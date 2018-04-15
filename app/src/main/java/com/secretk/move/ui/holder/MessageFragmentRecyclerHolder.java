@@ -14,19 +14,15 @@ import butterknife.ButterKnife;
  * Created by zc on 2018/4/14.
  */
 
-public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
+public class MessageFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.img)
     public ImageView img;
-    @BindView(R.id.tvSpell)
-    public TextView tvSpell;
     @BindView(R.id.tvName)
     public TextView tvName;
-    @BindView(R.id.tvFollws)
-    public TextView tvFollws;
-    @BindView(R.id.tvIsFollw)
-    public TextView tvIsFollw;
+    @BindView(R.id.tvLastContent)
+    public TextView tvLastContent;
 
-    public TopicFragmentRecyclerHolder(View itemView) {
+    public MessageFragmentRecyclerHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }

@@ -90,7 +90,7 @@ public class QuickIndexBar extends View {
             int textHeight = bounds.height();
 
             // 如果当前绘制时, 索引是我们按下的字母, 设置画笔为灰色, 否则设置为白色
-            mPaint.setColor(touchIndex == i ? Color.BLUE : Color.BLACK);
+            mPaint.setColor(touchIndex == i ? Color.BLUE : Color.parseColor("#666666"));
 
             int y = (int) (cellHeight * 0.5f + textHeight * 0.5f + i
                     * cellHeight);

@@ -5,26 +5,10 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#f5f4f4">
-        <TextView
-            android:id="@+id/tvSpell"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="12dp"
-            android:text="A" />
-    </RelativeLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:padding="@dimen/dp_15"
         android:layout_height="80dp">
-
         <ImageView
             android:id="@+id/img"
             android:layout_width="40dp"
@@ -41,9 +25,8 @@
             android:layout_toRightOf="@id/img"
             android:layout_marginLeft="@dimen/dp_15"
             android:text="AOS/柚子" />
-
         <TextView
-            android:id="@+id/tvFollws"
+            android:id="@+id/tvLastContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_12"
@@ -52,24 +35,9 @@
             android:textColor="#aaaaaa"
             android:layout_alignParentBottom="true"
             android:text="115248关注" />
-
-        <TextView
-            android:id="@+id/tvIsFollw"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_5"
-            android:paddingTop="@dimen/dp_3"
-            android:paddingBottom="@dimen/dp_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_rectangle_topic"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/app_background"
-            android:text="+关注" />
     </RelativeLayout>
-    <View
-        android:background="#dddddd"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"/>
+<View
+    android:background="#dddddd"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_1"/>
 </LinearLayout>
