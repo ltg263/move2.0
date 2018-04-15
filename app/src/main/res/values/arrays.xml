@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="fragment_main_titles">
+        <item>@string/main_fragment_recommend</item>
+        <item>@string/main_fragment_follow</item>
+        <item>@string/main_fragment_bluesky</item>
+
+    </string-array>
+
+
+</resources>
