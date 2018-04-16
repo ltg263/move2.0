@@ -1,11 +1,11 @@
 package com.secretk.move.ui.fragment;
 
 import android.content.Intent;
+import android.widget.ImageView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.bean.PersonInfors;
-import com.secretk.move.customview.CircleImageView;
 import com.secretk.move.presenter.MineFragmentPresenter;
 import com.secretk.move.presenter.impl.MineFragmentPresenterImpl;
 import com.secretk.move.ui.activity.LoginActivity;
@@ -23,7 +23,7 @@ import butterknife.OnClick;
 
 public class MineFragment extends LazyFragment implements FragmentMineView {
     @BindView(R.id.fragment_mine_account_portrait)
-    CircleImageView fragment_mine_account_portrait;
+    ImageView fragment_mine_account_portrait;
     MineFragmentPresenter presenter;
 
     @Override
@@ -33,7 +33,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
     @Override
     public void initViews() {
-        GlideUtils.load(fragment_mine_account_portrait, "");
+        GlideUtils.loadCircle(fragment_mine_account_portrait, 0);
     }
 
     @Override
@@ -54,6 +54,6 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
     @Override
     public void loadInfoSuccess(PersonInfors infos) {
-      GlideUtils.load(fragment_mine_account_portrait, infos.getHeadPath());
+      GlideUtils.loadCircle(fragment_mine_account_portrait, 0);
     }
 }

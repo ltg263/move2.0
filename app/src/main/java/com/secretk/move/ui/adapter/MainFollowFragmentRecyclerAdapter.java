@@ -5,11 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.bean.MessageBean;
+import com.secretk.move.customview.GlideCircleTransform;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.holder.MainFollowFragmentRecyclerHolder;
 import com.secretk.move.ui.holder.MessageFragmentRecyclerHolder;
+import com.secretk.move.utils.GlideUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +30,7 @@ public class MainFollowFragmentRecyclerAdapter extends RecyclerView.Adapter<Main
     public void setItemListener(ItemClickListener mListener) {
         this.mListener = mListener;
     }
+
     @Override
     public MainFollowFragmentRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_main_follow_recycler_item, parent, false);
@@ -37,6 +43,8 @@ public class MainFollowFragmentRecyclerAdapter extends RecyclerView.Adapter<Main
         String currenBean = list.get(position);
         holder.setItemListener(mListener);
         holder.tvscore.setText(currenBean);
+        GlideUtils.loadCircle(holder.img_head, R.drawable.account_portrait);
+        GlideUtils.loadCircle(holder.img_organization, R.drawable.account_portrait);
 
     }
 
@@ -52,7 +60,8 @@ public class MainFollowFragmentRecyclerAdapter extends RecyclerView.Adapter<Main
         this.list = list;
         notifyDataSetChanged();
     }
-    public List<String> getData(){
+
+    public List<String> getData() {
         return list;
     }
 }
