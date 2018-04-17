@@ -17,17 +17,17 @@ import com.secretk.move.utils.PatternUtils;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.TopicFragmentView;
 
-import java.util.ArrayList;
+
+
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by zc on 2018/4/5.
  */
 
-public class TopicFragment extends LazyFragment implements TopicFragmentView ,ItemClickListener,QuickIndexBar.OnLetterChangeListener {
+public class TopicFragment extends LazyFragment implements TopicFragmentView,ItemClickListener,QuickIndexBar.OnLetterChangeListener {
 
     @BindView(R.id.qbar)
     QuickIndexBar qbar;
@@ -100,6 +100,8 @@ public class TopicFragment extends LazyFragment implements TopicFragmentView ,It
             String str=list.get(i).getSpell().charAt(0)+"";
             if (letter.equals(str.trim().toUpperCase())){
                 recycler.scrollToPosition(i);
+                LinearLayoutManager manager= (LinearLayoutManager) recycler.getLayoutManager();
+                manager.scrollToPositionWithOffset(i,0);
                 break;
             }else if (letter.equals("#")&& PatternUtils.isLetter(str)==false){
                 recycler.scrollToPosition(0);

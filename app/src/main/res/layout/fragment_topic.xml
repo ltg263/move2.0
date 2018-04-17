@@ -49,6 +49,7 @@
             android:background="@drawable/show_bg"
             android:gravity="center"
             android:text="A"
+            android:visibility="gone"
             android:textColor="#fff"
             android:textSize="36sp" />
     </RelativeLayout>

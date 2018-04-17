@@ -6,10 +6,8 @@ import android.view.View;
 
 import com.secretk.move.R;
 import com.secretk.move.base.LazyFragment;
-import com.secretk.move.bean.MessageBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.MainFollowFragmentRecyclerAdapter;
-import com.secretk.move.ui.adapter.MessageFragmentRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +23,7 @@ public class MainFollowFragment extends LazyFragment implements ItemClickListene
     RecyclerView recycler;
     private LinearLayoutManager layoutManager;
     private MainFollowFragmentRecyclerAdapter adapter;
+
     @Override
     public int setFragmentView() {
         return R.layout.fragment_main_follow;
@@ -35,15 +34,15 @@ public class MainFollowFragment extends LazyFragment implements ItemClickListene
         layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler.setLayoutManager(layoutManager);
-        adapter=new MainFollowFragmentRecyclerAdapter();
+        adapter = new MainFollowFragmentRecyclerAdapter();
         recycler.setAdapter(adapter);
         adapter.setItemListener(this);
     }
 
     @Override
     public void onFirstUserVisible() {
-        List<String> list=new ArrayList<String>();
-list.add("8.5分");
+        List<String> list = new ArrayList<String>();
+        list.add("8.5分");
         list.add("7.2分");
         list.add("9.1分");
         adapter.setData(list);

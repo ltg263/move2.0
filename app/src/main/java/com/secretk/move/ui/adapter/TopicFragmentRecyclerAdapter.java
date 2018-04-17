@@ -48,6 +48,7 @@ public class TopicFragmentRecyclerAdapter extends RecyclerView.Adapter<TopicFrag
             } else {
                 holder.tvSpell.setText( "#");
             }
+            holder.tvSpell.setVisibility(View.VISIBLE);
         } else {
             TopicBean lastBean=list.get(position-1);
             boolean b =lastBean.getSpell().subSequence(0, 1)
