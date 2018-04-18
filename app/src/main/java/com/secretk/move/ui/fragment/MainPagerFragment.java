@@ -1,5 +1,6 @@
 package com.secretk.move.ui.fragment;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,7 @@ import android.view.View;
 
 import com.secretk.move.R;
 import com.secretk.move.base.LazyFragment;
+import com.secretk.move.ui.activity.SearchActivity;
 import com.secretk.move.ui.adapter.MainFragmentPagerAdapter;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
@@ -52,7 +54,8 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         tool_bar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.getInstance().show("搜索");
+                Intent intent=new Intent(getContext(), SearchActivity.class);
+                startActivity(intent);
             }
         });
     }

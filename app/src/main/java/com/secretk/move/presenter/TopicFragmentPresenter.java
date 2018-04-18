@@ -1,4 +1,4 @@
-package com.secretk.move.presenter.impl;
+package com.secretk.move.presenter;
 
 import com.secretk.move.bean.TopicBean;
 

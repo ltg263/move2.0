@@ -1,5 +1,6 @@
 package com.secretk.move.ui.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,8 +11,9 @@ import com.secretk.move.base.LazyFragment;
 import com.secretk.move.bean.TopicBean;
 import com.secretk.move.customview.QuickIndexBar;
 import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.presenter.impl.TopicFragmentPresenter;
+import com.secretk.move.presenter.TopicFragmentPresenter;
 import com.secretk.move.presenter.impl.TopicFragmentPresenterImpl;
+import com.secretk.move.ui.activity.SearchActivity;
 import com.secretk.move.ui.adapter.TopicFragmentRecyclerAdapter;
 import com.secretk.move.utils.PatternUtils;
 import com.secretk.move.utils.ToastUtils;
@@ -22,6 +24,7 @@ import com.secretk.move.view.TopicFragmentView;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by zc on 2018/4/5.
@@ -107,6 +110,10 @@ public class TopicFragment extends LazyFragment implements TopicFragmentView,Ite
                 recycler.scrollToPosition(0);
             }
         }
-
+    }
+    @OnClick(R.id.toolbar)
+    public void goSearch(View view) {
+        Intent intent=new Intent(getContext(), SearchActivity.class);
+        startActivity(intent);
     }
 }

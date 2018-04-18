@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.secretk.move.R;
-import com.secretk.move.presenter.impl.RegisterPresenter;
+import com.secretk.move.presenter.RegisterPresenter;
 import com.secretk.move.presenter.impl.RegisterPresenterImpl;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.ActivityRegisterFogetView;

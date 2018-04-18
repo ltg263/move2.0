@@ -7,6 +7,7 @@ import com.secretk.move.bean.LoginRegisterBean;
 import com.secretk.move.interactor.RegisterInteractor;
 import com.secretk.move.interactor.impl.RegisterInteractorimpl;
 import com.secretk.move.listener.RegisterRequestCallBack;
+import com.secretk.move.presenter.RegisterPresenter;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.RegisterUtils;
 import com.secretk.move.utils.UiUtils;
@@ -16,7 +17,7 @@ import com.secretk.move.view.ActivityRegisterFogetView;
  * Created by zc on 2018/4/7.
  */
 
-public class RegisterPresenterImpl implements RegisterPresenter , RegisterRequestCallBack {
+public class RegisterPresenterImpl implements RegisterPresenter, RegisterRequestCallBack {
     private ActivityRegisterFogetView view;
     private RegisterInteractor interactor;
     public RegisterPresenterImpl(ActivityRegisterFogetView view) {

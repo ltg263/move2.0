@@ -7,33 +7,36 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
-        android:background="#f9f9f9"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textColor="#333333"
-        android:textSize="@dimen/sp_18"
-        android:text="消息" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-android:layout_alignParentRight="true"
-        android:textColor="@color/app_background"
-        android:layout_marginRight="@dimen/dp_20"
-        android:textSize="@dimen/sp_15"
-        android:text="全部已读" />
-</RelativeLayout>
+        android:background="#f9f9f9">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="消息"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp_20"
+                android:text="全部已读"
+                android:textColor="@color/app_background"
+                android:textSize="@dimen/sp_15" />
+        </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </LinearLayout>

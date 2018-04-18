@@ -4,6 +4,7 @@ import com.secretk.move.bean.TopicBean;
 import com.secretk.move.interactor.TopicFragmentInteractor;
 import com.secretk.move.interactor.impl.TopicFragmentInteractorImpl;
 import com.secretk.move.listener.TopicFragmentCallBack;
+import com.secretk.move.presenter.TopicFragmentPresenter;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.view.TopicFragmentView;
 

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_background"
+        app:theme="@style/ToolbarTheme">
+
+       <LinearLayout
+           android:orientation="horizontal"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+           <TextView
+               android:layout_weight="1"
+               android:paddingTop="@dimen/dp_5"
+               android:paddingBottom="@dimen/dp_5"
+               android:paddingLeft="@dimen/dp_25"
+               android:layout_marginRight="@dimen/dp_10"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:gravity="center_vertical"
+               android:background="@drawable/shape_fragment_topic_search"
+               android:drawableLeft="@drawable/main_search_gray"
+               android:text="  搜索相关币种"
+               android:textColor="#aaaaaa" />
+           <TextView
+               android:layout_weight="8"
+               android:text="取消"
+               android:textColor="@color/colorPrimary"
+               android:gravity="center_vertical"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent" />
+       </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
