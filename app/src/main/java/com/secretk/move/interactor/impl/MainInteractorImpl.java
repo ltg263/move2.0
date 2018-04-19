@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.FileProvider;
+
 import com.secretk.move.MoveApplication;
 import com.secretk.move.bean.VersionBean;
 import com.secretk.move.http.Network;
@@ -35,7 +36,7 @@ import okio.Okio;
  */
 
 public class MainInteractorImpl implements MainInteractor {
-   private MainRequestCallBack callBack;
+    private MainRequestCallBack callBack;
 
     public MainInteractorImpl(MainRequestCallBack callBack) {
         this.callBack = callBack;
@@ -46,7 +47,7 @@ public class MainInteractorImpl implements MainInteractor {
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> emitter) throws Exception {
-                Boolean isSuccess=okHttpDownLoad(url);
+                Boolean isSuccess = okHttpDownLoad(url);
                 emitter.onNext(isSuccess);
             }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Boolean>() {
@@ -92,7 +93,7 @@ public class MainInteractorImpl implements MainInteractor {
         return versionCode;
     }
 
-    public boolean okHttpDownLoad(String url){
+    public boolean okHttpDownLoad(String url) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(url).build();
         try {
@@ -113,13 +114,14 @@ public class MainInteractorImpl implements MainInteractor {
         }
         return true;
     }
+
     @Override
-    public  void install(String apkPath) {
+    public void install(String apkPath) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             Uri contentUri = FileProvider.
-                    getUriForFile( MoveApplication.getContext(),
+                    getUriForFile(MoveApplication.getContext(),
                             "com.secretk.move.fileprovider",
                             new File(apkPath));
             intent.setDataAndType(contentUri, "application/vnd.android.package-archive");

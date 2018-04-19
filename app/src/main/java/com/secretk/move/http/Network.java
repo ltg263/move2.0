@@ -24,9 +24,10 @@ public class Network {
     private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
     private static CallAdapter.Factory rxJavaCallAdapterFactory = RxJava2CallAdapterFactory.create();
     private static HttpMethods methods;
+    private static MoveMethods moveMethods;
 
     private static String BASEURL="http://api.fir.im/apps/latest/";
-
+    private static String MOVEBASEURL="http://47.98.197.101/tzg-rest";
     public static void initOkhttp(Context mContext) {
         if (mOkHttpClient == null) {
             synchronized (Network.class) {
@@ -58,5 +59,17 @@ public class Network {
         return methods;
     }
 
+    public static MoveMethods getMoveMethods() {
+        if (moveMethods == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(mOkHttpClient)
+                    .baseUrl(BASEURL)
+                    .addConverterFactory(gsonConverterFactory)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
 
+                    .build();
+            moveMethods = retrofit.create(MoveMethods.class);
+        }
+        return moveMethods;
+    }
 }
