@@ -27,16 +27,19 @@ public class Network {
     private static MoveMethods moveMethods;
 
     private static String BASEURL="http://api.fir.im/apps/latest/";
-    private static String MOVEBASEURL="http://47.98.197.101/tzg-rest";
+    private static String MOVEBASEURL="http://47.98.197.101/tzg-rest/";
     public static void initOkhttp(Context mContext) {
         if (mOkHttpClient == null) {
             synchronized (Network.class) {
                 if (mOkHttpClient == null) {
                     File mFile = new File(mContext.getCacheDir(), "cache");
                     Cache mCache = new Cache(mFile, 1024 * 1024 * 200);
+                    NetworkInterceptor mNetworkInterceptor = new NetworkInterceptor();
 
                     mOkHttpClient = new OkHttpClient.Builder()
                             .cache(mCache)
+                            .addInterceptor(mNetworkInterceptor)
+                            .addNetworkInterceptor(mNetworkInterceptor)
                             .retryOnConnectionFailure(true)
                             .connectTimeout(15, TimeUnit.SECONDS)
                             .build();
@@ -63,7 +66,7 @@ public class Network {
         if (moveMethods == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(mOkHttpClient)
-                    .baseUrl(BASEURL)
+                    .baseUrl(MOVEBASEURL)
                     .addConverterFactory(gsonConverterFactory)
                     .addCallAdapterFactory(rxJavaCallAdapterFactory)
 

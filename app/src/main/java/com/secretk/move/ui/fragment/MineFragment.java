@@ -38,6 +38,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
     @Override
     public void onFirstUserVisible() {
+        GlideUtils.loadCircle(fragment_mine_account_portrait, R.drawable.account_portrait);
         presenter = new MineFragmentPresenterImpl(this);
     }
 
@@ -54,6 +55,6 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
     @Override
     public void loadInfoSuccess(PersonInfors infos) {
-      GlideUtils.loadCircle(fragment_mine_account_portrait, 0);
+        GlideUtils.loadCircle(fragment_mine_account_portrait, R.drawable.account_portrait);
     }
 }
