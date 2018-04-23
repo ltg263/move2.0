@@ -15,8 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.AddLabelActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" >
+        <activity
+            android:name=".ui.activity.DemoActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -34,8 +35,17 @@
         <activity
             android:name=".ui.activity.VerificationLoginActivity"
             android:theme="@style/AppEditTextStyle" />
-        <activity android:name=".ui.activity.SearchActivity"
-            android:theme="@style/AppEditTextStyle"/>
+        <activity
+            android:name=".ui.activity.SearchActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity android:name=".ui.activity.AddLabelActivity" />
+        <activity
+            android:name=".ui.activity.HttpActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:theme="@style/AppEditTextStyle" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.secretk.move.fileprovider"
