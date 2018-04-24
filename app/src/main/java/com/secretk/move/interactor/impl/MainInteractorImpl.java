@@ -7,12 +7,11 @@ import android.os.Build;
 import android.support.v4.content.FileProvider;
 
 import com.secretk.move.MoveApplication;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.VersionBean;
 import com.secretk.move.http.Network;
 import com.secretk.move.interactor.MainInteractor;
 import com.secretk.move.listener.MainRequestCallBack;
-import com.secretk.move.utils.Constant;
-import com.secretk.move.utils.CrashHandler;
 
 import java.io.File;
 
@@ -104,7 +103,7 @@ public class MainInteractorImpl implements MainInteractor {
             ResponseBody body = response.body();
             long contentLength = body.contentLength();
             BufferedSource source = body.source();
-            File file = new File(Constant.APKPATH);
+            File file = new File(Constants.APKPATH);
             BufferedSink sink = Okio.buffer(Okio.sink(file));
             sink.writeAll(source);
             sink.flush();

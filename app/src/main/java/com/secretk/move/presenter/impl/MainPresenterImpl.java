@@ -1,11 +1,11 @@
 package com.secretk.move.presenter.impl;
 
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.VersionBean;
 import com.secretk.move.interactor.MainInteractor;
 import com.secretk.move.interactor.impl.MainInteractorImpl;
 import com.secretk.move.listener.MainRequestCallBack;
 import com.secretk.move.presenter.MainPresenter;
-import com.secretk.move.utils.Constant;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.view.ActivityMainView;
 
@@ -59,7 +59,7 @@ public class MainPresenterImpl implements MainPresenter, MainRequestCallBack{
     public void isDownLoadSuccess(Boolean isSuccess) {
         if (isSuccess){
             mainView.showMessage("下载成功正在安装");
-            interactor.install(Constant.APKPATH);
+            interactor.install(Constants.APKPATH);
         }else {
             mainView.showMessage("当前网络不好，下载失败");
         }

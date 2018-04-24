@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -16,7 +15,6 @@ import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by zc on 2018/4/5.
@@ -54,7 +52,7 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         tool_bar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(), SearchActivity.class);
+                Intent intent=new Intent(getContext(),SearchActivity.class);
                 startActivity(intent);
             }
         });

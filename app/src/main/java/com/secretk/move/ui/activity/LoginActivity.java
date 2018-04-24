@@ -2,19 +2,17 @@ package com.secretk.move.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
+import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.utils.ToastUtils;
+import com.secretk.move.view.AppBarHeadView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import java.util.List;
+
 import butterknife.OnClick;
 
 
@@ -23,44 +21,38 @@ import butterknife.OnClick;
  */
 
 public class LoginActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener {
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    AppBarHeadView mHeadView;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
-        initView();
-        initData();
+    protected int setOnCreate() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
+        mHeadView = findViewById(R.id.head_app_server);
+        mHeadView.setHeadBackShow(true);
+        //mHeadView.setTitle(getString(R.string.registered_account));
+        return mHeadView;
     }
 
 
-    private void initView() {
-        toolbar.setNavigationIcon(R.drawable.toobar_back);
-        toolbar.inflateMenu(R.menu.activity_login_menu);
-        toolbar.setOnMenuItemClickListener(this);
+    @Override
+    protected void initUI(Bundle savedInstanceState) {
     }
 
-    private void initData() {
+    protected void initData() {
 
     }
 
-    /**
-     * 返回
-     */
-    @OnClick(R.id.toolbar)
-    public void goback() {
-        finish();
-    }
 
     /**
      * 验证码登陆
      */
     @OnClick(R.id.tv_verification_code_login)
     public void verification_code_login() {
-      Intent intent=new Intent(this,VerificationLoginActivity.class);
-      startActivity(intent);
+        Intent intent = new Intent(this, VerificationLoginActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -89,4 +81,5 @@ public class LoginActivity extends BaseActivity implements Toolbar.OnMenuItemCli
         startActivity(intent);
         return false;
     }
+
 }

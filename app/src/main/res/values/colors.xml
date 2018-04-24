@@ -5,6 +5,8 @@
     <color name="colorPrimaryDark">#3b88f6</color>
     <!--FF4081-->
     <color name="colorAccent">#3b88f6</color>
+    <!--登陆按钮-->
+    <color name="login_bnt">#64b5f7</color>
 
     <color name="gray">#4d4d4d</color>
     <color name="white">#ffffff</color>

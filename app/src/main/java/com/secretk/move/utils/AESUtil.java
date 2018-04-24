@@ -1,9 +1,6 @@
 
 package com.secretk.move.utils;
-
-
-
-import org.apache.commons.codec.binary.MoveBase64;
+import android.util.Base64;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -32,7 +29,8 @@ public class AESUtil {
         IvParameterSpec iv = new IvParameterSpec("0102030405060708".getBytes());// 使用CBC模式，需要一个向量iv，可增加加密算法的强度
         cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
         byte[] encrypted = cipher.doFinal(sSrc.getBytes(defaultCharSet));
-        return MoveBase64.encodeBase64URLSafeString(encrypted);// 此处使用BASE64做转码功能，同时能起到2次加密的作用。
+        //return Base64.encodeBase64URLSafeString(encrypted);// 此处使用BASE64做转码功能，同时能起到2次加密的作用。
+        return Base64.encodeToString(encrypted,Base64.DEFAULT);// 此处使用BASE64做转码功能，同时能起到2次加密的作用。
     }
 
     /**
@@ -59,17 +57,17 @@ public class AESUtil {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             IvParameterSpec iv = new IvParameterSpec("0102030405060708".getBytes());
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
-            byte[] encrypted1 = MoveBase64.decodeBase64(sSrc);// 先用base64解密
+            byte[] encrypted1 = Base64.decode(sSrc,Base64.DEFAULT);// 先用base64解密
             try {
                 byte[] original = cipher.doFinal(encrypted1);
-                String originalString = new String(original, defaultCharSet);
+                String originalString = new String(original,defaultCharSet);
                 return originalString;
             } catch (Exception e) {
-//                log.error("解密异常，sKey：" + sKey, e);
+                LogUtil.w("解密异常，sKey：" + sKey, e);
                 return null;
             }
         } catch (Exception ex) {
-//            log.error("解密异常，sSrc=" + sSrc + ",sKey=" + sKey, ex);
+            LogUtil.w("解密异常，sSrc=" + sSrc + ",sKey=" + sKey, ex);
             return null;
         }
     }
@@ -79,7 +77,7 @@ public class AESUtil {
         encrypt = URLEncoder.encode(encrypt, "UTF-8");
         System.out.println(encrypt);
         System.out.println(Charset.defaultCharset().name());
-        encrypt = URLDecoder.decode(encrypt, "UTF-8");
+        encrypt = URLDecoder.decode(encrypt,"UTF-8");
         System.out.println(encrypt);
         System.out.println(AESUtil.decrypt(encrypt, "0987654321qazxcv"));
     }

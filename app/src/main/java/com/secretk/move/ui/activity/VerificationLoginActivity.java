@@ -1,21 +1,21 @@
 package com.secretk.move.ui.activity;
 
 
-
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
-
+import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.ActivityRegisterFogetView;
+import com.secretk.move.view.AppBarHeadView;
+
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -32,16 +32,25 @@ public class VerificationLoginActivity extends BaseActivity implements ActivityR
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_verification_login);
-        ButterKnife.bind(this);
-        init();
+    protected int setOnCreate() {
+        return R.layout.activity_verification_login;
     }
 
-    private void init() {
+    @Override
+    protected void initUI(Bundle savedInstanceState) {
         toolbar.setNavigationIcon(R.drawable.toobar_back);
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
+        return null;
     }
 
     /**

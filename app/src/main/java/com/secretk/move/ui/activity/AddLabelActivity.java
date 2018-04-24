@@ -17,11 +17,14 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 
 import com.secretk.move.R;
+import com.secretk.move.base.BaseActivity;
+import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.AddLabelActivityRecyclerAdapter;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
+import com.secretk.move.view.AppBarHeadView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,23 +37,19 @@ import butterknife.OnClick;
  * Created by zc on 2018/4/22.
  */
 
-public class AddLabelActivity extends AppCompatActivity implements ItemClickListener {
+public class AddLabelActivity extends BaseActivity implements ItemClickListener {
     @BindView(R.id.recycler)
     RecyclerView recycler;
     AddLabelActivityRecyclerAdapter adapter;
     List<String> list = new ArrayList<>();
 
-
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_label);
-        ButterKnife.bind(this);
-        initView();
-        initData();
+    protected int setOnCreate() {
+        return R.layout.activity_add_label;
     }
 
-    private void initView() {
+    @Override
+    protected void initUI(Bundle savedInstanceState) {
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.main_background), 0);
 
@@ -61,12 +60,18 @@ public class AddLabelActivity extends AppCompatActivity implements ItemClickList
         adapter.setItemListener(this);
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         list.add("+添加话题");
         for (int i = 0; i < 20; i++) {
             list.add(i + "号标签");
         }
         adapter.setData(list);
+    }
+
+    @Override
+    protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
+        return null;
     }
 
 

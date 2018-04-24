@@ -17,33 +17,20 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_25"
-        android:text="欢迎回来!"
+        android:text="@string/registered_login"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_40" />
 
     <EditText
-        android:id="@+id/ed_phone"
+        android:id="@+id/et_phone"
+        style="@style/AppEditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_35"
         android:hint="@string/hint_phone"
-        android:inputType="phone"
-        style="@style/AppEditTextStyle"
-       />
-
-
-    <EditText
-        android:id="@+id/ed_passwoord"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_35"
-        android:hint="@string/hint_password"
-        android:inputType="textPassword"
-        style="@style/AppEditTextStyle" />
+        android:inputType="phone" />
 
 
     <RelativeLayout
@@ -52,18 +39,11 @@
         android:layout_margin="@dimen/dp_24">
 
         <TextView
-            android:id="@+id/tv_verification_code_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/verification_code_login"
-            android:textColor="@color/white" />
-
-        <TextView
-            android:id="@+id/tv_forget_password"
+            android:id="@+id/tv_old_user_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="@string/forget_password"
+            android:text="@string/old_user_login"
             android:textColor="@color/white" />
     </RelativeLayout>
 
@@ -75,8 +55,8 @@
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_20"
-        android:background="@drawable/bg_btn_login_selected"
-        android:text="@string/login_in"
-        android:textColor="@color/app_background"
+        android:background="@drawable/selector_login_bnt"
+        android:text="@string/start_use"
+        android:textColor="@drawable/selector_login_text"
         android:textSize="@dimen/sp_18" />
 </LinearLayout>

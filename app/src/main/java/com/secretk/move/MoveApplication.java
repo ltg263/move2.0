@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.github.moduth.blockcanary.BlockCanary;
+import com.secretk.move.baseManager.AppConfig;
 import com.secretk.move.http.Network;
 import com.secretk.move.utils.AppBlockCanaryContext;
 import com.secretk.move.utils.CrashHandler;
@@ -24,6 +25,7 @@ public class MoveApplication extends Application {
         CrashHandler.getInstance().init(mContext);
         BlockCanary.install(mContext, new AppBlockCanaryContext()).start();
         Network.initOkhttp(mContext);
+        AppConfig.initAppConfig(this);
 
     }
     /**
