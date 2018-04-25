@@ -20,31 +20,37 @@
         android:text="欢迎回来!"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_40" />
-
-    <EditText
-        android:id="@+id/ed_phone"
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_35"
-        android:hint="@string/hint_phone"
-        android:inputType="phone"
-        style="@style/AppEditTextStyle"
-       />
+        android:layout_marginTop="@dimen/dp_35">
 
+        <EditText
+            android:id="@+id/ed_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_phone"
+            android:inputType="number"
+            android:textColor="@color/white" />
+    </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/ed_passwoord"
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_35"
-        android:hint="@string/hint_password"
-        android:inputType="textPassword"
-        style="@style/AppEditTextStyle" />
+        android:layout_marginTop="@dimen/dp_35">
 
+        <EditText
+            android:id="@+id/ed_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_password"
+            android:inputType="textPassword"
+            android:textColor="@color/white" />
+    </android.support.design.widget.TextInputLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -75,8 +81,8 @@
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_20"
-        android:background="@drawable/bg_btn_login_selected"
+        android:background="@drawable/selector_login_bnt"
         android:text="@string/login_in"
-        android:textColor="@color/app_background"
+        android:textColor="@drawable/selector_login_text"
         android:textSize="@dimen/sp_18" />
 </LinearLayout>

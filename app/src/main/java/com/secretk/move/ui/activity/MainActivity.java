@@ -16,6 +16,7 @@ import com.secretk.move.customview.TabViewpager;
 import com.secretk.move.presenter.MainPresenter;
 import com.secretk.move.presenter.impl.MainPresenterImpl;
 import com.secretk.move.ui.adapter.MainActivityPagerAdapter;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
@@ -40,6 +41,7 @@ public class MainActivity extends BaseActivity implements ActivityMainView {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        LogUtil.w("token:"+sharedUtils.get("token",""));
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this,  UiUtils.getColor(R.color.main_background), 0);
         adapter = new MainActivityPagerAdapter(getSupportFragmentManager());

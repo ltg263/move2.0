@@ -81,4 +81,10 @@
 
     <color name="black_translucent">#50000000</color>
     <color name="main_background">#f9f9f9</color>
+
+    <!-- 登录背景色由浅到深 -->
+    <color name="login_background_top">#02b7ea</color>
+    <color name="login_background_below">#4372ff</color>
+
+
 </resources>

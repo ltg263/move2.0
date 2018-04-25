@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.secretk.move.R;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.view.AppBarHeadView;
 
 import java.util.ArrayList;
@@ -23,11 +24,14 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity {
     public AppBarHeadView mHeadView;
     protected List<MenuInfo> mMenuInfos = new ArrayList<>();
+    protected SharedUtils sharedUtils;
+    protected boolean isLoginUi = false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(setOnCreate());
         ButterKnife.bind(this);
+        sharedUtils = SharedUtils.singleton();
         initUI(savedInstanceState);
         initData();
 
@@ -74,7 +78,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(isShow);
         getSupportActionBar().setHomeButtonEnabled(isShow);
         if (mHeadView != null && isShow) {
-            mHeadView.getToolbar().setNavigationIcon(R.drawable.call_back);
+            if(isLoginUi){
+                mHeadView.getToolbar().setNavigationIcon(R.drawable.call_back);
+            }else {
+                mHeadView.getToolbar().setNavigationIcon(R.drawable.toobar_back_blue);
+            }
         }
     }
 

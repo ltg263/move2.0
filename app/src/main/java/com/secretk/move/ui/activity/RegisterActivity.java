@@ -1,16 +1,13 @@
 package com.secretk.move.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -34,11 +31,13 @@ import org.json.JSONObject;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- *
+ * 作者： litongge
+ * 时间： 2018/4/25 9:57
+ * 邮箱；ltg263@126.com
+ * 描述：新用户注册
  */
 
 public class RegisterActivity extends BaseActivity {
@@ -54,6 +53,7 @@ public class RegisterActivity extends BaseActivity {
 
     String strYzm;
     String strPsw;
+
     @Override
     protected int setOnCreate() {
         return R.layout.activity_register;
@@ -62,6 +62,7 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
         AppBarHeadView mHeadView = findViewById(R.id.head_app_server);
+        isLoginUi=true;
         mHeadView.setHeadBackShow(true);
         return mHeadView;
     }
@@ -69,40 +70,22 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-        etSearchChangedListener(edVerification,butRegister);
-        etSearchChangedListener(edPassword,butRegister);
+        StringUtil.etSearchChangedListener(edVerification,butRegister,etChangListener);
+        StringUtil.etSearchChangedListener(edPassword,butRegister,etChangListener);
     }
 
-    /**
-     * 监听输入框输的变化
-     */
-    private void etSearchChangedListener(final EditText et, final Button btn) {
-        et.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    StringUtil.EtChange etChangListener = new StringUtil.EtChange() {
+        @Override
+        public void etYes() {
+            strYzm = edVerification.getText().toString().trim();
+            strPsw = edPassword.getText().toString().trim();
+            if(StringUtil.isNotBlank(strYzm) && StringUtil.isNotBlank(strPsw)){
+                butRegister.setSelected(true);
+            }else{
+                butRegister.setSelected(false);
             }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                strYzm = edVerification.getText().toString().trim();
-                strPsw = edPassword.getText().toString().trim();
-                if (s.length() != 0 && et.getText().toString().trim().length() != 0) {
-                    if(StringUtil.isNotBlank(strYzm) && StringUtil.isNotBlank(strPsw)){
-                        btn.setSelected(true);
-                    }else{
-                        btn.setSelected(false);
-                    }
-                }
-                if (et.getText().toString().trim().length() == 0) {
-                    btn.setSelected(false);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-    }
+        }
+    };
 
     @Override
     protected void initData() {
@@ -114,22 +97,26 @@ public class RegisterActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.get_verification:
-                if(getVerification.getText().toString().equals(getString(R.string.get_verification))){
+                if(getVerification.getText().toString().equals(getString(R.string.get_verification))
+                        || getVerification.getText().toString().equals(getString(R.string.anew_get))){
                     recLen=60;
                     new Thread(new MyThread()).start();
                     sendVerification();
                 }
                 break;
             case R.id.but_register:
+                strYzm = edVerification.getText().toString().trim();
+                strPsw = edPassword.getText().toString().trim();
                 if(StringUtil.isBlank(strYzm) || StringUtil.isBlank(strPsw)){
                     ToastUtils.getInstance().show("填写不完整");
                     return;
                 }
-                if(strPsw.length()<5 || strPsw.length()>16){
+                if(strPsw.length()>5 && strPsw.length()<16){
+                    userRegister();
+                }else{
                     ToastUtils.getInstance().show("请保持密码长度在6-16位");
-                    return;
                 }
-                userRegister();
+
                 break;
         }
     }
@@ -183,8 +170,9 @@ public class RegisterActivity extends BaseActivity {
             public void onCompleted(String str) {
                 try {
                     JSONObject jsonObject = new JSONObject(str);
-                    String token = jsonObject.getJSONObject("data").getString("token");
-
+                    //String token = jsonObject.getJSONObject("data").getString("token");
+                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                    IntentUtil.startActivity(LoginActivity.class);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -219,7 +207,7 @@ public class RegisterActivity extends BaseActivity {
                         getVerification.setText("倒计时:" + recLen);
                     }else if(recLen==0){
                         recLen=-1;
-                        getVerification.setText(getString(R.string.get_verification));
+                        getVerification.setText(getString(R.string.anew_get));
                     }
             }
             super.handleMessage(msg);

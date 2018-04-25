@@ -19,7 +19,6 @@ public class BaseRes extends BaseInfo{
 
     private String msg;
     private int code;
-    private String token;
     private long serverDatetime;
 
     public String getMsg() {
@@ -38,13 +37,6 @@ public class BaseRes extends BaseInfo{
         this.code = code;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 
 
     public long getServerDatetime() {

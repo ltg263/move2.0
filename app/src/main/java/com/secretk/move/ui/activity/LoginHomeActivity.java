@@ -29,6 +29,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 
+
 /**
  * 作者： litongge
  * 时间： 2018/4/24 17:02
@@ -55,6 +56,7 @@ public class LoginHomeActivity extends BaseActivity {
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
         AppBarHeadView mHeadView = findViewById(R.id.head_app_server);
+        isLoginUi=true;
         mHeadView.setHeadBackShow(true);
         //mHeadView.setTitle(getString(R.string.registered_account));
         return mHeadView;
@@ -63,7 +65,12 @@ public class LoginHomeActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-        StringUtil.etSearchChangedListener(etPhone,butLogin);
+        StringUtil.etSearchChangedListener(etPhone,butLogin ,new StringUtil.EtChange() {
+            @Override
+            public void etYes() {
+                butLogin.setSelected(true);
+            }
+        });
     }
 
     protected void initData() {
@@ -109,13 +116,14 @@ public class LoginHomeActivity extends BaseActivity {
             public void onCompleted(String str) {
                 try {
                     JSONObject jsonObject = new JSONObject(str);
+                    //"isRegister":0 // 是否已注册 ： 1-已注册过；0-未注册
                     int regIndex = jsonObject.getJSONObject("data").getInt("isRegister");
+                    String key[]={"phone"};
+                    String values[]={phoneNumber};
                     if(regIndex==0){
-                        String key[]={"phone"};
-                        String values[]={phoneNumber};
                         IntentUtil.startActivity(RegisterActivity.class,key,values);
                     }else{
-                        IntentUtil.startActivity(LoginActivity.class);
+                        IntentUtil.startActivity(LoginActivity.class,key,values);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

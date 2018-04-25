@@ -3,10 +3,9 @@
     <!-- Base application theme   Theme.AppCompat.Light.DarkActionBar -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <!--<item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>-->
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/login_background_top</item>
+        <item name="colorAccent">@color/white</item>
     </style>
     <style name="ToolbarTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="actionMenuTextColor">@color/white</item> <!--颜色-->
@@ -39,7 +38,7 @@
     </style>
     <style name="AppEditTextStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/app_background</item>
+        <item name="colorPrimaryDark">@color/login_background_top</item>
         <item name="colorAccent">@color/white</item>
         <item name="android:textColorHint">@color/white</item>
         <item name="colorControlNormal">@color/white</item>

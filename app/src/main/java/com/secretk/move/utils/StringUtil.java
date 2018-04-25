@@ -315,7 +315,7 @@ public class StringUtil {
     /**
      * 监听输入框输的变化
      */
-    public static void etSearchChangedListener(final EditText et, final Button btn) {
+    public static void etSearchChangedListener(final EditText et, final Button btn, final EtChange etChange) {
         et.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -324,10 +324,13 @@ public class StringUtil {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() != 0 && et.getText().toString().trim().length() != 0) {
-                    btn.setSelected(true);
+                    etChange.etYes();
                 }
                 if (et.getText().toString().trim().length() == 0) {
-                    btn.setSelected(false);
+                    if(btn!=null){
+                        btn.setSelected(false);
+                    }
+                    etChange.etNo();
                 }
             }
 
@@ -335,5 +338,11 @@ public class StringUtil {
             public void afterTextChanged(Editable s) {
             }
         });
+    }
+    public abstract static class EtChange{
+        //有内容
+         public abstract void etYes();
+         //无内容
+         public void etNo(){}
     }
 }
