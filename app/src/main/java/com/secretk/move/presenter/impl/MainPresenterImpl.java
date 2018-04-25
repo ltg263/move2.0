@@ -2,22 +2,19 @@ package com.secretk.move.presenter.impl;
 
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.VersionBean;
-import com.secretk.move.interactor.MainInteractor;
+import com.secretk.move.contract.ActivityMainContract;
 import com.secretk.move.interactor.impl.MainInteractorImpl;
-import com.secretk.move.listener.MainRequestCallBack;
-import com.secretk.move.presenter.MainPresenter;
 import com.secretk.move.utils.NetUtil;
-import com.secretk.move.view.ActivityMainView;
 
 /**
  * Created by zc on 2018/4/6.
  */
 
-public class MainPresenterImpl implements MainPresenter, MainRequestCallBack{
-    private ActivityMainView mainView;
-    private MainInteractor interactor;
+public class MainPresenterImpl implements ActivityMainContract.MainPresenter, ActivityMainContract.CallBack {
+    private ActivityMainContract.ActivityMainView mainView;
+    private ActivityMainContract.MainInteractor interactor;
     private String downLoadUrl="";
-    public MainPresenterImpl(ActivityMainView mainView) {
+    public MainPresenterImpl(ActivityMainContract.ActivityMainView mainView) {
         this.mainView = mainView;
         interactor = new MainInteractorImpl(this);
     }
@@ -29,7 +26,7 @@ public class MainPresenterImpl implements MainPresenter, MainRequestCallBack{
         if (isNetworkAvailable) {
            interactor.NetWorkVersion();
         } else {
-          mainView.showMessage("当前网络不可用 ");
+          mainView.showMsg("当前网络不可用 ");
         }
     }
 
@@ -40,7 +37,7 @@ public class MainPresenterImpl implements MainPresenter, MainRequestCallBack{
 
     @Override
     public void requestFailed(String str) {
-        mainView.showMessage(str);
+        mainView.showMsg(str);
     }
 
     @Override
@@ -50,7 +47,7 @@ public class MainPresenterImpl implements MainPresenter, MainRequestCallBack{
             mainView.showDialog(bean.changelog);
             downLoadUrl=bean.installUrl;
         } else {
-            mainView.showMessage("当前没有新版本");
+            mainView.showMsg("当前没有新版本");
             downLoadApk();
         }
     }
@@ -58,10 +55,16 @@ public class MainPresenterImpl implements MainPresenter, MainRequestCallBack{
     @Override
     public void isDownLoadSuccess(Boolean isSuccess) {
         if (isSuccess){
-            mainView.showMessage("下载成功正在安装");
+            mainView.showMsg("下载成功正在安装");
             interactor.install(Constants.APKPATH);
         }else {
-            mainView.showMessage("当前网络不好，下载失败");
+            mainView.showMsg("当前网络不好，下载失败");
         }
+    }
+
+    @Override
+    public void detachView() {
+        mainView = null;
+        interactor.destroy();
     }
 }

@@ -3,45 +3,41 @@ package com.secretk.move.ui.activity;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
-
 import com.secretk.move.R;
-import com.secretk.move.base.BaseActivity;
-import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.base.MvpBaseActivity;
+import com.secretk.move.contract.ActivityMainContract;
 import com.secretk.move.customview.TabViewpager;
-import com.secretk.move.presenter.MainPresenter;
 import com.secretk.move.presenter.impl.MainPresenterImpl;
 import com.secretk.move.ui.adapter.MainActivityPagerAdapter;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.StatusBarUtil;
-import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
-import com.secretk.move.view.ActivityMainView;
-import com.secretk.move.view.AppBarHeadView;
 
-import java.util.List;
 
 import butterknife.BindView;
 
 
-public class MainActivity extends BaseActivity implements ActivityMainView {
+public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements ActivityMainContract.ActivityMainView {
     @BindView(R.id.vp_main)
     TabViewpager vp_main;
     MainActivityPagerAdapter adapter;
-    MainPresenter presenter;
-
+    ActivityMainContract.MainPresenter presenter;
     @Override
-    protected int setOnCreate() {
-        return R.layout.activity_main;
+    protected int setLayout() {
+         return R.layout.activity_main;
     }
-
     @Override
-    protected void initUI(Bundle savedInstanceState) {
-        LogUtil.w("token:"+sharedUtils.get("token",""));
+    protected MainPresenterImpl initPresenter() {
+        return new MainPresenterImpl(this);
+    }
+    public void go2main(View view) {
+        vp_main.setCurrentItem(0);
+    }
+    @Override
+    protected void initView() {
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this,  UiUtils.getColor(R.color.main_background), 0);
         adapter = new MainActivityPagerAdapter(getSupportFragmentManager());
@@ -71,22 +67,6 @@ public class MainActivity extends BaseActivity implements ActivityMainView {
             }
         });
     }
-
-    @Override
-    protected void initData() {
-
-    }
-
-    @Override
-    protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
-        return null;
-    }
-
-    public void go2main(View view) {
-
-        vp_main.setCurrentItem(0);
-    }
-
     public void go2topic(View view) {
         vp_main.setCurrentItem(1);
     }
@@ -120,9 +100,5 @@ public class MainActivity extends BaseActivity implements ActivityMainView {
         dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#3F51B5"));
     }
 
-    @Override
-    public void showMessage(String error) {
-        ToastUtils.getInstance().show(error);
-    }
 
 }

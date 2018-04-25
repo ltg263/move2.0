@@ -9,9 +9,8 @@ import android.support.v4.content.FileProvider;
 import com.secretk.move.MoveApplication;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.VersionBean;
+import com.secretk.move.contract.ActivityMainContract;
 import com.secretk.move.http.Network;
-import com.secretk.move.interactor.MainInteractor;
-import com.secretk.move.listener.MainRequestCallBack;
 
 import java.io.File;
 
@@ -34,10 +33,10 @@ import okio.Okio;
  * Created by zc on 2018/4/6.
  */
 
-public class MainInteractorImpl implements MainInteractor {
-    private MainRequestCallBack callBack;
+public class MainInteractorImpl implements ActivityMainContract.MainInteractor {
+    private ActivityMainContract.CallBack callBack;
 
-    public MainInteractorImpl(MainRequestCallBack callBack) {
+    public MainInteractorImpl(ActivityMainContract.CallBack callBack) {
         this.callBack = callBack;
     }
 
@@ -129,6 +128,11 @@ public class MainInteractorImpl implements MainInteractor {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
         MoveApplication.getContext().startActivity(intent);
+    }
+
+    @Override
+    public void destroy() {
+        callBack=null;
     }
 
 }

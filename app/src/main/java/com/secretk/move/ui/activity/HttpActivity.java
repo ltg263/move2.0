@@ -3,7 +3,6 @@ package com.secretk.move.ui.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 
 import com.google.gson.Gson;
@@ -14,13 +13,14 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.DynamicValidateCodeSend;
 import com.secretk.move.bean.postbean.PostRegisterBean;
-import com.secretk.move.bean.returnbean.RegisterBean;
+import com.secretk.move.bean.returnbean.ReturnRegisterBean;
 import com.secretk.move.http.Network;
 import com.secretk.move.utils.AESUtil;
 import com.secretk.move.utils.CrashHandler;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.ToastUtils;
 
 import org.json.JSONException;
@@ -45,9 +45,9 @@ public class HttpActivity extends AppCompatActivity {
         String route= gson.toJson(registerBean);//通过Gson将Bean转化为Json字符串形式
         String str= AESUtil.encrypt(route,key);
         RequestBody body= RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),str);
-        Network.getMoveMethods().rxDemo(body).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<RegisterBean>() {
+        Network.getMoveMethods().rxDemo(body).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<ReturnRegisterBean>() {
             @Override
-            public void accept(RegisterBean versionBean) throws Exception {
+            public void accept(ReturnRegisterBean versionBean) throws Exception {
               String str="PostRegisterBean";
                 ToastUtils.getInstance().show(versionBean.msg);
             }
@@ -83,5 +83,9 @@ public class HttpActivity extends AppCompatActivity {
                 ToastUtils.getInstance().show(contactsBean.getData().getDynamicCode());
             }
         });
+    }
+    public void jyhLogin(View view) throws Exception{
+      String token=  SharedUtils.singleton().get("token","");
+      ToastUtils.getInstance().show(token);
     }
 }

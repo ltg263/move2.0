@@ -1,7 +1,7 @@
 package com.secretk.move.http;
 
 
-import com.secretk.move.bean.returnbean.RegisterBean;
+import com.secretk.move.bean.returnbean.ReturnRegisterBean;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
@@ -14,44 +14,44 @@ public interface MoveMethods {
     // 和用户相关接口
    @Headers({"platform: 2","phoneModel: iphone6p"})
     @POST("encryptPolicy?policy")
-    Observable<RegisterBean> rxDemo(@Body RequestBody route);
+    Observable<ReturnRegisterBean> rxDemo(@Body RequestBody route);
 
 
     @Headers({"platform: 2","phoneModel: iphone6p"})
     @POST("kff/dynamicValidateCode/send?policy")
-    Observable<RegisterBean> rxGetVerificationCode(@Body RequestBody route);
+    Observable<ReturnRegisterBean> rxGetVerificationCode(@Body RequestBody route);
 
     @Headers({"platform: 2","phoneModel: iphone6p"})
     @POST("kff/user/register?policy")
-    Observable<RegisterBean> rxRegister(@Body RequestBody route);
+    Observable<ReturnRegisterBean> rxRegister(@Body RequestBody route);
 
     @Headers({"platform: 2","phoneModel: iphone6p"})
     @POST("kff/user/login?policy")
-    Observable<RegisterBean> rxLogin(@Body RequestBody route);
+    Observable<ReturnRegisterBean> rxLogin(@Body RequestBody route);
     @Headers({"platform: 2","phoneModel: iphone6p"})
     @POST("kff/user/forgetPassword?policy")
-    Observable<RegisterBean> rxForgetPassword(@Body RequestBody route);
+    Observable<ReturnRegisterBean> rxForgetPassword(@Body RequestBody route);
     //Todo   上传头像先空着
 
     @Headers({"platform: 2","phoneModel: iphone6p"})
     @POST("kff/user/myFollowList?policy")
-    Observable<RegisterBean> rxMyFollowList(@Body RequestBody route);
+    Observable<ReturnRegisterBean> rxMyFollowList(@Body RequestBody route);
 
     @Headers({"platform: 2","phoneModel: iphone6p"})
     @POST("kff/user/myCollectList?policy")
-    Observable<RegisterBean> rxMyCollectList(@Body RequestBody route);
+    Observable<ReturnRegisterBean> rxMyCollectList(@Body RequestBody route);
 
     @Headers({"platform: 2","phoneModel: iphone6p"})
     @POST("kff/user/myTokenRecordsList?policy")
-    Observable<RegisterBean> rxMyTokenRecordsList(@Body RequestBody route);
+    Observable<ReturnRegisterBean> rxMyTokenRecordsList(@Body RequestBody route);
 
     // 和首页相关接口
     @Headers({"platform: 2","phoneModel: iphone6p"})
     @POST("kff/home/recommendList?policy")
-    Observable<RegisterBean> rxHomeRecommendList(@Body RequestBody route);
+    Observable<ReturnRegisterBean> rxHomeRecommendList(@Body RequestBody route);
     @Headers({"platform: 2","phoneModel: iphone6p"})
     @POST("kff/home/followList?policy")
-    Observable<RegisterBean> rxHomeFollowList(@Body RequestBody route);
+    Observable<ReturnRegisterBean> rxHomeFollowList(@Body RequestBody route);
 
 
 }

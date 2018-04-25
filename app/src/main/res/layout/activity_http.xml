@@ -17,4 +17,9 @@
         android:layout_height="wrap_content"
         android:onClick="rxGetVerificationCode"
         android:text="rxGetVerificationCode" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="jyhLogin"
+        android:text="jyhLogin" />
 </GridLayout>
