@@ -17,7 +17,6 @@
        android:layout_width="@dimen/dp_160"
        android:layout_height="@dimen/dp_160"
        android:visibility="gone"
-
        android:layout_centerInParent="true"
        app:matProg_barColor="@color/app_background"
        app:matProg_progressIndeterminate="true" />

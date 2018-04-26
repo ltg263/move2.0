@@ -1,6 +1,6 @@
 package com.secretk.move.presenter.impl;
 
-import com.secretk.move.bean.returnbean.MainRfBean;
+import com.secretk.move.bean.MainRfBean;
 import com.secretk.move.contract.MainRfContract;
 import com.secretk.move.interactor.MainRfInteractorImpl;
 import com.secretk.move.utils.NetUtil;

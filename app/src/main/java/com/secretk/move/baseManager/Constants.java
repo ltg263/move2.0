@@ -51,5 +51,7 @@ public interface Constants {
     String MAIN_RECOMMEND=BASE_URL+"/kff/home/recommendList";
     //首页关注
     String MAIN_FOLLOW=BASE_URL+" /kff/home/followList";
+    //青天榜
+    String MAIN_BLUE_SKY=BASE_URL+"/kff/home/projectRankList";
 
 }

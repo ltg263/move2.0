@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
  * Created by zc on 2018/4/14.
  */
 
-public class MainFollowFragmentRecyclerHolder extends RecyclerViewBaseHolder {
+public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
 
     @BindView(R.id.tvscore)
     public TextView tvscore;
@@ -22,7 +22,7 @@ public class MainFollowFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     public ImageView img_organization;
     @BindView(R.id.img_head)
     public ImageView img_head;
-    public MainFollowFragmentRecyclerHolder(View itemView) {
+    public MainRfFragmentRecyclerHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }

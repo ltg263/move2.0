@@ -4,7 +4,7 @@ import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.returnbean.MainRfBean;
+import com.secretk.move.bean.MainRfBean;
 import com.secretk.move.contract.MainRfContract;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;

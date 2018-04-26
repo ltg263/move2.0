@@ -1,4 +1,4 @@
-package com.secretk.move.bean.returnbean;
+package com.secretk.move.bean;
 
 import com.secretk.move.bean.base.BaseRes;
 

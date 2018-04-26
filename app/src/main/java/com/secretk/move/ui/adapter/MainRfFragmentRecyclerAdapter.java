@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
-import com.secretk.move.bean.returnbean.MainRfBean;
+import com.secretk.move.bean.MainRfBean;
 import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.holder.MainFollowFragmentRecyclerHolder;
+import com.secretk.move.ui.holder.MainRfFragmentRecyclerHolder;
 import com.secretk.move.utils.GlideUtils;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.List;
  * Created by zc on 2018/4/14.
  */
 
-public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainFollowFragmentRecyclerHolder> {
+public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFragmentRecyclerHolder> {
     private List<MainRfBean.Rows> list = new ArrayList<MainRfBean.Rows>();
     private ItemClickListener mListener;
 
@@ -27,14 +27,14 @@ public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainFoll
     }
 
     @Override
-    public MainFollowFragmentRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MainRfFragmentRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_main_rf_recycler_item, parent, false);
-        MainFollowFragmentRecyclerHolder holder = new MainFollowFragmentRecyclerHolder(view);
+        MainRfFragmentRecyclerHolder holder = new MainRfFragmentRecyclerHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(MainFollowFragmentRecyclerHolder holder, int position) {
+    public void onBindViewHolder(MainRfFragmentRecyclerHolder holder, int position) {
 
         String currenBean = "你好";
         holder.setItemListener(mListener);

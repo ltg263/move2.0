@@ -2,7 +2,7 @@ package com.secretk.move.contract;
 
 import com.secretk.move.base.BasePresenter;
 import com.secretk.move.base.BaseView;
-import com.secretk.move.bean.returnbean.MainRfBean;
+import com.secretk.move.bean.MainRfBean;
 
 import java.util.List;
 

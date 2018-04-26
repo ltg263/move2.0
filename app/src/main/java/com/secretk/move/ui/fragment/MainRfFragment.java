@@ -7,7 +7,7 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.secretk.move.R;
 import com.secretk.move.base.LazyFragment;
-import com.secretk.move.bean.returnbean.MainRfBean;
+import com.secretk.move.bean.MainRfBean;
 import com.secretk.move.contract.MainRfContract;
 import com.secretk.move.customview.ProgressWheel;
 import com.secretk.move.listener.ItemClickListener;
