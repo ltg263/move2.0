@@ -21,7 +21,7 @@ import butterknife.BindView;
  *
  * 主页fragment 下面还有3个子fragment
  * 分别是
- * MainRecommendFragment
+ * MainRfFragment
  * MainFollowFragment
  * MainBlueSkyFragment
  */

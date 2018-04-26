@@ -27,7 +27,7 @@ public class MainBlueSkyFragmentRecyclerAdapter extends RecyclerView.Adapter<Mai
 
     @Override
     public MainFollowFragmentRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_main_follow_recycler_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_main_rf_recycler_item, parent, false);
         MainFollowFragmentRecyclerHolder holder = new MainFollowFragmentRecyclerHolder(view);
         return holder;
     }

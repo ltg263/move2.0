@@ -6,13 +6,10 @@ import android.view.View;
 
 import com.secretk.move.R;
 import com.secretk.move.base.LazyFragment;
-import com.secretk.move.bean.TopicBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.MainBlueSkyFragmentRecyclerAdapter;
-import com.secretk.move.ui.adapter.MainFollowFragmentRecyclerAdapter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;

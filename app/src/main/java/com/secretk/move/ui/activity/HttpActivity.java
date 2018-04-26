@@ -13,6 +13,7 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.DynamicValidateCodeSend;
 import com.secretk.move.bean.postbean.PostRegisterBean;
+import com.secretk.move.bean.returnbean.MainRfBean;
 import com.secretk.move.bean.returnbean.ReturnRegisterBean;
 import com.secretk.move.http.Network;
 import com.secretk.move.utils.AESUtil;
@@ -86,6 +87,26 @@ public class HttpActivity extends AppCompatActivity {
     }
     public void jyhLogin(View view) throws Exception{
       String token=  SharedUtils.singleton().get("token","");
-      ToastUtils.getInstance().show(token);
+
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+            node.put("pageIndex", 1);
+            node.put("pageSize", 10);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.MAIN_RECOMMEND)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, MainRfBean.class, new HttpCallBackImpl<MainRfBean>() {
+            @Override
+            public void onCompleted(MainRfBean mainRecommendBean) {
+                int code=mainRecommendBean.getCode();
+                String msg=mainRecommendBean.getMsg();
+            }
+        });
     }
 }
