@@ -35,4 +35,15 @@
     <string name="confirm">确认</string>
     <string name="new_password">新密码</string>
 
+    <!--用户界面-->
+    <string name="review">测评</string>
+    <string name="assessment_agenc">测评机构</string>
+    <string name="discuss">讨论</string>
+    <string name="article">文章</string>
+    <string name="answer">回答</string>
+    <string name="like">赞</string>
+    <string name="fan">粉丝</string>
+    <string name="my_home_page">我的主页</string>
+    <string name="the_home_page_of">的主页</string>
+
 </resources>

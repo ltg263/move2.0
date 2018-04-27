@@ -16,7 +16,12 @@
         android:theme="@style/AppTheme.ActionBar"
         app:layout_scrollFlags="scroll|enterAlways"
         app:popupTheme="@style/AppTheme.PopupOverlay">
-
+        <ImageView
+            android:id="@+id/iv_head_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
         <TextView
             android:id="@+id/tv_head_title"
             android:layout_width="wrap_content"
