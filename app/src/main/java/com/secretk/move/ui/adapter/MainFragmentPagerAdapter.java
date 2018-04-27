@@ -4,7 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.secretk.move.ui.fragment.MainPagerFragmentsFactory;
+import com.secretk.move.ui.fragment.MainBlueSkyFragment;
+import com.secretk.move.ui.fragment.MainRfFragment;
 
 /**
  * Created by zc on 2018/4/6.
@@ -18,7 +19,12 @@ public class MainFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return MainPagerFragmentsFactory.getFragment(position);
+        if (position==2){
+            return new MainBlueSkyFragment();
+        }
+        return MainRfFragment.newInstance(position);
+//       return MainPagerFragmentsFactory.getFragment(position);
+
     }
 
     @Override

@@ -5,14 +5,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.secretk.move.R;
+import com.secretk.move.apiService.HttpCallBackImpl;
+import com.secretk.move.apiService.RetrofitUtil;
+import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
-import com.secretk.move.bean.TopicBean;
+import com.secretk.move.baseManager.Constants;
+import com.secretk.move.bean.BlueSkyBean;
+import com.secretk.move.customview.ProgressWheel;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.MainBlueSkyFragmentRecyclerAdapter;
-import com.secretk.move.ui.adapter.MainFollowFragmentRecyclerAdapter;
+import com.secretk.move.utils.MD5;
+import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.SharedUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,6 +33,8 @@ import butterknife.BindView;
 public class MainBlueSkyFragment extends LazyFragment implements ItemClickListener {
     @BindView(R.id.recycler)
     RecyclerView recycler;
+    @BindView(R.id.progress_bar)
+    ProgressWheel progress_bar;
     private LinearLayoutManager layoutManager;
     private MainBlueSkyFragmentRecyclerAdapter adapter;
 
@@ -44,10 +55,30 @@ public class MainBlueSkyFragment extends LazyFragment implements ItemClickListen
 
     @Override
     public void onFirstUserVisible() {
-        List<String> list = new ArrayList<String>();
-        list.add("0");
-        list.add("1");
-        adapter.setData(list);
+        progress_bar.setVisibility(View.VISIBLE);
+        String token = SharedUtils.singleton().get("token", "");
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.MAIN_BLUE_SKY)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, BlueSkyBean.class, new HttpCallBackImpl<BlueSkyBean>() {
+            @Override
+            public void onCompleted(BlueSkyBean bean) {
+                List<BlueSkyBean.RankList> list = bean.getData().getRankList();
+                list.add(new BlueSkyBean.RankList());
+                list.add(new BlueSkyBean.RankList());
+                list.add(new BlueSkyBean.RankList());
+                adapter.setData(list);
+                progress_bar.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override

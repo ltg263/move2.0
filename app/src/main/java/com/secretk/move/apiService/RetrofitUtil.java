@@ -47,6 +47,7 @@ public class RetrofitUtil {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // 使用RxJava作为回调适配器
                 .addConverterFactory(ScalarsConverterFactory.create()) // 使用String作为数据转换器
                 .addConverterFactory(GsonConverterFactory.create()) // 使用Gson作为数据转换器
+
                 .build();
     }
     public static OkHttpClient genericClient() {

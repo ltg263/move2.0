@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
+import com.secretk.move.bean.BlueSkyBean;
 import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.holder.MainFollowFragmentRecyclerHolder;
+
+import com.secretk.move.ui.holder.MainBlueSkyFragmentHolder;
 import com.secretk.move.utils.GlideUtils;
 
 import java.util.ArrayList;
@@ -17,8 +19,8 @@ import java.util.List;
  * Created by zc on 2018/4/14.
  */
 
-public class MainBlueSkyFragmentRecyclerAdapter extends RecyclerView.Adapter<MainFollowFragmentRecyclerHolder> {
-    private List<String> list = new ArrayList<String>();
+public class MainBlueSkyFragmentRecyclerAdapter extends RecyclerView.Adapter<MainBlueSkyFragmentHolder> {
+    private List<BlueSkyBean.RankList> list = new ArrayList<BlueSkyBean.RankList>();
     private ItemClickListener mListener;
 
     public void setItemListener(ItemClickListener mListener) {
@@ -26,20 +28,16 @@ public class MainBlueSkyFragmentRecyclerAdapter extends RecyclerView.Adapter<Mai
     }
 
     @Override
-    public MainFollowFragmentRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_main_follow_recycler_item, parent, false);
-        MainFollowFragmentRecyclerHolder holder = new MainFollowFragmentRecyclerHolder(view);
+    public MainBlueSkyFragmentHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_main_bluesky_recycler_item, parent, false);
+        MainBlueSkyFragmentHolder holder = new MainBlueSkyFragmentHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(MainFollowFragmentRecyclerHolder holder, int position) {
-        String currenBean = list.get(position);
+    public void onBindViewHolder(MainBlueSkyFragmentHolder holder, int position) {
         holder.setItemListener(mListener);
-        holder.tvscore.setText(currenBean);
         GlideUtils.loadCircle(holder.img_head, R.drawable.account_portrait);
-        GlideUtils.loadCircle(holder.img_organization, R.drawable.account_portrait);
-
     }
 
     @Override
@@ -50,12 +48,9 @@ public class MainBlueSkyFragmentRecyclerAdapter extends RecyclerView.Adapter<Mai
         return list.size();
     }
 
-    public void setData(List<String> list) {
+    public void setData(List<BlueSkyBean.RankList> list) {
         this.list = list;
         notifyDataSetChanged();
     }
 
-    public List<String> getData() {
-        return list;
-    }
 }
