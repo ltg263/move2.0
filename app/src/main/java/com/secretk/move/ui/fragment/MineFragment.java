@@ -9,10 +9,9 @@ import com.secretk.move.bean.PersonInfors;
 import com.secretk.move.presenter.MineFragmentPresenter;
 import com.secretk.move.presenter.impl.MineFragmentPresenterImpl;
 import com.secretk.move.ui.activity.HomeActivity;
-import com.secretk.move.ui.activity.LoginActivity;
+import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.FragmentMineView;
 
 import butterknife.BindView;
@@ -46,7 +45,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
     @OnClick(R.id.fragment_mine_account_portrait)
     public void fragment_mine_account_portrait() {
-        Intent intent = new Intent(getContext(), LoginActivity.class);
+        Intent intent = new Intent(getContext(), LoginHomeActivity.class);
         startActivity(intent);
     }
 

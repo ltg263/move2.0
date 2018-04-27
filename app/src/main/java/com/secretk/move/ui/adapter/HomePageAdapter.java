@@ -2,16 +2,19 @@ package com.secretk.move.ui.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by WZJSB-01 on 2017/12/5.
+ * 作者： litongge
+ * 时间： 2018/4/27 19:50
+ * 邮箱；ltg263@126.com
+ * 描述：我的主页 vp Adapter
  */
 
-public class HomePageAdapter extends FragmentPagerAdapter {
+public class HomePageAdapter extends FragmentStatePagerAdapter {
     private final List<Fragment> mFragments = new ArrayList<>();
     private final List<String> mFragmentTitles = new ArrayList<>();
 

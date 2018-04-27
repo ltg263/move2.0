@@ -6,22 +6,27 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
+import com.secretk.move.bean.HomeReviewBase;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.holder.HomeRecommendHolder;
-import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by zc on 2018/4/14.
+ * 作者： litongge
+ * 时间： 2018/4/27 19:51
+ * 邮箱；ltg263@126.com
+ * 描述：我的主页 列表 item
  */
 
 public class HomeRecommendAdapter extends RecyclerView.Adapter<HomeRecommendHolder> {
-    private List<String> list = new ArrayList<String>();
-    private ItemClickListener mListener;
 
-    public void setItemListener(ItemClickListener mListener) {
+
+    private List<HomeReviewBase> lists = new ArrayList<>();
+    private ItemClickListener mListener;
+    public void setItemListener(ItemClickListener mListener){
         this.mListener = mListener;
     }
 
@@ -34,28 +39,21 @@ public class HomeRecommendAdapter extends RecyclerView.Adapter<HomeRecommendHold
 
     @Override
     public void onBindViewHolder(HomeRecommendHolder holder, int position) {
-        String currenBean = list.get(position);
+        holder.refresh(position, lists);
         holder.setItemListener(mListener);
-        holder.tvscore.setText(currenBean);
-        GlideUtils.loadCircle(holder.img_head, R.drawable.account_portrait);
-        GlideUtils.loadCircle(holder.img_organization, R.drawable.account_portrait);
-
     }
 
     @Override
     public int getItemCount() {
-        if (list == null) {
-            return 0;
-        }
-        return list.size();
+        return lists.size();
     }
 
-    public void setData(List<String> list) {
-        this.list = list;
+    public void setData(List<HomeReviewBase> list) {
+        this.lists = list;
         notifyDataSetChanged();
     }
 
-    public List<String> getData() {
-        return list;
+    public List<HomeReviewBase> getData() {
+        return lists;
     }
 }

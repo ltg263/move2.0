@@ -119,10 +119,10 @@ public class RetrofitUtil {
                          @Override
                          public void onResponse(Call call, retrofit2.Response response) {
                              ResponseBody body = (ResponseBody) response.body();
-                             InputStream is = body.byteStream();
+                            // InputStream is = body.byteStream();
                              LogUtil.w("************************************************************************************");
                              LogUtil.i("request " + response.raw().toString());
-                             if (body != null && is != null) {
+                             if (body != null ) {
                                  String jsonStr = new String(read(body.byteStream()), Charset.forName("UTF-8"));
                                  LogUtil.w("jsonStr:"+jsonStr);
                                  try {

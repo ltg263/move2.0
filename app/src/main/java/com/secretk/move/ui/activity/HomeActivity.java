@@ -31,11 +31,10 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeUserIndexBean;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.ui.adapter.HomePageAdapter;
-import com.secretk.move.ui.fragment.HomeArticleFragmen;
-import com.secretk.move.ui.fragment.HomeDiscussFragmen;
-import com.secretk.move.ui.fragment.HomeReviewFragmen;
+import com.secretk.move.ui.fragment.HomeArticleFragment;
+import com.secretk.move.ui.fragment.HomeDiscussFragment;
+import com.secretk.move.ui.fragment.HomeReviewFragment;
 import com.secretk.move.utils.GlideUtils;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StatusBarUtil;
@@ -49,7 +48,13 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * Created by WZJSB-01 on 2017/12/5.
+ * 作者： litongge
+ * 时间： 2018/4/27 13:41
+ * 邮箱；ltg263@126.com
+ * 描述：我的主页 加载三个Fragment：
+ *          HomeReviewFragment      测评
+ *          HomeDiscussFragment     讨论
+ *          HomeArticleFragment     文章
  */
 
 public class HomeActivity extends BaseActivity {
@@ -99,13 +104,13 @@ public class HomeActivity extends BaseActivity {
         setSmartRefreshStyle();
         GlideUtils.loadCircle(ivHead, R.mipmap.ic_launcher);
         HomePageAdapter adapter = new HomePageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new HomeReviewFragmen(), getString(R.string.review));
-        adapter.addFragment(new HomeDiscussFragmen(), getString(R.string.discuss));
-        adapter.addFragment(new HomeArticleFragmen(), getString(R.string.article));
+        adapter.addFragment(new HomeReviewFragment(), getString(R.string.review));
+        adapter.addFragment(new HomeDiscussFragment(), getString(R.string.discuss));
+        adapter.addFragment(new HomeArticleFragment(), getString(R.string.article));
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
-        tabs.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorPrimary));
         viewPager.setCurrentItem(1);
+        viewPager.setOffscreenPageLimit(3);
         tabs.post(new Runnable() {
             @Override
             public void run() {
@@ -155,14 +160,12 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onHeaderPulling(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
                 mOffset = offset / 2;
-                LogUtil.w("++++++++++++++++++++++++++++++++++++onHeaderPulling:" + mOffset);
             }
 
             @Override
             public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
                 mOffset = offset / 2;
                 //iv_parallax.setTranslationY(mOffset);
-                LogUtil.w("------------------------------onHeaderReleasing:" + mOffset);
             }
         });
 
@@ -170,10 +173,6 @@ public class HomeActivity extends BaseActivity {
 
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                LogUtil.w("------------------------------Math.abs(verticalOffset):" + Math.abs(verticalOffset));
-                LogUtil.w("------------------------------DensityUtil.dp2px(200):" + DensityUtil.dp2px(200));
-                LogUtil.w("------------------------------mHeadView.getHeight():" + mHeadView.getHeight());
-                LogUtil.w("------------------------------DensityUtil.dp2px(200)-mHeadView.getHeight():" + (DensityUtil.dp2px(200)-mHeadView.getHeight()));
                 //if (Math.abs(verticalOffset) == DensityUtil.dp2px(200)-mHeadView.getHeight()) {//关闭
                 if (Math.abs(verticalOffset) > 200) {//关闭
                     mHeadView.getImageView().setVisibility(View.VISIBLE);

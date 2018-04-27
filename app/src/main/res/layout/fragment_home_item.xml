@@ -8,6 +8,7 @@
         android:layout_height="@dimen/dp_5"
         android:background="#dddddd" />
     <RelativeLayout
+        android:id="@+id/rl_discuss"
         android:background="#fff"
         android:visibility="gone"
         android:layout_width="match_parent"
@@ -29,6 +30,7 @@
                 android:layout_height="20dp" />
 
             <TextView
+                android:id="@+id/tv_head"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_5"
@@ -56,9 +58,10 @@
             android:scaleType="centerCrop" />
 
         <TextView
-            android:id="@+id/tvName"
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#333333"
             android:layout_marginLeft="@dimen/dp_15"
             android:layout_toRightOf="@id/img_organization"
             android:text="AOS/柚子"
@@ -99,6 +102,7 @@
         android:paddingRight="@dimen/dp_15">
 
         <TextView
+            android:id="@+id/tv_head_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ALL-团队测评"
@@ -106,7 +110,7 @@
             android:textSize="@dimen/sp_16" />
 
         <TextView
-            android:id="@+id/tvscore"
+            android:id="@+id/tv_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -119,7 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/tvscore"
+            android:layout_below="@+id/tv_score"
             android:layout_marginTop="@dimen/dp_2"
             android:text="以太坊系统自身带有一种叫做以太币（Ether）的数字货币。以太币和著名的数字货币比特币（Bitcoin）..."
             android:textColor="#7e7d7e"
@@ -136,7 +140,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_5"
-        android:background="#dddddd" />
+        android:background="@color/cut_off_rule" />
     <LinearLayout
         android:background="#ffffff"
         android:layout_width="match_parent"
@@ -144,24 +148,29 @@
         android:gravity="right"
         android:orientation="horizontal"
         android:padding="@dimen/dp_15">
+
         <ImageView
+            android:id="@+id/iv_assist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/upvote_selected" />
+            android:background="@drawable/selector_assist_img" />
         <TextView
+            android:id="@+id/tv_assist"
             android:layout_marginLeft="@dimen/dp_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="18"
-            android:textColor="@color/app_background"
+            android:textColor="@drawable/selector_assist_text"
             android:textSize="@dimen/sp_12" />
         <ImageView
+            android:id="@+id/iv_comment"
             android:layout_marginLeft="@dimen/dp_15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/comment" />
 
         <TextView
+            android:id="@+id/tv_comment"
             android:layout_marginLeft="@dimen/dp_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

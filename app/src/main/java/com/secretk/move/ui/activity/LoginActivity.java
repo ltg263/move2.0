@@ -15,6 +15,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.UserLoginInfo;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
@@ -113,6 +114,7 @@ public class LoginActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        LogUtil.w("node:"+node.toString());
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.USER_LOGIN)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))

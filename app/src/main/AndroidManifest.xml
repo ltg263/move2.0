@@ -24,6 +24,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.activity.LoginHomeActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.LoginActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
