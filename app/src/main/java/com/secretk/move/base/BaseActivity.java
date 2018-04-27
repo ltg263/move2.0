@@ -17,8 +17,10 @@ import java.util.List;
 import butterknife.ButterKnife;
 
 /**
- *
- * Created by zc on 2018/4/5.
+ * 作者： litongge
+ * 时间： 2018/4/27 13:40
+ * 邮箱；ltg263@126.com
+ * 描述：基类的activity
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
