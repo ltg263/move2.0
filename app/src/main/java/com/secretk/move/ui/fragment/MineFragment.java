@@ -8,8 +8,10 @@ import com.secretk.move.base.LazyFragment;
 import com.secretk.move.bean.PersonInfors;
 import com.secretk.move.presenter.MineFragmentPresenter;
 import com.secretk.move.presenter.impl.MineFragmentPresenterImpl;
+import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.activity.LoginActivity;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.FragmentMineView;
 
@@ -50,7 +52,8 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
     @OnClick(R.id.fragment_mine_img_set)
     public void fragment_mine_img_set() {
-        ToastUtils.getInstance().show("img_set");
+        IntentUtil.startActivity(HomeActivity.class);
+        //ToastUtils.getInstance().show("img_set");
     }
 
     @Override

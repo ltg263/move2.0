@@ -8,10 +8,10 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.secretk.move.R;
-
 
 /**
  * 通用的标题栏
@@ -22,6 +22,7 @@ public class AppBarHeadView extends FrameLayout {
     protected View mAppBarLayout;
     protected Toolbar mToolbar;
     protected TextView mTitle;
+    protected ImageView mImg;
     protected String setText;
     public boolean isHeadBackShow() {
         return headBackShow;
@@ -64,9 +65,10 @@ public class AppBarHeadView extends FrameLayout {
     protected void initView(Context context, AttributeSet attrs) {
         mAppBarLayout =  LayoutInflater.from(context).inflate(initAppBar(), this);
         if (mAppBarLayout != null) {
-            mToolbar = (Toolbar) mAppBarLayout.findViewById(R.id.head_toolbar);
+            mToolbar =  mAppBarLayout.findViewById(R.id.head_toolbar);
             mToolbar.setTitle("");
-            mTitle = (TextView) mAppBarLayout.findViewById(R.id.tv_head_title);
+            mTitle = mAppBarLayout.findViewById(R.id.tv_head_title);
+            mImg = mAppBarLayout.findViewById(R.id.iv_head_img);
             mTitle.setText(setText);
         }
     }
@@ -89,4 +91,11 @@ public class AppBarHeadView extends FrameLayout {
     public int getTitleHeight() {
         return mTitle.getHeight();
     }
+    public TextView getTextView(){
+        return mTitle;
+    }
+    public ImageView getImageView(){
+        return mImg;
+    }
+
 }

@@ -17,4 +17,8 @@ public class GlideUtils {
         Glide.with(MoveApplication.getContext()).applyDefaultRequestOptions(new RequestOptions().transform(new GlideCircleTransform()).placeholder(R.drawable.account_portrait).error(R.drawable.account_portrait)).
                 load(where).into(img);
     }
+    public static void loadCircleUrl(ImageView img, String where) {
+        Glide.with(MoveApplication.getContext()).applyDefaultRequestOptions(new RequestOptions().transform(new GlideCircleTransform()).placeholder(R.drawable.account_portrait).error(R.drawable.account_portrait)).
+                load(where).into(img);
+    }
 }
