@@ -36,6 +36,9 @@
             android:name=".ui.activity.VerificationLoginActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.HomeActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.SearchActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity android:name=".ui.activity.AddLabelActivity" />
