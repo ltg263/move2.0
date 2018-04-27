@@ -1,6 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 android {
+    //gradlew assembleRelease
+    signingConfigs {
+        move {
+            keyAlias 'move'
+            keyPassword 'move20180416'
+            storeFile file('F:/workspace/androidStudio/moveFind/move/move/word/move.jks')
+            storePassword 'move20180416'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.secretk.move"
@@ -14,6 +23,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.move
         }
     }
 }
@@ -48,6 +58,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
     //greenDao
     implementation 'org.greenrobot:greendao:3.2.2'
+    //下拉刷新框架
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
 
     //recyclerview
     compile 'com.jcodecraeer:xrecyclerview:1.2.7'
