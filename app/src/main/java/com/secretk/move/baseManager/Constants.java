@@ -35,15 +35,17 @@ public interface Constants {
     String BASE_URL = "http://47.98.197.101/tzg-rest/";
 
     //发送验证码通用接口
-    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL+"/kff/dynamicValidateCode/send";
+    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL+"kff/dynamicValidateCode/send";
     //校验验证码接口。
-    String DYNAMIC_VALIDATE_CODE_VERIFY = BASE_URL+"/kff/dynamicValidateCode/verify";
+    String DYNAMIC_VALIDATE_CODE_VERIFY = BASE_URL+"kff/dynamicValidateCode/verify";
     //验证手机号是否已经存在
-    String PHONE_AVAILABLE = BASE_URL+"/kff/user/register/phoneAvailable";
+    String PHONE_AVAILABLE = BASE_URL+"kff/user/register/phoneAvailable";
     //用户注册
-    String USER_REGISTER = BASE_URL+"/kff/user/register";
+    String USER_REGISTER = BASE_URL+"kff/user/register";
     //用户登录
-    String USER_LOGIN = BASE_URL+"/kff/user/login";
+    String USER_LOGIN = BASE_URL+"kff/user/login";
     //用户登录
-    String FORGET_PASSWORD = BASE_URL+"/kff/user/forgetPassword";
+    String FORGET_PASSWORD = BASE_URL+"kff/user/forgetPassword";
+    //用户主页
+    String USERHOME_INDEX = "kff/userhome/index";
 }
