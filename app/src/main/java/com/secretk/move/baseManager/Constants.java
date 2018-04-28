@@ -25,6 +25,10 @@ public interface Constants {
      *  登录的状态
      */
     String IS_LOGIN_KEY = "isLogin";
+    /**
+     * 分页单次请求数量
+     */
+        int PAGE_SIZE = 10;
 
     /**apk 在本地的存放地址*/
     String APKPATH = MoveApplication.getContext().getExternalFilesDir(null).getAbsolutePath() + "/move.apk";

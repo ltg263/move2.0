@@ -13,7 +13,9 @@ import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeReviewBase;
 import com.secretk.move.listener.ItemClickListener;
+import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.adapter.HomeRecommendAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -42,7 +44,7 @@ public class HomeArticleFragment extends LazyFragment  implements ItemClickListe
     private HomeRecommendAdapter adapter;
     @Override
     public int setFragmentView() {
-        return R.layout.home_viewpager_layout;
+        return R.layout.fragment_home;
     }
 
     @Override
@@ -91,6 +93,7 @@ public class HomeArticleFragment extends LazyFragment  implements ItemClickListe
 
     @Override
     public void onItemClick(View view, int postion) {
+        IntentUtil.startActivity(ProjectActivity.class);
         Toast.makeText(getActivity(), "文章界面：我是第："+postion, Toast.LENGTH_SHORT).show();
     }
 

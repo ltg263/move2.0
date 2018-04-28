@@ -14,6 +14,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeReviewBase;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.HomeRecommendAdapter;
+import com.secretk.move.ui.adapter.ProjectRecommendAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -30,19 +31,19 @@ import butterknife.BindView;
  * 作者： litongge
  * 时间： 2018/4/27 15:03
  * 邮箱；ltg263@126.com
- * 描述：我的主页--测评
+ * 描述：项目主页--测评
  */
 
-public class HomeReviewFragment extends LazyFragment implements ItemClickListener {
+public class ProjectReviewFragment extends LazyFragment implements ItemClickListener {
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
 
     private LinearLayoutManager layoutManager;
-    private HomeRecommendAdapter adapter;
+    private ProjectRecommendAdapter adapter;
     int pageIndex = 1;
     @Override
     public int setFragmentView() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_project_review;
     }
 
     @Override
@@ -50,7 +51,7 @@ public class HomeReviewFragment extends LazyFragment implements ItemClickListene
         layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvReview.setLayoutManager(layoutManager);
-        adapter = new HomeRecommendAdapter();
+        adapter = new ProjectRecommendAdapter();
         rvReview.setAdapter(adapter);
         adapter.setItemListener(this);
     }

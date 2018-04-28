@@ -41,7 +41,7 @@ public class HomeDiscussFragment extends LazyFragment  implements ItemClickListe
     private HomeRecommendAdapter adapter;
     @Override
     public int setFragmentView() {
-        return R.layout.home_viewpager_layout;
+        return R.layout.fragment_home;
     }
 
     @Override

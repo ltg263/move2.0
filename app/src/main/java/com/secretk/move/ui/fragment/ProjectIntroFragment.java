@@ -13,7 +13,7 @@ import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeReviewBase;
 import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.adapter.HomeRecommendAdapter;
+import com.secretk.move.ui.adapter.ProjectIntroAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -28,21 +28,25 @@ import butterknife.BindView;
 
 /**
  * 作者： litongge
- * 时间： 2018/4/27 15:03
+ * 时间： 2018/4/27 15:04
  * 邮箱；ltg263@126.com
- * 描述：我的主页--测评
+ * 描述：项目主页--简介
  */
 
-public class HomeReviewFragment extends LazyFragment implements ItemClickListener {
+
+public class ProjectIntroFragment extends LazyFragment  implements ItemClickListener {
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
+    @BindView(R.id.rv_review1)
+    RecyclerView rvReview1;
 
     private LinearLayoutManager layoutManager;
-    private HomeRecommendAdapter adapter;
-    int pageIndex = 1;
+    private LinearLayoutManager layoutManager1;
+    private ProjectIntroAdapter adapter;
+
     @Override
     public int setFragmentView() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_project_intro;
     }
 
     @Override
@@ -50,8 +54,12 @@ public class HomeReviewFragment extends LazyFragment implements ItemClickListene
         layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvReview.setLayoutManager(layoutManager);
-        adapter = new HomeRecommendAdapter();
+        layoutManager1 = new LinearLayoutManager(getContext());
+        layoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
+        rvReview1.setLayoutManager(layoutManager1);
+        adapter = new ProjectIntroAdapter();
         rvReview.setAdapter(adapter);
+        rvReview1.setAdapter(adapter);
         adapter.setItemListener(this);
     }
 
@@ -62,29 +70,25 @@ public class HomeReviewFragment extends LazyFragment implements ItemClickListene
         try {
             node.put("token", token);
             //node.put("userId", token);
-            node.put("pageIndex", pageIndex);
-            node.put("pageSize", Constants.PAGE_SIZE);
+            node.put("pageIndex", 1);
+            node.put("pageSize", 10);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.USERHOME_EVALUATION_LIST)
+                .url(Constants.USERHOME_ARTICLE_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
         RetrofitUtil.request(params, HomeReviewBase.class, new HttpCallBackImpl<HomeReviewBase>() {
             @Override
             public void onCompleted(HomeReviewBase bean) {
-                HomeReviewBase.DataBean.EvaluationsBean evaluations = bean.getData().getEvaluations();
-//                if(evaluations.getCurPageNum()==evaluations.getPageSize()){
-//                    Toast.makeText(getActivity(), "已经没有了更多禁止上啦", Toast.LENGTH_SHORT).show()
-//                }
                 List<HomeReviewBase> list = new ArrayList<>();
                 HomeReviewBase base = new HomeReviewBase();
                 base.setDiyi("张三");
                 base.setEr("李四");
                 base.setSan("周五");
-                base.setIndex(0);
+                base.setIndex(2);
                 list.add(base);
                 list.add(base);
                 list.add(base);
@@ -93,13 +97,20 @@ public class HomeReviewFragment extends LazyFragment implements ItemClickListene
         });
     }
 
+
+
     @Override
     public void onItemClick(View view, int postion) {
-        Toast.makeText(getActivity(), "评测揭秘那  我是第："+postion, Toast.LENGTH_SHORT).show();
+        if(view.getId()==R.id.tvFollws){
+        }else{
+            Toast.makeText(getActivity(), "进入下一个界面", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
     public void onItemLongClick(View view, int postion) {
 
     }
+
 }

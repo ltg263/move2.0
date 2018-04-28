@@ -35,15 +35,39 @@
     <string name="confirm">确认</string>
     <string name="new_password">新密码</string>
 
-    <!--用户界面-->
+    <!--用户 @ 项目 界面-->
+    <string name="intro">简介</string>
     <string name="review">测评</string>
-    <string name="assessment_agenc">测评机构</string>
     <string name="discuss">讨论</string>
     <string name="article">文章</string>
+    <string name="assessment_agenc">测评机构</string>
     <string name="answer">回答</string>
     <string name="like">赞</string>
     <string name="fan">粉丝</string>
     <string name="my_home_page">我的主页</string>
     <string name="the_home_page_of">的主页</string>
+    <string name="grade">评分</string>
+    <string name="grade_num">评分人数</string>
+    <string name="attention">关注</string>
+
+    <string name="project_intro">项目简介</string>
+    <string name="english_name">英文名</string>
+    <string name="chinese_name">中文名</string>
+    <string name="issue_time">发行时间</string>
+    <string name="official_website">官网</string>
+    <string name="related_notion">相关概念</string>
+    <string name="white_book">白皮书</string>
+    <string name="station_agent">站长</string>
+    <string name="active_user">活跃用户</string>
+
+    <string name="comprehensive_evaluation">综合评分</string>
+    <string name="project_location">项目定位</string>
+    <string name="technical_framework">技术框架</string>
+    <string name="team_strength">团队实力</string>
+    <string name="project_schedule">项目进度</string>
+    <string name="speculative_risk">投资风险</string>
+    <string name="assessment">精选测评</string>
+    <string name="crack_down">打假</string>
+    <string name="project_was_assessed">测评了项目</string>
 
 </resources>

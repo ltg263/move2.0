@@ -50,9 +50,12 @@ public class HomeRecommendHolder extends RecyclerViewBaseHolder {
     ImageView ivComment;
     @BindView(R.id.tv_comment)
     TextView tvComment;
+    @BindView(R.id.tv_crack_down)
+    TextView tvCrackDown;
     public HomeRecommendHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        tvIsFollw.setOnClickListener(this);
     }
 
     public void refresh(final int position, List<HomeReviewBase> lists) {
@@ -63,12 +66,14 @@ public class HomeRecommendHolder extends RecyclerViewBaseHolder {
             case 0:
                 tvScore.setVisibility(View.VISIBLE);
                 tvIsFollw.setVisibility(View.GONE);
-                rlDiscuss.setVisibility(View.GONE);
+                rlDiscuss.setVisibility(View.VISIBLE);
+                tvCrackDown.setVisibility(View.VISIBLE);
                 break;
             case 1:
                 tvScore.setVisibility(View.GONE);
-                tvIsFollw.setVisibility(View.VISIBLE);
-                rlDiscuss.setVisibility(View.VISIBLE);
+                tvIsFollw.setVisibility(View.GONE);
+                rlDiscuss.setVisibility(View.GONE);
+                tvCrackDown.setVisibility(View.GONE);
                 break;
             case 2:
                 tvScore.setVisibility(View.GONE);

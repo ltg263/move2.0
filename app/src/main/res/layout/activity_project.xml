@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/background_gray"
     android:orientation="vertical">
 
@@ -20,12 +20,12 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:srlEnablePreviewInEditMode="false">
 
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/appbar"
@@ -51,59 +51,48 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/dp_10">
-
-                            <ImageView
-                                android:id="@+id/iv_head"
-                                android:layout_width="73dp"
-                                android:layout_height="73dp"
-                                android:layout_gravity="center_vertical"
-                                android:src="@mipmap/ic_launcher" />
+                            android:layout_margin="@dimen/dp_10"
+                            android:orientation="horizontal">
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dp_10"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:layout_weight="1"
                                 android:orientation="vertical">
 
-                                <RelativeLayout
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
                                     android:padding="@dimen/dp_10">
 
                                     <TextView
-                                        android:id="@+id/tv_user_name"
+                                        android:id="@+id/tv_user_name_y"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="用户名"
+                                        android:text="EOS"
+                                        android:textStyle="bold"
                                         android:textColor="@color/title_gray"
                                         android:textSize="@dimen/dp_20" />
 
                                     <TextView
-                                        android:id="@+id/tv_evaluating_sign"
+                                        android:id="@+id/tv_user_name_z"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_centerVertical="true"
-                                        android:layout_marginLeft="@dimen/dp_10"
-                                        android:layout_toRightOf="@id/tv_user_name"
-                                        android:text="@string/assessment_agenc"
-                                        android:textColor="@color/colorAccent" />
+                                        android:text="/抽子"
+                                        android:textColor="#888888"
+                                        android:textSize="@dimen/dp_15" />
 
                                     <TextView
-                                        android:id="@+id/tv_attention"
+                                        android:id="@+id/tv_issue_time"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerVertical="true"
-                                        android:background="@drawable/shape_rectangle_topic"
-                                        android:paddingBottom="@dimen/dp_3"
-                                        android:paddingLeft="@dimen/dp_10"
-                                        android:paddingRight="@dimen/dp_10"
-                                        android:paddingTop="@dimen/dp_3"
-                                        android:text="+关注"
-                                        android:textColor="@color/app_background" />
-                                </RelativeLayout>
+                                        android:layout_marginLeft="@dimen/dp_35"
+                                        android:text="发布时间：2017-08-10"
+                                        android:textColor="#aaaaaa"
+                                        android:textSize="@dimen/dp_10" />
+                                </LinearLayout>
 
                                 <View
                                     android:layout_width="match_parent"
@@ -115,28 +104,30 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/dp_10">
 
-                                    <LinearLayout
+                                    <RelativeLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:gravity="center"
-                                        android:orientation="vertical">
+                                        android:layout_weight="1">
 
                                         <TextView
-                                            android:id="@+id/tv_answer"
+                                            android:id="@+id/tv_grade"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
+                                            android:layout_centerHorizontal="true"
+                                            android:textStyle="bold"
                                             android:text="168"
-                                            android:textColor="#555555"
-                                            android:textSize="@dimen/sp_15" />
+                                            android:textColor="@color/app_background"
+                                            android:textSize="@dimen/sp_18" />
 
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@string/answer"
+                                            android:layout_below="@+id/tv_grade"
+                                            android:layout_centerHorizontal="true"
+                                            android:text="@string/grade"
                                             android:textColor="#aaaaaa"
                                             android:textSize="@dimen/sp_12" />
-                                    </LinearLayout>
+                                    </RelativeLayout>
 
                                     <LinearLayout
                                         android:layout_width="wrap_content"
@@ -151,13 +142,14 @@
                                             android:layout_height="wrap_content"
                                             android:gravity="center"
                                             android:text="116"
+                                            android:textStyle="bold"
                                             android:textColor="#555555"
                                             android:textSize="@dimen/sp_15" />
 
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@string/like"
+                                            android:text="@string/grade_num"
                                             android:textColor="#aaaaaa"
                                             android:textSize="@dimen/sp_12" />
                                     </LinearLayout>
@@ -174,18 +166,26 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="168123"
+                                            android:textStyle="bold"
                                             android:textColor="#555555"
                                             android:textSize="@dimen/sp_15" />
 
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@string/fan"
+                                            android:text="@string/attention"
                                             android:textColor="#aaaaaa"
                                             android:textSize="@dimen/sp_12" />
                                     </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/iv_head"
+                                android:layout_width="73dp"
+                                android:layout_height="73dp"
+                                android:layout_gravity="center_vertical"
+                                android:src="@mipmap/ic_launcher" />
                         </LinearLayout>
 
                         <TextView
@@ -193,16 +193,41 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_10"
-                            android:text="区块链创业者，早期投资人，专注于提供区块链创业者最好的产品和服务。"
+                            android:text="商用分布式应用设计的一款区块链操作系统。"
                             android:textColor="#888888"
                             android:textSize="@dimen/dp_15" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <Button
+                                android:id="@+id/btn_review"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/dp_35"
+                                android:layout_margin="@dimen/dp_10"
+                                android:layout_weight="1"
+                                android:text="@string/review"
+                                android:background="@drawable/shape_rectangle_topic"
+                                android:textColor="@color/app_background" />
+
+                            <Button
+                                android:id="@+id/btn_attention"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/dp_35"
+                                android:layout_margin="@dimen/dp_10"
+                                android:text="已关注"
+                                android:layout_weight="1"
+                                android:background="@drawable/shape_rectangle_topic"
+                                android:textColor="@color/app_background" />
+                        </LinearLayout>
                     </LinearLayout>
                 </android.support.design.widget.CollapsingToolbarLayout>
             </android.support.design.widget.AppBarLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -212,10 +237,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:background="@color/white"
-                    app:tabSelectedTextColor="@color/app_background"
-                    app:tabTextColor="#aeaeae"
                     app:tabIndicatorColor="@color/app_background"
-                    app:tabPaddingBottom="@dimen/dp_5" />
+                    app:tabPaddingBottom="@dimen/dp_5"
+                    app:tabSelectedTextColor="@color/app_background"
+                    app:tabTextColor="#aeaeae" />
 
                 <View
                     android:layout_width="match_parent"
@@ -231,8 +256,7 @@
                 <android.support.v4.view.ViewPager
                     android:id="@+id/view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
         </android.support.design.widget.CoordinatorLayout>

@@ -13,7 +13,7 @@ import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeReviewBase;
 import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.adapter.HomeRecommendAdapter;
+import com.secretk.move.ui.adapter.ProjectRecommendAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -28,31 +28,41 @@ import butterknife.BindView;
 
 /**
  * 作者： litongge
- * 时间： 2018/4/27 15:03
+ * 时间： 2018/4/27 15:04
  * 邮箱；ltg263@126.com
- * 描述：我的主页--测评
+ * 描述：项目主页--讨论
  */
 
-public class HomeReviewFragment extends LazyFragment implements ItemClickListener {
-    @BindView(R.id.rv_review)
-    RecyclerView rvReview;
+public class ProjectDiscussFragment extends LazyFragment  implements ItemClickListener{
+    @BindView(R.id.rv_review_hot)
+    RecyclerView rvReviewHot;
+    @BindView(R.id.rv_review_newest)
+    RecyclerView rvReviewNewest;
 
     private LinearLayoutManager layoutManager;
-    private HomeRecommendAdapter adapter;
-    int pageIndex = 1;
+    private ProjectRecommendAdapter adapter;
+    private ProjectRecommendAdapter adapterNewest;
+    private LinearLayoutManager layoutManagerNot;
+
     @Override
     public int setFragmentView() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_project_discuss;
     }
 
     @Override
     public void initViews() {
         layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvReview.setLayoutManager(layoutManager);
-        adapter = new HomeRecommendAdapter();
-        rvReview.setAdapter(adapter);
+        layoutManagerNot = new LinearLayoutManager(getContext());
+        layoutManagerNot.setOrientation(LinearLayoutManager.VERTICAL);
+        rvReviewHot.setLayoutManager(layoutManagerNot);
+        rvReviewNewest.setLayoutManager(layoutManager);
+        adapter = new ProjectRecommendAdapter();
+        rvReviewHot.setAdapter(adapter);
+        adapterNewest = new ProjectRecommendAdapter();
+        rvReviewNewest.setAdapter(adapterNewest);
         adapter.setItemListener(this);
+        adapterNewest.setItemListener(this);
     }
 
     @Override
@@ -62,40 +72,36 @@ public class HomeReviewFragment extends LazyFragment implements ItemClickListene
         try {
             node.put("token", token);
             //node.put("userId", token);
-            node.put("pageIndex", pageIndex);
-            node.put("pageSize", Constants.PAGE_SIZE);
+            node.put("pageIndex", 1);
+            node.put("pageSize", 10);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.USERHOME_EVALUATION_LIST)
+                .url(Constants.USERHOME_DISCUSS_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, HomeReviewBase.class, new HttpCallBackImpl<HomeReviewBase>() {
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
-            public void onCompleted(HomeReviewBase bean) {
-                HomeReviewBase.DataBean.EvaluationsBean evaluations = bean.getData().getEvaluations();
-//                if(evaluations.getCurPageNum()==evaluations.getPageSize()){
-//                    Toast.makeText(getActivity(), "已经没有了更多禁止上啦", Toast.LENGTH_SHORT).show()
-//                }
+            public void onCompleted(String bean) {
                 List<HomeReviewBase> list = new ArrayList<>();
                 HomeReviewBase base = new HomeReviewBase();
                 base.setDiyi("张三");
                 base.setEr("李四");
                 base.setSan("周五");
-                base.setIndex(0);
-                list.add(base);
+                base.setIndex(1);
                 list.add(base);
                 list.add(base);
                 adapter.setData(list);
+                adapterNewest.setData(list);
             }
         });
     }
 
     @Override
     public void onItemClick(View view, int postion) {
-        Toast.makeText(getActivity(), "评测揭秘那  我是第："+postion, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "讨论界面    我是第："+postion, Toast.LENGTH_SHORT).show();
     }
 
     @Override
