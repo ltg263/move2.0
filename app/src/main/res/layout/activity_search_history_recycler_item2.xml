@@ -5,16 +5,13 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
-<TextView
-    android:id="@+id/tvType"
-    android:padding="@dimen/dp_15"
-    android:text="你好"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
-    <View
-        android:paddingLeft="@dimen/dp_15"
-        android:paddingRight="@dimen/dp_15"
-        android:background="#f5f4f4"
+
+    <TextView
+        android:id="@+id/tvClean"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1" />
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/dp_15"
+        android:text="清空历史记录"
+        android:textColor="@color/colorPrimary" />
 </LinearLayout>

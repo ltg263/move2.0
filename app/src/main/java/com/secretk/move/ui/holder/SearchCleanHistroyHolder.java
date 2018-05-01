@@ -13,12 +13,12 @@ import butterknife.ButterKnife;
  * Created by zc on 2018/4/14.
  */
 
-public class SearchActivityRecyclerHolder2 extends RecyclerViewBaseHolder {
+public class SearchCleanHistroyHolder extends RecyclerViewBaseHolder {
 
     @BindView(R.id.tvClean)
     public TextView tvClean;
 
-    public SearchActivityRecyclerHolder2(View itemView) {
+    public SearchCleanHistroyHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }

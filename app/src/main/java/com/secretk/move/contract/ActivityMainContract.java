@@ -13,7 +13,7 @@ public interface ActivityMainContract {
      * Created by zc on 2018/4/6.
      */
 
-    interface MainPresenter extends BasePresenter{
+    interface Presenter extends BasePresenter{
         void initialized();
         void downLoadApk();
     }
@@ -22,7 +22,7 @@ public interface ActivityMainContract {
      * Created by zc on 2018/4/5.
      */
 
-    interface ActivityMainView extends BaseView{
+    interface View extends BaseView{
         void showDialog(String str);
     }
 
@@ -40,7 +40,7 @@ public interface ActivityMainContract {
      * Created by zc on 2018/4/6.
      */
 
-    interface MainInteractor {
+    interface Interactor {
         void downLoadApk(String url);
 
         void NetWorkVersion();

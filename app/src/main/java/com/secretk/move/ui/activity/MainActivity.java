@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.view.View;
+
 import com.secretk.move.R;
 import com.secretk.move.base.MvpBaseActivity;
 import com.secretk.move.contract.ActivityMainContract;
@@ -20,11 +20,11 @@ import com.secretk.move.utils.UiUtils;
 import butterknife.BindView;
 
 
-public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements ActivityMainContract.ActivityMainView {
+public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements ActivityMainContract.View {
     @BindView(R.id.vp_main)
     TabViewpager vp_main;
     MainActivityPagerAdapter adapter;
-    ActivityMainContract.MainPresenter presenter;
+    ActivityMainContract.Presenter presenter;
     @Override
     protected int setLayout() {
          return R.layout.activity_main;
@@ -33,7 +33,7 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
     protected MainPresenterImpl initPresenter() {
         return new MainPresenterImpl(this);
     }
-    public void go2main(View view) {
+    public void go2main(android.view.View view) {
         vp_main.setCurrentItem(0);
     }
     @Override
@@ -67,15 +67,15 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
             }
         });
     }
-    public void go2topic(View view) {
+    public void go2topic(android.view.View view) {
         vp_main.setCurrentItem(1);
     }
 
-    public void go2message(View view) {
+    public void go2message(android.view.View view) {
         vp_main.setCurrentItem(2);
     }
 
-    public void go2mine(View view) {
+    public void go2mine(android.view.View view) {
         vp_main.setCurrentItem(3);
     }
 

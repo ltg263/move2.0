@@ -10,11 +10,11 @@ import com.secretk.move.utils.NetUtil;
  * Created by zc on 2018/4/6.
  */
 
-public class MainPresenterImpl implements ActivityMainContract.MainPresenter, ActivityMainContract.CallBack {
-    private ActivityMainContract.ActivityMainView mainView;
-    private ActivityMainContract.MainInteractor interactor;
+public class MainPresenterImpl implements ActivityMainContract.Presenter, ActivityMainContract.CallBack {
+    private ActivityMainContract.View mainView;
+    private ActivityMainContract.Interactor interactor;
     private String downLoadUrl="";
-    public MainPresenterImpl(ActivityMainContract.ActivityMainView mainView) {
+    public MainPresenterImpl(ActivityMainContract.View mainView) {
         this.mainView = mainView;
         interactor = new MainInteractorImpl(this);
     }

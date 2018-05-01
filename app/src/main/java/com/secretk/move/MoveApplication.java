@@ -9,6 +9,8 @@ import com.secretk.move.http.Network;
 import com.secretk.move.utils.AppBlockCanaryContext;
 import com.secretk.move.utils.CrashHandler;
 
+import org.greenrobot.greendao.database.Database;
+
 /**
  * Created by zc on 2018/4/5.
  */
@@ -18,6 +20,7 @@ public class MoveApplication extends Application {
      * 上下文对象
      */
     private static Context mContext;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -26,8 +29,14 @@ public class MoveApplication extends Application {
         BlockCanary.install(mContext, new AppBlockCanaryContext()).start();
         Network.initOkhttp(mContext);
         AppConfig.initAppConfig(this);
+        initDao();
+    }
+
+    private void initDao() {
+
 
     }
+
     /**
      * 全局上下文
      */

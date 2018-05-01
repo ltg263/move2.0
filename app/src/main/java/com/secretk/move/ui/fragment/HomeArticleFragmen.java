@@ -19,23 +19,24 @@ import butterknife.BindView;
  */
 
 public class HomeArticleFragmen extends LazyFragment  implements ItemClickListener {
-    @BindView(R.id.rv_review)
-    RecyclerView rvReview;
+    @BindView(R.id.recycler)
+    RecyclerView recycler;
 
     private LinearLayoutManager layoutManager;
     private HomeRecommendAdapter adapter;
     @Override
     public int setFragmentView() {
-        return R.layout.home_viewpager_layout;
+//        return R.layout.home_viewpager_layout;
+        return R.layout.fragment_topic;
     }
 
     @Override
     public void initViews() {
         layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvReview.setLayoutManager(layoutManager);
+        recycler.setLayoutManager(layoutManager);
         adapter = new HomeRecommendAdapter();
-        rvReview.setAdapter(adapter);
+        recycler.setAdapter(adapter);
         adapter.setItemListener(this);
     }
 
@@ -45,7 +46,7 @@ public class HomeArticleFragmen extends LazyFragment  implements ItemClickListen
         list.add("8.5分");
         list.add("7.2分");
         list.add("9.1分");
-        adapter.setData(list);
+
     }
 
 

@@ -33,7 +33,7 @@ import okio.Okio;
  * Created by zc on 2018/4/6.
  */
 
-public class MainInteractorImpl implements ActivityMainContract.MainInteractor {
+public class MainInteractorImpl implements ActivityMainContract.Interactor {
     private ActivityMainContract.CallBack callBack;
 
     public MainInteractorImpl(ActivityMainContract.CallBack callBack) {
