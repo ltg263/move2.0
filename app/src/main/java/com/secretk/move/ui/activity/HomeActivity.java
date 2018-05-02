@@ -94,7 +94,7 @@ public class HomeActivity extends BaseActivity {
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
         mHeadView = findViewById(R.id.head_app_server);
         mHeadView.setHeadBackShow(true);
-        mHeadView.setTitle("我的首页");
+        mHeadView.setTitle("XXX的主页");
         mHeadView.setTitleColor(R.color.title_gray);
         return mHeadView;
     }

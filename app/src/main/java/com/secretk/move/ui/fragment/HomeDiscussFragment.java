@@ -13,7 +13,9 @@ import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeReviewBase;
 import com.secretk.move.listener.ItemClickListener;
+import com.secretk.move.ui.activity.DetailsDiscussActivity;
 import com.secretk.move.ui.adapter.HomeRecommendAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -89,7 +91,8 @@ public class HomeDiscussFragment extends LazyFragment  implements ItemClickListe
 
     @Override
     public void onItemClick(View view, int postion) {
-        Toast.makeText(getActivity(), "讨论界面    我是第："+postion, Toast.LENGTH_SHORT).show();
+        IntentUtil.startActivity(DetailsDiscussActivity.class);
+        //Toast.makeText(getActivity(), "讨论界面    我是第："+postion, Toast.LENGTH_SHORT).show();
     }
 
     @Override

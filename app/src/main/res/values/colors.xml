@@ -89,7 +89,14 @@
     <color name="cut_off_rule">#dddddd</color>
     <!--個人主頁-->
     <color name="title_gray">#333333</color>
+    <color name="title_gray_66">#666666</color>
     <color name="background_gray">#f4f4f4</color>
+    <!--评分进度色-->
+    <color name="xmdw">#54c7fc</color>
+    <color name="jskj">#ff9600 </color>
+    <color name="tdsl">#ffce01 </color>
+    <color name="xmjd">#ff739c </color>
+    <color name="tzfx">#ff2851 </color>
 
 
 </resources>

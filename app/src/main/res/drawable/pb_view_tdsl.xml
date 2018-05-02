@@ -1,10 +1,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--这里是设置progressbar的背景样式-->
-    <item android:id="@android:id/background">
-
+    <item android:id="@android:id/background" >
          <shape>
-
                 <corners android:radius="20dp" />
                 <solid android:color="#f3f4f5" />
             </shape>
@@ -15,7 +13,7 @@
         <clip>
             <shape>
                 <corners android:radius="20dp" />
-                <solid android:color="@color/app_background" />
+                <solid android:color="@color/tdsl" />
                 <stroke
                     android:width="2dp"
                     android:color="#FFFFFF" />

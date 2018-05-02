@@ -22,6 +22,7 @@ public class AppBarHeadView extends FrameLayout {
     protected View mAppBarLayout;
     protected Toolbar mToolbar;
     protected TextView mTitle;
+    protected TextView mTitleVice;
     protected ImageView mImg;
     protected String setText;
     public boolean isHeadBackShow() {
@@ -68,6 +69,7 @@ public class AppBarHeadView extends FrameLayout {
             mToolbar =  mAppBarLayout.findViewById(R.id.head_toolbar);
             mToolbar.setTitle("");
             mTitle = mAppBarLayout.findViewById(R.id.tv_head_title);
+            mTitleVice = mAppBarLayout.findViewById(R.id.tv_head_vice);
             mImg = mAppBarLayout.findViewById(R.id.iv_head_img);
             mTitle.setText(setText);
         }
@@ -75,6 +77,9 @@ public class AppBarHeadView extends FrameLayout {
 
     public void setTitle(String title) {
         mTitle.setText(title);
+    }
+    public void setTitleVice(String title) {
+        mTitleVice.setText(title);
     }
     public void setHeadViewColor(int color) {
         mAppBarLayout.setBackgroundResource(color);

@@ -10,5 +10,13 @@
     <declare-styleable name="TitleBar">
         <attr name="setTitle" format="string" />
     </declare-styleable>
+    <!--自定义PB 评价进度-->
+    <declare-styleable name="PbTitle">
+        <attr name="setOneTitle" format="string" />
+        <attr name="setTwoTitle" format="string" />
+        <attr name="setThreeTitle" format="string" />
+
+        <attr name="setPbY" value="20dp" />
+    </declare-styleable>
 
 </resources>

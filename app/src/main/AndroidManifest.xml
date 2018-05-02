@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.DaoActivity"
+            android:name=".ui.activity.MainActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,7 +42,13 @@
             android:name=".ui.activity.HomeActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.MoreCommentsActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.ProjectActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.DetailsDiscussActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.SearchActivity"

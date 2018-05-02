@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.secretk.move.R;
 import com.secretk.move.bean.MenuInfo;
@@ -70,6 +72,15 @@ public abstract class BaseActivity extends AppCompatActivity {
             setHeadBackShow(mHeadView.isHeadBackShow());
         }
     }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
+        for (MenuInfo item : mMenuInfos) {
+            menu.add(0, item.getId(), 0, item.getName()).setIcon(item.getIcon()).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
+        return true;
+    }
+
     protected abstract AppBarHeadView initHeadView(List<MenuInfo> mMenus);
     /**
      * 是否显示回退键
@@ -92,6 +103,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
+        }else if(item.getItemId() == R.string.share){
+            Toast.makeText(this, "您点击了分享", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }

@@ -47,7 +47,6 @@ import org.json.JSONObject;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 作者： litongge
@@ -103,7 +102,8 @@ public class ProjectActivity extends BaseActivity {
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
         mHeadView = findViewById(R.id.head_app_server);
         mHeadView.setHeadBackShow(true);
-        mHeadView.setTitle("我的首页");
+        mHeadView.setTitle("EOX");
+        mHeadView.setTitleVice("/臭子");
         mHeadView.setTitleColor(R.color.title_gray);
         return mHeadView;
     }

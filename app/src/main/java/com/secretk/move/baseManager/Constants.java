@@ -60,10 +60,24 @@ public interface Constants {
 
     //用户主页
     String USERHOME_INDEX = BASE_URL+"kff/userhome/index";
-    //用户测评列表
+    //用户 测评列表
     String USERHOME_EVALUATION_LIST =BASE_URL+ "kff/userhome/evaluationList";
-    //用户讨论列表
+    //用户\项目讨论列表
     String USERHOME_DISCUSS_LIST = BASE_URL+"kff/userhome/discussList";
-    //用户文章列表
-    String USERHOME_ARTICLE_LIST = BASE_URL+"/kff/userhome/articleList";
+    //用户\项目  文章列表
+    String USERHOME_ARTICLE_LIST = BASE_URL+"kff/userhome/articleList";
+
+    //项目主页 ，显示项目基本信息
+    String PROJECT_INDEX = BASE_URL+"/kff/project/index";
+    //项目主页 评测列表
+    String PROJECT_EVALUATION_LIST = BASE_URL+"/kff/project/evaluationList";
+    //讨论详情 页
+    String HOME_DISCUSS_DETAIL = BASE_URL+"kff/home/discussDetail";
+    //讨论详情页 单个评论详情页
+    String HOME_DISCUSS_COMMENT_LIST = BASE_URL+"/kff/home/discussCommentList";
+
+    //文章详情 页面
+    String ARTICLE_DETAIL = BASE_URL+"kff/home/articleDetail";
+    //文章评论列表
+    String ARTICLE_COMMENT_LIST = BASE_URL+"/kff/home/articleCommentList";
 }

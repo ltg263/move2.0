@@ -1,24 +1,24 @@
-package com.secretk.move.ui.fragment;
+package com.secretk.move.ui.activity;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
-import com.secretk.move.base.LazyFragment;
+import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeReviewBase;
+import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.activity.DetailsDiscussActivity;
-import com.secretk.move.ui.adapter.ProjectRecommendAdapter;
-import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.ui.adapter.MoreCommentsAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.view.AppBarHeadView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,59 +28,67 @@ import java.util.List;
 
 import butterknife.BindView;
 
+
 /**
  * 作者： litongge
- * 时间： 2018/4/27 15:04
+ * 时间： 2018/5/2 18:53
  * 邮箱；ltg263@126.com
- * 描述：项目主页--讨论
+ * 描述：评论详情------更多评论
  */
+public class MoreCommentsActivity extends BaseActivity  implements ItemClickListener {
 
-public class ProjectDiscussFragment extends LazyFragment  implements ItemClickListener{
-    @BindView(R.id.rv_review_hot)
-    RecyclerView rvReviewHot;
-    @BindView(R.id.rv_review_newest)
-    RecyclerView rvReviewNewest;
-
-    private LinearLayoutManager layoutManager;
-    private ProjectRecommendAdapter adapter;
-    private ProjectRecommendAdapter adapterNewest;
-    private LinearLayoutManager layoutManagerNot;
+    @BindView(R.id.rv_review)
+    RecyclerView rvReview;
+    private LinearLayoutManager layoutManagerNew;
+    private MoreCommentsAdapter adapter;
 
     @Override
-    public int setFragmentView() {
-        return R.layout.fragment_project_discuss;
+    protected int setOnCreate() {
+        return R.layout.activity_comments_more ;
     }
 
     @Override
-    public void initViews() {
-        layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        layoutManagerNot = new LinearLayoutManager(getContext());
-        layoutManagerNot.setOrientation(LinearLayoutManager.VERTICAL);
-        rvReviewHot.setLayoutManager(layoutManagerNot);
-        rvReviewNewest.setLayoutManager(layoutManager);
-        adapter = new ProjectRecommendAdapter();
-        rvReviewHot.setAdapter(adapter);
-        adapterNewest = new ProjectRecommendAdapter();
-        rvReviewNewest.setAdapter(adapterNewest);
+    protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
+        mHeadView = findViewById(R.id.head_app_server);
+        mHeadView.setTitleColor(R.color.title_gray);
+        mHeadView.setHeadBackShow(true);
+        mHeadView.setTitle("评论详情");
+        mMenuInfos.add(0,new MenuInfo(R.string.share, "分享", R.drawable.ic_share));
+        return mHeadView;
+    }
+
+
+    @Override
+    protected void initUI(Bundle savedInstanceState) {
+        layoutManagerNew = new LinearLayoutManager(this);
+        layoutManagerNew.setOrientation(LinearLayoutManager.VERTICAL);
+        rvReview.setLayoutManager(layoutManagerNew);
+        adapter = new MoreCommentsAdapter();
+        rvReview.setAdapter(adapter);
         adapter.setItemListener(this);
-        adapterNewest.setItemListener(this);
     }
 
-    @Override
-    public void onFirstUserVisible() {
+    protected void initData() {
+        List<HomeReviewBase> list = new ArrayList<>();
+        HomeReviewBase base = new HomeReviewBase();
+        base.setDiyi("张三");
+        base.setEr("李四");
+        base.setSan("周五");
+        base.setIndex(1);
+        list.add(base);
+        list.add(base);
+        adapter.setData(list);
+
         String token = SharedUtils.singleton().get(Constants.TOKEN_KEY, "");
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            //node.put("userId", token);
-            node.put("pageIndex", 1);
-            node.put("pageSize", 10);
+            node.put("postId", 1);//帖子ID
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.USERHOME_DISCUSS_LIST)
+                .url(Constants.HOME_DISCUSS_COMMENT_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
@@ -96,15 +104,13 @@ public class ProjectDiscussFragment extends LazyFragment  implements ItemClickLi
                 list.add(base);
                 list.add(base);
                 adapter.setData(list);
-                adapterNewest.setData(list);
             }
         });
     }
 
     @Override
     public void onItemClick(View view, int postion) {
-        IntentUtil.startActivity(DetailsDiscussActivity.class);
-        //Toast.makeText(getActivity(), "讨论界面    我是第："+postion, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
