@@ -6,13 +6,6 @@
     android:orientation="vertical"
     android:background="#f4f4f4">
 
-    <com.secretk.move.view.ProgressBarStyleView
-        android:id="@+id/pb"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </com.secretk.move.view.ProgressBarStyleView>
-
     <RelativeLayout
         android:id="@+id/rl_top"
         android:layout_width="match_parent"
