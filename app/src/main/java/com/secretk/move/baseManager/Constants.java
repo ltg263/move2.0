@@ -80,4 +80,5 @@ public interface Constants {
     String ARTICLE_DETAIL = BASE_URL+"kff/home/articleDetail";
     //文章评论列表
     String ARTICLE_COMMENT_LIST = BASE_URL+"/kff/home/articleCommentList";
+
 }
