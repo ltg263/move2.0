@@ -1,6 +1,5 @@
 package com.secretk.move.ui.fragment;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
@@ -26,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
@@ -53,7 +51,6 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
     ProgressBarStyleView pbSpeculativeRisk;//投资风险
     Unbinder unbinder;
 
-    private LinearLayoutManager layoutManager;
     private ProjectRecommendAdapter adapter;
     int pageIndex = 1;
 
@@ -86,9 +83,7 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
         pbSpeculativeRisk.setAllTv(getResources().getString(R.string.comprehensive_evaluation),
                 "/ 20% (2018人)",0);
 
-        layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvReview.setLayoutManager(layoutManager);
+        setVerticalManager(rvReview);
         adapter = new ProjectRecommendAdapter();
         rvReview.setAdapter(adapter);
         adapter.setItemListener(this);

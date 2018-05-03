@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_gray"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <com.secretk.move.view.AppBarHeadView
+        android:id="@+id/head_app_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f9f9f9" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_line"
+        android:layout_below="@id/head_app_server"
+        android:background="@color/cut_off_rule" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/view_bottom"
+        android:layout_below="@id/view"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"
+                    android:text="我我垃圾上单飞机按时交付垃圾上单了房价机按时交付垃圾上单了房价机按时交付垃圾上单了房价"
+                    android:textColor="@color/title_gray"
+                    android:textSize="@dimen/sp_16" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_line"
+                    android:background="@color/cut_off_rule" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:padding="@dimen/dp_10">
+
+                    <ImageView
+                        android:id="@+id/img_organization"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_toRightOf="@id/img_organization"
+                        android:text="AOS/柚子"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/sp_16" />
+
+                    <TextView
+                        android:id="@+id/tvFollws"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_toRightOf="@id/img_organization"
+                        android:text="115248关注"
+                        android:textColor="#aaaaaa"
+                        android:textSize="@dimen/sp_12" />
+
+                    <TextView
+                        android:id="@+id/tvIsFollw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/shape_rectangle_topic"
+                        android:paddingBottom="@dimen/dp_3"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_3"
+                        android:text="+关注"
+                        android:textColor="@color/app_background" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/dp_10">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="187dp"
+                        android:layout_marginBottom="@dimen/dp_5"
+                        android:layout_marginTop="@dimen/dp_2"
+                        android:background="@drawable/fragment_follow_background" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp"
+                        android:layout_marginBottom="@dimen/dp_5"
+                        android:layout_marginTop="@dimen/dp_2"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/fragment_follow_background" />
+
+                        <View
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/fragment_follow_background" />
+
+                        <View
+                            android:layout_width="@dimen/dp_5"
+                            android:layout_height="@dimen/dp_5" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/fragment_follow_background" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="@dimen/dp_2"
+                        android:text="以太坊系统自身带有一种叫做以太币（Ether）的数字货币。以太币和著名的数字货币比特币（Bitcoin）..."
+                        android:textColor="#7e7d7e"
+                        android:textSize="@dimen/sp_12" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_line"
+                    android:background="@color/cut_off_rule" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_10">
+
+                    <TextView
+                        android:id="@+id/tv_crack_down"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/garden_crack"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_10"
+                        android:text="@string/crack_down"
+                        android:textColor="#3b88f6"
+                        android:textSize="@dimen/sp_15"
+                        android:visibility="visible" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="发表时间：2015-01-01"
+                        android:textSize="@dimen/sp_12" />
+
+                </LinearLayout>
+
+
+                <com.secretk.move.view.PileLayout
+                    android:id="@+id/pile_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/dp_10"
+                    app:PileLayout_pileWidth="@dimen/dp_25" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="68人已赞助"
+                    android:textColor="@color/title_gray_66" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <View
+        android:id="@+id/view_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_line"
+        android:layout_above="@id/ll_bottom_bnt"
+        android:background="@color/cut_off_rule" />
+
+    <LinearLayout
+        android:id="@+id/ll_bottom_bnt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:padding="@dimen/dp_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp_4"
+            android:drawableTop="@drawable/selector_assist_img"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/dp_8"
+            android:text="赞188"
+            android:textColor="@drawable/selector_assist_text"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp_4"
+            android:drawableTop="@drawable/selector_collect_img"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/dp_8"
+            android:text="收藏"
+            android:textColor="@drawable/selector_assist_text"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp_4"
+            android:drawableTop="@drawable/ic_sponsor"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/dp_8"
+            android:text="赞助 68"
+            android:textColor="#aaaaaa"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/tv_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp_4"
+            android:drawableTop="@drawable/comment"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/dp_8"
+            android:text="评论 1225"
+            android:textColor="#aaaaaa"
+            android:textSize="@dimen/sp_12" />
+    </LinearLayout>
+
+</RelativeLayout>

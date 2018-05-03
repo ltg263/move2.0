@@ -40,8 +40,6 @@ public class ProjectIntroFragment extends LazyFragment  implements ItemClickList
     @BindView(R.id.rv_review1)
     RecyclerView rvReview1;
 
-    private LinearLayoutManager layoutManager;
-    private LinearLayoutManager layoutManager1;
     private ProjectIntroAdapter adapter;
 
     @Override
@@ -51,12 +49,8 @@ public class ProjectIntroFragment extends LazyFragment  implements ItemClickList
 
     @Override
     public void initViews() {
-        layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvReview.setLayoutManager(layoutManager);
-        layoutManager1 = new LinearLayoutManager(getContext());
-        layoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
-        rvReview1.setLayoutManager(layoutManager1);
+        setVerticalManager(rvReview);
+        setVerticalManager(rvReview1);
         adapter = new ProjectIntroAdapter();
         rvReview.setAdapter(adapter);
         rvReview1.setAdapter(adapter);

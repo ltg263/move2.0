@@ -1,6 +1,5 @@
 package com.secretk.move.ui.fragment;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -43,7 +42,6 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     @BindView(R.id.tv_sort)
     TextView tvSort;
 
-    private LinearLayoutManager layoutManager;
     private HomeRecommendAdapter adapter;
 
     @Override
@@ -53,9 +51,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
 
     @Override
     public void initViews() {
-        layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvReview.setLayoutManager(layoutManager);
+        setVerticalManager(rvReview);
         adapter = new HomeRecommendAdapter();
         rvReview.setAdapter(adapter);
         adapter.setItemListener(this);

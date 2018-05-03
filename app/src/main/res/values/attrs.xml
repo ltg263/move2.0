@@ -13,4 +13,8 @@
         <attr name="matProg_barWidth" format="dimension" />
         <attr name="matProg_linearProgress" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="PileLayout">
+        <attr name="PileLayout_vertivalSpace" format="dimension"/>
+        <attr name="PileLayout_pileWidth" format="dimension"/>
+    </declare-styleable>
 </resources>

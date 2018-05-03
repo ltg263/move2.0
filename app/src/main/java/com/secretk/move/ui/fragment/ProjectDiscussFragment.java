@@ -1,9 +1,7 @@
 package com.secretk.move.ui.fragment;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -41,10 +39,8 @@ public class ProjectDiscussFragment extends LazyFragment  implements ItemClickLi
     @BindView(R.id.rv_review_newest)
     RecyclerView rvReviewNewest;
 
-    private LinearLayoutManager layoutManager;
     private ProjectRecommendAdapter adapter;
     private ProjectRecommendAdapter adapterNewest;
-    private LinearLayoutManager layoutManagerNot;
 
     @Override
     public int setFragmentView() {
@@ -53,12 +49,8 @@ public class ProjectDiscussFragment extends LazyFragment  implements ItemClickLi
 
     @Override
     public void initViews() {
-        layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        layoutManagerNot = new LinearLayoutManager(getContext());
-        layoutManagerNot.setOrientation(LinearLayoutManager.VERTICAL);
-        rvReviewHot.setLayoutManager(layoutManagerNot);
-        rvReviewNewest.setLayoutManager(layoutManager);
+        setVerticalManager(rvReviewHot);
+        setVerticalManager(rvReviewNewest);
         adapter = new ProjectRecommendAdapter();
         rvReviewHot.setAdapter(adapter);
         adapterNewest = new ProjectRecommendAdapter();

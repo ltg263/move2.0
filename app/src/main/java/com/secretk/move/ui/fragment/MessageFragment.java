@@ -1,6 +1,5 @@
 package com.secretk.move.ui.fragment;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -9,7 +8,6 @@ import com.secretk.move.base.LazyFragment;
 import com.secretk.move.bean.MessageBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.MessageFragmentRecyclerAdapter;
-import com.secretk.move.ui.adapter.TopicFragmentRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +21,6 @@ import butterknife.BindView;
 public class MessageFragment extends LazyFragment implements ItemClickListener {
     @BindView(R.id.recycler)
     RecyclerView recycler;
-    private LinearLayoutManager layoutManager;
     private MessageFragmentRecyclerAdapter adapter;
     @Override
     public int setFragmentView() {
@@ -32,9 +29,7 @@ public class MessageFragment extends LazyFragment implements ItemClickListener {
 
     @Override
     public void initViews() {
-        layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recycler.setLayoutManager(layoutManager);
+        setVerticalManager(recycler);
         adapter=new MessageFragmentRecyclerAdapter();
         recycler.setAdapter(adapter);
         adapter.setItemListener(this);

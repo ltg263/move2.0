@@ -30,11 +30,11 @@ import butterknife.BindView;
 
 /**
  * 作者： litongge
- * 时间： 2018/5/2 14:12
+ * 时间： 2018/5/3 16:53
  * 邮箱；ltg263@126.com
- * 描述：讨论详情.
+ * 描述：文章---评论详情
  */
-public class DetailsDiscussActivity extends BaseActivity  implements ItemClickListener {
+public class DetailsArticleCommentActivity extends BaseActivity  implements ItemClickListener {
 
     @BindView(R.id.rv_hot_review)
     RecyclerView rvkHotReview;
@@ -45,7 +45,7 @@ public class DetailsDiscussActivity extends BaseActivity  implements ItemClickLi
 
     @Override
     protected int setOnCreate() {
-        return R.layout.activity_details_discuss;
+        return R.layout.activity_details_article_comment;
     }
 
     @Override

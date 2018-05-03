@@ -4,10 +4,6 @@
     android:layout_height="wrap_content"
     android:background="#fff"
     android:orientation="vertical">
-    <View
-        android:layout_width="match_parent"
-        android:background="@color/cut_off_rule"
-        android:layout_height="@dimen/dp_line"/>
     <TextView
         android:id="@+id/tv_eave_content"
         android:layout_width="match_parent"

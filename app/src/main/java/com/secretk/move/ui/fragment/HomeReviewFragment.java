@@ -1,6 +1,5 @@
 package com.secretk.move.ui.fragment;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
@@ -13,7 +12,9 @@ import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeReviewBase;
 import com.secretk.move.listener.ItemClickListener;
+import com.secretk.move.ui.activity.MoreCommentsActivity;
 import com.secretk.move.ui.adapter.HomeRecommendAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -37,9 +38,9 @@ public class HomeReviewFragment extends LazyFragment implements ItemClickListene
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
 
-    private LinearLayoutManager layoutManager;
     private HomeRecommendAdapter adapter;
-    int pageIndex = 1;
+    int pageIndex = 1;//
+    public Boolean isHaveData = true;//是否还有数据
     @Override
     public int setFragmentView() {
         return R.layout.fragment_home;
@@ -47,9 +48,7 @@ public class HomeReviewFragment extends LazyFragment implements ItemClickListene
 
     @Override
     public void initViews() {
-        layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvReview.setLayoutManager(layoutManager);
+        setVerticalManager(rvReview);
         adapter = new HomeRecommendAdapter();
         rvReview.setAdapter(adapter);
         adapter.setItemListener(this);
@@ -95,6 +94,7 @@ public class HomeReviewFragment extends LazyFragment implements ItemClickListene
 
     @Override
     public void onItemClick(View view, int postion) {
+        IntentUtil.startActivity(MoreCommentsActivity.class);
         Toast.makeText(getActivity(), "评测揭秘那  我是第："+postion, Toast.LENGTH_SHORT).show();
     }
 

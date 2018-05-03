@@ -1,9 +1,7 @@
 package com.secretk.move.ui.fragment;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -39,8 +37,8 @@ public class HomeDiscussFragment extends LazyFragment  implements ItemClickListe
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
 
-    private LinearLayoutManager layoutManager;
     private HomeRecommendAdapter adapter;
+    public Boolean isHaveData = true;//是否还有数据
     @Override
     public int setFragmentView() {
         return R.layout.fragment_home;
@@ -48,9 +46,7 @@ public class HomeDiscussFragment extends LazyFragment  implements ItemClickListe
 
     @Override
     public void initViews() {
-        layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvReview.setLayoutManager(layoutManager);
+        setVerticalManager(rvReview);
         adapter = new HomeRecommendAdapter();
         rvReview.setAdapter(adapter);
         adapter.setItemListener(this);

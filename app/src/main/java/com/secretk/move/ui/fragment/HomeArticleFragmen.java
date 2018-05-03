@@ -1,6 +1,5 @@
 package com.secretk.move.ui.fragment;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -22,7 +21,6 @@ public class HomeArticleFragmen extends LazyFragment  implements ItemClickListen
     @BindView(R.id.recycler)
     RecyclerView recycler;
 
-    private LinearLayoutManager layoutManager;
     private HomeRecommendAdapter adapter;
     @Override
     public int setFragmentView() {
@@ -32,9 +30,7 @@ public class HomeArticleFragmen extends LazyFragment  implements ItemClickListen
 
     @Override
     public void initViews() {
-        layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recycler.setLayoutManager(layoutManager);
+        setVerticalManager(recycler);
         adapter = new HomeRecommendAdapter();
         recycler.setAdapter(adapter);
         adapter.setItemListener(this);

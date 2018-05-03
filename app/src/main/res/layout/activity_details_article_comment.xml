@@ -20,66 +20,36 @@
         android:background="@color/cut_off_rule" />
 
     <com.secretk.move.view.RecycleScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/view"
         android:fillViewport="true"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical">
-
-            <RelativeLayout
-                android:id="@+id/rl_ge_ren"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:padding="@dimen/dp_10">
+                android:layout_height="@dimen/dp_line"
+                android:background="@color/cut_off_rule" />
 
-                <ImageView
-                    android:id="@+id/img_head"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
-                    android:scaleType="centerCrop" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dp_10"
+                android:text="热门测评"
+                android:textColor="@color/title_gray"
+                android:textSize="@dimen/sp_14" />
 
-                <TextView
-                    android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_15"
-                    android:layout_toRightOf="@id/img_head"
-                    android:text="AOS/柚子"
-                    android:textColor="#333333"
-                    android:textSize="@dimen/sp_16" />
-
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="@dimen/dp_15"
-                    android:layout_toRightOf="@id/img_head"
-                    android:text="115248关注"
-                    android:textColor="#aaaaaa"
-                    android:textSize="@dimen/sp_12" />
-
-                <TextView
-                    android:id="@+id/tv_assist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/iv_assist"
-                    android:drawablePadding="@dimen/dp_4"
-                    android:drawableTop="@drawable/selector_assist_img"
-                    android:padding="@dimen/dp_8"
-                    android:text="188"
-                    android:textColor="@drawable/selector_assist_text"
-                    android:textSize="@dimen/sp_12" />
-
-            </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_hot_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/dp_10" />
 
             <View
                 android:layout_width="match_parent"
@@ -87,33 +57,24 @@
                 android:background="@color/cut_off_rule" />
 
             <TextView
-                android:id="@+id/tv_eave_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:padding="@dimen/dp_10"
-                android:text="体自在EOS引力区的知识星球里有一个人，他在知识星球分享了一篇文章《数字会说明，老猫在想什么，写给eos的投资者们》，精明地推测出老猫分批地积累了上百万个EOS，这更能说明老猫看好EOS。道理很简单：因为看好，所以大量持有。"
+                android:text="最新测评"
                 android:textColor="@color/title_gray"
-                android:textSize="@dimen/dp_15" />
-
+                android:textSize="@dimen/sp_14" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_review"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_line"
-                android:background="@color/cut_off_rule" />
-            <View
+                android:id="@+id/rv_new_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:padding="@dimen/dp_10" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_line"
                 android:background="@color/cut_off_rule" />
-
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -123,6 +84,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_toStartOf="@+id/but_login"
                     android:background="#f4f4f4"
                     android:hint="留下你的评论..."
@@ -134,6 +96,7 @@
                     android:id="@+id/but_login"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:background="@drawable/selector_login_bnt"

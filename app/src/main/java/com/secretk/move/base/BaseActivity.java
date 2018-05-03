@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -47,6 +50,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         initHead();
     }
 
+    public void setVerticalManager(RecyclerView rcv) {
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        rcv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        rcv.setLayoutManager(manager);
+    }
 
     /**
      * 重写onCreate

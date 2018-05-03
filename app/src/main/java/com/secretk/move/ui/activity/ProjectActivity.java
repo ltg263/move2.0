@@ -110,7 +110,6 @@ public class ProjectActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-        setSmartRefreshStyle();
         GlideUtils.loadCircle(ivHead, R.mipmap.ic_launcher);
         HomePageAdapter adapter = new HomePageAdapter(getSupportFragmentManager());
         adapter.addFragment(new ProjectIntroFragment(), getString(R.string.intro));
@@ -166,18 +165,6 @@ public class ProjectActivity extends BaseActivity {
     }
 
     private void initListener() {
-        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
-            @Override
-            public void onHeaderPulling(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
-                mOffset = offset / 2;
-            }
-
-            @Override
-            public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
-                mOffset = offset / 2;
-                //iv_parallax.setTranslationY(mOffset);
-            }
-        });
 
         appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
 
@@ -194,30 +181,5 @@ public class ProjectActivity extends BaseActivity {
                 }
             }
         });
-    }
-
-    /**
-     * 指定刷线的样式
-     */
-    private void setSmartRefreshStyle() {
-        //设置全局的Header构建器
-        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
-            @NonNull
-            @Override
-            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-                //指定为经典Header，默认是 贝塞尔雷达Header
-                return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);
-            }
-        });
-        //设置全局的Footer构建器
-        SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
-            @NonNull
-            @Override
-            public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
-                //指定为经典Footer，默认是 BallPulseFooter
-                return new ClassicsFooter(context).setSpinnerStyle(SpinnerStyle.Translate);
-            }
-        });
-
     }
 }

@@ -1,6 +1,5 @@
 package com.secretk.move.ui.fragment;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
@@ -13,7 +12,7 @@ import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeReviewBase;
 import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.activity.ProjectActivity;
+import com.secretk.move.ui.activity.DetailsArticleActivity;
 import com.secretk.move.ui.adapter.HomeRecommendAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
@@ -40,8 +39,8 @@ public class HomeArticleFragment extends LazyFragment  implements ItemClickListe
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
 
-    private LinearLayoutManager layoutManager;
     private HomeRecommendAdapter adapter;
+    public Boolean isHaveData = true;//是否还有数据
     @Override
     public int setFragmentView() {
         return R.layout.fragment_home;
@@ -49,9 +48,7 @@ public class HomeArticleFragment extends LazyFragment  implements ItemClickListe
 
     @Override
     public void initViews() {
-        layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvReview.setLayoutManager(layoutManager);
+        setVerticalManager(rvReview);
         adapter = new HomeRecommendAdapter();
         rvReview.setAdapter(adapter);
         adapter.setItemListener(this);
@@ -93,7 +90,7 @@ public class HomeArticleFragment extends LazyFragment  implements ItemClickListe
 
     @Override
     public void onItemClick(View view, int postion) {
-        IntentUtil.startActivity(ProjectActivity.class);
+        IntentUtil.startActivity(DetailsArticleActivity.class);
         Toast.makeText(getActivity(), "文章界面：我是第："+postion, Toast.LENGTH_SHORT).show();
     }
 

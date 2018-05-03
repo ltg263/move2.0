@@ -1,9 +1,10 @@
 package com.secretk.move.ui.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -15,6 +16,7 @@ import com.secretk.move.bean.HomeReviewBase;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.MoreCommentsAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -39,7 +41,10 @@ public class MoreCommentsActivity extends BaseActivity  implements ItemClickList
 
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
-    private LinearLayoutManager layoutManagerNew;
+    @BindView(R.id.rl_ge_ren)
+    RelativeLayout rlGeRen;
+    @BindView(R.id.tv_assist)
+    TextView tvAssist;
     private MoreCommentsAdapter adapter;
 
     @Override
@@ -60,12 +65,17 @@ public class MoreCommentsActivity extends BaseActivity  implements ItemClickList
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-        layoutManagerNew = new LinearLayoutManager(this);
-        layoutManagerNew.setOrientation(LinearLayoutManager.VERTICAL);
-        rvReview.setLayoutManager(layoutManagerNew);
+        setVerticalManager(rvReview);
         adapter = new MoreCommentsAdapter();
         rvReview.setAdapter(adapter);
         adapter.setItemListener(this);
+        tvAssist.setSelected(true);
+        rlGeRen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IntentUtil.startActivity(ProjectActivity.class);
+            }
+        });
     }
 
     protected void initData() {

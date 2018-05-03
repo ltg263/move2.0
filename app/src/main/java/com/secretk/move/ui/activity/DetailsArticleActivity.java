@@ -1,8 +1,10 @@
 package com.secretk.move.ui.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -13,11 +15,13 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeReviewBase;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.adapter.DetailsDiscussAdapter;
+import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.view.AppBarHeadView;
+import com.secretk.move.view.PileLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,25 +31,29 @@ import java.util.List;
 
 import butterknife.BindView;
 
-
 /**
  * 作者： litongge
  * 时间： 2018/5/2 14:12
  * 邮箱；ltg263@126.com
- * 描述：讨论详情.
+ * 描述: 文章详情.
  */
-public class DetailsDiscussActivity extends BaseActivity  implements ItemClickListener {
+public class DetailsArticleActivity extends BaseActivity  implements ItemClickListener {
 
-    @BindView(R.id.rv_hot_review)
-    RecyclerView rvkHotReview;
-    @BindView(R.id.rv_new_review)
-    RecyclerView rvNewReview;
-    private DetailsDiscussAdapter adapter;
-    private DetailsDiscussAdapter adapterNew;
+    @BindView(R.id.pile_layout)
+    PileLayout pileLayout;
+    @BindView(R.id.tv_comment)
+    TextView tvComment;
 
+    String[] urls = {"http://img2.imgtn.bdimg.com/it/u=1939271907,257307689&fm=21&gp=0.jpg",
+            "http://img0.imgtn.bdimg.com/it/u=2263418180,3668836868&fm=206&gp=0.jpg",
+            "http://img0.imgtn.bdimg.com/it/u=2263418180,3668836868&fm=206&gp=0.jpg",
+            "http://img2.imgtn.bdimg.com/it/u=1939271907,257307689&fm=21&gp=0.jpg",
+            "http://img0.imgtn.bdimg.com/it/u=2263418180,3668836868&fm=206&gp=0.jpg",
+            "http://img0.imgtn.bdimg.com/it/u=2263418180,3668836868&fm=206&gp=0.jpg"
+    };
     @Override
     protected int setOnCreate() {
-        return R.layout.activity_details_discuss;
+        return R.layout.activity_details_article;
     }
 
     @Override
@@ -59,31 +67,30 @@ public class DetailsDiscussActivity extends BaseActivity  implements ItemClickLi
         return mHeadView;
     }
 
+    public void initPraises() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        for (int i = 0; i < urls.length; i++) {
+
+            ImageView imageView = (ImageView) inflater.inflate(R.layout.item_praise, pileLayout, false);
+            GlideUtils.loadCircleUrl(imageView, urls[i]);
+            pileLayout.addView(imageView);
+        }
+
+    }
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-        setVerticalManager(rvkHotReview);
-        adapter = new DetailsDiscussAdapter();
-        rvkHotReview.setAdapter(adapter);
-        adapter.setItemListener(this);
-
-        setVerticalManager(rvNewReview);
-        adapterNew = new DetailsDiscussAdapter();
-        rvNewReview.setAdapter(adapterNew);
-        adapterNew.setItemListener(this);
+        GlideUtils.loadCircle(mHeadView.getImageView(),R.drawable.ic_collect_have);
+        tvComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IntentUtil.startActivity(DetailsArticleCommentActivity.class);
+            }
+        });
+        initPraises();
     }
 
     protected void initData() {
-        List<HomeReviewBase> list = new ArrayList<>();
-        HomeReviewBase base = new HomeReviewBase();
-        base.setDiyi("张三");
-        base.setEr("李四");
-        base.setSan("周五");
-        base.setIndex(1);
-        list.add(base);
-        list.add(base);
-        adapter.setData(list);
-        adapterNew.setData(list);
 
         String token = SharedUtils.singleton().get(Constants.TOKEN_KEY, "");
         JSONObject node = new JSONObject();
@@ -109,7 +116,6 @@ public class DetailsDiscussActivity extends BaseActivity  implements ItemClickLi
                 base.setIndex(1);
                 list.add(base);
                 list.add(base);
-                adapter.setData(list);
             }
         });
     }
