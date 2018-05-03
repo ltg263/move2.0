@@ -48,6 +48,12 @@
             android:name=".ui.activity.ProjectActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.DetailsArticleCommentActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.DetailsArticleActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.DetailsDiscussActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
