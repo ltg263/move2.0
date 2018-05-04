@@ -1,10 +1,12 @@
 package com.secretk.move.ui.fragment;
 
+import android.graphics.pdf.PdfDocument;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -43,6 +45,8 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     TextView tvSort;
 
     private HomeRecommendAdapter adapter;
+    public boolean isHaveData = true;
+    private int pageIndex = 1;
 
     @Override
     public int setFragmentView() {
@@ -59,34 +63,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
 
     @Override
     public void onFirstUserVisible() {
-        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY, "");
-        JSONObject node = new JSONObject();
-        try {
-            node.put("token", token);
-            //node.put("userId", token);
-            node.put("pageIndex", 1);
-            node.put("pageSize", 10);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.USERHOME_ARTICLE_LIST)
-                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
-                .addQuery("sign", MD5.Md5(node.toString()))
-                .build();
-        RetrofitUtil.request(params, HomeReviewBase.class, new HttpCallBackImpl<HomeReviewBase>() {
-            @Override
-            public void onCompleted(HomeReviewBase bean) {
-                List<HomeReviewBase> list = new ArrayList<>();
-                HomeReviewBase base = new HomeReviewBase();
-                base.setDiyi("张三");
-                base.setEr("李四");
-                base.setSan("周五");
-                base.setIndex(2);
-                list.add(base);
-                adapter.setData(list);
-            }
-        });
+        getLoadData(null);
     }
 
 
@@ -98,5 +75,45 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     @Override
     public void onItemLongClick(View view, int postion) {
 
+    }
+
+    public void getLoadData(final RefreshLayout refreshlayout) {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+            //node.put("userId", token);
+            node.put("pageIndex", pageIndex++);
+            node.put("pageSize", Constants.PAGE_SIZE);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.USERHOME_ARTICLE_LIST)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, HomeReviewBase.class, new HttpCallBackImpl<HomeReviewBase>() {
+            @Override
+            public void onCompleted(HomeReviewBase bean) {
+                if(pageIndex==4){
+                    isHaveData=false;
+                }
+                List<HomeReviewBase> list = new ArrayList<>();
+                HomeReviewBase base = new HomeReviewBase();
+                base.setDiyi("张三");
+                base.setEr("李四");
+                base.setSan("周五");
+                base.setIndex(2);
+                list.add(base);
+                adapter.setData(list);
+            }
+
+            @Override
+            public void onFinish() {
+                if(refreshlayout!=null){
+                    refreshlayout.finishLoadmore();
+                }
+            }
+        });
     }
 }

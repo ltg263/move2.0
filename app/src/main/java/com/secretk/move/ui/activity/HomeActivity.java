@@ -1,8 +1,6 @@
 package com.secretk.move.ui.activity;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -12,15 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -37,6 +29,7 @@ import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StatusBarUtil;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.AppBarHeadView;
 
 import org.json.JSONException;
@@ -83,8 +76,9 @@ public class HomeActivity extends BaseActivity {
     ViewPager viewPager;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-    private int mOffset = 0;
-    //token：MzoxNTI0NzQ1MzA1NDQ1OmMyM2EwODU0NjE0YTNkYWRhYjg3MDg2OGY2MmRjZGFh
+    public static final int HOME_REVIEW_FRAGMENT = 0;
+    public static final int HOME_DISCUSS_FRAGMENT = 1;
+    public static final int HOME_ARTICLE_FRAGMENT = 2;
     @Override
     protected int setOnCreate() {
         return R.layout.activity_home;
@@ -98,14 +92,20 @@ public class HomeActivity extends BaseActivity {
         mHeadView.setTitleColor(R.color.title_gray);
         return mHeadView;
     }
+    HomeReviewFragment reviewFragment ;
+    HomeDiscussFragment discussFragment ;
+    HomeArticleFragment articleFragment ;
     @Override
     protected void initUI(Bundle savedInstanceState) {
-        setSmartRefreshStyle();
         GlideUtils.loadCircle(ivHead, R.mipmap.ic_launcher);
+        refreshLayout.setEnableRefresh(false);//禁止下拉刷新
+        reviewFragment = new HomeReviewFragment();
+        discussFragment = new HomeDiscussFragment();
+        articleFragment = new HomeArticleFragment();
         HomePageAdapter adapter = new HomePageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new HomeReviewFragment(), getString(R.string.review));
-        adapter.addFragment(new HomeDiscussFragment(), getString(R.string.discuss));
-        adapter.addFragment(new HomeArticleFragment(), getString(R.string.article));
+        adapter.addFragment(reviewFragment, getString(R.string.review));
+        adapter.addFragment(discussFragment, getString(R.string.discuss));
+        adapter.addFragment(articleFragment, getString(R.string.article));
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(1);
@@ -155,22 +155,14 @@ public class HomeActivity extends BaseActivity {
         });
     }
 
+    /**
+     * 各种滑动监听
+     */
     private void initListener() {
-        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
-            @Override
-            public void onHeaderPulling(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
-                mOffset = offset / 2;
-            }
-
-            @Override
-            public void onHeaderReleasing(RefreshHeader header, float percent, int offset, int bottomHeight, int extendHeight) {
-                mOffset = offset / 2;
-                //iv_parallax.setTranslationY(mOffset);
-            }
-        });
-
+        /**
+         * 设置Toolbar的变化
+         */
         appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 //if (Math.abs(verticalOffset) == DensityUtil.dp2px(200)-mHeadView.getHeight()) {//关闭
@@ -184,31 +176,77 @@ public class HomeActivity extends BaseActivity {
                 }
             }
         });
-    }
-
-    /**
-     * 指定刷线的样式
-     */
-    private void setSmartRefreshStyle(){
-        //设置全局的Header构建器
-        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
-            @NonNull
+        /**
+         * 下拉刷新
+         */
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-                //指定为经典Header，默认是 贝塞尔雷达Header
-                return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);
+            public void onRefresh(RefreshLayout refreshlayout) {
+                //设置可上啦
+                refreshlayout.setLoadmoreFinished(false);
             }
         });
-        //设置全局的Footer构建器
-        SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
-            @NonNull
+        /**
+         * 上啦加载
+         */
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
-            public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
-                //指定为经典Footer，默认是 BallPulseFooter
-                return new ClassicsFooter(context).setSpinnerStyle(SpinnerStyle.Translate);
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                switch (viewPager.getCurrentItem()){
+                    case HOME_REVIEW_FRAGMENT:
+                        reviewFragment.getLoadData(refreshlayout);
+                        if(reviewFragment.isHaveData){
+                            refreshlayout.setLoadmoreFinished(false);
+                        }else{
+                            refreshlayout.setLoadmoreFinished(true);
+                        }
+                        break;
+                    case HOME_DISCUSS_FRAGMENT:
+                        discussFragment.getLoadData(refreshlayout);
+                        if(discussFragment.isHaveData){
+                            refreshlayout.setLoadmoreFinished(false);
+                        }else{
+                            refreshlayout.setLoadmoreFinished(true);
+                        }
+                        break;
+                    case HOME_ARTICLE_FRAGMENT:
+                        articleFragment.getLoadData(refreshlayout);
+                        if(articleFragment.isHaveData){
+                            refreshlayout.setLoadmoreFinished(false);
+                        }else{
+                            refreshlayout.setLoadmoreFinished(true);
+                        }
+                        break;
+                }
             }
         });
-
+        StringUtil.getVpPosition(viewPager, new StringUtil.VpPageSelected() {
+            @Override
+            public void getVpPageSelected(int position) {
+                switch (position){
+                    case HOME_REVIEW_FRAGMENT:
+                        if(reviewFragment.isHaveData){
+                            refreshLayout.setLoadmoreFinished(false);
+                        }else{
+                            refreshLayout.setLoadmoreFinished(true);
+                        }
+                        break;
+                    case HOME_DISCUSS_FRAGMENT:
+                        if(discussFragment.isHaveData){
+                            refreshLayout.setLoadmoreFinished(false);
+                        }else{
+                            refreshLayout.setLoadmoreFinished(true);
+                        }
+                        break;
+                    case HOME_ARTICLE_FRAGMENT:
+                        if(articleFragment.isHaveData){
+                            refreshLayout.setLoadmoreFinished(false);
+                        }else{
+                            refreshLayout.setLoadmoreFinished(true);
+                        }
+                        break;
+                }
+            }
+        });
     }
-
 }

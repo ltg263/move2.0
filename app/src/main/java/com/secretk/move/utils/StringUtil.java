@@ -3,6 +3,7 @@ package com.secretk.move.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
@@ -344,5 +345,23 @@ public class StringUtil {
          public abstract void etYes();
          //无内容
          public void etNo(){}
+    }
+    public static void getVpPosition(ViewPager vp, final VpPageSelected vps){
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+            @Override
+            public void onPageSelected(int position) {
+                vps.getVpPageSelected(position);
+            }
+        });
+    }
+    public abstract static class VpPageSelected{
+        public abstract void getVpPageSelected(int position);
     }
 }

@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -37,7 +38,6 @@ import butterknife.BindView;
 public class HomeReviewFragment extends LazyFragment implements ItemClickListener {
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
-
     private HomeRecommendAdapter adapter;
     int pageIndex = 1;//
     public Boolean isHaveData = true;//是否还有数据
@@ -56,12 +56,15 @@ public class HomeReviewFragment extends LazyFragment implements ItemClickListene
 
     @Override
     public void onFirstUserVisible() {
-        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY, "");
+        getLoadData(null);
+
+    }
+    public void getLoadData(final RefreshLayout refreshlayout){
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
             //node.put("userId", token);
-            node.put("pageIndex", pageIndex);
+            node.put("pageIndex", pageIndex++);
             node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -74,10 +77,10 @@ public class HomeReviewFragment extends LazyFragment implements ItemClickListene
         RetrofitUtil.request(params, HomeReviewBase.class, new HttpCallBackImpl<HomeReviewBase>() {
             @Override
             public void onCompleted(HomeReviewBase bean) {
+                if(pageIndex==3){//当前也等于总页
+                    isHaveData=false;
+                }
                 HomeReviewBase.DataBean.EvaluationsBean evaluations = bean.getData().getEvaluations();
-//                if(evaluations.getCurPageNum()==evaluations.getPageSize()){
-//                    Toast.makeText(getActivity(), "已经没有了更多禁止上啦", Toast.LENGTH_SHORT).show()
-//                }
                 List<HomeReviewBase> list = new ArrayList<>();
                 HomeReviewBase base = new HomeReviewBase();
                 base.setDiyi("张三");
@@ -88,6 +91,13 @@ public class HomeReviewFragment extends LazyFragment implements ItemClickListene
                 list.add(base);
                 list.add(base);
                 adapter.setData(list);
+            }
+
+            @Override
+            public void onFinish() {
+                if(refreshlayout!=null){
+                    refreshlayout.finishLoadmore();
+                }
             }
         });
     }

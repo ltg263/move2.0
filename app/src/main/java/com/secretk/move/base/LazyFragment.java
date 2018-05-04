@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.secretk.move.baseManager.Constants;
+import com.secretk.move.utils.SharedUtils;
+
 import butterknife.ButterKnife;
 
 /**
@@ -23,6 +26,10 @@ public abstract class LazyFragment extends Fragment {
     private Boolean isFrist = true;
     private Boolean isPrepared = false;
     private View convertView;
+    protected SharedUtils sharedUtils;
+    protected boolean isLoginZt;
+    protected String token;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,6 +49,13 @@ public abstract class LazyFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        sharedUtils = SharedUtils.singleton();
+        isLoginZt = sharedUtils.get(Constants.IS_LOGIN_KEY,false);
+        if(isLoginZt){
+            token = sharedUtils.get(Constants.TOKEN_KEY,"");
+        }else{
+            token = "";
+        }
         initViews();
 
     }

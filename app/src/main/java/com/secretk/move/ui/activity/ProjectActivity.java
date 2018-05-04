@@ -1,8 +1,6 @@
 package com.secretk.move.ui.activity;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -13,15 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -39,6 +31,7 @@ import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StatusBarUtil;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.AppBarHeadView;
 
 import org.json.JSONException;
@@ -52,10 +45,11 @@ import butterknife.BindView;
  * 作者： litongge
  * 时间： 2018/4/27 13:41
  * 邮箱；ltg263@126.com
- * 描述：我的主页 加载三个Fragment：
- * HomeReviewFragment      测评
- * HomeDiscussFragment     讨论
- * HomeArticleFragment     文章
+ * 描述：项目主页 加载四个Fragment：
+ * ProjectIntroFragment        简介
+ * ProjectReviewFragment()    测评
+ * ProjectDiscussFragment(    讨论
+ * ProjectArticleFragment(    文章
  */
 
 public class ProjectActivity extends BaseActivity {
@@ -90,9 +84,11 @@ public class ProjectActivity extends BaseActivity {
     ViewPager viewPager;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-    private int mOffset = 0;
+    private ProjectIntroFragment introFragment;
+    private ProjectReviewFragment reviewFragment;
+    private ProjectDiscussFragment discussFragment;
+    private ProjectArticleFragment articleFragment;
 
-    //token：MzoxNTI0NzQ1MzA1NDQ1OmMyM2EwODU0NjE0YTNkYWRhYjg3MDg2OGY2MmRjZGFh
     @Override
     protected int setOnCreate() {
         return R.layout.activity_project;
@@ -111,11 +107,15 @@ public class ProjectActivity extends BaseActivity {
     @Override
     protected void initUI(Bundle savedInstanceState) {
         GlideUtils.loadCircle(ivHead, R.mipmap.ic_launcher);
+        introFragment = new ProjectIntroFragment();
+        reviewFragment = new ProjectReviewFragment();
+        discussFragment = new ProjectDiscussFragment();
+        articleFragment = new ProjectArticleFragment();
         HomePageAdapter adapter = new HomePageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ProjectIntroFragment(), getString(R.string.intro));
-        adapter.addFragment(new ProjectReviewFragment(), getString(R.string.review));
-        adapter.addFragment(new ProjectDiscussFragment(), getString(R.string.discuss));
-        adapter.addFragment(new ProjectArticleFragment(), getString(R.string.article));
+        adapter.addFragment(introFragment, getString(R.string.intro));
+        adapter.addFragment(reviewFragment, getString(R.string.review));
+        adapter.addFragment(discussFragment, getString(R.string.discuss));
+        adapter.addFragment(articleFragment, getString(R.string.article));
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(0);
@@ -165,9 +165,12 @@ public class ProjectActivity extends BaseActivity {
     }
 
     private void initListener() {
-
+        refreshLayout.setEnableRefresh(false);//禁止下拉刷新
+        refreshLayout.setEnableLoadmore(false);
+        /**
+         * 设置Toolbar的变化
+         */
         appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 //if (Math.abs(verticalOffset) == DensityUtil.dp2px(200)-mHeadView.getHeight()) {//关闭
@@ -177,8 +180,89 @@ public class ProjectActivity extends BaseActivity {
                 } else {  //展开
                     mHeadView.getImageView().setVisibility(View.GONE);
                     mHeadView.getTextView().setVisibility(View.VISIBLE);
-                    mHeadView.setTitle("我的首页");
+                    mHeadView.setTitle("项目首页");
                 }
+            }
+        });
+        /**
+         * 下拉刷新
+         */
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                //设置可上啦
+                refreshlayout.setLoadmoreFinished(false);
+            }
+        });
+        /**
+         * 上啦加载
+         */
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                switch (viewPager.getCurrentItem()){
+                    case 1:
+                        reviewFragment.getLoadData(refreshlayout);
+                        if(reviewFragment.isHaveData){
+                            refreshlayout.setLoadmoreFinished(false);
+                        }else{
+                            refreshlayout.setLoadmoreFinished(true);
+                        }
+                        break;
+                    case 2:
+                        discussFragment.getLoadData(refreshlayout);
+                        if(discussFragment.isHaveData){
+                            refreshlayout.setLoadmoreFinished(false);
+                        }else{
+                            refreshlayout.setLoadmoreFinished(true);
+                        }
+                        break;
+                    case 3:
+                        articleFragment.getLoadData(refreshlayout);
+                        if(articleFragment.isHaveData){
+                            refreshlayout.setLoadmoreFinished(false);
+                        }else{
+                            refreshlayout.setLoadmoreFinished(true);
+                        }
+                        break;
+                }
+            }
+        });
+        StringUtil.getVpPosition(viewPager, new StringUtil.VpPageSelected() {
+            @Override
+            public void getVpPageSelected(int position) {
+                if(viewPager.getCurrentItem()==0){
+                    refreshLayout.setEnableLoadmore(false);
+                }else{
+                    refreshLayout.setEnableLoadmore(true);
+                }
+                switch (viewPager.getCurrentItem()){
+                    case 1:
+                        reviewFragment.getLoadData(refreshLayout);
+                        if(discussFragment.isHaveData){
+                            refreshLayout.setLoadmoreFinished(false);
+                        }else{
+                            refreshLayout.setLoadmoreFinished(true);
+                        }
+                        break;
+                    case 2:
+                        discussFragment.getLoadData(refreshLayout);
+                        if(articleFragment.isHaveData){
+                            refreshLayout.setLoadmoreFinished(false);
+                        }else{
+                            refreshLayout.setLoadmoreFinished(true);
+                        }
+                        break;
+                    case 3:
+                        articleFragment.getLoadData(refreshLayout);
+                        if(articleFragment.isHaveData){
+                            refreshLayout.setLoadmoreFinished(false);
+                        }else{
+                            refreshLayout.setLoadmoreFinished(true);
+                        }
+                        break;
+                }
+
             }
         });
     }

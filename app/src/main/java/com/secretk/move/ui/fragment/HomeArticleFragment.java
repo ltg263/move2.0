@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -41,6 +42,7 @@ public class HomeArticleFragment extends LazyFragment  implements ItemClickListe
 
     private HomeRecommendAdapter adapter;
     public Boolean isHaveData = true;//是否还有数据
+    public int pageIndex = 1;
     @Override
     public int setFragmentView() {
         return R.layout.fragment_home;
@@ -56,17 +58,19 @@ public class HomeArticleFragment extends LazyFragment  implements ItemClickListe
 
     @Override
     public void onFirstUserVisible() {
-        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY, "");
+        getLoadData(null);
+    }
+    public void getLoadData(final RefreshLayout refreshlayout){
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
             //node.put("userId", token);
-            node.put("pageIndex", 1);
-            node.put("pageSize", 10);
+            node.put("pageIndex", pageIndex++);
+            node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        RxHttpParams params = new RxHttpParams.Build()
+        final RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.USERHOME_ARTICLE_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
@@ -74,6 +78,9 @@ public class HomeArticleFragment extends LazyFragment  implements ItemClickListe
         RetrofitUtil.request(params, HomeReviewBase.class, new HttpCallBackImpl<HomeReviewBase>() {
             @Override
             public void onCompleted(HomeReviewBase bean) {
+                if(pageIndex==10){
+                    isHaveData=false;
+                }
                 List<HomeReviewBase> list = new ArrayList<>();
                 HomeReviewBase base = new HomeReviewBase();
                 base.setDiyi("张三");
@@ -82,6 +89,13 @@ public class HomeArticleFragment extends LazyFragment  implements ItemClickListe
                 base.setIndex(2);
                 list.add(base);
                 adapter.setData(list);
+            }
+
+            @Override
+            public void onFinish() {
+                if(refreshlayout!=null){
+                    refreshlayout.finishLoadmore();
+                }
             }
         });
     }

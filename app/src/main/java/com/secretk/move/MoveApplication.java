@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.github.moduth.blockcanary.BlockCanary;
+import com.mob.MobSDK;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
@@ -38,6 +39,7 @@ public class MoveApplication extends Application {
         BlockCanary.install(mContext, new AppBlockCanaryContext()).start();
         Network.initOkhttp(mContext);
         AppConfig.initAppConfig(this);
+        MobSDK.init(this);
         initDao();
     }
 

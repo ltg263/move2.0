@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -53,6 +54,7 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
 
     private ProjectRecommendAdapter adapter;
     int pageIndex = 1;
+    public boolean isHaveData = true;
 
     @Override
     public int setFragmentView() {
@@ -91,14 +93,15 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
 
     @Override
     public void onFirstUserVisible() {
-        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY, "");
+        getLoadData(null);
+    }
+    public void getLoadData(final RefreshLayout refreshlayout) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
             //node.put("userId", token);
-            node.put("pageIndex", pageIndex);
+            node.put("pageIndex", pageIndex++);
             node.put("pageSize", Constants.PAGE_SIZE);
-            node.put("projectId", "");//查看的项目ID
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -110,6 +113,9 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
         RetrofitUtil.request(params, HomeReviewBase.class, new HttpCallBackImpl<HomeReviewBase>() {
             @Override
             public void onCompleted(HomeReviewBase bean) {
+                if(pageIndex==3){
+                    isHaveData=false;
+                }
                 HomeReviewBase.DataBean.EvaluationsBean evaluations = bean.getData().getEvaluations();
 //                if(evaluations.getCurPageNum()==evaluations.getPageSize()){
 //                    Toast.makeText(getActivity(), "已经没有了更多禁止上啦", Toast.LENGTH_SHORT).show()
@@ -125,9 +131,15 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
                 list.add(base);
                 adapter.setData(list);
             }
+
+            @Override
+            public void onFinish() {
+                if(refreshlayout!=null){
+                    refreshlayout.finishLoadmore();
+                }
+            }
         });
     }
-
     @Override
     public void onItemClick(View view, int postion) {
         Toast.makeText(getActivity(), "评测揭秘那  我是第：" + postion, Toast.LENGTH_SHORT).show();
@@ -137,4 +149,6 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
     public void onItemLongClick(View view, int postion) {
 
     }
+
+
 }

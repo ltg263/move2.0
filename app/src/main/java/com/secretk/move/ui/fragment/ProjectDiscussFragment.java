@@ -3,6 +3,7 @@ package com.secretk.move.ui.fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -41,6 +42,8 @@ public class ProjectDiscussFragment extends LazyFragment  implements ItemClickLi
 
     private ProjectRecommendAdapter adapter;
     private ProjectRecommendAdapter adapterNewest;
+    public boolean isHaveData=true;
+    public int pageIndex=1;
 
     @Override
     public int setFragmentView() {
@@ -61,13 +64,15 @@ public class ProjectDiscussFragment extends LazyFragment  implements ItemClickLi
 
     @Override
     public void onFirstUserVisible() {
-        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY, "");
+        getLoadData(null);
+    }
+    public void getLoadData(final RefreshLayout refreshlayout) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
             //node.put("userId", token);
-            node.put("pageIndex", 1);
-            node.put("pageSize", 10);
+            node.put("pageIndex", pageIndex++);
+            node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -79,6 +84,9 @@ public class ProjectDiscussFragment extends LazyFragment  implements ItemClickLi
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String bean) {
+                if(pageIndex==4){
+                    isHaveData=false;
+                }
                 List<HomeReviewBase> list = new ArrayList<>();
                 HomeReviewBase base = new HomeReviewBase();
                 base.setDiyi("张三");
@@ -90,9 +98,15 @@ public class ProjectDiscussFragment extends LazyFragment  implements ItemClickLi
                 adapter.setData(list);
                 adapterNewest.setData(list);
             }
+
+            @Override
+            public void onFinish() {
+                if(refreshlayout!=null){
+                    refreshlayout.finishLoadmore();
+                }
+            }
         });
     }
-
     @Override
     public void onItemClick(View view, int postion) {
         IntentUtil.startActivity(DetailsDiscussActivity.class);

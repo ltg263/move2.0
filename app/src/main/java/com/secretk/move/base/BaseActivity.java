@@ -12,7 +12,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.secretk.move.R;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.view.AppBarHeadView;
 
@@ -32,13 +34,21 @@ public abstract class BaseActivity extends AppCompatActivity {
     public AppBarHeadView mHeadView;
     protected List<MenuInfo> mMenuInfos = new ArrayList<>();
     protected SharedUtils sharedUtils;
-    protected boolean isLoginUi = false;
+    protected Boolean isLoginUi = false;
+    protected Boolean isLoginZt = false;//登录状态
+    protected String token ;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(setOnCreate());
         ButterKnife.bind(this);
         sharedUtils = SharedUtils.singleton();
+        isLoginZt = sharedUtils.get(Constants.IS_LOGIN_KEY,false);
+        if(isLoginZt){
+            token = sharedUtils.get(Constants.TOKEN_KEY,"");
+        }else{
+            token = "";
+        }
         initUI(savedInstanceState);
         initData();
 
@@ -113,6 +123,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }else if(item.getItemId() == R.string.share){
+            IntentUtil.showShare();
             Toast.makeText(this, "您点击了分享", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
