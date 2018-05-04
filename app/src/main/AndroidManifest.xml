@@ -10,13 +10,13 @@
 
     <application
         android:name=".MoveApplication"
-        tools:replace="android:name"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:name">
         <activity
             android:name=".ui.activity.MainActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged">
@@ -68,6 +68,9 @@
             android:name=".ui.activity.SearchActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity android:name=".ui.activity.AddLabelActivity" />
+        <activity android:name=".ui.activity.ReleaseArticleActivity" />
+        <activity android:name=".ui.activity.ReleaseDiscussActivity" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.secretk.move.fileprovider"

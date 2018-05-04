@@ -22,6 +22,7 @@
     <dimen name="dp_35">35dp</dimen>
 
     <dimen name="dp_40">40dp</dimen>
+    <dimen name="dp_60">60dp</dimen>
     <dimen name="dp_80">80dp</dimen>
     <dimen name="dp_120">120dp</dimen>
     <dimen name="dp_130">130dp</dimen>
