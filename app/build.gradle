@@ -36,6 +36,7 @@ MobSDK {
 
 android {
     //gradlew assembleRelease
+
     signingConfigs {
         move {
             keyAlias 'move'
