@@ -46,6 +46,7 @@ public class MoreCommentsActivity extends BaseActivity  implements ItemClickList
     @BindView(R.id.tv_assist)
     TextView tvAssist;
     private MoreCommentsAdapter adapter;
+    private String commentsId;
 
     @Override
     protected int setOnCreate() {
@@ -65,6 +66,7 @@ public class MoreCommentsActivity extends BaseActivity  implements ItemClickList
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        commentsId = getIntent().getStringExtra("commentsId");
         setVerticalManager(rvReview);
         adapter = new MoreCommentsAdapter();
         rvReview.setAdapter(adapter);
@@ -93,12 +95,12 @@ public class MoreCommentsActivity extends BaseActivity  implements ItemClickList
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            node.put("postId", 1);//帖子ID
+            node.put("commentsId", commentsId);//评论ID
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.HOME_DISCUSS_COMMENT_LIST)
+                .url(Constants.ARTICLE_COMMENT_REPLY_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();

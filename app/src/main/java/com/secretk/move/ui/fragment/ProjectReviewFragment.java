@@ -1,5 +1,6 @@
 package com.secretk.move.ui.fragment;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
@@ -13,6 +14,7 @@ import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeReviewBase;
 import com.secretk.move.listener.ItemClickListener;
+import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.adapter.ProjectRecommendAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
@@ -55,6 +57,7 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
     private ProjectRecommendAdapter adapter;
     int pageIndex = 1;
     public boolean isHaveData = true;
+    private String projectId;
 
     @Override
     public int setFragmentView() {
@@ -70,19 +73,19 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
         pbComprehensiveEvaluation.setTvThree(8.5,16,R.color.app_background);
 
         pbProjectLocation.setProgressDrawable(R.drawable.pb_view_xmdw,R.color.xmdw);
-        pbProjectLocation.setAllTv(getResources().getString(R.string.comprehensive_evaluation),
+        pbProjectLocation.setAllTv(getResources().getString(R.string.project_location),
                 "/ 20% (2018人)",8.1);
         pbTechnicalFramework.setProgressDrawable(R.drawable.pb_view_jskj,R.color.jskj);
-        pbTechnicalFramework.setAllTv(getResources().getString(R.string.comprehensive_evaluation),
+        pbTechnicalFramework.setAllTv(getResources().getString(R.string.technical_framework),
                 "/ 20% (2018人)",7.2);
         pbTeamStrength.setProgressDrawable(R.drawable.pb_view_tdsl,R.color.tdsl);
-        pbTeamStrength.setAllTv(getResources().getString(R.string.comprehensive_evaluation),
+        pbTeamStrength.setAllTv(getResources().getString(R.string.team_strength),
                 "/ 20% (2018人)",5.5);
         pbProjectSchedule.setProgressDrawable(R.drawable.pb_view_xmjd,R.color.xmjd);
-        pbProjectSchedule.setAllTv(getResources().getString(R.string.comprehensive_evaluation),
+        pbProjectSchedule.setAllTv(getResources().getString(R.string.project_schedule),
                 "/ 20% (2018人)",10);
         pbSpeculativeRisk.setProgressDrawable(R.drawable.pb_view_tzfx,R.color.tzfx);
-        pbSpeculativeRisk.setAllTv(getResources().getString(R.string.comprehensive_evaluation),
+        pbSpeculativeRisk.setAllTv(getResources().getString(R.string.speculative_risk),
                 "/ 20% (2018人)",0);
 
         setVerticalManager(rvReview);
@@ -99,7 +102,7 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            //node.put("userId", token);
+            node.put("projectId", projectId);
             node.put("pageIndex", pageIndex++);
             node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
@@ -140,6 +143,13 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
             }
         });
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        projectId = ((ProjectActivity)context).getProjectId();
+    }
+
     @Override
     public void onItemClick(View view, int postion) {
         Toast.makeText(getActivity(), "评测揭秘那  我是第：" + postion, Toast.LENGTH_SHORT).show();

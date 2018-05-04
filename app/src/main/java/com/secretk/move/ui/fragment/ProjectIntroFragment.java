@@ -1,5 +1,6 @@
 package com.secretk.move.ui.fragment;
 
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeReviewBase;
 import com.secretk.move.listener.ItemClickListener;
+import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.adapter.ProjectIntroAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
@@ -59,43 +61,28 @@ public class ProjectIntroFragment extends LazyFragment  implements ItemClickList
 
     @Override
     public void onFirstUserVisible() {
-        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY, "");
-        JSONObject node = new JSONObject();
-        try {
-            node.put("token", token);
-            //node.put("userId", token);
-            node.put("pageIndex", 1);
-            node.put("pageSize", 10);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.USERHOME_ARTICLE_LIST)
-                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
-                .addQuery("sign", MD5.Md5(node.toString()))
-                .build();
-        RetrofitUtil.request(params, HomeReviewBase.class, new HttpCallBackImpl<HomeReviewBase>() {
-            @Override
-            public void onCompleted(HomeReviewBase bean) {
-                List<HomeReviewBase> list = new ArrayList<>();
-                HomeReviewBase base = new HomeReviewBase();
-                base.setDiyi("张三");
-                base.setEr("李四");
-                base.setSan("周五");
-                base.setIndex(2);
-                list.add(base);
-                list.add(base);
-                list.add(base);
-                adapter.setData(list);
-            }
-        });
+        List<HomeReviewBase> list = new ArrayList<>();
+        HomeReviewBase base = new HomeReviewBase();
+        base.setDiyi("张三");
+        base.setEr("李四");
+        base.setSan("周五");
+        base.setIndex(2);
+        list.add(base);
+        list.add(base);
+        list.add(base);
+        adapter.setData(list);
     }
 
-
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        String xx = ((ProjectActivity)context).getProjectIntro();
+    }
 
     @Override
     public void onItemClick(View view, int postion) {
         if(view.getId()==R.id.tvFollws){
+
         }else{
             Toast.makeText(getActivity(), "进入下一个界面", Toast.LENGTH_SHORT).show();
         }

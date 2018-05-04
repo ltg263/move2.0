@@ -27,6 +27,7 @@ import com.secretk.move.ui.fragment.HomeDiscussFragment;
 import com.secretk.move.ui.fragment.HomeReviewFragment;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.MD5;
+import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
@@ -38,15 +39,16 @@ import org.json.JSONObject;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 作者： litongge
  * 时间： 2018/4/27 13:41
  * 邮箱；ltg263@126.com
  * 描述：我的主页 加载三个Fragment：
- *          HomeReviewFragment      测评
- *          HomeDiscussFragment     讨论
- *          HomeArticleFragment     文章
+ * HomeReviewFragment      测评
+ * HomeDiscussFragment     讨论
+ * HomeArticleFragment     文章
  */
 
 public class HomeActivity extends BaseActivity {
@@ -56,8 +58,8 @@ public class HomeActivity extends BaseActivity {
     TextView tvUserName;
     @BindView(R.id.tv_evaluating_sign)
     TextView tvEvaluatingSign;
-    @BindView(R.id.tv_attention)
-    TextView tvAttention;
+    @BindView(R.id.tv_save_follow)
+    TextView tvSaveFollow;
     @BindView(R.id.tv_answer)
     TextView tvAnswer;
     @BindView(R.id.tv_praise)
@@ -79,6 +81,10 @@ public class HomeActivity extends BaseActivity {
     public static final int HOME_REVIEW_FRAGMENT = 0;
     public static final int HOME_DISCUSS_FRAGMENT = 1;
     public static final int HOME_ARTICLE_FRAGMENT = 2;
+    String userId;
+    private String homePageTitle;
+    private Boolean isFollow=true;
+
     @Override
     protected int setOnCreate() {
         return R.layout.activity_home;
@@ -92,11 +98,14 @@ public class HomeActivity extends BaseActivity {
         mHeadView.setTitleColor(R.color.title_gray);
         return mHeadView;
     }
-    HomeReviewFragment reviewFragment ;
-    HomeDiscussFragment discussFragment ;
-    HomeArticleFragment articleFragment ;
+
+    HomeReviewFragment reviewFragment;
+    HomeDiscussFragment discussFragment;
+    HomeArticleFragment articleFragment;
+
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        userId = getIntent().getStringExtra("userId");
         GlideUtils.loadCircle(ivHead, R.mipmap.ic_launcher);
         refreshLayout.setEnableRefresh(false);//禁止下拉刷新
         reviewFragment = new HomeReviewFragment();
@@ -119,12 +128,19 @@ public class HomeActivity extends BaseActivity {
         initListener();
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
     @Override
     protected void initData() {
         JSONObject node = new JSONObject();
         try {
-            node.put("token", sharedUtils.get(Constants.TOKEN_KEY,""));
-           // node.put("userId", edPassword.getText().toString());
+            node.put("token", sharedUtils.get(Constants.TOKEN_KEY, ""));
+            //查看自己不用传userId只用token就可以，查看他人需要传入他人userID
+            if (StringUtil.isNotBlank(userId)) {
+               node.put("userId", userId);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -139,21 +155,51 @@ public class HomeActivity extends BaseActivity {
             public void onCompleted(HomeUserIndexBean userInfo) {
                 HomeUserIndexBean.DataBean.UserBean userData = userInfo.getData().getUser();
                 String iconUrl = userData.getIcon();
+                iconUrl="https://t11.baidu.com/it/u=3204748471,2053904929&fm=173&app=25&f=JPEG?w=640&h=426&s=98C1A14C0C4B2B5F52CC969D03004085";
                 GlideUtils.loadCircleUrl(ivHead, iconUrl);
                 GlideUtils.loadCircleUrl(mHeadView.getImageView(), iconUrl);
                 mHeadView.setTitle(userData.getHomePageTitle());
                 tvUserName.setText(userData.getUserName());
                 tvIndividualResume.setText(userData.getUserSignature());
                 //"userType": 1,// 用户类型:1-普通用户；2-项目方；3-评测机构；4-机构用户
-                tvEvaluatingSign.setText(userData.getUserType());
+                if(userData.getUserType()==2){
+                    tvEvaluatingSign.setText("项目方");
+                }else if(userData.getUserType()==3){
+                    tvEvaluatingSign.setText("评测机构");
+                }else if(userData.getUserType()==4){
+                    tvEvaluatingSign.setText("机构用户");
+                }else{
+                    tvEvaluatingSign.setText("普通用户");
+                    tvEvaluatingSign.setVisibility(View.GONE);
+                }
                 //“showFollow”: 0 , //是否显示 关注按钮 0- 不显示；1-显示关注  2-显示取消关注
-                tvAttention.setText(userData.getShowFollow());
-                tvAnswer.setText(userData.getTotalPostNum());
-                tvPraise.setText(userData.getPraiseNum());
-                tvFans.setText(userData.getFansNum());
+                if(userData.getShowFollow()==0){
+                    tvSaveFollow.setVisibility(View.GONE);
+                }else if(userData.getShowFollow()==1){
+                    isFollow=false;
+                    tvSaveFollow.setText("+关注");
+                }else{
+                    isFollow=true;
+                    tvSaveFollow.setText("已关注");
+                }
+                homePageTitle =  userData.getHomePageTitle();
+                mHeadView.setTitle(homePageTitle);
+                tvAnswer.setText(String.valueOf(userData.getTotalPostNum()));
+                tvPraise.setText(String.valueOf(userData.getPraiseNum()));
+                tvFans.setText(String.valueOf(userData.getFansNum()));
             }
         });
     }
+
+    @OnClick(R.id.tv_save_follow)
+    public void onViewClicked(View view) {
+        switch (view.getId()){
+            case R.id.tv_save_follow:
+               // NetUtil.addSaveFollow(isFollow,token,Constants.SaveFollow.USER,userId);
+                break;
+        }
+    }
+
 
     /**
      * 各种滑动监听
@@ -172,7 +218,7 @@ public class HomeActivity extends BaseActivity {
                 } else {  //展开
                     mHeadView.getImageView().setVisibility(View.GONE);
                     mHeadView.getTextView().setVisibility(View.VISIBLE);
-                    mHeadView.setTitle("我的首页");
+                    mHeadView.setTitle(homePageTitle);
                 }
             }
         });
@@ -192,28 +238,28 @@ public class HomeActivity extends BaseActivity {
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                switch (viewPager.getCurrentItem()){
+                switch (viewPager.getCurrentItem()) {
                     case HOME_REVIEW_FRAGMENT:
                         reviewFragment.getLoadData(refreshlayout);
-                        if(reviewFragment.isHaveData){
+                        if (reviewFragment.isHaveData) {
                             refreshlayout.setLoadmoreFinished(false);
-                        }else{
+                        } else {
                             refreshlayout.setLoadmoreFinished(true);
                         }
                         break;
                     case HOME_DISCUSS_FRAGMENT:
                         discussFragment.getLoadData(refreshlayout);
-                        if(discussFragment.isHaveData){
+                        if (discussFragment.isHaveData) {
                             refreshlayout.setLoadmoreFinished(false);
-                        }else{
+                        } else {
                             refreshlayout.setLoadmoreFinished(true);
                         }
                         break;
                     case HOME_ARTICLE_FRAGMENT:
                         articleFragment.getLoadData(refreshlayout);
-                        if(articleFragment.isHaveData){
+                        if (articleFragment.isHaveData) {
                             refreshlayout.setLoadmoreFinished(false);
-                        }else{
+                        } else {
                             refreshlayout.setLoadmoreFinished(true);
                         }
                         break;
@@ -223,25 +269,25 @@ public class HomeActivity extends BaseActivity {
         StringUtil.getVpPosition(viewPager, new StringUtil.VpPageSelected() {
             @Override
             public void getVpPageSelected(int position) {
-                switch (position){
+                switch (position) {
                     case HOME_REVIEW_FRAGMENT:
-                        if(reviewFragment.isHaveData){
+                        if (reviewFragment.isHaveData) {
                             refreshLayout.setLoadmoreFinished(false);
-                        }else{
+                        } else {
                             refreshLayout.setLoadmoreFinished(true);
                         }
                         break;
                     case HOME_DISCUSS_FRAGMENT:
-                        if(discussFragment.isHaveData){
+                        if (discussFragment.isHaveData) {
                             refreshLayout.setLoadmoreFinished(false);
-                        }else{
+                        } else {
                             refreshLayout.setLoadmoreFinished(true);
                         }
                         break;
                     case HOME_ARTICLE_FRAGMENT:
-                        if(articleFragment.isHaveData){
+                        if (articleFragment.isHaveData) {
                             refreshLayout.setLoadmoreFinished(false);
-                        }else{
+                        } else {
                             refreshLayout.setLoadmoreFinished(true);
                         }
                         break;

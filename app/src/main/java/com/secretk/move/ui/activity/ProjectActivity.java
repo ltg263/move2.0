@@ -1,5 +1,6 @@
 package com.secretk.move.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -8,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -28,6 +30,7 @@ import com.secretk.move.ui.fragment.ProjectDiscussFragment;
 import com.secretk.move.ui.fragment.ProjectIntroFragment;
 import com.secretk.move.ui.fragment.ProjectReviewFragment;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StatusBarUtil;
@@ -54,6 +57,8 @@ import butterknife.BindView;
 
 public class ProjectActivity extends BaseActivity {
 
+    @BindView(R.id.rl_grade)
+    RelativeLayout rlGrade;
     @BindView(R.id.tv_user_name_y)
     TextView tvUserNameY;
     @BindView(R.id.tv_user_name_z)
@@ -88,6 +93,7 @@ public class ProjectActivity extends BaseActivity {
     private ProjectReviewFragment reviewFragment;
     private ProjectDiscussFragment discussFragment;
     private ProjectArticleFragment articleFragment;
+    private String projectId;
 
     @Override
     protected int setOnCreate() {
@@ -106,6 +112,7 @@ public class ProjectActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        projectId = getIntent().getStringExtra("projectId");
         GlideUtils.loadCircle(ivHead, R.mipmap.ic_launcher);
         introFragment = new ProjectIntroFragment();
         reviewFragment = new ProjectReviewFragment();
@@ -120,6 +127,12 @@ public class ProjectActivity extends BaseActivity {
         tabs.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(4);
+        rlGrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IntentUtil.startActivity(DetailsUserGradeActivity.class);
+            }
+        });
         tabs.post(new Runnable() {
             @Override
             public void run() {
@@ -134,12 +147,12 @@ public class ProjectActivity extends BaseActivity {
         JSONObject node = new JSONObject();
         try {
             node.put("token", sharedUtils.get(Constants.TOKEN_KEY, ""));
-            // node.put("userId", edPassword.getText().toString());
+            node.put("projectId", projectId);//查看的项目ID
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.USERHOME_INDEX)
+                .url(Constants.PROJECT_INDEX)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
@@ -162,6 +175,12 @@ public class ProjectActivity extends BaseActivity {
                 tvFans.setText(userData.getFansNum());
             }
         });
+    }
+    public String getProjectId(){
+        return projectId;
+    }
+    public String getProjectIntro(){
+        return "返回项目简介的信息";
     }
 
     private void initListener() {

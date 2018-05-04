@@ -1,6 +1,5 @@
 package com.secretk.move.bean;
 
-import com.google.gson.annotations.SerializedName;
 import com.secretk.move.bean.base.BaseRes;
 
 /**
@@ -13,13 +12,50 @@ import com.secretk.move.bean.base.BaseRes;
 public class HomeUserIndexBean extends BaseRes{
 
     /**
-     * data : {"user":{"homePageTitle":"我的主页","showFollow":0,"totalPostNum":100,"praiseNum":100,"fansNum":100,"userType":1,"icon":"upload/userIcons/1.jpg","userName":"老猫","userSignature":"xxxx"}}
-     * serverDatetime : 1503147401
+     * status : null
+     * reason : null
+     * fromuri : null
+     * token : null
+     * data : {"user":{"homePageTitle":"我的主页","showFollow":0,"totalPostNum":0,"userId":3,"userName":"UVHaV6BJo","sex":1,"icon":"/upload/avatars/avatar.png","userType":1,"userDegree":1,"userSignature":null,"fansNum":0,"praiseNum":0,"evaluationNum":0,"discussNum":0,"articleNum":0,"kffCoinNum":0,"areaName":null,"status":1}}
      */
 
+    private Object status;
+    private Object reason;
+    private Object fromuri;
+    private Object token;
     private DataBean data;
-    @SerializedName("serverDatetime")
-    private int serverDatetimeX;
+
+    public Object getStatus() {
+        return status;
+    }
+
+    public void setStatus(Object status) {
+        this.status = status;
+    }
+
+    public Object getReason() {
+        return reason;
+    }
+
+    public void setReason(Object reason) {
+        this.reason = reason;
+    }
+
+    public Object getFromuri() {
+        return fromuri;
+    }
+
+    public void setFromuri(Object fromuri) {
+        this.fromuri = fromuri;
+    }
+
+    public Object getToken() {
+        return token;
+    }
+
+    public void setToken(Object token) {
+        this.token = token;
+    }
 
     public DataBean getData() {
         return data;
@@ -29,17 +65,9 @@ public class HomeUserIndexBean extends BaseRes{
         this.data = data;
     }
 
-    public int getServerDatetimeX() {
-        return serverDatetimeX;
-    }
-
-    public void setServerDatetimeX(int serverDatetimeX) {
-        this.serverDatetimeX = serverDatetimeX;
-    }
-
     public static class DataBean {
         /**
-         * user : {"homePageTitle":"我的主页","showFollow":0,"totalPostNum":100,"praiseNum":100,"fansNum":100,"userType":1,"icon":"upload/userIcons/1.jpg","userName":"老猫","userSignature":"xxxx"}
+         * user : {"homePageTitle":"我的主页","showFollow":0,"totalPostNum":0,"userId":3,"userName":"UVHaV6BJo","sex":1,"icon":"/upload/avatars/avatar.png","userType":1,"userDegree":1,"userSignature":null,"fansNum":0,"praiseNum":0,"evaluationNum":0,"discussNum":0,"articleNum":0,"kffCoinNum":0,"areaName":null,"status":1}
          */
 
         private UserBean user;
@@ -56,24 +84,42 @@ public class HomeUserIndexBean extends BaseRes{
             /**
              * homePageTitle : 我的主页
              * showFollow : 0
-             * totalPostNum : 100
-             * praiseNum : 100
-             * fansNum : 100
+             * totalPostNum : 0
+             * userId : 3
+             * userName : UVHaV6BJo
+             * sex : 1
+             * icon : /upload/avatars/avatar.png
              * userType : 1
-             * icon : upload/userIcons/1.jpg
-             * userName : 老猫
-             * userSignature : xxxx
+             * userDegree : 1
+             * userSignature : null
+             * fansNum : 0
+             * praiseNum : 0
+             * evaluationNum : 0
+             * discussNum : 0
+             * articleNum : 0
+             * kffCoinNum : 0
+             * areaName : null
+             * status : 1
              */
 
             private String homePageTitle;
             private int showFollow;
             private int totalPostNum;
-            private int praiseNum;
-            private int fansNum;
-            private int userType;
-            private String icon;
+            private int userId;
             private String userName;
+            private int sex;
+            private String icon;
+            private int userType;
+            private int userDegree;
             private String userSignature;
+            private int fansNum;
+            private int praiseNum;
+            private int evaluationNum;
+            private int discussNum;
+            private int articleNum;
+            private int kffCoinNum;
+            private Object areaName;
+            private int status;
 
             public String getHomePageTitle() {
                 return homePageTitle;
@@ -99,36 +145,12 @@ public class HomeUserIndexBean extends BaseRes{
                 this.totalPostNum = totalPostNum;
             }
 
-            public int getPraiseNum() {
-                return praiseNum;
+            public int getUserId() {
+                return userId;
             }
 
-            public void setPraiseNum(int praiseNum) {
-                this.praiseNum = praiseNum;
-            }
-
-            public int getFansNum() {
-                return fansNum;
-            }
-
-            public void setFansNum(int fansNum) {
-                this.fansNum = fansNum;
-            }
-
-            public int getUserType() {
-                return userType;
-            }
-
-            public void setUserType(int userType) {
-                this.userType = userType;
-            }
-
-            public String getIcon() {
-                return icon;
-            }
-
-            public void setIcon(String icon) {
-                this.icon = icon;
+            public void setUserId(int userId) {
+                this.userId = userId;
             }
 
             public String getUserName() {
@@ -139,12 +161,108 @@ public class HomeUserIndexBean extends BaseRes{
                 this.userName = userName;
             }
 
+            public int getSex() {
+                return sex;
+            }
+
+            public void setSex(int sex) {
+                this.sex = sex;
+            }
+
+            public String getIcon() {
+                return icon;
+            }
+
+            public void setIcon(String icon) {
+                this.icon = icon;
+            }
+
+            public int getUserType() {
+                return userType;
+            }
+
+            public void setUserType(int userType) {
+                this.userType = userType;
+            }
+
+            public int getUserDegree() {
+                return userDegree;
+            }
+
+            public void setUserDegree(int userDegree) {
+                this.userDegree = userDegree;
+            }
+
             public String getUserSignature() {
                 return userSignature;
             }
 
             public void setUserSignature(String userSignature) {
                 this.userSignature = userSignature;
+            }
+
+            public int getFansNum() {
+                return fansNum;
+            }
+
+            public void setFansNum(int fansNum) {
+                this.fansNum = fansNum;
+            }
+
+            public int getPraiseNum() {
+                return praiseNum;
+            }
+
+            public void setPraiseNum(int praiseNum) {
+                this.praiseNum = praiseNum;
+            }
+
+            public int getEvaluationNum() {
+                return evaluationNum;
+            }
+
+            public void setEvaluationNum(int evaluationNum) {
+                this.evaluationNum = evaluationNum;
+            }
+
+            public int getDiscussNum() {
+                return discussNum;
+            }
+
+            public void setDiscussNum(int discussNum) {
+                this.discussNum = discussNum;
+            }
+
+            public int getArticleNum() {
+                return articleNum;
+            }
+
+            public void setArticleNum(int articleNum) {
+                this.articleNum = articleNum;
+            }
+
+            public int getKffCoinNum() {
+                return kffCoinNum;
+            }
+
+            public void setKffCoinNum(int kffCoinNum) {
+                this.kffCoinNum = kffCoinNum;
+            }
+
+            public Object getAreaName() {
+                return areaName;
+            }
+
+            public void setAreaName(Object areaName) {
+                this.areaName = areaName;
+            }
+
+            public int getStatus() {
+                return status;
+            }
+
+            public void setStatus(int status) {
+                this.status = status;
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.secretk.move.ui.fragment;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -13,6 +14,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeReviewBase;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.DetailsDiscussActivity;
+import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.adapter.ProjectRecommendAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
@@ -44,6 +46,7 @@ public class ProjectDiscussFragment extends LazyFragment  implements ItemClickLi
     private ProjectRecommendAdapter adapterNewest;
     public boolean isHaveData=true;
     public int pageIndex=1;
+    private String projectId;
 
     @Override
     public int setFragmentView() {
@@ -70,14 +73,14 @@ public class ProjectDiscussFragment extends LazyFragment  implements ItemClickLi
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            //node.put("userId", token);
+            node.put("projectId", projectId);
             node.put("pageIndex", pageIndex++);
             node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.USERHOME_DISCUSS_LIST)
+                .url(Constants.PROJECT_DISCUSS_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
@@ -107,6 +110,13 @@ public class ProjectDiscussFragment extends LazyFragment  implements ItemClickLi
             }
         });
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        projectId = ((ProjectActivity)context).getProjectId();
+    }
+
     @Override
     public void onItemClick(View view, int postion) {
         IntentUtil.startActivity(DetailsDiscussActivity.class);

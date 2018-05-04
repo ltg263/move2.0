@@ -42,6 +42,7 @@ public class DetailsDiscussActivity extends BaseActivity  implements ItemClickLi
     RecyclerView rvNewReview;
     private DetailsDiscussAdapter adapter;
     private DetailsDiscussAdapter adapterNew;
+    private String postId;
 
     @Override
     protected int setOnCreate() {
@@ -62,6 +63,7 @@ public class DetailsDiscussActivity extends BaseActivity  implements ItemClickLi
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        postId = getIntent().getStringExtra("postId");
         setVerticalManager(rvkHotReview);
         adapter = new DetailsDiscussAdapter();
         rvkHotReview.setAdapter(adapter);
@@ -89,12 +91,12 @@ public class DetailsDiscussActivity extends BaseActivity  implements ItemClickLi
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            node.put("postId", 1);//帖子ID
+            node.put("postId", postId);//帖子ID
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.HOME_DISCUSS_DETAIL)
+                .url(Constants.DISCUSS_DETAIL)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();

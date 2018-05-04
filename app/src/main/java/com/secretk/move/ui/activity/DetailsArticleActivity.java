@@ -51,6 +51,8 @@ public class DetailsArticleActivity extends BaseActivity  implements ItemClickLi
             "http://img0.imgtn.bdimg.com/it/u=2263418180,3668836868&fm=206&gp=0.jpg",
             "http://img0.imgtn.bdimg.com/it/u=2263418180,3668836868&fm=206&gp=0.jpg"
     };
+    private String postId;
+
     @Override
     protected int setOnCreate() {
         return R.layout.activity_details_article;
@@ -80,6 +82,7 @@ public class DetailsArticleActivity extends BaseActivity  implements ItemClickLi
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        postId = getIntent().getStringExtra("postId");
         GlideUtils.loadCircle(mHeadView.getImageView(),R.drawable.ic_collect_have);
         tvComment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,17 +94,15 @@ public class DetailsArticleActivity extends BaseActivity  implements ItemClickLi
     }
 
     protected void initData() {
-
-        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY, "");
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            node.put("postId", 1);//帖子ID
+            node.put("postId", postId);//帖子ID
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.HOME_DISCUSS_DETAIL)
+                .url(Constants.ARTICLE_DETAIL)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();

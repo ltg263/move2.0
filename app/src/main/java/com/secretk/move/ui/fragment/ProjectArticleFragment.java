@@ -1,5 +1,6 @@
 package com.secretk.move.ui.fragment;
 
+import android.content.Context;
 import android.graphics.pdf.PdfDocument;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeReviewBase;
 import com.secretk.move.listener.ItemClickListener;
+import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.adapter.HomeRecommendAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
@@ -47,6 +49,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     private HomeRecommendAdapter adapter;
     public boolean isHaveData = true;
     private int pageIndex = 1;
+    private String projectId;
 
     @Override
     public int setFragmentView() {
@@ -77,18 +80,25 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
 
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        projectId = ((ProjectActivity)context).getProjectId();
+    }
+
     public void getLoadData(final RefreshLayout refreshlayout) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            //node.put("userId", token);
+            node.put("projectId", projectId);
             node.put("pageIndex", pageIndex++);
+            //node.put("sortField", pageIndex++);//按点赞数排序，需要传值 "praiseNum"
             node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.USERHOME_ARTICLE_LIST)
+                .url(Constants.PROJECT_ARTICLE_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();

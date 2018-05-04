@@ -1,5 +1,6 @@
 package com.secretk.move.ui.fragment;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -13,10 +14,12 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeReviewBase;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.DetailsDiscussActivity;
+import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.adapter.HomeRecommendAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.StringUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,6 +43,8 @@ public class HomeDiscussFragment extends LazyFragment  implements ItemClickListe
 
     private HomeRecommendAdapter adapter;
     public Boolean isHaveData = true;//是否还有数据
+    private String userId;
+
     @Override
     public int setFragmentView() {
         return R.layout.fragment_home;
@@ -54,6 +59,12 @@ public class HomeDiscussFragment extends LazyFragment  implements ItemClickListe
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        userId = ((HomeActivity)context).getUserId();
+    }
+
+    @Override
     public void onFirstUserVisible() {
         getLoadData(null);
 
@@ -62,7 +73,9 @@ public class HomeDiscussFragment extends LazyFragment  implements ItemClickListe
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            //node.put("userId", token);
+            if(StringUtil.isNotBlank(userId)){
+                node.put("userId", userId);
+            }
             node.put("pageIndex", pageIndex++);
             node.put("pageSize",  Constants.PAGE_SIZE);
         } catch (JSONException e) {

@@ -32,7 +32,7 @@ import butterknife.BindView;
  * 作者： litongge
  * 时间： 2018/5/3 16:53
  * 邮箱；ltg263@126.com
- * 描述：文章---评论详情
+ * 描述：文章---评论详情列表
  */
 public class DetailsArticleCommentActivity extends BaseActivity  implements ItemClickListener {
 
@@ -42,6 +42,7 @@ public class DetailsArticleCommentActivity extends BaseActivity  implements Item
     RecyclerView rvNewReview;
     private DetailsDiscussAdapter adapter;
     private DetailsDiscussAdapter adapterNew;
+    private String postId;
 
     @Override
     protected int setOnCreate() {
@@ -62,6 +63,7 @@ public class DetailsArticleCommentActivity extends BaseActivity  implements Item
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        postId = getIntent().getStringExtra("postId");
         setVerticalManager(rvkHotReview);
         adapter = new DetailsDiscussAdapter();
         rvkHotReview.setAdapter(adapter);
@@ -85,16 +87,15 @@ public class DetailsArticleCommentActivity extends BaseActivity  implements Item
         adapter.setData(list);
         adapterNew.setData(list);
 
-        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY, "");
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            node.put("postId", 1);//帖子ID
+            node.put("postId", postId);//帖子ID
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.HOME_DISCUSS_DETAIL)
+                .url(Constants.ARTICLE_COMMENT_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
