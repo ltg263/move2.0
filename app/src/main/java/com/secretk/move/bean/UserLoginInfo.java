@@ -98,7 +98,7 @@ public class UserLoginInfo extends BaseRes{
             private String payPassword;
             private int userType;
             private int userDegree;
-            private Object userSignature;
+            private String userSignature;
             private int fansNum;
             private int praiseNum;
             private int evaluationNum;
@@ -214,11 +214,11 @@ public class UserLoginInfo extends BaseRes{
                 this.userDegree = userDegree;
             }
 
-            public Object getUserSignature() {
+            public String getUserSignature() {
                 return userSignature;
             }
 
-            public void setUserSignature(Object userSignature) {
+            public void setUserSignature(String userSignature) {
                 this.userSignature = userSignature;
             }
 
@@ -364,6 +364,43 @@ public class UserLoginInfo extends BaseRes{
 
             public void setReferLevel(int referLevel) {
                 this.referLevel = referLevel;
+            }
+
+            @Override
+            public String toString() {
+                return "{" +
+                        "followStatus=" + followStatus +
+                        ", userId=" + userId +
+                        ", userName='" + userName + '\'' +
+                        ", sex=" + sex +
+                        ", icon='" + icon + '\'' +
+                        ", mobile='" + mobile + '\'' +
+                        ", email=" + email +
+                        ", wechat=" + wechat +
+                        ", password='" + password + '\'' +
+                        ", payPassword='" + payPassword + '\'' +
+                        ", userType=" + userType +
+                        ", userDegree=" + userDegree +
+                        ", userSignature=" + userSignature +
+                        ", fansNum=" + fansNum +
+                        ", praiseNum=" + praiseNum +
+                        ", evaluationNum=" + evaluationNum +
+                        ", discussNum=" + discussNum +
+                        ", articleNum=" + articleNum +
+                        ", kffCoinNum=" + kffCoinNum +
+                        ", areaName=" + areaName +
+                        ", createTime=" + createTime +
+                        ", createTimeStr='" + createTimeStr + '\'' +
+                        ", updateTime=" + updateTime +
+                        ", updateTimeStr='" + updateTimeStr + '\'' +
+                        ", status=" + status +
+                        ", memo=" + memo +
+                        ", provinceCode=" + provinceCode +
+                        ", cityCode=" + cityCode +
+                        ", areaCode=" + areaCode +
+                        ", referUserId=" + referUserId +
+                        ", referLevel=" + referLevel +
+                        '}';
             }
         }
     }

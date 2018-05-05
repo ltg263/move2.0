@@ -92,10 +92,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             mHeadView.setTitleSize(17);
             setSupportActionBar(mHeadView.getToolbar());
             setHeadBackShow(mHeadView.isHeadBackShow());
-            if(!isLoginUi){
-                StatusBarUtil.setLightMode(this);
-                StatusBarUtil.setColor(this,  UiUtils.getColor(R.color.main_background), 0);
-            }
         }
     }
     @Override
@@ -117,9 +113,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(isShow);
         getSupportActionBar().setHomeButtonEnabled(isShow);
         if (mHeadView != null && isShow) {
-            if(isLoginUi){
-                mHeadView.getToolbar().setNavigationIcon(R.drawable.call_back);
-            }else {
+            if (isLoginUi) {
+                mHeadView.getToolbar().setNavigationIcon(R.drawable.toobar_back_white);
+            } else {
+                StatusBarUtil.setLightMode(this);
+                StatusBarUtil.setColor(this, UiUtils.getColor(R.color.main_background), 0);
                 mHeadView.getToolbar().setNavigationIcon(R.drawable.toobar_back_blue);
             }
         }
