@@ -129,7 +129,8 @@ public class LoginActivity extends BaseActivity {
                 //登录的状态
                 sharedUtils.put(Constants.IS_LOGIN_KEY,true);
                 ////用户信息
-                UserLoginInfo.DataBean dataBean = userInfo.getData();
+//                UserLoginInfo.DataBean dataBean = userInfo.getData();
+                sharedUtils.put("userInfo",userInfo.getData().getUser().toString());
                 IntentUtil.startActivity(MainActivity.class);
             }
         });

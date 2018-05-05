@@ -1,8 +1,10 @@
 package com.secretk.move.presenter.impl;
 
-import android.text.TextUtils;
 
-import com.secretk.move.bean.PersonInfors;
+import android.widget.Toast;
+
+import com.secretk.move.baseManager.BaseManager;
+import com.secretk.move.bean.UserLoginInfo;
 import com.secretk.move.interactor.impl.MineFragmentInteractorImpl;
 import com.secretk.move.presenter.MineFragmentPresenter;
 import com.secretk.move.view.FragmentMineView;
@@ -16,12 +18,13 @@ public class MineFragmentPresenterImpl implements MineFragmentPresenter {
     private MineFragmentInteractorImpl interactor;
     public MineFragmentPresenterImpl(FragmentMineView view) {
         this.view=view;
+        interactor = new MineFragmentInteractorImpl();
     }
     @Override
     public void initialized() {
-        PersonInfors infors= interactor.getInfos();
-        if (TextUtils.isEmpty(infors.getName())){
-
+        UserLoginInfo.DataBean.UserBean infors = interactor.getInfos();
+        if (infors==null){
+            Toast.makeText(BaseManager.app, "登录信息有误", Toast.LENGTH_SHORT).show();
         }else {
             view.loadInfoSuccess(infors);
         }
