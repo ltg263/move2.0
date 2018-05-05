@@ -14,8 +14,11 @@ import android.widget.Toast;
 import com.secretk.move.R;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.utils.StatusBarUtil;
+import com.secretk.move.utils.UiUtils;
 import com.secretk.move.view.AppBarHeadView;
 
 import java.util.ArrayList;
@@ -89,6 +92,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             mHeadView.setTitleSize(17);
             setSupportActionBar(mHeadView.getToolbar());
             setHeadBackShow(mHeadView.isHeadBackShow());
+            if(!isLoginUi){
+                StatusBarUtil.setLightMode(this);
+                StatusBarUtil.setColor(this,  UiUtils.getColor(R.color.main_background), 0);
+            }
         }
     }
     @Override
