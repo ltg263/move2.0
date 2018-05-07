@@ -84,10 +84,10 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
     public void refresh(final int position, List<RowsBean> lists) {
         final RowsBean rowsBean = lists.get(position);
 //        GlideUtils.loadCircle(imgHead, R.drawable.account_portrait);
-        GlideUtils.loadCircleUrl(ivCreateUserIcon, Constants.BASE_IMG_URL+rowsBean.getCreateUserIcon());
+        GlideUtils.loadCircleUrl(ivCreateUserIcon, Constants.BASE_IMG_URL+rowsBean.getProjectIcon());
        // tvCreateUserName.setText(rowsBean.getCreateUserName());
         tvCreateUserName.setText(rowsBean.getProjectChineseName());
-        tvEnglishName.setText(rowsBean.getProjectEnglishName());
+        tvEnglishName.setText("/"+rowsBean.getProjectCode());
         tvCreateTime.setText(String.valueOf(rowsBean.getCreateTime()));
         tvPostTitle.setText(rowsBean.getPostTitle());
         tvTotalScore.setText(String.valueOf(rowsBean.getTotalScore()));
@@ -104,7 +104,7 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
             case 2:
                 tvTotalScore.setVisibility(View.GONE);
                 tvFollowStatus.setVisibility(View.VISIBLE);
-                rlDiscuss.setVisibility(View.VISIBLE);
+                rlDiscuss.setVisibility(View.GONE);
                 tvCrackDown.setVisibility(View.GONE);
                 break;
             case 3:

@@ -239,24 +239,24 @@ public class HomeActivity extends BaseActivity {
             public void onLoadmore(RefreshLayout refreshlayout) {
                 switch (viewPager.getCurrentItem()) {
                     case HOME_REVIEW_FRAGMENT:
-                        reviewFragment.getLoadData(refreshlayout);
                         if (reviewFragment.isHaveData) {
                             refreshlayout.setLoadmoreFinished(false);
+                            reviewFragment.getLoadData(refreshlayout);
                         } else {
                             refreshlayout.setLoadmoreFinished(true);
                         }
                         break;
                     case HOME_DISCUSS_FRAGMENT:
-                        discussFragment.getLoadData(refreshlayout);
                         if (discussFragment.isHaveData) {
                             refreshlayout.setLoadmoreFinished(false);
+                            discussFragment.getLoadData(refreshlayout);
                         } else {
                             refreshlayout.setLoadmoreFinished(true);
                         }
                         break;
                     case HOME_ARTICLE_FRAGMENT:
-                        articleFragment.getLoadData(refreshlayout);
                         if (articleFragment.isHaveData) {
+                            articleFragment.getLoadData(refreshlayout);
                             refreshlayout.setLoadmoreFinished(false);
                         } else {
                             refreshlayout.setLoadmoreFinished(true);
