@@ -9,12 +9,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.secretk.move.R;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
-import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
@@ -98,10 +99,33 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
         for (MenuInfo item : mMenuInfos) {
-            menu.add(0, item.getId(), 0, item.getName()).setIcon(item.getIcon()).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            if(item.getIcon()!=0){
+                menu.add(0, item.getId(), 0, item.getName()).setIcon(item.getIcon()).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            }else {
+                TextView tv = new TextView(this);
+                tv.setText(item.getName());
+                tv.setPadding(0,0,10,0);
+                tv.setTextSize(14);
+                tv.setTextColor(getResources().getColor(R.color.app_background));
+                tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        OnToolbarRightListener();
+                    }
+                });
+                menu.add(0, item.getId(), 0, item.getName())
+                        .setActionView(tv)
+                        .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+            }
         }
         return true;
     }
+
+    /**
+     * Toolbar右侧的点击事件
+     */
+    protected void OnToolbarRightListener(){}
 
     protected abstract AppBarHeadView initHeadView(List<MenuInfo> mMenus);
     /**
