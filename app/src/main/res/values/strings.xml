@@ -71,4 +71,21 @@
     <string name="crack_down">打假</string>
     <string name="project_was_assessed">测评了项目</string>
 
+    <!-- 我的设置 -->
+    <string name="mine_text_1">未绑定</string>
+    <string name="mine_text_2">个人信息</string>
+    <string name="mine_text_3">头像</string>
+    <string name="mine_text_4">昵称</string>
+    <string name="mine_text_5">性别</string>
+    <string name="mine_text_6">所在地</string>
+    <string name="mine_text_7">个人简介</string>
+    <string name="mine_text_8">用户等级</string>
+    <string name="mine_text_9">账户设置</string>
+    <string name="mine_text_10">绑定手机号</string>
+    <string name="mine_text_11">绑定微信</string>
+    <string name="mine_text_12">绑定邮箱</string>
+    <string name="mine_text_13">重置密码</string>
+
+    <string name="permission_ask_now">您需要打开%1$s权限</string>
+    <string name="permission_ask_error">申请%1$s权限失敗，请在应用详情中打开</string>
 </resources>

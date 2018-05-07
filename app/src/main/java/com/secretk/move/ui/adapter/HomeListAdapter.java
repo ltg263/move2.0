@@ -6,28 +6,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
-import com.secretk.move.bean.HomeReviewBase;
-import com.secretk.move.listener.ItemClickListener;
+import com.secretk.move.bean.RowsBean;
 import com.secretk.move.ui.holder.HomeListHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * 作者： litongge
  * 时间： 2018/4/27 19:51
  * 邮箱；ltg263@126.com
- * 描述：我的项目 列表 item
+ * 描述：我的主页 列表 item
  */
 
-public class ProjectRecommendAdapter extends RecyclerView.Adapter<HomeListHolder> {
+public class HomeListAdapter extends RecyclerView.Adapter<HomeListHolder> {
 
 
-    private List<HomeReviewBase> lists = new ArrayList<>();
-    private ItemClickListener mListener;
-    public void setItemListener(ItemClickListener mListener){
-        this.mListener = mListener;
-    }
+    private List<RowsBean> lists = new ArrayList<>();
 
     @Override
     public HomeListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,8 +34,7 @@ public class ProjectRecommendAdapter extends RecyclerView.Adapter<HomeListHolder
 
     @Override
     public void onBindViewHolder(HomeListHolder holder, int position) {
-       // holder.refresh(position, lists);
-        holder.setItemListener(mListener);
+        holder.refresh(position, lists);
     }
 
     @Override
@@ -47,12 +42,12 @@ public class ProjectRecommendAdapter extends RecyclerView.Adapter<HomeListHolder
         return lists.size();
     }
 
-    public void setData(List<HomeReviewBase> list) {
+    public void setData(List<RowsBean> list) {
         this.lists = list;
         notifyDataSetChanged();
     }
 
-    public List<HomeReviewBase> getData() {
+    public List<RowsBean> getData() {
         return lists;
     }
 }

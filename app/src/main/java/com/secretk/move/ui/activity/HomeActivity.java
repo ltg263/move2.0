@@ -154,8 +154,7 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onCompleted(HomeUserIndexBean userInfo) {
                 HomeUserIndexBean.DataBean.UserBean userData = userInfo.getData().getUser();
-                String iconUrl = userData.getIcon();
-                iconUrl="https://t11.baidu.com/it/u=3204748471,2053904929&fm=173&app=25&f=JPEG?w=640&h=426&s=98C1A14C0C4B2B5F52CC969D03004085";
+                String iconUrl = Constants.BASE_IMG_URL+userData.getIcon();
                 GlideUtils.loadCircleUrl(ivHead, iconUrl);
                 GlideUtils.loadCircleUrl(mHeadView.getImageView(), iconUrl);
                 mHeadView.setTitle(userData.getHomePageTitle());
@@ -195,7 +194,7 @@ public class HomeActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()){
             case R.id.tv_save_follow:
-               // NetUtil.addSaveFollow(isFollow,token,Constants.SaveFollow.USER,userId);
+                NetUtil.addSaveFollow(isFollow,token,Constants.SaveFollow.USER,userId);
                 break;
         }
     }

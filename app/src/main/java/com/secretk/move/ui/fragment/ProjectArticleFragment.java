@@ -1,7 +1,6 @@
 package com.secretk.move.ui.fragment;
 
 import android.content.Context;
-import android.graphics.pdf.PdfDocument;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -14,19 +13,15 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.HomeReviewBase;
+import com.secretk.move.bean.CommonListBase;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.ProjectActivity;
-import com.secretk.move.ui.adapter.HomeRecommendAdapter;
+import com.secretk.move.ui.adapter.ProjectRecommendAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
-import com.secretk.move.utils.SharedUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -46,7 +41,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     @BindView(R.id.tv_sort)
     TextView tvSort;
 
-    private HomeRecommendAdapter adapter;
+    private ProjectRecommendAdapter adapter;
     public boolean isHaveData = true;
     private int pageIndex = 1;
     private String projectId;
@@ -59,7 +54,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     @Override
     public void initViews() {
         setVerticalManager(rvReview);
-        adapter = new HomeRecommendAdapter();
+        adapter = new ProjectRecommendAdapter();
         rvReview.setAdapter(adapter);
         adapter.setItemListener(this);
     }
@@ -102,20 +97,15 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, HomeReviewBase.class, new HttpCallBackImpl<HomeReviewBase>() {
+        RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
             @Override
-            public void onCompleted(HomeReviewBase bean) {
-                if(pageIndex==4){
+            public void onCompleted(CommonListBase bean) {
+                CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getDiscusses();
+                if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
                     isHaveData=false;
                 }
-                List<HomeReviewBase> list = new ArrayList<>();
-                HomeReviewBase base = new HomeReviewBase();
-                base.setDiyi("张三");
-                base.setEr("李四");
-                base.setSan("周五");
-                base.setIndex(2);
-                list.add(base);
-                adapter.setData(list);
+                // List<RowsBean> rows = detailsBean.getRows();
+                //adapter.setData(detailsBean.getRows());
             }
 
             @Override

@@ -1,5 +1,8 @@
 package com.secretk.move.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.secretk.move.bean.base.BaseRes;
 
 /**
@@ -51,7 +54,7 @@ public class UserLoginInfo extends BaseRes{
             this.user = user;
         }
 
-        public static class UserBean {
+        public static class UserBean implements Parcelable {
             /**
              * followStatus : 0
              * userId : 3
@@ -92,8 +95,8 @@ public class UserLoginInfo extends BaseRes{
             private int sex;
             private String icon;
             private String mobile;
-            private Object email;
-            private Object wechat;
+            private String email;
+            private String wechat;
             private String password;
             private String payPassword;
             private int userType;
@@ -105,17 +108,17 @@ public class UserLoginInfo extends BaseRes{
             private int discussNum;
             private int articleNum;
             private int kffCoinNum;
-            private Object areaName;
+            private String areaName;
             private long createTime;
             private String createTimeStr;
             private long updateTime;
             private String updateTimeStr;
             private int status;
-            private Object memo;
-            private Object provinceCode;
-            private Object cityCode;
-            private Object areaCode;
-            private Object referUserId;
+            private String memo;
+            private String provinceCode;
+            private String cityCode;
+            private String areaCode;
+            private String referUserId;
             private int referLevel;
 
             public int getFollowStatus() {
@@ -166,19 +169,19 @@ public class UserLoginInfo extends BaseRes{
                 this.mobile = mobile;
             }
 
-            public Object getEmail() {
+            public String getEmail() {
                 return email;
             }
 
-            public void setEmail(Object email) {
+            public void setEmail(String email) {
                 this.email = email;
             }
 
-            public Object getWechat() {
+            public String getWechat() {
                 return wechat;
             }
 
-            public void setWechat(Object wechat) {
+            public void setWechat(String wechat) {
                 this.wechat = wechat;
             }
 
@@ -270,11 +273,11 @@ public class UserLoginInfo extends BaseRes{
                 this.kffCoinNum = kffCoinNum;
             }
 
-            public Object getAreaName() {
+            public String getAreaName() {
                 return areaName;
             }
 
-            public void setAreaName(Object areaName) {
+            public void setAreaName(String areaName) {
                 this.areaName = areaName;
             }
 
@@ -318,43 +321,43 @@ public class UserLoginInfo extends BaseRes{
                 this.status = status;
             }
 
-            public Object getMemo() {
+            public String getMemo() {
                 return memo;
             }
 
-            public void setMemo(Object memo) {
+            public void setMemo(String memo) {
                 this.memo = memo;
             }
 
-            public Object getProvinceCode() {
+            public String getProvinceCode() {
                 return provinceCode;
             }
 
-            public void setProvinceCode(Object provinceCode) {
+            public void setProvinceCode(String provinceCode) {
                 this.provinceCode = provinceCode;
             }
 
-            public Object getCityCode() {
+            public String getCityCode() {
                 return cityCode;
             }
 
-            public void setCityCode(Object cityCode) {
+            public void setCityCode(String cityCode) {
                 this.cityCode = cityCode;
             }
 
-            public Object getAreaCode() {
+            public String getAreaCode() {
                 return areaCode;
             }
 
-            public void setAreaCode(Object areaCode) {
+            public void setAreaCode(String areaCode) {
                 this.areaCode = areaCode;
             }
 
-            public Object getReferUserId() {
+            public String getReferUserId() {
                 return referUserId;
             }
 
-            public void setReferUserId(Object referUserId) {
+            public void setReferUserId(String referUserId) {
                 this.referUserId = referUserId;
             }
 
@@ -402,6 +405,95 @@ public class UserLoginInfo extends BaseRes{
                         ", referLevel=" + referLevel +
                         '}';
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeInt(this.followStatus);
+                dest.writeInt(this.userId);
+                dest.writeString(this.userName);
+                dest.writeInt(this.sex);
+                dest.writeString(this.icon);
+                dest.writeString(this.mobile);
+                dest.writeString(this.email);
+                dest.writeString(this.wechat);
+                dest.writeString(this.password);
+                dest.writeString(this.payPassword);
+                dest.writeInt(this.userType);
+                dest.writeInt(this.userDegree);
+                dest.writeString(this.userSignature);
+                dest.writeInt(this.fansNum);
+                dest.writeInt(this.praiseNum);
+                dest.writeInt(this.evaluationNum);
+                dest.writeInt(this.discussNum);
+                dest.writeInt(this.articleNum);
+                dest.writeInt(this.kffCoinNum);
+                dest.writeString(this.areaName);
+                dest.writeLong(this.createTime);
+                dest.writeString(this.createTimeStr);
+                dest.writeLong(this.updateTime);
+                dest.writeString(this.updateTimeStr);
+                dest.writeInt(this.status);
+                dest.writeString(this.memo);
+                dest.writeString(this.provinceCode);
+                dest.writeString(this.cityCode);
+                dest.writeString(this.areaCode);
+                dest.writeString(this.referUserId);
+                dest.writeInt(this.referLevel);
+            }
+
+            public UserBean() {
+            }
+
+            protected UserBean(Parcel in) {
+                this.followStatus = in.readInt();
+                this.userId = in.readInt();
+                this.userName = in.readString();
+                this.sex = in.readInt();
+                this.icon = in.readString();
+                this.mobile = in.readString();
+                this.email = in.readString();
+                this.wechat = in.readString();
+                this.password = in.readString();
+                this.payPassword = in.readString();
+                this.userType = in.readInt();
+                this.userDegree = in.readInt();
+                this.userSignature = in.readString();
+                this.fansNum = in.readInt();
+                this.praiseNum = in.readInt();
+                this.evaluationNum = in.readInt();
+                this.discussNum = in.readInt();
+                this.articleNum = in.readInt();
+                this.kffCoinNum = in.readInt();
+                this.areaName = in.readString();
+                this.createTime = in.readLong();
+                this.createTimeStr = in.readString();
+                this.updateTime = in.readLong();
+                this.updateTimeStr = in.readString();
+                this.status = in.readInt();
+                this.memo = in.readString();
+                this.provinceCode = in.readString();
+                this.cityCode = in.readString();
+                this.areaCode = in.readString();
+                this.referUserId = in.readString();
+                this.referLevel = in.readInt();
+            }
+
+            public static final Parcelable.Creator<UserBean> CREATOR = new Parcelable.Creator<UserBean>() {
+                @Override
+                public UserBean createFromParcel(Parcel source) {
+                    return new UserBean(source);
+                }
+
+                @Override
+                public UserBean[] newArray(int size) {
+                    return new UserBean[size];
+                }
+            };
         }
     }
 }

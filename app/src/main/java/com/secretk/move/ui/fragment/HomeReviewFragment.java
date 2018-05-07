@@ -3,7 +3,6 @@ package com.secretk.move.ui.fragment;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.secretk.move.R;
@@ -12,24 +11,18 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.HomeReviewBase;
+import com.secretk.move.bean.CommonListBase;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.DetailsReviewAllActivity;
 import com.secretk.move.ui.activity.HomeActivity;
-import com.secretk.move.ui.activity.MoreCommentsActivity;
-import com.secretk.move.ui.adapter.HomeRecommendAdapter;
+import com.secretk.move.ui.adapter.HomeListAdapter;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
-import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -40,10 +33,10 @@ import butterknife.BindView;
  * 描述：我的主页--测评
  */
 
-public class HomeReviewFragment extends LazyFragment implements ItemClickListener {
+public class HomeReviewFragment extends LazyFragment{
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
-    private HomeRecommendAdapter adapter;
+    private HomeListAdapter adapter;
     int pageIndex = 1;//
     public Boolean isHaveData = true;//是否还有数据
     String userId;
@@ -55,9 +48,8 @@ public class HomeReviewFragment extends LazyFragment implements ItemClickListene
     @Override
     public void initViews() {
         setVerticalManager(rvReview);
-        adapter = new HomeRecommendAdapter();
+        adapter = new HomeListAdapter();
         rvReview.setAdapter(adapter);
-        adapter.setItemListener(this);
     }
     @Override
     public void onAttach(Context context) {
@@ -87,23 +79,14 @@ public class HomeReviewFragment extends LazyFragment implements ItemClickListene
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, HomeReviewBase.class, new HttpCallBackImpl<HomeReviewBase>() {
+        RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
             @Override
-            public void onCompleted(HomeReviewBase bean) {
-                if(pageIndex==3){//当前也等于总页
+            public void onCompleted(CommonListBase bean) {
+                CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getEvaluations();
+                if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
                     isHaveData=false;
                 }
-                HomeReviewBase.DataBean.EvaluationsBean evaluations = bean.getData().getEvaluations();
-                List<HomeReviewBase> list = new ArrayList<>();
-                HomeReviewBase base = new HomeReviewBase();
-                base.setDiyi("张三");
-                base.setEr("李四");
-                base.setSan("周五");
-                base.setIndex(0);
-                list.add(base);
-                list.add(base);
-                list.add(base);
-                adapter.setData(list);
+                adapter.setData(detailsBean.getRows());
             }
 
             @Override
@@ -113,15 +96,5 @@ public class HomeReviewFragment extends LazyFragment implements ItemClickListene
                 }
             }
         });
-    }
-
-    @Override
-    public void onItemClick(View view, int postion) {
-        IntentUtil.startActivity(DetailsReviewAllActivity.class);
-    }
-
-    @Override
-    public void onItemLongClick(View view, int postion) {
-
     }
 }

@@ -2,6 +2,8 @@ package com.secretk.move.baseManager;
 
 import com.secretk.move.MoveApplication;
 
+import java.io.File;
+
 /**
  * 作者： litongge
  * 时间：  2017/2/26 11:51
@@ -30,20 +32,40 @@ public interface Constants {
      */
         int PAGE_SIZE = 10;
 
+    /**
+     * 文件存储的名称
+     */
+    String SHAREDPREFS_NAME = "move";
     /**apk 在本地的存放地址*/
     String APKPATH = MoveApplication.getContext().getExternalFilesDir(null).getAbsolutePath() + "/move.apk";
+    /**
+     * 文件存储目录
+     */
+    String LOCAL_PATH = MoveApplication.getContext().getExternalFilesDir(null).getAbsolutePath()
+            + File.separator + SHAREDPREFS_NAME;
     /**
      * 是否开启调试模式
      */
     boolean DEBUG = true;
     /**
+     * 图片
+     */
+    String BASE_IMG_URL = "http://47.98.197.101/";
+    /**
      * 外网
      */
-//    String BASE_URL = "http://47.98.197.101/tzg-rest/";
+    String BASE_URL = "http://47.98.197.101/rest/";
+
     /**
      * 王晗
-      */
-    String BASE_URL = "http://192.168.10.122:8082/";
+     */
+//    String BASE_URL = "http://192.168.10.122:8082/";
+    /**
+     * 张栋栋
+     */
+//    String BASE_URL = "http://192.168.10.151:802/rest/";
+
+//    String BASE_URL = "http://192.168.10.201/";
 
     //发送验证码通用接口
     String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL+"kff/dynamicValidateCode/send";
@@ -53,9 +75,9 @@ public interface Constants {
     String PHONE_AVAILABLE = BASE_URL+"kff/user/register/phoneAvailable";
     //用户注册
     String USER_REGISTER = BASE_URL+"kff/user/register";
-    //用户登录
+    //老用户用户登录
     String USER_LOGIN = BASE_URL+"kff/user/login";
-    //用户登录
+    //重置密码
     String FORGET_PASSWORD = BASE_URL+"kff/user/forgetPassword";
 
     //首页推荐
@@ -79,9 +101,9 @@ public interface Constants {
     //项目主页 评测列表
     String PROJECT_EVALUATION_LIST = BASE_URL+"/kff/project/evaluationList";
     //项目讨论列表
-    String PROJECT_DISCUSS_LIST = BASE_URL+"kff/userhome/discussList";
+    String PROJECT_DISCUSS_LIST = BASE_URL+"kff/project/discussLis";
     //项目  文章列表
-    String PROJECT_ARTICLE_LIST = BASE_URL+"kff/userhome/articleList";
+    String PROJECT_ARTICLE_LIST = BASE_URL+"kff/project/articleList";
 
 
     //讨论详情 页

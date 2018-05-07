@@ -12,22 +12,18 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.HomeReviewBase;
+import com.secretk.move.bean.CommonListBase;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.DetailsArticleActivity;
 import com.secretk.move.ui.activity.HomeActivity;
-import com.secretk.move.ui.adapter.HomeRecommendAdapter;
+import com.secretk.move.ui.adapter.HomeListAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
-import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -39,11 +35,11 @@ import butterknife.BindView;
  */
 
 
-public class HomeArticleFragment extends LazyFragment  implements ItemClickListener {
+public class HomeArticleFragment extends LazyFragment{
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
 
-    private HomeRecommendAdapter adapter;
+    private HomeListAdapter adapter;
     public Boolean isHaveData = true;//是否还有数据
     public int pageIndex = 1;
     private String userId;
@@ -56,9 +52,8 @@ public class HomeArticleFragment extends LazyFragment  implements ItemClickListe
     @Override
     public void initViews() {
         setVerticalManager(rvReview);
-        adapter = new HomeRecommendAdapter();
+        adapter = new HomeListAdapter();
         rvReview.setAdapter(adapter);
-        adapter.setItemListener(this);
     }
 
     @Override
@@ -82,20 +77,14 @@ public class HomeArticleFragment extends LazyFragment  implements ItemClickListe
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, HomeReviewBase.class, new HttpCallBackImpl<HomeReviewBase>() {
+        RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
             @Override
-            public void onCompleted(HomeReviewBase bean) {
-                if(pageIndex==10){
+            public void onCompleted(CommonListBase bean) {
+                CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getArticles();
+                if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
                     isHaveData=false;
                 }
-                List<HomeReviewBase> list = new ArrayList<>();
-                HomeReviewBase base = new HomeReviewBase();
-                base.setDiyi("张三");
-                base.setEr("李四");
-                base.setSan("周五");
-                base.setIndex(2);
-                list.add(base);
-                adapter.setData(list);
+                adapter.setData(detailsBean.getRows());
             }
 
             @Override
@@ -110,19 +99,6 @@ public class HomeArticleFragment extends LazyFragment  implements ItemClickListe
     public void onAttach(Context context) {
         super.onAttach(context);
         userId = ((HomeActivity)context).getUserId();
-    }
-
-
-
-    @Override
-    public void onItemClick(View view, int postion) {
-        IntentUtil.startActivity(DetailsArticleActivity.class);
-        Toast.makeText(getActivity(), "文章界面：我是第："+postion, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onItemLongClick(View view, int postion) {
-
     }
 
 }

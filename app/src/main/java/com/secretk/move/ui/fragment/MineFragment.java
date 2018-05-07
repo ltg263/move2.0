@@ -1,5 +1,7 @@
 package com.secretk.move.ui.fragment;
 
+import android.content.Intent;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -84,6 +86,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     @BindView(R.id.ll_my_feedback)
     LinearLayout llMyFeedback;
     Unbinder unbinder;
+    private UserLoginInfo.DataBean.UserBean userInfos;
 
     @Override
     public int setFragmentView() {
@@ -112,7 +115,8 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
     @Override
     public void loadInfoSuccess(UserLoginInfo.DataBean.UserBean infos) {
-        GlideUtils.loadCircleUrl(ivHeadImg, Constants.BASE_URL+infos.getIcon());
+        userInfos = infos;
+        GlideUtils.loadCircleUrl(ivHeadImg, Constants.BASE_IMG_URL+infos.getIcon());
         tvUserName.setText(infos.getUserName());
         //300 粉丝 •1568 赞
         String fansNum = String.valueOf(infos.getFansNum())+"  粉丝 • "+String.valueOf(infos.getPraiseNum())+" 赞";
@@ -128,7 +132,11 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_my_set:
-                //IntentUtil.startActivity(MineSetActivity.class);
+                if(userInfos!=null){
+                    Intent intent = new Intent(getActivity(),MineSetActivity.class);
+                    intent.putExtra("userInfos", userInfos);
+                    startActivity(intent);
+                }
                 break;
             case R.id.tv_go_login:
                 IntentUtil.startActivity(LoginHomeActivity.class);
