@@ -2,7 +2,6 @@ package com.secretk.move.ui.fragment;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.secretk.move.R;
@@ -11,20 +10,16 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.HomeReviewBase;
-import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.activity.DetailsDiscussActivity;
+import com.secretk.move.bean.CommonListBase;
+import com.secretk.move.bean.RowsBean;
 import com.secretk.move.ui.activity.ProjectActivity;
-import com.secretk.move.ui.adapter.ProjectRecommendAdapter;
-import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.ui.adapter.HomeListAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
-import com.secretk.move.utils.SharedUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,17 +31,18 @@ import butterknife.BindView;
  * 描述：项目主页--讨论
  */
 
-public class ProjectDiscussFragment extends LazyFragment  implements ItemClickListener{
+public class ProjectDiscussFragment extends LazyFragment{
     @BindView(R.id.rv_review_hot)
     RecyclerView rvReviewHot;
     @BindView(R.id.rv_review_newest)
     RecyclerView rvReviewNewest;
 
-    private ProjectRecommendAdapter adapter;
-    private ProjectRecommendAdapter adapterNewest;
+    private HomeListAdapter adapterNot;
+    private HomeListAdapter adapterNew;
     public boolean isHaveData=true;
     public int pageIndex=1;
     private String projectId;
+    private List<RowsBean> newData;
 
     @Override
     public int setFragmentView() {
@@ -57,23 +53,22 @@ public class ProjectDiscussFragment extends LazyFragment  implements ItemClickLi
     public void initViews() {
         setVerticalManager(rvReviewHot);
         setVerticalManager(rvReviewNewest);
-        adapter = new ProjectRecommendAdapter();
-        rvReviewHot.setAdapter(adapter);
-        adapterNewest = new ProjectRecommendAdapter();
-        rvReviewNewest.setAdapter(adapterNewest);
-        adapter.setItemListener(this);
-        adapterNewest.setItemListener(this);
+        adapterNot = new HomeListAdapter();
+        rvReviewHot.setAdapter(adapterNot);
+        adapterNew = new HomeListAdapter();
+        rvReviewNewest.setAdapter(adapterNew);
     }
 
     @Override
     public void onFirstUserVisible() {
+        adapterNot.setData(newData);
         getLoadData(null);
     }
     public void getLoadData(final RefreshLayout refreshlayout) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            node.put("projectId", projectId);
+            node.put("projectId", Integer.valueOf(projectId));
             node.put("pageIndex", pageIndex++);
             node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
@@ -84,22 +79,17 @@ public class ProjectDiscussFragment extends LazyFragment  implements ItemClickLi
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+        RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
             @Override
-            public void onCompleted(String bean) {
-                if(pageIndex==4){
+            public void onCompleted(CommonListBase bean) {
+                CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getDiscusses();
+                if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
                     isHaveData=false;
                 }
-                List<HomeReviewBase> list = new ArrayList<>();
-                HomeReviewBase base = new HomeReviewBase();
-                base.setDiyi("张三");
-                base.setEr("李四");
-                base.setSan("周五");
-                base.setIndex(1);
-                list.add(base);
-                list.add(base);
-                adapter.setData(list);
-                adapterNewest.setData(list);
+                if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
+                    return;
+                }
+                adapterNew.setData(detailsBean.getRows());
             }
 
             @Override
@@ -117,14 +107,7 @@ public class ProjectDiscussFragment extends LazyFragment  implements ItemClickLi
         projectId = ((ProjectActivity)context).getProjectId();
     }
 
-    @Override
-    public void onItemClick(View view, int postion) {
-        IntentUtil.startActivity(DetailsDiscussActivity.class);
-        //Toast.makeText(getActivity(), "讨论界面    我是第："+postion, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onItemLongClick(View view, int postion) {
-
+    public void initUiData(List<RowsBean> rows) {
+        this.newData=rows;
     }
 }

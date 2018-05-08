@@ -31,6 +31,7 @@ import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 
 import org.json.JSONException;
@@ -176,10 +177,10 @@ public class HomeActivity extends BaseActivity {
                     tvSaveFollow.setVisibility(View.GONE);
                 }else if(userData.getShowFollow()==1){
                     isFollow=false;
-                    tvSaveFollow.setText("+关注");
+                    tvSaveFollow.setText(getResources().getString(R.string.follow_status_0));
                 }else{
                     isFollow=true;
-                    tvSaveFollow.setText("已关注");
+                    tvSaveFollow.setText(getResources().getString(R.string.follow_status_1));
                 }
                 homePageTitle =  userData.getHomePageTitle();
                 mHeadView.setTitle(homePageTitle);
@@ -194,7 +195,13 @@ public class HomeActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()){
             case R.id.tv_save_follow:
-                NetUtil.addSaveFollow(isFollow,token,Constants.SaveFollow.USER,userId);
+                NetUtil.addSaveFollow(isFollow,token,
+                        Constants.SaveFollow.USER,Integer.valueOf(userId), new NetUtil.SaveFollowImpl() {
+                            @Override
+                            public void finishFollow(String str) {
+                                ToastUtils.getInstance().show(str);
+                            }
+                        });
                 break;
         }
     }

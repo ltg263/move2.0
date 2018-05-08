@@ -1,6 +1,5 @@
 package com.secretk.move.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -22,8 +21,9 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.HomeUserIndexBean;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.bean.ProjectHomeBean;
+import com.secretk.move.bean.RowsBean;
 import com.secretk.move.ui.adapter.HomePageAdapter;
 import com.secretk.move.ui.fragment.ProjectArticleFragment;
 import com.secretk.move.ui.fragment.ProjectDiscussFragment;
@@ -32,9 +32,12 @@ import com.secretk.move.ui.fragment.ProjectReviewFragment;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
+import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 
 import org.json.JSONException;
@@ -43,6 +46,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 作者： litongge
@@ -57,43 +61,44 @@ import butterknife.BindView;
 
 public class ProjectActivity extends BaseActivity {
 
-    @BindView(R.id.rl_grade)
-    RelativeLayout rlGrade;
-    @BindView(R.id.tv_user_name_y)
-    TextView tvUserNameY;
-    @BindView(R.id.tv_user_name_z)
-    TextView tvUserNameZ;
-    @BindView(R.id.tv_issue_time)
-    TextView tvIssueTime;
-    @BindView(R.id.tv_grade)
-    TextView tvGrade;
-    @BindView(R.id.tv_praise)
-    TextView tvPraise;
-    @BindView(R.id.tv_fans)
-    TextView tvFans;
-    @BindView(R.id.iv_head)
-    ImageView ivHead;
-    @BindView(R.id.tv_individual_resume)
-    TextView tvIndividualResume;
-    @BindView(R.id.btn_review)
-    Button btnReview;
-    @BindView(R.id.btn_attention)
-    Button btnAttention;
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
-    @BindView(R.id.appbar)
-    AppBarLayout appbar;
     @BindView(R.id.tabs)
     TabLayout tabs;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.tv_project_code)
+    TextView tvProjectCode;
+    @BindView(R.id.tv_project_chinese_name)
+    TextView tvProjectChineseName;
+    @BindView(R.id.tv_create_time)
+    TextView tvCreateTime;
+    @BindView(R.id.tv_total_score)
+    TextView tvTotalScore;
+    @BindView(R.id.rl_grade)
+    RelativeLayout rlGrade;
+    @BindView(R.id.tv_rater_num)
+    TextView tvRaterNum;
+    @BindView(R.id.tv_follower_num)
+    TextView tvFollowerNum;
+    @BindView(R.id.iv_project_icon)
+    ImageView ivProjectIcon;
+    @BindView(R.id.tv_project_signature)
+    TextView tvProjectSignature;
+    @BindView(R.id.btn_review)
+    Button btnReview;
+    @BindView(R.id.btn_follow_status)
+    Button btnFollowStatus;
+    @BindView(R.id.appbar)
+    AppBarLayout appbar;
     private ProjectIntroFragment introFragment;
     private ProjectReviewFragment reviewFragment;
     private ProjectDiscussFragment discussFragment;
     private ProjectArticleFragment articleFragment;
     private String projectId;
+    private ProjectHomeBean.DataBean.ProjectBean projectInfo;
 
     @Override
     protected int setOnCreate() {
@@ -104,8 +109,6 @@ public class ProjectActivity extends BaseActivity {
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
         mHeadView = findViewById(R.id.head_app_server);
         mHeadView.setHeadBackShow(true);
-        mHeadView.setTitle("EOX");
-        mHeadView.setTitleVice("/臭子");
         mHeadView.setTitleColor(R.color.title_gray);
         return mHeadView;
     }
@@ -113,7 +116,6 @@ public class ProjectActivity extends BaseActivity {
     @Override
     protected void initUI(Bundle savedInstanceState) {
         projectId = getIntent().getStringExtra("projectId");
-        GlideUtils.loadCircle(ivHead, R.mipmap.ic_launcher);
         introFragment = new ProjectIntroFragment();
         reviewFragment = new ProjectReviewFragment();
         discussFragment = new ProjectDiscussFragment();
@@ -127,12 +129,6 @@ public class ProjectActivity extends BaseActivity {
         tabs.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(4);
-        rlGrade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                IntentUtil.startActivity(DetailsUserGradeActivity.class);
-            }
-        });
         tabs.post(new Runnable() {
             @Override
             public void run() {
@@ -147,7 +143,8 @@ public class ProjectActivity extends BaseActivity {
         JSONObject node = new JSONObject();
         try {
             node.put("token", sharedUtils.get(Constants.TOKEN_KEY, ""));
-            node.put("projectId", projectId);//查看的项目ID
+            projectId = "1";
+            node.put("projectId", Integer.valueOf(projectId));//查看的项目ID
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -157,31 +154,44 @@ public class ProjectActivity extends BaseActivity {
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
         //网络请求方式 默认为POST
-        RetrofitUtil.request(params, HomeUserIndexBean.class, new HttpCallBackImpl<HomeUserIndexBean>() {
+        RetrofitUtil.request(params, ProjectHomeBean.class, new HttpCallBackImpl<ProjectHomeBean>() {
             @Override
-            public void onCompleted(HomeUserIndexBean userInfo) {
-                HomeUserIndexBean.DataBean.UserBean userData = userInfo.getData().getUser();
-                String iconUrl = userData.getIcon();
-                GlideUtils.loadCircleUrl(ivHead, iconUrl);
-                GlideUtils.loadCircleUrl(mHeadView.getImageView(), iconUrl);
-                mHeadView.setTitle(userData.getHomePageTitle());
-                tvUserNameY.setText(userData.getUserName());
-                //"userType": 1,// 用户类型:1-普通用户；2-项目方；3-评测机构；4-机构用户
-                //tvEvaluatingSign.setText(userData.getUserType());
-                //“showFollow”: 0 , //是否显示 关注按钮 0- 不显示；1-显示关注  2-显示取消关注
-                btnAttention.setText(userData.getShowFollow());
-                //tvAnswer.setText(userData.getTotalPostNum());
-                tvPraise.setText(userData.getPraiseNum());
-                tvFans.setText(userData.getFansNum());
+            public void onCompleted(ProjectHomeBean projectHomeBean) {
+                projectInfo = projectHomeBean.getData().getProject();
+                reviewFragment.initUiDate(projectHomeBean);
+                discussFragment.initUiData(projectHomeBean.getData().getHotDiscuss());
+                if (projectInfo != null) {
+                    mHeadView.setTitle(projectInfo.getProjectCode());
+                    mHeadView.setTitleVice("/" + projectInfo.getProjectChineseName());
+                    introFragment.initUiData(projectInfo);
+                    //  discussFragment.initUiData(30);
+                    GlideUtils.loadCircleUrl(ivProjectIcon, Constants.BASE_IMG_URL + projectInfo.getProjectIcon());
+                    tvProjectCode.setText(projectInfo.getProjectCode());
+                    tvProjectChineseName.setText("/" + projectInfo.getProjectChineseName());
+                    tvCreateTime.setText("发布时间：" + StringUtil.getTimeToM(projectInfo.getCreateTime()));
+                    tvFollowerNum.setText(String.valueOf(projectInfo.getFollowerNum()));
+                    tvTotalScore.setText(String.valueOf(projectInfo.getTotalScore()));
+                    tvRaterNum.setText(String.valueOf(projectInfo.getRaterNum()));
+                    tvProjectSignature.setText(projectInfo.getProjectSignature());
+                    // 0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
+                    if (projectInfo.getFollowStatus() == 0) {
+                        btnFollowStatus.setText(getResources().getString(R.string.follow_status_0));
+                    } else if (projectInfo.getFollowStatus() == 1) {
+                        btnFollowStatus.setText(getResources().getString(R.string.follow_status_1));
+                    } else {
+                        btnFollowStatus.setVisibility(View.GONE);
+                    }
+
+                }
+
             }
         });
     }
-    public String getProjectId(){
+
+    public String getProjectId() {
         return projectId;
     }
-    public String getProjectIntro(){
-        return "返回项目简介的信息";
-    }
+
 
     private void initListener() {
         refreshLayout.setEnableRefresh(false);//禁止下拉刷新
@@ -194,12 +204,12 @@ public class ProjectActivity extends BaseActivity {
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 //if (Math.abs(verticalOffset) == DensityUtil.dp2px(200)-mHeadView.getHeight()) {//关闭
                 if (Math.abs(verticalOffset) > 200) {//关闭
-                    mHeadView.getImageView().setVisibility(View.VISIBLE);
-                    mHeadView.getTextView().setVisibility(View.GONE);
+//                    mHeadView.getImageView().setVisibility(View.VISIBLE);
+//                    mHeadView.getTextView().setVisibility(View.GONE);
                 } else {  //展开
-                    mHeadView.getImageView().setVisibility(View.GONE);
-                    mHeadView.getTextView().setVisibility(View.VISIBLE);
-                    mHeadView.setTitle("项目首页");
+//                    mHeadView.getImageView().setVisibility(View.GONE);
+//                    mHeadView.getTextView().setVisibility(View.VISIBLE);
+//                    mHeadView.setTitle("项目首页");
                 }
             }
         });
@@ -219,28 +229,28 @@ public class ProjectActivity extends BaseActivity {
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                switch (viewPager.getCurrentItem()){
+                switch (viewPager.getCurrentItem()) {
                     case 1:
                         reviewFragment.getLoadData(refreshlayout);
-                        if(reviewFragment.isHaveData){
+                        if (reviewFragment.isHaveData) {
                             refreshlayout.setLoadmoreFinished(false);
-                        }else{
+                        } else {
                             refreshlayout.setLoadmoreFinished(true);
                         }
                         break;
                     case 2:
                         discussFragment.getLoadData(refreshlayout);
-                        if(discussFragment.isHaveData){
+                        if (discussFragment.isHaveData) {
                             refreshlayout.setLoadmoreFinished(false);
-                        }else{
+                        } else {
                             refreshlayout.setLoadmoreFinished(true);
                         }
                         break;
                     case 3:
-                        articleFragment.getLoadData(refreshlayout);
-                        if(articleFragment.isHaveData){
+                        articleFragment.getLoadData(refreshlayout, "");
+                        if (articleFragment.isHaveData) {
                             refreshlayout.setLoadmoreFinished(false);
-                        }else{
+                        } else {
                             refreshlayout.setLoadmoreFinished(true);
                         }
                         break;
@@ -250,33 +260,30 @@ public class ProjectActivity extends BaseActivity {
         StringUtil.getVpPosition(viewPager, new StringUtil.VpPageSelected() {
             @Override
             public void getVpPageSelected(int position) {
-                if(viewPager.getCurrentItem()==0){
+                if (viewPager.getCurrentItem() == 0) {
                     refreshLayout.setEnableLoadmore(false);
-                }else{
+                } else {
                     refreshLayout.setEnableLoadmore(true);
                 }
-                switch (viewPager.getCurrentItem()){
+                switch (viewPager.getCurrentItem()) {
                     case 1:
-                        reviewFragment.getLoadData(refreshLayout);
-                        if(discussFragment.isHaveData){
+                        if (discussFragment.isHaveData) {
                             refreshLayout.setLoadmoreFinished(false);
-                        }else{
+                        } else {
                             refreshLayout.setLoadmoreFinished(true);
                         }
                         break;
                     case 2:
-                        discussFragment.getLoadData(refreshLayout);
-                        if(articleFragment.isHaveData){
+                        if (articleFragment.isHaveData) {
                             refreshLayout.setLoadmoreFinished(false);
-                        }else{
+                        } else {
                             refreshLayout.setLoadmoreFinished(true);
                         }
                         break;
                     case 3:
-                        articleFragment.getLoadData(refreshLayout);
-                        if(articleFragment.isHaveData){
+                        if (articleFragment.isHaveData) {
                             refreshLayout.setLoadmoreFinished(false);
-                        }else{
+                        } else {
                             refreshLayout.setLoadmoreFinished(true);
                         }
                         break;
@@ -284,5 +291,34 @@ public class ProjectActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @OnClick({R.id.rl_grade, R.id.btn_review, R.id.btn_follow_status})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.rl_grade:
+                IntentUtil.startActivity(DetailsUserGradeActivity.class);
+                break;
+            case R.id.btn_review:
+                ToastUtils.getInstance().show("简单测评");
+                break;
+            case R.id.btn_follow_status:
+                boolean isFollow;
+                if (btnFollowStatus.getText().toString().
+                        equals(getString(R.string.follow_status_0))) {
+                    isFollow = false;
+                } else {
+                    isFollow = true;
+                }
+                NetUtil.addSaveFollow(isFollow,
+                        SharedUtils.singleton().get(Constants.TOKEN_KEY, ""),
+                        Constants.SaveFollow.PROJECT, projectInfo.getProjectId(), new NetUtil.SaveFollowImpl() {
+                            @Override
+                            public void finishFollow(String str) {
+                                ToastUtils.getInstance().show(str);
+                            }
+                        });
+                break;
+        }
     }
 }

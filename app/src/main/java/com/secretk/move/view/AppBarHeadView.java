@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.baseManager.BaseManager;
 
 /**
  * 通用的标题栏
@@ -88,7 +89,7 @@ public class AppBarHeadView extends FrameLayout {
         mToolbar.setBackgroundColor(ContextCompat.getColor(getContext(),color));
     }
     public void setTitleColor(int color) {
-        mTitle.setTextColor(color);
+        mTitle.setTextColor(BaseManager.app.getResources().getColor(color));
     }
     public void setTitleSize(int size) {
         mTitle.setTextSize(size);

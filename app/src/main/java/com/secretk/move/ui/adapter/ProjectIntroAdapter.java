@@ -4,18 +4,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.secretk.move.R;
-import com.secretk.move.bean.HomeReviewBase;
+import com.secretk.move.bean.ProjectHomeBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.holder.ProjectIntroHolder;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
 
 /**
  * 作者： litongge
@@ -26,7 +22,7 @@ import butterknife.BindView;
 
 public class ProjectIntroAdapter extends RecyclerView.Adapter<ProjectIntroHolder> {
 
-    private List<HomeReviewBase> lists = new ArrayList<>();
+    private List<ProjectHomeBean.DataBean.ProjectBean.ActiveUsersBean> lists = new ArrayList<>();
     private ItemClickListener mListener;
 
     public void setItemListener(ItemClickListener mListener) {
@@ -51,12 +47,12 @@ public class ProjectIntroAdapter extends RecyclerView.Adapter<ProjectIntroHolder
         return lists.size();
     }
 
-    public void setData(List<HomeReviewBase> list) {
+    public void setData(List<ProjectHomeBean.DataBean.ProjectBean.ActiveUsersBean> list) {
         this.lists = list;
         notifyDataSetChanged();
     }
 
-    public List<HomeReviewBase> getData() {
+    public List<ProjectHomeBean.DataBean.ProjectBean.ActiveUsersBean> getData() {
         return lists;
     }
 }

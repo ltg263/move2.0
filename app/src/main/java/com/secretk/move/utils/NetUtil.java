@@ -83,7 +83,7 @@ public class NetUtil {
      * @param followType 1-关注项目;2-关注帖子；3-关注用户
      * @param followedId 关注类型为1，对应为projectId对应值，2 为postId对应值 3 为对应userId值
      */
-    public static void addSaveFollow(Boolean isFollow ,String token, int followType, String followedId){
+    public static void addSaveFollow(Boolean isFollow , String token, int followType, int followedId, final SaveFollowImpl follow){
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -105,9 +105,12 @@ public class NetUtil {
                 .build();
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
-            public void onCompleted(String bean) {
-
+            public void onCompleted(String str) {
+                follow.finishFollow(str);
             }
         });
+    }
+    public static abstract class SaveFollowImpl{
+        public abstract void finishFollow(String str);
     }
 }

@@ -2,15 +2,17 @@ package com.secretk.move.ui.holder;
 
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.BaseManager;
-import com.secretk.move.bean.HomeReviewBase;
+import com.secretk.move.baseManager.Constants;
+import com.secretk.move.bean.ProjectHomeBean;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.NetUtil;
+import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.utils.ToastUtils;
 
 import java.util.List;
 
@@ -24,28 +26,51 @@ import butterknife.ButterKnife;
  * 描述：项目主页---简介ListViewItem
  */
 public class ProjectIntroHolder extends RecyclerViewBaseHolder {
-    @BindView(R.id.img_head)
-    ImageView imgHead;
-    @BindView(R.id.tvIsFollw)
-    TextView tvIsFollw;
-    @BindView(R.id.tv_name)
-    TextView tvName;
-    @BindView(R.id.tv_content)
-    TextView tvContent;
+    @BindView(R.id.iv_icon)
+    ImageView ivIcon;
+    @BindView(R.id.tv_follow_status)
+    TextView tvFollowStatus;
+    @BindView(R.id.tv_user_uame)
+    TextView tvUserUame;
+    @BindView(R.id.tv_user_signature)
+    TextView tvUserSignature;
     public ProjectIntroHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
-    public void refresh(final int position, List<HomeReviewBase> lists) {
-        GlideUtils.loadCircle(imgHead, R.drawable.account_portrait);
-        tvIsFollw.setOnClickListener(new View.OnClickListener() {
+    public void refresh(final int position, List<ProjectHomeBean.DataBean.ProjectBean.ActiveUsersBean> lists) {
+        final ProjectHomeBean.DataBean.ProjectBean.ActiveUsersBean usersBean = lists.get(position);
+        GlideUtils.loadCircleUrl(ivIcon, Constants.BASE_IMG_URL+usersBean.getIcon());
+        tvUserUame.setText(usersBean.getUserName());
+        tvUserSignature.setText(usersBean.getUserSignature());
+        //0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
+        if(usersBean.getFollowStatus()==0){
+            tvFollowStatus.setText(BaseManager.app.getString(R.string.follow_status_0));
+        }else if(usersBean.getFollowStatus()==1){
+            tvFollowStatus.setText(BaseManager.app.getString(R.string.follow_status_1));
+        }else{
+            tvFollowStatus.setVisibility(View.GONE);
+        }
+        tvFollowStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(BaseManager.app, "关注", Toast.LENGTH_SHORT).show();
+                boolean isFollow ;
+                if(tvFollowStatus.getText().toString().
+                        equals(BaseManager.app.getString(R.string.follow_status_0))){
+                    isFollow=false;
+                }else{
+                    isFollow=true;
+                }
+                NetUtil.addSaveFollow(isFollow,
+                        SharedUtils.singleton().get(Constants.TOKEN_KEY, ""),
+                        Constants.SaveFollow.USER, usersBean.getUserId(), new NetUtil.SaveFollowImpl() {
+                            @Override
+                            public void finishFollow(String str) {
+                                ToastUtils.getInstance().show(str);
+                            }
+                        });
             }
         });
-        HomeReviewBase base = lists.get(position);
-        tvName.setText(base.getDiyi());
     }
 }

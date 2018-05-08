@@ -13,7 +13,7 @@
         android:padding="@dimen/dp_10">
 
         <TextView
-            android:id="@+id/tv_num"
+            android:id="@+id/tv_row_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -26,7 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableRight="@drawable/right_boult"
-            android:text="按点赞排序"
+            android:padding="@dimen/dp_5"
+            android:text="@string/sort_time"
             android:textColor="#aaaaaa"
             android:textSize="@dimen/sp_12" />
 

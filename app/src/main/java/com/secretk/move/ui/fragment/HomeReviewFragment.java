@@ -2,7 +2,6 @@ package com.secretk.move.ui.fragment;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.secretk.move.R;
@@ -12,11 +11,8 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonListBase;
-import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.activity.DetailsReviewAllActivity;
 import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.adapter.HomeListAdapter;
-import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
@@ -85,6 +81,9 @@ public class HomeReviewFragment extends LazyFragment{
                 CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getEvaluations();
                 if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
                     isHaveData=false;
+                }
+                if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
+                    return;
                 }
                 adapter.setData(detailsBean.getRows());
             }

@@ -41,7 +41,7 @@ public class DetailsUserGradeActivity extends BaseActivity  implements ItemClick
         mHeadView = findViewById(R.id.head_app_server);
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitle("用户评分");
-        mHeadView.setTitleColor(getResources().getColor(R.color.title_gray));
+        mHeadView.setTitleColor(R.color.title_gray);
         return mHeadView;
     }
 

@@ -10,7 +10,7 @@
         android:background="#fff">
 
         <ImageView
-            android:id="@+id/img_head"
+            android:id="@+id/iv_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
@@ -23,7 +23,7 @@
             android:layout_centerInParent="true" />
 
         <TextView
-            android:id="@+id/tvIsFollw"
+            android:id="@+id/tv_follow_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -38,23 +38,23 @@
             android:textColor="@color/app_background" />
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/tv_user_uame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/view_center"
             android:layout_marginLeft="@dimen/dp_10"
-            android:layout_toRightOf="@id/img_head"
+            android:layout_toRightOf="@id/iv_icon"
             android:text="EOS/柚子"
             android:textColor="@color/title_gray"
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/tv_content"
+            android:id="@+id/tv_user_signature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/view_center"
             android:layout_marginLeft="@dimen/dp_10"
-            android:layout_toRightOf="@id/img_head"
+            android:layout_toRightOf="@id/iv_icon"
             android:text="新上线"
             android:textColor="#888888"
             android:textSize="12sp" />

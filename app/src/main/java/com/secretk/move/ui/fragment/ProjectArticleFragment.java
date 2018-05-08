@@ -16,7 +16,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonListBase;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.ProjectActivity;
-import com.secretk.move.ui.adapter.ProjectRecommendAdapter;
+import com.secretk.move.ui.adapter.HomeListAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 
@@ -36,12 +36,12 @@ import butterknife.BindView;
 public class ProjectArticleFragment extends LazyFragment implements ItemClickListener {
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
-    @BindView(R.id.tv_num)
-    TextView tvNum;
+    @BindView(R.id.tv_row_count)
+    TextView tvRowCount;
     @BindView(R.id.tv_sort)
     TextView tvSort;
 
-    private ProjectRecommendAdapter adapter;
+    private HomeListAdapter adapter;
     public boolean isHaveData = true;
     private int pageIndex = 1;
     private String projectId;
@@ -54,14 +54,26 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     @Override
     public void initViews() {
         setVerticalManager(rvReview);
-        adapter = new ProjectRecommendAdapter();
+        adapter = new HomeListAdapter();
         rvReview.setAdapter(adapter);
-        adapter.setItemListener(this);
+        tvSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String sort = tvSort.getText().toString();
+                if(sort.equals(getString(R.string.sort_love))){
+                    tvSort.setText(getString(R.string.sort_time));
+                }else{
+                    tvSort.setText(getString(R.string.sort_love));
+                }
+                pageIndex=1;
+                getLoadData(null,getString(R.string.sort_time));
+            }
+        });
     }
 
     @Override
     public void onFirstUserVisible() {
-        getLoadData(null);
+        getLoadData(null,"");
     }
 
 
@@ -81,13 +93,19 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
         projectId = ((ProjectActivity)context).getProjectId();
     }
 
-    public void getLoadData(final RefreshLayout refreshlayout) {
+    /**
+     * @param refreshlayout
+     * @param sort:排毒方式  空时间   否则赞
+     */
+    public void getLoadData(final RefreshLayout refreshlayout,String sort) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            node.put("projectId", projectId);
+            node.put("projectId", Integer.valueOf(projectId));
             node.put("pageIndex", pageIndex++);
-            //node.put("sortField", pageIndex++);//按点赞数排序，需要传值 "praiseNum"
+            if(sort.equals(getString(R.string.sort_love))){
+                node.put("praiseNum", pageIndex++);//按点赞数排序，需要传值 "praiseNum"
+            }
             node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -100,12 +118,15 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
         RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
             @Override
             public void onCompleted(CommonListBase bean) {
-                CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getDiscusses();
+                CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getArticles();
                 if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
                     isHaveData=false;
                 }
-                // List<RowsBean> rows = detailsBean.getRows();
-                //adapter.setData(detailsBean.getRows());
+                if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
+                    return;
+                }
+                tvRowCount.setText("共"+detailsBean.getRowCount()+"篇文章");
+                adapter.setData(detailsBean.getRows());
             }
 
             @Override

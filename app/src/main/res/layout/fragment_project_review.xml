@@ -35,30 +35,35 @@
                 android:id="@+id/pb_project_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginHorizontal="@dimen/dp_10" />
 
             <com.secretk.move.view.ProgressBarStyleView
                 android:id="@+id/pb_technical_framework"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginHorizontal="@dimen/dp_10" />
 
             <com.secretk.move.view.ProgressBarStyleView
                 android:id="@+id/pb_team_strength"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginHorizontal="@dimen/dp_10" />
 
             <com.secretk.move.view.ProgressBarStyleView
                 android:id="@+id/pb_project_schedule"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginHorizontal="@dimen/dp_10" />
 
             <com.secretk.move.view.ProgressBarStyleView
                 android:id="@+id/pb_speculative_risk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginHorizontal="@dimen/dp_10" />
             <!--评分結束-->
             <!--项目介绍結束-->

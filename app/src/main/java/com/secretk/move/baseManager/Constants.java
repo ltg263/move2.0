@@ -101,7 +101,7 @@ public interface Constants {
     //项目主页 评测列表
     String PROJECT_EVALUATION_LIST = BASE_URL+"/kff/project/evaluationList";
     //项目讨论列表
-    String PROJECT_DISCUSS_LIST = BASE_URL+"kff/project/discussLis";
+    String PROJECT_DISCUSS_LIST = BASE_URL+"kff/project/discussList";
     //项目  文章列表
     String PROJECT_ARTICLE_LIST = BASE_URL+"kff/project/articleList";
 

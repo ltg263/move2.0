@@ -13,7 +13,6 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonListBase;
 import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.adapter.HomeListAdapter;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
@@ -85,6 +84,9 @@ public class HomeDiscussFragment extends LazyFragment{
                 CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getDiscusses();
                 if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
                     isHaveData=false;
+                }
+                if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
+                    return;
                 }
                 adapter.setData(detailsBean.getRows());
             }

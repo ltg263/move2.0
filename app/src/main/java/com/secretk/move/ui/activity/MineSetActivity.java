@@ -56,7 +56,7 @@ public class MineSetActivity extends BaseActivity {
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
         mHeadView = findViewById(R.id.head_app_server);
         mHeadView.setHeadBackShow(true);
-        mHeadView.setTitleColor(getResources().getColor(R.color.title_gray));
+        mHeadView.setTitleColor(R.color.title_gray);
         mHeadView.setTitle("设置");
         mMenuInfos.add(0,new MenuInfo(R.string.share, "保存", 0));
         return mHeadView;

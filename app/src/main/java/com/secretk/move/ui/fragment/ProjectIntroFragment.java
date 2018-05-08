@@ -1,32 +1,27 @@
 package com.secretk.move.ui.fragment;
 
-import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.secretk.move.R;
-import com.secretk.move.apiService.HttpCallBackImpl;
-import com.secretk.move.apiService.RetrofitUtil;
-import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.HomeReviewBase;
+import com.secretk.move.bean.ProjectHomeBean;
 import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.adapter.ProjectIntroAdapter;
-import com.secretk.move.utils.MD5;
-import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.ToastUtils;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * 作者： litongge
@@ -36,13 +31,37 @@ import butterknife.BindView;
  */
 
 
-public class ProjectIntroFragment extends LazyFragment  implements ItemClickListener {
-    @BindView(R.id.rv_review)
-    RecyclerView rvReview;
-    @BindView(R.id.rv_review1)
-    RecyclerView rvReview1;
+public class ProjectIntroFragment extends LazyFragment implements ItemClickListener {
 
+    @BindView(R.id.tv_project_desc)
+    TextView tvProjectDesc;
+    @BindView(R.id.tv_project_english_name)
+    TextView tvProjectEnglishName;
+    @BindView(R.id.tv_project_chinese_name)
+    TextView tvProjectChineseName;
+    @BindView(R.id.tv_issue_date)
+    TextView tvIssueDate;
+    @BindView(R.id.tv_website_url)
+    TextView tvWebsiteUrl;
+    @BindView(R.id.tv_project_type_name)
+    TextView tvProjectTypeName;
+    @BindView(R.id.tv_whitepaper_url)
+    TextView tvWhitepaperUrl;
+    @BindView(R.id.iv_icon)
+    ImageView ivIcon;
+    @BindView(R.id.rl_station_agent)
+    RelativeLayout rlStationAgent;
+    @BindView(R.id.tv_follow_status)
+    TextView tvFollowStatus;
+    @BindView(R.id.tv_user_name)
+    TextView tvUserName;
+    @BindView(R.id.tv_user_signature)
+    TextView tvUserSignature;
+    @BindView(R.id.rv_active_users)
+    RecyclerView rvActiveUsers;
+    Unbinder unbinder;
     private ProjectIntroAdapter adapter;
+    private int submitUserId;
 
     @Override
     public int setFragmentView() {
@@ -51,42 +70,48 @@ public class ProjectIntroFragment extends LazyFragment  implements ItemClickList
 
     @Override
     public void initViews() {
-        setVerticalManager(rvReview);
-        setVerticalManager(rvReview1);
+        setVerticalManager(rvActiveUsers);
         adapter = new ProjectIntroAdapter();
-        rvReview.setAdapter(adapter);
-        rvReview1.setAdapter(adapter);
+        rvActiveUsers.setAdapter(adapter);
         adapter.setItemListener(this);
     }
 
     @Override
     public void onFirstUserVisible() {
-        List<HomeReviewBase> list = new ArrayList<>();
-        HomeReviewBase base = new HomeReviewBase();
-        base.setDiyi("张三");
-        base.setEr("李四");
-        base.setSan("周五");
-        base.setIndex(2);
-        list.add(base);
-        list.add(base);
-        list.add(base);
-        adapter.setData(list);
+
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        String xx = ((ProjectActivity)context).getProjectIntro();
+    public void initUiData(ProjectHomeBean.DataBean.ProjectBean projectIntro) {
+        if (projectIntro != null) {
+            submitUserId = projectIntro.getSubmitUserId();
+            tvProjectDesc.setText(projectIntro.getProjectDesc());
+            tvProjectEnglishName.setText(projectIntro.getProjectEnglishName());
+            tvProjectChineseName.setText(projectIntro.getProjectChineseName());
+            tvIssueDate.setText(StringUtil.getTimeToM(projectIntro.getIssueDate()));
+            tvWebsiteUrl.setText(projectIntro.getWebsiteUrl());
+            tvProjectTypeName.setText(projectIntro.getProjectTypeName());
+            tvWhitepaperUrl.setText(projectIntro.getWhitepaperUrl());
+            adapter.setData(projectIntro.getActiveUsers());
+            ProjectHomeBean.DataBean.ProjectBean.OwnerBean owner = projectIntro.getOwner();
+            if (owner != null) {
+                GlideUtils.loadCircleUrl(ivIcon, Constants.BASE_IMG_URL + owner.getIcon());
+                tvUserName.setText(owner.getUserName());
+                tvUserSignature.setText(owner.getUserSignature());
+                //0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
+                if (owner.getFollowStatus() == 0) {
+                    tvFollowStatus.setText(getResources().getString(R.string.follow_status_0));
+                } else if (owner.getFollowStatus() == 1) {
+                    tvFollowStatus.setText(getResources().getString(R.string.follow_status_1));
+                } else {
+                    tvFollowStatus.setVisibility(View.GONE);
+                }
+            }
+        }
     }
 
     @Override
     public void onItemClick(View view, int postion) {
-        if(view.getId()==R.id.tvFollws){
-
-        }else{
-            Toast.makeText(getActivity(), "进入下一个界面", Toast.LENGTH_SHORT).show();
-        }
-
+        Toast.makeText(getActivity(), "进入下一个界面", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -94,4 +119,29 @@ public class ProjectIntroFragment extends LazyFragment  implements ItemClickList
 
     }
 
+    @OnClick({R.id.tv_follow_status, R.id.rl_station_agent})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_follow_status:
+                boolean isFollow;
+                if (tvFollowStatus.getText().toString().
+                        equals(getString(R.string.follow_status_0))) {
+                    isFollow = false;
+                } else {
+                    isFollow = true;
+                }
+                NetUtil.addSaveFollow(isFollow,
+                        SharedUtils.singleton().get(Constants.TOKEN_KEY, ""),
+                        Constants.SaveFollow.USER, submitUserId, new NetUtil.SaveFollowImpl() {
+                            @Override
+                            public void finishFollow(String str) {
+                                ToastUtils.getInstance().show(str);
+                            }
+                        });
+                break;
+            case R.id.rl_station_agent:
+                Toast.makeText(getActivity(), "进入下一个界面", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
 }

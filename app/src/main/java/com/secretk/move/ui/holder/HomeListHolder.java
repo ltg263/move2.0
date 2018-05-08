@@ -16,6 +16,7 @@ import com.secretk.move.ui.activity.DetailsReviewAllActivity;
 import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.StringUtil;
 
 import java.util.List;
 
@@ -88,7 +89,7 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
        // tvCreateUserName.setText(rowsBean.getCreateUserName());
         tvCreateUserName.setText(rowsBean.getProjectChineseName());
         tvEnglishName.setText("/"+rowsBean.getProjectCode());
-        tvCreateTime.setText(String.valueOf(rowsBean.getCreateTime()));
+        tvCreateTime.setText(StringUtil.getTimeToM(rowsBean.getCreateTime()));
         tvPostTitle.setText(rowsBean.getPostTitle());
         tvTotalScore.setText(String.valueOf(rowsBean.getTotalScore()));
         tvPostShortDesc.setText(rowsBean.getPostShortDesc());
