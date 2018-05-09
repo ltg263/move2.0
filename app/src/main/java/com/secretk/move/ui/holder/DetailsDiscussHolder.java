@@ -1,26 +1,25 @@
 package com.secretk.move.ui.holder;
 
-import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.text.style.TextAppearanceSpan;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.secretk.move.R;
+import com.secretk.move.bean.CommonCommentsBean;
+import com.secretk.move.bean.DetailsDiscussBase;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.BaseManager;
-import com.secretk.move.bean.HomeReviewBase;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.ui.activity.MoreCommentsActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
+import com.secretk.move.utils.StringUtil;
 
 import java.util.List;
 
@@ -34,64 +33,99 @@ import butterknife.ButterKnife;
  * 描述：评测详情——评价Item
  */
 public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
-    @BindView(R.id.img_head)
-    ImageView imgHead;
-    @BindView(R.id.tv_name)
-    TextView tvName;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.tv_assist)
-    TextView tvAssist;
-    @BindView(R.id.tv_eave_content)
-    TextView tvEaveContent;
-    @BindView(R.id.tv_eave_ont)
-    TextView tvEaveOnt;
-    @BindView(R.id.tv_eave_two)
-    TextView tvEaveTwo;
-    @BindView(R.id.tv_eave_num)
-    TextView tvEaveNum;
+    @BindView(R.id.iv_commented_user_icon)
+    ImageView ivCommentedUserIcon;
+    @BindView(R.id.tv_commented_user_name)
+    TextView tvCommentedUserName;
+    @BindView(R.id.tv_create_time)
+    TextView tvCreateTime;
+    @BindView(R.id.tv_praise_num)
+    TextView tvPraiseNum;
+    @BindView(R.id.tv_comment_content)
+    TextView tvCommentContent;
+    @BindView(R.id.tv_child_content1)
+    TextView tvChildContent1;
+    @BindView(R.id.tv_child_content2)
+    TextView tvChildContent2;
+    @BindView(R.id.view_child_content1)
+    View viewChildContent1;
+    @BindView(R.id.view_child_content2)
+    View viewChildContent2;
+    @BindView(R.id.tv_child_comments_num)
+    TextView tvChildCommentsNum;
     public DetailsDiscussHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
-    public void refresh(final int position, List<HomeReviewBase> lists) {
-        GlideUtils.loadCircle(imgHead, R.drawable.account_portrait);
-        HomeReviewBase base = lists.get(position);
-        tvEaveNum.setOnClickListener(new View.OnClickListener() {
+    public void refresh(final int position, List<CommonCommentsBean> lists) {
+        CommonCommentsBean commentsBean = lists.get(position);
+        GlideUtils.loadCircleUrl(ivCommentedUserIcon, Constants.BASE_IMG_URL+commentsBean.getCommentUserIcon());
+        tvCommentedUserName.setText(commentsBean.getCommentUserName());
+        tvPraiseNum.setText(String.valueOf(commentsBean.getPraiseNum()));
+        tvCreateTime.setText(StringUtil.getTimeToM(commentsBean.getCreateTime()));
+        tvCommentContent.setText(commentsBean.getCommentContent());
+        //"praiseStatus":0,//点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
+        if(commentsBean.getPraiseStatus()==1){
+            tvPraiseNum.setSelected(false);
+        }else if(commentsBean.getPraiseStatus()==0){
+            tvPraiseNum.setSelected(true);
+        }else if(commentsBean.getPraiseStatus()==3){
+            tvPraiseNum.setText("****");
+        }
+        if(commentsBean.getChildCommentsNum()!=0){
+            tvChildCommentsNum.setText("更多"+commentsBean.getChildCommentsNum()+"条评论");
+        }
+        tvChildCommentsNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 IntentUtil.startActivity(MoreCommentsActivity.class);
             }
         });
-        tvName.setText(base.getDiyi());
-        tvEaveContent.setText("体自在EOS引力区的知识星球里有一个人，他在知识星球分享了一篇文章《数字会说明，老猫在想什么，写给eos的投资者们》，精明地推测出老猫分批地积累了上百万个EOS，这更能说明老猫看好EOS。道理很简单：因为看好，所以大量持有。");
-        tvEaveTwo.setText(Html.fromHtml("<font color='#3b88f6'>张赫：@小柚子</font> 目前所有的交易所都没有公布是否会映射，还要进一步等消息。"));
+        final List<CommonCommentsBean.ChildCommentsListBean> childLists = commentsBean.getChildCommentsList();
+        if(childLists!=null && childLists.size()>0){
+            for(int i=0;i<childLists.size();i++){
+                String userName = childLists.get(i).getCommentUserName()+": ";
+                String userNameB = "@"+childLists.get(i).getBecommentedUserName();
+                String content = childLists.get(i).getCommentContent();
+                String all = userName+userNameB+content;
+                SpannableString InfoOne = new SpannableString(all);
+                final int finalI = i;
+                //评论人
+                int var = all.indexOf(userName);
+                InfoOne.setSpan(new Clickable(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(BaseManager.app, childLists.get(finalI).getCommentUserName(),Toast.LENGTH_SHORT).show();
+                    }
+                }),var,var+userNameB.length()-1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                //被评论人
+                int varB = all.indexOf(userNameB);
+                InfoOne.setSpan(new Clickable(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(BaseManager.app, childLists.get(finalI).getBecommentedUserName(),Toast.LENGTH_SHORT).show();
+                    }
+                }),varB,varB+userNameB.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                if(i==0){
+                    tvChildContent1.setText(InfoOne);
+                    tvChildContent1.setVisibility(View.VISIBLE);
+                    viewChildContent1.setVisibility(View.VISIBLE);
+                    tvChildContent1.setMovementMethod(LinkMovementMethod.getInstance());
+                }
+                if(i==1){
+                    tvChildContent2.setText(InfoOne);
+                    tvChildContent2.setVisibility(View.VISIBLE);
+                    viewChildContent2.setVisibility(View.VISIBLE);
+                    tvChildContent2.setMovementMethod(LinkMovementMethod.getInstance());
+                }
 
-        String str = "老柚子：@乌拉 圭你 @乌啊 说的很好可是能不能买呢？";
-        String s= "老柚子：@乌拉";
-        int var = str.indexOf(s);
-        SpannableString InfoOne = new SpannableString(str);
-        InfoOne.setSpan(new Clickable(clickListener),var,var+s.length()-1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tvEaveOnt.setText(InfoOne);
-        tvEaveOnt.setMovementMethod(LinkMovementMethod.getInstance());
+            }
 
-        SpannableString InfoTwo = new SpannableString(str);
-        String strt = "张赫：@小柚子 目前所有的交易所都没有公布是否会映射，还要进一步等消息。";
-        String st= "张赫：@小柚子";
-        int vart = strt.indexOf(st);
-        InfoTwo.setSpan(new Clickable(clickListener),vart,var+st.length()-1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-    }
-    private View.OnClickListener clickListener=new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            LogUtil.w("v:"+v.getId());
-            Toast.makeText(BaseManager.app, "成功....",Toast.LENGTH_SHORT).show();
         }
-    };
+    }
     class Clickable extends ClickableSpan {
         private final View.OnClickListener mListener;
-
         public Clickable(View.OnClickListener l) {
             mListener = l;
         }

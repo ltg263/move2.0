@@ -6,8 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
-import com.secretk.move.bean.HomeReviewBase;
-import com.secretk.move.listener.ItemClickListener;
+import com.secretk.move.bean.CommonCommentsBean;
 import com.secretk.move.ui.holder.DetailsDiscussHolder;
 
 import java.util.ArrayList;
@@ -22,12 +21,8 @@ import java.util.List;
 
 public class DetailsDiscussAdapter extends RecyclerView.Adapter<DetailsDiscussHolder> {
 
-    private List<HomeReviewBase> lists = new ArrayList<>();
-    private ItemClickListener mListener;
 
-    public void setItemListener(ItemClickListener mListener) {
-        this.mListener = mListener;
-    }
+    private List<CommonCommentsBean> lists = new ArrayList<>();
 
     @Override
     public DetailsDiscussHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -39,7 +34,6 @@ public class DetailsDiscussAdapter extends RecyclerView.Adapter<DetailsDiscussHo
     @Override
     public void onBindViewHolder(DetailsDiscussHolder holder, int position) {
         holder.refresh(position, lists);
-        holder.setItemListener(mListener);
     }
 
     @Override
@@ -47,12 +41,12 @@ public class DetailsDiscussAdapter extends RecyclerView.Adapter<DetailsDiscussHo
         return lists.size();
     }
 
-    public void setData(List<HomeReviewBase> list) {
+    public void setData(List<CommonCommentsBean> list) {
         this.lists = list;
         notifyDataSetChanged();
     }
 
-    public List<HomeReviewBase> getData() {
+    public List<CommonCommentsBean> getData() {
         return lists;
     }
 }

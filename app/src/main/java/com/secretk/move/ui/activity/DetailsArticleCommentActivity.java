@@ -34,7 +34,7 @@ import butterknife.BindView;
  * 邮箱；ltg263@126.com
  * 描述：文章---评论详情列表
  */
-public class DetailsArticleCommentActivity extends BaseActivity  implements ItemClickListener {
+public class DetailsArticleCommentActivity extends BaseActivity{
 
     @BindView(R.id.rv_hot_review)
     RecyclerView rvkHotReview;
@@ -67,12 +67,10 @@ public class DetailsArticleCommentActivity extends BaseActivity  implements Item
         setVerticalManager(rvkHotReview);
         adapter = new DetailsDiscussAdapter();
         rvkHotReview.setAdapter(adapter);
-        adapter.setItemListener(this);
 
         setVerticalManager(rvNewReview);
         adapterNew = new DetailsDiscussAdapter();
         rvNewReview.setAdapter(adapterNew);
-        adapterNew.setItemListener(this);
     }
 
     protected void initData() {
@@ -84,8 +82,8 @@ public class DetailsArticleCommentActivity extends BaseActivity  implements Item
         base.setIndex(1);
         list.add(base);
         list.add(base);
-        adapter.setData(list);
-        adapterNew.setData(list);
+//        adapter.setData(list);
+//        adapterNew.setData(list);
 
         JSONObject node = new JSONObject();
         try {
@@ -110,18 +108,8 @@ public class DetailsArticleCommentActivity extends BaseActivity  implements Item
                 base.setIndex(1);
                 list.add(base);
                 list.add(base);
-                adapter.setData(list);
+//                adapter.setData(list);
             }
         });
-    }
-
-    @Override
-    public void onItemClick(View view, int postion) {
-
-    }
-
-    @Override
-    public void onItemLongClick(View view, int postion) {
-
     }
 }

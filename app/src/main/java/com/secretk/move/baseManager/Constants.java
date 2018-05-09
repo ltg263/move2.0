@@ -104,7 +104,10 @@ public interface Constants {
     String PROJECT_DISCUSS_LIST = BASE_URL+"kff/project/discussList";
     //项目  文章列表
     String PROJECT_ARTICLE_LIST = BASE_URL+"kff/project/articleList";
-
+    //讨论详情 页
+    String DISCUSS_DETAIL = BASE_URL+"/kff/home/discussDetail";
+    //对(评测/文章/讨论)类型的帖子进行评论或者对评论内容进行评论
+    String SAVE_COMMENT = BASE_URL+"kff/comments/saveComment";
 
     //讨论详情 页
     String HOME_DISCUSS_DETAIL = BASE_URL+"kff/home/discussDetail";
@@ -116,8 +119,6 @@ public interface Constants {
     String ARTICLE_COMMENT_LIST = BASE_URL+"/kff/home/articleCommentList";
     //针对文章单个评论的评论列表页
     String ARTICLE_COMMENT_REPLY_LIST = BASE_URL+"kff/home/articleCommentReplyList";
-    //讨论详情 页
-    String DISCUSS_DETAIL = BASE_URL+"/kff/home/discussDetail";
 
     //关注 项目 / 帖子 /人
     String SAVE_FOLLOW = BASE_URL+"kff/follow/saveFollow";

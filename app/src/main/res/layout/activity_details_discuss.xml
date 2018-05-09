@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_gray"
@@ -19,254 +20,256 @@
         android:layout_below="@id/head_app_server"
         android:background="@color/cut_off_rule" />
 
-    <com.secretk.move.view.RecycleScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/view_be"
         android:layout_below="@id/view"
-        android:fillViewport="true"
-        android:scrollbars="none">
+        app:srlEnablePreviewInEditMode="false">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.secretk.move.view.RecycleScrollView
+            android:id="@+id/rcv"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dp_10"
-                android:text="我我垃圾上单飞机按时交付垃圾上单了房价机按时交付垃圾上单了房价机按时交付垃圾上单了房价"
-                android:textColor="@color/title_gray"
-                android:textSize="@dimen/sp_16" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_line"
-                android:background="@color/cut_off_rule" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:padding="@dimen/dp_10">
-
-                <ImageView
-                    android:id="@+id/img_organization"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
-                    android:scaleType="centerCrop" />
-
-                <TextView
-                    android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_toRightOf="@id/img_organization"
-                    android:text="AOS/柚子"
-                    android:textColor="#333333"
-                    android:textSize="@dimen/sp_16" />
-
-                <TextView
-                    android:id="@+id/tvFollws"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_toRightOf="@id/img_organization"
-                    android:text="115248关注"
-                    android:textColor="#aaaaaa"
-                    android:textSize="@dimen/sp_12" />
-
-                <TextView
-                    android:id="@+id/tvIsFollw"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/shape_rectangle_topic"
-                    android:paddingBottom="@dimen/dp_3"
-                    android:paddingLeft="@dimen/dp_10"
-                    android:paddingRight="@dimen/dp_10"
-                    android:paddingTop="@dimen/dp_3"
-                    android:text="+关注"
-                    android:textColor="@color/app_background" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/dp_10">
-
-
-                <TextView
-                    android:id="@+id/tvContent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="@dimen/dp_2"
-                    android:text="以太坊系统自身带有一种叫做以太币（Ether）的数字货币。以太币和著名的数字货币比特币（Bitcoin）..."
-                    android:textColor="#7e7d7e"
-                    android:textSize="@dimen/sp_12" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="187dp"
-                    android:layout_below="@+id/tvContent"
-                    android:layout_marginBottom="@dimen/dp_5"
-                    android:layout_marginTop="@dimen/dp_2"
-                    android:background="@drawable/fragment_follow_background" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="110dp"
-                    android:layout_below="@+id/tvContent"
-                    android:layout_marginBottom="@dimen/dp_5"
-                    android:layout_marginTop="@dimen/dp_2"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:src="@drawable/fragment_follow_background" />
-
-                    <View
-                        android:layout_width="@dimen/dp_5"
-                        android:layout_height="@dimen/dp_5" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:src="@drawable/fragment_follow_background" />
-
-                    <View
-                        android:layout_width="@dimen/dp_5"
-                        android:layout_height="@dimen/dp_5" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:src="@drawable/fragment_follow_background" />
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_line"
-                android:background="@color/cut_off_rule" />
+            android:fillViewport="true"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/dp_10">
-
-                <TextView
-                    android:id="@+id/tv_crack_down"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/garden_crack"
-                    android:paddingLeft="@dimen/dp_10"
-                    android:paddingRight="@dimen/dp_10"
-                    android:text="@string/crack_down"
-                    android:textColor="#3b88f6"
-                    android:textSize="@dimen/sp_15"
-                    android:visibility="visible" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:text="#打假#"
-                    android:textColor="@color/app_background" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:text="发表时间：2015-01-01"
-                    android:textSize="@dimen/sp_12" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_line"
-                android:background="@color/cut_off_rule" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:padding="@dimen/dp_10"
-                android:text="热门测评"
-                android:textColor="@color/title_gray"
-                android:textSize="@dimen/sp_14" />
+                android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_hot_review"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/dp_10" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_line"
-                android:background="@color/cut_off_rule" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:padding="@dimen/dp_10"
-                android:text="最新测评"
-                android:textColor="@color/title_gray"
-                android:textSize="@dimen/sp_14" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_new_review"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dp_10" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_line"
-                android:background="@color/cut_off_rule" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/dp_10">
-
-                <EditText
+                <TextView
+                    android:id="@+id/tv_post_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_toStartOf="@+id/but_login"
-                    android:background="#f4f4f4"
-                    android:hint="留下你的评论..."
                     android:padding="@dimen/dp_10"
+                    android:text="我我垃圾上单飞机按时交付垃圾上单了房价机按时交付垃圾上单了房价机按时交付垃圾上单了房价"
                     android:textColor="@color/title_gray"
-                    android:textColorHint="#aaaaaa" />
+                    android:textSize="@dimen/sp_16" />
 
-                <Button
-                    android:id="@+id/but_login"
-                    android:layout_width="100dp"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_line"
+                    android:background="@color/cut_off_rule" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:padding="@dimen/dp_10">
+
+                    <ImageView
+                        android:id="@+id/iv_create_user_icon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:id="@+id/tv_create_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_toRightOf="@id/iv_create_user_icon"
+                        android:text="AOS/柚子"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/sp_16" />
+
+                    <TextView
+                        android:id="@+id/tv_create_user_signature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_toRightOf="@id/iv_create_user_icon"
+                        android:text="115248关注"
+                        android:textColor="#aaaaaa"
+                        android:textSize="@dimen/sp_12" />
+
+                    <TextView
+                        android:id="@+id/tv_follow_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/shape_rectangle_topic"
+                        android:paddingBottom="@dimen/dp_3"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_3"
+                        android:text="+关注"
+                        android:textColor="@color/app_background" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:background="@drawable/selector_login_bnt"
-                    android:text="发送"
-                    android:textColor="@drawable/selector_login_text"
-                    android:textSize="@dimen/sp_18" />
-            </RelativeLayout>
-        </LinearLayout>
-    </com.secretk.move.view.RecycleScrollView>
+                    android:paddingHorizontal="@dimen/dp_10">
+
+
+                    <TextView
+                        android:id="@+id/tv_post_short_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="@dimen/dp_2"
+                        android:text="以太坊系统自身带有一种叫做以太币（Ether）的数字货币。以太币和著名的数字货币比特币（Bitcoin）..."
+                        android:textColor="#7e7d7e"
+                        android:textSize="@dimen/sp_12" />
+
+                    <ImageView
+                        android:id="@+id/iv_post_small_images"
+                        android:layout_width="match_parent"
+                        android:layout_height="187dp"
+                        android:layout_below="@+id/tvContent"
+                        android:layout_marginBottom="@dimen/dp_5"
+                        android:layout_marginTop="@dimen/dp_2"
+                        android:background="@drawable/fragment_follow_background" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_line"
+                    android:background="@color/cut_off_rule" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_10">
+
+                    <TextView
+                        android:id="@+id/tv_project_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/garden_crack"
+                        android:paddingHorizontal="@dimen/dp_15"
+                        android:paddingVertical="@dimen/dp_4"
+                        android:text="@string/crack_down"
+                        android:textColor="#3b88f6"
+                        android:textSize="@dimen/sp_15"
+                        android:visibility="visible" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_add_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:orientation="horizontal"
+                        android:textColor="@color/app_background" />
+
+                    <TextView
+                        android:id="@+id/tv_create_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="发表时间：2015-01-01"
+                        android:textColor="@color/title_gray_66"
+                        android:textSize="@dimen/sp_12" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_line"
+                    android:background="@color/cut_off_rule" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="@dimen/dp_10"
+                    android:text="热门测评"
+                    android:textColor="@color/title_gray"
+                    android:textSize="@dimen/sp_14" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_line"
+                    android:background="@color/cut_off_rule" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_hot_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/dp_10" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_line"
+                    android:background="@color/cut_off_rule" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="@dimen/dp_10"
+                    android:text="最新测评"
+                    android:textColor="@color/title_gray"
+                    android:textSize="@dimen/sp_14" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_line"
+                    android:background="@color/cut_off_rule" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_new_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10" />
+            </LinearLayout>
+        </com.secretk.move.view.RecycleScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <View
+        android:id="@+id/view_be"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_line"
+        android:layout_alignTop="@+id/rl"
+        android:background="@color/cut_off_rule" />
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:paddingHorizontal="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10">
+
+        <EditText
+            android:id="@+id/et_comment_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/but_login"
+            android:background="#f4f4f4"
+            android:hint="留下你的评论..."
+            android:padding="@dimen/dp_10"
+            android:textColor="@color/title_gray"
+            android:textColorHint="#aaaaaa" />
+
+        <Button
+            android:id="@+id/but_login"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:background="@drawable/selector_login_bnt"
+            android:text="发送"
+            android:textColor="@drawable/selector_login_text"
+            android:textSize="@dimen/sp_18" />
+    </RelativeLayout>
 </RelativeLayout>
