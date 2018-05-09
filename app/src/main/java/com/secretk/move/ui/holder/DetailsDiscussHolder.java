@@ -63,7 +63,7 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         GlideUtils.loadCircleUrl(ivCommentedUserIcon, Constants.BASE_IMG_URL+commentsBean.getCommentUserIcon());
         tvCommentedUserName.setText(commentsBean.getCommentUserName());
         tvPraiseNum.setText(String.valueOf(commentsBean.getPraiseNum()));
-        tvCreateTime.setText(StringUtil.getTimeToM(commentsBean.getCreateTime()));
+        tvCreateTime.setText(commentsBean.getFloor() +"楼    "+StringUtil.getTimeToM(commentsBean.getCreateTime()));
         tvCommentContent.setText(commentsBean.getCommentContent());
         //"praiseStatus":0,//点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
         if(commentsBean.getPraiseStatus()==1){

@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class CommonCommentsBean {
     /**
+     * floor:0
      * praiseStatus : 0
      * childCommentsNum : 1
      * childCommentsList : [{"praiseStatus":0,"childCommentsNum":0,"childCommentsList":null,"commentsId":3,"commentUserId":24,"commentUserIcon":"/upload/avatars/avatar.png","commentUserName":"用户24","commentContent":"怎么能随便评论呢？","projectId":1,"postId":4,"postType":2,"praiseNum":29,"parentCommentsId":1,"becommentedUserId":3,"becommentedUserName":"UVHaV6BJo","becommentedUserIcon":"/upload/avatars/avatar.png","createTime":1525835712000,"createTimeStr":"2018-05-09 11:15:12","updateTime":1525835714000,"updateTimeStr":"2018-05-09 11:15:14","status":1}]
@@ -33,6 +34,7 @@ public class CommonCommentsBean {
      * status : 1
      */
 
+    private int floor;
     private int praiseStatus;
     private int childCommentsNum;
     private int commentsId;
@@ -54,6 +56,14 @@ public class CommonCommentsBean {
     private String updateTimeStr;
     private int status;
     private List<ChildCommentsListBean> childCommentsList;
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
 
     public int getPraiseStatus() {
         return praiseStatus;
