@@ -192,7 +192,6 @@ public class DetailsDiscussActivity extends BaseActivity {
             node.put("token", token);
             node.put("commentContent", content);//帖子ID
             node.put("postId", Integer.valueOf(postId));
-//            node.put("parentCommentsId", parentCommentsId);
         } catch (JSONException e) {
             e.printStackTrace();
         }

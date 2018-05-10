@@ -10,6 +10,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.apiService.HttpCallBackImpl;
+import com.secretk.move.apiService.RetrofitUtil;
+import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonCommentsBean;
@@ -18,9 +21,15 @@ import com.secretk.move.ui.adapter.MoreCommentsAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
+import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
+import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -60,6 +69,8 @@ public class MoreCommentsActivity extends BaseActivity {
     private MoreCommentsAdapter adapter;
     private int commentsId;
     private int userId;
+    private int postId;
+    private int parentCommentsId;
 
     @Override
     protected int setOnCreate() {
@@ -87,6 +98,8 @@ public class MoreCommentsActivity extends BaseActivity {
     protected void initData() {
         CommonCommentsBean commentsBean = getIntent().getParcelableExtra("commentsBean");
         GlideUtils.loadCircleUrl(ivCommentedUserIcon, Constants.BASE_IMG_URL + commentsBean.getCommentUserIcon());
+        postId = commentsBean.getPostId();
+        parentCommentsId = commentsBean.getParentCommentsId();
         commentsId = commentsBean.getCommentsId();
         userId= commentsBean.getCommentUserId();
         tvCommentedUserName.setText(commentsBean.getCommentUserName());
@@ -123,7 +136,39 @@ public class MoreCommentsActivity extends BaseActivity {
                 IntentUtil.startHomeActivity(userId);
                 break;
             case R.id.but_send:
+                String str = etMessage.getText().toString().trim();
+                if (StringUtil.isNotBlank(str)) {
+                    saveComment(str);
+                } else {
+                    ToastUtils.getInstance().show("内容不能为空");
+                }
                 break;
         }
     }
+    private void saveComment(String content) {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+            node.put("commentContent", content);//帖子ID
+            node.put("postId", Integer.valueOf(postId));
+            node.put("parentCommentsId", parentCommentsId);//parentCommentsId 未null
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.SAVE_COMMENT)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onCompleted(String str) {
+                ToastUtils.getInstance().show("评论成功");
+                etMessage.setText("");
+               // rvReview.fullScroll(ScrollView.FOCUS_UP);
+                initData();
+            }
+        });
+    }
+
 }
