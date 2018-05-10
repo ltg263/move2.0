@@ -1,25 +1,23 @@
 package com.secretk.move.ui.holder;
 
 import android.content.Context;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.TextPaint;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
-import com.secretk.move.baseManager.BaseManager;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonCommentsBean;
 import com.secretk.move.ui.activity.MoreCommentsActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
+import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.StringUtil;
+import com.secretk.move.view.Clickable;
 
 import java.util.List;
 
@@ -53,19 +51,22 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
     View viewChildContent2;
     @BindView(R.id.tv_child_comments_num)
     TextView tvChildCommentsNum;
+    @BindView(R.id.rl_ge_ren)
+    RelativeLayout rlGeRen;
     public DetailsDiscussHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
-    public void refresh(final int position, List<CommonCommentsBean> lists, Context context) {
-        CommonCommentsBean commentsBean = lists.get(position);
+    public void refresh(int position, List<CommonCommentsBean> lists, final Context context) {
+        final CommonCommentsBean commentsBean = lists.get(position);
         GlideUtils.loadCircleUrl(ivCommentedUserIcon, Constants.BASE_IMG_URL+commentsBean.getCommentUserIcon());
         tvCommentedUserName.setText(commentsBean.getCommentUserName());
         tvPraiseNum.setText(String.valueOf(commentsBean.getPraiseNum()));
         tvCreateTime.setText(commentsBean.getFloor() +"楼    "+StringUtil.getTimeToM(commentsBean.getCreateTime()));
         tvCommentContent.setText(commentsBean.getCommentContent());
         //"praiseStatus":0,//点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
+        LogUtil.w("commentsBean.getPraiseStatus():"+commentsBean.getPraiseStatus());
         if(commentsBean.getPraiseStatus()==1){
             tvPraiseNum.setSelected(false);
         }else if(commentsBean.getPraiseStatus()==0){
@@ -73,75 +74,88 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         }else if(commentsBean.getPraiseStatus()==3){
             tvPraiseNum.setText("****");
         }
+        tvPraiseNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setPraise(tvPraiseNum.isSelected(),commentsBean.getCommentsId());
+            }
+        });
+        rlGeRen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IntentUtil.startHomeActivity(commentsBean.getCommentUserId());
+            }
+        });
         if(commentsBean.getChildCommentsNum()!=0){
             tvChildCommentsNum.setText("更多"+commentsBean.getChildCommentsNum()+"条评论");
         }
+        final List<CommonCommentsBean.ChildCommentsListBean> childLists = commentsBean.getChildCommentsList();
+
         tvChildCommentsNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                IntentUtil.startActivity(MoreCommentsActivity.class);
+                Intent intent = new Intent(context,MoreCommentsActivity.class);
+                intent.putExtra("commentsBean", commentsBean);
+                context.startActivity(intent);
             }
         });
-        final List<CommonCommentsBean.ChildCommentsListBean> childLists = commentsBean.getChildCommentsList();
+        setChildLists(childLists,context);
+
+    }
+
+    private void setPraise(boolean finalIsLove, int commentsId) {
+        NetUtil.addCommentsPraise(finalIsLove, commentsId, new NetUtil.SaveFollowImpl() {
+            @Override
+            public void finishFollow(String str,boolean status) {
+                tvPraiseNum.setSelected(status);
+            }
+        });
+    }
+
+    /**
+     * 设置更多子的留言信息
+     * @param childLists
+     * @param context
+     */
+    private void setChildLists(final List<CommonCommentsBean.ChildCommentsListBean> childLists, final Context context) {
         if(childLists!=null && childLists.size()>0){
             for(int i=0;i<childLists.size();i++){
-                String userName = childLists.get(i).getCommentUserName()+": ";
-                String userNameB = "@"+childLists.get(i).getBecommentedUserName();
+                final String userName = childLists.get(i).getCommentUserName();
+                String userNameB = ": @"+childLists.get(i).getBecommentedUserName();
                 String content = childLists.get(i).getCommentContent();
                 String all = userName+userNameB+content;
-                SpannableString InfoOne = new SpannableString(all);
-                final int finalI = i;
-                //评论人
-                int var = all.indexOf(userName);
-                InfoOne.setSpan(new Clickable(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(BaseManager.app, childLists.get(finalI).getCommentUserName(),Toast.LENGTH_SHORT).show();
-                    }
-                }),var,var+userNameB.length()-1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                //被评论人
-                int varB = all.indexOf(userNameB);
-                InfoOne.setSpan(new Clickable(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(BaseManager.app, childLists.get(finalI).getBecommentedUserName(),Toast.LENGTH_SHORT).show();
-                    }
-                }),varB,varB+userNameB.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                String name[] = {userName,userNameB};
                 if(i==0){
-                    tvChildContent1.setText(InfoOne);
                     tvChildContent1.setVisibility(View.VISIBLE);
                     viewChildContent1.setVisibility(View.VISIBLE);
-                    tvChildContent1.setMovementMethod(LinkMovementMethod.getInstance());
+                    Clickable.getSpannableString(all, name, tvChildContent1,new Clickable.ClickListener() {
+                        @Override
+                        public void setOnClick(String name) {
+                            if(name.equals(userName)){
+                                IntentUtil.startHomeActivity(childLists.get(0).getCommentUserId());
+                            }else{
+                                IntentUtil.startHomeActivity(childLists.get(0).getBecommentedUserId());
+                            }
+                        }
+                    });
                 }
                 if(i==1){
-                    tvChildContent2.setText(InfoOne);
                     tvChildContent2.setVisibility(View.VISIBLE);
                     viewChildContent2.setVisibility(View.VISIBLE);
-                    tvChildContent2.setMovementMethod(LinkMovementMethod.getInstance());
+                    Clickable.getSpannableString(all, name, tvChildContent2,new Clickable.ClickListener() {
+                        @Override
+                        public void setOnClick(String name) {
+                            if(name.equals(userName)){
+                                IntentUtil.startHomeActivity(childLists.get(1).getCommentUserId());
+                            }else{
+                                IntentUtil.startHomeActivity(childLists.get(1).getBecommentedUserId());
+                            }
+                        }
+                    });
                 }
 
             }
 
-        }
-    }
-    class Clickable extends ClickableSpan {
-        private final View.OnClickListener mListener;
-        public Clickable(View.OnClickListener l) {
-            mListener = l;
-        }
-        /**
-         * 重写父类点击事件
-         */
-        @Override
-        public void onClick(View v) {
-            mListener.onClick(v);
-        }
-        /**
-         * 重写父类updateDrawState方法  我们可以给TextView设置字体颜色,背景颜色等等...
-         */
-        @Override
-        public void updateDrawState(TextPaint ds) {
-           ds.setColor(BaseManager.app.getResources().getColor(R.color.app_background));
         }
     }
 }

@@ -78,12 +78,12 @@ public class NetUtil {
     }
 
     /**
-     *  @param token 登录的token
      *  @param isFollow 是否已关注  true 关注
      * @param followType 1-关注项目;2-关注帖子；3-关注用户
      * @param followedId 关注类型为1，对应为projectId对应值，2 为postId对应值 3 为对应userId值
      */
-    public static void addSaveFollow(Boolean isFollow , String token, int followType, int followedId, final SaveFollowImpl follow){
+    public static void addSaveFollow(final Boolean isFollow ,int followType, int followedId, final SaveFollowImpl follow){
+        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY,"");
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -106,11 +106,49 @@ public class NetUtil {
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
-                follow.finishFollow(str);
+                follow.finishFollow(str,isFollow);
             }
         });
     }
+
+    /**
+     *  @param isLove 是否已赞 true 赞
+     * @param commentsId
+     * praiseStatus":0,//点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
+     */
+    public static void addCommentsPraise(final Boolean isLove , int commentsId, final SaveFollowImpl follow){
+        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY,"");
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+            node.put("commentsId", commentsId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String url ;
+        if(!isLove){
+            url=Constants.CANCEL_COMMENTS_PRAISE;
+        }else{
+            url=Constants.SAVE_COMMENTS_PRAISE;
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(url)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onCompleted(String str) {
+                follow.finishFollow(str,!isLove);
+            }
+        });
+
+    }
     public static abstract class SaveFollowImpl{
-        public abstract void finishFollow(String str);
+        /**
+         * status :true 未赞
+         *      false：已赞
+         */
+        public abstract void finishFollow(String str,boolean status);
     }
 }

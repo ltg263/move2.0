@@ -311,11 +311,14 @@ public class ProjectActivity extends BaseActivity {
                     isFollow = true;
                 }
                 NetUtil.addSaveFollow(isFollow,
-                        SharedUtils.singleton().get(Constants.TOKEN_KEY, ""),
-                        Constants.SaveFollow.PROJECT, projectInfo.getProjectId(), new NetUtil.SaveFollowImpl() {
+                        Constants.SaveFollow.PROJECT,projectInfo.getProjectId(), new NetUtil.SaveFollowImpl() {
                             @Override
-                            public void finishFollow(String str) {
-                                ToastUtils.getInstance().show(str);
+                            public void finishFollow(String str,boolean status) {
+                                if(status){
+                                    btnFollowStatus.setSelected(false);
+                                }else {
+                                    btnFollowStatus.setSelected(true);
+                                }
                             }
                         });
                 break;

@@ -108,11 +108,22 @@ public interface Constants {
     String DISCUSS_DETAIL = BASE_URL+"/kff/home/discussDetail";
     //对(评测/文章/讨论)类型的帖子进行评论或者对评论内容进行评论
     String SAVE_COMMENT = BASE_URL+"kff/comments/saveComment";
+    //讨论详情 最新评测列表和单个评论详情页childCommentList
+    String HOME_DISCUSS_COMMENT_LIST = BASE_URL+"/kff/home/discussCommentList";
 
+
+    //对 评论进行点赞
+    String SAVE_COMMENTS_PRAISE = BASE_URL+"kff/praise/saveCommentsPraise";
+    //取消对某个评论的点赞
+    String CANCEL_COMMENTS_PRAISE = BASE_URL+"kff/praise/cancelCommentsPraise";
+
+    //关注 项目 / 帖子 /人
+    String SAVE_FOLLOW = BASE_URL+"kff/follow/saveFollow";
+    //取消关注 项目 / 帖子 /人
+    String CANCEL_FOLLOW = BASE_URL+"/kff/follow/cancelFollow";
+//=======
     //讨论详情 页
     String HOME_DISCUSS_DETAIL = BASE_URL+"kff/home/discussDetail";
-    //讨论详情页 单个评论详情页
-    String HOME_DISCUSS_COMMENT_LIST = BASE_URL+"/kff/home/discussCommentList";
     //文章详情 页面
     String ARTICLE_DETAIL = BASE_URL+"kff/home/articleDetail";
     //文章评论列表
@@ -120,10 +131,7 @@ public interface Constants {
     //针对文章单个评论的评论列表页
     String ARTICLE_COMMENT_REPLY_LIST = BASE_URL+"kff/home/articleCommentReplyList";
 
-    //关注 项目 / 帖子 /人
-    String SAVE_FOLLOW = BASE_URL+"kff/follow/saveFollow";
-    //取消关注 项目 / 帖子 /人
-    String CANCEL_FOLLOW = BASE_URL+"/kff/follow/cancelFollow";
+
 
     /**
      * 1-关注项目;2-关注帖子；3-关注用户

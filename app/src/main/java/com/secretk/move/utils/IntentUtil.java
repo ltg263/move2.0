@@ -1,17 +1,11 @@
 package com.secretk.move.utils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 
-import com.secretk.move.MoveApplication;
-import com.secretk.move.R;
 import com.secretk.move.baseManager.BaseManager;
+import com.secretk.move.ui.activity.HomeActivity;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
@@ -125,6 +119,18 @@ public class IntentUtil {
         }
         return null;
     }
+
+    /**
+     * 跳转到用户的Activity
+     * @param userId
+     */
+    public static  void startHomeActivity(int userId){
+        String key[]={"userId"};
+        String values[]={String.valueOf(userId)};
+        IntentUtil.startActivity(HomeActivity.class,key,values);
+    }
+
+
     public static void  showShare() {
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权

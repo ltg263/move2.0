@@ -131,10 +131,9 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
                     isFollow = true;
                 }
                 NetUtil.addSaveFollow(isFollow,
-                        SharedUtils.singleton().get(Constants.TOKEN_KEY, ""),
                         Constants.SaveFollow.USER, submitUserId, new NetUtil.SaveFollowImpl() {
                             @Override
-                            public void finishFollow(String str) {
+                            public void finishFollow(String str,boolean statia) {
                                 ToastUtils.getInstance().show(str);
                             }
                         });

@@ -63,10 +63,9 @@ public class ProjectIntroHolder extends RecyclerViewBaseHolder {
                     isFollow=true;
                 }
                 NetUtil.addSaveFollow(isFollow,
-                        SharedUtils.singleton().get(Constants.TOKEN_KEY, ""),
                         Constants.SaveFollow.USER, usersBean.getUserId(), new NetUtil.SaveFollowImpl() {
                             @Override
-                            public void finishFollow(String str) {
+                            public void finishFollow(String str,boolean s) {
                                 ToastUtils.getInstance().show(str);
                             }
                         });

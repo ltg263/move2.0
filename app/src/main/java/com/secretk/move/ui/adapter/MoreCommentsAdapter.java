@@ -1,5 +1,6 @@
 package com.secretk.move.ui.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,10 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
-import com.secretk.move.bean.HomeReviewBase;
+import com.secretk.move.bean.CommonCommentsBean;
 import com.secretk.move.listener.ItemClickListener;
+import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.view.Clickable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +30,12 @@ import butterknife.ButterKnife;
 public class MoreCommentsAdapter extends RecyclerView.Adapter<MoreCommentsAdapter.MoreCommentsHolder> {
 
 
-    private List<HomeReviewBase> lists = new ArrayList<>();
+    private List<CommonCommentsBean.ChildCommentsListBean> lists = new ArrayList<>();
     private ItemClickListener mListener;
+    Context context;
+    public MoreCommentsAdapter(Context context) {
+        this.context=context;
+    }
 
     public void setItemListener(ItemClickListener mListener) {
         this.mListener = mListener;
@@ -52,12 +59,12 @@ public class MoreCommentsAdapter extends RecyclerView.Adapter<MoreCommentsAdapte
         return lists.size();
     }
 
-    public void setData(List<HomeReviewBase> list) {
+    public void setData(List<CommonCommentsBean.ChildCommentsListBean> list) {
         this.lists = list;
         notifyDataSetChanged();
     }
 
-    public List<HomeReviewBase> getData() {
+    public List<CommonCommentsBean.ChildCommentsListBean> getData() {
         return lists;
     }
 
@@ -69,8 +76,23 @@ public class MoreCommentsAdapter extends RecyclerView.Adapter<MoreCommentsAdapte
             ButterKnife.bind(this, itemView);
         }
 
-        public void refresh(int position, List<HomeReviewBase> lists) {
-            tvEaveContent.setText(lists.get(position).getDiyi());
+        public void refresh(int position, List<CommonCommentsBean.ChildCommentsListBean> lists) {
+            final CommonCommentsBean.ChildCommentsListBean bean = lists.get(position);
+            final String userName = bean.getCommentUserName();
+            String userNameB = ": @"+bean.getBecommentedUserName();
+            String content = bean.getCommentContent();
+            String all = userName+userNameB+content;
+            String name[] = {userName,userNameB};
+            Clickable.getSpannableString(all, name, tvEaveContent,new Clickable.ClickListener() {
+                @Override
+                public void setOnClick(String name) {
+                    if(name.equals(userName)){
+                        IntentUtil.startHomeActivity(bean.getCommentUserId());
+                    }else{
+                        IntentUtil.startHomeActivity(bean.getBecommentedUserId());
+                    }
+                }
+            });
         }
     }
 }

@@ -29,6 +29,7 @@ import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
+import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
@@ -67,6 +68,8 @@ public class DetailsDiscussActivity extends BaseActivity {
     TextView tvPostTitle;
     @BindView(R.id.iv_create_user_icon)
     ImageView ivCreateUserIcon;
+    @BindView(R.id.tv_project_code)
+    TextView tvProjectCode;
     @BindView(R.id.tv_create_user_name)
     TextView tvCreateUserName;
     @BindView(R.id.tv_create_user_signature)
@@ -93,6 +96,9 @@ public class DetailsDiscussActivity extends BaseActivity {
     private ImagesAdapter imagesadapter;
     private String imgUrl;
     private String imgName;
+    private Boolean isFollow = false;
+    private int userId;
+    private int createUserId;
 
     @Override
     protected int setOnCreate() {
@@ -126,16 +132,25 @@ public class DetailsDiscussActivity extends BaseActivity {
         rvNewReview.setAdapter(adapterNew);
         initRefresh();
     }
-    @OnClick({R.id.tv_follow_status, R.id.iv_post_small_images, R.id.but_login})
+    @OnClick({R.id.tv_follow_status, R.id.iv_post_small_images, R.id.but_login,R.id.rl_ge_ren})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_follow_status:
-                ToastUtils.getInstance().show("内容不能为空");
+                NetUtil.addSaveFollow(isFollow,
+                        Constants.SaveFollow.USER,Integer.valueOf(userId), new NetUtil.SaveFollowImpl() {
+                            @Override
+                            public void finishFollow(String str,boolean status) {
+                                 tvFollowStatus.setSelected(status);
+                            }
+                        });
                 break;
             case R.id.iv_post_small_images:
                 String key[]={"imgUrl","imgName"};
                 String values[]={imgUrl,imgName};
                 IntentUtil.startActivity(TemporaryIV.class,key,values);
+                break;
+            case R.id.rl_ge_ren:
+                IntentUtil.startHomeActivity(createUserId);
                 break;
             case R.id.but_login:
                 String str = etCommentContent.getText().toString().trim();
@@ -217,16 +232,21 @@ public class DetailsDiscussActivity extends BaseActivity {
                 llAddTv.removeAllViews();
                 initNewsDataList();
                 DetailsDiscussBase.DataBean.DiscussDetailBean discussDetail = bean.getData().getDiscussDetail();
+                createUserId = discussDetail.getCreateUserId();
                 mHeadView.setTitle(discussDetail.getProjectCode());
                 mHeadView.setTitleVice("/" + discussDetail.getProjectEnglishName());
+                tvProjectCode.setText(discussDetail.getProjectCode());
                 GlideUtils.loadCircleUrl(mHeadView.getImageView(), Constants.BASE_IMG_URL + discussDetail.getProjectIcon());
                 tvPostTitle.setText(discussDetail.getPostTitle());
                 GlideUtils.loadCircleUrl(ivCreateUserIcon, Constants.BASE_IMG_URL + discussDetail.getCreateUserIcon());
                 tvCreateUserName.setText(discussDetail.getCreateUserName());
+                userId = discussDetail.getCreateUserId();
                 tvCreateUserSignature.setText(discussDetail.getCreateUserSignature());
                 if (discussDetail.getFollowStatus() == 1) { //关注状态  "//0 未关注；1-已关注；2-不显示关注按钮"
+                    isFollow=true;
                     tvFollowStatus.setText("已关注");
                 } else if (discussDetail.getFollowStatus() == 0) {
+                    isFollow=false;
                     tvFollowStatus.setText("+关注");
                 } else {
                     tvFollowStatus.setVisibility(View.GONE);
@@ -256,7 +276,6 @@ public class DetailsDiscussActivity extends BaseActivity {
                             imagesadapter.setData(lists);
                         }
                     }
-
 
                     JSONArray object = new JSONArray(discussDetail.getTagInfos());
                     //[{"tagId":1,"tagName":"进度讨论"},{"tagId":3,"tagName":"项目前景讨论"},{"tagId":4,"tagName":"打假"}]

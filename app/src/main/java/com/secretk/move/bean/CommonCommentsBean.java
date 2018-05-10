@@ -1,5 +1,9 @@
 package com.secretk.move.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,7 +12,7 @@ import java.util.List;
  * 邮箱；ltg263@126.com
  * 描述：通用的讨论详情中的评论
  */
-public class CommonCommentsBean {
+public class CommonCommentsBean implements Parcelable {
     /**
      * floor:0
      * praiseStatus : 0
@@ -46,7 +50,7 @@ public class CommonCommentsBean {
     private int postId;
     private int postType;
     private int praiseNum;
-    private Object parentCommentsId;
+    private int parentCommentsId;
     private int becommentedUserId;
     private String becommentedUserName;
     private String becommentedUserIcon;
@@ -153,11 +157,11 @@ public class CommonCommentsBean {
         this.praiseNum = praiseNum;
     }
 
-    public Object getParentCommentsId() {
+    public int getParentCommentsId() {
         return parentCommentsId;
     }
 
-    public void setParentCommentsId(Object parentCommentsId) {
+    public void setParentCommentsId(int parentCommentsId) {
         this.parentCommentsId = parentCommentsId;
     }
 
@@ -233,7 +237,7 @@ public class CommonCommentsBean {
         this.childCommentsList = childCommentsList;
     }
 
-    public static class ChildCommentsListBean {
+    public static class ChildCommentsListBean implements Parcelable {
         /**
          * praiseStatus : 0
          * childCommentsNum : 0
@@ -260,7 +264,7 @@ public class CommonCommentsBean {
 
         private int praiseStatus;
         private int childCommentsNum;
-        private Object childCommentsList;
+//        private Object childCommentsList;
         private int commentsId;
         private int commentUserId;
         private String commentUserIcon;
@@ -296,13 +300,13 @@ public class CommonCommentsBean {
             this.childCommentsNum = childCommentsNum;
         }
 
-        public Object getChildCommentsList() {
-            return childCommentsList;
-        }
-
-        public void setChildCommentsList(Object childCommentsList) {
-            this.childCommentsList = childCommentsList;
-        }
+//        public Object getChildCommentsList() {
+//            return childCommentsList;
+//        }
+//
+//        public void setChildCommentsList(Object childCommentsList) {
+//            this.childCommentsList = childCommentsList;
+//        }
 
         public int getCommentsId() {
             return commentsId;
@@ -447,5 +451,144 @@ public class CommonCommentsBean {
         public void setStatus(int status) {
             this.status = status;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(this.praiseStatus);
+            dest.writeInt(this.childCommentsNum);
+            dest.writeInt(this.commentsId);
+            dest.writeInt(this.commentUserId);
+            dest.writeString(this.commentUserIcon);
+            dest.writeString(this.commentUserName);
+            dest.writeString(this.commentContent);
+            dest.writeInt(this.projectId);
+            dest.writeInt(this.postId);
+            dest.writeInt(this.postType);
+            dest.writeInt(this.praiseNum);
+            dest.writeInt(this.parentCommentsId);
+            dest.writeInt(this.becommentedUserId);
+            dest.writeString(this.becommentedUserName);
+            dest.writeString(this.becommentedUserIcon);
+            dest.writeLong(this.createTime);
+            dest.writeString(this.createTimeStr);
+            dest.writeLong(this.updateTime);
+            dest.writeString(this.updateTimeStr);
+            dest.writeInt(this.status);
+        }
+
+        public ChildCommentsListBean() {
+        }
+
+        protected ChildCommentsListBean(Parcel in) {
+            this.praiseStatus = in.readInt();
+            this.childCommentsNum = in.readInt();
+            this.commentsId = in.readInt();
+            this.commentUserId = in.readInt();
+            this.commentUserIcon = in.readString();
+            this.commentUserName = in.readString();
+            this.commentContent = in.readString();
+            this.projectId = in.readInt();
+            this.postId = in.readInt();
+            this.postType = in.readInt();
+            this.praiseNum = in.readInt();
+            this.parentCommentsId = in.readInt();
+            this.becommentedUserId = in.readInt();
+            this.becommentedUserName = in.readString();
+            this.becommentedUserIcon = in.readString();
+            this.createTime = in.readLong();
+            this.createTimeStr = in.readString();
+            this.updateTime = in.readLong();
+            this.updateTimeStr = in.readString();
+            this.status = in.readInt();
+        }
+
+        public static final Creator<ChildCommentsListBean> CREATOR = new Creator<ChildCommentsListBean>() {
+            @Override
+            public ChildCommentsListBean createFromParcel(Parcel source) {
+                return new ChildCommentsListBean(source);
+            }
+
+            @Override
+            public ChildCommentsListBean[] newArray(int size) {
+                return new ChildCommentsListBean[size];
+            }
+        };
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.floor);
+        dest.writeInt(this.praiseStatus);
+        dest.writeInt(this.childCommentsNum);
+        dest.writeInt(this.commentsId);
+        dest.writeInt(this.commentUserId);
+        dest.writeString(this.commentUserIcon);
+        dest.writeString(this.commentUserName);
+        dest.writeString(this.commentContent);
+        dest.writeInt(this.projectId);
+        dest.writeInt(this.postId);
+        dest.writeInt(this.postType);
+        dest.writeInt(this.praiseNum);
+        dest.writeInt(this.parentCommentsId);
+        dest.writeInt(this.becommentedUserId);
+        dest.writeString(this.becommentedUserName);
+        dest.writeString(this.becommentedUserIcon);
+        dest.writeLong(this.createTime);
+        dest.writeString(this.createTimeStr);
+        dest.writeLong(this.updateTime);
+        dest.writeString(this.updateTimeStr);
+        dest.writeInt(this.status);
+        dest.writeList(this.childCommentsList);
+    }
+
+    public CommonCommentsBean() {
+    }
+
+    protected CommonCommentsBean(Parcel in) {
+        this.floor = in.readInt();
+        this.praiseStatus = in.readInt();
+        this.childCommentsNum = in.readInt();
+        this.commentsId = in.readInt();
+        this.commentUserId = in.readInt();
+        this.commentUserIcon = in.readString();
+        this.commentUserName = in.readString();
+        this.commentContent = in.readString();
+        this.projectId = in.readInt();
+        this.postId = in.readInt();
+        this.postType = in.readInt();
+        this.praiseNum = in.readInt();
+        this.parentCommentsId = in.readInt();
+        this.becommentedUserId = in.readInt();
+        this.becommentedUserName = in.readString();
+        this.becommentedUserIcon = in.readString();
+        this.createTime = in.readLong();
+        this.createTimeStr = in.readString();
+        this.updateTime = in.readLong();
+        this.updateTimeStr = in.readString();
+        this.status = in.readInt();
+        this.childCommentsList = new ArrayList<ChildCommentsListBean>();
+        in.readList(this.childCommentsList, ChildCommentsListBean.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<CommonCommentsBean> CREATOR = new Parcelable.Creator<CommonCommentsBean>() {
+        @Override
+        public CommonCommentsBean createFromParcel(Parcel source) {
+            return new CommonCommentsBean(source);
+        }
+
+        @Override
+        public CommonCommentsBean[] newArray(int size) {
+            return new CommonCommentsBean[size];
+        }
+    };
 }

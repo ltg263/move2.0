@@ -195,11 +195,15 @@ public class HomeActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()){
             case R.id.tv_save_follow:
-                NetUtil.addSaveFollow(isFollow,token,
+                NetUtil.addSaveFollow(isFollow,
                         Constants.SaveFollow.USER,Integer.valueOf(userId), new NetUtil.SaveFollowImpl() {
                             @Override
-                            public void finishFollow(String str) {
-                                ToastUtils.getInstance().show(str);
+                            public void finishFollow(String str,boolean status) {
+                                if(status){
+                                    tvSaveFollow.setSelected(false);
+                                }else {
+                                    tvSaveFollow.setSelected(true);
+                                }
                             }
                         });
                 break;
