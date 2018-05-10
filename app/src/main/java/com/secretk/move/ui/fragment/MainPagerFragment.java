@@ -83,7 +83,8 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
     }
 
     Dialog dialog;
-Intent intent;
+    Intent intent;
+
     private void initDailog() {
         dialog = new Dialog(getContext(), R.style.Dialog_Fullscreen);
         LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -97,15 +98,17 @@ Intent intent;
         view.findViewById(R.id.ll_article).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent=new Intent(getContext(), ReleaseArticleActivity.class);
+                intent = new Intent(getContext(), ReleaseArticleActivity.class);
                 startActivity(intent);
+                dialog.dismiss();
             }
         });
         view.findViewById(R.id.ll_discuss).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent=new Intent(getContext(), ReleaseDiscussActivity.class);
+                intent = new Intent(getContext(), ReleaseDiscussActivity.class);
                 startActivity(intent);
+                dialog.dismiss();
             }
         });
         view.findViewById(R.id.img_close).setOnClickListener(new View.OnClickListener() {
