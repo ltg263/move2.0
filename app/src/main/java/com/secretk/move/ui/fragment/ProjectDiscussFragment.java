@@ -53,9 +53,9 @@ public class ProjectDiscussFragment extends LazyFragment{
     public void initViews() {
         setVerticalManager(rvReviewHot);
         setVerticalManager(rvReviewNewest);
-        adapterNot = new HomeListAdapter();
+        adapterNot = new HomeListAdapter(getActivity());
         rvReviewHot.setAdapter(adapterNot);
-        adapterNew = new HomeListAdapter();
+        adapterNew = new HomeListAdapter(getActivity());
         rvReviewNewest.setAdapter(adapterNew);
     }
 

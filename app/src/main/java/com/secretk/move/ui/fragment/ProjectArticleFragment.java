@@ -54,7 +54,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     @Override
     public void initViews() {
         setVerticalManager(rvReview);
-        adapter = new HomeListAdapter();
+        adapter = new HomeListAdapter(getActivity());
         rvReview.setAdapter(adapter);
         tvSort.setOnClickListener(new View.OnClickListener() {
             @Override

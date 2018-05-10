@@ -1,5 +1,6 @@
 package com.secretk.move.ui.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,10 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListHolder> {
 
 
     private List<RowsBean> lists = new ArrayList<>();
+    private Context context;
+    public HomeListAdapter(Context context) {
+        this.context=context;
+    }
 
     @Override
     public HomeListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -34,7 +39,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListHolder> {
 
     @Override
     public void onBindViewHolder(HomeListHolder holder, int position) {
-        holder.refresh(position, lists);
+        holder.refresh(position, lists,context);
     }
 
     @Override

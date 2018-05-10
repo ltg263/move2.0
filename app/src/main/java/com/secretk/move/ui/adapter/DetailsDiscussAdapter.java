@@ -1,5 +1,6 @@
 package com.secretk.move.ui.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,10 @@ public class DetailsDiscussAdapter extends RecyclerView.Adapter<DetailsDiscussHo
 
 
     private List<CommonCommentsBean> lists = new ArrayList<>();
+    Context context;
+    public DetailsDiscussAdapter(Context context) {
+        this.context=context;
+    }
 
     @Override
     public DetailsDiscussHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -33,7 +38,7 @@ public class DetailsDiscussAdapter extends RecyclerView.Adapter<DetailsDiscussHo
 
     @Override
     public void onBindViewHolder(DetailsDiscussHolder holder, int position) {
-        holder.refresh(position, lists);
+        holder.refresh(position, lists,context);
     }
 
     @Override

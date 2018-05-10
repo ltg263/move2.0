@@ -1,5 +1,6 @@
 package com.secretk.move.ui.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,9 @@ import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.PostDataInfo;
+import com.secretk.move.ui.activity.TemporaryIV;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,10 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesHold
 
 
     private List<PostDataInfo> lists = new ArrayList<>();
+    Context context;
+    public ImagesAdapter(Context context) {
+        this.context=context;
+    }
 
     @Override
     public ImagesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,8 +45,16 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesHold
     }
 
     @Override
-    public void onBindViewHolder(ImagesHolder holder, int position) {
-        GlideUtils.loadImage(holder.img, Constants.BASE_IMG_URL+lists.get(position).getUrl());
+    public void onBindViewHolder(ImagesHolder holder, final int position) {
+        GlideUtils.loadImage(context,holder.img, Constants.BASE_IMG_URL+lists.get(position).getUrl());
+        holder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String key[]={"imgUrl","imgName"};
+                String values[]={lists.get(position).getUrl(),lists.get(position).getName()};
+                IntentUtil.startActivity(TemporaryIV.class,key,values);
+            }
+        });
     }
 
     @Override

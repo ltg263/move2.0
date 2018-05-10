@@ -56,6 +56,7 @@ public class PolicyUtil {
      * @return
      */
     public static String encryptPolicy(String policy) {
+        LogUtil.w("policy:"+policy);
         try {
             if (StringUtil.isNotBlank(policy)) {
                 return URLEncoder.encode(AESUtil.encrypt(policy, Constants.AES_KEY), "UTF-8");

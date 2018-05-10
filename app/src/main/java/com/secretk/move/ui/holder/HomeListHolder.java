@@ -1,5 +1,6 @@
 package com.secretk.move.ui.holder;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -82,7 +83,7 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
         tvFollowStatus.setOnClickListener(this);
     }
 
-    public void refresh(final int position, List<RowsBean> lists) {
+    public void refresh(final int position, List<RowsBean> lists , Context context) {
         final RowsBean rowsBean = lists.get(position);
 //        GlideUtils.loadCircle(imgHead, R.drawable.account_portrait);
         GlideUtils.loadCircleUrl(ivCreateUserIcon, Constants.BASE_IMG_URL+rowsBean.getProjectIcon());
@@ -130,13 +131,13 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
         if(imgs.size()>=2){
             llMultiImg.setVisibility(View.VISIBLE);
             ivFileName.setVisibility(View.GONE);
-            GlideUtils.loadImage(ivOnt, Constants.BASE_IMG_URL+imgs.get(0).getFileUrl());
-            GlideUtils.loadImage(ivTwo, Constants.BASE_IMG_URL+imgs.get(1).getFileUrl());
-            GlideUtils.loadImage(ivThree, Constants.BASE_IMG_URL+imgs.get(2).getFileUrl());
+            GlideUtils.loadImage(context,ivOnt, Constants.BASE_IMG_URL+imgs.get(0).getFileUrl());
+            GlideUtils.loadImage(context,ivTwo, Constants.BASE_IMG_URL+imgs.get(1).getFileUrl());
+            GlideUtils.loadImage(context,ivThree, Constants.BASE_IMG_URL+imgs.get(2).getFileUrl());
         }else{
             llMultiImg.setVisibility(View.GONE);
             ivFileName.setVisibility(View.VISIBLE);
-            GlideUtils.loadImage(ivFileName, Constants.BASE_IMG_URL+imgs.get(0).getFileUrl());
+            GlideUtils.loadImage(context,ivFileName, Constants.BASE_IMG_URL+imgs.get(0).getFileUrl());
         }
         rlProject.setOnClickListener(new View.OnClickListener() {
             @Override

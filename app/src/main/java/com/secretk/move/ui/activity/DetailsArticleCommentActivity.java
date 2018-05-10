@@ -65,11 +65,11 @@ public class DetailsArticleCommentActivity extends BaseActivity{
     protected void initUI(Bundle savedInstanceState) {
         postId = getIntent().getStringExtra("postId");
         setVerticalManager(rvkHotReview);
-        adapter = new DetailsDiscussAdapter();
+        adapter = new DetailsDiscussAdapter(this);
         rvkHotReview.setAdapter(adapter);
 
         setVerticalManager(rvNewReview);
-        adapterNew = new DetailsDiscussAdapter();
+        adapterNew = new DetailsDiscussAdapter(this);
         rvNewReview.setAdapter(adapterNew);
     }
 

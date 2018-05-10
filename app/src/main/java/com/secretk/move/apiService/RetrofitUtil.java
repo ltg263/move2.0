@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.secretk.move.MoveApplication;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.utils.LogUtil;
+import com.secretk.move.utils.ToastUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -148,7 +149,11 @@ public class RetrofitUtil {
                                  } else {
                                      t = gson.fromJson(jsonStr, clz);
                                  }
-
+                                if(t==null){
+                                    ToastUtils.getInstance().show("实体类有误");
+                                    callBack.onFinish();
+                                    return;
+                                }
                                  if (callBack != null) {
                                      callBack.onFinish();
                                      callBack.onCompleted(t);

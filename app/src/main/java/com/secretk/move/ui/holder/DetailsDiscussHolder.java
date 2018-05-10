@@ -1,5 +1,6 @@
 package com.secretk.move.ui.holder;
 
+import android.content.Context;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -11,11 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.secretk.move.R;
-import com.secretk.move.bean.CommonCommentsBean;
-import com.secretk.move.bean.DetailsDiscussBase;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.BaseManager;
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.bean.CommonCommentsBean;
 import com.secretk.move.ui.activity.MoreCommentsActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
@@ -58,7 +58,7 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void refresh(final int position, List<CommonCommentsBean> lists) {
+    public void refresh(final int position, List<CommonCommentsBean> lists, Context context) {
         CommonCommentsBean commentsBean = lists.get(position);
         GlideUtils.loadCircleUrl(ivCommentedUserIcon, Constants.BASE_IMG_URL+commentsBean.getCommentUserIcon());
         tvCommentedUserName.setText(commentsBean.getCommentUserName());

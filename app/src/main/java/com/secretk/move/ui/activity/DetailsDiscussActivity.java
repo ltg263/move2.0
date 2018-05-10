@@ -19,14 +19,15 @@ import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
-import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.DetailsDiscussBase;
 import com.secretk.move.bean.DiscussNewInfoBean;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.ui.adapter.DetailsDiscussAdapter;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -43,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
 /**
@@ -89,6 +91,8 @@ public class DetailsDiscussActivity extends BaseActivity {
     private DetailsDiscussAdapter adapterNew;
     private String postId;
     private ImagesAdapter imagesadapter;
+    private String imgUrl;
+    private String imgName;
 
     @Override
     protected int setOnCreate() {
@@ -110,28 +114,38 @@ public class DetailsDiscussActivity extends BaseActivity {
     protected void initUI(Bundle savedInstanceState) {
         postId = getIntent().getStringExtra("postId");
         setHorizontalManager(rvImg);
-        imagesadapter = new ImagesAdapter();
+        imagesadapter = new ImagesAdapter(this);
         rvImg.setAdapter(imagesadapter);
 
         setVerticalManager(rvkHotReview);
-        adapter = new DetailsDiscussAdapter();
+        adapter = new DetailsDiscussAdapter(this);
         rvkHotReview.setAdapter(adapter);
 
         setVerticalManager(rvNewReview);
-        adapterNew = new DetailsDiscussAdapter();
+        adapterNew = new DetailsDiscussAdapter(this);
         rvNewReview.setAdapter(adapterNew);
         initRefresh();
-        butLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    }
+    @OnClick({R.id.tv_follow_status, R.id.iv_post_small_images, R.id.but_login})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_follow_status:
+                ToastUtils.getInstance().show("内容不能为空");
+                break;
+            case R.id.iv_post_small_images:
+                String key[]={"imgUrl","imgName"};
+                String values[]={imgUrl,imgName};
+                IntentUtil.startActivity(TemporaryIV.class,key,values);
+                break;
+            case R.id.but_login:
                 String str = etCommentContent.getText().toString().trim();
                 if (StringUtil.isNotBlank(str)) {
                     saveComment(str);
                 } else {
                     ToastUtils.getInstance().show("内容不能为空");
                 }
-            }
-        });
+                break;
+        }
     }
 
     private void initRefresh() {
@@ -141,7 +155,7 @@ public class DetailsDiscussActivity extends BaseActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                pageIndex=1;
+                pageIndex = 1;
                 initData();
             }
         });
@@ -231,13 +245,15 @@ public class DetailsDiscussActivity extends BaseActivity {
                         info.setTitle(strObj.getString("extension"));
                         lists.add(info);
                     }
-                    if(lists.size()!=0){
-                        if(lists.size()==1){
-                            GlideUtils.loadCircleUrl(ivPostSmallImages,Constants.BASE_IMG_URL+lists.get(0).getUrl());
-                        }else{
-                            imagesadapter.setData(lists);
+                    if (lists.size() != 0) {
+                        if (lists.size() == 1) {
+                            imgUrl = lists.get(0).getUrl();
+                            imgName = lists.get(0).getName();
+                            rvImg.setVisibility(View.GONE);
+                            GlideUtils.loadCircleUrl(ivPostSmallImages, Constants.BASE_IMG_URL + imgUrl);
+                        } else {
                             ivPostSmallImages.setVisibility(View.GONE);
-                            rvImg.setVisibility(View.VISIBLE);
+                            imagesadapter.setData(lists);
                         }
                     }
 
@@ -260,6 +276,7 @@ public class DetailsDiscussActivity extends BaseActivity {
     }
 
     int pageIndex = 1;
+
     public void initNewsDataList() {
         JSONObject node = new JSONObject();
         try {
@@ -280,20 +297,22 @@ public class DetailsDiscussActivity extends BaseActivity {
             public void onCompleted(DiscussNewInfoBean newInfoBean) {
                 DiscussNewInfoBean.DataBean.CommentsBean commentsBean = newInfoBean.getData().getComments();
                 adapterNew.setData(commentsBean.getRows());
-                if(commentsBean.getCurPageNum()==commentsBean.getPageSize()){
+                if (commentsBean.getCurPageNum() == commentsBean.getPageSize()) {
                     refreshLayout.setLoadmoreFinished(true);
                 }
             }
 
             @Override
             public void onFinish() {
-                if(refreshLayout.isRefreshing()){
+                if (refreshLayout.isRefreshing()) {
                     refreshLayout.finishRefresh();
                 }
-                if(refreshLayout.isLoading()){
+                if (refreshLayout.isLoading()) {
                     refreshLayout.finishLoadmore(true);
                 }
             }
         });
     }
+
+
 }

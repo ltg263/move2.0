@@ -21,7 +21,7 @@ public class LogUtil {
     /**
      * tag前缀,方便过滤
      */
-    public static String customTagPrefix = "";
+    public static String customTagPrefix = "ltg_263:";
 
     /**
      * log打印开关

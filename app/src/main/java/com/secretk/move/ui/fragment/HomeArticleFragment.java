@@ -47,7 +47,7 @@ public class HomeArticleFragment extends LazyFragment{
     @Override
     public void initViews() {
         setVerticalManager(rvReview);
-        adapter = new HomeListAdapter();
+        adapter = new HomeListAdapter(getActivity());
         rvReview.setAdapter(adapter);
     }
 

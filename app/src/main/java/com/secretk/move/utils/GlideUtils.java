@@ -1,5 +1,6 @@
 package com.secretk.move.utils;
 
+import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -21,7 +22,8 @@ public class GlideUtils {
         Glide.with(MoveApplication.getContext()).applyDefaultRequestOptions(new RequestOptions().transform(new GlideCircleTransform()).placeholder(R.drawable.account_portrait).error(R.drawable.account_portrait)).
                 load(url).into(img);
     }
-    public static void loadImage(ImageView img, String url) {
-        Glide.with(MoveApplication.getContext()).load(url).into(img);
+    public static void loadImage(Context context,ImageView img, String url) {
+        Glide.with(context).applyDefaultRequestOptions(new RequestOptions().placeholder(R.drawable.account_portrait).error(R.drawable.account_portrait)).
+                load(url).into(img);
     }
 }
