@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
@@ -40,8 +41,10 @@ import butterknife.OnClick;
 public class AddLabelActivity extends BaseActivity implements ItemClickListener {
     @BindView(R.id.recycler)
     RecyclerView recycler;
+    @BindView(R.id.tv_selected)
+    TextView tv_selected;
     AddLabelActivityRecyclerAdapter adapter;
-    List<String> list = new ArrayList<>();
+    List<LabelBean> list = new ArrayList<>();
 
     @Override
     protected int setOnCreate() {
@@ -62,9 +65,15 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
 
     @Override
     protected void initData() {
-        list.add("+添加话题");
+        LabelBean bean=new LabelBean();
+        bean.setName("+添加话题");
+        bean.setSelected(false);
+        list.add(bean);
         for (int i = 0; i < 20; i++) {
-            list.add(i + "号标签");
+            LabelBean bean1=new LabelBean();
+            bean1.setName(i + "号标签");
+            bean1.setSelected(false);
+            list.add(bean1);
         }
         adapter.setData(list);
     }
@@ -77,8 +86,17 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
 
     @Override
     public void onItemClick(View view, int postion) {
-        ToastUtils.getInstance().show("onItemClick postion=" + postion);
-        showPopupWindow();
+        if (postion == 0) {
+            showPopupWindow();
+        } else {
+            LabelBean bean=    adapter.getDataIndex(postion);
+            if (bean.getSelected()){
+                bean.setSelected(false);
+            }else {
+                bean.setSelected(true);
+            }
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -97,7 +115,7 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
     }
 
     public void showPopupWindow() {
-     final    PopupWindow popupWindow = new PopupWindow(AddLabelActivity.this);
+        final PopupWindow popupWindow = new PopupWindow(AddLabelActivity.this);
         popupWindow.setTouchable(true);
         popupWindow.setFocusable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -110,12 +128,12 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                setBackgroundAlpha(AddLabelActivity.this,1.0f);
+                setBackgroundAlpha(AddLabelActivity.this, 1.0f);
             }
         });
-        Button but_cancel=contentView.findViewById(R.id.but_cancel);
-        Button but_confirm=contentView.findViewById(R.id.but_confirm);
-        final EditText ed_word=contentView.findViewById(R.id.ed_word);
+        Button but_cancel = contentView.findViewById(R.id.but_cancel);
+        Button but_confirm = contentView.findViewById(R.id.but_confirm);
+        final EditText ed_word = contentView.findViewById(R.id.ed_word);
         but_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,9 +146,12 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
-                String str=ed_word.getText().toString().trim();
-                if (!TextUtils.isEmpty(str)){
-                    adapter.addData(str);
+                String str = ed_word.getText().toString().trim();
+                if (!TextUtils.isEmpty(str)) {
+                    LabelBean bean1=new LabelBean();
+                    bean1.setName(str);
+                    bean1.setSelected(false);
+                    adapter.addData(bean1);
                 }
             }
         });
@@ -152,5 +173,25 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);//此行代码主要是解决在华为手机上半透明效果无效的bug
         }
         activity.getWindow().setAttributes(lp);
+    }
+    public class  LabelBean{
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Boolean getSelected() {
+            return selected;
+        }
+
+        public void setSelected(Boolean selected) {
+            this.selected = selected;
+        }
+
+        String name;
+        Boolean selected;
     }
 }

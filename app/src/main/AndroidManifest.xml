@@ -115,7 +115,9 @@
             android:name=".ui.activity.SearchActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity android:name=".ui.activity.AddLabelActivity" />
-        <activity android:name=".ui.activity.ReleaseArticleActivity" />
+        <activity android:name=".ui.activity.ReleaseArticleActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            />
         <activity android:name=".ui.activity.ReleaseDiscussActivity" />
 
         <provider
