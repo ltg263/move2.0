@@ -39,10 +39,10 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_post_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dp_10"
-                    android:text="我我垃圾上单飞机按时交付垃圾上单了房价机按时交付垃圾上单了房价机按时交付垃圾上单了房价"
                     android:textColor="@color/title_gray"
                     android:textSize="@dimen/sp_16" />
 
@@ -57,35 +57,33 @@
                     android:padding="@dimen/dp_10">
 
                     <ImageView
-                        android:id="@+id/img_organization"
+                        android:id="@+id/iv_create_user_icon"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_centerVertical="true"
                         android:scaleType="centerCrop" />
 
                     <TextView
-                        android:id="@+id/tv_name"
+                        android:id="@+id/tv_create_user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_toRightOf="@id/img_organization"
-                        android:text="AOS/柚子"
+                        android:layout_toRightOf="@id/iv_create_user_icon"
                         android:textColor="#333333"
                         android:textSize="@dimen/sp_16" />
 
                     <TextView
-                        android:id="@+id/tvFollws"
+                        android:id="@+id/tv_create_user_signature"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_toRightOf="@id/img_organization"
-                        android:text="115248关注"
+                        android:layout_toRightOf="@id/iv_create_user_icon"
                         android:textColor="#aaaaaa"
                         android:textSize="@dimen/sp_12" />
 
                     <TextView
-                        android:id="@+id/tvIsFollw"
+                        android:id="@+id/tv_follow_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -105,54 +103,17 @@
                     android:orientation="vertical"
                     android:paddingHorizontal="@dimen/dp_10">
 
-                    <ImageView
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_img"
                         android:layout_width="match_parent"
-                        android:layout_height="187dp"
-                        android:layout_marginBottom="@dimen/dp_5"
-                        android:layout_marginTop="@dimen/dp_2"
-                        android:background="@drawable/fragment_follow_background" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="110dp"
-                        android:layout_marginBottom="@dimen/dp_5"
-                        android:layout_marginTop="@dimen/dp_2"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:src="@drawable/fragment_follow_background" />
-
-                        <View
-                            android:layout_width="@dimen/dp_5"
-                            android:layout_height="@dimen/dp_5" />
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:src="@drawable/fragment_follow_background" />
-
-                        <View
-                            android:layout_width="@dimen/dp_5"
-                            android:layout_height="@dimen/dp_5" />
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:src="@drawable/fragment_follow_background" />
-                    </LinearLayout>
+                        android:layout_height="wrap_content" />
 
                     <TextView
-                        android:id="@+id/tvContent"
+                        android:id="@+id/tv_post_short_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_margin="@dimen/dp_2"
-                        android:text="以太坊系统自身带有一种叫做以太币（Ether）的数字货币。以太币和著名的数字货币比特币（Bitcoin）..."
                         android:textColor="#7e7d7e"
                         android:textSize="@dimen/sp_12" />
                 </LinearLayout>
@@ -169,24 +130,24 @@
                     android:padding="@dimen/dp_10">
 
                     <TextView
-                        android:id="@+id/tv_crack_down"
+                        android:id="@+id/tv_project_code"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/garden_crack"
                         android:paddingLeft="@dimen/dp_10"
                         android:paddingRight="@dimen/dp_10"
-                        android:text="@string/crack_down"
                         android:textColor="#3b88f6"
                         android:textSize="@dimen/sp_15"
                         android:visibility="visible" />
 
 
                     <TextView
+                        android:id="@+id/tv_create_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:text="发表时间：2015-01-01"
+                        android:textColor="@color/title_gray_66"
                         android:textSize="@dimen/sp_12" />
 
                 </LinearLayout>
@@ -201,10 +162,10 @@
                     app:PileLayout_pileWidth="@dimen/dp_25" />
 
                 <TextView
+                    android:id="@+id/tv_donate_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="68人已赞助"
                     android:textColor="@color/title_gray_66" />
             </LinearLayout>
         </RelativeLayout>
@@ -222,10 +183,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:padding="@dimen/dp_10">
+        android:background="@color/white">
 
         <TextView
+            android:id="@+id/tv_praise_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -233,11 +194,11 @@
             android:drawableTop="@drawable/selector_assist_img"
             android:gravity="center_horizontal"
             android:padding="@dimen/dp_8"
-            android:text="赞188"
             android:textColor="@drawable/selector_assist_text"
             android:textSize="@dimen/sp_12" />
 
         <TextView
+            android:id="@+id/tv_collect_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -250,6 +211,7 @@
             android:textSize="@dimen/sp_12" />
 
         <TextView
+            android:id="@+id/tv_commendation_Num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -257,12 +219,11 @@
             android:drawableTop="@drawable/ic_sponsor"
             android:gravity="center_horizontal"
             android:padding="@dimen/dp_8"
-            android:text="赞助 68"
             android:textColor="#aaaaaa"
             android:textSize="@dimen/sp_12" />
 
         <TextView
-            android:id="@+id/tv_comment"
+            android:id="@+id/tv_comments_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -270,7 +231,6 @@
             android:drawableTop="@drawable/comment"
             android:gravity="center_horizontal"
             android:padding="@dimen/dp_8"
-            android:text="评论 1225"
             android:textColor="#aaaaaa"
             android:textSize="@dimen/sp_12" />
     </LinearLayout>

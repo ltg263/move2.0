@@ -1,8 +1,8 @@
 package com.secretk.move.ui.activity;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -10,19 +10,18 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.HomeReviewBase;
+import com.secretk.move.bean.CommonCommentsBean;
+import com.secretk.move.bean.DetailsArticleCommentBean;
 import com.secretk.move.bean.MenuInfo;
-import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.DetailsDiscussAdapter;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
-import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.view.AppBarHeadView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -64,9 +63,14 @@ public class DetailsArticleCommentActivity extends BaseActivity{
     @Override
     protected void initUI(Bundle savedInstanceState) {
         postId = getIntent().getStringExtra("postId");
+        List<CommonCommentsBean> hotComments = getIntent().getParcelableArrayListExtra("hotComments");
+        LogUtil.w("hotComments"+hotComments);
         setVerticalManager(rvkHotReview);
         adapter = new DetailsDiscussAdapter(this);
         rvkHotReview.setAdapter(adapter);
+        if(hotComments!=null){
+            adapter.setData(hotComments);
+        }
 
         setVerticalManager(rvNewReview);
         adapterNew = new DetailsDiscussAdapter(this);
@@ -74,21 +78,10 @@ public class DetailsArticleCommentActivity extends BaseActivity{
     }
 
     protected void initData() {
-        List<HomeReviewBase> list = new ArrayList<>();
-        HomeReviewBase base = new HomeReviewBase();
-        base.setDiyi("张三");
-        base.setEr("李四");
-        base.setSan("周五");
-        base.setIndex(1);
-        list.add(base);
-        list.add(base);
-//        adapter.setData(list);
-//        adapterNew.setData(list);
-
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            node.put("postId", postId);//帖子ID
+            node.put("postId", Integer.valueOf(postId));//帖子ID
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -97,18 +90,10 @@ public class DetailsArticleCommentActivity extends BaseActivity{
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+        RetrofitUtil.request(params, DetailsArticleCommentBean.class, new HttpCallBackImpl<DetailsArticleCommentBean>() {
             @Override
-            public void onCompleted(String bean) {
-                List<HomeReviewBase> list = new ArrayList<>();
-                HomeReviewBase base = new HomeReviewBase();
-                base.setDiyi("张三");
-                base.setEr("李四");
-                base.setSan("周五");
-                base.setIndex(1);
-                list.add(base);
-                list.add(base);
-//                adapter.setData(list);
+            public void onCompleted(DetailsArticleCommentBean bean) {
+                adapterNew.setData(bean.getData().getNewestComments().getRows());
             }
         });
     }

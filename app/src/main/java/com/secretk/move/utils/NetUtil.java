@@ -76,7 +76,6 @@ public class NetUtil {
         }
         return false;
     }
-
     /**
      *  @param isFollow 是否已关注  true 关注
      * @param followType 1-关注项目;2-关注帖子；3-关注用户
@@ -110,6 +109,40 @@ public class NetUtil {
             }
         });
     }
+    /**
+     * 点赞或取消 帖子 包括 评测 ，文章
+     * @param isPraise
+     * @param postId
+     * @param follow
+     */
+    public static void setPraise(final Boolean isPraise ,int postId,final SaveFollowImpl follow){
+        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY,"");
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+            node.put("postId", postId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String url ;
+        if(isPraise){
+            url=Constants.CANCEL_POST_PRAISE;
+        }else{
+            url=Constants.SAVE_POST_PRAISE;
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(url)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onCompleted(String str) {
+                follow.finishFollow(str,isPraise);
+            }
+        });
+    }
+
 
     /**
      *  @param isLove 是否已赞 true 赞

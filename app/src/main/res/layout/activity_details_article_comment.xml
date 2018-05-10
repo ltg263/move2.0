@@ -20,8 +20,9 @@
         android:background="@color/cut_off_rule" />
 
     <com.secretk.move.view.RecycleScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/view_q"
         android:layout_below="@id/view"
         android:fillViewport="true"
         android:scrollbars="none">
@@ -31,6 +32,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical">
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_line"
@@ -44,6 +46,11 @@
                 android:text="热门测评"
                 android:textColor="@color/title_gray"
                 android:textSize="@dimen/sp_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_line"
+                android:background="@color/cut_off_rule" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_hot_review"
@@ -65,6 +72,11 @@
                 android:textColor="@color/title_gray"
                 android:textSize="@dimen/sp_14" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_line"
+                android:background="@color/cut_off_rule" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_new_review"
                 android:layout_width="match_parent"
@@ -76,34 +88,45 @@
                 android:layout_height="@dimen/dp_line"
                 android:background="@color/cut_off_rule" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/dp_10">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_toStartOf="@+id/but_login"
-                    android:background="#f4f4f4"
-                    android:hint="留下你的评论..."
-                    android:padding="@dimen/dp_10"
-                    android:textColor="@color/title_gray"
-                    android:textColorHint="#aaaaaa" />
-
-                <Button
-                    android:id="@+id/but_login"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:background="@drawable/selector_login_bnt"
-                    android:text="发送"
-                    android:textColor="@drawable/selector_login_text"
-                    android:textSize="@dimen/sp_18" />
-            </RelativeLayout>
         </LinearLayout>
     </com.secretk.move.view.RecycleScrollView>
+
+    <View
+        android:id="@+id/view_q"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_line"
+        android:layout_alignTop="@+id/rl"
+        android:layout_below="@id/head_app_server"
+        android:background="@color/cut_off_rule" />
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingHorizontal="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_5">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/but_login"
+            android:background="#f4f4f4"
+            android:hint="留下你的评论..."
+            android:padding="@dimen/dp_10"
+            android:textColor="@color/title_gray"
+            android:textColorHint="#aaaaaa" />
+
+        <Button
+            android:id="@+id/but_login"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:background="@drawable/selector_login_bnt"
+            android:text="发送"
+            android:textColor="@drawable/selector_login_text"
+            android:textSize="@dimen/sp_18" />
+    </RelativeLayout>
 </RelativeLayout>

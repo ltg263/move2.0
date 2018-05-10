@@ -30,7 +30,6 @@ import butterknife.ButterKnife;
 
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesHolder> {
 
-
     private List<PostDataInfo> lists = new ArrayList<>();
     Context context;
     public ImagesAdapter(Context context) {

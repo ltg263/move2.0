@@ -53,13 +53,15 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
     TextView tvChildCommentsNum;
     @BindView(R.id.rl_ge_ren)
     RelativeLayout rlGeRen;
+    private CommonCommentsBean commentsBean;
+
     public DetailsDiscussHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
     public void refresh(int position, List<CommonCommentsBean> lists, final Context context) {
-        final CommonCommentsBean commentsBean = lists.get(position);
+        commentsBean = lists.get(position);
         GlideUtils.loadCircleUrl(ivCommentedUserIcon, Constants.BASE_IMG_URL+commentsBean.getCommentUserIcon());
         tvCommentedUserName.setText(commentsBean.getCommentUserName());
         tvPraiseNum.setText(String.valueOf(commentsBean.getPraiseNum()));
@@ -107,6 +109,12 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         NetUtil.addCommentsPraise(finalIsLove, commentsId, new NetUtil.SaveFollowImpl() {
             @Override
             public void finishFollow(String str,boolean status) {
+                ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
+                if(status){
+                    commentsBean.setPraiseStatus(1);
+                }else{
+                    commentsBean.setPraiseStatus(0);
+                }
                 tvPraiseNum.setSelected(status);
             }
         });
