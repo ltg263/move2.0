@@ -90,7 +90,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
             return;
         }
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        picPath = getExternalFilesDir(null).getAbsolutePath() + "/crashinfo/" + System.currentTimeMillis() + ".png";
+        picPath = getExternalFilesDir(null).getAbsolutePath() + "/" + System.currentTimeMillis() + ".png";
         Uri uri = Uri.fromFile(new File(picPath));
         //为拍摄的图片指定一个存储的路径
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);

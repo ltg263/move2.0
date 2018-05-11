@@ -30,4 +30,8 @@ public class GlideUtils {
         Glide.with(MoveApplication.getContext()).applyDefaultRequestOptions(new RequestOptions().placeholder(R.drawable.account_portrait).error(R.drawable.account_portrait)).
                 load(url).into(img);
     }
+    public static void loadImage(ImageView img, int url) {
+        Glide.with(MoveApplication.getContext()).applyDefaultRequestOptions(new RequestOptions().placeholder(R.drawable.account_portrait).error(R.drawable.account_portrait)).
+                load(url).into(img);
+    }
 }
