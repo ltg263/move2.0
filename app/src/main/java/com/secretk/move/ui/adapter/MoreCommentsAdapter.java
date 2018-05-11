@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.bean.CommonCommentsBean;
-import com.secretk.move.listener.ItemClickListener;
+import com.secretk.move.ui.activity.MoreCommentsActivity;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.view.Clickable;
 
@@ -31,14 +31,9 @@ public class MoreCommentsAdapter extends RecyclerView.Adapter<MoreCommentsAdapte
 
 
     private List<CommonCommentsBean.ChildCommentsListBean> lists = new ArrayList<>();
-    private ItemClickListener mListener;
     Context context;
     public MoreCommentsAdapter(Context context) {
         this.context=context;
-    }
-
-    public void setItemListener(ItemClickListener mListener) {
-        this.mListener = mListener;
     }
 
     @Override
@@ -51,7 +46,6 @@ public class MoreCommentsAdapter extends RecyclerView.Adapter<MoreCommentsAdapte
     @Override
     public void onBindViewHolder(MoreCommentsHolder holder, int position) {
         holder.refresh(position, lists);
-        holder.setItemListener(mListener);
     }
 
     @Override
@@ -80,7 +74,7 @@ public class MoreCommentsAdapter extends RecyclerView.Adapter<MoreCommentsAdapte
             final CommonCommentsBean.ChildCommentsListBean bean = lists.get(position);
             final String userName = bean.getCommentUserName();
             String userNameB = ": @"+bean.getBecommentedUserName();
-            String content = bean.getCommentContent();
+            final String content = bean.getCommentContent();
             String all = userName+userNameB+content;
             String name[] = {userName,userNameB};
             Clickable.getSpannableString(all, name, tvEaveContent,new Clickable.ClickListener() {
@@ -91,6 +85,12 @@ public class MoreCommentsAdapter extends RecyclerView.Adapter<MoreCommentsAdapte
                     }else{
                         IntentUtil.startHomeActivity(bean.getBecommentedUserId());
                     }
+                }
+            });
+            tvEaveContent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((MoreCommentsActivity)context).setSendEd(bean.getCommentUserName(),bean.getCommentUserId());
                 }
             });
         }

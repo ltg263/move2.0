@@ -1,5 +1,6 @@
 package com.secretk.move.ui.holder;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -68,7 +69,6 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         tvCreateTime.setText(commentsBean.getFloor() +"楼    "+StringUtil.getTimeToM(commentsBean.getCreateTime()));
         tvCommentContent.setText(commentsBean.getCommentContent());
         //"praiseStatus":0,//点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
-        LogUtil.w("commentsBean.getPraiseStatus():"+commentsBean.getPraiseStatus());
         if(commentsBean.getPraiseStatus()==1){
             tvPraiseNum.setSelected(false);
         }else if(commentsBean.getPraiseStatus()==0){
@@ -79,6 +79,7 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         tvPraiseNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tvPraiseNum.setEnabled(false);
                 setPraise(tvPraiseNum.isSelected(),commentsBean.getCommentsId());
             }
         });
@@ -97,8 +98,10 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context,MoreCommentsActivity.class);
+                LogUtil.w("PraiseNum："+String.valueOf(commentsBean.getPraiseNum()));
                 intent.putExtra("commentsBean", commentsBean);
-                context.startActivity(intent);
+//                context.startActivity(intent);
+                ((Activity)context).startActivityForResult(intent,0);
             }
         });
         setChildLists(childLists,context);
@@ -108,14 +111,15 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
     private void setPraise(boolean finalIsLove, int commentsId) {
         NetUtil.addCommentsPraise(finalIsLove, commentsId, new NetUtil.SaveFollowImpl() {
             @Override
-            public void finishFollow(String str,boolean status) {
-                ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
-                if(status){
-                    commentsBean.setPraiseStatus(1);
-                }else{
-                    commentsBean.setPraiseStatus(0);
+            public void finishFollow(String praiseNum,boolean status) {
+                tvPraiseNum.setEnabled(true);
+                if(!praiseNum.equals(Constants.PRAISE_ERROR)){
+                    commentsBean.setPraiseNum(Integer.valueOf(praiseNum));
+                    tvPraiseNum.setText(praiseNum);
+                    tvPraiseNum.setSelected(status);
+                    ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
+                    commentsBean.setPraiseStatus(status?0:1);
                 }
-                tvPraiseNum.setSelected(status);
             }
         });
     }

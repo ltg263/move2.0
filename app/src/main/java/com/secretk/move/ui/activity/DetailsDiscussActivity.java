@@ -1,12 +1,12 @@
 package com.secretk.move.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -31,10 +31,10 @@ import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
-import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
+import com.secretk.move.view.Clickable;
 import com.secretk.move.view.RecycleScrollView;
 
 import org.json.JSONArray;
@@ -82,8 +82,8 @@ public class DetailsDiscussActivity extends BaseActivity {
     TextView tvPostShortDesc;
     @BindView(R.id.tv_create_time)
     TextView tvCreateTime;
-    @BindView(R.id.ll_add_tv)
-    LinearLayout llAddTv;
+    @BindView(R.id.tv_tag_name)
+    TextView tvTagName;
     @BindView(R.id.et_comment_content)
     EditText etCommentContent;
     @BindView(R.id.but_login)
@@ -96,7 +96,6 @@ public class DetailsDiscussActivity extends BaseActivity {
     private ImagesAdapter imagesadapter;
     private String imgUrl;
     private String imgName;
-    private Boolean isFollow = false;
     private int userId;
     private int createUserId;
 
@@ -118,7 +117,7 @@ public class DetailsDiscussActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-        refreshLayout.setEnableRefresh(false);//关闭下拉刷新
+//        refreshLayout.setEnableRefresh(false);//关闭下拉刷新
         postId = getIntent().getStringExtra("postId");
         setHorizontalManager(rvImg);
         imagesadapter = new ImagesAdapter(this);
@@ -137,11 +136,13 @@ public class DetailsDiscussActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_follow_status:
-                NetUtil.addSaveFollow(isFollow,
+                NetUtil.addSaveFollow(tvFollowStatus.equals(R.string.follow_status_1),
                         Constants.SaveFollow.USER,Integer.valueOf(userId), new NetUtil.SaveFollowImpl() {
                             @Override
                             public void finishFollow(String str,boolean status) {
-                                 tvFollowStatus.setSelected(status);
+                                if(status){
+
+                                }
                             }
                         });
                 break;
@@ -213,7 +214,6 @@ public class DetailsDiscussActivity extends BaseActivity {
     }
 
     protected void initData() {
-        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY, "");
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -229,12 +229,12 @@ public class DetailsDiscussActivity extends BaseActivity {
         RetrofitUtil.request(params, DetailsDiscussBase.class, new HttpCallBackImpl<DetailsDiscussBase>() {
             @Override
             public void onCompleted(DetailsDiscussBase bean) {
-                llAddTv.removeAllViews();
                 initNewsDataList();
                 DetailsDiscussBase.DataBean.DiscussDetailBean discussDetail = bean.getData().getDiscussDetail();
                 createUserId = discussDetail.getCreateUserId();
                 mHeadView.setTitle(discussDetail.getProjectCode());
                 mHeadView.setTitleVice("/" + discussDetail.getProjectEnglishName());
+                mHeadView.setToolbarListener(discussDetail.getProjectId());
                 tvProjectCode.setText(discussDetail.getProjectCode());
                 GlideUtils.loadCircleUrl(mHeadView.getImageView(), Constants.BASE_IMG_URL + discussDetail.getProjectIcon());
                 tvPostTitle.setText(discussDetail.getPostTitle());
@@ -243,11 +243,9 @@ public class DetailsDiscussActivity extends BaseActivity {
                 userId = discussDetail.getCreateUserId();
                 tvCreateUserSignature.setText(discussDetail.getCreateUserSignature());
                 if (discussDetail.getFollowStatus() == 1) { //关注状态  "//0 未关注；1-已关注；2-不显示关注按钮"
-                    isFollow=true;
-                    tvFollowStatus.setText("已关注");
+                    tvFollowStatus.setText(getString(R.string.follow_status_1));
                 } else if (discussDetail.getFollowStatus() == 0) {
-                    isFollow=false;
-                    tvFollowStatus.setText("+关注");
+                    tvFollowStatus.setText(getString(R.string.follow_status_0));
                 } else {
                     tvFollowStatus.setVisibility(View.GONE);
                 }
@@ -279,13 +277,21 @@ public class DetailsDiscussActivity extends BaseActivity {
 
                     JSONArray object = new JSONArray(discussDetail.getTagInfos());
                     //[{"tagId":1,"tagName":"进度讨论"},{"tagId":3,"tagName":"项目前景讨论"},{"tagId":4,"tagName":"打假"}]
+                    String tagAll = "";
+                    String tagOnly[]= new String[object.length()];
                     for (int i = 0; i < object.length(); i++) {
                         JSONObject strObj = object.getJSONObject(i);
-                        TextView tv = new TextView(DetailsDiscussActivity.this);
-                        tv.setText("#" + strObj.getString("tagName") + "#   ");
-                        tv.setTextColor(getResources().getColor(R.color.app_background));
-                        llAddTv.addView(tv);
+                        tagOnly[i]="#" + strObj.getString("tagName") + "#";
+                        tagAll+="#" + strObj.getString("tagName") + "#   ";
                     }
+                    Clickable.getSpannableString(tagAll, tagOnly, tvTagName, new Clickable.ClickListener() {
+                        @Override
+                        public void setOnClick(String name) {
+                            //ToastUtils.getInstance().show(name);
+                        }
+                    });
+//                    tvTagName.setText(tag);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -333,5 +339,14 @@ public class DetailsDiscussActivity extends BaseActivity {
         });
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==0 && data!=null){
+            if(data.getExtras().getBoolean(Constants.REQUEST_CODE)){
+                pageIndex = 1;
+                initData();
+            }
+        }
+    }
 }

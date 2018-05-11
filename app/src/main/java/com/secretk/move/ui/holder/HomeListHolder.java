@@ -142,10 +142,7 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
         rlProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String projectId = String.valueOf(rowsBean.getProjectId());
-                String key[]={"projectId"};
-                String values[]={projectId};
-                IntentUtil.startActivity(ProjectActivity.class,key,values);
+                IntentUtil.startProjectActivity(rowsBean.getProjectId());
             }
         });
         llDetails.setOnClickListener(new View.OnClickListener() {

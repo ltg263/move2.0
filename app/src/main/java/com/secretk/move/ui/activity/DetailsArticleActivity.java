@@ -131,6 +131,7 @@ public class DetailsArticleActivity extends BaseActivity {
     public void setInitData(DetailsArticleBean.DataBean.ArticleDetailBean initData) {
         mHeadView.setTitle(initData.getProjectCode());
         mHeadView.setTitleVice("/" + initData.getProjectChineseName());
+        mHeadView.setToolbarListener(initData.getProjectId());
         tvPostTitle.setText(initData.getPostTitle());
         GlideUtils.loadCircleUrl(ivCreateUserIcon, Constants.BASE_IMG_URL + initData.getCreateUserIcon());
         tvCreateUserName.setText(initData.getCreateUserName());
@@ -203,7 +204,8 @@ public class DetailsArticleActivity extends BaseActivity {
             case R.id.tv_follow_status:
                 break;
             case R.id.tv_praise_status:
-                setPraise(tvCollectStatus.isSelected(),Integer.valueOf(postId));
+                tvPraiseStatus.setEnabled(false);
+                setPraise(tvPraiseStatus.isSelected(),Integer.valueOf(postId));
                 break;
             case R.id.tv_collect_status:
                 break;
@@ -220,9 +222,14 @@ public class DetailsArticleActivity extends BaseActivity {
     private void setPraise(boolean isPraise, int postId) {
         NetUtil.setPraise(isPraise, postId, new NetUtil.SaveFollowImpl() {
             @Override
-            public void finishFollow(String str,boolean status) {
+            public void finishFollow(String praiseNum,boolean status) {
+                tvPraiseStatus.setEnabled(true);
                 ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
-                tvPraiseStatus.setSelected(status);
+                if(!praiseNum.equals(Constants.PRAISE_ERROR)){
+                    tvPraiseStatus.setSelected(status);
+                    tvPraiseStatus.setText("赞"+praiseNum);
+                }
+
             }
         });
     }

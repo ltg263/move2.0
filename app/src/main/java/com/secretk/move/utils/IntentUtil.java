@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.secretk.move.baseManager.BaseManager;
 import com.secretk.move.ui.activity.HomeActivity;
+import com.secretk.move.ui.activity.ProjectActivity;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -120,6 +121,15 @@ public class IntentUtil {
         return null;
     }
 
+    /**
+     * 跳转到项目的Activity
+     * @param projectId
+     */
+    public static  void startProjectActivity(int projectId){
+        String key[]={"projectId"};
+        String values[]={String.valueOf(projectId)};
+        IntentUtil.startActivity(ProjectActivity.class,key,values);
+    }
     /**
      * 跳转到用户的Activity
      * @param userId

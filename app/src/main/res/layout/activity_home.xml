@@ -57,8 +57,7 @@
                                 android:id="@+id/iv_head"
                                 android:layout_width="73dp"
                                 android:layout_height="73dp"
-                                android:layout_gravity="center_vertical"
-                                android:src="@mipmap/ic_launcher" />
+                                android:layout_gravity="center_vertical"/>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -76,7 +75,6 @@
                                         android:id="@+id/tv_user_name"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="用户名"
                                         android:textStyle="bold"
                                         android:textColor="@color/title_gray"
                                         android:textSize="@dimen/dp_20" />
@@ -88,7 +86,6 @@
                                         android:layout_centerVertical="true"
                                         android:layout_marginLeft="@dimen/dp_10"
                                         android:layout_toRightOf="@id/tv_user_name"
-                                        android:text="@string/assessment_agenc"
                                         android:textColor="@color/colorAccent" />
 
                                     <TextView
@@ -127,7 +124,6 @@
                                             android:id="@+id/tv_answer"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="168"
                                             android:textStyle="bold"
                                             android:textColor="#555555"
                                             android:textSize="@dimen/sp_15" />
@@ -152,7 +148,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:gravity="center"
-                                            android:text="116"
                                             android:textStyle="bold"
                                             android:textColor="#555555"
                                             android:textSize="@dimen/sp_15" />
@@ -176,7 +171,6 @@
                                             android:id="@+id/tv_fans"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="168123"
                                             android:textStyle="bold"
                                             android:textColor="#555555"
                                             android:textSize="@dimen/sp_15" />
@@ -197,7 +191,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/dp_10"
-                            android:text="区块链创业者，早期投资人，专注于提供区块链创业者最好的产品和服务。"
                             android:textColor="#888888"
                             android:textSize="@dimen/dp_15" />
                     </LinearLayout>

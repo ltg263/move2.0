@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.baseManager.BaseManager;
+import com.secretk.move.utils.IntentUtil;
 
 /**
  * 通用的标题栏
@@ -26,6 +28,9 @@ public class AppBarHeadView extends FrameLayout {
     protected TextView mTitleVice;
     protected ImageView mImg;
     protected String setText;
+    private ImageView ivBoult;
+    private LinearLayout llToolbar;
+
     public boolean isHeadBackShow() {
         return headBackShow;
     }
@@ -68,12 +73,24 @@ public class AppBarHeadView extends FrameLayout {
         mAppBarLayout =  LayoutInflater.from(context).inflate(initAppBar(), this);
         if (mAppBarLayout != null) {
             mToolbar =  mAppBarLayout.findViewById(R.id.head_toolbar);
+            llToolbar =  mAppBarLayout.findViewById(R.id.ll_toolbar);
             mToolbar.setTitle("");
             mTitle = mAppBarLayout.findViewById(R.id.tv_head_title);
             mTitleVice = mAppBarLayout.findViewById(R.id.tv_head_vice);
             mImg = mAppBarLayout.findViewById(R.id.iv_head_img);
+            ivBoult = mAppBarLayout.findViewById(R.id.iv_boult);
             mTitle.setText(setText);
         }
+    }
+
+    public void setToolbarListener(final int projectId){
+        ivBoult.setVisibility(View.VISIBLE);
+        llToolbar.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IntentUtil.startProjectActivity(projectId);
+            }
+        });
     }
 
     public void setTitle(String title) {

@@ -1,5 +1,6 @@
 package com.secretk.move.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonCommentsBean;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.MoreCommentsAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
@@ -43,7 +45,7 @@ import butterknife.OnClick;
  * 邮箱；ltg263@126.com
  * 描述：评论详情------更多评论
  */
-public class MoreCommentsActivity extends BaseActivity {
+public class MoreCommentsActivity extends BaseActivity{
 
 
     @BindView(R.id.iv_commented_user_icon)
@@ -71,6 +73,7 @@ public class MoreCommentsActivity extends BaseActivity {
     private int userId;
     private int postId;
     private int parentCommentsId;
+    boolean isBianHua = false;
 
     @Override
     protected int setOnCreate() {
@@ -112,7 +115,7 @@ public class MoreCommentsActivity extends BaseActivity {
             tvPraiseNum.setSelected(false);
         } else if (commentsBean.getPraiseStatus() == 0) {
             tvPraiseNum.setSelected(true);
-        } else if (commentsBean.getPraiseStatus() == 3) {
+        } else if (commentsBean.getPraiseStatus() == 2) {
             tvPraiseNum.setText("****");
         }
         List<CommonCommentsBean.ChildCommentsListBean> commentsList = commentsBean.getChildCommentsList();
@@ -125,10 +128,16 @@ public class MoreCommentsActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_praise_num:
+                tvPraiseNum.setEnabled(false);
                 NetUtil.addCommentsPraise(tvPraiseNum.isSelected(), commentsId, new NetUtil.SaveFollowImpl() {
                     @Override
-                    public void finishFollow(String str,boolean status) {
+                    public void finishFollow(String praiseNum,boolean status) {
+                        tvPraiseNum.setEnabled(true);
+                        if(!praiseNum.equals(Constants.PRAISE_ERROR)){
+                            tvPraiseNum.setText(praiseNum);
                             tvPraiseNum.setSelected(status);
+                            isBianHua=true;
+                        }
                     }
                 });
                 break;
@@ -144,6 +153,12 @@ public class MoreCommentsActivity extends BaseActivity {
                 }
                 break;
         }
+    }
+    public void setSendEd(String user,int id){
+        etMessage.setHint("回复："+user);
+        etMessage.setFocusable(true);
+        parentCommentsId=id;
+//        ToastUtils.getInstance().show(user);
     }
     private void saveComment(String content) {
         JSONObject node = new JSONObject();
@@ -171,4 +186,11 @@ public class MoreCommentsActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra(Constants.REQUEST_CODE,isBianHua);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
 }

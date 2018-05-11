@@ -142,7 +142,7 @@ public class ProjectActivity extends BaseActivity {
     protected void initData() {
         JSONObject node = new JSONObject();
         try {
-            node.put("token", sharedUtils.get(Constants.TOKEN_KEY, ""));
+            node.put("token", token);
             projectId = "1";
             node.put("projectId", Integer.valueOf(projectId));//查看的项目ID
         } catch (JSONException e) {

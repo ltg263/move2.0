@@ -137,10 +137,10 @@ public class HomeActivity extends BaseActivity {
     protected void initData() {
         JSONObject node = new JSONObject();
         try {
-            node.put("token", sharedUtils.get(Constants.TOKEN_KEY, ""));
+            node.put("token", token);
             //查看自己不用传userId只用token就可以，查看他人需要传入他人userID
             if (StringUtil.isNotBlank(userId)) {
-               node.put("userId", userId);
+                node.put("userId", 4);
             }
         } catch (JSONException e) {
             e.printStackTrace();

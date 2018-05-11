@@ -9,6 +9,8 @@ import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.bean.base.BaseRes;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -107,6 +109,11 @@ public class NetUtil {
             public void onCompleted(String str) {
                 follow.finishFollow(str,isFollow);
             }
+
+            @Override
+            public void onError(String message) {
+                follow.finishFollow(Constants.FOLLOW_ERROR,isFollow);
+            }
         });
     }
     /**
@@ -125,7 +132,7 @@ public class NetUtil {
             e.printStackTrace();
         }
         String url ;
-        if(isPraise){
+        if(!isPraise){
             url=Constants.CANCEL_POST_PRAISE;
         }else{
             url=Constants.SAVE_POST_PRAISE;
@@ -138,13 +145,25 @@ public class NetUtil {
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
-                follow.finishFollow(str,isPraise);
+                try {
+                    JSONObject obj = new JSONObject(str);
+                    int praiseNum = obj.getJSONObject("data").getInt("praiseNum");
+                    follow.finishFollow(String.valueOf(praiseNum),!isPraise);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String message) {
+                follow.finishFollow(Constants.PRAISE_ERROR,isPraise);
             }
         });
     }
 
 
     /**
+     * 对评论内容点赞
      *  @param isLove 是否已赞 true 赞
      * @param commentsId
      * praiseStatus":0,//点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
@@ -172,7 +191,17 @@ public class NetUtil {
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
-                follow.finishFollow(str,!isLove);
+                try {
+                    JSONObject obj = new JSONObject(str);
+                    int praiseNum = obj.getJSONObject("data").getInt("praiseNum");
+                    follow.finishFollow(String.valueOf(praiseNum),!isLove);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onError(String message) {
+                follow.finishFollow(Constants.PRAISE_ERROR,isLove);
             }
         });
 

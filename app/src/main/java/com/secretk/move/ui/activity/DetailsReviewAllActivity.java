@@ -19,7 +19,6 @@ import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
-import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.PileLayout;
 
@@ -43,6 +42,7 @@ public class DetailsReviewAllActivity extends BaseActivity  implements ItemClick
     PileLayout pileLayout;
     @BindView(R.id.tv_comment)
     TextView tvComment;
+    String postId;
 
     String[] urls = {"http://img2.imgtn.bdimg.com/it/u=1939271907,257307689&fm=21&gp=0.jpg",
             "http://img0.imgtn.bdimg.com/it/u=2263418180,3668836868&fm=206&gp=0.jpg",
@@ -62,6 +62,7 @@ public class DetailsReviewAllActivity extends BaseActivity  implements ItemClick
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitle("EOS");
         mHeadView.setTitleVice("/張三");
+        mHeadView.setToolbarListener(0);
         mHeadView.setTitleColor(R.color.title_gray);
         mMenuInfos.add(0,new MenuInfo(R.string.share, "分享", R.drawable.ic_share));
         return mHeadView;
@@ -79,7 +80,7 @@ public class DetailsReviewAllActivity extends BaseActivity  implements ItemClick
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-
+        postId=getIntent().getStringExtra("postId");
         GlideUtils.loadCircle(mHeadView.getImageView(),R.drawable.ic_collect_have);
         tvComment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,17 +92,15 @@ public class DetailsReviewAllActivity extends BaseActivity  implements ItemClick
     }
 
     protected void initData() {
-
-        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY, "");
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            node.put("postId", 1);//帖子ID
+            node.put("postId", Integer.valueOf(postId));//帖子ID
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.HOME_DISCUSS_DETAIL)
+                .url(Constants.EVALUATION_DETAIL)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();

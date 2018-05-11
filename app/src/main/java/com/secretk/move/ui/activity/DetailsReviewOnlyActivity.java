@@ -65,6 +65,7 @@ public class DetailsReviewOnlyActivity extends BaseActivity  implements ItemClic
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitle("EOS");
         mHeadView.setTitleVice("/張三");
+        mHeadView.setToolbarListener(0);
         mHeadView.setTitleColor(R.color.title_gray);
         mMenuInfos.add(0,new MenuInfo(R.string.share, "分享", R.drawable.ic_share));
         return mHeadView;

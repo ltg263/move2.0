@@ -48,6 +48,19 @@ public interface Constants {
      */
     boolean DEBUG = true;
     /**
+     * 点赞失败
+     */
+    String PRAISE_ERROR = "praiseError";
+    /**
+     * 关注失败
+     */
+    String FOLLOW_ERROR = "followError";
+    /**
+     * startActivityForResult
+     */
+    String REQUEST_CODE = "requestCode";
+
+    /**
      * 图片
      */
     String BASE_IMG_URL = "http://47.98.197.101/";
@@ -109,7 +122,7 @@ public interface Constants {
     //对(评测/文章/讨论)类型的帖子进行评论或者对评论内容进行评论
     String SAVE_COMMENT = BASE_URL+"kff/comments/saveComment";
     //讨论详情 最新评测列表和单个评论详情页childCommentList
-    String HOME_DISCUSS_COMMENT_LIST = BASE_URL+"/kff/home/discussCommentList";
+    String HOME_DISCUSS_COMMENT_LIST = BASE_URL+"kff/home/discussCommentList";
     //文章详情 页面
     String ARTICLE_DETAIL = BASE_URL+"kff/home/articleDetail";
     //文章评论列表
@@ -124,7 +137,9 @@ public interface Constants {
     String SAVE_POST_PRAISE = BASE_URL+"kff/praise/savePostPraise";
     //取消对帖子的点赞  包括 文章 评测
     String CANCEL_POST_PRAISE = BASE_URL+"kff/praise/cancelPostPraise";
-
+//==
+    //评测详情 页
+    String EVALUATION_DETAIL = BASE_URL+"kff/home/evaluationDetail";
     //关注 项目 / 帖子 /人
     String SAVE_FOLLOW = BASE_URL+"kff/follow/saveFollow";
     //取消关注 项目 / 帖子 /人
