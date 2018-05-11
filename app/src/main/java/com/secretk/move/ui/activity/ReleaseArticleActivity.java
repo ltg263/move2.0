@@ -7,12 +7,14 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.secretk.move.R;
 import com.secretk.move.listener.ItemClickListener;
+import com.secretk.move.ui.adapter.ReleaseArticleLabelAdapter;
 import com.secretk.move.ui.adapter.ReleasePicAdapter;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.ToastUtils;
@@ -35,6 +37,8 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
     ReleasePicAdapter releasePicAdapter;
     @BindView(R.id.recycler_horizontal)
     RecyclerView recycler_horizontal;
+    ReleaseArticleLabelAdapter releaseArticleLabelAdapter;
+    LinearLayoutManager layoutManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,10 +54,16 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
         picList = new ArrayList<>();
 
-        recycler_pic.setLayoutManager(new GridLayoutManager(this, 3));
         releasePicAdapter = new ReleasePicAdapter();
+        recycler_pic.setLayoutManager(new GridLayoutManager(this, 3));
         recycler_pic.setAdapter(releasePicAdapter);
         releasePicAdapter.setItemListener(this);
+
+        releaseArticleLabelAdapter = new ReleaseArticleLabelAdapter();
+        layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recycler_horizontal.setLayoutManager(layoutManager);
+        recycler_horizontal.setAdapter(releaseArticleLabelAdapter);
     }
 
     @OnClick(R.id.img_return)
@@ -67,23 +77,29 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
     }
 
     public void localphoto(View view) {
-
+        Intent intent = new Intent(this, SelectedPicActivity.class);
+        startActivity(intent);
     }
 
     int REQUEST_CODE_CAMERA = 199;
     String picPath;
+
     public void takephoto(View view) {
+        if (releasePicAdapter.getItemCount()>=9){
+            ToastUtils.getInstance().show("最多选择九张图片");
+            return;
+        }
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        picPath= getExternalFilesDir(null).getAbsolutePath()+ "/crashinfo/"+System.currentTimeMillis()+".png";
+        picPath = getExternalFilesDir(null).getAbsolutePath() + "/crashinfo/" + System.currentTimeMillis() + ".png";
         Uri uri = Uri.fromFile(new File(picPath));
         //为拍摄的图片指定一个存储的路径
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         startActivityForResult(intent, REQUEST_CODE_CAMERA);
     }
-    int REQUEST_CODE_ADD_LABEL = 198;
+
     public void addlabel(View view) {
         Intent intent = new Intent(this, AddLabelActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_ADD_LABEL);
+        startActivity(intent);
     }
 
     public void swithKeyboard(View view) {
@@ -95,8 +111,8 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CAMERA && resultCode == RESULT_OK) {
-            File file=  new File(picPath);
-            if (file.exists()){
+            File file = new File(picPath);
+            if (file.exists()) {
                 releasePicAdapter.addData(picPath);
             }
         }
@@ -110,5 +126,17 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
     @Override
     public void onItemLongClick(View view, int postion) {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (AddLabelActivity.array != null) {
+            releaseArticleLabelAdapter.setData(AddLabelActivity.array);
+            AddLabelActivity.array=null;
+        }
+        if (true){
+
+        }
     }
 }

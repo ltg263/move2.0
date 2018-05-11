@@ -1,24 +1,18 @@
 package com.secretk.move.ui.adapter;
 
-import android.graphics.Color;
+
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
-
 import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.activity.AddLabelActivity;
-import com.secretk.move.ui.holder.MessageFragmentRecyclerHolder;
-import com.secretk.move.utils.UiUtils;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,8 +21,8 @@ import butterknife.ButterKnife;
  * Created by zc on 2018/4/14.
  */
 
-public class AddLabelActivityRecyclerAdapter extends RecyclerView.Adapter<AddLabelActivityRecyclerAdapter.ViewHolder> {
-    private List<DiscussLabelListbean.TagList> list = new ArrayList<>();
+public class ReleaseArticleLabelAdapter extends RecyclerView.Adapter<ReleaseArticleLabelAdapter.ViewHolder> {
+    private SparseArray<DiscussLabelListbean.TagList> list = new SparseArray<>();
     private ItemClickListener mListener;
 
     public void setItemListener(ItemClickListener mListener) {
@@ -36,23 +30,17 @@ public class AddLabelActivityRecyclerAdapter extends RecyclerView.Adapter<AddLab
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_add_label_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_add_label_item2, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        DiscussLabelListbean.TagList bean = list.get(position);
+        int key=list.keyAt(position);
+        DiscussLabelListbean.TagList bean = list.get(key);
         holder.setItemListener(mListener);
-        if (position==0){
-            holder.tvlabel.setTextColor(UiUtils.getColor(R.color.app_background));
-        }else {
-            holder.tvlabel.setTextColor(Color.parseColor("#333333"));
-        }
         holder.tvlabel.setText(bean.getTagName());
-
-        holder.tvlabel.setSelected(bean.getSelected());
 
     }
 
@@ -64,19 +52,13 @@ public class AddLabelActivityRecyclerAdapter extends RecyclerView.Adapter<AddLab
         return list.size();
     }
 
-    public void setData(List<DiscussLabelListbean.TagList> list) {
+    public void setData(SparseArray<DiscussLabelListbean.TagList> list) {
         this.list = list;
         notifyDataSetChanged();
     }
-    public void addData(DiscussLabelListbean.TagList str) {
-       list.add(1,str);
-        notifyDataSetChanged();
-    }
-    public DiscussLabelListbean.TagList getDataIndex(int index){
-        return list.get(index);
-    }
-    public class ViewHolder extends RecyclerViewBaseHolder {
 
+
+    public class ViewHolder extends RecyclerViewBaseHolder {
         @BindView(R.id.tvlabel)
         public TextView tvlabel;
 

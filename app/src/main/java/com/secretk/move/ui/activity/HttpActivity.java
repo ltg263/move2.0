@@ -11,6 +11,7 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.BlueSkyBean;
+import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.bean.DynamicValidateCodeSend;
 
 import com.secretk.move.bean.MainRfBean;
@@ -85,13 +86,13 @@ public class HttpActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.MAIN_BLUE_SKY)
+                .url(Constants.RELEASE_DISCUSS)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, BlueSkyBean.class, new HttpCallBackImpl<BlueSkyBean>() {
+        RetrofitUtil.request(params, DiscussLabelListbean.class, new HttpCallBackImpl<DiscussLabelListbean>() {
             @Override
-            public void onCompleted(BlueSkyBean bean) {
+            public void onCompleted(DiscussLabelListbean bean) {
                int code=bean.getCode();
             }
         });
