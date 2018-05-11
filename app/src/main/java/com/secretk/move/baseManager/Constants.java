@@ -151,7 +151,8 @@ public interface Constants {
     String ARTICLE_COMMENT_REPLY_LIST = BASE_URL+"kff/home/articleCommentReplyList";
 
 //发表讨论时 添加标签 获取标签列表
-    String RELEASE_DISCUSS=BASE_URL+"/kff/discuss/tagList";
+    String RELEASE_DISCUSS_LIST =BASE_URL+"/kff/discuss/tagList";
+    String RELEASE_ARTICLE=BASE_URL+"/kff/article/saveArticle";
 
     /**
      * 1-关注项目;2-关注帖子；3-关注用户

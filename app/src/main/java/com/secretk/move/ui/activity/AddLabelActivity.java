@@ -82,7 +82,7 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.RELEASE_DISCUSS)
+                .url(Constants.RELEASE_DISCUSS_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
