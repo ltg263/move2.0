@@ -99,7 +99,7 @@ public class MoreCommentsActivity extends BaseActivity {
         CommonCommentsBean commentsBean = getIntent().getParcelableExtra("commentsBean");
         GlideUtils.loadCircleUrl(ivCommentedUserIcon, Constants.BASE_IMG_URL + commentsBean.getCommentUserIcon());
         postId = commentsBean.getPostId();
-        parentCommentsId = commentsBean.getParentCommentsId();
+        parentCommentsId = commentsBean.getCommentsId();
         commentsId = commentsBean.getCommentsId();
         userId= commentsBean.getCommentUserId();
         tvCommentedUserName.setText(commentsBean.getCommentUserName());

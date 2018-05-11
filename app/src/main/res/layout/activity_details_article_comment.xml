@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background_gray"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
@@ -19,78 +20,87 @@
         android:layout_below="@id/head_app_server"
         android:background="@color/cut_off_rule" />
 
-    <com.secretk.move.view.RecycleScrollView
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        app:srlEnablePreviewInEditMode="false"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/view_q"
-        android:layout_below="@id/view"
-        android:fillViewport="true"
-        android:scrollbars="none">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/view_be"
+        android:layout_below="@id/view">
 
-        <LinearLayout
+        <com.secretk.move.view.RecycleScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical">
+            android:layout_above="@+id/view_q"
+            android:layout_below="@id/view"
+            android:fillViewport="true"
+            android:scrollbars="none">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_line"
-                android:background="@color/cut_off_rule" />
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:padding="@dimen/dp_10"
-                android:text="热门测评"
-                android:textColor="@color/title_gray"
-                android:textSize="@dimen/sp_14" />
+                android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_line"
-                android:background="@color/cut_off_rule" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_line"
+                    android:background="@color/cut_off_rule" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_hot_review"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/dp_10" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="@dimen/dp_10"
+                    android:text="热门测评"
+                    android:textColor="@color/title_gray"
+                    android:textSize="@dimen/sp_14" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_line"
-                android:background="@color/cut_off_rule" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_line"
+                    android:background="@color/cut_off_rule" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:padding="@dimen/dp_10"
-                android:text="最新测评"
-                android:textColor="@color/title_gray"
-                android:textSize="@dimen/sp_14" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_hot_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/dp_10" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_line"
-                android:background="@color/cut_off_rule" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_line"
+                    android:background="@color/cut_off_rule" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_new_review"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dp_10" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="@dimen/dp_10"
+                    android:text="最新测评"
+                    android:textColor="@color/title_gray"
+                    android:textSize="@dimen/sp_14" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_line"
-                android:background="@color/cut_off_rule" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_line"
+                    android:background="@color/cut_off_rule" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_new_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_line"
+                    android:background="@color/cut_off_rule" />
 
 
-        </LinearLayout>
-    </com.secretk.move.view.RecycleScrollView>
+            </LinearLayout>
+        </com.secretk.move.view.RecycleScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <View
         android:id="@+id/view_q"
@@ -109,6 +119,7 @@
         android:paddingTop="@dimen/dp_5">
 
         <EditText
+            android:id="@+id/et_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/but_login"
@@ -119,7 +130,7 @@
             android:textColorHint="#aaaaaa" />
 
         <Button
-            android:id="@+id/but_login"
+            android:id="@+id/but_send"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

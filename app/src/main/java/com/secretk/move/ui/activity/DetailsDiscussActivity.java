@@ -118,6 +118,7 @@ public class DetailsDiscussActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        refreshLayout.setEnableRefresh(false);//关闭下拉刷新
         postId = getIntent().getStringExtra("postId");
         setHorizontalManager(rvImg);
         imagesadapter = new ImagesAdapter(this);
