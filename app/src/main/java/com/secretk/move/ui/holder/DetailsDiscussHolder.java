@@ -32,6 +32,8 @@ import butterknife.ButterKnife;
  * 描述：评测详情——评价Item
  */
 public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
+    @BindView(R.id.view)
+    View view;
     @BindView(R.id.iv_commented_user_icon)
     ImageView ivCommentedUserIcon;
     @BindView(R.id.tv_commented_user_name)
@@ -62,6 +64,9 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
     }
 
     public void refresh(int position, List<CommonCommentsBean> lists, final Context context) {
+        if(position==0){
+            view.setVisibility(View.GONE);
+        }
         commentsBean = lists.get(position);
         GlideUtils.loadCircleUrl(ivCommentedUserIcon, Constants.BASE_IMG_URL+commentsBean.getCommentUserIcon());
         tvCommentedUserName.setText(commentsBean.getCommentUserName());

@@ -73,7 +73,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void setVerticalManager(RecyclerView rcv) {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
-        rcv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+//        rcv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         rcv.setLayoutManager(manager);
     }
 

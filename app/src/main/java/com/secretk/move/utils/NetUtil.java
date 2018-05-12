@@ -107,12 +107,18 @@ public class NetUtil {
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
-                follow.finishFollow(str,isFollow);
+                try {
+                    JSONObject obj = new JSONObject(str);
+                    int followStatus = obj.getJSONObject("data").getInt("followStatus");
+                    follow.finishFollow(String.valueOf(followStatus),followStatus==0?true:false);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onError(String message) {
-                follow.finishFollow(Constants.FOLLOW_ERROR,isFollow);
+                follow.finishFollow(Constants.FOLLOW_ERROR,false);
             }
         });
     }

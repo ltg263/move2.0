@@ -136,12 +136,14 @@ public class DetailsDiscussActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_follow_status:
+                tvFollowStatus.setEnabled(false);
                 NetUtil.addSaveFollow(tvFollowStatus.equals(R.string.follow_status_1),
                         Constants.SaveFollow.USER,Integer.valueOf(userId), new NetUtil.SaveFollowImpl() {
                             @Override
                             public void finishFollow(String str,boolean status) {
-                                if(status){
-
+                                tvFollowStatus.setEnabled(true);
+                                if (!str.equals(Constants.FOLLOW_ERROR)) {
+                                    tvFollowStatus.setSelected(status);
                                 }
                             }
                         });

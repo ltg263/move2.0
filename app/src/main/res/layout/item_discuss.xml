@@ -5,6 +5,11 @@
     android:background="#fff"
     android:orientation="vertical">
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_line"
+        android:background="@color/cut_off_rule" />
 
     <RelativeLayout
         android:id="@+id/rl_ge_ren"
@@ -68,8 +73,9 @@
         <View
             android:id="@+id/view_child_content1"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_line"
-            android:background="@color/cut_off_rule"
+            android:layout_height="0.5dp"
+            android:background="@drawable/dash_line"
+            android:layerType="software"
             android:visibility="gone" />
 
         <TextView
@@ -77,7 +83,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_10"
-            android:text="32131"
             android:textColor="@color/title_gray"
             android:textSize="@dimen/sp_14"
             android:visibility="gone" />
@@ -85,8 +90,9 @@
         <View
             android:id="@+id/view_child_content2"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_line"
-            android:background="@color/cut_off_rule"
+            android:layout_height="1dp"
+            android:background="@drawable/dash_line"
+            android:layerType="software"
             android:visibility="gone" />
 
         <TextView
@@ -94,15 +100,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_10"
-            android:text="32131"
             android:textColor="@color/title_gray"
             android:textSize="@dimen/sp_14"
             android:visibility="gone" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_line"
-            android:background="@color/cut_off_rule" />
+            android:layout_height="1dp"
+            android:background="@drawable/dash_line"
+            android:layerType="software" />
 
         <TextView
             android:id="@+id/tv_child_comments_num"

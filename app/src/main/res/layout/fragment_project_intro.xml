@@ -67,7 +67,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
+                    android:layout_height="@dimen/dp_line"
                     android:background="@color/cut_off_rule" />
 
                 <LinearLayout
@@ -100,7 +100,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
+                    android:layout_height="@dimen/dp_line"
                     android:background="@color/cut_off_rule" />
 
                 <LinearLayout
@@ -133,7 +133,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
+                    android:layout_height="@dimen/dp_line"
                     android:background="@color/cut_off_rule" />
 
                 <LinearLayout
@@ -166,7 +166,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
+                    android:layout_height="@dimen/dp_line"
                     android:background="@color/cut_off_rule" />
 
                 <LinearLayout
@@ -199,7 +199,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
+                    android:layout_height="@dimen/dp_line"
                     android:background="@color/cut_off_rule" />
 
                 <LinearLayout
@@ -232,7 +232,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
+                    android:layout_height="@dimen/dp_line"
                     android:background="@color/cut_off_rule" />
 
                 <LinearLayout
@@ -267,12 +267,12 @@
             <!--项目介绍結束-->
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
+                android:layout_height="@dimen/dp_line"
                 android:background="@color/cut_off_rule" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
+                android:layout_height="@dimen/dp_line"
                 android:layout_marginTop="@dimen/dp_10"
                 android:background="@color/cut_off_rule" />
             <!--站長開始-->
@@ -296,7 +296,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
+                    android:layout_height="@dimen/dp_line"
                     android:background="@color/cut_off_rule" />
 
                 <RelativeLayout
@@ -358,12 +358,12 @@
             <!--站長結束-->
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
+                android:layout_height="@dimen/dp_line"
                 android:background="@color/cut_off_rule" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
+                android:layout_height="@dimen/dp_line"
                 android:layout_marginTop="@dimen/dp_10"
                 android:background="@color/cut_off_rule" />
             <!--活躍用戶開始-->
@@ -386,7 +386,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
+                    android:layout_height="@dimen/dp_line"
                     android:background="@color/cut_off_rule" />
 
                 <android.support.v7.widget.RecyclerView

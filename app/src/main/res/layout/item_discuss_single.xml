@@ -4,6 +4,13 @@
     android:layout_height="wrap_content"
     android:background="#fff"
     android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/dash_line"
+        android:layerType="software" />
+
     <TextView
         android:id="@+id/tv_eave_content"
         android:layout_width="match_parent"
