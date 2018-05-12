@@ -5,9 +5,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.secretk.move.MoveApplication;
+import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
+import com.secretk.move.baseManager.BaseManager;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.base.BaseRes;
 
@@ -79,12 +81,17 @@ public class NetUtil {
         return false;
     }
     /**
-     *  @param isFollow 是否已关注  true 关注
+     *    // 0 显示 +关注； 1--显示 已关注 按钮 ；2 不显示按钮
+     *  @param statusStr 已关注  文字
      * @param followType 1-关注项目;2-关注帖子；3-关注用户
      * @param followedId 关注类型为1，对应为projectId对应值，2 为postId对应值 3 为对应userId值
      */
-    public static void addSaveFollow(final Boolean isFollow ,int followType, int followedId, final SaveFollowImpl follow){
+    public static void addSaveFollow(String statusStr ,int followType, int followedId, final SaveFollowImp follow){
         String token = SharedUtils.singleton().get(Constants.TOKEN_KEY,"");
+        int statusCode=0;
+        if(statusStr.equals(BaseManager.app.getString(R.string.follow_status_1))){
+            statusCode=1;
+        }
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -94,7 +101,7 @@ public class NetUtil {
             e.printStackTrace();
         }
         String url ;
-        if(isFollow){
+        if(statusCode==1){
             url=Constants.CANCEL_FOLLOW;
         }else{
             url=Constants.SAVE_FOLLOW;
@@ -110,7 +117,11 @@ public class NetUtil {
                 try {
                     JSONObject obj = new JSONObject(str);
                     int followStatus = obj.getJSONObject("data").getInt("followStatus");
-                    follow.finishFollow(String.valueOf(followStatus),followStatus==0?true:false);
+                    if(followStatus==1){
+                        follow.finishFollow(BaseManager.app.getString(R.string.follow_status_1));
+                    }else{
+                        follow.finishFollow(BaseManager.app.getString(R.string.follow_status_0));
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -118,10 +129,19 @@ public class NetUtil {
 
             @Override
             public void onError(String message) {
-                follow.finishFollow(Constants.FOLLOW_ERROR,false);
+                follow.finishFollow(Constants.FOLLOW_ERROR);
             }
         });
     }
+
+    public static abstract class SaveFollowImp{
+        /**
+         * status :true 未赞
+         *      false：已赞
+         */
+        public abstract void finishFollow(String str);
+    }
+
     /**
      * 点赞或取消 帖子 包括 评测 ，文章
      * @param isPraise
@@ -218,5 +238,55 @@ public class NetUtil {
          *      false：已赞
          */
         public abstract void finishFollow(String str,boolean status);
+    }
+
+    /**
+     *
+     * @param isCollect
+     * @param postId
+     * @param collect
+     */
+    public static void saveCollect(Boolean isCollect ,int postId, final SaveCollectImp collect){
+        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY,"");
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+            node.put("postId", postId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String url ;
+        if(isCollect){
+            url=Constants.CANCEL_COLLECT;
+        }else{
+            url=Constants.SAVE_COLLECT;
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(url)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onCompleted(String str) {
+                try {
+                    JSONObject obj = new JSONObject(str);
+                    //0-未收藏，1-已收藏，数字
+                    int followStatus = obj.getJSONObject("data").getInt("collectStatus");
+                    collect.finishCollect("",followStatus==0?true:false);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String message) {
+                collect.finishCollect(Constants.COLLECT_ERROR,true);
+            }
+        });
+    }
+
+    public static abstract class SaveCollectImp{
+        public abstract void finishCollect(String code,boolean status);
     }
 }

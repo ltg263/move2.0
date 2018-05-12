@@ -56,6 +56,10 @@ public interface Constants {
      */
     String FOLLOW_ERROR = "followError";
     /**
+     * 收藏失败
+     */
+    String COLLECT_ERROR = "collectStatus";
+    /**
      * startActivityForResult
      */
     String REQUEST_CODE = "requestCode";
@@ -137,14 +141,21 @@ public interface Constants {
     String SAVE_POST_PRAISE = BASE_URL+"kff/praise/savePostPraise";
     //取消对帖子的点赞  包括 文章 评测
     String CANCEL_POST_PRAISE = BASE_URL+"kff/praise/cancelPostPraise";
-//==
-    //评测详情 页
-    String EVALUATION_DETAIL = BASE_URL+"kff/home/evaluationDetail";
-    //关注 项目 / 帖子 /人
-    String SAVE_FOLLOW = BASE_URL+"kff/follow/saveFollow";
     //取消关注 项目 / 帖子 /人
     String CANCEL_FOLLOW = BASE_URL+"/kff/follow/cancelFollow";
-//=======
+    //关注 项目 / 帖子 /人
+    String SAVE_FOLLOW = BASE_URL+"kff/follow/saveFollow";
+
+    //收藏帖子 包括 讨论，评测 ，文章
+    String SAVE_COLLECT = "kff/collect/saveCollect";
+    //取消对帖子的收藏  包括 讨论 文章 评测
+    String CANCEL_COLLECT = "kff/collect/cancelCollect";
+
+
+
+    //评测详情 页
+    String EVALUATION_DETAIL = BASE_URL+"kff/home/evaluationDetail";
+    //=======
     //讨论详情 页
     String HOME_DISCUSS_DETAIL = BASE_URL+"kff/home/discussDetail";
     //针对文章单个评论的评论列表页

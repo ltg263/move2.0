@@ -39,6 +39,7 @@ import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
+import com.secretk.move.view.LoadingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -140,6 +141,10 @@ public class ProjectActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        if(!NetUtil.isNetworkAvailable()){
+            ToastUtils.getInstance().show(getString(R.string.network_error));
+            return;
+        }
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -153,6 +158,7 @@ public class ProjectActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
+        loadingDialog.show();
         //网络请求方式 默认为POST
         RetrofitUtil.request(params, ProjectHomeBean.class, new HttpCallBackImpl<ProjectHomeBean>() {
             @Override
@@ -185,11 +191,22 @@ public class ProjectActivity extends BaseActivity {
                 }
 
             }
+
+            @Override
+            public void onFinish() {
+                if(loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
+                }
+            }
         });
     }
 
     public String getProjectId() {
         return projectId;
+    }
+
+    public LoadingDialog getloadingDialog(){
+        return loadingDialog;
     }
 
 
@@ -303,21 +320,15 @@ public class ProjectActivity extends BaseActivity {
                 ToastUtils.getInstance().show("简单测评");
                 break;
             case R.id.btn_follow_status:
-                boolean isFollow;
-                if (btnFollowStatus.getText().toString().
-                        equals(getString(R.string.follow_status_0))) {
-                    isFollow = false;
-                } else {
-                    isFollow = true;
-                }
-                NetUtil.addSaveFollow(isFollow,
-                        Constants.SaveFollow.PROJECT,projectInfo.getProjectId(), new NetUtil.SaveFollowImpl() {
+                btnFollowStatus.setEnabled(false);
+                NetUtil.addSaveFollow(btnFollowStatus.getText().toString().trim(),
+                        Constants.SaveFollow.PROJECT,projectInfo.getProjectId(), new NetUtil.SaveFollowImp() {
                             @Override
-                            public void finishFollow(String str,boolean status) {
-                                if(status){
-                                    btnFollowStatus.setSelected(false);
-                                }else {
-                                    btnFollowStatus.setSelected(true);
+                            public void finishFollow(String str) {
+                               // 0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
+                                btnFollowStatus.setEnabled(true);
+                                if(!str.equals(Constants.FOLLOW_ERROR)){
+                                    btnFollowStatus.setText(str);
                                 }
                             }
                         });

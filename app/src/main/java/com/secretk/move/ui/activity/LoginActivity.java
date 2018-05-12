@@ -114,7 +114,7 @@ public class LoginActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        LogUtil.w("node:"+node.toString());
+        loadingDialog.show();
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.USER_LOGIN)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
@@ -132,6 +132,13 @@ public class LoginActivity extends BaseActivity {
 //                UserLoginInfo.DataBean dataBean = userInfo.getData();
                 sharedUtils.put("userInfo",userInfo.getData().getUser().toString());
                 IntentUtil.startActivity(MainActivity.class);
+            }
+
+            @Override
+            public void onFinish() {
+                if(loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
+                }
             }
         });
     }

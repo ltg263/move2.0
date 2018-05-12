@@ -340,7 +340,6 @@
                         android:layout_above="@+id/view_center"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_toRightOf="@id/iv_icon"
-                        android:text="EOS/柚子"
                         android:textColor="@color/title_gray"
                         android:textSize="16sp" />
 

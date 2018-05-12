@@ -1,5 +1,6 @@
 package com.secretk.move.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.ui.adapter.DetailsDiscussAdapter;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
+import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
@@ -81,7 +83,6 @@ public class DetailsArticleCommentActivity extends BaseActivity {
     protected void initUI(Bundle savedInstanceState) {
         postId = getIntent().getStringExtra("postId");
         List<CommonCommentsBean> hotComments = getIntent().getParcelableArrayListExtra("hotComments");
-        LogUtil.w("hotComments" + hotComments);
         setVerticalManager(rvkHotReview);
         adapter = new DetailsDiscussAdapter(this);
         rvkHotReview.setAdapter(adapter);
@@ -118,6 +119,10 @@ public class DetailsArticleCommentActivity extends BaseActivity {
     }
 
     protected void initData() {
+        if (!NetUtil.isNetworkAvailable()) {
+            ToastUtils.getInstance().show(getString(R.string.network_error));
+            return;
+        }
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -132,6 +137,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
+        loadingDialog.show();
         RetrofitUtil.request(params, DetailsArticleCommentBean.class, new HttpCallBackImpl<DetailsArticleCommentBean>() {
             @Override
             public void onCompleted(DetailsArticleCommentBean bean) {
@@ -149,9 +155,13 @@ public class DetailsArticleCommentActivity extends BaseActivity {
                 if (refreshLayout.isLoading()) {
                     refreshLayout.finishLoadmore(true);
                 }
+                if(loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
+                }
             }
         });
     }
+
     @OnClick(R.id.but_send)
     public void onViewClicked() {
         String str = etContent.getText().toString().trim();
@@ -166,6 +176,10 @@ public class DetailsArticleCommentActivity extends BaseActivity {
      * @param content
      */
     private void saveComment(String content) {
+        if(!NetUtil.isNetworkAvailable()){
+            ToastUtils.getInstance().show(getString(R.string.network_error));
+            return;
+        }
         pageIndex = 1;
         JSONObject node = new JSONObject();
         try {
@@ -175,6 +189,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        loadingDialog.show();
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.SAVE_COMMENT)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
@@ -186,6 +201,31 @@ public class DetailsArticleCommentActivity extends BaseActivity {
                 etContent.setText("");
                 initData();
             }
+
+            @Override
+            public void onError(String message) {
+                if(loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
+                }
+            }
         });
+    }
+
+    /**
+     * 有问题
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && data != null) {
+            if (data.getExtras().getBoolean(Constants.REQUEST_CODE)) {
+                pageIndex = 1;
+                initData();
+            }
+        }
     }
 }

@@ -62,7 +62,7 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
         AppBarHeadView mHeadView = findViewById(R.id.head_app_server);
-        isLoginUi=true;
+        isLoginUi = true;
         mHeadView.setHeadBackShow(true);
         return mHeadView;
     }
@@ -70,8 +70,8 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-        StringUtil.etSearchChangedListener(edVerification,butRegister,etChangListener);
-        StringUtil.etSearchChangedListener(edPassword,butRegister,etChangListener);
+        StringUtil.etSearchChangedListener(edVerification, butRegister, etChangListener);
+        StringUtil.etSearchChangedListener(edPassword, butRegister, etChangListener);
     }
 
     StringUtil.EtChange etChangListener = new StringUtil.EtChange() {
@@ -79,9 +79,9 @@ public class RegisterActivity extends BaseActivity {
         public void etYes() {
             strYzm = edVerification.getText().toString().trim();
             strPsw = edPassword.getText().toString().trim();
-            if(StringUtil.isNotBlank(strYzm) && StringUtil.isNotBlank(strPsw)){
+            if (StringUtil.isNotBlank(strYzm) && StringUtil.isNotBlank(strPsw)) {
                 butRegister.setSelected(true);
-            }else{
+            } else {
                 butRegister.setSelected(false);
             }
         }
@@ -93,13 +93,14 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private int recLen = -1;
+
     @OnClick({R.id.get_verification, R.id.but_register})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.get_verification:
-                if(getVerification.getText().toString().equals(getString(R.string.get_verification))
-                        || getVerification.getText().toString().equals(getString(R.string.anew_get))){
-                    recLen=60;
+                if (getVerification.getText().toString().equals(getString(R.string.get_verification))
+                        || getVerification.getText().toString().equals(getString(R.string.anew_get))) {
+                    recLen = 60;
                     new Thread(new MyThread()).start();
                     sendVerification();
                 }
@@ -107,15 +108,15 @@ public class RegisterActivity extends BaseActivity {
             case R.id.but_register:
                 strYzm = edVerification.getText().toString().trim();
                 strPsw = edPassword.getText().toString().trim();
-                if(StringUtil.isBlank(strYzm) || StringUtil.isBlank(strPsw)){
+                if (StringUtil.isBlank(strYzm) || StringUtil.isBlank(strPsw)) {
                     ToastUtils.getInstance().show("填写不完整");
                     return;
                 }
-                if(strPsw.length()>5 && strPsw.length()<16){
-                    userRegister();
-                }else{
-                    ToastUtils.getInstance().show("请保持密码长度在6-16位");
-                }
+                userRegister();
+//                if(strPsw.length()>5 && strPsw.length()<16){
+//                }else{
+//                    ToastUtils.getInstance().show("请保持密码长度在6-16位");
+//                }
 
                 break;
         }
@@ -156,10 +157,11 @@ public class RegisterActivity extends BaseActivity {
             node.put("phoneNumber", getIntent().getStringExtra("phone"));
             node.put("password", strPsw);
             node.put("dynamicVerifyCode", strYzm);
-            LogUtil.w("node:"+node.toString());
+            LogUtil.w("node:" + node.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        loadingDialog.show();
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.USER_REGISTER)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
@@ -178,6 +180,13 @@ public class RegisterActivity extends BaseActivity {
                     e.printStackTrace();
                 }
             }
+
+            @Override
+            public void onFinish() {
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+            }
         });
     }
 
@@ -187,7 +196,7 @@ public class RegisterActivity extends BaseActivity {
     public class MyThread implements Runnable {
         @Override
         public void run() {
-            while (recLen>=0) {
+            while (recLen >= 0) {
                 try {
                     Thread.sleep(1000);
                     Message message = new Message();
@@ -199,15 +208,16 @@ public class RegisterActivity extends BaseActivity {
             }
         }
     }
-    final Handler handler = new Handler(){
-        public void handleMessage(Message msg){
+
+    final Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    if(recLen>0){
+                    if (recLen > 0) {
                         recLen--;
                         getVerification.setText("倒计时:" + recLen);
-                    }else if(recLen==0){
-                        recLen=-1;
+                    } else if (recLen == 0) {
+                        recLen = -1;
                         getVerification.setText(getString(R.string.anew_get));
                     }
             }

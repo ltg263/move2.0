@@ -19,6 +19,7 @@ import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.adapter.HomeListAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.view.LoadingDialog;
 import com.secretk.move.view.ProgressBarStyleView;
 
 import org.json.JSONException;
@@ -55,6 +56,7 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
     int pageIndex = 1;
     public boolean isHaveData = true;
     private String projectId;
+    private LoadingDialog loadingDialog;
 
     @Override
     public int setFragmentView() {
@@ -87,6 +89,7 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
+        loadingDialog.show();
         RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
             @Override
             public void onCompleted(CommonListBase bean) {
@@ -105,6 +108,9 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
                 if(refreshlayout!=null){
                     refreshlayout.finishLoadmore();
                 }
+                if(loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
+                }
             }
         });
     }
@@ -113,6 +119,7 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
     public void onAttach(Context context) {
         super.onAttach(context);
         projectId = ((ProjectActivity)context).getProjectId();
+        loadingDialog = ((ProjectActivity)context).getloadingDialog();
     }
 
     @Override

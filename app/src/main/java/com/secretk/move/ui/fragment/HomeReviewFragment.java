@@ -16,6 +16,7 @@ import com.secretk.move.ui.adapter.HomeListAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
+import com.secretk.move.view.LoadingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +37,8 @@ public class HomeReviewFragment extends LazyFragment{
     int pageIndex = 1;//
     public Boolean isHaveData = true;//是否还有数据
     String userId;
+    private LoadingDialog loadingDialog;
+
     @Override
     public int setFragmentView() {
         return R.layout.fragment_home;
@@ -51,6 +54,7 @@ public class HomeReviewFragment extends LazyFragment{
     public void onAttach(Context context) {
         super.onAttach(context);
         userId = ((HomeActivity)context).getUserId();
+        loadingDialog = ((HomeActivity) context).getLoadingDialog();
     }
 
     @Override
@@ -75,6 +79,7 @@ public class HomeReviewFragment extends LazyFragment{
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
+        loadingDialog.show();
         RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
             @Override
             public void onCompleted(CommonListBase bean) {
@@ -93,6 +98,10 @@ public class HomeReviewFragment extends LazyFragment{
                 if(refreshlayout!=null){
                     refreshlayout.finishLoadmore();
                 }
+                if(loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
+                }
+
             }
         });
     }

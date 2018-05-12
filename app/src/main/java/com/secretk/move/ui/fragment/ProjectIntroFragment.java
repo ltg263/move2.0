@@ -14,10 +14,13 @@ import com.secretk.move.bean.ProjectHomeBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.ProjectIntroAdapter;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -62,6 +65,7 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
     Unbinder unbinder;
     private ProjectIntroAdapter adapter;
     private int submitUserId;
+    private List<ProjectHomeBean.DataBean.ProjectBean.ActiveUsersBean> activeUsers;
 
     @Override
     public int setFragmentView() {
@@ -91,7 +95,8 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
             tvWebsiteUrl.setText(projectIntro.getWebsiteUrl());
             tvProjectTypeName.setText(projectIntro.getProjectTypeName());
             tvWhitepaperUrl.setText(projectIntro.getWhitepaperUrl());
-            adapter.setData(projectIntro.getActiveUsers());
+            activeUsers = projectIntro.getActiveUsers();
+            adapter.setData(activeUsers);
             ProjectHomeBean.DataBean.ProjectBean.OwnerBean owner = projectIntro.getOwner();
             if (owner != null) {
                 GlideUtils.loadCircleUrl(ivIcon, Constants.BASE_IMG_URL + owner.getIcon());
@@ -111,7 +116,7 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
 
     @Override
     public void onItemClick(View view, int postion) {
-        Toast.makeText(getActivity(), "进入下一个界面", Toast.LENGTH_SHORT).show();
+        IntentUtil.startHomeActivity(activeUsers.get(postion).getUserId());
     }
 
     @Override
@@ -123,23 +128,20 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_follow_status:
-                boolean isFollow;
-                if (tvFollowStatus.getText().toString().
-                        equals(getString(R.string.follow_status_0))) {
-                    isFollow = false;
-                } else {
-                    isFollow = true;
-                }
-                NetUtil.addSaveFollow(isFollow,
-                        Constants.SaveFollow.USER, submitUserId, new NetUtil.SaveFollowImpl() {
+                tvFollowStatus.setEnabled(false);
+                NetUtil.addSaveFollow(tvFollowStatus.getText().toString().trim(),
+                        Constants.SaveFollow.USER, submitUserId, new NetUtil.SaveFollowImp() {
                             @Override
-                            public void finishFollow(String str,boolean statia) {
-                                ToastUtils.getInstance().show(str);
+                            public void finishFollow(String str) {
+                                tvFollowStatus.setEnabled(true);
+                                if(!str.equals(Constants.FOLLOW_ERROR)){
+                                    tvFollowStatus.setText(str);
+                                }
                             }
                         });
                 break;
             case R.id.rl_station_agent:
-                Toast.makeText(getActivity(), "进入下一个界面", Toast.LENGTH_SHORT).show();
+                IntentUtil.startHomeActivity(submitUserId);
                 break;
         }
     }

@@ -15,6 +15,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
+import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
@@ -99,6 +100,10 @@ public class LoginHomeActivity extends BaseActivity {
     }
 
     private void postHttpLogin(final String phoneNumber) {
+        if(!NetUtil.isNetworkAvailable()){
+            ToastUtils.getInstance().show(getString(R.string.network_error));
+            return;
+        }
         JSONObject node = new JSONObject();
         try {
             node.put("phone", phoneNumber);
@@ -110,10 +115,14 @@ public class LoginHomeActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
+        loadingDialog.show();
         //网络请求方式 默认为POST
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
+                if(loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
+                }
                 try {
                     JSONObject jsonObject = new JSONObject(str);
                     //"isRegister":0 // 是否已注册 ： 1-已注册过；0-未注册

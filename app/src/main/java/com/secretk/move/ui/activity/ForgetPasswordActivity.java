@@ -151,6 +151,7 @@ public class ForgetPasswordActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        loadingDialog.show();
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.FORGET_PASSWORD)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
@@ -161,7 +162,14 @@ public class ForgetPasswordActivity extends BaseActivity {
             @Override
             public void onCompleted(String str) {
                 Toast.makeText(ForgetPasswordActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
-                onBackPressed();
+                finish();
+            }
+
+            @Override
+            public void onFinish() {
+                if(loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
+                }
             }
         });
     }

@@ -161,6 +161,10 @@ public class MoreCommentsActivity extends BaseActivity{
 //        ToastUtils.getInstance().show(user);
     }
     private void saveComment(String content) {
+        if(!NetUtil.isNetworkAvailable()){
+            ToastUtils.getInstance().show(getString(R.string.network_error));
+            return;
+        }
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -175,13 +179,21 @@ public class MoreCommentsActivity extends BaseActivity{
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
+        loadingDialog.show();
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
                 ToastUtils.getInstance().show("评论成功");
                 etMessage.setText("");
                // rvReview.fullScroll(ScrollView.FOCUS_UP);
-                initData();
+//                initData();
+            }
+
+            @Override
+            public void onFinish() {
+                if(loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
+                }
             }
         });
     }

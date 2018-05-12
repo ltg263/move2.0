@@ -33,6 +33,7 @@ import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
+import com.secretk.move.view.LoadingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -135,13 +136,17 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        if(!NetUtil.isNetworkAvailable()){
+            ToastUtils.getInstance().show(getString(R.string.network_error));
+            return;
+        }
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
             //查看自己不用传userId只用token就可以，查看他人需要传入他人userID
-            if (StringUtil.isNotBlank(userId)) {
-                node.put("userId", 4);
-            }
+//            if (StringUtil.isNotBlank(userId)) {
+             node.put("userId", userId);
+//            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -150,6 +155,7 @@ public class HomeActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
+        loadingDialog.show();
         //网络请求方式 默认为POST
         RetrofitUtil.request(params, HomeUserIndexBean.class, new HttpCallBackImpl<HomeUserIndexBean>() {
             @Override
@@ -191,18 +197,22 @@ public class HomeActivity extends BaseActivity {
         });
     }
 
+    public LoadingDialog getLoadingDialog(){
+        return loadingDialog;
+    }
+
     @OnClick(R.id.tv_save_follow)
     public void onViewClicked(View view) {
         switch (view.getId()){
             case R.id.tv_save_follow:
-                NetUtil.addSaveFollow(isFollow,
-                        Constants.SaveFollow.USER,Integer.valueOf(userId), new NetUtil.SaveFollowImpl() {
+                tvSaveFollow.setEnabled(false);
+                NetUtil.addSaveFollow(tvSaveFollow.getText().toString().trim(),
+                        Constants.SaveFollow.USER, Integer.valueOf(userId), new NetUtil.SaveFollowImp() {
                             @Override
-                            public void finishFollow(String str,boolean status) {
-                                if(status){
-                                    tvSaveFollow.setSelected(false);
-                                }else {
-                                    tvSaveFollow.setSelected(true);
+                            public void finishFollow(String str) {
+                                tvSaveFollow.setEnabled(true);
+                                if(!str.equals(Constants.FOLLOW_ERROR)){
+                                    tvSaveFollow.setText(str);
                                 }
                             }
                         });

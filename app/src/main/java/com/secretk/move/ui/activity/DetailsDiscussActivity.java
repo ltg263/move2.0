@@ -137,13 +137,13 @@ public class DetailsDiscussActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.tv_follow_status:
                 tvFollowStatus.setEnabled(false);
-                NetUtil.addSaveFollow(tvFollowStatus.equals(R.string.follow_status_1),
-                        Constants.SaveFollow.USER,Integer.valueOf(userId), new NetUtil.SaveFollowImpl() {
+                NetUtil.addSaveFollow(tvFollowStatus.getText().toString().trim(),
+                        Constants.SaveFollow.USER,Integer.valueOf(userId), new NetUtil.SaveFollowImp() {
                             @Override
-                            public void finishFollow(String str,boolean status) {
+                            public void finishFollow(String str) {
                                 tvFollowStatus.setEnabled(true);
-                                if (!str.equals(Constants.FOLLOW_ERROR)) {
-                                    tvFollowStatus.setSelected(status);
+                                if(!str.equals(Constants.FOLLOW_ERROR)){
+                                    tvFollowStatus.setText(str);
                                 }
                             }
                         });
@@ -190,6 +190,10 @@ public class DetailsDiscussActivity extends BaseActivity {
     }
 
     private void saveComment(String content) {
+        if(!NetUtil.isNetworkAvailable()){
+            ToastUtils.getInstance().show(getString(R.string.network_error));
+            return;
+        }
         pageIndex = 1;
         JSONObject node = new JSONObject();
         try {
@@ -204,7 +208,15 @@ public class DetailsDiscussActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
+        loadingDialog.show();
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onError(String message) {
+                if(loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
+                }
+            }
+
             @Override
             public void onCompleted(String str) {
                 ToastUtils.getInstance().show("评论成功");
@@ -216,6 +228,10 @@ public class DetailsDiscussActivity extends BaseActivity {
     }
 
     protected void initData() {
+        if(!NetUtil.isNetworkAvailable()){
+            ToastUtils.getInstance().show(getString(R.string.network_error));
+            return;
+        }
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -228,7 +244,15 @@ public class DetailsDiscussActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
+        loadingDialog.show();
         RetrofitUtil.request(params, DetailsDiscussBase.class, new HttpCallBackImpl<DetailsDiscussBase>() {
+            @Override
+            public void onError(String message) {
+                if(loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
+                }
+            }
+
             @Override
             public void onCompleted(DetailsDiscussBase bean) {
                 initNewsDataList();
@@ -319,6 +343,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
+        loadingDialog.show();
         RetrofitUtil.request(params, DiscussNewInfoBean.class, new HttpCallBackImpl<DiscussNewInfoBean>() {
             @Override
             public void onCompleted(DiscussNewInfoBean newInfoBean) {
@@ -336,6 +361,9 @@ public class DetailsDiscussActivity extends BaseActivity {
                 }
                 if (refreshLayout.isLoading()) {
                     refreshLayout.finishLoadmore(true);
+                }
+                if(loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
                 }
             }
         });

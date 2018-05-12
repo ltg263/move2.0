@@ -55,18 +55,15 @@ public class ProjectIntroHolder extends RecyclerViewBaseHolder {
         tvFollowStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean isFollow ;
-                if(tvFollowStatus.getText().toString().
-                        equals(BaseManager.app.getString(R.string.follow_status_0))){
-                    isFollow=false;
-                }else{
-                    isFollow=true;
-                }
-                NetUtil.addSaveFollow(isFollow,
-                        Constants.SaveFollow.USER, usersBean.getUserId(), new NetUtil.SaveFollowImpl() {
+                tvFollowStatus.setEnabled(false);
+                NetUtil.addSaveFollow(tvFollowStatus.getText().toString().trim(),
+                        Constants.SaveFollow.USER, usersBean.getUserId(), new NetUtil.SaveFollowImp() {
                             @Override
-                            public void finishFollow(String str,boolean s) {
-                                ToastUtils.getInstance().show(str);
+                            public void finishFollow(String str) {
+                                tvFollowStatus.setEnabled(true);
+                                if(!str.equals(Constants.FOLLOW_ERROR)){
+                                    tvFollowStatus.setText(str);
+                                }
                             }
                         });
             }

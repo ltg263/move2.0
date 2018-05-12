@@ -130,6 +130,7 @@ public class VerificationLoginActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        loadingDialog.show();
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.DYNAMIC_VALIDATE_CODE_VERIFY)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
@@ -147,6 +148,13 @@ public class VerificationLoginActivity extends BaseActivity {
                 ////用户信息
                 UserLoginInfo.DataBean dataBean = userInfo.getData();
                 IntentUtil.startActivity(MainActivity.class);
+            }
+
+            @Override
+            public void onFinish() {
+                if(loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
+                }
             }
         });
     }

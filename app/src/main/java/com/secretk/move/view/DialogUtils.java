@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,10 +31,10 @@ public class DialogUtils {
         dialog.show();
         RelativeLayout localPicLayout = view.findViewById(R.id.localPicLayout);//从本地获取照片按钮
         RelativeLayout takePicLayout = view.findViewById(R.id.takePicLayout);
-        TextView tvLogTop =  view.findViewById(R.id.tv_log_top);
-        TextView tvLogZhong =  view.findViewById(R.id.tv_log_zhong);
-        TextView tvLogBottom =  view.findViewById(R.id.tv_log_bottom);
-        ImageView ivXbNan =  view.findViewById(R.id.iv_xb_nan);
+        TextView tvLogTop = view.findViewById(R.id.tv_log_top);
+        TextView tvLogZhong = view.findViewById(R.id.tv_log_zhong);
+        TextView tvLogBottom = view.findViewById(R.id.tv_log_bottom);
+        ImageView ivXbNan = view.findViewById(R.id.iv_xb_nan);
         ImageView ivXbNv = view.findViewById(R.id.iv_xb_nv);
 
         tvLogTop.setText(content[0]);
@@ -82,5 +82,40 @@ public class DialogUtils {
     public interface AlertDialogInterface {
         void btnLineListener(int index);
     }
+
+    /**
+     * 单个按钮，设置监听；
+     *
+     * @param context
+     * @param
+     */
+    public static void showDialogError(Context context, final EditTextDialogInterface anInterface) {
+
+        final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
+        final View view = LayoutInflater.from(context).inflate(R.layout.dialog_layout, null);
+        Button bt_ok = view.findViewById(R.id.but_confirm);
+        TextView tv_body = view.findViewById(R.id.tv_body);
+//        tv_body.setText(text);
+
+        bt_ok.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                anInterface.btnConfirm();
+                dialog5.dismiss();
+            }
+        });
+
+        dialog5.setContentView(view);
+        dialog5.show();
+    }
+    public interface EditTextDialogInterface {
+        /**
+         * 确定
+         */
+        public void btnConfirm();
+
+    }
+
 
 }

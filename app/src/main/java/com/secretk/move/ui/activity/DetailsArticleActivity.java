@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -22,10 +23,12 @@ import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.PileLayout;
 
@@ -80,6 +83,7 @@ public class DetailsArticleActivity extends BaseActivity {
     private String postId;
     private ImagesAdapter adapter;
     private List<CommonCommentsBean> hotComments;
+    private int createUserId;
 
     @Override
     protected int setOnCreate() {
@@ -104,6 +108,10 @@ public class DetailsArticleActivity extends BaseActivity {
     }
 
     protected void initData() {
+        if(!NetUtil.isNetworkAvailable()){
+            ToastUtils.getInstance().show(getString(R.string.network_error));
+            return;
+        }
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -116,9 +124,13 @@ public class DetailsArticleActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
+        loadingDialog.show();
         RetrofitUtil.request(params, DetailsArticleBean.class, new HttpCallBackImpl<DetailsArticleBean>() {
             @Override
             public void onCompleted(DetailsArticleBean bean) {
+                if(loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
+                }
                 if (bean.getData() != null) {
                     setInitData(bean.getData().getArticleDetail());
                 }
@@ -136,6 +148,7 @@ public class DetailsArticleActivity extends BaseActivity {
         GlideUtils.loadCircleUrl(ivCreateUserIcon, Constants.BASE_IMG_URL + initData.getCreateUserIcon());
         tvCreateUserName.setText(initData.getCreateUserName());
         tvCreateUserSignature.setText(initData.getCreateUserSignature());
+        createUserId = initData.getCreateUserId();
         //,//"0 未关注；1-已关注；2-不显示关注按钮"\
         if (initData.getFollowStatus() == 0) {
             tvFollowStatus.setText(getString(R.string.follow_status_0));
@@ -155,7 +168,7 @@ public class DetailsArticleActivity extends BaseActivity {
         } else {
             tvPraiseStatus.setSelected(false);
         }
-        //,//0-未收藏，1-已收藏，数字
+        //0-未收藏，1-已收藏，数字
         if (initData.getCollectStatus() == 0) {
             tvCollectStatus.setSelected(true);
         } else {
@@ -201,13 +214,39 @@ public class DetailsArticleActivity extends BaseActivity {
     @OnClick({R.id.tv_follow_status, R.id.tv_praise_status, R.id.tv_collect_status, R.id.tv_commendation_Num, R.id.tv_comments_num})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.rl_ge_ren:
+                IntentUtil.startHomeActivity(createUserId);
+                break;
             case R.id.tv_follow_status:
+                tvFollowStatus.setEnabled(false);
+                NetUtil.addSaveFollow(tvFollowStatus.getText().toString().trim(),
+                        Constants.SaveFollow.USER,Integer.valueOf(createUserId), new NetUtil.SaveFollowImp() {
+                            @Override
+                            public void finishFollow(String str) {
+                                tvFollowStatus.setEnabled(true);
+                                if(!str.equals(Constants.FOLLOW_ERROR)){
+                                    tvFollowStatus.setText(str);
+                                }
+                            }
+                        });
                 break;
             case R.id.tv_praise_status:
                 tvPraiseStatus.setEnabled(false);
                 setPraise(tvPraiseStatus.isSelected(),Integer.valueOf(postId));
                 break;
             case R.id.tv_collect_status:
+                tvCollectStatus.setEnabled(false);
+                NetUtil.saveCollect(!tvCollectStatus.isSelected(),
+                        Integer.valueOf(postId), new NetUtil.SaveCollectImp() {
+                            @Override
+                            public void finishCollect(String str,boolean status) {
+                                tvCollectStatus.setEnabled(true);
+                                if(!str.equals(Constants.COLLECT_ERROR)){
+                                    tvCollectStatus.setSelected(status);
+                                }
+                            }
+                        });
+
                 break;
             case R.id.tv_commendation_Num:
                 break;

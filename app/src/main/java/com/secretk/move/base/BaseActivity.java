@@ -18,10 +18,13 @@ import com.secretk.move.R;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.UiUtils;
 import com.secretk.move.view.AppBarHeadView;
+import com.secretk.move.view.DialogUtils;
+import com.secretk.move.view.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +39,8 @@ import butterknife.ButterKnife;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
-    public AppBarHeadView mHeadView;
+    protected AppBarHeadView mHeadView;
+    protected LoadingDialog loadingDialog;
     protected List<MenuInfo> mMenuInfos = new ArrayList<>();
     protected SharedUtils sharedUtils;
     protected Boolean isLoginUi = false;
@@ -55,15 +59,25 @@ public abstract class BaseActivity extends AppCompatActivity {
             token = "";
         }
         initUI(savedInstanceState);
+        if(!NetUtil.isNetworkAvailable()){
+            DialogUtils.showDialogError(this, new DialogUtils.EditTextDialogInterface() {
+                @Override
+                public void btnConfirm() {
+                    finish();
+                }
+            });
+            return;
+        }
         initData();
-
     }
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
         initHead();
+        initDialog();
     }
+
 
     public void setHorizontalManager(RecyclerView rcv) {
         GridLayoutManager layoutManager = new GridLayoutManager(this,3);
@@ -99,6 +113,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             mHeadView.setTitleSize(17);
             setSupportActionBar(mHeadView.getToolbar());
             setHeadBackShow(mHeadView.isHeadBackShow());
+        }
+
+    }
+
+    public void initDialog(){
+        if(loadingDialog==null){
+            loadingDialog=new LoadingDialog(this);
         }
     }
     @Override

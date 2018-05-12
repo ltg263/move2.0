@@ -16,6 +16,7 @@ import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.adapter.HomeListAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.view.LoadingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,6 +44,7 @@ public class ProjectDiscussFragment extends LazyFragment{
     public int pageIndex=1;
     private String projectId;
     private List<RowsBean> newData;
+    private LoadingDialog loadingDialog;
 
     @Override
     public int setFragmentView() {
@@ -79,6 +81,7 @@ public class ProjectDiscussFragment extends LazyFragment{
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
+        loadingDialog.show();
         RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
             @Override
             public void onCompleted(CommonListBase bean) {
@@ -97,6 +100,9 @@ public class ProjectDiscussFragment extends LazyFragment{
                 if(refreshlayout!=null){
                     refreshlayout.finishLoadmore();
                 }
+                if(loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
+                }
             }
         });
     }
@@ -105,6 +111,7 @@ public class ProjectDiscussFragment extends LazyFragment{
     public void onAttach(Context context) {
         super.onAttach(context);
         projectId = ((ProjectActivity)context).getProjectId();
+        loadingDialog = ((ProjectActivity)context).getloadingDialog();
     }
 
     public void initUiData(List<RowsBean> rows) {

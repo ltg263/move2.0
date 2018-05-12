@@ -19,6 +19,7 @@ import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.adapter.HomeListAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.view.LoadingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,6 +46,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     public boolean isHaveData = true;
     private int pageIndex = 1;
     private String projectId;
+    private LoadingDialog loadingDialog;
 
     @Override
     public int setFragmentView() {
@@ -91,6 +93,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     public void onAttach(Context context) {
         super.onAttach(context);
         projectId = ((ProjectActivity)context).getProjectId();
+        loadingDialog = ((ProjectActivity)context).getloadingDialog();
     }
 
     /**
@@ -110,6 +113,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        loadingDialog.show();
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.PROJECT_ARTICLE_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
@@ -133,6 +137,9 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
             public void onFinish() {
                 if(refreshlayout!=null){
                     refreshlayout.finishLoadmore();
+                }
+                if(loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
                 }
             }
         });
