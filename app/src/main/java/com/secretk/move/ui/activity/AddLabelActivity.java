@@ -3,11 +3,10 @@ package com.secretk.move.ui.activity;
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,20 +17,29 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.apiService.HttpCallBackImpl;
+import com.secretk.move.apiService.RetrofitUtil;
+import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
+import com.secretk.move.baseManager.Constants;
+import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.AddLabelActivityRecyclerAdapter;
+import com.secretk.move.utils.MD5;
+import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
 import com.secretk.move.view.AppBarHeadView;
 
-import java.util.ArrayList;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -44,7 +52,7 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
     @BindView(R.id.tv_selected)
     TextView tv_selected;
     AddLabelActivityRecyclerAdapter adapter;
-    List<LabelBean> list = new ArrayList<>();
+   public static SparseArray<DiscussLabelListbean.TagList> array =null;
 
     @Override
     protected int setOnCreate() {
@@ -65,17 +73,32 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
 
     @Override
     protected void initData() {
-        LabelBean bean=new LabelBean();
-        bean.setName("+添加话题");
-        bean.setSelected(false);
-        list.add(bean);
-        for (int i = 0; i < 20; i++) {
-            LabelBean bean1=new LabelBean();
-            bean1.setName(i + "号标签");
-            bean1.setSelected(false);
-            list.add(bean1);
+        array = new SparseArray<>();
+        String token = SharedUtils.singleton().get("token", "");
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        adapter.setData(list);
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.RELEASE_DISCUSS_LIST)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, DiscussLabelListbean.class, new HttpCallBackImpl<DiscussLabelListbean>() {
+            @Override
+            public void onCompleted(DiscussLabelListbean bean) {
+                int code = bean.getCode();
+                List<DiscussLabelListbean.TagList> lists = bean.getData().getTagList();
+                if (code == 0) {
+                    DiscussLabelListbean.TagList data = new DiscussLabelListbean.TagList();
+                    data.setTagName("+添加话题");
+                    lists.add(0, data);
+                    adapter.setData(lists);
+                }
+            }
+        });
     }
 
     @Override
@@ -89,11 +112,21 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
         if (postion == 0) {
             showPopupWindow();
         } else {
-            LabelBean bean=    adapter.getDataIndex(postion);
-            if (bean.getSelected()){
+            DiscussLabelListbean.TagList bean = adapter.getDataIndex(postion);
+            if (bean.getSelected()) {
                 bean.setSelected(false);
-            }else {
+                array.remove(Integer.parseInt(bean.getTagId()));
+            } else {
+                if (array.size()>=3){
+                    return;
+                }
                 bean.setSelected(true);
+                array.put( Integer.parseInt(bean.getTagId()),bean);
+            }
+            if (array.size()>3){
+              ToastUtils.getInstance().show("最多选三个");
+            }else {
+                tv_selected.setText("已选"+array.size()+"个");
             }
             adapter.notifyDataSetChanged();
         }
@@ -106,11 +139,13 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
 
     @OnClick(R.id.img_return)
     public void img_return() {
+        array=null;
         finish();
     }
 
     @OnClick(R.id.tv_finish)
     public void tv_finish() {
+
         finish();
     }
 
@@ -148,10 +183,7 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
                 popupWindow.dismiss();
                 String str = ed_word.getText().toString().trim();
                 if (!TextUtils.isEmpty(str)) {
-                    LabelBean bean1=new LabelBean();
-                    bean1.setName(str);
-                    bean1.setSelected(false);
-                    adapter.addData(bean1);
+
                 }
             }
         });
@@ -174,24 +206,5 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
         }
         activity.getWindow().setAttributes(lp);
     }
-    public class  LabelBean{
-        public String getName() {
-            return name;
-        }
 
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Boolean getSelected() {
-            return selected;
-        }
-
-        public void setSelected(Boolean selected) {
-            this.selected = selected;
-        }
-
-        String name;
-        Boolean selected;
-    }
 }

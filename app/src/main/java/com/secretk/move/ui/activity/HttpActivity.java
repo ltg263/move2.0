@@ -11,9 +11,11 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.BlueSkyBean;
+import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.bean.DynamicValidateCodeSend;
 
 import com.secretk.move.bean.MainRfBean;
+import com.secretk.move.bean.base.BaseRes;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
@@ -81,17 +83,21 @@ public class HttpActivity extends AppCompatActivity {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
+            node.put("projectId", "projectId");
+            node.put("postTitle", "postTitle");
+            node.put("articleContents", "articleContents");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.MAIN_BLUE_SKY)
+                .url(Constants.RELEASE_ARTICLE)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, BlueSkyBean.class, new HttpCallBackImpl<BlueSkyBean>() {
+        RetrofitUtil.request(params, BaseRes.class, new HttpCallBackImpl<BaseRes>() {
             @Override
-            public void onCompleted(BlueSkyBean bean) {
+            public void onCompleted(BaseRes bean) {
                int code=bean.getCode();
             }
         });

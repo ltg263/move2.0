@@ -1,5 +1,6 @@
 package com.secretk.move.ui.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,14 +26,15 @@ public class ReleasePicAdapter extends RecyclerView.Adapter<ReleasePicAdapter.Vi
 
     private List<String> list = new ArrayList<String>();
     private ItemClickListener mListener;
-
+private Context mContext;
     public void setItemListener(ItemClickListener mListener) {
         this.mListener = mListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_release_pic_item, parent, false);
+        mContext=parent.getContext();
+        View view = LayoutInflater.from(mContext).inflate(R.layout.activity_release_pic_item, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -41,8 +43,7 @@ public class ReleasePicAdapter extends RecyclerView.Adapter<ReleasePicAdapter.Vi
     public void onBindViewHolder(ViewHolder holder, int position) {
         String str = list.get(position);
         holder.setItemListener(mListener);
-        GlideUtils.loadImage(holder.img, str);
-
+       GlideUtils.loadImage(holder.img, str);
     }
 
     @Override
