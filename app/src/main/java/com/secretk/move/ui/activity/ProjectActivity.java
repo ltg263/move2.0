@@ -3,6 +3,7 @@ package com.secretk.move.ui.activity;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -94,6 +95,8 @@ public class ProjectActivity extends BaseActivity {
     Button btnFollowStatus;
     @BindView(R.id.appbar)
     AppBarLayout appbar;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
     private ProjectIntroFragment introFragment;
     private ProjectReviewFragment reviewFragment;
     private ProjectDiscussFragment discussFragment;
@@ -211,6 +214,7 @@ public class ProjectActivity extends BaseActivity {
 
 
     private void initListener() {
+        fab.setVisibility(View.GONE);
         refreshLayout.setEnableRefresh(false);//禁止下拉刷新
         refreshLayout.setEnableLoadmore(false);
         /**
@@ -278,8 +282,10 @@ public class ProjectActivity extends BaseActivity {
             @Override
             public void getVpPageSelected(int position) {
                 if (viewPager.getCurrentItem() == 0) {
+                    fab.setVisibility(View.GONE);
                     refreshLayout.setEnableLoadmore(false);
                 } else {
+                    fab.setVisibility(View.VISIBLE);
                     refreshLayout.setEnableLoadmore(true);
                 }
                 switch (viewPager.getCurrentItem()) {
@@ -310,9 +316,12 @@ public class ProjectActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.rl_grade, R.id.btn_review, R.id.btn_follow_status})
+    @OnClick({R.id.fab,R.id.rl_grade, R.id.btn_review, R.id.btn_follow_status})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.fab:
+                ToastUtils.getInstance().show("简单测评111");
+                break;
             case R.id.rl_grade:
                 IntentUtil.startActivity(DetailsUserGradeActivity.class);
                 break;
