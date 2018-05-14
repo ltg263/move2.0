@@ -127,40 +127,43 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
-                    <com.secretk.move.view.ProgressBarStyleView
-                        android:id="@+id/pb_project_location"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/dp_10"
-                        android:visibility="gone" />
+                        android:background="@drawable/shape_rectangle_topic"
+                        android:orientation="vertical">
 
-                    <com.secretk.move.view.ProgressBarStyleView
-                        android:id="@+id/pb_technical_framework"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/dp_10"
-                        android:visibility="gone" />
+                        <com.secretk.move.view.ProgressBarStyleView
+                            android:id="@+id/pb_project_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
 
-                    <com.secretk.move.view.ProgressBarStyleView
-                        android:id="@+id/pb_team_strength"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/dp_10"
-                        android:visibility="gone" />
+                        <com.secretk.move.view.ProgressBarStyleView
+                            android:id="@+id/pb_technical_framework"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
 
-                    <com.secretk.move.view.ProgressBarStyleView
-                        android:id="@+id/pb_project_schedule"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/dp_10"
-                        android:visibility="gone" />
+                        <com.secretk.move.view.ProgressBarStyleView
+                            android:id="@+id/pb_team_strength"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
 
-                    <com.secretk.move.view.ProgressBarStyleView
-                        android:id="@+id/pb_speculative_risk"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/dp_10"
-                        android:visibility="gone" />
+                        <com.secretk.move.view.ProgressBarStyleView
+                            android:id="@+id/pb_project_schedule"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
+                        <com.secretk.move.view.ProgressBarStyleView
+                            android:id="@+id/pb_speculative_risk"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+                    </LinearLayout>
                     <!--评分結束-->
                     <!--项目介绍結束-->
                     <TextView
@@ -175,8 +178,8 @@
                         android:layout_marginHorizontal="@dimen/dp_10"
                         android:background="@color/background_gray"
                         android:padding="@dimen/dp_10"
-                        android:text="，，，。"
-                        android:visibility="gone" />
+                        android:text="这个项目非常值得投资，但是涨幅不会超过十倍，还是有很大风险的，打假要注意防范。"
+                        android:visibility="visible" />
 
                 </LinearLayout>
 

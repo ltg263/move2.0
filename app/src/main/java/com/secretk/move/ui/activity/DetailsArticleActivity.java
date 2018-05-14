@@ -26,6 +26,7 @@ import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
+import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.PileLayout;
 
 import org.json.JSONArray;
@@ -78,6 +79,7 @@ public class DetailsArticleActivity extends BaseActivity {
     private String postId;
     private ImagesAdapter adapter;
     private int createUserId;
+    private int projectId;
 
     @Override
     protected int setOnCreate() {
@@ -137,6 +139,7 @@ public class DetailsArticleActivity extends BaseActivity {
         mHeadView.setTitle(initData.getProjectCode());
         mHeadView.setTitleVice("/" + initData.getProjectChineseName());
         mHeadView.setToolbarListener(initData.getProjectId());
+        projectId = initData.getProjectId();
         tvPostTitle.setText(initData.getPostTitle());
         GlideUtils.loadCircleUrl(ivCreateUserIcon, Constants.BASE_IMG_URL + initData.getCreateUserIcon());
         tvCreateUserName.setText(initData.getCreateUserName());
@@ -153,8 +156,8 @@ public class DetailsArticleActivity extends BaseActivity {
         tvPostShortDesc.setText(initData.getPostShortDesc());
         tvProjectCode.setText(initData.getProjectCode());
         tvCreateTime.setText(StringUtil.getTimeToM(initData.getCreateTime()));
-        tvDonateNum.setText(initData.getDonateNum() + "人已赞助");
-        tvPraiseStatus.setText("赞" + String.valueOf(initData.getPraiseNum()));
+        tvDonateNum.setText(initData.getDonateNum() + getString(R.string.sponsor_num));
+        tvPraiseStatus.setText(getString(R.string.like) + String.valueOf(initData.getPraiseNum()));
         ///0-未点赞，1-已点赞，数字
         if (initData.getPraiseStatus() == 0) {
             tvPraiseStatus.setSelected(true);
@@ -197,7 +200,7 @@ public class DetailsArticleActivity extends BaseActivity {
      */
     public void initPraises(List<DetailsArticleBean.DataBean.ArticleDetailBean.CommendationListBean> pileLists) {
         LayoutInflater inflater = LayoutInflater.from(this);
-        for (int i = 0; i < pileLists.size(); i++) {
+        for (int i = 0; i < pileLists.size() && i<7; i++) {
             ImageView imageView = (ImageView) inflater.inflate(R.layout.item_praise, pileLayout, false);
             GlideUtils.loadCircleUrl(imageView, Constants.BASE_IMG_URL + pileLists.get(i).getSendUserIcon());
             pileLayout.addView(imageView);
@@ -242,6 +245,20 @@ public class DetailsArticleActivity extends BaseActivity {
 
                 break;
             case R.id.tv_commendation_Num:
+                DialogUtils.showEditTextDialog(this, "赞助", new DialogUtils.EditTextDialogInterface() {
+                    @Override
+                    public void btnConfirm(String season) {
+                        NetUtil.commendation(Integer.valueOf(postId), createUserId,Double.valueOf(season), projectId, new NetUtil.SaveCommendationImp() {
+                            @Override
+                            public void finishCommendation(String commendationNum, String donateNum, boolean status) {
+                                if(status){
+                                    tvCommendationNum.setText(getString(R.string.sponsor)+ commendationNum);
+                                    tvDonateNum.setText(donateNum+getString(R.string.sponsor_num));
+                                }
+                            }
+                        });
+                    }
+                });
                 break;
             case R.id.tv_comments_num:
                 Intent intent = new Intent(this,DetailsArticleCommentActivity.class);
@@ -259,7 +276,7 @@ public class DetailsArticleActivity extends BaseActivity {
                 ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
                 if(!praiseNum.equals(Constants.PRAISE_ERROR)){
                     tvPraiseStatus.setSelected(status);
-                    tvPraiseStatus.setText("赞"+praiseNum);
+                    tvPraiseStatus.setText(getString(R.string.like)+praiseNum);
                 }
 
             }

@@ -293,7 +293,7 @@ public class NetUtil {
     /**
      *
      */
-    public static void commendation(int postId,int receiveUserId,double amount,int projectId, final SaveCollectImp collect){
+    public static void commendation(int postId,int receiveUserId,double amount,int projectId, final SaveCommendationImp collect){
         String token = SharedUtils.singleton().get(Constants.TOKEN_KEY,"");
         JSONObject node = new JSONObject();
         try {
@@ -315,10 +315,9 @@ public class NetUtil {
             public void onCompleted(String str) {
                 try {
                     JSONObject obj = new JSONObject(str);
-                    int commendationNum = obj.getJSONObject("data").getInt("commendationNum");
-                    LogUtil.w("Math.round(commendationNum):"+Math.round(commendationNum));
-                    LogUtil.w("String.valueOf(Math.round(commendationNum)):"+String.valueOf(Math.round(commendationNum)));
-                    collect.finishCollect(String.valueOf(Math.round(commendationNum)),true);
+                    double commendationNum = obj.getJSONObject("data").getDouble("commendationNum");
+                    int donateNum = obj.getJSONObject("data").getInt("donateNum");
+                    collect.finishCommendation(String.valueOf(Math.round(commendationNum)),String.valueOf(donateNum),true);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -326,8 +325,11 @@ public class NetUtil {
 
             @Override
             public void onError(String message) {
-                collect.finishCollect("",false);
+                collect.finishCommendation("","",false);
             }
         });
+    }
+    public static abstract class SaveCommendationImp{
+        public abstract void finishCommendation(String commendationNum,String donateNum,boolean status);
     }
 }

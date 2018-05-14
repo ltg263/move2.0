@@ -95,4 +95,7 @@
     <string name="sort_love">按点赞排序</string>
     <string name="sort_time">按时间排序</string>
     <string name="dialog_loading">请稍后...</string>
+    <string name="sponsor">赞助</string>
+    <string name="comment">评论</string>
+    <string name="sponsor_num">人已赞助</string>
 </resources>

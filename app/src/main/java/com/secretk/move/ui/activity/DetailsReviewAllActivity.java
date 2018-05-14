@@ -183,8 +183,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
         tvPostShortDesc.setText(evaluationDetail.getPostShortDesc());
         tvProjectCode.setText(evaluationDetail.getProjectCode());
         tvCreateTime.setText(StringUtil.getTimeToM(evaluationDetail.getCreateTime()));
-        tvDonateNum.setText(evaluationDetail.getDonateNum()+"人已赞助");
-        tvPraiseStatus.setText("赞" + String.valueOf(evaluationDetail.getPraiseNum()));
+        tvDonateNum.setText(evaluationDetail.getDonateNum()+getString(R.string.sponsor_num));
+        tvPraiseStatus.setText(getString(R.string.like)+ String.valueOf(evaluationDetail.getPraiseNum()));
         ///0-未点赞，1-已点赞，数字
         if (evaluationDetail.getPraiseStatus() == 0) {
             tvPraiseStatus.setSelected(true);
@@ -197,8 +197,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
         } else {
             tvCollectStatus.setSelected(false);
         }
-        tvCommendationNum.setText("赞助" + String.valueOf(Math.rint(evaluationDetail.getCommendationNum())));
-        tvCommentsNum.setText("评论" + String.valueOf(evaluationDetail.getCollectNum()));
+        tvCommendationNum.setText(getString(R.string.sponsor) + String.valueOf(Math.round(evaluationDetail.getCommendationNum())));
+        tvCommentsNum.setText(getString(R.string.comment)  + String.valueOf(evaluationDetail.getCollectNum()));
 
 
         pbComprehensiveEvaluation.setTvOne(getResources().getString(R.string.comprehensive_evaluation),0,
@@ -213,7 +213,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
         List<PostDataInfo> lists = new ArrayList<>();
         try {
             JSONArray images = new JSONArray(evaluationDetail.getPostSmallImages());
-            for (int i = 0; i < images.length(); i++) {
+            for (int i = 0; i < images.length() && i>7; i++) {
                 JSONObject strObj = images.getJSONObject(i);
                 PostDataInfo info = new PostDataInfo();
                 info.setUrl(strObj.getString("fileUrl"));
@@ -333,12 +333,12 @@ public class DetailsReviewAllActivity extends BaseActivity {
                 DialogUtils.showEditTextDialog(this, "赞助", new DialogUtils.EditTextDialogInterface() {
                     @Override
                     public void btnConfirm(String season) {
-                        NetUtil.commendation(Integer.valueOf(postId), createUserId,Double.valueOf(season), projectId, new NetUtil.SaveCollectImp() {
+                        NetUtil.commendation(Integer.valueOf(postId), createUserId,Double.valueOf(season), projectId, new NetUtil.SaveCommendationImp() {
                             @Override
-                            public void finishCollect(String code, boolean status) {
+                            public void finishCommendation(String commendationNum, String donateNum, boolean status) {
                                 if(status){
-                                    LogUtil.w("code:"+code);
-                                    tvCommendationNum.setText("赞助" + code);
+                                    tvCommendationNum.setText(getString(R.string.sponsor)+ commendationNum);
+                                    tvDonateNum.setText(donateNum+getString(R.string.sponsor_num));
                                 }
                             }
                         });
