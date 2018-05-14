@@ -17,6 +17,7 @@ import com.secretk.move.ui.adapter.MainBlueSkyFragmentRecyclerAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.utils.ToastUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -80,7 +81,14 @@ public class MainBlueSkyFragment extends LazyFragment implements ItemClickListen
 
     @Override
     public void onItemClick(View view, int postion) {
-
+        switch (view.getId()) {
+            case R.id.tvIsFollw:
+                ToastUtils.getInstance().show("关注");
+                break;
+                default:
+                    ToastUtils.getInstance().show("default");
+                     break;
+        }
     }
 
     @Override

@@ -31,5 +31,6 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
     public MainBlueSkyFragmentHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        tvIsFollw.setOnClickListener(this);
     }
 }
