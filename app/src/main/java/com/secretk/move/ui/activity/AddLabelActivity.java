@@ -166,9 +166,9 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
                 setBackgroundAlpha(AddLabelActivity.this, 1.0f);
             }
         });
-        Button but_cancel = contentView.findViewById(R.id.but_cancel);
-        Button but_confirm = contentView.findViewById(R.id.but_confirm);
-        final EditText ed_word = contentView.findViewById(R.id.ed_word);
+        Button but_cancel = (Button) contentView.findViewById(R.id.but_cancel);
+        Button but_confirm = (Button) contentView.findViewById(R.id.but_confirm);
+        final EditText ed_word = (EditText) contentView.findViewById(R.id.ed_word);
         but_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -45,7 +45,7 @@ android {
             storePassword 'move20180416'
         }
     }
-    compileSdkVersion 27
+    compileSdkVersion 21
     defaultConfig {
         applicationId "com.secretk.move"
         minSdkVersion 19
@@ -96,7 +96,6 @@ dependencies {
     //下拉刷新框架
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
     implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
-
     //recyclerview
     implementation 'com.jcodecraeer:xrecyclerview:1.2.7'
 }

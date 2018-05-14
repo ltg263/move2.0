@@ -4,6 +4,10 @@ import com.secretk.move.bean.base.BaseRes;
 
 import java.util.List;
 
+/**
+ * Created by zc on 2018/5/14.
+ */
+
 public class DiscussLabelListbean extends BaseRes {
     public Data getData() {
         return data;
@@ -16,6 +20,8 @@ public class DiscussLabelListbean extends BaseRes {
     private Data data;
 
     public class Data {
+
+
         public List<TagList> getTagList() {
             return tagList;
         }
@@ -25,16 +31,9 @@ public class DiscussLabelListbean extends BaseRes {
         }
 
         private List<TagList> tagList;
-
-
     }
 
-
     public static class TagList {
-        public TagList() {
-            this.selected = false;
-        }
-
         public String getTagId() {
             return tagId;
         }
@@ -63,14 +62,14 @@ public class DiscussLabelListbean extends BaseRes {
         String tagName;
         String memo;
 
-        public Boolean getSelected() {
+        public boolean getSelected() {
             return selected;
         }
 
-        public void setSelected(Boolean selected) {
+        public void setSelected(boolean selected) {
             this.selected = selected;
         }
 
-        Boolean selected;
+        boolean selected;
     }
 }
