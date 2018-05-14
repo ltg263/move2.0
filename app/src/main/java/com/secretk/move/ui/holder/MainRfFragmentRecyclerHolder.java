@@ -15,13 +15,28 @@ import butterknife.ButterKnife;
  */
 
 public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
-
-    @BindView(R.id.tvscore)
-    public TextView tvscore;
     @BindView(R.id.img_organization)
     public ImageView img_organization;
-    @BindView(R.id.img_head)
-    public ImageView img_head;
+    @BindView(R.id.tvName)
+    public TextView tvName;
+    @BindView(R.id.tvIsFollw)
+    public TextView tvIsFollw;
+    @BindView(R.id.tvTime)
+    public TextView tvTime;
+    @BindView(R.id.tvTitle)
+    public TextView tvTitle;
+    @BindView(R.id.tvScore)
+    public TextView tvScore;
+    @BindView(R.id.tvDesc)
+    public TextView tvDesc;
+    @BindView(R.id.img_user_head)
+    public ImageView img_user_head;
+    @BindView(R.id.tvUser)
+    public TextView tvUser;
+    @BindView(R.id.tvPraise)
+    public TextView tvPraise;
+    @BindView(R.id.tvComments)
+    public TextView tvComments;
     public MainRfFragmentRecyclerHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);

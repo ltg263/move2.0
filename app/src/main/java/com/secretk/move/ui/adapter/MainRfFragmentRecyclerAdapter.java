@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MainRfBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.holder.MainRfFragmentRecyclerHolder;
@@ -35,12 +36,28 @@ public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFr
 
     @Override
     public void onBindViewHolder(MainRfFragmentRecyclerHolder holder, int position) {
-
-        String currenBean = "你好";
         holder.setItemListener(mListener);
-        holder.tvscore.setText(currenBean);
-        GlideUtils.loadCircle(holder.img_head, R.drawable.account_portrait);
-        GlideUtils.loadCircle(holder.img_organization, R.drawable.account_portrait);
+        MainRfBean.Rows bean = list.get(position);
+
+        GlideUtils.loadCircleUrl(holder.img_organization, Constants.BASE_IMG_URL + bean.getProjectIcon());
+        holder.tvName.setText(bean.getProjectChineseName());
+        holder.tvTime.setText(bean.getCreateTime());
+        holder.tvIsFollw.setVisibility(View.VISIBLE);
+        if (0 == bean.getFollowStatus()) {
+            holder.tvIsFollw.setText("+ 关注");
+        } else if (1 == bean.getFollowStatus()) {
+            holder.tvIsFollw.setText("已关注");
+        } else {
+            holder.tvIsFollw.setVisibility(View.GONE);
+        }
+        holder.tvTitle.setText(bean.getPostTitle());
+        holder.tvScore.setText(bean.getTotalScore());
+        holder.tvDesc.setText(bean.getPostShortDesc());
+
+        GlideUtils.loadCircleUrl(holder.img_user_head, Constants.BASE_IMG_URL + bean.getCreateUserIcon());
+        holder.tvUser.setText(bean.getCreateUserName());
+       holder.tvPraise.setText(bean.getPraiseNum()+"");
+       holder.tvComments.setText(bean.getCommentsNum()+"");
 
     }
 

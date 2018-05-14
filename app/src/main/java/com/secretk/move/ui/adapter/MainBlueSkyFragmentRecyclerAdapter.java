@@ -45,12 +45,10 @@ public class MainBlueSkyFragmentRecyclerAdapter extends RecyclerView.Adapter<Mai
         holder.tv_score.setText(bean.getTotalScore());
         holder.tv_follow.setText(bean.getFollowerNum());
         if (bean.getFollowStatus()==0){
-            holder.tvIsFollw.setText("+关注");
+            holder.tvIsFollw.setText("+ 关注");
         }else {
             holder.tvIsFollw.setText("已关注");
         }
-
-
     }
 
     @Override

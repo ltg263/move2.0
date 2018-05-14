@@ -58,6 +58,7 @@ public class MainRfBean extends BaseRes {
 
     public class Data {
         private Recommends recommends;
+
         public void setRecommends(Recommends recommends) {
             this.recommends = recommends;
         }
@@ -67,9 +68,11 @@ public class MainRfBean extends BaseRes {
         }
 
         private Follows follows;
+
         public Follows getFollows() {
             return follows;
         }
+
         public void setFollows(Follows follows) {
             this.follows = follows;
         }
@@ -218,6 +221,17 @@ public class MainRfBean extends BaseRes {
         String createUserName;
         String createTime;
         String totalScore;
+
+        public String getCreateUserIcon() {
+            return createUserIcon;
+        }
+
+        public void setCreateUserIcon(String createUserIcon) {
+            this.createUserIcon = createUserIcon;
+        }
+
+        String createUserIcon;
+
 
         public int getFollowStatus() {
             return followStatus;
