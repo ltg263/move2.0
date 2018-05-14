@@ -19,7 +19,6 @@ import com.secretk.move.utils.PicUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.DialogUtils;
-import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
 import java.util.List;
@@ -191,14 +190,14 @@ public class MineSetActivity extends BaseActivity {
                         PicUtil.getImageToView(data);
                     }
                     break;
-                case Crop.REQUEST_PICK:
-                    if (PicUtil.hasSdcard()) {
-                        File tempFile = new File(Constants.LOCAL_PATH + File.separator + PicUtil.USER_NEME + ".jpg");
-                        PicUtil.startPhotoZoom(this,Uri.fromFile(tempFile));
-                    } else {
-                        Toast.makeText(this, "未找到存储卡，无法存储照片！", Toast.LENGTH_LONG).show();
-                    }
-                    break;
+//                case Crop.REQUEST_PICK:
+//                    if (PicUtil.hasSdcard()) {
+//                        File tempFile = new File(Constants.LOCAL_PATH + File.separator + PicUtil.USER_NEME + ".jpg");
+//                        PicUtil.startPhotoZoom(this,Uri.fromFile(tempFile));
+//                    } else {
+//                        Toast.makeText(this, "未找到存储卡，无法存储照片！", Toast.LENGTH_LONG).show();
+//                    }
+//                    break;
 //
 //                case REQUSET://对性别设置
 //                    //requestCode标示请求的标示   resultCode表示有数据
