@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
+        android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#f9f9f9">
@@ -19,13 +20,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/toobar_back_blue" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="发布讨论"
+                android:text="发表讨论"
                 android:textColor="#333333"
                 android:textSize="@dimen/sp_18" />
+
             <TextView
                 android:id="@+id/tv_release"
                 android:layout_width="wrap_content"
@@ -39,24 +42,97 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <EditText
-        android:hint="请输入标题 (6-30字之间)"
-        android:padding="@dimen/dp_10"
-        android:background="@null"
-        android:textCursorDrawable="@drawable/shape_edit_cursor"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <View
-        android:layout_marginTop="@dimen/dp_5"
-        android:background="#dddddd"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"/>
-    <EditText
-        android:layout_marginTop="@dimen/dp_5"
-        android:hint="请输入字数小于2000字的正文"
-        android:background="@null"
-        android:padding="@dimen/dp_10"
-        android:textCursorDrawable="@drawable/shape_edit_cursor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/scr_parent"
+            android:layout_alignParentTop="true"
+            android:layout_above="@id/recycler_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="请输入标题 (6-30字之间)"
+                    android:padding="@dimen/dp_10"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:background="#dddddd" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:background="@null"
+                    android:hint="请输入字数小于2000字的正文"
+                    android:padding="@dimen/dp_10"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor" />
+                <android.support.v7.widget.RecyclerView
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:id="@+id/recycler_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </ScrollView>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginBottom="@dimen/dp_5"
+            android:layout_above="@id/rg_bottom"
+            android:id="@+id/recycler_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <RadioGroup
+            android:layout_alignParentBottom="true"
+            android:id="@+id/rg_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:background="#f9f9f9"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp_5">
+
+            <RadioButton
+                style="@style/main_tab_bottom"
+                android:checked="true"
+                android:drawableTop="@drawable/my_infro_localphoto"
+                android:onClick="localphoto"
+                />
+
+            <RadioButton
+                style="@style/main_tab_bottom"
+                android:drawableTop="@drawable/my_infro_takephoto"
+                android:onClick="takephoto"
+                />
+
+            <RadioButton
+                style="@style/main_tab_bottom"
+                android:drawableTop="@drawable/my_info_keyboard"
+                android:onClick="swithKeyboard"
+                />
+
+            <RadioButton
+                style="@style/main_tab_bottom"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:onClick="addlabel"
+                android:text="A"
+                android:textColor="#9e9e9e"
+                android:textSize="18sp" />
+        </RadioGroup>
+    </RelativeLayout>
+
+
 </LinearLayout>
