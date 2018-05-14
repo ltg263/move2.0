@@ -72,9 +72,6 @@ public class MainBlueSkyFragment extends LazyFragment implements ItemClickListen
             @Override
             public void onCompleted(BlueSkyBean bean) {
                 List<BlueSkyBean.RankList> list = bean.getData().getRankList();
-                list.add(new BlueSkyBean.RankList());
-                list.add(new BlueSkyBean.RankList());
-                list.add(new BlueSkyBean.RankList());
                 adapter.setData(list);
                 progress_bar.setVisibility(View.GONE);
             }

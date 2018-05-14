@@ -15,7 +15,6 @@ import com.secretk.move.ui.activity.ReleaseDiscussActivity;
 import com.secretk.move.ui.activity.ReleaseEvaluationActivity;
 import com.secretk.move.ui.activity.SearchActivity;
 import com.secretk.move.ui.adapter.MainFragmentPagerAdapter;
-import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
 
 import butterknife.BindView;

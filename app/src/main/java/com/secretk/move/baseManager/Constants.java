@@ -20,23 +20,25 @@ public interface Constants {
      */
     String APPNAME_ENGLISH = "move";
     /**
-     *  token_key
+     * token_key
      */
     String TOKEN_KEY = "token";
     /**
-     *  登录的状态
+     * 登录的状态
      */
     String IS_LOGIN_KEY = "isLogin";
     /**
      * 分页单次请求数量
      */
-        int PAGE_SIZE = 10;
+    int PAGE_SIZE = 10;
 
     /**
      * 文件存储的名称
      */
     String SHAREDPREFS_NAME = "move";
-    /**apk 在本地的存放地址*/
+    /**
+     * apk 在本地的存放地址
+     */
     String APKPATH = MoveApplication.getContext().getExternalFilesDir(null).getAbsolutePath() + "/move.apk";
     /**
      * 文件存储目录
@@ -85,66 +87,66 @@ public interface Constants {
 //    String BASE_URL = "http://192.168.10.201/";
 
     //发送验证码通用接口
-    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL+"kff/dynamicValidateCode/send";
+    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/send";
     //校验验证码接口。
-    String DYNAMIC_VALIDATE_CODE_VERIFY = BASE_URL+"kff/dynamicValidateCode/verify";
+    String DYNAMIC_VALIDATE_CODE_VERIFY = BASE_URL + "kff/dynamicValidateCode/verify";
     //验证手机号是否已经存在
-    String PHONE_AVAILABLE = BASE_URL+"kff/user/register/phoneAvailable";
+    String PHONE_AVAILABLE = BASE_URL + "kff/user/register/phoneAvailable";
     //用户注册
-    String USER_REGISTER = BASE_URL+"kff/user/register";
+    String USER_REGISTER = BASE_URL + "kff/user/register";
     //老用户用户登录
-    String USER_LOGIN = BASE_URL+"kff/user/login";
+    String USER_LOGIN = BASE_URL + "kff/user/login";
     //重置密码
-    String FORGET_PASSWORD = BASE_URL+"kff/user/forgetPassword";
+    String FORGET_PASSWORD = BASE_URL + "kff/user/forgetPassword";
 
     //首页推荐
-    String MAIN_RECOMMEND=BASE_URL+"/kff/home/recommendList";
+    String MAIN_RECOMMEND = BASE_URL + "/kff/home/recommendList";
     //首页关注
-    String MAIN_FOLLOW=BASE_URL+" /kff/home/followList";
+    String MAIN_FOLLOW = BASE_URL + " /kff/home/followList";
     //青天榜
-    String MAIN_BLUE_SKY=BASE_URL+"/kff/home/projectRankList";
+    String MAIN_BLUE_SKY = BASE_URL + "/kff/home/projectRankList";
 
     //用户主页
-    String USERHOME_INDEX = BASE_URL+"kff/userhome/index";
+    String USERHOME_INDEX = BASE_URL + "kff/userhome/index";
     //用户 测评列表
-    String USERHOME_EVALUATION_LIST =BASE_URL+ "kff/userhome/evaluationList";
+    String USERHOME_EVALUATION_LIST = BASE_URL + "kff/userhome/evaluationList";
     //用户讨论列表
-    String USERHOME_DISCUSS_LIST = BASE_URL+"kff/userhome/discussList";
+    String USERHOME_DISCUSS_LIST = BASE_URL + "kff/userhome/discussList";
     //  文章列表
-    String USERHOME_ARTICLE_LIST = BASE_URL+"kff/userhome/articleList";
+    String USERHOME_ARTICLE_LIST = BASE_URL + "kff/userhome/articleList";
 
     //项目主页 ，显示项目基本信息
-    String PROJECT_INDEX = BASE_URL+"/kff/project/index";
+    String PROJECT_INDEX = BASE_URL + "/kff/project/index";
     //项目主页 评测列表
-    String PROJECT_EVALUATION_LIST = BASE_URL+"/kff/project/evaluationList";
+    String PROJECT_EVALUATION_LIST = BASE_URL + "/kff/project/evaluationList";
     //项目讨论列表
-    String PROJECT_DISCUSS_LIST = BASE_URL+"kff/project/discussList";
+    String PROJECT_DISCUSS_LIST = BASE_URL + "kff/project/discussList";
     //项目  文章列表
-    String PROJECT_ARTICLE_LIST = BASE_URL+"kff/project/articleList";
+    String PROJECT_ARTICLE_LIST = BASE_URL + "kff/project/articleList";
     //讨论详情 页
-    String DISCUSS_DETAIL = BASE_URL+"/kff/home/discussDetail";
+    String DISCUSS_DETAIL = BASE_URL + "/kff/home/discussDetail";
     //对(评测/文章/讨论)类型的帖子进行评论或者对评论内容进行评论
-    String SAVE_COMMENT = BASE_URL+"kff/comments/saveComment";
+    String SAVE_COMMENT = BASE_URL + "kff/comments/saveComment";
     //讨论详情 最新评测列表和单个评论详情页childCommentList
-    String HOME_DISCUSS_COMMENT_LIST = BASE_URL+"kff/home/discussCommentList";
+    String HOME_DISCUSS_COMMENT_LIST = BASE_URL + "kff/home/discussCommentList";
     //文章详情 页面
-    String ARTICLE_DETAIL = BASE_URL+"kff/home/articleDetail";
+    String ARTICLE_DETAIL = BASE_URL + "kff/home/articleDetail";
     //文章评论列表
-    String ARTICLE_COMMENT_LIST = BASE_URL+"/kff/home/articleCommentList";
+    String ARTICLE_COMMENT_LIST = BASE_URL + "/kff/home/articleCommentList";
 
     //对 评论进行点赞
-    String SAVE_COMMENTS_PRAISE = BASE_URL+"kff/praise/saveCommentsPraise";
+    String SAVE_COMMENTS_PRAISE = BASE_URL + "kff/praise/saveCommentsPraise";
     //取消对某个评论的点赞
-    String CANCEL_COMMENTS_PRAISE = BASE_URL+"kff/praise/cancelCommentsPraise";
+    String CANCEL_COMMENTS_PRAISE = BASE_URL + "kff/praise/cancelCommentsPraise";
 
     //点赞帖子 包括评测 ，文章
-    String SAVE_POST_PRAISE = BASE_URL+"kff/praise/savePostPraise";
+    String SAVE_POST_PRAISE = BASE_URL + "kff/praise/savePostPraise";
     //取消对帖子的点赞  包括 文章 评测
-    String CANCEL_POST_PRAISE = BASE_URL+"kff/praise/cancelPostPraise";
+    String CANCEL_POST_PRAISE = BASE_URL + "kff/praise/cancelPostPraise";
     //取消关注 项目 / 帖子 /人
-    String CANCEL_FOLLOW = BASE_URL+"/kff/follow/cancelFollow";
+    String CANCEL_FOLLOW = BASE_URL + "/kff/follow/cancelFollow";
     //关注 项目 / 帖子 /人
-    String SAVE_FOLLOW = BASE_URL+"kff/follow/saveFollow";
+    String SAVE_FOLLOW = BASE_URL + "kff/follow/saveFollow";
 
     //收藏帖子 包括 讨论，评测 ，文章
     String SAVE_COLLECT = "kff/collect/saveCollect";
@@ -152,23 +154,22 @@ public interface Constants {
     String CANCEL_COLLECT = "kff/collect/cancelCollect";
 
 
-
     //评测详情 页
-    String EVALUATION_DETAIL = BASE_URL+"kff/home/evaluationDetail";
+    String EVALUATION_DETAIL = BASE_URL + "kff/home/evaluationDetail";
     //=======
     //讨论详情 页
-    String HOME_DISCUSS_DETAIL = BASE_URL+"kff/home/discussDetail";
+    String HOME_DISCUSS_DETAIL = BASE_URL + "kff/home/discussDetail";
     //针对文章单个评论的评论列表页
-    String ARTICLE_COMMENT_REPLY_LIST = BASE_URL+"kff/home/articleCommentReplyList";
+    String ARTICLE_COMMENT_REPLY_LIST = BASE_URL + "kff/home/articleCommentReplyList";
 
-//发表讨论时 添加标签 获取标签列表
-    String RELEASE_DISCUSS_LIST =BASE_URL+"/kff/discuss/tagList";
-    String RELEASE_ARTICLE=BASE_URL+"/kff/article/saveArticle";
+    //发表讨论时 添加标签 获取标签列表
+    String RELEASE_DISCUSS_LIST = BASE_URL + "/kff/discuss/tagList";
+    String RELEASE_ARTICLE = BASE_URL + "/kff/article/saveArticle";
 
     /**
      * 1-关注项目;2-关注帖子；3-关注用户
      */
-    interface SaveFollow{
+    interface SaveFollow {
         int PROJECT = 1;
         int INVITATION = 2;
         int USER = 3;

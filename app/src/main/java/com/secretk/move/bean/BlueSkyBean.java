@@ -73,16 +73,25 @@ public class BlueSkyBean extends BaseRes {
 
     }
 
-    public static  class RankList {
+    public static class RankList {
         String projectId;
         String projectIcon;
         String projectCode;
         String projectEnglishName;
         String projectChineseName;
         String projectSignature;
+
+        public int getFollowStatus() {
+            return followStatus;
+        }
+
+        public void setFollowStatus(int followStatus) {
+            this.followStatus = followStatus;
+        }
+
         String totalScore;
         String followerNum;
-        String followStatus;
+        int followStatus;
 
         public String getProjectId() {
             return projectId;
@@ -148,12 +157,6 @@ public class BlueSkyBean extends BaseRes {
             this.followerNum = followerNum;
         }
 
-        public String getFollowStatus() {
-            return followStatus;
-        }
 
-        public void setFollowStatus(String followStatus) {
-            this.followStatus = followStatus;
-        }
     }
 }
