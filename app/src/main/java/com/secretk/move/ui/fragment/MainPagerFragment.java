@@ -8,12 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
-
 import com.secretk.move.R;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.ui.activity.ReleaseArticleActivity;
 import com.secretk.move.ui.activity.ReleaseDiscussActivity;
+import com.secretk.move.ui.activity.ReleaseEvaluationActivity;
 import com.secretk.move.ui.activity.SearchActivity;
 import com.secretk.move.ui.adapter.MainFragmentPagerAdapter;
 import com.secretk.move.utils.ToastUtils;
@@ -92,7 +91,9 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         view.findViewById(R.id.ll_evaluation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.getInstance().show("ll_evaluation");
+                intent = new Intent(getContext(), ReleaseEvaluationActivity.class);
+                startActivity(intent);
+                dialog.dismiss();
             }
         });
         view.findViewById(R.id.ll_article).setOnClickListener(new View.OnClickListener() {
