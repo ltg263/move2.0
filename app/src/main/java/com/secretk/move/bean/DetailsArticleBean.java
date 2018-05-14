@@ -106,7 +106,7 @@ public class DetailsArticleBean extends BaseRes{
             private int donateNum;
             private int collectStatus;
             private int collectNum;
-            private int commendationNum;
+            private double commendationNum;
             private int createUserId;
             private String createUserIcon;
             private String createUserSignature;
@@ -117,11 +117,11 @@ public class DetailsArticleBean extends BaseRes{
             private String updateTimeStr;
             private List<CommendationListBean> commendationList;
 
-            public void setCommendationNum(int commendationNum) {
+            public void setCommendationNum(double commendationNum) {
                 this.commendationNum = commendationNum;
             }
 
-            public int getCommendationNum() {
+            public double getCommendationNum() {
                 return commendationNum;
             }
 
@@ -387,7 +387,7 @@ public class DetailsArticleBean extends BaseRes{
                 private int postId;
                 private int projectId;
                 private int postType;
-                private int amount;
+                private double amount;
 
                 public int getCommendationId() {
                     return commendationId;
@@ -485,11 +485,11 @@ public class DetailsArticleBean extends BaseRes{
                     this.postType = postType;
                 }
 
-                public int getAmount() {
+                public double getAmount() {
                     return amount;
                 }
 
-                public void setAmount(int amount) {
+                public void setAmount(double amount) {
                     this.amount = amount;
                 }
             }

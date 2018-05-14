@@ -107,7 +107,7 @@ public class UserLoginInfo extends BaseRes{
             private int evaluationNum;
             private int discussNum;
             private int articleNum;
-            private int kffCoinNum;
+            private double kffCoinNum;
             private String areaName;
             private long createTime;
             private String createTimeStr;
@@ -265,11 +265,11 @@ public class UserLoginInfo extends BaseRes{
                 this.articleNum = articleNum;
             }
 
-            public int getKffCoinNum() {
+            public double getKffCoinNum() {
                 return kffCoinNum;
             }
 
-            public void setKffCoinNum(int kffCoinNum) {
+            public void setKffCoinNum(double kffCoinNum) {
                 this.kffCoinNum = kffCoinNum;
             }
 
@@ -431,7 +431,7 @@ public class UserLoginInfo extends BaseRes{
                 dest.writeInt(this.evaluationNum);
                 dest.writeInt(this.discussNum);
                 dest.writeInt(this.articleNum);
-                dest.writeInt(this.kffCoinNum);
+                dest.writeDouble(this.kffCoinNum);
                 dest.writeString(this.areaName);
                 dest.writeLong(this.createTime);
                 dest.writeString(this.createTimeStr);

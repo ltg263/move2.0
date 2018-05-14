@@ -117,7 +117,7 @@ public class HomeUserIndexBean extends BaseRes{
             private int evaluationNum;
             private int discussNum;
             private int articleNum;
-            private int kffCoinNum;
+            private double kffCoinNum;
             private Object areaName;
             private int status;
 
@@ -241,11 +241,11 @@ public class HomeUserIndexBean extends BaseRes{
                 this.articleNum = articleNum;
             }
 
-            public int getKffCoinNum() {
+            public double getKffCoinNum() {
                 return kffCoinNum;
             }
 
-            public void setKffCoinNum(int kffCoinNum) {
+            public void setKffCoinNum(double kffCoinNum) {
                 this.kffCoinNum = kffCoinNum;
             }
 

@@ -106,6 +106,8 @@ public interface Constants {
     //青天榜
     String MAIN_BLUE_SKY = BASE_URL + "/kff/home/projectRankList";
 
+    //上传用户头像
+    String UPLOAD_USER_ICON ="kff/user/uploadUserIcon";
     //用户主页
     String USERHOME_INDEX = BASE_URL + "kff/userhome/index";
     //用户 测评列表
@@ -156,6 +158,12 @@ public interface Constants {
 
     //评测详情 页
     String EVALUATION_DETAIL = BASE_URL + "kff/home/evaluationDetail";
+    //测评评论
+    String EVLUATION_COMMENT_LIST = BASE_URL+"kff/home/evaluationCommentList";
+    //捐赠(赞赏)
+    String COMMENDATION = BASE_URL+"kff/token/commendation";
+
+
     //=======
     //讨论详情 页
     String HOME_DISCUSS_DETAIL = BASE_URL + "kff/home/discussDetail";

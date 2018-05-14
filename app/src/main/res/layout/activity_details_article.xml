@@ -20,7 +20,7 @@
         android:layout_below="@id/head_app_server"
         android:background="@color/cut_off_rule" />
 
-    <ScrollView
+    <com.secretk.move.view.RecycleScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/view_bottom"
@@ -36,7 +36,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dp_25">
 
                 <TextView
                     android:id="@+id/tv_post_title"
@@ -170,7 +171,7 @@
                     android:textColor="@color/title_gray_66" />
             </LinearLayout>
         </RelativeLayout>
-    </ScrollView>
+    </com.secretk.move.view.RecycleScrollView>
 
     <View
         android:id="@+id/view_bottom"

@@ -40,6 +40,15 @@ public class DetailsArticleCommentBean extends BaseRes{
         public void setNewestComments(NewestCommentsBean newestComments) {
             this.newestComments = newestComments;
         }
+        private List<CommonCommentsBean>   hotComments;
+
+        public List<CommonCommentsBean> getHotComments() {
+            return hotComments;
+        }
+
+        public void setHotComments(List<CommonCommentsBean> hotComments) {
+            this.hotComments = hotComments;
+        }
 
         public static class NewestCommentsBean {
             /**

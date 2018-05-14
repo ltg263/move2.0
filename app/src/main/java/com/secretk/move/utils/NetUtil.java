@@ -289,4 +289,45 @@ public class NetUtil {
     public static abstract class SaveCollectImp{
         public abstract void finishCollect(String code,boolean status);
     }
+
+    /**
+     *
+     */
+    public static void commendation(int postId,int receiveUserId,double amount,int projectId, final SaveCollectImp collect){
+        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY,"");
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+            node.put("postId", postId);
+            node.put("receiveUserId", receiveUserId);
+            node.put("amount", amount);
+            node.put("projectId", projectId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.COMMENDATION)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onCompleted(String str) {
+                try {
+                    JSONObject obj = new JSONObject(str);
+                    int commendationNum = obj.getJSONObject("data").getInt("commendationNum");
+                    LogUtil.w("Math.round(commendationNum):"+Math.round(commendationNum));
+                    LogUtil.w("String.valueOf(Math.round(commendationNum)):"+String.valueOf(Math.round(commendationNum)));
+                    collect.finishCollect(String.valueOf(Math.round(commendationNum)),true);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String message) {
+                collect.finishCollect("",false);
+            }
+        });
+    }
 }

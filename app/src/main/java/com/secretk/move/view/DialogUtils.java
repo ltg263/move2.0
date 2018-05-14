@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -89,7 +90,7 @@ public class DialogUtils {
      * @param context
      * @param
      */
-    public static void showDialogError(Context context, final EditTextDialogInterface anInterface) {
+    public static void showDialogError(Context context, final ErrorDialogInterface anInterface) {
 
         final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_layout, null);
@@ -109,12 +110,55 @@ public class DialogUtils {
         dialog5.setContentView(view);
         dialog5.show();
     }
-    public interface EditTextDialogInterface {
+
+    /**
+     * 描述: 自定义ShowUnifiedDialog
+     * 统一 确认取消的Dialog
+     */
+    public static void showEditTextDialog(final Context context, String title, final EditTextDialogInterface editTextDialogInterface) {
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_with_edittext, null);// 获得dialog布局
+        final Dialog dialog = new Dialog(context, R.style.RemindDialog);
+        dialog.setContentView(view);
+        dialog.show();
+        TextView tvLogPrompt = view.findViewById(R.id.tv_log_prompt);
+        final EditText tvLogContent = view.findViewById(R.id.tv_log_content);
+        TextView tvLogConfirm = view.findViewById(R.id.tv_log_confirm);
+        TextView tvLogCancel = view.findViewById(R.id.tv_log_cancel);
+
+        tvLogPrompt.setText(title);
+        // 确定
+        tvLogConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                String season = tvLogContent.getText().toString().trim();
+                editTextDialogInterface.btnConfirm(season);
+                dialog.dismiss();
+            }
+
+        });
+        // 取消
+        tvLogCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+    public interface ErrorDialogInterface {
         /**
          * 确定
          */
         public void btnConfirm();
+    }
 
+    public interface EditTextDialogInterface {
+        /**
+         * 确定
+         *
+         * @param season
+         */
+        public void btnConfirm(String season);
     }
 
 

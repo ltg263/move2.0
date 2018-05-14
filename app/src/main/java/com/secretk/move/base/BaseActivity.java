@@ -60,7 +60,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         initUI(savedInstanceState);
         if(!NetUtil.isNetworkAvailable()){
-            DialogUtils.showDialogError(this, new DialogUtils.EditTextDialogInterface() {
+            DialogUtils.showDialogError(this, new DialogUtils.ErrorDialogInterface() {
                 @Override
                 public void btnConfirm() {
                     finish();

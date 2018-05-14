@@ -2,12 +2,10 @@ package com.secretk.move.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -16,14 +14,12 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.CommonCommentsBean;
 import com.secretk.move.bean.DetailsArticleBean;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -40,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -82,7 +77,6 @@ public class DetailsArticleActivity extends BaseActivity {
     RecyclerView rvImg;
     private String postId;
     private ImagesAdapter adapter;
-    private List<CommonCommentsBean> hotComments;
     private int createUserId;
 
     @Override
@@ -134,7 +128,6 @@ public class DetailsArticleActivity extends BaseActivity {
                 if (bean.getData() != null) {
                     setInitData(bean.getData().getArticleDetail());
                 }
-                hotComments = bean.getData().getHotComments();
             }
         });
     }
@@ -174,7 +167,7 @@ public class DetailsArticleActivity extends BaseActivity {
         } else {
             tvCollectStatus.setSelected(false);
         }
-        tvCommendationNum.setText("赞助" + String.valueOf(initData.getCommendationNum()));
+        tvCommendationNum.setText("赞助" + String.valueOf(new Double(initData.getCommendationNum()).intValue()));
         tvCommentsNum.setText("评论" + String.valueOf(initData.getCollectNum()));
         List<PostDataInfo> lists = new ArrayList<>();
         try {
@@ -253,7 +246,7 @@ public class DetailsArticleActivity extends BaseActivity {
             case R.id.tv_comments_num:
                 Intent intent = new Intent(this,DetailsArticleCommentActivity.class);
                 intent.putExtra("postId",String.valueOf(postId));
-                intent.putParcelableArrayListExtra("hotComments", (ArrayList<? extends Parcelable>) hotComments);
+                intent.putExtra("url",Constants.ARTICLE_COMMENT_LIST);
                 startActivity(intent);
                 break;
         }

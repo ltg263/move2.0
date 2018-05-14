@@ -36,7 +36,7 @@ import butterknife.BindView;
  * 作者： litongge
  * 时间： 2018/5/2 14:12
  * 邮箱；ltg263@126.com
- * 描述: 评测详情--全部
+ * 描述: 评测详情--单个
  */
 public class DetailsReviewOnlyActivity extends BaseActivity  implements ItemClickListener {
 

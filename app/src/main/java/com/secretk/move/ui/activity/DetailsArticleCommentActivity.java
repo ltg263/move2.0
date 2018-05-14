@@ -42,7 +42,7 @@ import butterknife.OnClick;
  * 作者： litongge
  * 时间： 2018/5/3 16:53
  * 邮箱；ltg263@126.com
- * 描述：文章---评论详情列表
+ * 描述：文章-评测--评论详情列表
  */
 public class DetailsArticleCommentActivity extends BaseActivity {
 
@@ -56,12 +56,11 @@ public class DetailsArticleCommentActivity extends BaseActivity {
     EditText etContent;
     @BindView(R.id.but_send)
     Button butSend;
-    @BindView(R.id.rl)
-    RelativeLayout rl;
     private DetailsDiscussAdapter adapter;
     private DetailsDiscussAdapter adapterNew;
     private String postId;
     private int pageIndex = 1;
+    private String url;
 
     @Override
     protected int setOnCreate() {
@@ -82,13 +81,10 @@ public class DetailsArticleCommentActivity extends BaseActivity {
     @Override
     protected void initUI(Bundle savedInstanceState) {
         postId = getIntent().getStringExtra("postId");
-        List<CommonCommentsBean> hotComments = getIntent().getParcelableArrayListExtra("hotComments");
+        url = getIntent().getStringExtra("url");
         setVerticalManager(rvkHotReview);
         adapter = new DetailsDiscussAdapter(this);
         rvkHotReview.setAdapter(adapter);
-        if (hotComments != null) {
-            adapter.setData(hotComments);
-        }
 
         setVerticalManager(rvNewReview);
         adapterNew = new DetailsDiscussAdapter(this);
@@ -133,7 +129,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.ARTICLE_COMMENT_LIST)
+                .url(url)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
@@ -141,10 +137,22 @@ public class DetailsArticleCommentActivity extends BaseActivity {
         RetrofitUtil.request(params, DetailsArticleCommentBean.class, new HttpCallBackImpl<DetailsArticleCommentBean>() {
             @Override
             public void onCompleted(DetailsArticleCommentBean bean) {
-                if (bean.getData().getNewestComments().getCurPageNum() == bean.getData().getNewestComments().getPageSize()) {
+                DetailsArticleCommentBean.DataBean data = bean.getData();
+                if(data==null){
+                    return;
+                }
+                if(data.getNewestComments().getCurPageNum()==1){
+                    if(data.getHotComments()!=null&&data.getHotComments().size()>0){
+                        adapter.setData(data.getHotComments());
+                    }
+                }
+                if (data.getNewestComments().getCurPageNum() == data.getNewestComments().getPageSize()) {
                     refreshLayout.setLoadmoreFinished(true);
                 }
-                adapterNew.setData(bean.getData().getNewestComments().getRows());
+                if(bean.getData().getNewestComments().getRows()!=null
+                        && bean.getData().getNewestComments().getRows().size()>0){
+                    adapterNew.setData(bean.getData().getNewestComments().getRows());
+                }
             }
 
             @Override
