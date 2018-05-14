@@ -222,6 +222,15 @@ public class MainRfBean extends BaseRes {
         String createTime;
         String totalScore;
 
+        public List<PostSmallImagesList> getPostSmallImagesList() {
+            return postSmallImagesList;
+        }
+
+        public void setPostSmallImagesList(List<PostSmallImagesList> postSmallImagesList) {
+            this.postSmallImagesList = postSmallImagesList;
+        }
+
+        List<PostSmallImagesList> postSmallImagesList;
         public String getCreateUserIcon() {
             return createUserIcon;
         }
@@ -364,4 +373,33 @@ public class MainRfBean extends BaseRes {
         //Todo 缩略图先不加
     }
 
+    public static class PostSmallImagesList {
+        public String getFileUrl() {
+            return fileUrl;
+        }
+
+        public void setFileUrl(String fileUrl) {
+            this.fileUrl = fileUrl;
+        }
+
+        public String getFileName() {
+            return fileName;
+        }
+
+        public void setFileName(String fileName) {
+            this.fileName = fileName;
+        }
+
+        public String getExtension() {
+            return extension;
+        }
+
+        public void setExtension(String extension) {
+            this.extension = extension;
+        }
+
+        String fileUrl;
+        String fileName;
+        String extension;
+    }
 }

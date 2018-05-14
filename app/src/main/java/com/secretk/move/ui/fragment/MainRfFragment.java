@@ -79,6 +79,17 @@ public class MainRfFragment extends LazyFragment implements ItemClickListener, M
     @Override
     public void onItemClick(android.view.View view, int postion) {
 
+     switch (view.getId()){
+         case R.id.img_organization:
+             ToastUtils.getInstance().show("img_organization");
+             break;
+         case R.id.tvIsFollw:
+             ToastUtils.getInstance().show("tvIsFollw");
+             break;
+             default:
+                 ToastUtils.getInstance().show("default");
+                 break;
+     }
     }
 
     @Override

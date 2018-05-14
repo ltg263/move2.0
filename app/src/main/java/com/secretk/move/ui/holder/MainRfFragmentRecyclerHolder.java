@@ -40,5 +40,9 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     public MainRfFragmentRecyclerHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        img_organization.setOnClickListener(this);
+        tvIsFollw.setOnClickListener(this);
+
+
     }
 }
