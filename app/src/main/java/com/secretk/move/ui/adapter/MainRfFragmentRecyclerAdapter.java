@@ -1,5 +1,6 @@
 package com.secretk.move.ui.adapter;
 
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.secretk.move.bean.MainRfBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.holder.MainRfFragmentRecyclerHolder;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.UiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,16 @@ import java.util.List;
 public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFragmentRecyclerHolder> {
     private List<MainRfBean.Rows> list = new ArrayList<MainRfBean.Rows>();
     private ItemClickListener mListener;
+    /**
+     * 横向多张图的adapter
+     */
+    public ImgExtraHorizontalAdapter imgExtraHorizontalAdapter;
 
+
+    /**
+     * 横向多张图layoutManager参数设置
+     */
+    private LinearLayoutManager layoutManagerImgExtra;
     public void setItemListener(ItemClickListener mListener) {
         this.mListener = mListener;
     }
@@ -56,9 +67,18 @@ public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFr
 
         GlideUtils.loadCircleUrl(holder.img_user_head, Constants.BASE_IMG_URL + bean.getCreateUserIcon());
         holder.tvUser.setText(bean.getCreateUserName());
-       holder.tvPraise.setText(bean.getPraiseNum()+"");
-       holder.tvComments.setText(bean.getCommentsNum()+"");
+        holder.tvPraise.setText(bean.getPraiseNum() + "");
+        holder.tvComments.setText(bean.getCommentsNum() + "");
 
+        if (holder.ry_horizontal.getAdapter()==null){
+            imgExtraHorizontalAdapter = new ImgExtraHorizontalAdapter();
+            //设置成横向
+            layoutManagerImgExtra = new LinearLayoutManager(UiUtils.getContext());
+            layoutManagerImgExtra.setOrientation(LinearLayoutManager.HORIZONTAL);
+            holder.ry_horizontal.setAdapter(imgExtraHorizontalAdapter);
+            holder.ry_horizontal.setLayoutManager(layoutManagerImgExtra);
+        }
+        imgExtraHorizontalAdapter.setData(bean);
     }
 
     @Override

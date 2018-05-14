@@ -221,7 +221,7 @@ public class MainRfBean extends BaseRes {
         String createUserName;
         String createTime;
         String totalScore;
-
+        List<PostSmallImagesList> postSmallImagesList;
         public List<PostSmallImagesList> getPostSmallImagesList() {
             return postSmallImagesList;
         }
@@ -230,7 +230,7 @@ public class MainRfBean extends BaseRes {
             this.postSmallImagesList = postSmallImagesList;
         }
 
-        List<PostSmallImagesList> postSmallImagesList;
+
         public String getCreateUserIcon() {
             return createUserIcon;
         }

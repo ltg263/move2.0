@@ -87,14 +87,13 @@
             android:text="以太坊系统自身带有一种叫做以太币以太坊系统自身带有一种叫做以太币以太坊系统自身带有一种叫做以太币以太坊系统自身带有一种叫做以太币以太坊系统自身带有一种叫做以太币"
             android:textColor="#7e7d7e"
             android:textSize="@dimen/sp_12" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="187dp"
+        <com.secretk.move.customview.NoDispatchTouchRecyclerView
             android:layout_below="@+id/tvDesc"
             android:layout_marginBottom="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_2"
-            android:background="@drawable/fragment_follow_background" />
+            android:id="@+id/ry_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </RelativeLayout>
 
     <View

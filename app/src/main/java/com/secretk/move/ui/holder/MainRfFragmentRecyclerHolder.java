@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
+import com.secretk.move.customview.NoDispatchTouchRecyclerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +38,9 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     public TextView tvPraise;
     @BindView(R.id.tvComments)
     public TextView tvComments;
+
+    @BindView(R.id.ry_horizontal)
+    public NoDispatchTouchRecyclerView ry_horizontal;
     public MainRfFragmentRecyclerHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
