@@ -412,5 +412,11 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_line"
         android:background="@color/cut_off_rule" />
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:text="退出登录"/>
 </LinearLayout>
 

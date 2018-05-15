@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -179,7 +178,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }else if(item.getItemId() == R.string.share){
-            IntentUtil.showShare();
+            IntentUtil.showShare("区动","http://qufen.top","我是分享的内容",
+                    Constants.BASE_IMG_URL+"/upload/posts/201805/2.jpg");
             Toast.makeText(this, "您点击了分享", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);

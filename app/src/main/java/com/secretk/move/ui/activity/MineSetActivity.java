@@ -7,14 +7,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
-import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.UserLoginInfo;
-import com.secretk.move.utils.LogUtil;
+import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.PicUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.AppBarHeadView;
@@ -35,7 +33,7 @@ import butterknife.OnClick;
 public class MineSetActivity extends BaseActivity {
     @BindView(R.id.head_app_server)
     AppBarHeadView headAppServer;
-    @BindView(R.id.iv_head_img)
+    @BindView(R.id.iv_head_img_a)
     ImageView ivHeadImg;
     @BindView(R.id.tv_user_name)
     TextView tvUserName;
@@ -162,61 +160,29 @@ public class MineSetActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        LogUtil.w("resultCode:"+resultCode);
-        LogUtil.w("requestCode:"+requestCode);
-        // 结果码不等于取消时候
-        if (resultCode != RESULT_CANCELED) {
-            switch (requestCode) {
-//                case IMAGE_REQUEST_CODE:
-//                    Uri tag = data.getData();
-//                    int sdkV = Build.VERSION.SDK_INT;
-//                    if (sdkV >= 19) {
-//                        String path = UriUtils.getImageAbsolutePath(MyDataAcitivity.this, data.getData());
-//                        tag = Uri.parse("file://" + path);
-//                    }
-//                    startPhotoZoom(tag);
-//                    break;
-                case PicUtil.CAMERA_REQUEST_CODE:
-                    if (PicUtil.hasSdcard()) {
-                        File tempFile = new File(Constants.LOCAL_PATH + File.separator + PicUtil.USER_NEME + ".jpg");
-                        PicUtil.startPhotoZoom(this,Uri.fromFile(tempFile));
-                    } else {
-                        Toast.makeText(this, "未找到存储卡，无法存储照片！", Toast.LENGTH_LONG).show();
-                    }
-                    break;
-                case PicUtil.RESULT_REQUEST_CODE:
-                    LogUtil.w("data:"+data);
-                    if (data != null) {
-                        PicUtil.getImageToView(data);
-                    }
-                    break;
-//                case Crop.REQUEST_PICK:
-//                    if (PicUtil.hasSdcard()) {
-//                        File tempFile = new File(Constants.LOCAL_PATH + File.separator + PicUtil.USER_NEME + ".jpg");
-//                        PicUtil.startPhotoZoom(this,Uri.fromFile(tempFile));
-//                    } else {
-//                        Toast.makeText(this, "未找到存储卡，无法存储照片！", Toast.LENGTH_LONG).show();
-//                    }
-//                    break;
-//
-//                case REQUSET://对性别设置
-//                    //requestCode标示请求的标示   resultCode表示有数据
-//                    if (requestCode == MyDataAcitivity.REQUSET && resultCode == RESULT_OK) {
-//                        String strHz = data.getStringExtra(MyGenderActivity.KEY_GENDER);
-//                        tvDataGender.setText(strHz);
-//                        submitData(getString(R.string.my_data_line04));
-//                    }
-//                    break;
-//                case RESULT_NICK_NAME:
-//                    if (resultCode ==RESULT_OK&&requestCode == MyDataAcitivity.RESULT_NICK_NAME) {
-//                        String name = data.getStringExtra("newName");
-//                        if (!TextUtils.isEmpty(name)) {
-//                            tvDataNickname.setText(name);
-//                        }
-//                    }
-//                    break;
-            }
-        }
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==PicUtil.CODE_CAMERA_PIC){
+            Object o = PicUtil.filePath;
+            if (o != null && o.toString().length()>0) {
+                onPicResult(o.toString());
+            }
+        }else if(requestCode==PicUtil.CODE_SELECT_PIC){
+            Object o = PicUtil.onActivityResult(this, requestCode, resultCode, data);
+            if (o != null && o.toString().length()>0) {
+                onPicResult(o.toString());
+            }
+        }else if(requestCode== PicUtil.CODE_CROP_PIC){
+            onPicTrimResult();
+        }
+    }
+    private void onPicResult(String picPath) {
+        if(StringUtil.isNotBlank(picPath)){
+            File tempFile = new File(picPath);
+            PicUtil.startPhotoZoom(Uri.fromFile(tempFile),MineSetActivity.this);
+        }
+    }
+
+    private void onPicTrimResult() {
+       GlideUtils.loadImage(ivHeadImg,PicUtil.uritempFile.getPath());
     }
 }

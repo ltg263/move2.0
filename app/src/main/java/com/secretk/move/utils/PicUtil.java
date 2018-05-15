@@ -2,25 +2,24 @@ package com.secretk.move.utils;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.widget.Toast;
 
-import com.secretk.move.apiService.HttpCallBackImpl;
-import com.secretk.move.apiService.RetrofitUtil;
-import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Date;
 
 /**
  * 作者： litongge
@@ -30,31 +29,75 @@ import java.io.IOException;
  */
 public class PicUtil {
 
-    public static final int CAMERA_REQUEST_CODE = 1;//相机
-    public static final int RESULT_REQUEST_CODE = 2;//结果
-    public static final String USER_NEME = "move";//相机
+    public static int CODE_SELECT_PIC_MULTIPLE = 5560;
+    public static int CODE_SELECT_PIC = 5561;
+    public static int CODE_CAMERA_PIC = 5562;
+    public static int CODE_CROP_PIC = 5563;
+    public static String filePath =  "";
+    public static int CODE_CURRENT = 0;
+    public static int CODE_REQUEST_TAG = 0;
+    public static Uri uritempFile;
 
-    public static void openPhoto(Context context) {
-        //Crop.pickImage((Activity) context);
+    /**
+     * 开启单选图片相册
+     * @param context
+     */
+    public static void openPhoto(Activity context){
+        openPhoto(context,CODE_SELECT_PIC);
+    }
+    /**
+     * 开启单选图片相册
+     * @param context
+     */
+    public static void openPhoto(Activity context,int reqCode){
+        CODE_CURRENT = reqCode;
+        CODE_REQUEST_TAG = CODE_SELECT_PIC;
+        Intent intent = new Intent(Intent.ACTION_PICK, null);
+        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                "image/*");
+        context.startActivityForResult(intent, reqCode);
     }
 
-
-    public static void openCamera(final Context context) {
-        File file = new File(Constants.LOCAL_PATH);
-        LogUtil.w("file:"+file);
-        if (!file.exists()) {
-            file.mkdirs();
+    public static Object onActivityResult(Activity context,int requestCode, int resultCode, Intent data){
+        if (resultCode==Activity.RESULT_OK){
+            if (CODE_REQUEST_TAG == CODE_SELECT_PIC && requestCode == CODE_CURRENT && data != null) {
+                filePath = UriUtils.getImageAbsolutePath(context, data.getData());
+                return  filePath;
+            } else if (CODE_REQUEST_TAG == CODE_CAMERA_PIC && requestCode == CODE_CURRENT) {
+                return filePath;
+            } else if (CODE_REQUEST_TAG == CODE_SELECT_PIC_MULTIPLE && requestCode == CODE_CURRENT && data != null) {
+                return data.getStringArrayListExtra("dataList");
+            } else if (CODE_REQUEST_TAG == CODE_CROP_PIC && requestCode == CODE_CURRENT) {
+                //                startPhotoZoom(Uri.fromFile(new File(filePath)),context);
+                return filePath;
+            }
+        }
+        return null;
+    }
+    /**
+     * 打开照相
+     * @param context
+     * @return
+     */
+    public static void openCamera(Activity context) {
+        openCamera(context,CODE_CAMERA_PIC);
+    }
+    /**
+     * 打开照相
+     * @param context
+     * @return
+     */
+    public static void openCamera(final Activity context, final int reqCode) {
+        if(!isEnvironment(context)){
+            return;
         }
         if (Build.VERSION.SDK_INT >= 23) {
-            PermissionsManager.get().checkPermissions((Activity) context, Manifest.permission.CAMERA, new PermissionsManager.CheckCallBack() {
+            PermissionsManager.get().checkPermissions(context, Manifest.permission.CAMERA, new PermissionsManager.CheckCallBack() {
                 @Override
                 public void onSuccess(String permission) {
-                    Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    // 判断存储卡是否可以用，可用进行存储
-                    if (hasSdcard()) {
-                        intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Constants.LOCAL_PATH, USER_NEME + ".jpg")));
-                    }
-                    ((Activity)context).startActivityForResult(intentFromCapture,CAMERA_REQUEST_CODE);
+                    takeCamera(context,reqCode);
                 }
 
                 @Override
@@ -63,104 +106,115 @@ public class PicUtil {
                 }
             });
         } else {
-            Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            // 判断存储卡是否可以用，可用进行存储
-            if (hasSdcard()) {
-                intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Constants.LOCAL_PATH, USER_NEME + ".jpg")));
-            }
-            ((Activity)context).startActivityForResult(intentFromCapture, CAMERA_REQUEST_CODE);
+            takeCamera(context,reqCode);
         }
+    }
+    private static String takeCamera(Activity context,int reqCode) {
+        CODE_CURRENT = reqCode;
+        CODE_REQUEST_TAG = CODE_CAMERA_PIC;
+        ContentValues values = new ContentValues();
+        long time = new Date(System.currentTimeMillis()).getTime();
+        values.put(MediaStore.Images.Media.TITLE, new Date(System.currentTimeMillis()).getTime());
+        File photoFile = new File(getSDCardPath() + File.separator + "DCIM"
+                + File.separator + time + ".jpg");
+        filePath = photoFile.getPath();
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+        context.startActivityForResult(intent, reqCode);
+        return filePath;
     }
     /**
      * 裁剪图片方法实现
      *
      * @param uri
      */
-    public static void startPhotoZoom(Context context,Uri uri) {
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        // 设置裁剪
-        intent.putExtra("crop", "true");
-        // aspectX aspectY 是宽高的比例
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        // outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX", 320);
-        intent.putExtra("outputY", 320);
-        intent.putExtra("return-data", true);
-        ((Activity)context).startActivityForResult(intent, RESULT_REQUEST_CODE);
-    }
+   public static void startPhotoZoom(Uri uri,Activity mActivity) {
+       Intent intent = new Intent("com.android.camera.action.CROP");
+       intent.setDataAndType(uri, "image/*");
+       // 设置裁剪
+       intent.putExtra("crop", "true");
+       // aspectX aspectY 是宽高的比例
+       intent.putExtra("aspectX", 1);
+       intent.putExtra("aspectY", 1);
+       // outputX outputY 是裁剪图片宽高
+       intent.putExtra("outputX", 320);
+       intent.putExtra("outputY", 320);
+//        intent.putExtra("return-data", true);
+       /**
+        * 此方法返回的图片只能是小图片（sumsang测试为高宽160px的图片）
+        * 故只保存图片Uri，调用时将Uri转换为Bitmap，此方法还可解决miui系统不能return data的问题
+        */
+       //裁剪后的图片Uri路径，uritempFile为Uri类变量
+       uritempFile =Uri.parse("file://" + "/" +  Constants.LOCAL_PATH + "/" + System.currentTimeMillis()+"move.png");
+       intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
+       mActivity.startActivityForResult(intent, PicUtil.CODE_CROP_PIC);
+   }
+
     /**
-     * 保存裁剪之后的图片数据
+     * 获取sd卡
      *
-     * @param
+     * @return
      */
-    @SuppressWarnings("deprecation")
-    public static void getImageToView(Intent data) {
-        Bundle extras = data.getExtras();
-        LogUtil.w("data:"+data);
-        if (extras != null) {
-            Bitmap photo = extras.getParcelable("data");
+    public static String getSDCardPath() {
+        String cmd = "cat /proc/mounts";
+        Runtime run = Runtime.getRuntime();// 返回与当前 Java 应用程序相关的运行时对象
+        BufferedInputStream in = null;
+        BufferedReader inBr = null;
+        try {
+            Process p = run.exec(cmd);// 启动另一个进程来执行命令
+            in = new BufferedInputStream(p.getInputStream());
+            inBr = new BufferedReader(new InputStreamReader(in));
+
+            String lineStr;
+            while ((lineStr = inBr.readLine()) != null) {
+                // 获得命令执行后在控制台的输出信息
+                if (lineStr.contains("sdcard")
+                        && lineStr.contains(".android_secure")) {
+                    String[] strArray = lineStr.split(" ");
+                    if (strArray != null && strArray.length >= 5) {
+                        String result = strArray[1].replace("/.android_secure",
+                                "");
+                        return result;
+                    }
+                }
+                // 检查命令是否执行失败。
+                if (p.waitFor() != 0 && p.exitValue() == 1) {
+                    // p.exitValue()==0表示正常结束，1：非正常结束
+                    Log.e("getSDCardPath", "命令执行失败!");
+                }
+            }
+        } catch (Exception e) {
+            Log.e("getSDCardPath", e.toString());
+            return Environment.getExternalStorageDirectory().getPath();
+        } finally {
             try {
-                saveBitmap(photo, USER_NEME + ".jpg");
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (inBr != null) {
+                    inBr.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        return Environment.getExternalStorageDirectory().getPath();
     }
-    /**
-     * 将剪切后的图片存储到本地
-     *
-     * @param bitmap
-     * @param bitName
-     * @throws IOException
-     */
-    public static void saveBitmap(Bitmap bitmap, String bitName) throws IOException {
-        String path = ImageUtils.saveBitmap(bitmap, Constants.LOCAL_PATH, bitName);
-        String BasePath = ImageUtils.getImageBase64(path);
-        loadDataImage(BasePath);
-    }
-    /**
-     * 上传头像
-     *
-     * @param imgdata
-     */
-    private static void loadDataImage(final String imgdata) {
-        //UPLOAD_USER_ICON
-        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY,"");
-        JSONObject node = new JSONObject();
-        try {
-            node.put("token", token);
-            node.put("imgdata", imgdata);
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+    // 判断时候有SD卡
+    public static boolean isEnvironment(Context context) {
+
+        String sdState = Environment.getExternalStorageState();
+        if (!sdState.equals(Environment.MEDIA_MOUNTED)) {
+            Toast.makeText(context, "请检查SD卡是否安装", Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
         }
-        RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.UPLOAD_USER_ICON)
-                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
-                .addQuery("sign", MD5.Md5(node.toString()))
-                .build();
-        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
-            @Override
-            public void onCompleted(String str) {
-
-            }
-
-            @Override
-            public void onError(String message) {
-            }
-        });
-
     }
-    /**
-     * 检查是否存在SDCard
-     *
-     * @return
-     */
-    public static boolean hasSdcard() {
-        String state = Environment.getExternalStorageState();
-        return state.equals(Environment.MEDIA_MOUNTED);
-    }
-
 
 }

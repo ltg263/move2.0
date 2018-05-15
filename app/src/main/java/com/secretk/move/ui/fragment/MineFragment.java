@@ -1,7 +1,6 @@
 package com.secretk.move.ui.fragment;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -128,7 +127,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
         tvBalance.setText(String.valueOf(infos.getKffCoinNum()));
     }
 
-    @OnClick({R.id.iv_my_set, R.id.tv_go_login, R.id.tv_go_register, R.id.rl_user_info, R.id.rl_appraisal, R.id.rl_discuss, R.id.rl_essay, R.id.ll_check_details, R.id.ll_my_attention, R.id.ll_my_collect, R.id.ll_my_recommend, R.id.ll_my_about, R.id.ll_my_feedback})
+    @OnClick({R.id.btn,R.id.iv_my_set, R.id.tv_go_login, R.id.tv_go_register, R.id.rl_user_info, R.id.rl_appraisal, R.id.rl_discuss, R.id.rl_essay, R.id.ll_check_details, R.id.ll_my_attention, R.id.ll_my_collect, R.id.ll_my_recommend, R.id.ll_my_about, R.id.ll_my_feedback})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_my_set:
@@ -163,6 +162,11 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
             case R.id.ll_my_about:
                 break;
             case R.id.ll_my_feedback:
+                break;
+            case R.id.btn:
+                sharedUtils.clear();
+                IntentUtil.startActivity(LoginHomeActivity.class);
+                getActivity().finish();
                 break;
         }
     }
