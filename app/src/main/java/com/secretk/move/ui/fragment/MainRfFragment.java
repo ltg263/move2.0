@@ -13,6 +13,7 @@ import com.secretk.move.customview.ProgressWheel;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.presenter.impl.MainRfPresenterImpl;
 import com.secretk.move.ui.adapter.MainRfFragmentRecyclerAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.ToastUtils;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class MainRfFragment extends LazyFragment implements ItemClickListener, M
     private MainRfFragmentRecyclerAdapter adapter;
     MainRfContract.Presenter presenter;
     private int current_position;
+
     public static MainRfFragment newInstance(int position) {
         Bundle args = new Bundle();
         MainRfFragment fragment = new MainRfFragment();
@@ -39,6 +41,7 @@ public class MainRfFragment extends LazyFragment implements ItemClickListener, M
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public int setFragmentView() {
         return R.layout.fragment_main_rf;
@@ -71,25 +74,25 @@ public class MainRfFragment extends LazyFragment implements ItemClickListener, M
     @Override
     public void onFirstUserVisible() {
         current_position = getArguments().getInt("position");
-        presenter = new MainRfPresenterImpl(this,current_position);
+        presenter = new MainRfPresenterImpl(this, current_position);
         presenter.loadingHead();
 
     }
 
     @Override
     public void onItemClick(android.view.View view, int postion) {
-
-     switch (view.getId()){
-         case R.id.img_organization:
-             ToastUtils.getInstance().show("img_organization");
-             break;
-         case R.id.tvIsFollw:
-             ToastUtils.getInstance().show("tvIsFollw");
-             break;
-             default:
-                 ToastUtils.getInstance().show("default");
-                 break;
-     }
+        MainRfBean.Rows data = adapter.getDataIndex(postion);
+        switch (view.getId()) {
+            case R.id.img_organization:
+                IntentUtil.startProjectActivity(data.getProjectId());
+                break;
+            case R.id.tvIsFollw:
+                ToastUtils.getInstance().show("tvIsFollw");
+                break;
+            default:
+                IntentUtil.startHomeActivity(data.getCreateUserId());
+                break;
+        }
     }
 
     @Override

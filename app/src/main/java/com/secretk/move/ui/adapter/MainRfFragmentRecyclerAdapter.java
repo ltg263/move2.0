@@ -12,6 +12,7 @@ import com.secretk.move.bean.MainRfBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.holder.MainRfFragmentRecyclerHolder;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.UiUtils;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFr
 
         GlideUtils.loadCircleUrl(holder.img_organization, Constants.BASE_IMG_URL + bean.getProjectIcon());
         holder.tvName.setText(bean.getProjectChineseName());
-        holder.tvTime.setText(bean.getCreateTime());
+        holder.tvTime.setText(StringUtil.getTimeToM(bean.getCreateTime()));
         holder.tvIsFollw.setVisibility(View.VISIBLE);
         if (0 == bean.getFollowStatus()) {
             holder.tvIsFollw.setText("+ 关注");
@@ -101,6 +102,9 @@ public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFr
         if (list == null) return;
         list.addAll(data);
         notifyDataSetChanged();
+    }
+    public MainRfBean.Rows getDataIndex(int position){
+        return list.get(position);
     }
 
 }

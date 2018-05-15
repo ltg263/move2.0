@@ -32,11 +32,11 @@ public class ImgExtraHorizontalAdapter extends RecyclerView.Adapter {
 
 
     private ImgExtraHorizontalHolder horizontalHolder;
-    private Context mContext;
 
+    private Context mContext;
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        mContext = parent.getContext();
+        mContext=parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.imgextra_horizontal_item, parent, false);
         horizontalHolder = new ImgExtraHorizontalHolder(view);
         return horizontalHolder;
@@ -52,8 +52,7 @@ public class ImgExtraHorizontalAdapter extends RecyclerView.Adapter {
         params.height = UiUtils.getNewsPicSize()[1];
         img.setLayoutParams(params);
         img.setPadding(0, 0, UiUtils.dip2px(5), 0);
-        GlideUtils.loadImage(img,str);
-
+        GlideUtils.loadImage(mContext,img, str);
     }
 
     @Override

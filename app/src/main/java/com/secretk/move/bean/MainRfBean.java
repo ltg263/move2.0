@@ -206,7 +206,16 @@ public class MainRfBean extends BaseRes {
 
     public static class Rows {
         int followStatus;
-        String projectId;
+
+        public int getProjectId() {
+            return projectId;
+        }
+
+        public void setProjectId(int projectId) {
+            this.projectId = projectId;
+        }
+
+        int projectId;
         String postId;
         String postType;
         String projectIcon;
@@ -219,7 +228,25 @@ public class MainRfBean extends BaseRes {
         int praiseNum;
         int commentsNum;
         String createUserName;
-        String createTime;
+
+        public int getCreateUserId() {
+            return createUserId;
+        }
+
+        public void setCreateUserId(int createUserId) {
+            this.createUserId = createUserId;
+        }
+
+        int createUserId;
+        public long getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(long createTime) {
+            this.createTime = createTime;
+        }
+
+        long createTime;
         String totalScore;
         List<PostSmallImagesList> postSmallImagesList;
         public List<PostSmallImagesList> getPostSmallImagesList() {
@@ -250,13 +277,7 @@ public class MainRfBean extends BaseRes {
             this.followStatus = followStatus;
         }
 
-        public String getProjectId() {
-            return projectId;
-        }
 
-        public void setProjectId(String projectId) {
-            this.projectId = projectId;
-        }
 
         public String getPostId() {
             return postId;
@@ -354,13 +375,7 @@ public class MainRfBean extends BaseRes {
             this.createUserName = createUserName;
         }
 
-        public String getCreateTime() {
-            return createTime;
-        }
 
-        public void setCreateTime(String createTime) {
-            this.createTime = createTime;
-        }
 
         public String getTotalScore() {
             return totalScore;
@@ -370,7 +385,7 @@ public class MainRfBean extends BaseRes {
             this.totalScore = totalScore;
         }
 
-        //Todo 缩略图先不加
+
     }
 
     public static class PostSmallImagesList {
