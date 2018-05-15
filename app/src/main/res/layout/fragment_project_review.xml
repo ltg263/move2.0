@@ -95,11 +95,6 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_12" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
-                    android:background="@color/cut_off_rule" />
-
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_review"
                     android:layout_width="match_parent"
