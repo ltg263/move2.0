@@ -106,7 +106,7 @@ public class DetailsReviewBean {
             private double totalScore;
             private String professionalEvaDetail;
             private String evauationContent;
-            private Object evaluationTags;
+            private String evaluationTags;
             private int status;
             private long createTime;
             private String createTimeStr;
@@ -239,11 +239,11 @@ public class DetailsReviewBean {
                 this.evauationContent = evauationContent;
             }
 
-            public Object getEvaluationTags() {
+            public String getEvaluationTags() {
                 return evaluationTags;
             }
 
-            public void setEvaluationTags(Object evaluationTags) {
+            public void setEvaluationTags(String evaluationTags) {
                 this.evaluationTags = evaluationTags;
             }
 

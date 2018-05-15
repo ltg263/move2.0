@@ -101,9 +101,9 @@
 
     <LinearLayout
         android:id="@+id/ll_details"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -140,11 +140,11 @@
                 android:id="@+id/iv_file_name"
                 android:layout_width="match_parent"
                 android:layout_height="187dp"
-                android:scaleType="centerCrop"
-                android:visibility="visible"
                 android:layout_below="@+id/tv_post_short_desc"
                 android:layout_marginBottom="@dimen/dp_5"
-                android:layout_marginTop="@dimen/dp_2" />
+                android:layout_marginTop="@dimen/dp_2"
+                android:scaleType="centerCrop"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/ll_multi_img"
@@ -159,8 +159,8 @@
                     android:id="@+id/iv_ont"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:scaleType="fitXY" />
 
                 <View
                     android:layout_width="@dimen/dp_5"
@@ -170,8 +170,8 @@
                     android:id="@+id/iv_two"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="centerCrop"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop" />
 
                 <View
                     android:layout_width="@dimen/dp_5"
@@ -181,8 +181,8 @@
                     android:id="@+id/iv_three"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="centerCrop"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop" />
             </LinearLayout>
 
         </RelativeLayout>

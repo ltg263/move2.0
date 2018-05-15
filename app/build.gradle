@@ -98,4 +98,5 @@ dependencies {
     implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
     //recyclerview
     implementation 'com.jcodecraeer:xrecyclerview:1.2.7'
+    implementation 'com.nex3z:flow-layout:1.0.0'
 }

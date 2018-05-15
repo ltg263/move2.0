@@ -168,17 +168,13 @@
                     <!--项目介绍結束-->
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_1"
-                        android:background="@color/cut_off_rule" />
-
-                    <TextView
-                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/dp_10"
                         android:layout_marginHorizontal="@dimen/dp_10"
                         android:background="@color/background_gray"
                         android:padding="@dimen/dp_10"
                         android:text="这个项目非常值得投资，但是涨幅不会超过十倍，还是有很大风险的，打假要注意防范。"
+                        android:textColor="@color/title_gray_66"
                         android:visibility="visible" />
 
                 </LinearLayout>
@@ -192,7 +188,8 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv_img"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/tv_post_short_desc"
@@ -209,30 +206,28 @@
                     android:layout_height="@dimen/dp_line"
                     android:background="@color/cut_off_rule" />
 
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:padding="@dimen/dp_10">
 
-                    <TextView
-                        android:id="@+id/tv_project_code"
-                        android:layout_width="wrap_content"
+                    <com.nex3z.flowlayout.FlowLayout
+                        android:id="@+id/fl_evaluation_tags"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/garden_crack"
-                        android:paddingLeft="@dimen/dp_10"
-                        android:paddingRight="@dimen/dp_10"
-                        android:textColor="#3b88f6"
-                        android:textSize="@dimen/sp_15"
-                        android:visibility="visible" />
+                        app:flChildSpacing="7dp"
+                        app:flRowSpacing="8dp">
+
+                    </com.nex3z.flowlayout.FlowLayout>
 
 
                     <TextView
                         android:id="@+id/tv_create_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="right"
+                        android:layout_gravity="right"
                         android:textColor="@color/title_gray_66"
                         android:textSize="@dimen/sp_12" />
 

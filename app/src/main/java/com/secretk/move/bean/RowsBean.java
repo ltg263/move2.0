@@ -8,7 +8,7 @@ import java.util.List;
  * 邮箱；ltg263@126.com
  * 描述：
  */
-public class  RowsBean extends CommonListBase{
+public class RowsBean extends CommonListBase {
 
     /**
      * followStatus : 2
@@ -39,7 +39,6 @@ public class  RowsBean extends CommonListBase{
      * updateTimeStr : 2018-05-06 23:08:20
      * status : 1
      */
-
     private int followStatus;
     private int postId;
     private int projectId;
@@ -68,6 +67,71 @@ public class  RowsBean extends CommonListBase{
     private int status;
     private List<PostSmallImagesListBean> postSmallImagesList;
     private String postSmallImages;
+
+    /**
+     * discussId
+     * disscussContents
+     * <p>
+     * evaluationId
+     * evaluationTags
+     * evauationContent
+     * tagInfos [{"tagId":1,"tagName":"进度讨论"},{"tagId":3,"tagName":"项目前景讨论"},{"tagId":4,"tagName":"打假"}]
+     */
+    private int discussId;
+    private String disscussContents;
+
+    private int valuationId;
+    private String evaluationTags;
+    private String evauationContent;
+    private String tagInfos;
+
+    public void setTagInfos(String tagInfos) {
+        this.tagInfos = tagInfos;
+    }
+
+    public String getTagInfos() {
+        return tagInfos;
+    }
+
+    public int getDiscussId() {
+        return discussId;
+    }
+
+    public void setDiscussId(int discussId) {
+        this.discussId = discussId;
+    }
+
+    public String getDisscussContents() {
+        return disscussContents;
+    }
+
+    public void setDisscussContents(String disscussContents) {
+        this.disscussContents = disscussContents;
+    }
+
+    public int getValuationId() {
+        return valuationId;
+    }
+
+    public void setValuationId(int valuationId) {
+        this.valuationId = valuationId;
+    }
+
+    public String getEvaluationTags() {
+        return evaluationTags;
+    }
+
+    public void setEvaluationTags(String evaluationTags) {
+        this.evaluationTags = evaluationTags;
+    }
+
+    public String getEvauationContent() {
+        return evauationContent;
+    }
+
+    public void setEvauationContent(String evauationContent) {
+        this.evauationContent = evauationContent;
+    }
 
     public int getFollowStatus() {
         return followStatus;

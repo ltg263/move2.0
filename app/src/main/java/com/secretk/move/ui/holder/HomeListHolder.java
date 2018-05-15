@@ -14,10 +14,12 @@ import com.secretk.move.bean.RowsBean;
 import com.secretk.move.ui.activity.DetailsArticleActivity;
 import com.secretk.move.ui.activity.DetailsDiscussActivity;
 import com.secretk.move.ui.activity.DetailsReviewAllActivity;
-import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.StringUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.List;
 
@@ -85,9 +87,7 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
 
     public void refresh(final int position, List<RowsBean> lists , Context context) {
         final RowsBean rowsBean = lists.get(position);
-//        GlideUtils.loadCircle(imgHead, R.drawable.account_portrait);
         GlideUtils.loadCircleUrl(ivCreateUserIcon, Constants.BASE_IMG_URL+rowsBean.getProjectIcon());
-       // tvCreateUserName.setText(rowsBean.getCreateUserName());
         tvCreateUserName.setText(rowsBean.getProjectChineseName());
         tvEnglishName.setText("/"+rowsBean.getProjectCode());
         tvCreateTime.setText(StringUtil.getTimeToM(rowsBean.getCreateTime()));
@@ -96,12 +96,25 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
         tvPostShortDesc.setText(rowsBean.getPostShortDesc());
         tvPraiseNum.setText(String.valueOf(rowsBean.getPraiseNum()));
         tvCommentsNum.setText(String.valueOf(rowsBean.getCollectNum()));
+        String tagInfos = rowsBean.getEvaluationTags();
+        String tagName = "";
+        if(StringUtil.isNotBlank(tagInfos)){
+            try {
+                JSONArray array = new JSONArray(tagInfos);
+                if(array.length()>0){
+                    tagName = array.getJSONObject(0).getString("tagName");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
         switch (rowsBean.getPostType()){//帖子类型，数字，帖子类型：1-评测；2-讨论；3-文章
             case 1:
                 tvTotalScore.setVisibility(View.VISIBLE);//分数
                 tvFollowStatus.setVisibility(View.GONE);//关注
                 rlDiscuss.setVisibility(View.GONE);//发表
-                tvCrackDown.setVisibility(View.GONE);//打假
+                tvCrackDown.setVisibility(View.VISIBLE);//标签
+                tvCrackDown.setText(tagName);
                 break;
             case 2:
                 tvTotalScore.setVisibility(View.GONE);
@@ -117,11 +130,11 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
                 break;
         }
         if(rowsBean.getFollowStatus()==1){ //关注状态  "//0 未关注；1-已关注；2-不显示关注按钮"
-            tvFollowStatus.setText("已关注");
+            tvFollowStatus.setText(context.getString(R.string.follow_status_1));
             tvPraiseNum.setSelected(true);
             ivAssist.setSelected(true);
         }else if(rowsBean.getFollowStatus()==0){
-            tvFollowStatus.setText("+关注");
+            tvFollowStatus.setText(context.getString(R.string.follow_status_0));
             tvPraiseNum.setSelected(false);
             ivAssist.setSelected(false);
         }else{

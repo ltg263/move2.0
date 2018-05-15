@@ -2,30 +2,26 @@ package com.secretk.move.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nex3z.flowlayout.FlowLayout;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.DetailsArticleBean;
 import com.secretk.move.bean.DetailsReviewBean;
-import com.secretk.move.bean.HomeReviewBase;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.PostDataInfo;
-import com.secretk.move.bean.ProjectHomeBean;
-import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -44,7 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -84,8 +79,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
     RecyclerView rvImg;
     @BindView(R.id.tv_post_short_desc)
     TextView tvPostShortDesc;
-    @BindView(R.id.tv_project_code)
-    TextView tvProjectCode;
+    @BindView(R.id.fl_evaluation_tags)
+    FlowLayout flEvaluationTags;
     @BindView(R.id.tv_create_time)
     TextView tvCreateTime;
     @BindView(R.id.pile_layout)
@@ -181,7 +176,6 @@ public class DetailsReviewAllActivity extends BaseActivity {
             tvFollowStatus.setVisibility(View.GONE);
         }
         tvPostShortDesc.setText(evaluationDetail.getPostShortDesc());
-        tvProjectCode.setText(evaluationDetail.getProjectCode());
         tvCreateTime.setText(StringUtil.getTimeToM(evaluationDetail.getCreateTime()));
         tvDonateNum.setText(evaluationDetail.getDonateNum()+getString(R.string.sponsor_num));
         tvPraiseStatus.setText(getString(R.string.like)+ String.valueOf(evaluationDetail.getPraiseNum()));
@@ -210,6 +204,19 @@ public class DetailsReviewAllActivity extends BaseActivity {
             e.printStackTrace();
         }
 
+        String evaluationTags = evaluationDetail.getEvaluationTags();
+        if(StringUtil.isNotBlank(evaluationTags)){
+            try {
+                JSONArray array = new JSONArray(evaluationTags);
+                for(int i = 0;i<array.length();i++){
+                    String tagName = array.getJSONObject(i).getString("tagName");
+                    TextView tv = buildLabel(tagName);
+                    flEvaluationTags.addView(tv);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
         List<PostDataInfo> lists = new ArrayList<>();
         try {
             JSONArray images = new JSONArray(evaluationDetail.getPostSmallImages());
@@ -366,5 +373,25 @@ public class DetailsReviewAllActivity extends BaseActivity {
 
             }
         });
+    }
+    private TextView buildLabel(final String text) {
+        TextView textView = new TextView(this);
+        textView.setText(text);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        textView.setTextColor(getResources().getColor(R.color.app_background));
+        textView.setPadding((int) dpToPx(5), (int) dpToPx(3), (int) dpToPx(5), (int) dpToPx(3));
+        textView.setBackgroundResource(R.drawable.garden_crack);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.getInstance().show("dinada");
+            }
+        });
+        return textView;
+    }
+
+    private float dpToPx(float dp) {
+        return TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }
 }
