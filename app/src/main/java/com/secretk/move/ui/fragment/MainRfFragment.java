@@ -91,6 +91,7 @@ public class MainRfFragment extends LazyFragment implements ItemClickListener, M
 
                 break;
             case R.id.ll_user:
+            case R.id.ll_user2:
                 IntentUtil.startHomeActivity(data.getCreateUserId());
                 break;
             default:

@@ -22,6 +22,7 @@ import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.TimeUtils;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
 
@@ -71,6 +72,21 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.tvUserDynamic)
     TextView tvUserDynamic;
 
+
+    @BindView(R.id.rl_follow)
+    RelativeLayout rl_follow;
+    @BindView(R.id.ll_user2)
+    LinearLayout ll_user2;
+    @BindView(R.id.img_user_head2)
+    public ImageView img_user_head2;
+    @BindView(R.id.tvUser2)
+    public TextView tvUser2;
+    @BindView(R.id.tvUserDynamic2)
+    public TextView tvUserDynamic2;
+    @BindView(R.id.tv_release_time)
+    public TextView tv_release_time;
+
+
     /**
      * 横向多张图的adapter
      */
@@ -81,6 +97,9 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
      * 横向多张图layoutManager参数设置
      */
     private LinearLayoutManager layoutManagerImgExtra;
+
+
+
     String token = SharedUtils.singleton().get("token", "");
     public MainRfFragmentRecyclerHolder(View itemView) {
         super(itemView);
@@ -90,9 +109,18 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tv_english_name.setOnClickListener(this);
         tvTime.setOnClickListener(this);
         ll_user.setOnClickListener(this);
+        ll_user2.setOnClickListener(this);
     }
     public  void  setData(final MainRfBean.Rows bean){
         GlideUtils.loadCircleUrl(img_organization, Constants.BASE_IMG_URL + bean.getProjectIcon());
+        switch (type){
+            case 0:
+                showRecommend(bean);
+                break;
+            case 1:
+                showFollow(bean);
+                break;
+        }
         tvName.setText(bean.getProjectChineseName());
         tv_english_name.setText("/"+bean.getProjectEnglishName());
         tvTime.setText(StringUtil.getTimeToM(bean.getCreateTime()));
@@ -107,12 +135,8 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvTitle.setText(bean.getPostTitle());
         tvScore.setText(bean.getTotalScore()+"分");
         tvDesc.setText(bean.getPostShortDesc());
-
-        GlideUtils.loadCircleUrl(img_user_head, Constants.BASE_IMG_URL + bean.getCreateUserIcon());
-        tvUser.setText(bean.getCreateUserName());
         tvPraise.setText(bean.getPraiseNum() + "");
         tvComments.setText(bean.getCommentsNum() + "");
-
         if (ry_horizontal.getAdapter()==null){
             imgExtraHorizontalAdapter = new ImgExtraHorizontalAdapter();
             //设置成横向
@@ -134,18 +158,7 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 }
             }
         });
-       switch (bean.getPostType()){
 
-           case 1:
-               tvUserDynamic.setText("发表了评测");
-               break;
-           case 2:
-               tvUserDynamic.setText("发表了讨论");
-               break;
-           case 3:
-               tvUserDynamic.setText("发表了文章");
-               break;
-       }
     }
     public void http(String url,int id) {
         JSONObject node = new JSONObject();
@@ -185,5 +198,43 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     private int type;
     public void setAdapterType(int type) {
         this.type=type;
+    }
+
+    public void showRecommend(MainRfBean.Rows bean){
+        rl_follow.setVisibility(View.GONE);
+        ll_user.setVisibility(View.VISIBLE);
+        GlideUtils.loadCircleUrl(img_user_head, Constants.BASE_IMG_URL + bean.getCreateUserIcon());
+        tvUser.setText(bean.getCreateUserName());
+        switch (bean.getPostType()){
+            case 1:
+                tvUserDynamic.setText("发表了评测");
+                break;
+            case 2:
+                tvUserDynamic.setText("发表了讨论");
+                break;
+            case 3:
+                tvUserDynamic.setText("发表了文章");
+                break;
+        }
+    }
+
+    public void showFollow(MainRfBean.Rows bean){
+        rl_follow.setVisibility(View.VISIBLE);
+        ll_user.setVisibility(View.GONE);
+        GlideUtils.loadCircleUrl(img_user_head2, Constants.BASE_IMG_URL + bean.getCreateUserIcon());
+        tvUser2.setText(bean.getCreateUserName());
+        switch (bean.getPostType()){
+            case 1:
+                tvUserDynamic2.setText("发表了评测");
+                break;
+            case 2:
+                tvUserDynamic2.setText("发表了讨论");
+                break;
+            case 3:
+                tvUserDynamic2.setText("发表了文章");
+                break;
+        }
+        String time= TimeUtils.getChatTime(bean.getCreateTime());
+        tv_release_time.setText(time);
     }
 }
