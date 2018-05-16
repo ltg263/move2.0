@@ -40,7 +40,7 @@ public class MainBlueSkyFragmentRecyclerAdapter extends RecyclerView.Adapter<Mai
     public void onBindViewHolder(MainBlueSkyFragmentHolder holder, int position) {
         holder.setItemListener(mListener);
         BlueSkyBean.RankList  bean=list.get(position);
-        holder.setData(bean);
+        holder.setData(bean,position);
     }
 
     @Override

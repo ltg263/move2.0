@@ -41,13 +41,21 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
     public   TextView  tv_follow;
     @BindView(R.id.tvIsFollw)
     public   TextView  tvIsFollw;
+
+    @BindView(R.id.tv_order)
+    public   TextView  tv_order;
+    @BindView(R.id.img_order)
+    public ImageView img_order;
+
     String token = SharedUtils.singleton().get("token", "");
+
+
     public MainBlueSkyFragmentHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         tvIsFollw.setOnClickListener(this);
     }
-    public  void  setData(final BlueSkyBean.RankList bean){
+    public  void  setData(final BlueSkyBean.RankList bean,int position){
         GlideUtils.loadCircleUrl(img_head, Constants.BASE_IMG_URL+bean.getProjectIcon());
         tv_name.setText(bean.getProjectChineseName());
         tv_content.setText(bean.getProjectSignature());
@@ -68,6 +76,28 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
                 }
             }
         });
+      switch (position){
+          case 0:
+              tv_order.setVisibility(View.INVISIBLE);
+              img_order.setVisibility(View.VISIBLE);
+              img_order.setBackgroundResource(R.drawable.topic_one);
+              break;
+          case 1:
+              tv_order.setVisibility(View.INVISIBLE);
+              img_order.setVisibility(View.VISIBLE);
+              img_order.setBackgroundResource(R.drawable.topic_two);
+              break;
+          case 2:
+              tv_order.setVisibility(View.INVISIBLE);
+              img_order.setVisibility(View.VISIBLE);
+              img_order.setBackgroundResource(R.drawable.topic_three);
+              break;
+              default:
+                  img_order.setVisibility(View.INVISIBLE);
+                  tv_order.setVisibility(View.VISIBLE);
+                  tv_order.setText(position+"");
+                  break;
+      }
     }
     public void http(String url,int id) {
         JSONObject node = new JSONObject();

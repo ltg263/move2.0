@@ -3,6 +3,7 @@ package com.secretk.move.ui.fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -37,6 +38,8 @@ public class MainBlueSkyFragment extends LazyFragment implements ItemClickListen
     RecyclerView recycler;
     @BindView(R.id.progress_bar)
     ProgressWheel progress_bar;
+    @BindView(R.id.rl_title)
+    RelativeLayout rl_title;
     private LinearLayoutManager layoutManager;
     private MainBlueSkyFragmentRecyclerAdapter adapter;
 
@@ -74,6 +77,7 @@ public class MainBlueSkyFragment extends LazyFragment implements ItemClickListen
             @Override
             public void onCompleted(BlueSkyBean bean) {
                 List<BlueSkyBean.RankList> list = bean.getData().getRankList();
+                rl_title.setVisibility(View.VISIBLE);
                 adapter.setData(list);
                 progress_bar.setVisibility(View.GONE);
             }
