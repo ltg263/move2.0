@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#000"
     android:orientation="vertical">
 
 
@@ -91,7 +92,7 @@
         <com.secretk.move.customview.NoDispatchTouchRecyclerView
             android:layout_below="@+id/tvDesc"
             android:layout_marginBottom="@dimen/dp_5"
-            android:layout_marginTop="@dimen/dp_2"
+            android:layout_marginTop="@dimen/dp_5"
             android:id="@+id/ry_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -99,7 +100,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_2"
+        android:layout_height="@dimen/dp_line"
         android:background="#dddddd" />
 
     <RelativeLayout

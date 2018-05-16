@@ -48,8 +48,13 @@ public class ImgExtraHorizontalAdapter extends RecyclerView.Adapter {
         String str = Constants.BASE_IMG_URL + list.get(position).getFileUrl();
         ImageView img = horizontalHolder.img_extra;
         ViewGroup.LayoutParams params = img.getLayoutParams();
-        params.width = UiUtils.getNewsPicSize()[0];
-        params.height = UiUtils.getNewsPicSize()[1];
+        if (list.size()==1){
+            params.width = UiUtils.getNewsPicBrowSize()[0];
+            params.height = 187;
+        }else {
+            params.width = UiUtils.getNewsPicSize()[0];
+            params.height = UiUtils.getNewsPicSize()[1];
+        }
         img.setLayoutParams(params);
         img.setPadding(0, 0, UiUtils.dip2px(5), 0);
         GlideUtils.loadImage(mContext,img, str);

@@ -63,7 +63,7 @@ public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFr
             holder.tvIsFollw.setVisibility(View.GONE);
         }
         holder.tvTitle.setText(bean.getPostTitle());
-        holder.tvScore.setText(bean.getTotalScore());
+        holder.tvScore.setText(bean.getTotalScore()+"分");
         holder.tvDesc.setText(bean.getPostShortDesc());
 
         GlideUtils.loadCircleUrl(holder.img_user_head, Constants.BASE_IMG_URL + bean.getCreateUserIcon());
