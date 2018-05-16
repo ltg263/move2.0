@@ -182,4 +182,8 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     public String getString(){
         return tvIsFollw.getText().toString();
     }
+    private int type;
+    public void setAdapterType(int type) {
+        this.type=type;
+    }
 }
