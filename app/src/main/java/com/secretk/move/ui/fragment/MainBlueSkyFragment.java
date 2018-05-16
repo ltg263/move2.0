@@ -14,6 +14,7 @@ import com.secretk.move.bean.BlueSkyBean;
 import com.secretk.move.customview.ProgressWheel;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.MainBlueSkyFragmentRecyclerAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -81,14 +82,8 @@ public class MainBlueSkyFragment extends LazyFragment implements ItemClickListen
 
     @Override
     public void onItemClick(View view, int postion) {
-        switch (view.getId()) {
-            case R.id.tvIsFollw:
-
-                break;
-                default:
-                    ToastUtils.getInstance().show("default");
-                     break;
-        }
+        BlueSkyBean.RankList bean=  adapter.getDataIndex(postion);
+        IntentUtil.startProjectActivity(bean.getProjectId());
     }
 
     @Override

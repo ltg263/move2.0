@@ -74,6 +74,7 @@ public class MainRfFragment extends LazyFragment implements ItemClickListener, M
     @Override
     public void onFirstUserVisible() {
         current_position = getArguments().getInt("position");
+        adapter.setAdapterType(current_position);
         presenter = new MainRfPresenterImpl(this, current_position);
         presenter.loadingHead();
 
@@ -87,7 +88,7 @@ public class MainRfFragment extends LazyFragment implements ItemClickListener, M
             case R.id.tvName:
             case R.id.tv_english_name:
             case R.id.tvTime:
-                IntentUtil.startProjectActivity(data.getProjectId());
+
                 break;
             case R.id.ll_user:
                 IntentUtil.startHomeActivity(data.getCreateUserId());
