@@ -83,7 +83,7 @@ public class MainBlueSkyFragment extends LazyFragment implements ItemClickListen
     public void onItemClick(View view, int postion) {
         switch (view.getId()) {
             case R.id.tvIsFollw:
-                ToastUtils.getInstance().show("关注");
+
                 break;
                 default:
                     ToastUtils.getInstance().show("default");

@@ -7,13 +7,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
+import com.secretk.move.apiService.HttpCallBackImpl;
+import com.secretk.move.apiService.RetrofitUtil;
+import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MainRfBean;
+import com.secretk.move.bean.base.BaseRes;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.holder.MainRfFragmentRecyclerHolder;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.MD5;
+import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.UiUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,16 +35,7 @@ import java.util.List;
 public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFragmentRecyclerHolder> {
     private List<MainRfBean.Rows> list = new ArrayList<MainRfBean.Rows>();
     private ItemClickListener mListener;
-    /**
-     * 横向多张图的adapter
-     */
-    public ImgExtraHorizontalAdapter imgExtraHorizontalAdapter;
 
-
-    /**
-     * 横向多张图layoutManager参数设置
-     */
-    private LinearLayoutManager layoutManagerImgExtra;
     public void setItemListener(ItemClickListener mListener) {
         this.mListener = mListener;
     }
@@ -51,35 +52,8 @@ public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFr
         holder.setItemListener(mListener);
         MainRfBean.Rows bean = list.get(position);
 
-        GlideUtils.loadCircleUrl(holder.img_organization, Constants.BASE_IMG_URL + bean.getProjectIcon());
-        holder.tvName.setText(bean.getProjectChineseName());
-        holder.tvTime.setText(StringUtil.getTimeToM(bean.getCreateTime()));
-        holder.tvIsFollw.setVisibility(View.VISIBLE);
-        if (0 == bean.getFollowStatus()) {
-            holder.tvIsFollw.setText("+ 关注");
-        } else if (1 == bean.getFollowStatus()) {
-            holder.tvIsFollw.setText("已关注");
-        } else {
-            holder.tvIsFollw.setVisibility(View.GONE);
-        }
-        holder.tvTitle.setText(bean.getPostTitle());
-        holder.tvScore.setText(bean.getTotalScore()+"分");
-        holder.tvDesc.setText(bean.getPostShortDesc());
+       holder.setData(bean);
 
-        GlideUtils.loadCircleUrl(holder.img_user_head, Constants.BASE_IMG_URL + bean.getCreateUserIcon());
-        holder.tvUser.setText(bean.getCreateUserName());
-        holder.tvPraise.setText(bean.getPraiseNum() + "");
-        holder.tvComments.setText(bean.getCommentsNum() + "");
-
-        if (holder.ry_horizontal.getAdapter()==null){
-            imgExtraHorizontalAdapter = new ImgExtraHorizontalAdapter();
-            //设置成横向
-            layoutManagerImgExtra = new LinearLayoutManager(UiUtils.getContext());
-            layoutManagerImgExtra.setOrientation(LinearLayoutManager.HORIZONTAL);
-            holder.ry_horizontal.setAdapter(imgExtraHorizontalAdapter);
-            holder.ry_horizontal.setLayoutManager(layoutManagerImgExtra);
-        }
-        imgExtraHorizontalAdapter.setData(bean);
     }
 
     @Override
@@ -106,5 +80,7 @@ public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFr
     public MainRfBean.Rows getDataIndex(int position){
         return list.get(position);
     }
+
+
 
 }

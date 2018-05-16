@@ -26,9 +26,16 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_15"
             android:layout_toRightOf="@id/img_organization"
-            android:text="AOS/柚子"
+            android:text="AOS"
             android:textSize="@dimen/sp_16" />
-
+        <TextView
+            android:id="@+id/tv_english_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tvName"
+            android:layout_toEndOf="@+id/tvName"
+            android:textColor="#aaaaaa"
+            android:textSize="@dimen/sp_14" />
         <TextView
             android:id="@+id/tvTime"
             android:layout_width="wrap_content"
@@ -129,7 +136,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_5"
-                android:text="老猫关注了项目" />
+                android:textSize="@dimen/sp_14"
+                android:text="老猫" />
+            <TextView
+                android:layout_marginLeft="@dimen/dp_5"
+                android:id="@+id/tvUserDynamic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tvName"
+                android:layout_toEndOf="@+id/tvName"
+                android:textColor="#aaaaaa"
+                android:text="关注了项目"
+                android:textSize="@dimen/sp_12" />
         </LinearLayout>
 
         <LinearLayout

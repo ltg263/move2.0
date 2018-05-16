@@ -38,17 +38,8 @@ public class MainBlueSkyFragmentRecyclerAdapter extends RecyclerView.Adapter<Mai
     @Override
     public void onBindViewHolder(MainBlueSkyFragmentHolder holder, int position) {
         holder.setItemListener(mListener);
-        BlueSkyBean.RankList bean=list.get(position);
-        GlideUtils.loadCircleUrl(holder.img_head, Constants.BASE_IMG_URL+bean.getProjectIcon());
-        holder.tv_name.setText(bean.getProjectChineseName());
-        holder.tv_content.setText(bean.getProjectSignature());
-        holder.tv_score.setText(bean.getTotalScore());
-        holder.tv_follow.setText(bean.getFollowerNum());
-        if (bean.getFollowStatus()==0){
-            holder.tvIsFollw.setText("+ 关注");
-        }else {
-            holder.tvIsFollw.setText("已关注");
-        }
+        BlueSkyBean.RankList  bean=list.get(position);
+        holder.setData(bean);
     }
 
     @Override
