@@ -217,7 +217,16 @@ public class MainRfBean extends BaseRes {
 
         int projectId;
         String postId;
-        String postType;
+
+        public int getPostType() {
+            return postType;
+        }
+
+        public void setPostType(int postType) {
+            this.postType = postType;
+        }
+
+        int postType;
         String projectIcon;
         String projectCode;
         String projectEnglishName;
@@ -287,13 +296,7 @@ public class MainRfBean extends BaseRes {
             this.postId = postId;
         }
 
-        public String getPostType() {
-            return postType;
-        }
 
-        public void setPostType(String postType) {
-            this.postType = postType;
-        }
 
         public String getProjectIcon() {
             return projectIcon;

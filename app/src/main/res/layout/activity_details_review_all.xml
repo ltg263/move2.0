@@ -218,9 +218,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:flChildSpacing="7dp"
-                        app:flRowSpacing="8dp">
+                        app:flRowSpacing="8dp"/>
 
-                    </com.nex3z.flowlayout.FlowLayout>
 
 
                     <TextView

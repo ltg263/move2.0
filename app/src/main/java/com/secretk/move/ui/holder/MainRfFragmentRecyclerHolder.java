@@ -2,6 +2,8 @@ package com.secretk.move.ui.holder;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -38,15 +40,19 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     public TextView tvPraise;
     @BindView(R.id.tvComments)
     public TextView tvComments;
-
     @BindView(R.id.ry_horizontal)
     public NoDispatchTouchRecyclerView ry_horizontal;
+
+    @BindView(R.id.rl_project)
+    public RelativeLayout rl_project;
+    @BindView(R.id.ll_user)
+    LinearLayout ll_user;
     public MainRfFragmentRecyclerHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        img_organization.setOnClickListener(this);
+        rl_project.setOnClickListener(this);
         tvIsFollw.setOnClickListener(this);
-
+        ll_user.setOnClickListener(this);
 
     }
 }

@@ -2,8 +2,11 @@ package com.secretk.move.utils;
 
 import android.app.Activity;
 import android.content.Intent;
-
+import com.secretk.move.MoveApplication;
 import com.secretk.move.baseManager.BaseManager;
+import com.secretk.move.ui.activity.DetailsArticleActivity;
+import com.secretk.move.ui.activity.DetailsDiscussActivity;
+import com.secretk.move.ui.activity.DetailsReviewAllActivity;
 import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.activity.ProjectActivity;
 
@@ -123,26 +126,29 @@ public class IntentUtil {
 
     /**
      * 跳转到项目的Activity
+     *
      * @param projectId
      */
-    public static  void startProjectActivity(int projectId){
-        String key[]={"projectId"};
-        String values[]={String.valueOf(projectId)};
-        IntentUtil.startActivity(ProjectActivity.class,key,values);
+    public static void startProjectActivity(int projectId) {
+        String key[] = {"projectId"};
+        String values[] = {String.valueOf(projectId)};
+        IntentUtil.startActivity(ProjectActivity.class, key, values);
     }
+
     /**
      * 跳转到用户的Activity
+     *
      * @param userId
      */
-    public static  void startHomeActivity(int userId){
-        String key[]={"userId"};
-        String values[]={String.valueOf(userId)};
-        IntentUtil.startActivity(HomeActivity.class,key,values);
+    public static void startHomeActivity(int userId) {
+        String key[] = {"userId"};
+        String values[] = {String.valueOf(userId)};
+        IntentUtil.startActivity(HomeActivity.class, key, values);
     }
 
 
-    public static void  showShare(String titile, String url, String context,
-                                  String imagePath) {
+    public static void showShare(String titile, String url, String context,
+                                 String imagePath) {
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
@@ -161,5 +167,28 @@ public class IntentUtil {
 //        oks.setComment("我是测试评论文本");
         // 启动分享GUI
         oks.show(BaseManager.app);
+    }
+
+    public static void go2DetailsByType(int type,String postId) {
+        Intent intent=null;
+        switch (type) {
+            case 1:
+                intent=new Intent(MoveApplication.getContext(), DetailsReviewAllActivity.class);
+                intent.putExtra("postId",postId);
+                startActivity(intent);
+                break;
+            case 2:
+                intent=new Intent(MoveApplication.getContext(), DetailsDiscussActivity.class);
+                intent.putExtra("postId",postId);
+                startActivity(intent);
+                break;
+            case 3:
+                intent=new Intent(MoveApplication.getContext(), DetailsArticleActivity.class);
+                intent.putExtra("postId",postId);
+                startActivity(intent);
+                break;
+                default:
+                    break;
+        }
     }
 }

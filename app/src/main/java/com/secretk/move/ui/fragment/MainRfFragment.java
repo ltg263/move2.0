@@ -83,14 +83,18 @@ public class MainRfFragment extends LazyFragment implements ItemClickListener, M
     public void onItemClick(android.view.View view, int postion) {
         MainRfBean.Rows data = adapter.getDataIndex(postion);
         switch (view.getId()) {
-            case R.id.img_organization:
+            case R.id.rl_project:
                 IntentUtil.startProjectActivity(data.getProjectId());
                 break;
             case R.id.tvIsFollw:
-                ToastUtils.getInstance().show("tvIsFollw");
+                ToastUtils.getInstance().show("关注");
+
+                break;
+            case R.id.ll_user:
+                IntentUtil.startHomeActivity(data.getCreateUserId());
                 break;
             default:
-                IntentUtil.startHomeActivity(data.getCreateUserId());
+                IntentUtil.go2DetailsByType(data.getPostType(),data.getPostId());
                 break;
         }
     }
