@@ -35,7 +35,7 @@ import java.util.List;
 public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFragmentRecyclerHolder> {
     private List<MainRfBean.Rows> list = new ArrayList<MainRfBean.Rows>();
     private ItemClickListener mListener;
-
+    private int type;
     public void setItemListener(ItemClickListener mListener) {
         this.mListener = mListener;
     }
@@ -51,8 +51,8 @@ public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFr
     public void onBindViewHolder(MainRfFragmentRecyclerHolder holder, int position) {
         holder.setItemListener(mListener);
         MainRfBean.Rows bean = list.get(position);
-
-       holder.setData(bean);
+        holder.setAdapterType(type);
+        holder.setData(bean);
 
     }
 
@@ -77,10 +77,13 @@ public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFr
         list.addAll(data);
         notifyDataSetChanged();
     }
-    public MainRfBean.Rows getDataIndex(int position){
+
+    public MainRfBean.Rows getDataIndex(int position) {
         return list.get(position);
     }
 
-
+    public void setAdapterType(int type) {
+        this.type=type;
+    }
 
 }
