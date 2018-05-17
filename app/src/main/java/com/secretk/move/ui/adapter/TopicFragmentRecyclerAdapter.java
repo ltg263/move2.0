@@ -6,10 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
-import com.secretk.move.bean.TopicBean;
+import com.secretk.move.bean.SearchedBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.holder.TopicFragmentRecyclerHolder;
-import com.secretk.move.utils.PatternUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +18,14 @@ import java.util.List;
  */
 
 public class TopicFragmentRecyclerAdapter extends RecyclerView.Adapter<TopicFragmentRecyclerHolder> {
-    private List<TopicBean> list = new ArrayList<TopicBean>();
     private ItemClickListener mListener;
+    private List<SearchedBean.Projects> listNum = new ArrayList<SearchedBean.Projects>();
+    private List<SearchedBean.Projects> listName = new ArrayList<SearchedBean.Projects>();
 
     public void setItemListener(ItemClickListener mListener) {
         this.mListener = mListener;
     }
+
     @Override
     public TopicFragmentRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_topic_recycler_item, parent, false);
@@ -34,38 +35,14 @@ public class TopicFragmentRecyclerAdapter extends RecyclerView.Adapter<TopicFrag
 
     @Override
     public void onBindViewHolder(TopicFragmentRecyclerHolder holder, int position) {
-        TopicBean currenBean = list.get(position);
         holder.setItemListener(mListener);
-        holder.tvName.setText(currenBean.getName());
-
-
-
-        if (position == 0) {
-            if (PatternUtils.isLetter(currenBean.getSpell()
-                    .subSequence(0, 1).toString())) {
-                holder.tvSpell.setText( currenBean.getSpell()
-                        .subSequence(0, 1).toString().toUpperCase());
-            } else {
-                holder.tvSpell.setText( "#");
-            }
-            holder.tvSpell.setVisibility(View.VISIBLE);
-        } else {
-            TopicBean lastBean=list.get(position-1);
-            boolean b =lastBean.getSpell().subSequence(0, 1)
-                    .equals(currenBean.getSpell().subSequence(0, 1));
-            if (b) {
-                holder.tvSpell.setVisibility(View.GONE);
-            } else if (PatternUtils.isLetter(currenBean.getSpell()
-                    .subSequence(0, 1).toString())
-                    && b == false) {
-                holder.tvSpell.setVisibility(View.VISIBLE);
-                holder.tvSpell.setText( currenBean.getSpell()
-                        .subSequence(0, 1).toString().toUpperCase());
-            } else if (PatternUtils.isLetter(currenBean.getSpell()
-                    .subSequence(0, 1).toString()) == false
-                    && b == false) {
-                holder.tvSpell.setVisibility(View.VISIBLE);
-            }
+        switch (type) {
+            case 1:
+                holder.setData(listNum, position);
+                break;
+            case 2:
+                holder.setData(listName, position);
+                break;
         }
 
 
@@ -73,17 +50,50 @@ public class TopicFragmentRecyclerAdapter extends RecyclerView.Adapter<TopicFrag
 
     @Override
     public int getItemCount() {
-        if (list == null) {
+        if (type == 1) {
+            if (listNum != null) {
+                return listNum.size();
+            }
+            return 0;
+        } else {
+            if (listName != null) {
+                return listName.size();
+            }
             return 0;
         }
-        return list.size();
     }
 
-    public void setData(List<TopicBean> list) {
-        this.list = list;
+    int type;
+
+    public void setListType(int type) {
+        this.type = type;
+    }
+
+    //1-按关注数量倒序；2-按名称排序
+    public void setData(List<SearchedBean.Projects> list, int type) {
+        this.type=type;
+        if (type == 1) {
+            this.listNum = list;
+        } else if (type == 2) {
+            this.listName = list;
+        }
         notifyDataSetChanged();
     }
-    public List<TopicBean> getData(){
-        return list;
+
+    public List<SearchedBean.Projects> getData() {
+        if (type == 1) {
+            return listNum;
+        }
+        return listName;
+    }
+    public List<SearchedBean.Projects> getDataByType(int dataType) {
+        if (type == 1) {
+            return listNum;
+        }
+        return listName;
+    }
+    public void swithData(int type){
+        this.type=type;
+        notifyDataSetChanged();
     }
 }

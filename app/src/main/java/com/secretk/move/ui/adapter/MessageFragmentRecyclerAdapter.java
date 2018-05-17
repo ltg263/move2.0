@@ -7,11 +7,10 @@ import android.view.ViewGroup;
 
 import com.secretk.move.R;
 import com.secretk.move.bean.MessageBean;
-import com.secretk.move.bean.TopicBean;
+
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.holder.MessageFragmentRecyclerHolder;
-import com.secretk.move.ui.holder.TopicFragmentRecyclerHolder;
-import com.secretk.move.utils.PatternUtils;
+
 
 import java.util.ArrayList;
 import java.util.List;

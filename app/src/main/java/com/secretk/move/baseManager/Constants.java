@@ -174,6 +174,7 @@ public interface Constants {
     String RELEASE_DISCUSS_LIST = BASE_URL + "/kff/discuss/tagList";
     String RELEASE_ARTICLE = BASE_URL + "/kff/article/saveArticle";
 
+    String SEARCH_PROJECTS=BASE_URL+"/kff/project/searchProjects";
     /**
      * 1-关注项目;2-关注帖子；3-关注用户
      */

@@ -16,31 +16,40 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="15dp"
             android:text="A" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:padding="@dimen/dp_15"
-        android:layout_height="80dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/img"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@mipmap/ic_launcher"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
             android:layout_centerVertical="true"
             android:scaleType="centerCrop" />
 
         <TextView
-            android:id="@+id/tvName"
+            android:id="@+id/tvCode"
+            android:textColor="#333333"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_16"
             android:layout_toRightOf="@id/img"
             android:layout_marginLeft="@dimen/dp_15"
-            android:text="AOS/柚子" />
+            android:text="AOS" />
+        <TextView
+            android:layout_alignBottom="@+id/tvCode"
+            android:id="@+id/tvName"
+            android:layout_toRightOf="@+id/tvCode"
+            android:text="/你好"
+            android:textSize="@dimen/sp_12"
+            android:textColor="#888888"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/tvFollws"
@@ -50,7 +59,8 @@
             android:layout_toRightOf="@id/img"
             android:layout_marginLeft="@dimen/dp_15"
             android:textColor="#aaaaaa"
-            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/dp_2"
+            android:layout_below="@+id/tvName"
             android:text="115248关注" />
 
         <TextView
