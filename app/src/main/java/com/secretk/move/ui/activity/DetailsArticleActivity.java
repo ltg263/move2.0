@@ -245,7 +245,7 @@ public class DetailsArticleActivity extends BaseActivity {
 
                 break;
             case R.id.tv_commendation_Num:
-                DialogUtils.showEditTextDialog(this, "赞助", new DialogUtils.EditTextDialogInterface() {
+                DialogUtils.showEditTextDialog(this, getString(R.string.sponsor_title),"", new DialogUtils.EditTextDialogInterface() {
                     @Override
                     public void btnConfirm(String season) {
                         NetUtil.commendation(Integer.valueOf(postId), createUserId,Double.valueOf(season), projectId, new NetUtil.SaveCommendationImp() {

@@ -107,7 +107,9 @@ public interface Constants {
     String MAIN_BLUE_SKY = BASE_URL + "/kff/home/projectRankList";
 
     //上传用户头像
-    String UPLOAD_USER_ICON ="kff/user/uploadUserIcon";
+    String UPLOAD_USER_ICON_FILE =BASE_URL+"kff/user/uploadUserIconFile";
+    //	更新用户信息（头像，昵称）
+    String UPDATE_USER_INFO =BASE_URL+"/kff/user/updateUserInfo";
     //用户主页
     String USERHOME_INDEX = BASE_URL + "kff/userhome/index";
     //用户 测评列表

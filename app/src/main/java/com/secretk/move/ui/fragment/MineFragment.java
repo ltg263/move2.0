@@ -18,6 +18,7 @@ import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.activity.MineSetActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.view.FragmentMineView;
 
 import butterknife.BindView;
@@ -26,9 +27,11 @@ import butterknife.Unbinder;
 
 
 /**
- * Created by zc on 2018/4/5.
+ * 作者： litongge
+ * 时间： 2018/5/16 14:29
+ * 邮箱；ltg263@126.com
+ * 描述：我的界面
  */
-
 public class MineFragment extends LazyFragment implements FragmentMineView {
 
     MineFragmentPresenter presenter;
@@ -94,12 +97,11 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
     @Override
     public void initViews() {
-        GlideUtils.loadCircle(ivHeadNotLogin, 0);
+
     }
 
     @Override
     public void onFirstUserVisible() {
-        GlideUtils.loadCircle(ivHeadNotLogin, R.drawable.account_portrait);
         if(isLoginZt){
             rlNoLogin.setVisibility(View.GONE);
             rlUserInfo.setVisibility(View.VISIBLE);
@@ -134,7 +136,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 if(userInfos!=null){
                     Intent intent = new Intent(getActivity(),MineSetActivity.class);
                     intent.putExtra("userInfos", userInfos);
-                    startActivity(intent);
+                    startActivityForResult(intent,0);
                 }
                 break;
             case R.id.tv_go_login:
@@ -168,6 +170,19 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 IntentUtil.startActivity(LoginHomeActivity.class);
                 getActivity().finish();
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        LogUtil.w("requestCode:"+requestCode);
+        LogUtil.w("data:"+data);
+        if(requestCode==0 && data!=null){
+            LogUtil.w("data:"+data.getExtras().getBoolean(Constants.REQUEST_CODE));
+            if(data.getExtras().getBoolean(Constants.REQUEST_CODE)){
+                onFirstUserVisible();
+            }
         }
     }
 }

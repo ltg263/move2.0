@@ -2,6 +2,7 @@ package com.secretk.move.view;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.utils.StringUtil;
 
 
 /**
@@ -115,13 +117,29 @@ public class DialogUtils {
      * 描述: 自定义ShowUnifiedDialog
      * 统一 确认取消的Dialog
      */
-    public static void showEditTextDialog(final Context context, String title, final EditTextDialogInterface editTextDialogInterface) {
+    public static void showEditTextDialog(final Context context, String title, String content, final EditTextDialogInterface editTextDialogInterface) {
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_with_edittext, null);// 获得dialog布局
         final Dialog dialog = new Dialog(context, R.style.RemindDialog);
         dialog.setContentView(view);
         dialog.show();
         TextView tvLogPrompt = view.findViewById(R.id.tv_log_prompt);
-        final EditText tvLogContent = view.findViewById(R.id.tv_log_content);
+        final EditText etLogContent = view.findViewById(R.id.et_log_content);
+        if(context.getString(R.string.sponsor_title).equals(title)){
+            etLogContent.setInputType(InputType.TYPE_CLASS_NUMBER);
+            etLogContent.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        }
+        if(context.getString(R.string.set_my_name).equals(title)){
+            etLogContent.setHint("请输入昵称");
+            if(StringUtil.isNotBlank(content)){
+                etLogContent.setText(content);
+            }
+        }
+        if(context.getString(R.string.set_my_signature).equals(title)){
+            etLogContent.setHint("请输入简介");
+            if(StringUtil.isNotBlank(content)){
+                etLogContent.setText(content);
+            }
+        }
         TextView tvLogConfirm = view.findViewById(R.id.tv_log_confirm);
         TextView tvLogCancel = view.findViewById(R.id.tv_log_cancel);
 
@@ -130,7 +148,7 @@ public class DialogUtils {
         tvLogConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                String season = tvLogContent.getText().toString().trim();
+                String season = etLogContent.getText().toString().trim();
                 editTextDialogInterface.btnConfirm(season);
                 dialog.dismiss();
             }

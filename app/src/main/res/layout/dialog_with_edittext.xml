@@ -40,7 +40,7 @@
             android:paddingTop="15dp">
 
             <EditText
-                android:id="@+id/tv_log_content"
+                android:id="@+id/et_log_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"

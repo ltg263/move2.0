@@ -108,7 +108,7 @@ public class UserLoginInfo extends BaseRes{
             private int discussNum;
             private int articleNum;
             private double kffCoinNum;
-            private String areaName;
+            private String  areaName;
             private long createTime;
             private String createTimeStr;
             private long updateTime;
@@ -370,43 +370,6 @@ public class UserLoginInfo extends BaseRes{
             }
 
             @Override
-            public String toString() {
-                return "{" +
-                        "followStatus=" + followStatus +
-                        ", userId=" + userId +
-                        ", userName='" + userName + '\'' +
-                        ", sex=" + sex +
-                        ", icon='" + icon + '\'' +
-                        ", mobile='" + mobile + '\'' +
-                        ", email=" + email +
-                        ", wechat=" + wechat +
-                        ", password='" + password + '\'' +
-                        ", payPassword='" + payPassword + '\'' +
-                        ", userType=" + userType +
-                        ", userDegree=" + userDegree +
-                        ", userSignature=" + userSignature +
-                        ", fansNum=" + fansNum +
-                        ", praiseNum=" + praiseNum +
-                        ", evaluationNum=" + evaluationNum +
-                        ", discussNum=" + discussNum +
-                        ", articleNum=" + articleNum +
-                        ", kffCoinNum=" + kffCoinNum +
-                        ", areaName=" + areaName +
-                        ", createTime=" + createTime +
-                        ", createTimeStr='" + createTimeStr + '\'' +
-                        ", updateTime=" + updateTime +
-                        ", updateTimeStr='" + updateTimeStr + '\'' +
-                        ", status=" + status +
-                        ", memo=" + memo +
-                        ", provinceCode=" + provinceCode +
-                        ", cityCode=" + cityCode +
-                        ", areaCode=" + areaCode +
-                        ", referUserId=" + referUserId +
-                        ", referLevel=" + referLevel +
-                        '}';
-            }
-
-            @Override
             public int describeContents() {
                 return 0;
             }
@@ -468,7 +431,7 @@ public class UserLoginInfo extends BaseRes{
                 this.evaluationNum = in.readInt();
                 this.discussNum = in.readInt();
                 this.articleNum = in.readInt();
-                this.kffCoinNum = in.readInt();
+                this.kffCoinNum = in.readDouble();
                 this.areaName = in.readString();
                 this.createTime = in.readLong();
                 this.createTimeStr = in.readString();

@@ -499,7 +499,7 @@ public class ImageUtils {
         options.inPurgeable = true;
         options.inSampleSize = 2;
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
-        return bitmaptoString(bitmap);
+        return bitmaptoString(getSmallImageByBitmap(bitmap,10,50,50));
     }
 
     /**

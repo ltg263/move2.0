@@ -129,6 +129,12 @@ public class PicUtil {
      * @param uri
      */
    public static void startPhotoZoom(Uri uri,Activity mActivity) {
+       File file = new  File(Constants.LOCAL_PATH);
+       LogUtil.w("file:"+file.exists());
+       if(!file.exists()){
+           file.mkdirs();
+       }
+       LogUtil.w("file:"+file.exists());
        Intent intent = new Intent("com.android.camera.action.CROP");
        intent.setDataAndType(uri, "image/*");
        // 设置裁剪
