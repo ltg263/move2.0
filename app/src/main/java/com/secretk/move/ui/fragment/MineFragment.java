@@ -15,6 +15,7 @@ import com.secretk.move.presenter.MineFragmentPresenter;
 import com.secretk.move.presenter.impl.MineFragmentPresenterImpl;
 import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
+import com.secretk.move.ui.activity.MineCollectActivity;
 import com.secretk.move.ui.activity.MineSetActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
@@ -23,7 +24,6 @@ import com.secretk.move.view.FragmentMineView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 
 /**
@@ -87,7 +87,6 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     LinearLayout llMyAbout;
     @BindView(R.id.ll_my_feedback)
     LinearLayout llMyFeedback;
-    Unbinder unbinder;
     private UserLoginInfo.DataBean.UserBean userInfos;
 
     @Override
@@ -135,7 +134,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
             case R.id.iv_my_set:
                 if(userInfos!=null){
                     Intent intent = new Intent(getActivity(),MineSetActivity.class);
-                    intent.putExtra("userInfos", userInfos);
+                    intent.putExtra(Constants.USER_INFOS, userInfos);
                     startActivityForResult(intent,0);
                 }
                 break;
@@ -158,6 +157,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
             case R.id.ll_my_attention:
                 break;
             case R.id.ll_my_collect:
+                IntentUtil.startActivity(MineCollectActivity.class);
                 break;
             case R.id.ll_my_recommend:
                 break;

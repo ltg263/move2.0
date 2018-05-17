@@ -91,7 +91,7 @@ public class MineSetActivity extends BaseActivity {
     @Override
     protected void initUI(Bundle savedInstanceState) {
         //接收对象
-        UserLoginInfo.DataBean.UserBean infos=getIntent().getParcelableExtra("userInfos");
+        UserLoginInfo.DataBean.UserBean infos=getIntent().getParcelableExtra(Constants.USER_INFOS);
         GlideUtils.loadCircleUrl(ivHeadImg,Constants.BASE_IMG_URL+infos.getIcon());
         tvUserName.setText(infos.getUserName());
         if(infos.getSex()==1){

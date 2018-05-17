@@ -12,9 +12,10 @@ import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
-import com.secretk.move.bean.DetailsArticleCommentBean;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
-import com.secretk.move.ui.adapter.DetailsDiscussAdapter;
+import com.secretk.move.bean.MyCollectList;
+import com.secretk.move.ui.adapter.HomeListAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -43,8 +44,7 @@ public class MineCollectActivity extends BaseActivity {
     SmartRefreshLayout refreshLayout;
     private String postId;
     private int pageIndex = 1;
-    private String url;
-    private DetailsDiscussAdapter adapter;
+    private HomeListAdapter adapter;
 
     @Override
     protected int setOnCreate() {
@@ -64,9 +64,8 @@ public class MineCollectActivity extends BaseActivity {
     @Override
     protected void initUI(Bundle savedInstanceState) {
         postId = getIntent().getStringExtra("postId");
-        url = getIntent().getStringExtra("url");
         setVerticalManager(rvCollect);
-        adapter = new DetailsDiscussAdapter(this);
+        adapter = new HomeListAdapter(this);
         rvCollect.setAdapter(adapter);
         initRefresh();
     }
@@ -101,46 +100,31 @@ public class MineCollectActivity extends BaseActivity {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            node.put("postId", Integer.valueOf(postId));//帖子ID
             node.put("pageIndex", pageIndex++);//帖子ID
-            node.put("pageSize", 20);//帖子ID
+            node.put("pageSize", Constants.PAGE_SIZE);//帖子ID
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(url)
+                .url(Constants.GET_H5_URLS)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
         loadingDialog.show();
-        RetrofitUtil.request(params, DetailsArticleCommentBean.class, new HttpCallBackImpl<DetailsArticleCommentBean>() {
+        RetrofitUtil.request(params, MyCollectList.class, new HttpCallBackImpl<MyCollectList>() {
             @Override
-            public void onCompleted(DetailsArticleCommentBean bean) {
-                DetailsArticleCommentBean.DataBean data = bean.getData();
-                if(data==null){
+            public void onCompleted(MyCollectList bean) {
+                MyCollectList.DataBean.MyTokenRecordsBean detailsBean = bean.getData().getMyTokenRecords();
+                if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
                     return;
                 }
-                if(data.getNewestComments().getCurPageNum()==1){
-                    if(data.getHotComments()!=null&&data.getHotComments().size()>0){
-                        adapter.setData(data.getHotComments());
-                    }
-                }
-                if (data.getNewestComments().getCurPageNum() == data.getNewestComments().getPageSize()) {
-                    refreshLayout.setLoadmoreFinished(true);
-                }
-                if(bean.getData().getNewestComments().getRows()!=null
-                        && bean.getData().getNewestComments().getRows().size()>0){
-                    adapter.setData(bean.getData().getNewestComments().getRows());
-                }
+                adapter.setData(detailsBean.getRows());
             }
 
             @Override
             public void onFinish() {
                 if (refreshLayout.isRefreshing()) {
                     refreshLayout.finishRefresh();
-                }
-                if (refreshLayout.isLoading()) {
-                    refreshLayout.finishLoadmore(true);
                 }
                 if(loadingDialog.isShowing()){
                     loadingDialog.dismiss();

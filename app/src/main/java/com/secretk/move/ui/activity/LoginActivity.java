@@ -130,7 +130,7 @@ public class LoginActivity extends BaseActivity {
                 sharedUtils.put(Constants.IS_LOGIN_KEY,true);
                 ////用户信息
 //                UserLoginInfo.DataBean dataBean = userInfo.getData();
-                sharedUtils.put("userInfo",userInfo.getData().getUser().toString());
+                sharedUtils.put(Constants.USER_INFOS,userInfo.getData().getUser().toString());
                 IntentUtil.startActivity(MainActivity.class);
             }
 

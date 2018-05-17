@@ -28,6 +28,10 @@ public interface Constants {
      */
     String IS_LOGIN_KEY = "isLogin";
     /**
+     * 登录的用户信息
+     */
+    String USER_INFOS = "userInfos";
+    /**
      * 分页单次请求数量
      */
     int PAGE_SIZE = 10;
@@ -110,6 +114,10 @@ public interface Constants {
     String UPLOAD_USER_ICON_FILE =BASE_URL+"kff/user/uploadUserIconFile";
     //	更新用户信息（头像，昵称）
     String UPDATE_USER_INFO =BASE_URL+"/kff/user/updateUserInfo";
+    //	我的收藏列表
+    String MYC_OLLECT_LIST =BASE_URL+"kff/user/myCollectList";
+    String GET_H5_URLS =BASE_URL+"/kff/user/getH5URLs";
+
     //用户主页
     String USERHOME_INDEX = BASE_URL + "kff/userhome/index";
     //用户 测评列表

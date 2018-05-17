@@ -55,6 +55,43 @@ public class UserLoginInfo extends BaseRes{
         }
 
         public static class UserBean implements Parcelable {
+            @Override
+            public String toString() {
+                return "{" +
+                        "followStatus:" + followStatus +
+                        ", userId:" + userId +
+                        ", userName:'" + userName + '\'' +
+                        ", sex:" + sex +
+                        ", icon:'" + icon + '\'' +
+                        ", mobile:'" + mobile + '\'' +
+                        ", email:'" + email + '\'' +
+                        ", wechat:'" + wechat + '\'' +
+                        ", password:'" + password + '\'' +
+                        ", payPassword:'" + payPassword + '\'' +
+                        ", userType:" + userType +
+                        ", userDegree:" + userDegree +
+                        ", userSignature:'" + userSignature + '\'' +
+                        ", fansNum:" + fansNum +
+                        ", praiseNum:" + praiseNum +
+                        ", evaluationNum:" + evaluationNum +
+                        ", discussNum:" + discussNum +
+                        ", articleNum:" + articleNum +
+                        ", kffCoinNum:" + kffCoinNum +
+                        ", areaName:'" + areaName + '\'' +
+                        ", createTime:" + createTime +
+                        ", createTimeStr:'" + createTimeStr + '\'' +
+                        ", updateTime:" + updateTime +
+                        ", updateTimeStr:'" + updateTimeStr + '\'' +
+                        ", status:" + status +
+                        ", memo:'" + memo + '\'' +
+                        ", provinceCode:'" + provinceCode + '\'' +
+                        ", cityCode:'" + cityCode + '\'' +
+                        ", areaCode:'" + areaCode + '\'' +
+                        ", referUserId:'" + referUserId + '\'' +
+                        ", referLevel:" + referLevel +
+                        '}';
+            }
+
             /**
              * followStatus : 0
              * userId : 3

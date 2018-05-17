@@ -113,8 +113,12 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
                 tvTotalScore.setVisibility(View.VISIBLE);//分数
                 tvFollowStatus.setVisibility(View.GONE);//关注
                 rlDiscuss.setVisibility(View.GONE);//发表
-                tvCrackDown.setVisibility(View.VISIBLE);//标签
-                tvCrackDown.setText(tagName);
+                if(StringUtil.isNotBlank(tagName)){
+                    tvCrackDown.setVisibility(View.VISIBLE);//标签
+                    tvCrackDown.setText(tagName);
+                }else{
+                    tvCrackDown.setVisibility(View.GONE);//标签
+                }
                 break;
             case 2:
                 tvTotalScore.setVisibility(View.GONE);
