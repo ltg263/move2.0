@@ -6,13 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
-import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.BlueSkyBean;
-import com.secretk.move.bean.MainRfBean;
+
 import com.secretk.move.listener.ItemClickListener;
 
 import com.secretk.move.ui.holder.MainBlueSkyFragmentHolder;
-import com.secretk.move.utils.GlideUtils;
+
 
 import java.util.ArrayList;
 import java.util.List;

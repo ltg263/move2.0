@@ -1,29 +1,18 @@
 package com.secretk.move.ui.adapter;
 
-import android.support.v7.widget.LinearLayoutManager;
+
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
-import com.secretk.move.apiService.HttpCallBackImpl;
-import com.secretk.move.apiService.RetrofitUtil;
-import com.secretk.move.apiService.RxHttpParams;
-import com.secretk.move.baseManager.Constants;
+
 import com.secretk.move.bean.MainRfBean;
-import com.secretk.move.bean.base.BaseRes;
+
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.holder.MainRfFragmentRecyclerHolder;
-import com.secretk.move.utils.GlideUtils;
-import com.secretk.move.utils.MD5;
-import com.secretk.move.utils.PolicyUtil;
-import com.secretk.move.utils.SharedUtils;
-import com.secretk.move.utils.StringUtil;
-import com.secretk.move.utils.UiUtils;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
