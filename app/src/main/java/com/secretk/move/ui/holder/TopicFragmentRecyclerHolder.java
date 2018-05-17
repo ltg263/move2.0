@@ -51,7 +51,7 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         ButterKnife.bind(this, itemView);
     }
     public void setData(List<SearchedBean.Projects> list, int position ){
-        SearchedBean.Projects  currenBean= list.get(position);
+        final SearchedBean.Projects  currenBean= list.get(position);
         GlideUtils.loadCircleUrl(img, Constants.BASE_IMG_URL + currenBean.getProjectIcon());
         tvCode.setText(currenBean.getProjectCode()+"/");
         tvName.setText(currenBean.getProjectChineseName());
@@ -82,6 +82,18 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 tvSpell.setVisibility(View.VISIBLE);
             }
         }
+        tvFollws.setText(currenBean.getFollowerNum()+"关注");
+        tvIsFollw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (getString().equals("已关注")) {
+                    http(Constants.CANCEL_FOLLOW,currenBean.getProjectId());
+                } else {
+                    http(Constants.SAVE_FOLLOW,currenBean.getProjectId());
+                }
+            }
+        });
     }
 
     public void http(String url,int id) {

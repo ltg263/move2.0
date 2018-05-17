@@ -88,7 +88,7 @@ public class MainRfFragment extends LazyFragment implements ItemClickListener, M
             case R.id.tvName:
             case R.id.tv_english_name:
             case R.id.tvTime:
-
+                IntentUtil.startProjectActivity(data.getProjectId());
                 break;
             case R.id.ll_user:
             case R.id.ll_user2:

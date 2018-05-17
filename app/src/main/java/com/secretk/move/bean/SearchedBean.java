@@ -102,5 +102,6 @@ public class SearchedBean  extends BaseRes {
   String projectChineseName;
   String projectSignature;
   int followerNum;
+
     }
 }

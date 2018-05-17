@@ -20,6 +20,7 @@ import com.secretk.move.customview.QuickIndexBar;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.SearchActivity;
 import com.secretk.move.ui.adapter.TopicFragmentRecyclerAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PatternUtils;
 import com.secretk.move.utils.PolicyUtil;
@@ -85,6 +86,8 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
 
     @OnClick(R.id.tv_sort_name)
     public void sortByName(View view) {
+        qbar.setVisibility(View.VISIBLE);
+        tv_count.setText("共"+0+"个币种");
         tv_sort_name.setTextColor(Color.parseColor("#3b88f6"));
         tv_sort_follow.setTextColor(Color.parseColor("#dddddd"));
         List<SearchedBean.Projects> list=adapter.getDataByType(2);
@@ -97,6 +100,8 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
 
     @OnClick(R.id.tv_sort_follow)
     public void sortByFollow(View view) {
+        qbar.setVisibility(View.GONE);
+        tv_count.setText("共"+0+"个币种");
         tv_sort_name.setTextColor(Color.parseColor("#dddddd"));
         tv_sort_follow.setTextColor(Color.parseColor("#3b88f6"));
         List<SearchedBean.Projects> list   =adapter.getDataByType(1);
@@ -108,16 +113,10 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
     }
 
 
-
-
-
-
-
-
-
     @Override
     public void onItemClick(View view, int postion) {
-        ToastUtils.getInstance().show("onItemClick postion=" + postion);
+     int id=   adapter.getData().get(postion).getProjectId();
+        IntentUtil.startProjectActivity(id);
     }
 
     @Override
