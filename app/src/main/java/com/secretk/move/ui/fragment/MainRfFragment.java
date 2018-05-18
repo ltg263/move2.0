@@ -15,6 +15,7 @@ import com.secretk.move.presenter.impl.MainRfPresenterImpl;
 import com.secretk.move.ui.adapter.MainRfFragmentRecyclerAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.ToastUtils;
+import com.secretk.move.view.LoadingDialog;
 
 import java.util.List;
 
@@ -27,8 +28,7 @@ import butterknife.BindView;
 public class MainRfFragment extends LazyFragment implements ItemClickListener, MainRfContract.View {
     @BindView(R.id.recycler)
     XRecyclerView recycler;
-    @BindView(R.id.progress_bar)
-    ProgressWheel progress_bar;
+    private LoadingDialog loadingDialog;
     private LinearLayoutManager layoutManager;
     private MainRfFragmentRecyclerAdapter adapter;
     MainRfContract.Presenter presenter;
@@ -69,10 +69,12 @@ public class MainRfFragment extends LazyFragment implements ItemClickListener, M
             }
         });
         adapter.setItemListener(this);
+        loadingDialog=new LoadingDialog(getActivity());
     }
 
     @Override
     public void onFirstUserVisible() {
+
         current_position = getArguments().getInt("position");
         adapter.setAdapterType(current_position);
         presenter = new MainRfPresenterImpl(this, current_position);
@@ -107,19 +109,21 @@ public class MainRfFragment extends LazyFragment implements ItemClickListener, M
 
     @Override
     public void showLoading() {
-        progress_bar.setVisibility(android.view.View.VISIBLE);
+
+        loadingDialog.show();
     }
 
     @Override
     public void hideLoading() {
         recycler.refreshComplete();
-        progress_bar.setVisibility(android.view.View.INVISIBLE);
+        loadingDialog.dismiss();
     }
 
     @Override
     public void showMsg(String msg) {
         recycler.refreshComplete();
         recycler.loadMoreComplete();
+        loadingDialog.dismiss();
         ToastUtils.getInstance().show(msg);
     }
 

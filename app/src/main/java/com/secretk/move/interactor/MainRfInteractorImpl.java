@@ -46,6 +46,12 @@ public class MainRfInteractorImpl implements MainRfContract.Interactor {
             public void onCompleted(MainRfBean mainRecommendBean) {
                 callBack.loadPageIndexSuccess(index, mainRecommendBean.getData().getRecommends().getRows());
             }
+
+            @Override
+            public void onError(String message) {
+                super.onError(message);
+                callBack.loadFail(message);
+            }
         });
     }
 

@@ -23,6 +23,7 @@ public class MainRfPresenterImpl implements MainRfContract.Presenter, MainRfCont
     private int current_position = 0;
 
     private int type;
+    private Boolean isFrist = true;
     public MainRfPresenterImpl(MainRfContract.View view, int type) {
         this.view = view;
         interactor = new MainRfInteractorImpl(this);
@@ -31,8 +32,10 @@ public class MainRfPresenterImpl implements MainRfContract.Presenter, MainRfCont
 
     @Override
     public void loadingHead() {
-        if (NetUtil.isNetworkAvailable()) {
+        if (isFrist) {
             view.showLoading();
+        }
+        if (NetUtil.isNetworkAvailable()) {
             if (type==0){
                 interactor.loadReCommendPageIndex(current_position);
             }else {
@@ -66,6 +69,9 @@ public class MainRfPresenterImpl implements MainRfContract.Presenter, MainRfCont
         current_position++;
         if (index == 0) {
             view.onloadHeadSuccess(list);
+            if (isFrist) {
+                isFrist = false;
+            }
         } else {
             view.onloadMoreSuccess(list);
         }

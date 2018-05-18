@@ -20,6 +20,7 @@ import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.ToastUtils;
+import com.secretk.move.view.LoadingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,12 +37,11 @@ import butterknife.BindView;
 public class MainBlueSkyFragment extends LazyFragment implements ItemClickListener {
     @BindView(R.id.recycler)
     RecyclerView recycler;
-    @BindView(R.id.progress_bar)
-    ProgressWheel progress_bar;
     @BindView(R.id.rl_title)
     RelativeLayout rl_title;
     private LinearLayoutManager layoutManager;
     private MainBlueSkyFragmentRecyclerAdapter adapter;
+    protected LoadingDialog loadingDialog;
 
     @Override
     public int setFragmentView() {
@@ -56,11 +56,12 @@ public class MainBlueSkyFragment extends LazyFragment implements ItemClickListen
         adapter = new MainBlueSkyFragmentRecyclerAdapter();
         recycler.setAdapter(adapter);
         adapter.setItemListener(this);
+        loadingDialog = new LoadingDialog(getActivity());
     }
 
     @Override
     public void onFirstUserVisible() {
-        progress_bar.setVisibility(View.VISIBLE);
+        loadingDialog.show();
         String token = SharedUtils.singleton().get("token", "");
         JSONObject node = new JSONObject();
         try {
@@ -74,19 +75,25 @@ public class MainBlueSkyFragment extends LazyFragment implements ItemClickListen
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
         RetrofitUtil.request(params, BlueSkyBean.class, new HttpCallBackImpl<BlueSkyBean>() {
+                    @Override
+                    public void onCompleted(BlueSkyBean bean) {
+                        List<BlueSkyBean.RankList> list = bean.getData().getRankList();
+                        rl_title.setVisibility(View.VISIBLE);
+                        adapter.setData(list);
+                        loadingDialog.dismiss();
+                    }
+
             @Override
-            public void onCompleted(BlueSkyBean bean) {
-                List<BlueSkyBean.RankList> list = bean.getData().getRankList();
-                rl_title.setVisibility(View.VISIBLE);
-                adapter.setData(list);
-                progress_bar.setVisibility(View.GONE);
+            public void onError(String message) {
+                super.onError(message);
+                loadingDialog.dismiss();
             }
         });
     }
 
     @Override
     public void onItemClick(View view, int postion) {
-        BlueSkyBean.RankList bean=  adapter.getDataIndex(postion);
+        BlueSkyBean.RankList bean = adapter.getDataIndex(postion);
         IntentUtil.startProjectActivity(bean.getProjectId());
     }
 

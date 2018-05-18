@@ -25,7 +25,7 @@ import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PatternUtils;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.ToastUtils;
-
+import com.secretk.move.view.LoadingDialog;
 
 
 import org.json.JSONException;
@@ -60,7 +60,7 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
     private LinearLayoutManager layoutManager;
     private TopicFragmentRecyclerAdapter adapter;
 
-
+    private LoadingDialog loadingDialog;
     @Override
     public int setFragmentView() {
         return R.layout.fragment_topic;
@@ -76,11 +76,11 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
         recycler.setAdapter(adapter);
         adapter.setItemListener(this);
         qbar.setOnLetterChangeListener(this);
+        loadingDialog=new LoadingDialog(getActivity());
     }
     //1-按关注数量倒序；2-按名称排序
     @Override
     public void onFirstUserVisible() {
-
         http(2);
     }
 
@@ -147,6 +147,7 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
     }
 
     public void http(final int type) {
+        loadingDialog.show();
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -163,6 +164,7 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
         RetrofitUtil.request(params, SearchedBean.class, new HttpCallBackImpl<SearchedBean>() {
             @Override
             public void onCompleted(SearchedBean bean) {
+                loadingDialog.dismiss();
                      if (bean.getCode()==0){
                          List<SearchedBean.Projects> list=  bean.getData().getProjects();
                          tv_count.setText("共"+list.size()+"个币种");
@@ -172,7 +174,7 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
 
             @Override
             public void onError(String message) {
-
+                loadingDialog.dismiss();
             }
         });
     }

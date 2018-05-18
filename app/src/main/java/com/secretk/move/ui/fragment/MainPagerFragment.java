@@ -43,6 +43,8 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
     TabLayout tab_layout;
     MainFragmentPagerAdapter adapter;
     public String[] head_list;
+    Dialog dialog;
+    Intent intent;
 
     @Override
     public int setFragmentView() {
@@ -88,8 +90,6 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         return false;
     }
 
-    Dialog dialog;
-    Intent intent;
 
     private void initDailog() {
         dialog = new Dialog(getContext(), R.style.Dialog_Fullscreen);

@@ -63,13 +63,4 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_title" />
 
-    <com.secretk.move.customview.ProgressWheel
-        android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="@dimen/dp_160"
-        android:layout_height="@dimen/dp_160"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        app:matProg_barColor="@color/app_background"
-        app:matProg_progressIndeterminate="true" />
 </RelativeLayout>

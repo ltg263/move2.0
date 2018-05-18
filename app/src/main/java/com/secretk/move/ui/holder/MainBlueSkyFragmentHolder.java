@@ -95,7 +95,7 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
               default:
                   img_order.setVisibility(View.INVISIBLE);
                   tv_order.setVisibility(View.VISIBLE);
-                  tv_order.setText(position+"");
+                  tv_order.setText(position+1+"");
                   break;
       }
     }
@@ -130,6 +130,7 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
 
             }
         });
+
     }
     public String getString(){
         return tvIsFollw.getText().toString();
