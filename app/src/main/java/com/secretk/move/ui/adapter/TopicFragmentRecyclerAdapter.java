@@ -88,7 +88,7 @@ public class TopicFragmentRecyclerAdapter extends RecyclerView.Adapter<TopicFrag
         return listName;
     }
     public List<SearchedBean.Projects> getDataByType(int dataType) {
-        if (type == Constants.TOPIC_SORT_BY_NUM) {
+        if (dataType == Constants.TOPIC_SORT_BY_NUM) {
             return listNum;
         }
         return listName;
