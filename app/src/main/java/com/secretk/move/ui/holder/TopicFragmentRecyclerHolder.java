@@ -50,11 +50,34 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
-    public void setData(List<SearchedBean.Projects> list, int position ){
+    //1-按关注数量倒序；2-按名称排序
+    public void setData(List<SearchedBean.Projects> list, int position,int type ){
         final SearchedBean.Projects  currenBean= list.get(position);
         GlideUtils.loadCircleUrl(img, Constants.BASE_IMG_URL + currenBean.getProjectIcon());
         tvCode.setText(currenBean.getProjectCode()+"/");
         tvName.setText(currenBean.getProjectChineseName());
+        switch (type){
+            case Constants.TOPIC_SORT_BY_NUM:
+                sortByNum();
+                break;
+            case Constants.TOPIC_SORT_BY_NAME:
+                sortByName(currenBean,list,position);
+                break;
+        }
+        tvFollws.setText(currenBean.getFollowerNum()+"关注");
+        tvIsFollw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (getString().equals("已关注")) {
+                    http(Constants.CANCEL_FOLLOW,currenBean.getProjectId());
+                } else {
+                    http(Constants.SAVE_FOLLOW,currenBean.getProjectId());
+                }
+            }
+        });
+    }
+    public void sortByName(SearchedBean.Projects  currenBean,List<SearchedBean.Projects> list, int position){
         if (position == 0) {
             if (PatternUtils.isLetter(currenBean.getProjectCode()
                     .subSequence(0, 1).toString())) {
@@ -82,18 +105,9 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 tvSpell.setVisibility(View.VISIBLE);
             }
         }
-        tvFollws.setText(currenBean.getFollowerNum()+"关注");
-        tvIsFollw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (getString().equals("已关注")) {
-                    http(Constants.CANCEL_FOLLOW,currenBean.getProjectId());
-                } else {
-                    http(Constants.SAVE_FOLLOW,currenBean.getProjectId());
-                }
-            }
-        });
+    }
+    public void sortByNum(){
+        tvSpell.setVisibility(View.GONE);
     }
 
     public void http(String url,int id) {

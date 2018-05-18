@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.SearchedBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.holder.TopicFragmentRecyclerHolder;
@@ -37,11 +38,11 @@ public class TopicFragmentRecyclerAdapter extends RecyclerView.Adapter<TopicFrag
     public void onBindViewHolder(TopicFragmentRecyclerHolder holder, int position) {
         holder.setItemListener(mListener);
         switch (type) {
-            case 1:
-                holder.setData(listNum, position);
+            case Constants.TOPIC_SORT_BY_NUM:
+                holder.setData(listNum, position,type);
                 break;
-            case 2:
-                holder.setData(listName, position);
+            case Constants.TOPIC_SORT_BY_NAME:
+                holder.setData(listName, position,type);
                 break;
         }
 
@@ -50,7 +51,7 @@ public class TopicFragmentRecyclerAdapter extends RecyclerView.Adapter<TopicFrag
 
     @Override
     public int getItemCount() {
-        if (type == 1) {
+        if (type == Constants.TOPIC_SORT_BY_NUM) {
             if (listNum != null) {
                 return listNum.size();
             }
@@ -72,22 +73,22 @@ public class TopicFragmentRecyclerAdapter extends RecyclerView.Adapter<TopicFrag
     //1-按关注数量倒序；2-按名称排序
     public void setData(List<SearchedBean.Projects> list, int type) {
         this.type=type;
-        if (type == 1) {
+        if (type == Constants.TOPIC_SORT_BY_NUM) {
             this.listNum = list;
-        } else if (type == 2) {
+        } else if (type == Constants.TOPIC_SORT_BY_NAME) {
             this.listName = list;
         }
         notifyDataSetChanged();
     }
 
     public List<SearchedBean.Projects> getData() {
-        if (type == 1) {
+        if (type == Constants.TOPIC_SORT_BY_NUM) {
             return listNum;
         }
         return listName;
     }
     public List<SearchedBean.Projects> getDataByType(int dataType) {
-        if (type == 1) {
+        if (type == Constants.TOPIC_SORT_BY_NUM) {
             return listNum;
         }
         return listName;

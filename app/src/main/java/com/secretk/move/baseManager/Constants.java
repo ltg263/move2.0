@@ -111,12 +111,12 @@ public interface Constants {
     String MAIN_BLUE_SKY = BASE_URL + "/kff/home/projectRankList";
 
     //上传用户头像
-    String UPLOAD_USER_ICON_FILE =BASE_URL+"kff/user/uploadUserIconFile";
+    String UPLOAD_USER_ICON_FILE = BASE_URL + "kff/user/uploadUserIconFile";
     //	更新用户信息（头像，昵称）
-    String UPDATE_USER_INFO =BASE_URL+"/kff/user/updateUserInfo";
+    String UPDATE_USER_INFO = BASE_URL + "/kff/user/updateUserInfo";
     //	我的收藏列表
-    String MYC_OLLECT_LIST =BASE_URL+"kff/user/myCollectList";
-    String GET_H5_URLS =BASE_URL+"/kff/user/getH5URLs";
+    String MYC_OLLECT_LIST = BASE_URL + "kff/user/myCollectList";
+    String GET_H5_URLS = BASE_URL + "/kff/user/getH5URLs";
 
     //用户主页
     String USERHOME_INDEX = BASE_URL + "kff/userhome/index";
@@ -169,9 +169,9 @@ public interface Constants {
     //评测详情 页
     String EVALUATION_DETAIL = BASE_URL + "kff/home/evaluationDetail";
     //测评评论
-    String EVLUATION_COMMENT_LIST = BASE_URL+"kff/home/evaluationCommentList";
+    String EVLUATION_COMMENT_LIST = BASE_URL + "kff/home/evaluationCommentList";
     //捐赠(赞赏)
-    String COMMENDATION = BASE_URL+"kff/token/commendation";
+    String COMMENDATION = BASE_URL + "kff/token/commendation";
 
 
     //=======
@@ -184,7 +184,8 @@ public interface Constants {
     String RELEASE_DISCUSS_LIST = BASE_URL + "/kff/discuss/tagList";
     String RELEASE_ARTICLE = BASE_URL + "/kff/article/saveArticle";
 
-    String SEARCH_PROJECTS=BASE_URL+"/kff/project/searchProjects";
+    String SEARCH_PROJECTS = BASE_URL + "/kff/project/searchProjects";
+
     /**
      * 1-关注项目;2-关注帖子；3-关注用户
      */
@@ -193,5 +194,8 @@ public interface Constants {
         int INVITATION = 2;
         int USER = 3;
     }
+
+    int TOPIC_SORT_BY_NUM = 1;
+    int TOPIC_SORT_BY_NAME = 2;
 
 }

@@ -81,7 +81,7 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
     //1-按关注数量倒序；2-按名称排序
     @Override
     public void onFirstUserVisible() {
-        http(2);
+        http(Constants.TOPIC_SORT_BY_NUM);
     }
 
     @OnClick(R.id.tv_sort_name)
@@ -90,12 +90,12 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
         tv_count.setText("共"+0+"个币种");
         tv_sort_name.setTextColor(Color.parseColor("#3b88f6"));
         tv_sort_follow.setTextColor(Color.parseColor("#dddddd"));
-        List<SearchedBean.Projects> list=adapter.getDataByType(2);
+        List<SearchedBean.Projects> list=adapter.getDataByType(Constants.TOPIC_SORT_BY_NAME);
         if (list==null||list.size()==0){
-            http(2);
+            http(Constants.TOPIC_SORT_BY_NAME);
             return;
         }
-        adapter.swithData(2);
+        adapter.swithData(Constants.TOPIC_SORT_BY_NAME);
     }
 
     @OnClick(R.id.tv_sort_follow)
@@ -104,12 +104,12 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
         tv_count.setText("共"+0+"个币种");
         tv_sort_name.setTextColor(Color.parseColor("#dddddd"));
         tv_sort_follow.setTextColor(Color.parseColor("#3b88f6"));
-        List<SearchedBean.Projects> list   =adapter.getDataByType(1);
+        List<SearchedBean.Projects> list   =adapter.getDataByType(Constants.TOPIC_SORT_BY_NUM);
         if (list==null||list.size()==0){
-            http(1);
+            http(Constants.TOPIC_SORT_BY_NUM);
             return;
         }
-        adapter.swithData(1);
+        adapter.swithData(Constants.TOPIC_SORT_BY_NUM);
     }
 
 

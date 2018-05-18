@@ -51,7 +51,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
             android:text="按名称"
-            android:textColor="#3b88f6"
+            android:textColor="#aaaaaa"
             android:textSize="@dimen/sp_12" />
 
         <TextView
@@ -71,7 +71,8 @@
             android:layout_marginRight="12dp"
             android:layout_toLeftOf="@+id/tv_line"
             android:text="按关注"
-            android:textColor="#aaaaaa"
+            android:textColor="#3b88f6"
+
             android:textSize="@dimen/sp_12" />
     </RelativeLayout>
 
@@ -86,6 +87,7 @@
 
         <com.secretk.move.customview.QuickIndexBar
             android:id="@+id/qbar"
+            android:visibility="gone"
             android:layout_width="20dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true" />
