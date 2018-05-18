@@ -51,7 +51,6 @@ public class MainRfPresenterImpl implements MainRfContract.Presenter, MainRfCont
     @Override
     public void loadingFoot() {
         if (NetUtil.isNetworkAvailable()) {
-            view.showLoading();
             if (type==0){
                 interactor.loadReCommendPageIndex(current_position);
             }else {
