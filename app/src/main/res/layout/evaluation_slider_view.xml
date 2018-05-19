@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/tv_dimensionality_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="项目定位"
+            android:textColor="@color/title_gray"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="" />
+
+        <TextView
+            android:id="@+id/tv_dimensionality_evaluate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_circle"
+            android:drawablePadding="@dimen/dp_3"
+            android:paddingHorizontal="@dimen/dp_8"
+            android:paddingVertical="@dimen/dp_3"
+            android:text="好看"
+            android:textColor="@color/title_gray"
+            android:textSize="@dimen/sp_14" />
+        <TextView
+            android:id="@+id/tv_dimensionality_compile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_circle_2dp"
+            android:drawablePadding="@dimen/dp_3"
+            android:drawableRight="@drawable/right_boult"
+            android:paddingHorizontal="@dimen/dp_8"
+            android:paddingVertical="@dimen/dp_3"
+            android:text="编辑"
+            android:visibility="gone"
+            android:textColor="@color/app_background"
+            android:textSize="@dimen/sp_14" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-3dp"
+        android:layout_below="@id/rl_state">
+
+        <TextView
+            android:id="@+id/tv_evaluation_mun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="22"
+            android:textColor="@color/xmdw"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_line"
+            android:layout_below="@+id/tv_evaluation_mun"
+            android:layout_centerHorizontal="true"
+            android:background="#aaaaaa" />
+
+        <com.secretk.move.view.EvaluationItemView
+            android:id="@+id/es_view"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/view"
+            app:alphaEnable="false"
+            app:lineMax="@dimen/dp_25"
+            app:lineMaxHeight="16dp"
+            app:lineMidHeight="14dp"
+            app:lineMinHeight="14dp"
+            app:lineSpaceWidth="8dp"
+            app:lineWidth="2dp"
+            app:maxValue="10"
+            app:minValue="0"
+            app:perValue="0.1"
+            app:rvLineColor="#aaaaaa"
+            app:rvTextColor="#aaaaaa"
+            app:rvTextSize="10sp"
+            app:selectorValue="5.5"
+            app:textMarginTop="1dp" />
+    </RelativeLayout>
+</RelativeLayout>
