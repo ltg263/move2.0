@@ -6,9 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -31,6 +36,7 @@ import com.secretk.move.view.LoadingDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,12 +46,10 @@ import butterknife.OnClick;
  * Created by zc on 2018/4/5.
  */
 
-public class TopicFragment extends LazyFragment implements  ItemClickListener, QuickIndexBar.OnLetterChangeListener {
+public class TopicFragment extends LazyFragment implements ItemClickListener, QuickIndexBar.OnLetterChangeListener {
 
     @BindView(R.id.qbar)
     QuickIndexBar qbar;
-    @BindView(R.id.tvShow)
-    TextView tvShow;
     @BindView(R.id.recycler)
     RecyclerView recycler;
 
@@ -61,6 +65,7 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
     private TopicFragmentRecyclerAdapter adapter;
 
     private LoadingDialog loadingDialog;
+
     @Override
     public int setFragmentView() {
         return R.layout.fragment_topic;
@@ -68,7 +73,7 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
 
     @Override
     public void initViews() {
-        qbar.addBundleView(tvShow);
+
         layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler.setLayoutManager(layoutManager);
@@ -76,8 +81,40 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
         recycler.setAdapter(adapter);
         adapter.setItemListener(this);
         qbar.setOnLetterChangeListener(this);
-        loadingDialog=new LoadingDialog(getActivity());
+        loadingDialog = new LoadingDialog(getActivity());
+        List<String> list = new ArrayList<>();
+        list.add("#");
+        list.add("A");
+        list.add("B");
+        list.add("C");
+        list.add("d");
+        list.add("e");
+        list.add("f");
+        list.add("g");
+        list.add("h");
+        list.add("i");
+        list.add("j");
+        list.add("k");
+        list.add("l");
+        list.add("m");
+        list.add("n");
+        list.add("o");
+        list.add("p");
+        list.add("q");
+        list.add("r");
+        list.add("s");
+        list.add("t");
+        list.add("y");
+        list.add("v");
+        list.add("u");
+        list.add("x");
+        list.add("g");
+        list.add("z");
+
+        qbar.setData(list);
+
     }
+
     //1-按关注数量倒序；2-按名称排序
     @Override
     public void onFirstUserVisible() {
@@ -86,40 +123,41 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
 
     @OnClick(R.id.tv_sort_name)
     public void sortByName(View view) {
+
         qbar.setVisibility(View.VISIBLE);
-        tv_count.setText("共"+0+"个币种");
+        tv_count.setText("共" + 0 + "个币种");
         tv_sort_name.setTextColor(Color.parseColor("#3b88f6"));
         tv_sort_follow.setTextColor(Color.parseColor("#dddddd"));
-        List<SearchedBean.Projects> list=adapter.getDataByType(Constants.TOPIC_SORT_BY_NAME);
-        if (list==null||list.size()==0){
+        List<SearchedBean.Projects> list = adapter.getDataByType(Constants.TOPIC_SORT_BY_NAME);
+        if (list == null || list.size() == 0) {
             http(Constants.TOPIC_SORT_BY_NAME);
             return;
         }
         adapter.swithData(Constants.TOPIC_SORT_BY_NAME);
-        int count=adapter.getDataByType(Constants.TOPIC_SORT_BY_NAME).size();
-        tv_count.setText("共"+count+"个币种");
+        int count = adapter.getDataByType(Constants.TOPIC_SORT_BY_NAME).size();
+        tv_count.setText("共" + count + "个币种");
     }
 
     @OnClick(R.id.tv_sort_follow)
     public void sortByFollow(View view) {
         qbar.setVisibility(View.GONE);
-        tv_count.setText("共"+0+"个币种");
+        tv_count.setText("共" + 0 + "个币种");
         tv_sort_name.setTextColor(Color.parseColor("#dddddd"));
         tv_sort_follow.setTextColor(Color.parseColor("#3b88f6"));
-        List<SearchedBean.Projects> list   =adapter.getDataByType(Constants.TOPIC_SORT_BY_NUM);
-        if (list==null||list.size()==0){
+        List<SearchedBean.Projects> list = adapter.getDataByType(Constants.TOPIC_SORT_BY_NUM);
+        if (list == null || list.size() == 0) {
             http(Constants.TOPIC_SORT_BY_NUM);
             return;
         }
         adapter.swithData(Constants.TOPIC_SORT_BY_NUM);
-        int count=adapter.getDataByType(Constants.TOPIC_SORT_BY_NUM).size();
-        tv_count.setText("共"+count+"个币种");
+        int count = adapter.getDataByType(Constants.TOPIC_SORT_BY_NUM).size();
+        tv_count.setText("共" + count + "个币种");
     }
 
 
     @Override
     public void onItemClick(View view, int postion) {
-     int id=   adapter.getData().get(postion).getProjectId();
+        int id = adapter.getData().get(postion).getProjectId();
         IntentUtil.startProjectActivity(id);
     }
 
@@ -169,11 +207,11 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
             @Override
             public void onCompleted(SearchedBean bean) {
                 loadingDialog.dismiss();
-                     if (bean.getCode()==0){
-                         List<SearchedBean.Projects> list=  bean.getData().getProjects();
-                         tv_count.setText("共"+list.size()+"个币种");
-                         adapter.setData(list,type);
-                     }
+                if (bean.getCode() == 0) {
+                    List<SearchedBean.Projects> list = bean.getData().getProjects();
+                    tv_count.setText("共" + list.size() + "个币种");
+                    adapter.setData(list, type);
+                }
             }
 
             @Override
@@ -182,4 +220,5 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
             }
         });
     }
+
 }

@@ -8,9 +8,20 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.secretk.move.MoveApplication;
+import com.secretk.move.R;
+import com.secretk.move.utils.UiUtils;
+
+import java.util.List;
 
 /**
  * 快速索引栏
@@ -19,9 +30,6 @@ import android.widget.TextView;
  */
 public class QuickIndexBar extends View {
 
-    private static final String[] LETTERS = new String[]{"#", "A", "B", "C", "D",
-            "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
-            "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 
     private Paint mPaint;
 
@@ -30,12 +38,10 @@ public class QuickIndexBar extends View {
     private int mHeight;
 
     private float cellHeight;
-    private TextView showTv;
+
     int touchIndex = -1;
-  private Context mContext;
-    public void addBundleView(TextView tv) {
-        showTv = tv;
-    }
+    private Context mContext;
+
 
     /**
      * 字母变化监听
@@ -59,16 +65,17 @@ public class QuickIndexBar extends View {
 
     public QuickIndexBar(Context context) {
         this(context, null);
-
+        initPop();
     }
 
     public QuickIndexBar(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
+        initPop();
     }
 
     public QuickIndexBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        this.mContext=context;
+        this.mContext = context;
         // 初始化画笔, 抗锯齿
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(Color.WHITE);
@@ -80,8 +87,8 @@ public class QuickIndexBar extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (int i = 0; i < LETTERS.length; i++) {
-            String letter = LETTERS[i];
+        for (int i = 0; i < list.size(); i++) {
+            String letter = list.get(i);
             int x = (int) (cellWidth * 0.5f - mPaint.measureText(letter) * 0.5f);
 
             // 文本所在的矩形, 获取文本的高度
@@ -106,16 +113,17 @@ public class QuickIndexBar extends View {
         int index = -1;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                this.setBackgroundColor(Color.GRAY);
-                panduan(event);
-                break;
             case MotionEvent.ACTION_MOVE:
                 panduan(event);
                 break;
             case MotionEvent.ACTION_UP:
                 this.setBackgroundColor(Color.TRANSPARENT);
                 touchIndex = -1;
-                showTv.setVisibility(View.GONE);
+
+                if (pop != null) {
+                    pop.dismiss();
+                }
+
                 break;
             default:
                 break;
@@ -129,22 +137,26 @@ public class QuickIndexBar extends View {
         float y;
         int index;
         y = event.getY();
+        float x = event.getX();
         // 根据当前的y值, 除以单元格高度, 获取当前按下字母的索引
         index = (int) (y / cellHeight);
 
-        if (index >= 0 && index < LETTERS.length) {
 
+        if (index >= 0 && index < list.size()) {
             // 判断跟刚刚的索引是否一致, 不一致才显示出来
             if (index != touchIndex) {
                 // 得到按下的字母
-                String letter = LETTERS[index];
 
+                String letter = list.get(index);
                 if (onLetterChangeListener != null) {
                     onLetterChangeListener.onLetterChange(letter);
                 }
-                showTv.setVisibility(View.VISIBLE);
+
+
+                int pop_y = (int) event.getRawY();
+                pop.showAtLocation(this, Gravity.RIGHT, UiUtils.dip2px(20), pop_y - UiUtils.getWindowWidth() / 2 - UiUtils.dip2px(110));
+                tvShow.setText(letter);
                 touchIndex = index;
-                showTv.setText(LETTERS[touchIndex] + "");
             }
         }
     }
@@ -156,12 +168,34 @@ public class QuickIndexBar extends View {
         cellWidth = getMeasuredWidth();
 
         mHeight = getMeasuredHeight();
-        cellHeight = mHeight * 1.0f / LETTERS.length;
+
+        cellHeight = mHeight * 1.0f / 27;
     }
 
-    public  int dip2px(int dip) {
+    public int dip2px(int dip) {
         // 获取dp和px的转换关系的变量
-        float density =  mContext.getResources().getDisplayMetrics().density;
+        float density = mContext.getResources().getDisplayMetrics().density;
         return (int) (dip * density + 0.5f);
+    }
+
+    private List<String> list;
+
+    public void setData(List<String> list) {
+        this.list = list;
+        postInvalidate();
+    }
+
+    public PopupWindow pop;
+    public TextView tvShow;
+
+    public void initPop() {
+
+        View contentView = LayoutInflater.from(MoveApplication.getContext()).inflate(R.layout.fragment_topic_pop, null);
+        tvShow = contentView.findViewById(R.id.tvShow);
+        pop = new PopupWindow(contentView, RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        // 指定 PopupWindow 的背景
+        pop.setFocusable(true);                   // 设定 PopupWindow 取的焦点，创建出来的 PopupWindow 默认无焦点
+
+
     }
 }
