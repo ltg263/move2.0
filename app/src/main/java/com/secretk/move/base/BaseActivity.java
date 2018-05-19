@@ -181,12 +181,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             IntentUtil.showShare("区动","http://qufen.top","我是分享的内容",
                     Constants.BASE_IMG_URL+"/upload/posts/201805/2.jpg");
             Toast.makeText(this, "您点击了分享", Toast.LENGTH_SHORT).show();
-        }else if(item.getItemId() == R.string.save){
-            toolbarTopRightBtn();
         }
         return super.onOptionsItemSelected(item);
-    }
-    protected void toolbarTopRightBtn(){
     }
 
     @Override

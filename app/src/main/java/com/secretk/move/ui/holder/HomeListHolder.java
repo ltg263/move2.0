@@ -79,17 +79,18 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
     ImageView ivComment;
     @BindView(R.id.tv_comments_num)
     TextView tvCommentsNum;
+
     public HomeListHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         tvFollowStatus.setOnClickListener(this);
     }
 
-    public void refresh(final int position, List<RowsBean> lists , Context context) {
+    public void refresh(final int position, List<RowsBean> lists, Context context) {
         final RowsBean rowsBean = lists.get(position);
-        GlideUtils.loadCircleUrl(ivCreateUserIcon, Constants.BASE_IMG_URL+rowsBean.getProjectIcon());
+        GlideUtils.loadCircleUrl(ivCreateUserIcon, Constants.BASE_IMG_URL + rowsBean.getProjectIcon());
         tvCreateUserName.setText(rowsBean.getProjectChineseName());
-        tvEnglishName.setText("/"+rowsBean.getProjectCode());
+        tvEnglishName.setText("/" + rowsBean.getProjectCode());
         tvCreateTime.setText(StringUtil.getTimeToM(rowsBean.getCreateTime()));
         tvPostTitle.setText(rowsBean.getPostTitle());
         tvTotalScore.setText(String.valueOf(rowsBean.getTotalScore()));
@@ -98,25 +99,25 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
         tvCommentsNum.setText(String.valueOf(rowsBean.getCollectNum()));
         String tagInfos = rowsBean.getEvaluationTags();
         String tagName = "";
-        if(StringUtil.isNotBlank(tagInfos)){
+        if (StringUtil.isNotBlank(tagInfos)) {
             try {
                 JSONArray array = new JSONArray(tagInfos);
-                if(array.length()>0){
+                if (array.length() > 0) {
                     tagName = array.getJSONObject(0).getString("tagName");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        switch (rowsBean.getPostType()){//帖子类型，数字，帖子类型：1-评测；2-讨论；3-文章
+        switch (rowsBean.getPostType()) {//帖子类型，数字，帖子类型：1-评测；2-讨论；3-文章
             case 1:
                 tvTotalScore.setVisibility(View.VISIBLE);//分数
                 tvFollowStatus.setVisibility(View.GONE);//关注
                 rlDiscuss.setVisibility(View.GONE);//发表
-                if(StringUtil.isNotBlank(tagName)){
+                if (StringUtil.isNotBlank(tagName)) {
                     tvCrackDown.setVisibility(View.VISIBLE);//标签
                     tvCrackDown.setText(tagName);
-                }else{
+                } else {
                     tvCrackDown.setVisibility(View.GONE);//标签
                 }
                 break;
@@ -133,28 +134,33 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
                 tvCrackDown.setVisibility(View.GONE);
                 break;
         }
-        if(rowsBean.getFollowStatus()==1){ //关注状态  "//0 未关注；1-已关注；2-不显示关注按钮"
+        if (rowsBean.getFollowStatus() == 1) { //关注状态  "//0 未关注；1-已关注；2-不显示关注按钮"
             tvFollowStatus.setText(context.getString(R.string.follow_status_1));
             tvPraiseNum.setSelected(true);
             ivAssist.setSelected(true);
-        }else if(rowsBean.getFollowStatus()==0){
+        } else if (rowsBean.getFollowStatus() == 0) {
             tvFollowStatus.setText(context.getString(R.string.follow_status_0));
             tvPraiseNum.setSelected(false);
             ivAssist.setSelected(false);
-        }else{
+        } else {
             tvFollowStatus.setVisibility(View.GONE);
         }
         List<RowsBean.PostSmallImagesListBean> imgs = rowsBean.getPostSmallImagesList();
-        if(imgs.size()>=2){
-            llMultiImg.setVisibility(View.VISIBLE);
-            ivFileName.setVisibility(View.GONE);
-            GlideUtils.loadImage(context,ivOnt, Constants.BASE_IMG_URL+imgs.get(0).getFileUrl());
-            GlideUtils.loadImage(context,ivTwo, Constants.BASE_IMG_URL+imgs.get(1).getFileUrl());
-            GlideUtils.loadImage(context,ivThree, Constants.BASE_IMG_URL+imgs.get(2).getFileUrl());
+        if (imgs != null) {
+            if (imgs.size() >= 2) {
+                llMultiImg.setVisibility(View.VISIBLE);
+                ivFileName.setVisibility(View.GONE);
+                GlideUtils.loadImage(context, ivOnt, Constants.BASE_IMG_URL + imgs.get(0).getFileUrl());
+                GlideUtils.loadImage(context, ivTwo, Constants.BASE_IMG_URL + imgs.get(1).getFileUrl());
+                GlideUtils.loadImage(context, ivThree, Constants.BASE_IMG_URL + imgs.get(2).getFileUrl());
+            } else {
+                llMultiImg.setVisibility(View.GONE);
+                ivFileName.setVisibility(View.VISIBLE);
+                GlideUtils.loadImage(context, ivFileName, Constants.BASE_IMG_URL + imgs.get(0).getFileUrl());
+            }
         }else{
             llMultiImg.setVisibility(View.GONE);
-            ivFileName.setVisibility(View.VISIBLE);
-            GlideUtils.loadImage(context,ivFileName, Constants.BASE_IMG_URL+imgs.get(0).getFileUrl());
+            ivFileName.setVisibility(View.GONE);
         }
         rlProject.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,17 +172,17 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
             @Override
             public void onClick(View view) {
                 String postId = String.valueOf(rowsBean.getPostId());
-                String key[]={"postId"};
-                String values[]={postId};
-                switch (rowsBean.getPostType()){//帖子类型，数字，帖子类型：1-评测；2-讨论；3-文章
+                String key[] = {"postId"};
+                String values[] = {postId};
+                switch (rowsBean.getPostType()) {//帖子类型，数字，帖子类型：1-评测；2-讨论；3-文章
                     case 1:
-                        IntentUtil.startActivity(DetailsReviewAllActivity.class,key,values);
+                        IntentUtil.startActivity(DetailsReviewAllActivity.class, key, values);
                         break;
                     case 2://
-                        IntentUtil.startActivity(DetailsDiscussActivity.class,key,values);
+                        IntentUtil.startActivity(DetailsDiscussActivity.class, key, values);
                         break;
                     case 3:
-                        IntentUtil.startActivity(DetailsArticleActivity.class,key,values);
+                        IntentUtil.startActivity(DetailsArticleActivity.class, key, values);
                         break;
                 }
             }

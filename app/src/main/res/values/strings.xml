@@ -102,4 +102,14 @@
     <string name="sponsor_title">为人赞助</string>
     <string name="comment">评论</string>
     <string name="sponsor_num">人已赞助</string>
+
+    <!--写测评-->
+    <string name="evaluation_simpleness">简单评测</string>
+    <string name="evaluation_professional">专业评测</string>
+    <string name="evaluation_btn_new">新建测评模型</string>
+    <string name="evaluation_btn_compile">编写完整评测</string>
+    <string name="evaluation">测评</string>
+    <string name="evaluation_state">评测模型说明></string>
+    <string name="evaluation_write">写测评</string>
+    <string name="evaluation_state_select">主要从竞争对手、市场前景、可行性等各方面进行评测。</string>
 </resources>

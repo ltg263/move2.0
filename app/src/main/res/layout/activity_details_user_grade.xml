@@ -9,7 +9,7 @@
         android:id="@+id/head_app_server"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#f9f9f9" />
+        android:background="@color/app_bar_background" />
 
     <View
         android:layout_width="match_parent"
@@ -27,8 +27,8 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dp_15"
                 android:src="@drawable/account_portrait" />

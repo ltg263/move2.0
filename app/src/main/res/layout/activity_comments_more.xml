@@ -10,7 +10,7 @@
         android:id="@+id/head_app_server"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#f9f9f9" />
+        android:background="@color/app_bar_background" />
 
     <View
         android:id="@+id/view"

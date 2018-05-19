@@ -79,7 +79,7 @@ public class MineSetActivity extends BaseActivity {
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitleColor(R.color.title_gray);
         mHeadView.setTitle("设置");
-        mMenuInfos.add(0,new MenuInfo(R.string.save, getString(R.string.save), R.drawable.ic_share));
+        mMenuInfos.add(0,new MenuInfo(R.string.save, getString(R.string.save), 0));
         return mHeadView;
     }
 
@@ -185,7 +185,7 @@ public class MineSetActivity extends BaseActivity {
         return result;
     }
     @Override
-    protected void toolbarTopRightBtn() {
+    protected void OnToolbarRightListener() {
         File file = new File(PicUtil.uritempFile.getPath());
         LogUtil.w("file.exists(:"+file.exists());
         if(!file.exists()){
