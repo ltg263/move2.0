@@ -25,14 +25,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_8"
-            android:text="(5278人)"
             android:textColor="#888888"
             android:textSize="@dimen/sp_12" />
 
         <ImageView
+            android:id="@+id/iv_right_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_5"
+            android:visibility="gone"
             android:src="@drawable/right_boult" />
 
         <TextView
@@ -52,10 +53,20 @@
         android:id="@+id/pb_progress"
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="5dp"
         android:layout_marginTop="@dimen/dp_8"
         android:progress="20"
         android:progressDrawable="@drawable/pb_view_grade" />
+
+    <ProgressBar
+        android:id="@+id/pb_progress_max"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_8"
+        android:progress="80"
+        android:progressDrawable="@drawable/pb_view_grade"
+        android:visibility="gone" />
 
 
 </LinearLayout>

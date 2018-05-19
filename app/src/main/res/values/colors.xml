@@ -19,6 +19,8 @@
     <color name="sr_window_background">#FFFEFEFE</color>
 
     <color name="default_image_background">#FFDEDEDE</color>
+    <!--AppBarHeadView 背景色-->
+    <color name="app_bar_background">#f9f9f9</color>
 
     <color name="alpha_05_white">#0DFFFFFF</color>
     <color name="alpha_10_white">#1AFFFFFF</color>
@@ -90,6 +92,7 @@
     <!--個人主頁-->
     <color name="title_gray">#333333</color>
     <color name="title_gray_66">#666666</color>
+    <color name="title_gray_88">#888888</color>
     <color name="title_gray_ee">#eeeeee</color>
     <color name="background_gray">#f4f4f4</color>
     <!--评分进度色-->

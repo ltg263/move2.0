@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingHorizontal="@dimen/dp_10"
+    android:paddingTop="@dimen/dp_10">
+
+    <TextView
+        android:id="@+id/tv_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="项目定位"
+        android:textColor="@color/title_gray"
+        android:textSize="@dimen/sp_14" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="/20%"
+        android:textColor="@color/title_gray_88"
+        android:textSize="@dimen/sp_12" />
+
+    <TextView
+        android:id="@+id/tv_dimensionality_compile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_circle_2dp"
+        android:drawablePadding="@dimen/dp_3"
+        android:drawableRight="@drawable/right_boult"
+        android:paddingHorizontal="@dimen/dp_8"
+        android:paddingVertical="@dimen/dp_3"
+        android:text="@string/evaluation"
+        android:textColor="@color/app_background"
+        android:textSize="@dimen/sp_14"
+        android:visibility="visible" />
+
+</LinearLayout>

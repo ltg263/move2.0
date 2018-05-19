@@ -94,6 +94,9 @@
             android:name=".ui.activity.DetailsArticleCommentActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.EvaluationSimplenessActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.DetailsReviewAllActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
@@ -109,10 +112,19 @@
             android:name=".ui.activity.DetailsUserGradeActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.EvaluationProfessionalActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.EvaluationProfessionalItemActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.MineSetActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.SearchActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.EvaluationCompileListActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.MineCollectActivity"

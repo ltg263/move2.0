@@ -62,7 +62,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="22"
             android:textColor="@color/xmdw"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -93,7 +92,6 @@
             app:rvLineColor="#aaaaaa"
             app:rvTextColor="#aaaaaa"
             app:rvTextSize="10sp"
-            app:selectorValue="5.5"
             app:textMarginTop="1dp" />
     </RelativeLayout>
 </RelativeLayout>

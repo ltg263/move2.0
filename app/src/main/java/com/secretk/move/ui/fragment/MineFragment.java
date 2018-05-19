@@ -13,9 +13,9 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.UserLoginInfo;
 import com.secretk.move.presenter.MineFragmentPresenter;
 import com.secretk.move.presenter.impl.MineFragmentPresenterImpl;
+import com.secretk.move.ui.activity.EvaluationSimplenessActivity;
 import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
-import com.secretk.move.ui.activity.MineCollectActivity;
 import com.secretk.move.ui.activity.MineSetActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
@@ -157,7 +157,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
             case R.id.ll_my_attention:
                 break;
             case R.id.ll_my_collect:
-                IntentUtil.startActivity(MineCollectActivity.class);
+                IntentUtil.startActivity(EvaluationSimplenessActivity.class);
                 break;
             case R.id.ll_my_recommend:
                 break;

@@ -198,7 +198,9 @@ public class DetailsReviewAllActivity extends BaseActivity {
         pbComprehensiveEvaluation.setTvOne(getResources().getString(R.string.comprehensive_evaluation),0,
                 getResources().getColor(R.color.title_gray));
         pbComprehensiveEvaluation.setTvThree(evaluationDetail.getTotalScore(),16,R.color.app_background);
+        pbComprehensiveEvaluation.setPbProgressMaxVisible();
         try {
+
             initProfessionalData(evaluationDetail.getProfessionalEvaDetail());
         } catch (JSONException e) {
             e.printStackTrace();
