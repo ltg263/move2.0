@@ -22,28 +22,32 @@
         android:paddingBottom="@dimen/dp_5">
 
         <RadioButton
+            android:id="@+id/rb_main"
             style="@style/main_tab_bottom"
             android:checked="true"
             android:drawableTop="@drawable/main_tab_home_page_selector"
-            android:onClick="go2main"
+
             android:text="@string/main_tab_home_page" />
 
         <RadioButton
+            android:id="@+id/rb_topic"
             style="@style/main_tab_bottom"
             android:drawableTop="@drawable/main_tab_topic_selector"
-            android:onClick="go2topic"
+
             android:text="@string/main_tab_topic" />
 
         <RadioButton
+            android:id="@+id/rb_message"
             style="@style/main_tab_bottom"
             android:drawableTop="@drawable/main_tab_message_selector"
-            android:onClick="go2message"
+
             android:text="@string/main_tab_message" />
 
         <RadioButton
+            android:id="@+id/rb_mine"
             style="@style/main_tab_bottom"
             android:drawableTop="@drawable/main_tab_mine_selector"
-            android:onClick="go2mine"
+
             android:text="@string/main_tab_mine" />
     </RadioGroup>
 

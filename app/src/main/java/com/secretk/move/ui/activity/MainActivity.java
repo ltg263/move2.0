@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.widget.RadioGroup;
 
 import com.secretk.move.R;
 import com.secretk.move.base.MvpBaseActivity;
@@ -23,6 +24,8 @@ import butterknife.BindView;
 public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements ActivityMainContract.View {
     @BindView(R.id.vp_main)
     TabViewpager vp_main;
+    @BindView(R.id.rg_main_parent)
+    RadioGroup rg_main_parent;
     MainActivityPagerAdapter adapter;
     ActivityMainContract.Presenter presenter;
     @Override
@@ -33,9 +36,7 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
     protected MainPresenterImpl initPresenter() {
         return new MainPresenterImpl(this);
     }
-    public void go2main(android.view.View view) {
-        vp_main.setCurrentItem(0);
-    }
+
     @Override
     protected void initView() {
         StatusBarUtil.setLightMode(this);
@@ -66,18 +67,30 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
 
             }
         });
-    }
-    public void go2topic(android.view.View view) {
-        vp_main.setCurrentItem(1);
+
+        rg_main_parent.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_main:
+                        vp_main.setCurrentItem(0);
+                        break;
+                    case R.id.rb_topic:
+                        vp_main.setCurrentItem(1);
+                        break;
+                    case R.id.rb_message:
+                        vp_main.setCurrentItem(2);
+                        break;
+                    case R.id.rb_mine:
+                        vp_main.setCurrentItem(3);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
-    public void go2message(android.view.View view) {
-        vp_main.setCurrentItem(2);
-    }
-
-    public void go2mine(android.view.View view) {
-        vp_main.setCurrentItem(3);
-    }
 
 
     @Override
