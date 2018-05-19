@@ -96,6 +96,8 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
             return;
         }
         adapter.swithData(Constants.TOPIC_SORT_BY_NAME);
+        int count=adapter.getDataByType(Constants.TOPIC_SORT_BY_NAME).size();
+        tv_count.setText("共"+count+"个币种");
     }
 
     @OnClick(R.id.tv_sort_follow)
@@ -110,6 +112,8 @@ public class TopicFragment extends LazyFragment implements  ItemClickListener, Q
             return;
         }
         adapter.swithData(Constants.TOPIC_SORT_BY_NUM);
+        int count=adapter.getDataByType(Constants.TOPIC_SORT_BY_NUM).size();
+        tv_count.setText("共"+count+"个币种");
     }
 
 
