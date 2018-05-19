@@ -83,7 +83,7 @@ public class HttpActivity extends AppCompatActivity {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            node.put("projectId", "projectId");
+            node.put("projectId", 1);
             node.put("postTitle", "postTitle");
             node.put("articleContents", "articleContents");
 

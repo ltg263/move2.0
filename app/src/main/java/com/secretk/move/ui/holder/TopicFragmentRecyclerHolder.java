@@ -65,6 +65,17 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 break;
         }
         tvFollws.setText(currenBean.getFollowerNum()+"关注");
+        if (0 == currenBean.getFollowStatus()) {
+            tvIsFollw.setText("+ 关注");
+            tvIsFollw.setSelected(false);
+            tvIsFollw.setPressed(false);
+        } else if (1 == currenBean.getFollowStatus()) {
+            tvIsFollw.setText("已关注");
+            tvIsFollw.setSelected(true);
+            tvIsFollw.setPressed(true);
+        } else {
+            tvIsFollw.setVisibility(View.GONE);
+        }
         tvIsFollw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,8 +141,12 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 if (bean.getCode()==0){
                     if (getString().equals("已关注")) {
                         tvIsFollw.setText("+ 关注");
+                        tvIsFollw.setSelected(false);
+                        tvIsFollw.setPressed(false);
                     } else {
                         tvIsFollw.setText("已关注");
+                        tvIsFollw.setSelected(true);
+                        tvIsFollw.setPressed(true);
                     }
                 }
             }

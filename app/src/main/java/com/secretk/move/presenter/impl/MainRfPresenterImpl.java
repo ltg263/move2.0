@@ -59,7 +59,6 @@ public class MainRfPresenterImpl implements MainRfContract.Presenter, MainRfCont
         } else {
             view.showMsg("请检查当前网络");
         }
-
     }
 
     @Override

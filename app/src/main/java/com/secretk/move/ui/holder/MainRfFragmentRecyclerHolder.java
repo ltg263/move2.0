@@ -1,12 +1,16 @@
 package com.secretk.move.ui.holder;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -111,6 +115,7 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         ll_user.setOnClickListener(this);
         ll_user2.setOnClickListener(this);
     }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public  void  setData(final MainRfBean.Rows bean){
         GlideUtils.loadCircleUrl(img_organization, Constants.BASE_IMG_URL + bean.getProjectIcon());
         switch (type){
@@ -127,8 +132,12 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvIsFollw.setVisibility(View.VISIBLE);
         if (0 == bean.getFollowStatus()) {
             tvIsFollw.setText("+ 关注");
+            tvIsFollw.setSelected(false);
+            tvIsFollw.setPressed(false);
         } else if (1 == bean.getFollowStatus()) {
             tvIsFollw.setText("已关注");
+            tvIsFollw.setSelected(true);
+            tvIsFollw.setPressed(true);
         } else {
             tvIsFollw.setVisibility(View.GONE);
         }
@@ -180,8 +189,12 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 if (bean.getCode()==0){
                     if (getString().equals("已关注")) {
                         tvIsFollw.setText("+ 关注");
+                        tvIsFollw.setSelected(false);
+                        tvIsFollw.setPressed(false);
                     } else {
                         tvIsFollw.setText("已关注");
+                        tvIsFollw.setSelected(true);
+                        tvIsFollw.setPressed(true);
                     }
                 }
             }
