@@ -2,6 +2,7 @@ package com.secretk.move.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 作者： litongge
@@ -33,6 +36,7 @@ public class EvaluationProfessionalActivity extends BaseActivity {
     EvaluationTypeAdapter adapter;
     @BindView(R.id.tv_status)
     TextView textView;
+
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
         mHeadView = findViewById(R.id.head_app_server);
@@ -56,9 +60,9 @@ public class EvaluationProfessionalActivity extends BaseActivity {
 
         String tagAll = "经过科学筛选，系统提供以下几个评测纬度，可完整评测，" +
                 "也可部分评测；您也可以自己新建模型进行测评。"
-                +getResources().getString(R.string.evaluation_state);
-        String tagOnly[]= new String[1];
-        tagOnly[0]=getResources().getString(R.string.evaluation_state);
+                + getResources().getString(R.string.evaluation_state);
+        String tagOnly[] = new String[1];
+        tagOnly[0] = getResources().getString(R.string.evaluation_state);
         Clickable.getSpannableString(tagAll, tagOnly, textView, new Clickable.ClickListener() {
             @Override
             public void setOnClick(String name) {
@@ -70,9 +74,9 @@ public class EvaluationProfessionalActivity extends BaseActivity {
     @Override
     protected void initData() {
         List<BaseRes> list = new ArrayList<>();
-        for(int i=0;i<5;i++){
+        for (int i = 0; i < 5; i++) {
             BaseRes res = new BaseRes();
-            res.setMsg("我是"+i);
+            res.setMsg("我是" + i);
             list.add(res);
         }
         adapter.setData(list);
@@ -85,4 +89,18 @@ public class EvaluationProfessionalActivity extends BaseActivity {
         IntentUtil.startActivity(EvaluationSimplenessActivity.class);
     }
 
+    @OnClick({R.id.ll_project, R.id.btn_new, R.id.btn_compile})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_project:
+                IntentUtil.startProjectActivity(3);
+                break;
+            case R.id.btn_new:
+//                IntentUtil.startActivity(EvaluationNewActivity.class);
+                break;
+            case R.id.btn_compile:
+                IntentUtil.startActivity(EvaluationCompileListActivity.class);
+                break;
+        }
+    }
 }

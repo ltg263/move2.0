@@ -7,10 +7,12 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.utils.StringUtil;
 
 /**
  * 作者： litongge
@@ -29,6 +31,8 @@ public class ProgressBarStyleView extends FrameLayout {
     protected TextView tvTwoTitle;//默认：Color #888888  Size：12sp
     protected TextView tvThreeTitle;//默认：Color #3b88f6  Size：14sp
     protected ProgressBar pbProgress;//默认：pb_view_grade
+    protected ProgressBar pbProgressMax;//默认：pb_view_grade
+    private ImageView ivRightIcon;
 
     public void setTvOne(String strOneTitle,float strOneSize,int strOneColor) {
         tvOneTitle.setText(strOneTitle);
@@ -40,7 +44,10 @@ public class ProgressBarStyleView extends FrameLayout {
         }
     }
     public void setTvTwo(String strTwoTitle,float strTwoSize,int strTwoColor) {
-        tvTwoTitle.setText(strTwoTitle);
+        if(StringUtil.isNotBlank(strTwoTitle)){
+            tvTwoTitle.setText(strTwoTitle);
+            ivRightIcon.setVisibility(View.VISIBLE);
+        }
         if(strTwoSize!=0){
             tvTwoTitle.setTextSize(strTwoSize);
         }
@@ -59,6 +66,9 @@ public class ProgressBarStyleView extends FrameLayout {
         }
     }
     public void setAllTv(String ont,String two,double three) {
+        if(StringUtil.isNotBlank(two)){
+            ivRightIcon.setVisibility(View.VISIBLE);
+        }
         tvOneTitle.setText(ont);
         tvTwoTitle.setText(two);
         tvThreeTitle.setText(String.valueOf(three));
@@ -68,10 +78,12 @@ public class ProgressBarStyleView extends FrameLayout {
     public void setProgressDrawable(int id,int colorId){
         Drawable progressDrawable= getResources().getDrawable(id);
         pbProgress.setProgressDrawable(progressDrawable);
+        pbProgressMax.setProgressDrawable(progressDrawable);
         tvThreeTitle.setTextColor(getResources().getColor(colorId));
     }
     public void setProgress(int progress){
         pbProgress.setProgress(progress);
+        pbProgressMax.setProgress(progress);
 
     }
 
@@ -99,12 +111,19 @@ public class ProgressBarStyleView extends FrameLayout {
         if (PbView != null) {
             tvOneTitle = PbView.findViewById(R.id.tv_title);
             tvTwoTitle = PbView.findViewById(R.id.tv_head_level);
+            ivRightIcon = PbView.findViewById(R.id.iv_right_icon);
             tvThreeTitle = PbView.findViewById(R.id.tv_score);
             pbProgress = PbView.findViewById(R.id.pb_progress);
+            pbProgressMax = PbView.findViewById(R.id.pb_progress_max);
+
             tvOneTitle.setText(setOneTitle);
             tvTwoTitle.setText(setTwoTitle);
             tvThreeTitle.setText(setThreeTitle);
         }
     }
 
+    public void setPbProgressMaxVisible() {
+        pbProgress.setVisibility(View.GONE);
+        pbProgressMax.setVisibility(View.VISIBLE);
+    }
 }

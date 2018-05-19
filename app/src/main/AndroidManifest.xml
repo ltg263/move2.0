@@ -124,6 +124,9 @@
             android:name=".ui.activity.SearchActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.EvaluationCompileListActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.MineCollectActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity android:name=".ui.activity.AddLabelActivity" />

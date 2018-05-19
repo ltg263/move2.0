@@ -39,7 +39,7 @@
             android:layout_width="@dimen/dp_80"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="@string/mine_text_5"
+            android:text="@string/evaluation_object"
             android:textColor="@color/title_gray_88"
             android:textSize="@dimen/sp_14" />
 

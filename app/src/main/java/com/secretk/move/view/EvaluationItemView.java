@@ -143,6 +143,7 @@ public class EvaluationItemView extends View {
 
     public void setSelectorValue(float selectorValue) {
         mSelectorValue = selectorValue;
+        setValue(mSelectorValue, 0, 10, 0.1f);
     }
 
     public void setTextColor(int color) {

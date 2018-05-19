@@ -17,6 +17,7 @@
         android:background="@color/cut_off_rule" />
 
     <LinearLayout
+        android:id="@+id/ll_project"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -64,13 +65,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10" />
+
     <TextView
         android:id="@+id/tv_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dp_10"
         android:textColor="@color/title_gray_88"
-        android:textSize="@dimen/sp_12"/>
+        android:textSize="@dimen/sp_12" />
 
     <View
         android:layout_width="wrap_content"
@@ -83,6 +85,7 @@
         android:background="@color/app_background">
 
         <Button
+            android:id="@+id/btn_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -98,6 +101,7 @@
             android:background="@color/white" />
 
         <Button
+            android:id="@+id/btn_compile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

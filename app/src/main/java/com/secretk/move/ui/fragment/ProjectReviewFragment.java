@@ -141,6 +141,7 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
                     getResources().getColor(R.color.title_gray));
             pbComprehensiveEvaluation.setTvTwo("("+project.getRaterNum()+"人)",0,0);
             pbComprehensiveEvaluation.setTvThree(project.getTotalScore(),16,R.color.app_background);
+            pbComprehensiveEvaluation.setPbProgressMaxVisible();
         }
         //设置评分样式
         for(int postion=0;postion<beans.size();postion++){
