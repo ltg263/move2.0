@@ -92,6 +92,8 @@ public class QuickIndexBar extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if (list==null)
+            return;
         for (int i = 0; i < list.size(); i++) {
             String letter = list.get(i);
             int x = (int) (cellWidth * 0.5f - mPaint.measureText(letter) * 0.5f);

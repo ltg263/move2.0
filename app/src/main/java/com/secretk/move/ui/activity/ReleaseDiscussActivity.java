@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.secretk.move.R;
 import com.secretk.move.listener.ItemClickListener;
@@ -37,6 +39,8 @@ public class ReleaseDiscussActivity extends AppCompatActivity  implements ItemCl
     ReleasePicAdapter releasePicAdapter;
     @BindView(R.id.recycler_horizontal)
     RecyclerView recycler_horizontal;
+    @BindView(R.id.ed_title)
+    EditText ed_title;
     ReleaseArticleLabelAdapter releaseArticleLabelAdapter;
     LinearLayoutManager layoutManager;
     @Override
@@ -62,6 +66,8 @@ public class ReleaseDiscussActivity extends AppCompatActivity  implements ItemCl
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recycler_horizontal.setLayoutManager(layoutManager);
         recycler_horizontal.setAdapter(releaseArticleLabelAdapter);
+
+        ed_title.setHint(Html.fromHtml("请输入标题 <small>(6-30字之间)</small>"));
     }
     @OnClick(R.id.img_return)
     public void img_return() {
@@ -72,6 +78,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity  implements ItemCl
     public void tv_release() {
 
     }
+    @OnClick(R.id.localphoto)
     public void localphoto(View view) {
         Intent intent = new Intent(this, SelectedPicActivity.class);
         startActivity(intent);
@@ -79,7 +86,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity  implements ItemCl
 
     int REQUEST_CODE_CAMERA = 199;
     String picPath;
-
+    @OnClick(R.id.takephoto)
     public void takephoto(View view) {
         if (releasePicAdapter.getItemCount()>=9){
             ToastUtils.getInstance().show("最多选择九张图片");
@@ -92,12 +99,12 @@ public class ReleaseDiscussActivity extends AppCompatActivity  implements ItemCl
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         startActivityForResult(intent, REQUEST_CODE_CAMERA);
     }
-
+    @OnClick(R.id.addlabel)
     public void addlabel(View view) {
         Intent intent = new Intent(this, AddLabelActivity.class);
         startActivity(intent);
     }
-
+    @OnClick(R.id.swithKeyboard)
     public void swithKeyboard(View view) {
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }

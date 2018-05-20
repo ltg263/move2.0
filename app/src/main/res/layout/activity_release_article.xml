@@ -58,10 +58,11 @@
               android:orientation="vertical">
 
               <EditText
+                  android:id="@+id/ed_title"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:background="@null"
-                  android:hint="请输入标题 (6-30字之间)"
+                  android:textSize="@dimen/sp_18"
                   android:padding="@dimen/dp_10"
                   android:textCursorDrawable="@drawable/shape_edit_cursor" />
 
@@ -78,6 +79,7 @@
                   android:background="@null"
                   android:hint="请输入字数小于2000字的正文"
                   android:padding="@dimen/dp_10"
+                  android:textSize="@dimen/sp_14"
                   android:textCursorDrawable="@drawable/shape_edit_cursor" />
               <android.support.v7.widget.RecyclerView
                   android:layout_marginTop="@dimen/dp_20"
@@ -93,45 +95,68 @@
             android:id="@+id/recycler_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <RadioGroup
-            android:layout_alignParentBottom="true"
+        <LinearLayout
             android:id="@+id/rg_bottom"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
             android:layout_weight="1"
             android:background="#f9f9f9"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/dp_5">
 
-            <RadioButton
-                style="@style/main_tab_bottom"
-                android:checked="true"
-                android:drawableTop="@drawable/my_infro_localphoto"
-                android:onClick="localphoto"
-                />
+            <RelativeLayout
+                android:id="@+id/localphoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-            <RadioButton
-                style="@style/main_tab_bottom"
-                android:drawableTop="@drawable/my_infro_takephoto"
-                android:onClick="takephoto"
-                />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/my_infro_localphoto" />
+            </RelativeLayout>
 
-            <RadioButton
-                style="@style/main_tab_bottom"
-                android:drawableTop="@drawable/my_info_keyboard"
-                android:onClick="swithKeyboard"
-               />
+            <RelativeLayout
+                android:id="@+id/takephoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/my_infro_takephoto" />
+            </RelativeLayout>
 
-            <RadioButton
-                style="@style/main_tab_bottom"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:onClick="addlabel"
-                android:text="A"
-                android:textColor="#9e9e9e"
-                android:textSize="18sp" />
-        </RadioGroup>
+            <RelativeLayout
+                android:id="@+id/addlabel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:textSize="@dimen/sp_22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="#aaaaaa"
+                    android:text="A" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/swithKeyboard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/my_info_keyboard" />
+            </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
 
 
