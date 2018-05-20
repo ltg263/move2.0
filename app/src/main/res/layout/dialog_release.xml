@@ -24,6 +24,7 @@
                 android:background="@drawable/release_evaluation" />
 
             <TextView
+                android:layout_marginTop="@dimen/dp_20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -44,6 +45,7 @@
                 android:background="@drawable/release_article" />
 
             <TextView
+                android:layout_marginTop="@dimen/dp_20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -64,6 +66,7 @@
                 android:background="@drawable/release_discuss" />
 
             <TextView
+                android:layout_marginTop="@dimen/dp_20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

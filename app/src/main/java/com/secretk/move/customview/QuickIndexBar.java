@@ -19,9 +19,14 @@ import android.widget.TextView;
 
 import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
+import com.secretk.move.bean.SearchedBean;
 import com.secretk.move.utils.UiUtils;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 快速索引栏
@@ -154,7 +159,7 @@ public class QuickIndexBar extends View {
 
 
                 int pop_y = (int) event.getRawY();
-                pop.showAtLocation(this, Gravity.RIGHT, UiUtils.dip2px(20), pop_y - UiUtils.getWindowWidth() / 2 - UiUtils.dip2px(110));
+                pop.showAtLocation(this, Gravity.LEFT, UiUtils.dip2px(20), pop_y - UiUtils.getWindowWidth() / 2 - UiUtils.dip2px(110));
                 tvShow.setText(letter);
                 pop.update();
                 tvShow.invalidate();
@@ -187,7 +192,25 @@ public class QuickIndexBar extends View {
         this.list = list;
         postInvalidate();
     }
-
+    public void setDatax( List<SearchedBean.Projects> xlist) {
+        for (int i=0;i<xlist.size();i++){
+            String str=xlist.get(i).getProjectCode().charAt(0)+"";
+            this.list.add(str.toUpperCase());
+        }
+        removeDuplicateWithOrder( this.list);
+    }
+    public  void removeDuplicateWithOrder(List list) {
+        Set set = new HashSet();
+        List newList = new ArrayList();
+        for (Iterator iter = list.iterator(); iter.hasNext();) {
+            Object element = iter.next();
+            if (set.add(element))
+                newList.add(element);
+        }
+        list.clear();
+        list.addAll(newList);
+        postInvalidate();
+    }
     public PopupWindow pop;
     public TextView tvShow;
 

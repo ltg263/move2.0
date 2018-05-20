@@ -34,4 +34,9 @@ public class GlideUtils {
         Glide.with(MoveApplication.getContext()).applyDefaultRequestOptions(new RequestOptions().placeholder(R.drawable.account_portrait).error(R.drawable.account_portrait)).
                 load(url).into(img);
     }
+
+    public static void loadTabImage(Context context,ImageView img, int url) {
+        Glide.with(context).applyDefaultRequestOptions(new RequestOptions().override(UiUtils.dip2px(20),UiUtils.dip2px(20))).
+                load(url).into(img);
+    }
 }
