@@ -43,7 +43,7 @@ private Context mContext;
     public void onBindViewHolder(ViewHolder holder, int position) {
         String str = list.get(position);
         holder.setItemListener(mListener);
-       GlideUtils.loadImage(holder.img, str);
+        GlideUtils.loadImage(mContext,holder.img, str);
     }
 
     @Override

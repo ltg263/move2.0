@@ -197,6 +197,9 @@ public class QuickIndexBar extends View {
     public void setDatax( List<SearchedBean.Projects> xlist) {
         for (int i=0;i<xlist.size();i++){
             String str=xlist.get(i).getProjectCode().charAt(0)+"";
+            if (list==null){
+                list=new ArrayList<>();
+            }
             this.list.add(str.toUpperCase());
         }
         removeDuplicateWithOrder( this.list);
