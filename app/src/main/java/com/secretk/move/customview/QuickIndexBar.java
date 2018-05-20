@@ -156,6 +156,9 @@ public class QuickIndexBar extends View {
                 int pop_y = (int) event.getRawY();
                 pop.showAtLocation(this, Gravity.RIGHT, UiUtils.dip2px(20), pop_y - UiUtils.getWindowWidth() / 2 - UiUtils.dip2px(110));
                 tvShow.setText(letter);
+                pop.update();
+                tvShow.invalidate();
+
                 touchIndex = index;
             }
         }

@@ -92,9 +92,6 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
                 int code = bean.getCode();
                 List<DiscussLabelListbean.TagList> lists = bean.getData().getTagList();
                 if (code == 0) {
-                    DiscussLabelListbean.TagList data = new DiscussLabelListbean.TagList();
-                    data.setTagName("+添加话题");
-                    lists.add(0, data);
                     adapter.setData(lists);
                 }
             }
@@ -109,9 +106,9 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
 
     @Override
     public void onItemClick(View view, int postion) {
-        if (postion == 0) {
-            showPopupWindow();
-        } else {
+//        if (postion == 0) {
+//            showPopupWindow();
+//        } else {
             DiscussLabelListbean.TagList bean = adapter.getDataIndex(postion);
             if (bean.getSelected()) {
                 bean.setSelected(false);
@@ -129,7 +126,7 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
                 tv_selected.setText("已选"+array.size()+"个");
             }
             adapter.notifyDataSetChanged();
-        }
+//        }
     }
 
     @Override
