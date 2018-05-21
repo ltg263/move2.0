@@ -87,7 +87,7 @@ public class RetrofitUtil {
             return;
         }
         long time = System.currentTimeMillis();
-        params.addQuery("time", time+"");
+//        params.addQuery("time", time+"");
         BaseApiService apiService = mRetrofit.create(BaseApiService.class);
         String url = params.getUrl();
         Call<ResponseBody> call;

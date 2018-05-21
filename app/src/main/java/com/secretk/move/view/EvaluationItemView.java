@@ -73,6 +73,12 @@ public class EvaluationItemView extends View {
     private String unit = "";
     private OnValueChangeListener mListener;
     private int mAlphacolor=0;
+    //支持滑动
+    private boolean setSlide = true;
+
+    public void setSetSlide(boolean setSlide) {
+        this.setSlide = setSlide;
+    }
 
 
     public EvaluationItemView(Context context) {
@@ -294,9 +300,11 @@ public class EvaluationItemView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if(!setSlide){
+            return true;
+        }
         int action = event.getAction();
         int xPosition = (int) event.getX();
-
         if (mVelocityTracker == null) {
             mVelocityTracker = VelocityTracker.obtain();
         }
@@ -351,6 +359,9 @@ public class EvaluationItemView extends View {
     }
     //改变滑动的值 校准刻度
     private void changeMoveAndValue() {
+//        if(true){
+//            return;
+//        }
         mOffset -= mMove;
         if (mOffset <= mMaxOffset) {
             mOffset = mMaxOffset;
