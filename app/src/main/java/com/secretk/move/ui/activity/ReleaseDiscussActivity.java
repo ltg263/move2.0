@@ -81,6 +81,8 @@ public class ReleaseDiscussActivity extends AppCompatActivity  implements ItemCl
     @OnClick(R.id.localphoto)
     public void localphoto(View view) {
         Intent intent = new Intent(this, SelectedPicActivity.class);
+        intent.putExtra("max_pic",9);
+        intent.putExtra("current_pic",releasePicAdapter.getItemCount());
         startActivity(intent);
     }
 

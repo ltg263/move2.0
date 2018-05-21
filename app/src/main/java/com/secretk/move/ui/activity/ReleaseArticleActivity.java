@@ -58,8 +58,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
     }
 
     private void init() {
-        StatusBarUtil.setLightMode(this);
-        StatusBarUtil.setColor(this, UiUtils.getColor(R.color.main_background), 0);
+
         imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
         picList = new ArrayList<>();
 
@@ -90,6 +89,8 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
     @OnClick(R.id.localphoto)
     public void localphoto(View view) {
         Intent intent = new Intent(this, SelectedPicActivity.class);
+        intent.putExtra("max_pic",3);
+        intent.putExtra("current_pic",releasePicAdapter.getItemCount());
         startActivity(intent);
     }
 
@@ -97,8 +98,8 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
     String picPath;
     @OnClick(R.id.takephoto)
     public void takephoto(View view) {
-        if (releasePicAdapter.getItemCount()>=9){
-            ToastUtils.getInstance().show("最多选择九张图片");
+        if (releasePicAdapter.getItemCount()>=3){
+            ToastUtils.getInstance().show("最多选择三张张图片");
             return;
         }
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

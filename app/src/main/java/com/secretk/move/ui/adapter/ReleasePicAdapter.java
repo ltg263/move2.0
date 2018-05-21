@@ -48,6 +48,9 @@ private Context mContext;
 
     @Override
     public int getItemCount() {
+        if (list==null){
+            return 0;
+        }
         return list.size();
 
     }

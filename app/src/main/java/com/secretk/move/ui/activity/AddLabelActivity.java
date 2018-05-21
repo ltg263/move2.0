@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -204,4 +205,11 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
         activity.getWindow().setAttributes(lp);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            array=null;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

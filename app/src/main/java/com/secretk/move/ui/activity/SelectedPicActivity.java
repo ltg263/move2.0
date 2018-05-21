@@ -18,6 +18,9 @@ import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.bean.PicBean;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.StatusBarUtil;
+import com.secretk.move.utils.ToastUtils;
+import com.secretk.move.utils.UiUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,7 +48,8 @@ public class SelectedPicActivity extends AppCompatActivity {
     private String data = null;
     private ArrayList<PicBean> list = new ArrayList<PicBean>();
     public static LongSparseArray<PicBean> picArray = new LongSparseArray<>();
-
+private int maxPicNum;
+private int lastActivityPicNum;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,9 +60,14 @@ public class SelectedPicActivity extends AppCompatActivity {
     }
 
     private void init() {
+        StatusBarUtil.setLightMode(this);
+        StatusBarUtil.setColor(this, UiUtils.getColor(R.color.main_background), 0);
         recycler.setLayoutManager(new GridLayoutManager(this, 4));
         selectedPicAdaper = new SelectedPicAdaper();
         recycler.setAdapter(selectedPicAdaper);
+        maxPicNum=   getIntent().getIntExtra("max_pic",3);
+        lastActivityPicNum= getIntent().getIntExtra("current_pic",0);
+        picArray.clear();
     }
 
     private void initPic() {
@@ -132,6 +141,10 @@ public class SelectedPicActivity extends AppCompatActivity {
             holder.img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (picArray.size()+lastActivityPicNum>=maxPicNum){
+                        ToastUtils.getInstance().show("最多选择"+maxPicNum+"张照片");
+                        return;
+                    }
                     if (picArray.get(bean.getId()) == null) {
                         picArray.put(bean.getId(), bean);
                     } else {
