@@ -25,12 +25,14 @@ import com.secretk.move.utils.UiUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Files.FileColumns;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,8 +50,10 @@ public class SelectedPicActivity extends AppCompatActivity {
     private String data = null;
     private ArrayList<PicBean> list = new ArrayList<PicBean>();
     public static LongSparseArray<PicBean> picArray = new LongSparseArray<>();
-private int maxPicNum;
-private int lastActivityPicNum;
+
+    private int maxPicNum;
+    private int lastActivityPicNum;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +69,8 @@ private int lastActivityPicNum;
         recycler.setLayoutManager(new GridLayoutManager(this, 4));
         selectedPicAdaper = new SelectedPicAdaper();
         recycler.setAdapter(selectedPicAdaper);
-        maxPicNum=   getIntent().getIntExtra("max_pic",3);
-        lastActivityPicNum= getIntent().getIntExtra("current_pic",0);
+        maxPicNum = getIntent().getIntExtra("max_pic", 3);
+        lastActivityPicNum = getIntent().getIntExtra("current_pic", 0);
         picArray.clear();
     }
 
@@ -129,7 +133,7 @@ private int lastActivityPicNum;
 
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
-            final   PicBean bean = list.get(position);
+            final PicBean bean = list.get(position);
             GlideUtils.loadImage(mContext, holder.img, bean.getPath());
             if (picArray.get(bean.getId()) != null) {
                 Glide.with(mContext).
@@ -141,8 +145,8 @@ private int lastActivityPicNum;
             holder.img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (picArray.size()+lastActivityPicNum>=maxPicNum){
-                        ToastUtils.getInstance().show("最多选择"+maxPicNum+"张照片");
+                    if (picArray.size() + lastActivityPicNum >= maxPicNum) {
+                        ToastUtils.getInstance().show("最多选择" + maxPicNum + "张照片");
                         return;
                     }
                     if (picArray.get(bean.getId()) == null) {
