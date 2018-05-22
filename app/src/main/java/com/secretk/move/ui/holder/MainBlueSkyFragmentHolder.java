@@ -122,12 +122,13 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
             public void onCompleted(BaseRes bean) {
                 if (bean.getCode()==0){
                     if (getString().equals("已关注")) {
-                        tvIsFollw.setPressed(true);
-                        tvIsFollw.setSelected(true);
-                        tvIsFollw.setText("+ 关注");
-                    } else {
+
                         tvIsFollw.setPressed(false);
                         tvIsFollw.setSelected(false);
+                        tvIsFollw.setText("+ 关注");
+                    } else {
+                        tvIsFollw.setPressed(true);
+                        tvIsFollw.setSelected(true);
                         tvIsFollw.setText("已关注");
                     }
                 }
