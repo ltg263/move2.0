@@ -139,6 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="8.5分"
+            android:textStyle="bold"
             android:textColor="@color/app_background"
             android:textSize="@dimen/sp_16" />
 
