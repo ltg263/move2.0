@@ -128,7 +128,8 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         }
         tvName.setText(bean.getProjectChineseName());
         tv_english_name.setText("/"+bean.getProjectEnglishName());
-        tvTime.setText(StringUtil.getTimeToM(bean.getCreateTime()));
+        String time= TimeUtils.getChatTime(bean.getCreateTime());
+       tvTime.setText(time);
         tvIsFollw.setVisibility(View.VISIBLE);
         if (0 == bean.getFollowStatus()) {
             tvIsFollw.setText("+ 关注");
