@@ -19,7 +19,7 @@
     <string name="main_tab_topic">话题</string>
     <string name="main_tab_message">消息</string>
     <string name="main_tab_mine">我的</string>
-    <string name="main_fragment_recommend">推荐</string>
+    <string name="main_fragment_recommend">发现</string>
     <string name="main_fragment_follow">关注</string>
     <string name="main_fragment_bluesky">青天榜</string>
     <string name="main_publish">发表</string>

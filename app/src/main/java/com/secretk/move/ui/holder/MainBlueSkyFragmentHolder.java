@@ -33,6 +33,9 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
     public ImageView img_head;
     @BindView(R.id.tv_name)
     public   TextView  tv_name;
+    @BindView(R.id.tv_code)
+    public   TextView  tv_code;
+
     @BindView(R.id.tv_content)
     public   TextView  tv_content;
     @BindView(R.id.tv_score)
@@ -57,7 +60,8 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
     }
     public  void  setData(final BlueSkyBean.RankList bean,int position){
         GlideUtils.loadCircleUrl(img_head, Constants.BASE_IMG_URL+bean.getProjectIcon());
-        tv_name.setText(bean.getProjectChineseName());
+        tv_code.setText(bean.getProjectCode());
+        tv_name.setText(" /"+bean.getProjectChineseName());
         tv_content.setText(bean.getProjectSignature());
         tv_score.setText(bean.getTotalScore());
         tv_follow.setText(bean.getFollowerNum());

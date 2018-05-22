@@ -50,15 +50,24 @@
         android:textColor="@color/app_background" />
 
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/view_center"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_toRightOf="@id/img_head"
-        android:text="EOS/柚子"
+        android:textColor="#333333"
+        android:text="EOS"
         android:textSize="16sp" />
-
+    <TextView
+        android:id="@+id/tv_name"
+        android:text="/柚子"
+       android:layout_toRightOf="@id/tv_code"
+        android:layout_alignBaseline="@id/tv_code"
+        android:layout_width="wrap_content"
+        android:textColor="#888888"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"/>
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
@@ -80,6 +89,7 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_toRightOf="@+id/view_center"
         android:text="6.5"
+        android:textStyle="bold"
         android:textColor="@color/app_background"
         android:textSize="@dimen/sp_12" />
 
@@ -88,7 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/view_center"
-        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_24"
         android:layout_toRightOf="@+id/tv_score"
         android:text="12345"
         android:textColor="#333333"

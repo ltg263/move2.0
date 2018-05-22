@@ -32,6 +32,7 @@
              app:tabSelectedTextColor="@color/app_background"
              app:tabTextColor="#aeaeae"
              app:tabIndicatorColor="@color/app_background"
+             app:tabTextAppearance="@style/TabLayoutTextStyle"
              app:tabMode="scrollable"/>
       </RelativeLayout>
       </android.support.v7.widget.Toolbar>

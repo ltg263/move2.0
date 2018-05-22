@@ -86,4 +86,7 @@
         <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
     </style>
 
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">@dimen/sp_17</item>
+    </style>
 </resources>
