@@ -94,6 +94,19 @@
             android:layout_marginBottom="@dimen/dp_40"
             android:layout_marginTop="@dimen/dp_40" />
 
-
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:src="@drawable/main_menu_publish"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            app:backgroundTint="#fff"
+            app:borderWidth="0.0dip"
+            app:elevation="5.0dip"
+            app:fabSize="normal"
+            app:pressedTranslationZ="10.0dip"
+            app:rippleColor="#a6a6a6" />
     </RelativeLayout>
 </LinearLayout>

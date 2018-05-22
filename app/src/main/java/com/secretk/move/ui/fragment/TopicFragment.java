@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -59,7 +60,8 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
     TextView tv_sort_name;
     @BindView(R.id.tv_sort_follow)
     TextView tv_sort_follow;
-
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
     private LinearLayoutManager layoutManager;
     private TopicFragmentRecyclerAdapter adapter;
@@ -82,6 +84,12 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
         adapter.setItemListener(this);
         qbar.setOnLetterChangeListener(this);
         loadingDialog = new LoadingDialog(getActivity());
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.getInstance().show("跳转界面");
+            }
+        });
 //        List<String> list = new ArrayList<>();
 //        list.add("#");
 //        list.add("A");
@@ -123,7 +131,7 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
 
     @OnClick(R.id.tv_sort_name)
     public void sortByName(View view) {
-
+        fab.setVisibility(View.GONE);
         qbar.setVisibility(View.VISIBLE);
         tv_count.setText("共" + 0 + "个币种");
         tv_sort_name.setTextColor(Color.parseColor("#3b88f6"));
@@ -136,10 +144,13 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
         adapter.swithData(Constants.TOPIC_SORT_BY_NAME);
         int count = adapter.getDataByType(Constants.TOPIC_SORT_BY_NAME).size();
         tv_count.setText("共" + count + "个币种");
+
+
     }
 
     @OnClick(R.id.tv_sort_follow)
     public void sortByFollow(View view) {
+        fab.setVisibility(View.VISIBLE);
         qbar.setVisibility(View.GONE);
         tv_count.setText("共" + 0 + "个币种");
         tv_sort_name.setTextColor(Color.parseColor("#dddddd"));
@@ -152,6 +163,7 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
         adapter.swithData(Constants.TOPIC_SORT_BY_NUM);
         int count = adapter.getDataByType(Constants.TOPIC_SORT_BY_NUM).size();
         tv_count.setText("共" + count + "个币种");
+
     }
 
 
