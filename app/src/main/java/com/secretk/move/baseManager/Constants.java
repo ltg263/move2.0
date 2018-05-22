@@ -186,6 +186,8 @@ public interface Constants {
 
     String SEARCH_PROJECTS = BASE_URL + "/kff/project/searchProjects";
 
+    String UPLOAD_IMG_FILE=BASE_URL + "/kff/home/uploadImgFile";
+
     /**
      * 1-关注项目;2-关注帖子；3-关注用户
      */
