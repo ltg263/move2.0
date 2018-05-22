@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.secretk.move.view.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sml_msg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <com.secretk.move.view.EvaluationSliderView
+            android:id="@+id/esv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_line"
+            android:background="@color/cut_off_rule" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_delete"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="match_parent"
+        android:background="#fc514f"
+        android:gravity="center"
+        android:padding="@dimen/dp_12"
+        android:text="删除"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16" />
+</com.secretk.move.view.SwipeMenuLayout>

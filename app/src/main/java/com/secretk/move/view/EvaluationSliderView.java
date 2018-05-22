@@ -67,6 +67,16 @@ public class EvaluationSliderView extends FrameLayout {
             }
         });
     }
+    public void setCompileState(final Compile compile){
+        tvDimensionalityCompile.setVisibility(View.VISIBLE);
+        tvDimensionalityEvaluate.setVisibility(View.GONE);
+        tvDimensionalityCompile.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                compile.OnClick(view);
+            }
+        });
+    }
 
     /**
      * 设置分数
@@ -89,6 +99,14 @@ public class EvaluationSliderView extends FrameLayout {
                 new int[]{getResources().getColor(R.color.white),getResources().getColor(color)});
         rl.setBackground(gradientDrawable);
         rl.getBackground().setAlpha(25);
+    }
+
+    /**
+     * 设置滑动
+     * @param side
+     */
+    public void setSetSlide(boolean side){
+        esView.setSetSlide(side);
     }
     /**
      *  设置评价名称
@@ -126,5 +144,8 @@ public class EvaluationSliderView extends FrameLayout {
      */
     public String getTvDimensionalityEvaluate() {
         return tvDimensionalityEvaluate.getText().toString().trim();
+    }
+    public abstract static class Compile{
+        public abstract void OnClick(View view);
     }
 }

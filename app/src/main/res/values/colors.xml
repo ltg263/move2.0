@@ -93,6 +93,7 @@
     <color name="title_gray">#333333</color>
     <color name="title_gray_66">#666666</color>
     <color name="title_gray_88">#888888</color>
+    <color name="title_gray_aa">#aaaaaa</color>
     <color name="title_gray_ee">#eeeeee</color>
     <color name="background_gray">#f4f4f4</color>
     <!--评分进度色-->

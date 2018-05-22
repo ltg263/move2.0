@@ -1,5 +1,6 @@
 package com.secretk.move.view;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +8,7 @@ import android.content.res.AssetManager;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.PopupWindow;
@@ -30,12 +32,11 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.OnItemClick;
-
 /**
- * 发表主题底部 PopupWindow
- *
- * @author liyeyu
- * @time 2014/11/5
+ * 作者： litongge
+ * 时间： 2018/5/19 18:54
+ * 邮箱；ltg263@126.com
+ * 描述：选择地址的pupupwindow
  */
 public class PicPopupWindow extends PopupWindow  implements  OnWheelChangedListener{
 
@@ -118,6 +119,22 @@ public class PicPopupWindow extends PopupWindow  implements  OnWheelChangedListe
             public void onClick(View view) {
                 itemsOnClick.onclick(mCurrentProviceName+"  "+mCurrentCityName);
                 dismiss();
+            }
+        });
+        //mMenuView添加OnTouchListener监听判断获取触屏位置如果在选择框外面则销毁弹出框
+        mMenuView.setOnTouchListener(new View.OnTouchListener() {
+
+            @SuppressLint("ClickableViewAccessibility")
+            public boolean onTouch(View v, MotionEvent event) {
+
+                int height = mMenuView.findViewById(R.id.pop_layout).getTop();
+                int y = (int) event.getY();
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (y < height) {
+                        dismiss();
+                    }
+                }
+                return true;
             }
         });
     }

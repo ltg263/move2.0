@@ -96,7 +96,7 @@ public class EvaluationProfessionalActivity extends BaseActivity {
                 IntentUtil.startProjectActivity(3);
                 break;
             case R.id.btn_new:
-//                IntentUtil.startActivity(EvaluationNewActivity.class);
+                IntentUtil.startActivity(EvaluationNewActivity.class);
                 break;
             case R.id.btn_compile:
                 IntentUtil.startActivity(EvaluationCompileListActivity.class);

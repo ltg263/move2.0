@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.StringUtil;
 
 /**
