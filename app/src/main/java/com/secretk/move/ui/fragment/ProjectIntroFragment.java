@@ -103,11 +103,13 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
                 tvUserName.setText(owner.getUserName());
                 tvUserSignature.setText(owner.getUserSignature());
                 //0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
-                if (owner.getFollowStatus() == 0) {
+                if(owner.getFollowStatus()==1){
+                    tvFollowStatus.setSelected(false);
                     tvFollowStatus.setText(getResources().getString(R.string.follow_status_0));
-                } else if (owner.getFollowStatus() == 1) {
+                }else if(owner.getFollowStatus() == 0){
+                    tvFollowStatus.setSelected(true);
                     tvFollowStatus.setText(getResources().getString(R.string.follow_status_1));
-                } else {
+                }else{
                     tvFollowStatus.setVisibility(View.GONE);
                 }
             }
@@ -129,7 +131,7 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
         switch (view.getId()) {
             case R.id.tv_follow_status:
                 tvFollowStatus.setEnabled(false);
-                NetUtil.addSaveFollow(tvFollowStatus.getText().toString().trim(),
+                NetUtil.addSaveFollow(tvFollowStatus,
                         Constants.SaveFollow.USER, submitUserId, new NetUtil.SaveFollowImp() {
                             @Override
                             public void finishFollow(String str) {

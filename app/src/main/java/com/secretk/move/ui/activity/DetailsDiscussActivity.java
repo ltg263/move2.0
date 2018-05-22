@@ -137,7 +137,7 @@ public class DetailsDiscussActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.tv_follow_status:
                 tvFollowStatus.setEnabled(false);
-                NetUtil.addSaveFollow(tvFollowStatus.getText().toString().trim(),
+                NetUtil.addSaveFollow(tvFollowStatus,
                         Constants.SaveFollow.USER,Integer.valueOf(userId), new NetUtil.SaveFollowImp() {
                             @Override
                             public void finishFollow(String str) {
@@ -268,11 +268,14 @@ public class DetailsDiscussActivity extends BaseActivity {
                 tvCreateUserName.setText(discussDetail.getCreateUserName());
                 userId = discussDetail.getCreateUserId();
                 tvCreateUserSignature.setText(discussDetail.getCreateUserSignature());
-                if (discussDetail.getFollowStatus() == 1) { //关注状态  "//0 未关注；1-已关注；2-不显示关注按钮"
-                    tvFollowStatus.setText(getString(R.string.follow_status_1));
-                } else if (discussDetail.getFollowStatus() == 0) {
-                    tvFollowStatus.setText(getString(R.string.follow_status_0));
-                } else {
+                //关注状态  "//0 未关注；1-已关注；2-不显示关注按钮"
+                if(discussDetail.getFollowStatus()==1){
+                    tvFollowStatus.setSelected(false);
+                    tvFollowStatus.setText(getResources().getString(R.string.follow_status_0));
+                }else if(discussDetail.getFollowStatus() == 0){
+                    tvFollowStatus.setSelected(true);
+                    tvFollowStatus.setText(getResources().getString(R.string.follow_status_1));
+                }else{
                     tvFollowStatus.setVisibility(View.GONE);
                 }
                 tvPostShortDesc.setText(discussDetail.getPostShortDesc());

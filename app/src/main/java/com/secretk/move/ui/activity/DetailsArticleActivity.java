@@ -80,6 +80,7 @@ public class DetailsArticleActivity extends BaseActivity {
     private ImagesAdapter adapter;
     private int createUserId;
     private int projectId;
+    private int praiseNum;
 
     @Override
     protected int setOnCreate() {
@@ -146,18 +147,21 @@ public class DetailsArticleActivity extends BaseActivity {
         tvCreateUserSignature.setText(initData.getCreateUserSignature());
         createUserId = initData.getCreateUserId();
         //,//"0 未关注；1-已关注；2-不显示关注按钮"\
-        if (initData.getFollowStatus() == 0) {
-            tvFollowStatus.setText(getString(R.string.follow_status_0));
-        } else if (initData.getFollowStatus() == 1) {
-            tvFollowStatus.setText(getString(R.string.follow_status_1));
-        } else {
+        if(initData.getFollowStatus()==1){
+            tvFollowStatus.setSelected(false);
+            tvFollowStatus.setText(getResources().getString(R.string.follow_status_0));
+        }else if(initData.getFollowStatus() == 0){
+            tvFollowStatus.setSelected(true);
+            tvFollowStatus.setText(getResources().getString(R.string.follow_status_1));
+        }else{
             tvFollowStatus.setVisibility(View.GONE);
         }
         tvPostShortDesc.setText(initData.getPostShortDesc());
         tvProjectCode.setText(initData.getProjectCode());
         tvCreateTime.setText(StringUtil.getTimeToM(initData.getCreateTime()));
         tvDonateNum.setText(initData.getDonateNum() + getString(R.string.sponsor_num));
-        tvPraiseStatus.setText(getString(R.string.like) + String.valueOf(initData.getPraiseNum()));
+        praiseNum = initData.getPraiseNum();
+        tvPraiseStatus.setText(getString(R.string.like) + String.valueOf(praiseNum));
         ///0-未点赞，1-已点赞，数字
         if (initData.getPraiseStatus() == 0) {
             tvPraiseStatus.setSelected(true);
@@ -215,7 +219,7 @@ public class DetailsArticleActivity extends BaseActivity {
                 break;
             case R.id.tv_follow_status:
                 tvFollowStatus.setEnabled(false);
-                NetUtil.addSaveFollow(tvFollowStatus.getText().toString().trim(),
+                NetUtil.addSaveFollow(tvFollowStatus,
                         Constants.SaveFollow.USER,Integer.valueOf(createUserId), new NetUtil.SaveFollowImp() {
                             @Override
                             public void finishFollow(String str) {
@@ -228,11 +232,20 @@ public class DetailsArticleActivity extends BaseActivity {
                 break;
             case R.id.tv_praise_status:
                 tvPraiseStatus.setEnabled(false);
-                setPraise(tvPraiseStatus.isSelected(),Integer.valueOf(postId));
+                String str;
+                if(tvPraiseStatus.isSelected()){
+                    str = getString(R.string.like) + String.valueOf(praiseNum+1);
+                }else{
+                    str = getString(R.string.like) + String.valueOf(praiseNum-1);
+                }
+                tvPraiseStatus.setText(str);
+                tvPraiseStatus.setSelected(!tvPraiseStatus.isSelected());
+                setPraise(!tvPraiseStatus.isSelected(),Integer.valueOf(postId));
                 break;
             case R.id.tv_collect_status:
                 tvCollectStatus.setEnabled(false);
-                NetUtil.saveCollect(!tvCollectStatus.isSelected(),
+                tvCollectStatus.setSelected(!tvCollectStatus.isSelected());
+                NetUtil.saveCollect(tvCollectStatus.isSelected(),
                         Integer.valueOf(postId), new NetUtil.SaveCollectImp() {
                             @Override
                             public void finishCollect(String str,boolean status) {
@@ -276,6 +289,7 @@ public class DetailsArticleActivity extends BaseActivity {
                 ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
                 if(!praiseNum.equals(Constants.PRAISE_ERROR)){
                     tvPraiseStatus.setSelected(status);
+                    DetailsArticleActivity.this.praiseNum=Integer.valueOf(praiseNum);
                     tvPraiseStatus.setText(getString(R.string.like)+praiseNum);
                 }
 

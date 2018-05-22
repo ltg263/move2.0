@@ -57,7 +57,7 @@
                                 android:id="@+id/iv_head"
                                 android:layout_width="73dp"
                                 android:layout_height="73dp"
-                                android:layout_gravity="center_vertical"/>
+                                android:layout_gravity="center_vertical" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -75,9 +75,9 @@
                                         android:id="@+id/tv_user_name"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:textStyle="bold"
                                         android:textColor="@color/title_gray"
-                                        android:textSize="@dimen/dp_20" />
+                                        android:textSize="@dimen/dp_20"
+                                        android:textStyle="bold" />
 
                                     <TextView
                                         android:id="@+id/tv_evaluating_sign"
@@ -94,13 +94,14 @@
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentRight="true"
                                         android:layout_centerVertical="true"
-                                        android:background="@drawable/shape_rectangle_topic"
+                                        android:background="@drawable/selector_follow_state"
                                         android:paddingBottom="@dimen/dp_3"
                                         android:paddingLeft="@dimen/dp_10"
                                         android:paddingRight="@dimen/dp_10"
                                         android:paddingTop="@dimen/dp_3"
+                                        android:visibility="gone"
                                         android:text="+关注"
-                                        android:textColor="@color/app_background" />
+                                        android:textColor="@drawable/selector_follow_state_text" />
                                 </RelativeLayout>
 
                                 <View
@@ -124,9 +125,9 @@
                                             android:id="@+id/tv_answer"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:textStyle="bold"
                                             android:textColor="#555555"
-                                            android:textSize="@dimen/sp_15" />
+                                            android:textSize="@dimen/sp_15"
+                                            android:textStyle="bold" />
 
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -148,9 +149,9 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:gravity="center"
-                                            android:textStyle="bold"
                                             android:textColor="#555555"
-                                            android:textSize="@dimen/sp_15" />
+                                            android:textSize="@dimen/sp_15"
+                                            android:textStyle="bold" />
 
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -171,9 +172,9 @@
                                             android:id="@+id/tv_fans"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:textStyle="bold"
                                             android:textColor="#555555"
-                                            android:textSize="@dimen/sp_15" />
+                                            android:textSize="@dimen/sp_15"
+                                            android:textStyle="bold" />
 
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -209,10 +210,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:background="@color/white"
-                    app:tabSelectedTextColor="@color/app_background"
-                    app:tabTextColor="#aeaeae"
                     app:tabIndicatorColor="@color/app_background"
-                    app:tabPaddingBottom="@dimen/dp_5" />
+                    app:tabPaddingBottom="@dimen/dp_5"
+                    app:tabSelectedTextColor="@color/app_background"
+                    app:tabTextColor="#aeaeae" />
 
                 <View
                     android:layout_width="match_parent"

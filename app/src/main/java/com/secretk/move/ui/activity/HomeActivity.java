@@ -18,6 +18,7 @@ import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
+import com.secretk.move.baseManager.BaseManager;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeUserIndexBean;
 import com.secretk.move.bean.MenuInfo;
@@ -29,6 +30,7 @@ import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
@@ -85,7 +87,6 @@ public class HomeActivity extends BaseActivity {
     public static final int HOME_ARTICLE_FRAGMENT = 2;
     String userId;
     private String homePageTitle;
-    private Boolean isFollow=true;
 
     @Override
     protected int setOnCreate() {
@@ -144,9 +145,9 @@ public class HomeActivity extends BaseActivity {
         try {
             node.put("token", token);
             //查看自己不用传userId只用token就可以，查看他人需要传入他人userID
-//            if (StringUtil.isNotBlank(userId)) {
-             node.put("userId", userId);
-//            }
+            if(StringUtil.isNotBlank(userId)){
+                node.put("userId", Integer.valueOf(userId));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -179,13 +180,15 @@ public class HomeActivity extends BaseActivity {
                     tvEvaluatingSign.setVisibility(View.GONE);
                 }
                 //“showFollow”: 0 , //是否显示 关注按钮 0- 不显示；1-显示关注  2-显示取消关注
-                if(userData.getShowFollow()==0){
-                    tvSaveFollow.setVisibility(View.GONE);
-                }else if(userData.getShowFollow()==1){
-                    isFollow=false;
+                if(userData.getShowFollow()!=0){
+                    tvSaveFollow.setVisibility(View.VISIBLE);
+                }
+
+                if(userData.getShowFollow()==1){
+                    tvSaveFollow.setSelected(false);
                     tvSaveFollow.setText(getResources().getString(R.string.follow_status_0));
                 }else{
-                    isFollow=true;
+                    tvSaveFollow.setSelected(true);
                     tvSaveFollow.setText(getResources().getString(R.string.follow_status_1));
                 }
                 homePageTitle =  userData.getHomePageTitle();
@@ -206,13 +209,15 @@ public class HomeActivity extends BaseActivity {
         switch (view.getId()){
             case R.id.tv_save_follow:
                 tvSaveFollow.setEnabled(false);
-                NetUtil.addSaveFollow(tvSaveFollow.getText().toString().trim(),
+                NetUtil.addSaveFollow(tvSaveFollow,
                         Constants.SaveFollow.USER, Integer.valueOf(userId), new NetUtil.SaveFollowImp() {
                             @Override
                             public void finishFollow(String str) {
                                 tvSaveFollow.setEnabled(true);
                                 if(!str.equals(Constants.FOLLOW_ERROR)){
                                     tvSaveFollow.setText(str);
+                                    tvSaveFollow.setSelected(tvSaveFollow.getText().toString().trim()
+                                            .equals(getResources().getString(R.string.follow_status_1)));
                                 }
                             }
                         });

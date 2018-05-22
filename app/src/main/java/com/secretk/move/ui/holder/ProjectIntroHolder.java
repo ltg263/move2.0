@@ -45,10 +45,12 @@ public class ProjectIntroHolder extends RecyclerViewBaseHolder {
         tvUserUame.setText(usersBean.getUserName());
         tvUserSignature.setText(usersBean.getUserSignature());
         //0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
-        if(usersBean.getFollowStatus()==0){
-            tvFollowStatus.setText(BaseManager.app.getString(R.string.follow_status_0));
-        }else if(usersBean.getFollowStatus()==1){
-            tvFollowStatus.setText(BaseManager.app.getString(R.string.follow_status_1));
+        if(usersBean.getFollowStatus()==1){
+            tvFollowStatus.setSelected(false);
+            tvFollowStatus.setText(BaseManager.app.getResources().getString(R.string.follow_status_0));
+        }else if(usersBean.getFollowStatus() == 0){
+            tvFollowStatus.setSelected(true);
+            tvFollowStatus.setText(BaseManager.app.getResources().getString(R.string.follow_status_1));
         }else{
             tvFollowStatus.setVisibility(View.GONE);
         }
@@ -56,7 +58,7 @@ public class ProjectIntroHolder extends RecyclerViewBaseHolder {
             @Override
             public void onClick(View view) {
                 tvFollowStatus.setEnabled(false);
-                NetUtil.addSaveFollow(tvFollowStatus.getText().toString().trim(),
+                NetUtil.addSaveFollow(tvFollowStatus,
                         Constants.SaveFollow.USER, usersBean.getUserId(), new NetUtil.SaveFollowImp() {
                             @Override
                             public void finishFollow(String str) {

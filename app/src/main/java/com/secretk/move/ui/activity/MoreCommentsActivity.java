@@ -74,6 +74,7 @@ public class MoreCommentsActivity extends BaseActivity{
     private int postId;
     private int parentCommentsId;
     boolean isBianHua = false;
+    private int praiseNum;
 
     @Override
     protected int setOnCreate() {
@@ -108,15 +109,15 @@ public class MoreCommentsActivity extends BaseActivity{
         tvCommentedUserName.setText(commentsBean.getCommentUserName());
         tvCreateTime.setText(commentsBean.getFloor() + "楼    " + StringUtil.getTimeToM(commentsBean.getCreateTime()));
         tvCommentContent.setText(commentsBean.getCommentContent());
-        tvPraiseNum.setText(String.valueOf(commentsBean.getPraiseNum()));
+        praiseNum = commentsBean.getPraiseNum();
+        tvPraiseNum.setText(String.valueOf(praiseNum));
         //"praiseStatus":0,//点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
-        LogUtil.w("commentsBean.getPraiseStatus():"+commentsBean.getPraiseStatus());
         if (commentsBean.getPraiseStatus() == 1) {
             tvPraiseNum.setSelected(false);
         } else if (commentsBean.getPraiseStatus() == 0) {
             tvPraiseNum.setSelected(true);
         } else if (commentsBean.getPraiseStatus() == 2) {
-            tvPraiseNum.setText("****");
+            tvPraiseNum.setVisibility(View.GONE);
         }
         List<CommonCommentsBean.ChildCommentsListBean> commentsList = commentsBean.getChildCommentsList();
         if (commentsList != null && commentsList.size() > 0) {
@@ -129,11 +130,20 @@ public class MoreCommentsActivity extends BaseActivity{
         switch (view.getId()) {
             case R.id.tv_praise_num:
                 tvPraiseNum.setEnabled(false);
-                NetUtil.addCommentsPraise(tvPraiseNum.isSelected(), commentsId, new NetUtil.SaveFollowImpl() {
+                String strNum;
+                if(tvPraiseNum.isSelected()){
+                    strNum = getString(R.string.like) + String.valueOf(praiseNum+1);
+                }else{
+                    strNum = getString(R.string.like) + String.valueOf(praiseNum-1);
+                }
+                tvPraiseNum.setText(strNum);
+                tvPraiseNum.setSelected(!tvPraiseNum.isSelected());
+                NetUtil.addCommentsPraise(!tvPraiseNum.isSelected(), commentsId, new NetUtil.SaveFollowImpl() {
                     @Override
                     public void finishFollow(String praiseNum,boolean status) {
                         tvPraiseNum.setEnabled(true);
                         if(!praiseNum.equals(Constants.PRAISE_ERROR)){
+                            MoreCommentsActivity.this.praiseNum=Integer.valueOf(praiseNum);
                             tvPraiseNum.setText(praiseNum);
                             tvPraiseNum.setSelected(status);
                             isBianHua=true;

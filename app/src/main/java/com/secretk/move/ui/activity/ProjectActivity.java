@@ -89,10 +89,10 @@ public class ProjectActivity extends BaseActivity {
     ImageView ivProjectIcon;
     @BindView(R.id.tv_project_signature)
     TextView tvProjectSignature;
-    @BindView(R.id.btn_review)
-    Button btnReview;
-    @BindView(R.id.btn_follow_status)
-    Button btnFollowStatus;
+    @BindView(R.id.tv_review)
+    TextView tvReview;
+    @BindView(R.id.tv_follow_status)
+    TextView tvFollowStatus;
     @BindView(R.id.appbar)
     AppBarLayout appbar;
     @BindView(R.id.fab)
@@ -119,6 +119,7 @@ public class ProjectActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        tvReview.setSelected(true);
         projectId = getIntent().getStringExtra("projectId");
         introFragment = new ProjectIntroFragment();
         reviewFragment = new ProjectReviewFragment();
@@ -183,12 +184,14 @@ public class ProjectActivity extends BaseActivity {
                     tvRaterNum.setText(String.valueOf(projectInfo.getRaterNum()));
                     tvProjectSignature.setText(projectInfo.getProjectSignature());
                     // 0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
-                    if (projectInfo.getFollowStatus() == 0) {
-                        btnFollowStatus.setText(getResources().getString(R.string.follow_status_0));
-                    } else if (projectInfo.getFollowStatus() == 1) {
-                        btnFollowStatus.setText(getResources().getString(R.string.follow_status_1));
-                    } else {
-                        btnFollowStatus.setVisibility(View.GONE);
+                    if(projectInfo.getFollowStatus()==1){
+                        tvFollowStatus.setSelected(false);
+                        tvFollowStatus.setText(getResources().getString(R.string.follow_status_0));
+                    }else if(projectInfo.getFollowStatus() == 0){
+                        tvFollowStatus.setSelected(true);
+                        tvFollowStatus.setText(getResources().getString(R.string.follow_status_1));
+                    }else{
+                        tvFollowStatus.setVisibility(View.GONE);
                     }
 
                 }
@@ -316,7 +319,7 @@ public class ProjectActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.fab,R.id.rl_grade, R.id.btn_review, R.id.btn_follow_status})
+    @OnClick({R.id.fab,R.id.rl_grade, R.id.tv_review, R.id.tv_follow_status})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fab:
@@ -325,19 +328,19 @@ public class ProjectActivity extends BaseActivity {
             case R.id.rl_grade:
                 IntentUtil.startActivity(DetailsUserGradeActivity.class);
                 break;
-            case R.id.btn_review:
+            case R.id.tv_review:
                 ToastUtils.getInstance().show("简单测评");
                 break;
-            case R.id.btn_follow_status:
-                btnFollowStatus.setEnabled(false);
-                NetUtil.addSaveFollow(btnFollowStatus.getText().toString().trim(),
+            case R.id.tv_follow_status:
+                tvFollowStatus.setEnabled(false);
+                NetUtil.addSaveFollow(tvFollowStatus,
                         Constants.SaveFollow.PROJECT,projectInfo.getProjectId(), new NetUtil.SaveFollowImp() {
                             @Override
                             public void finishFollow(String str) {
                                // 0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
-                                btnFollowStatus.setEnabled(true);
+                                tvFollowStatus.setEnabled(true);
                                 if(!str.equals(Constants.FOLLOW_ERROR)){
-                                    btnFollowStatus.setText(str);
+                                    tvFollowStatus.setText(str);
                                 }
                             }
                         });
