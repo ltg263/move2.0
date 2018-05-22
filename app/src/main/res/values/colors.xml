@@ -96,6 +96,7 @@
     <color name="title_gray_aa">#aaaaaa</color>
     <color name="title_gray_ee">#eeeeee</color>
     <color name="background_gray">#f4f4f4</color>
+    <color name="follow_true">#f5f4f4</color>
     <!--评分进度色-->
     <color name="xmdw">#54c7fc</color>
     <color name="jskj">#ff9600 </color>

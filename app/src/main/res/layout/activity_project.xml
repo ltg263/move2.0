@@ -199,25 +199,27 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
-                                <Button
-                                    android:id="@+id/btn_review"
+                                <TextView
+                                    android:id="@+id/tv_review"
                                     android:layout_width="wrap_content"
                                     android:layout_height="@dimen/dp_35"
                                     android:layout_margin="@dimen/dp_10"
                                     android:layout_weight="1"
-                                    android:background="@drawable/shape_rectangle_topic"
+                                    android:background="@drawable/selector_follow_state"
+                                    android:gravity="center"
                                     android:text="@string/review"
-                                    android:textColor="@color/app_background" />
+                                    android:textColor="@drawable/selector_follow_state_text" />
 
-                                <Button
-                                    android:id="@+id/btn_follow_status"
+                                <TextView
+                                    android:id="@+id/tv_follow_status"
                                     android:layout_width="wrap_content"
                                     android:layout_height="@dimen/dp_35"
                                     android:layout_margin="@dimen/dp_10"
                                     android:layout_weight="1"
-                                    android:background="@drawable/shape_rectangle_topic"
+                                    android:background="@drawable/selector_follow_state"
+                                    android:gravity="center"
                                     android:text="已关注"
-                                    android:textColor="@color/app_background" />
+                                    android:textColor="@drawable/selector_follow_state_text" />
                             </LinearLayout>
                         </LinearLayout>
                     </android.support.design.widget.CollapsingToolbarLayout>

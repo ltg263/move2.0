@@ -126,12 +126,12 @@ public class EvaluationNewActivity extends BaseActivity {
 
     //综合分数
     private double getComprehensiveGrade(){
-        float a = 0;
+        float comprehensiveGrade = 0;
         for(int i=0;i<list.size();i++){
             float grade =  list.get(i).getGrade();
             float weight =  list.get(i).getWeight();
-            a+= grade+weight;
+            comprehensiveGrade+= grade*weight;
         }
-        return Double.valueOf(String.format("%.1f", a));
+        return Double.valueOf(String.format("%.1f", comprehensiveGrade));
     }
 }

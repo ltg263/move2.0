@@ -3,6 +3,7 @@ package com.secretk.move.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.widget.TextView;
 
 import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
@@ -82,16 +83,23 @@ public class NetUtil {
     }
     /**
      *    // 0 显示 +关注； 1--显示 已关注 按钮 ；2 不显示按钮
-     *  @param statusStr 已关注  文字
+     *  @param tvSaveFollow 已关注  TextView
      * @param followType 1-关注项目;2-关注帖子；3-关注用户
      * @param followedId 关注类型为1，对应为projectId对应值，2 为postId对应值 3 为对应userId值
      */
-    public static void addSaveFollow(String statusStr ,int followType, int followedId, final SaveFollowImp follow){
+    public static void addSaveFollow(TextView tvSaveFollow , int followType, int followedId, final SaveFollowImp follow){
+        String statusStr = tvSaveFollow.getText().toString().trim();
         String token = SharedUtils.singleton().get(Constants.TOKEN_KEY,"");
+
+        tvSaveFollow.setSelected(!statusStr.equals(BaseManager.app.getString(R.string.follow_status_1)));
         int statusCode=0;
         if(statusStr.equals(BaseManager.app.getString(R.string.follow_status_1))){
             statusCode=1;
+            tvSaveFollow.setText(BaseManager.app.getString(R.string.follow_status_0));
+        }else{
+            tvSaveFollow.setText(BaseManager.app.getString(R.string.follow_status_1));
         }
+
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);

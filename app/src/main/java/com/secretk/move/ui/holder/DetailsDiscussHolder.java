@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
+import com.secretk.move.baseManager.BaseManager;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonCommentsBean;
 import com.secretk.move.ui.activity.MoreCommentsActivity;
@@ -79,13 +80,13 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         }else if(commentsBean.getPraiseStatus()==0){
             tvPraiseNum.setSelected(true);
         }else if(commentsBean.getPraiseStatus()==3){
-            tvPraiseNum.setText("****");
+            tvPraiseNum.setVisibility(View.GONE);
         }
         tvPraiseNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 tvPraiseNum.setEnabled(false);
-                setPraise(tvPraiseNum.isSelected(),commentsBean.getCommentsId());
+                setPraise(tvPraiseNum,commentsBean.getCommentsId());
             }
         });
         rlGeRen.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +104,6 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context,MoreCommentsActivity.class);
-                LogUtil.w("PraiseNum："+String.valueOf(commentsBean.getPraiseNum()));
                 intent.putExtra("commentsBean", commentsBean);
 //                context.startActivity(intent);
                 ((Activity)context).startActivityForResult(intent,0);
@@ -113,14 +113,24 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
 
     }
 
-    private void setPraise(boolean finalIsLove, int commentsId) {
-        NetUtil.addCommentsPraise(finalIsLove, commentsId, new NetUtil.SaveFollowImpl() {
+    private void setPraise(TextView finalIsLove, int commentsId) {
+        final int praiseNumA = commentsBean.getPraiseNum();
+        String strNum;
+        if(tvPraiseNum.isSelected()){
+            strNum = BaseManager.app.getString(R.string.like) + String.valueOf(praiseNumA +1);
+        }else{
+            strNum = BaseManager.app.getString(R.string.like) + String.valueOf(praiseNumA -1);
+        }
+        tvPraiseNum.setText(strNum);
+        tvPraiseNum.setSelected(!tvPraiseNum.isSelected());
+        NetUtil.addCommentsPraise(!finalIsLove.isSelected(), commentsId, new NetUtil.SaveFollowImpl() {
             @Override
             public void finishFollow(String praiseNum,boolean status) {
                 tvPraiseNum.setEnabled(true);
                 if(!praiseNum.equals(Constants.PRAISE_ERROR)){
                     commentsBean.setPraiseNum(Integer.valueOf(praiseNum));
                     tvPraiseNum.setText(praiseNum);
+//                    praiseNumA = commentsBean.getPraiseNum();
                     tvPraiseNum.setSelected(status);
                     ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
                     commentsBean.setPraiseStatus(status?0:1);
