@@ -43,6 +43,7 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
         StatusBarUtil.setColor(this,  UiUtils.getColor(R.color.main_background), 0);
         adapter = new MainActivityPagerAdapter(getSupportFragmentManager());
         vp_main.setAdapter(adapter);
+        vp_main.setOffscreenPageLimit(4);
         presenter = new MainPresenterImpl(this);
         presenter.initialized();
         vp_main.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

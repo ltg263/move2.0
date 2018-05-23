@@ -57,7 +57,7 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         tool_bar.setNavigationIcon(R.drawable.main_search);
         adapter = new MainFragmentPagerAdapter(getChildFragmentManager());
         vp_main_children.setAdapter(adapter);
-
+        vp_main_children.setOffscreenPageLimit(3);
         tab_layout.setupWithViewPager(vp_main_children);
         tab_layout.setTabMode(TabLayout.MODE_FIXED);
         tool_bar.setOnMenuItemClickListener(this);
