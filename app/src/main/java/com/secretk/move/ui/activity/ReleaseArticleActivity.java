@@ -58,7 +58,8 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
     }
 
     private void init() {
-
+        StatusBarUtil.setLightMode(this);
+        StatusBarUtil.setColor(this,  UiUtils.getColor(R.color.main_background), 0);
         imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
         picList = new ArrayList<>();
 
@@ -146,10 +147,9 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         super.onResume();
         if (AddLabelActivity.array != null) {
             releaseArticleLabelAdapter.setData(AddLabelActivity.array);
-            AddLabelActivity.array=null;
         }
-        if (true){
-
-        }
+       if (SelectedPicActivity.picArray!=null){
+           releasePicAdapter.addSparseData(SelectedPicActivity.picArray);
+       }
     }
 }

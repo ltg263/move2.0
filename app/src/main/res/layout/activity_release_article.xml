@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/dp_20"
-                android:text="发布"
+                android:text="完成"
                 android:textColor="@color/app_background"
                 android:textSize="@dimen/sp_15" />
         </RelativeLayout>
@@ -63,6 +63,7 @@
                   android:layout_height="wrap_content"
                   android:background="@null"
                   android:textSize="@dimen/sp_18"
+                  android:maxLength="2000"
                   android:padding="@dimen/dp_10"
                   android:textCursorDrawable="@drawable/shape_edit_cursor" />
 
@@ -77,6 +78,7 @@
                   android:layout_height="wrap_content"
                   android:layout_marginTop="@dimen/dp_5"
                   android:background="@null"
+                  android:maxLength="2000"
                   android:hint="请输入字数小于2000字的正文"
                   android:padding="@dimen/dp_10"
                   android:textSize="@dimen/sp_14"

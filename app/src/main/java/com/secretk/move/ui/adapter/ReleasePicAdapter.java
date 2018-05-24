@@ -2,6 +2,8 @@ package com.secretk.move.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.LongSparseArray;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
+import com.secretk.move.bean.PicBean;
 import com.secretk.move.bean.RowsBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.utils.GlideUtils;
@@ -25,16 +28,22 @@ import butterknife.ButterKnife;
 
 public class ReleasePicAdapter extends RecyclerView.Adapter<ReleasePicAdapter.ViewHolder> {
 
-    private List<String> list = new ArrayList<String>();
+    private List<String> list = null;
+
     private ItemClickListener mListener;
-private Context mContext;
+    private Context mContext;
+
+    public ReleasePicAdapter() {
+        list = new ArrayList<String>();
+    }
+
     public void setItemListener(ItemClickListener mListener) {
         this.mListener = mListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        mContext=parent.getContext();
+        mContext = parent.getContext();
         View view = LayoutInflater.from(mContext).inflate(R.layout.activity_release_pic_item, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
@@ -44,12 +53,12 @@ private Context mContext;
     public void onBindViewHolder(ViewHolder holder, int position) {
         String str = list.get(position);
         holder.setItemListener(mListener);
-        GlideUtils.loadImage(mContext,holder.img, str);
+        GlideUtils.loadImage(mContext, holder.img, str);
     }
 
     @Override
     public int getItemCount() {
-        if (list==null){
+        if (list == null) {
             return 0;
         }
         return list.size();
@@ -61,10 +70,21 @@ private Context mContext;
         notifyDataSetChanged();
     }
 
+    public void addSparseData(LongSparseArray<PicBean> picArray) {
+        for (int i = 0; i < picArray.size(); i++) {
+            long key = picArray.keyAt(i);
+            PicBean bean = picArray.get(key);
+            list.add(bean.getPath());
+        }
+        notifyDataSetChanged();
+
+    }
+
     public void addData(String str) {
         list.add(str);
         notifyDataSetChanged();
     }
+
     public List<String> getData() {
         return list;
     }
@@ -79,4 +99,5 @@ private Context mContext;
             ButterKnife.bind(this, itemView);
         }
     }
+
 }

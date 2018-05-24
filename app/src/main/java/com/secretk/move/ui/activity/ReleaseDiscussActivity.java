@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -31,7 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /*发表讨论*/
-public class ReleaseDiscussActivity extends AppCompatActivity  implements ItemClickListener {
+public class ReleaseDiscussActivity extends AppCompatActivity implements ItemClickListener {
     InputMethodManager imm;
     private List<String> picList;
     @BindView(R.id.recycler_pic)
@@ -43,6 +44,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity  implements ItemCl
     EditText ed_title;
     ReleaseArticleLabelAdapter releaseArticleLabelAdapter;
     LinearLayoutManager layoutManager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity  implements ItemCl
         ButterKnife.bind(this);
         init();
     }
+
     private void init() {
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.main_background), 0);
@@ -69,6 +72,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity  implements ItemCl
 
         ed_title.setHint(Html.fromHtml("请输入标题 <small>(6-30字之间)</small>"));
     }
+
     @OnClick(R.id.img_return)
     public void img_return() {
         finish();
@@ -76,21 +80,23 @@ public class ReleaseDiscussActivity extends AppCompatActivity  implements ItemCl
 
     @OnClick(R.id.tv_release)
     public void tv_release() {
-
+        finish();
     }
+
     @OnClick(R.id.localphoto)
     public void localphoto(View view) {
         Intent intent = new Intent(this, SelectedPicActivity.class);
-        intent.putExtra("max_pic",9);
-        intent.putExtra("current_pic",releasePicAdapter.getItemCount());
+        intent.putExtra("max_pic", 9);
+        intent.putExtra("current_pic", releasePicAdapter.getItemCount());
         startActivity(intent);
     }
 
     int REQUEST_CODE_CAMERA = 199;
     String picPath;
+
     @OnClick(R.id.takephoto)
     public void takephoto(View view) {
-        if (releasePicAdapter.getItemCount()>=9){
+        if (releasePicAdapter.getItemCount() >= 9) {
             ToastUtils.getInstance().show("最多选择九张图片");
             return;
         }
@@ -101,11 +107,13 @@ public class ReleaseDiscussActivity extends AppCompatActivity  implements ItemCl
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         startActivityForResult(intent, REQUEST_CODE_CAMERA);
     }
+
     @OnClick(R.id.addlabel)
     public void addlabel(View view) {
         Intent intent = new Intent(this, AddLabelActivity.class);
         startActivity(intent);
     }
+
     @OnClick(R.id.swithKeyboard)
     public void swithKeyboard(View view) {
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
@@ -138,10 +146,15 @@ public class ReleaseDiscussActivity extends AppCompatActivity  implements ItemCl
         super.onResume();
         if (AddLabelActivity.array != null) {
             releaseArticleLabelAdapter.setData(AddLabelActivity.array);
-            AddLabelActivity.array=null;
+            AddLabelActivity.array = null;
         }
-        if (true){
+        if (SelectedPicActivity.picArray != null) {
+            releasePicAdapter.addSparseData(SelectedPicActivity.picArray);
+        }
+    }
 
-        }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return super.onKeyDown(keyCode, event);
     }
 }

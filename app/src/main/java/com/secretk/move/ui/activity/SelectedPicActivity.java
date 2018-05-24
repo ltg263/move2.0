@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.LongSparseArray;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,7 @@ public class SelectedPicActivity extends AppCompatActivity {
     private String[] selectionArgs = null;
     private String data = null;
     private ArrayList<PicBean> list = new ArrayList<PicBean>();
-    public static LongSparseArray<PicBean> picArray = new LongSparseArray<>();
+    public static LongSparseArray<PicBean> picArray= null;
 
     private int maxPicNum;
     private int lastActivityPicNum;
@@ -66,6 +67,7 @@ public class SelectedPicActivity extends AppCompatActivity {
     private void init() {
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.main_background), 0);
+        picArray = new LongSparseArray<>();
         recycler.setLayoutManager(new GridLayoutManager(this, 4));
         selectedPicAdaper = new SelectedPicAdaper();
         recycler.setAdapter(selectedPicAdaper);
@@ -112,14 +114,21 @@ public class SelectedPicActivity extends AppCompatActivity {
 
     @OnClick(R.id.img_return)
     public void img_return() {
+        picArray=null;
         finish();
     }
 
     @OnClick(R.id.tv_release)
     public void tv_release() {
-
+        finish();
     }
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            picArray=null;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     public class SelectedPicAdaper extends RecyclerView.Adapter<ViewHolder> {
         private Context mContext;
 
