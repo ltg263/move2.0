@@ -116,6 +116,7 @@
     <string name="evaluation_num">*最少3个</string>
     <string name="evaluation_object">测评对象</string>
     <string name="evaluation_next">下一步</string>
+    <string name="evaluation_issue">发布</string>
     <string name="evaluation_state">评测模型说明></string>
     <string name="evaluation_write">写测评</string>
     <string name="evaluation_state_select">主要从竞争对手、市场前景、可行性等各方面进行评测。</string>

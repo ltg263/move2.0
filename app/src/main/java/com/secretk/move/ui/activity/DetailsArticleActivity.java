@@ -137,14 +137,14 @@ public class DetailsArticleActivity extends BaseActivity {
 
 
     public void setInitData(DetailsArticleBean.DataBean.ArticleDetailBean initData) {
-        mHeadView.setTitle(initData.getProjectCode());
-        mHeadView.setTitleVice("/" + initData.getProjectChineseName());
+        mHeadView.setTitle(StringUtil.getBeanString(initData.getProjectCode()));
+        mHeadView.setTitleVice("/" + StringUtil.getBeanString(initData.getProjectChineseName()));
         mHeadView.setToolbarListener(initData.getProjectId());
         projectId = initData.getProjectId();
-        tvPostTitle.setText(initData.getPostTitle());
+        tvPostTitle.setText(StringUtil.getBeanString(initData.getPostTitle()));
         GlideUtils.loadCircleUrl(ivCreateUserIcon, Constants.BASE_IMG_URL + initData.getCreateUserIcon());
-        tvCreateUserName.setText(initData.getCreateUserName());
-        tvCreateUserSignature.setText(initData.getCreateUserSignature());
+        tvCreateUserName.setText(StringUtil.getBeanString(initData.getCreateUserName()));
+        tvCreateUserSignature.setText(StringUtil.getBeanString(initData.getCreateUserSignature()));
         createUserId = initData.getCreateUserId();
         //,//"0 未关注；1-已关注；2-不显示关注按钮"\
         if(initData.getFollowStatus()==1){
@@ -156,8 +156,8 @@ public class DetailsArticleActivity extends BaseActivity {
         }else{
             tvFollowStatus.setVisibility(View.GONE);
         }
-        tvPostShortDesc.setText(initData.getPostShortDesc());
-        tvProjectCode.setText(initData.getProjectCode());
+        tvPostShortDesc.setText(StringUtil.getBeanString(initData.getPostShortDesc()));
+        tvProjectCode.setText(StringUtil.getBeanString(initData.getProjectCode()));
         tvCreateTime.setText(StringUtil.getTimeToM(initData.getCreateTime()));
         tvDonateNum.setText(initData.getDonateNum() + getString(R.string.sponsor_num));
         praiseNum = initData.getPraiseNum();
@@ -178,14 +178,16 @@ public class DetailsArticleActivity extends BaseActivity {
         tvCommentsNum.setText("评论" + String.valueOf(initData.getCollectNum()));
         List<PostDataInfo> lists = new ArrayList<>();
         try {
-            JSONArray images = new JSONArray(initData.getPostSmallImages());
-            for (int i = 0; i < images.length(); i++) {
-                JSONObject strObj = images.getJSONObject(i);
-                PostDataInfo info = new PostDataInfo();
-                info.setUrl(strObj.getString("fileUrl"));
-                info.setName(strObj.getString("fileName"));
-                info.setTitle(strObj.getString("extension"));
-                lists.add(info);
+            if(StringUtil.isNotBlank(initData.getPostSmallImages())){
+                JSONArray images = new JSONArray(initData.getPostSmallImages());
+                for (int i = 0; i < images.length(); i++) {
+                    JSONObject strObj = images.getJSONObject(i);
+                    PostDataInfo info = new PostDataInfo();
+                    info.setUrl(strObj.getString("fileUrl"));
+                    info.setName(strObj.getString("fileName"));
+                    info.setTitle(strObj.getString("extension"));
+                    lists.add(info);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

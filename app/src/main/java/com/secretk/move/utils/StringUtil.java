@@ -5,7 +5,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -44,6 +46,18 @@ public class StringUtil {
      */
     public static boolean isNotBlank(String str) {
         return !isBlank(str);
+    }
+    /**
+     * 判断字符串是否不为空
+     *
+     * @param str
+     * @return
+     */
+    public static String getBeanString(String str) {
+        if(isNotBlank(str)){
+            return str;
+        }
+        return "";
     }
 
     /**
@@ -363,5 +377,32 @@ public class StringUtil {
     }
     public abstract static class VpPageSelected{
         public abstract void getVpPageSelected(int position);
+    }
+    public static String getMimeType(String fileName) {
+        String result = "";
+        int extPos = fileName.lastIndexOf(".");
+        if(extPos != -1) {
+            String ext = fileName.substring(extPos + 1);
+            result = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext);
+        }
+        if(TextUtils.isEmpty(result)){
+            result = "application/octet-stream";
+        }
+        return result;
+    }
+
+    /**
+     * 文件后缀
+     * @param fileName
+     * @return
+     * {"imgUrl":"/upload/posts/201805/ztFpnYSlKj.jpg"}
+     */
+    public static String getFileSuffix(String fileName) {
+        String result = "";
+        int extPos = fileName.lastIndexOf(".");
+        if(extPos != -1) {
+            return fileName.substring(extPos + 1);
+        }
+        return result;
     }
 }

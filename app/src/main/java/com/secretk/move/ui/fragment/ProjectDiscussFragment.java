@@ -92,7 +92,11 @@ public class ProjectDiscussFragment extends LazyFragment{
                 if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
                     return;
                 }
-                adapterNew.setData(detailsBean.getRows());
+                if(pageIndex>2){
+                    adapterNew.setAddData(detailsBean.getRows());
+                }else {
+                    adapterNew.setData(detailsBean.getRows());
+                }
             }
 
             @Override

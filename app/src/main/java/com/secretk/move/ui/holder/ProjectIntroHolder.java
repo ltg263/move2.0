@@ -45,10 +45,10 @@ public class ProjectIntroHolder extends RecyclerViewBaseHolder {
         tvUserUame.setText(usersBean.getUserName());
         tvUserSignature.setText(usersBean.getUserSignature());
         //0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
-        if(usersBean.getFollowStatus()==1){
+        if(usersBean.getFollowStatus()==0){
             tvFollowStatus.setSelected(false);
             tvFollowStatus.setText(BaseManager.app.getResources().getString(R.string.follow_status_0));
-        }else if(usersBean.getFollowStatus() == 0){
+        }else if(usersBean.getFollowStatus() == 1){
             tvFollowStatus.setSelected(true);
             tvFollowStatus.setText(BaseManager.app.getResources().getString(R.string.follow_status_1));
         }else{

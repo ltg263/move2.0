@@ -51,6 +51,10 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListHolder> {
         this.lists = list;
         notifyDataSetChanged();
     }
+    public void setAddData(List<RowsBean> list) {
+        lists.addAll(list);
+        notifyDataSetChanged();
+    }
 
     public List<RowsBean> getData() {
         return lists;

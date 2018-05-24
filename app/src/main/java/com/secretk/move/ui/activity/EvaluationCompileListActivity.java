@@ -1,20 +1,31 @@
 package com.secretk.move.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
-import com.secretk.move.bean.base.BaseRes;
+import com.secretk.move.bean.SysEvaluationModelBean;
 import com.secretk.move.ui.adapter.EvaluationCompileAdapter;
+import com.secretk.move.utils.LogUtil;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.ProgressBarStyleView;
+import com.secretk.move.view.RecycleScrollView;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * 作者： litongge
@@ -27,7 +38,13 @@ public class EvaluationCompileListActivity extends BaseActivity {
     ProgressBarStyleView pbComprehensiveEvaluation;
     @BindView(R.id.rv_evaluation_list)
     RecyclerView rvEvaluationList;
+    @BindView(R.id.tv_project_name)
+    TextView tvProjectName;
+    @BindView(R.id.rsv)
+    RecycleScrollView rsv;
     private EvaluationCompileAdapter adapter;
+    int projectId;
+    List<SysEvaluationModelBean.DataBean.ModeDetailListBean> sysEvaluationModel;
 
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
@@ -46,29 +63,82 @@ public class EvaluationCompileListActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        projectId = getIntent().getIntExtra("projectId",0);
         setVerticalManager(rvEvaluationList);
         adapter = new EvaluationCompileAdapter(this);
         rvEvaluationList.setAdapter(adapter);
+        rsv.setFocusable(true);
+        rsv.setFocusableInTouchMode(true);
+        sysEvaluationModel =
+                getIntent().getParcelableArrayListExtra("sys_evaluation_model");
+        String projectName = getIntent().getStringExtra("project_name");
+        tvProjectName.setText(projectName);
 
-        pbComprehensiveEvaluation.setTvOne(getResources().getString(R.string.comprehensive_evaluation),0,
+        pbComprehensiveEvaluation.setTvOne(getResources().getString(R.string.comprehensive_evaluation), 0,
                 getResources().getColor(R.color.title_gray));
-        pbComprehensiveEvaluation.setTvThree(7.8,16,R.color.app_background);
+        pbComprehensiveEvaluation.setTvThree(getComprehensiveGrade(), 16, R.color.app_background);
         pbComprehensiveEvaluation.setPbProgressMaxVisible();
 
-        List<BaseRes> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            BaseRes res = new BaseRes();
-            res.setMsg("项目类型：" + i);
+        adapter.setData(sysEvaluationModel);
 
-            res.setCode(89-i);
-            list.add(res);
+    }
+
+    @Override
+    protected void OnToolbarRightListener() {
+        JSONArray professionalEvaDetail = new JSONArray();
+        for(int i=0;i<sysEvaluationModel.size();i++){
+            JSONObject node = new JSONObject();
+            float score = sysEvaluationModel.get(i).getTotalScore();
+            String strValue;
+            if(score==(int)score){
+                strValue=String.valueOf((int)score);
+            }else{
+                strValue=String.valueOf(score);
+            }
+            try {
+                node.put("modelId", sysEvaluationModel.get(i).getModelId());
+                node.put("modelName", sysEvaluationModel.get(i).getDetailName());
+                node.put("modelWeight", sysEvaluationModel.get(i).getDetailWeight());
+                node.put("score", strValue);
+                professionalEvaDetail.put(node);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
-        adapter.setData(list);
-
+        Intent intent = new Intent(this,EvaluationWriteActivity.class);
+        intent.putExtra("professionalEvaDetail",professionalEvaDetail.toString());
+        intent.putExtra("totalScore",pbComprehensiveEvaluation.getTotalScore());
+        intent.putExtra("projectId",projectId);
+        intent.putExtra(Constants.ModelType.MODEL_TYPE, Constants.ModelType.MODEL_TYPE_ALL);
+        startActivity(intent);
     }
 
     @Override
     protected void initData() {
 
+    }
+
+    //综合分数
+    private double getComprehensiveGrade() {
+        float comprehensiveGrade = 0;
+        for (int i = 0; i < sysEvaluationModel.size(); i++) {
+            float grade = sysEvaluationModel.get(i).getTotalScore();
+            float weight = sysEvaluationModel.get(i).getDetailWeight()/100f;
+            comprehensiveGrade += grade * weight;
+        }
+        if (comprehensiveGrade == (int) comprehensiveGrade) {
+            return (int) comprehensiveGrade;
+        }
+        return Double.valueOf(String.format("%.1f", comprehensiveGrade));
+    }
+
+    public void setComprehensiveGrade(String tvEvaluationName, float value) {
+        for (int i = 0; i < sysEvaluationModel.size(); i++) {
+            SysEvaluationModelBean.DataBean.ModeDetailListBean bean = sysEvaluationModel.get(i);
+            if (bean.getDetailName().equals(tvEvaluationName)) {
+                bean.setTotalScore(value);
+            }
+        }
+        pbComprehensiveEvaluation.setTvThree(getComprehensiveGrade(), 16, R.color.app_background);
     }
 }

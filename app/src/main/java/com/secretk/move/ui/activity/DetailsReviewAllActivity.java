@@ -20,6 +20,7 @@ import com.secretk.move.bean.DetailsReviewBean;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.ui.adapter.ImagesAdapter;
+import com.secretk.move.ui.adapter.ProgressAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
@@ -65,16 +66,6 @@ public class DetailsReviewAllActivity extends BaseActivity {
     TextView tvFollowStatus;
     @BindView(R.id.pb_comprehensive_evaluation)
     ProgressBarStyleView pbComprehensiveEvaluation;
-    @BindView(R.id.pb_project_location)
-    ProgressBarStyleView pbProjectLocation;
-    @BindView(R.id.pb_technical_framework)
-    ProgressBarStyleView pbTechnicalFramework;
-    @BindView(R.id.pb_team_strength)
-    ProgressBarStyleView pbTeamStrength;
-    @BindView(R.id.pb_project_schedule)
-    ProgressBarStyleView pbProjectSchedule;
-    @BindView(R.id.pb_speculative_risk)
-    ProgressBarStyleView pbSpeculativeRisk;
     @BindView(R.id.rv_img)
     RecyclerView rvImg;
     @BindView(R.id.tv_post_short_desc)
@@ -95,10 +86,13 @@ public class DetailsReviewAllActivity extends BaseActivity {
     TextView tvCommendationNum;
     @BindView(R.id.tv_comments_num)
     TextView tvCommentsNum;
+    @BindView(R.id.rv_review)
+    RecyclerView rvReview;
     private int createUserId;
     private ImagesAdapter adapter;
     private int projectId;
     private int praiseNum;
+    private ProgressAdapter adapterProgress;
 
     @Override
     protected int setOnCreate() {
@@ -120,12 +114,15 @@ public class DetailsReviewAllActivity extends BaseActivity {
     protected void initUI(Bundle savedInstanceState) {
         postId = getIntent().getStringExtra("postId");
         setVerticalManager(rvImg);
+        setVerticalManager(rvReview);
+        adapterProgress = new ProgressAdapter(this);
+        rvReview.setAdapter(adapterProgress);
         adapter = new ImagesAdapter(this);
         rvImg.setAdapter(adapter);
     }
 
     protected void initData() {
-        if(!NetUtil.isNetworkAvailable()){
+        if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
         }
@@ -150,39 +147,41 @@ public class DetailsReviewAllActivity extends BaseActivity {
 
             @Override
             public void onFinish() {
-                if(loadingDialog.isShowing()){
+                if (loadingDialog.isShowing()) {
                     loadingDialog.dismiss();
                 }
             }
         });
     }
 
-    private void initUiData(DetailsReviewBean.DataBean.EvaluationDetailBean evaluationDetail) {
-        mHeadView.setTitle(evaluationDetail.getProjectCode());
-        mHeadView.setTitleVice("/"+evaluationDetail.getProjectChineseName());
-        GlideUtils.loadCircleUrl(mHeadView.getImageView(), Constants.BASE_IMG_URL + evaluationDetail.getProjectIcon());
+    private void initUiData(DetailsReviewBean.DataBean.EvaluationDetailBean evaluationDetail){
+        mHeadView.setTitle(StringUtil.getBeanString(evaluationDetail.getProjectCode()));
+        mHeadView.setTitleVice("/" + StringUtil.getBeanString(evaluationDetail.getProjectChineseName()));
+        GlideUtils.loadCircleUrl(mHeadView.getImageView(), Constants.BASE_IMG_URL +
+                StringUtil.getBeanString(evaluationDetail.getProjectIcon()));
         createUserId = evaluationDetail.getCreateUserId();
-        projectId  = evaluationDetail.getProjectId();
-        tvPostTitle.setText(evaluationDetail.getPostTitle());
+        projectId = evaluationDetail.getProjectId();
+        tvPostTitle.setText(StringUtil.getBeanString(evaluationDetail.getPostTitle()));
         tvTotalScore.setText(String.valueOf(evaluationDetail.getTotalScore()));
-        GlideUtils.loadCircleUrl(ivCreateUserIcon,Constants.BASE_IMG_URL+evaluationDetail.getCreateUserIcon());
-        tvCreateUserName.setText(evaluationDetail.getCreateUserName());
-        tvCreateUserSignature.setText(evaluationDetail.getCreateUserSignature());
+        GlideUtils.loadCircleUrl(ivCreateUserIcon,
+                Constants.BASE_IMG_URL + StringUtil.getBeanString(evaluationDetail.getCreateUserIcon()));
+        tvCreateUserName.setText(StringUtil.getBeanString(evaluationDetail.getCreateUserName()));
+        tvCreateUserSignature.setText(StringUtil.getBeanString(evaluationDetail.getCreateUserSignature()));
         //,//"0 未关注；1-已关注；2-不显示关注按钮"\
-        if(evaluationDetail.getFollowStatus()==1){
+        if (evaluationDetail.getFollowStatus() == 0) {
             tvFollowStatus.setSelected(false);
             tvFollowStatus.setText(getResources().getString(R.string.follow_status_0));
-        }else if(evaluationDetail.getFollowStatus() == 0){
+        } else if (evaluationDetail.getFollowStatus() == 1) {
             tvFollowStatus.setSelected(true);
             tvFollowStatus.setText(getResources().getString(R.string.follow_status_1));
-        }else{
+        } else {
             tvFollowStatus.setVisibility(View.GONE);
         }
-        tvPostShortDesc.setText(evaluationDetail.getPostShortDesc());
+        tvPostShortDesc.setText(StringUtil.getBeanString(evaluationDetail.getPostShortDesc()));
         tvCreateTime.setText(StringUtil.getTimeToM(evaluationDetail.getCreateTime()));
-        tvDonateNum.setText(evaluationDetail.getDonateNum()+getString(R.string.sponsor_num));
+        tvDonateNum.setText(evaluationDetail.getDonateNum() + getString(R.string.sponsor_num));
         praiseNum = evaluationDetail.getPraiseNum();
-        tvPraiseStatus.setText(getString(R.string.like)+ String.valueOf(praiseNum));
+        tvPraiseStatus.setText(getString(R.string.like) + String.valueOf(praiseNum));
         ///0-未点赞，1-已点赞，数字
         if (evaluationDetail.getPraiseStatus() == 0) {
             tvPraiseStatus.setSelected(true);
@@ -196,48 +195,67 @@ public class DetailsReviewAllActivity extends BaseActivity {
             tvCollectStatus.setSelected(false);
         }
         tvCommendationNum.setText(getString(R.string.sponsor) + String.valueOf(Math.round(evaluationDetail.getCommendationNum())));
-        tvCommentsNum.setText(getString(R.string.comment)  + String.valueOf(evaluationDetail.getCollectNum()));
+        tvCommentsNum.setText(getString(R.string.comment) + String.valueOf(evaluationDetail.getCollectNum()));
 
+//        modelType = 1-简单评测；2-全面系统专业评测;3-部分系统专业评测；4-专业评测-自定义类型
+        //进度名称
 
-        pbComprehensiveEvaluation.setTvOne(getResources().getString(R.string.comprehensive_evaluation),0,
-                getResources().getColor(R.color.title_gray));
-        pbComprehensiveEvaluation.setTvThree(evaluationDetail.getTotalScore(),16,R.color.app_background);
-        pbComprehensiveEvaluation.setPbProgressMaxVisible();
         try {
-
-            initProfessionalData(evaluationDetail.getProfessionalEvaDetail());
+            String modelType = getResources().getString(R.string.comprehensive_evaluation);
+            if(evaluationDetail.getModelType()==Constants.ModelType.MODEL_TYPE_PART){
+                String evaDetail = evaluationDetail.getProfessionalEvaDetail();
+                if(StringUtil.isNotBlank(evaDetail)){
+                    JSONArray array = new JSONArray(evaDetail);
+                    modelType =array.getJSONObject(0).getString("modelName");
+                }
+            }
+            pbComprehensiveEvaluation.setTvOne(modelType, 0,getResources().getColor(R.color.title_gray));
+            pbComprehensiveEvaluation.setTvThree(evaluationDetail.getTotalScore(), 16, R.color.app_background);
+            pbComprehensiveEvaluation.setPbProgressMaxVisible();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        String evaluationTags = evaluationDetail.getEvaluationTags();
-        if(StringUtil.isNotBlank(evaluationTags)){
+        if(evaluationDetail.getModelType()==Constants.ModelType.MODEL_TYPE_ALL
+                || evaluationDetail.getModelType()==Constants.ModelType.MODEL_TYPE_ALL_NEW){
             try {
-                JSONArray array = new JSONArray(evaluationTags);
-                for(int i = 0;i<array.length();i++){
-                    String tagName = array.getJSONObject(i).getString("tagName");
-                    TextView tv = buildLabel(tagName);
-                    flEvaluationTags.addView(tv);
-                }
+                initProfessionalData(evaluationDetail.getProfessionalEvaDetail());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        List<PostDataInfo> lists = new ArrayList<>();
+        //标签
         try {
-            JSONArray images = new JSONArray(evaluationDetail.getPostSmallImages());
-            for (int i = 0; i < images.length() && i>7; i++) {
-                JSONObject strObj = images.getJSONObject(i);
-                PostDataInfo info = new PostDataInfo();
-                info.setUrl(strObj.getString("fileUrl"));
-                info.setName(strObj.getString("fileName"));
-                info.setTitle(strObj.getString("extension"));
-                lists.add(info);
+            String evaluationTags = evaluationDetail.getEvaluationTags();
+            if (StringUtil.isNotBlank(evaluationTags)) {
+                JSONArray array = new JSONArray(evaluationTags);
+                for (int i = 0; i < array.length(); i++) {
+                    String tagName = array.getJSONObject(i).getString("tagName");
+                    TextView tv = buildLabel(tagName);
+                    flEvaluationTags.addView(tv);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        adapter.setData(lists);
+        //图片
+        try {
+            List<PostDataInfo> lists = new ArrayList<>();
+            if(StringUtil.isNotBlank(evaluationDetail.getPostSmallImages())){
+                JSONArray images  = new JSONArray(evaluationDetail.getPostSmallImages());
+                for (int i = 0; i < images.length(); i++) {
+                    JSONObject strObj = images.getJSONObject(i);
+                    PostDataInfo info = new PostDataInfo();
+                    info.setUrl(strObj.getString("fileUrl"));
+                    info.setName(strObj.getString("fileName"));
+                    info.setTitle(strObj.getString("extension"));
+                    lists.add(info);
+                }
+                rvImg.setVisibility(View.VISIBLE);
+            }
+            adapter.setData(lists);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         List<DetailsReviewBean.DataBean.EvaluationDetailBean.CommendationListBean> pileLists = evaluationDetail.getCommendationList();
         if (pileLists != null) {
             initPraises(pileLists);
@@ -261,52 +279,25 @@ public class DetailsReviewAllActivity extends BaseActivity {
 
     /**
      * 设置评分进度
+     *
      * @param eva
      * @throws JSONException
      */
     private void initProfessionalData(String eva) throws JSONException {
-        JSONArray object = new JSONArray(eva);
-        for(int i=0;i<object.length();i++){
-            String projectName = object.getJSONObject(i).getString("detailName");
-            int detailWeight = object.getJSONObject(i).getInt("detailWeight");
-            int raterNum = object.getJSONObject(i).getInt("raterNum");
-            double totalScor= object.getJSONObject(i).getDouble("totalScore");
-            String two = "/ "+String.valueOf(detailWeight)+"% ("+raterNum+"人)";
-            if (getString(R.string.project_location).equals(projectName)) {
-                pbProjectLocation.setVisibility(View.VISIBLE);
-                pbProjectLocation.setProgressDrawable(R.drawable.pb_view_xmdw, R.color.xmdw);
-                pbProjectLocation.setAllTv(getResources().getString(R.string.project_location),
-                        two, totalScor);
-            }
-            if (getString(R.string.technical_framework).equals(projectName)) {
-                pbTechnicalFramework.setVisibility(View.VISIBLE);
-                pbTechnicalFramework.setProgressDrawable(R.drawable.pb_view_jskj, R.color.jskj);
-                pbTechnicalFramework.setAllTv(getResources().getString(R.string.technical_framework),
-                        two, totalScor);
-            }
-            if (getString(R.string.team_strength).equals(projectName)) {
-                pbTeamStrength.setVisibility(View.VISIBLE);
-                pbTeamStrength.setProgressDrawable(R.drawable.pb_view_tdsl, R.color.tdsl);
-                pbTeamStrength.setAllTv(getResources().getString(R.string.team_strength),
-                        two, totalScor);
-            }
-            if (getString(R.string.project_schedule).equals(projectName)) {
-                pbProjectSchedule.setVisibility(View.VISIBLE);
-                pbProjectSchedule.setProgressDrawable(R.drawable.pb_view_xmjd, R.color.xmjd);
-                pbProjectSchedule.setAllTv(getResources().getString(R.string.project_schedule),
-                        two, totalScor);
-            }
-            if (getString(R.string.speculative_risk).equals(projectName)) {
-                pbSpeculativeRisk.setVisibility(View.VISIBLE);
-                pbSpeculativeRisk.setProgressDrawable(R.drawable.pb_view_tzfx, R.color.tzfx);
-                pbSpeculativeRisk.setAllTv(getResources().getString(R.string.speculative_risk),
-                        two, totalScor);
-            }
+        if(StringUtil.isBlank(eva)){
+            return;
         }
+        List<String> listPd = new ArrayList<>();
+        JSONArray object = new JSONArray(eva);
+        for (int i = 0; i < object.length(); i++) {
+            listPd.add(object.getJSONObject(i).toString());
+        }
+        rvReview.setVisibility(View.VISIBLE);
+        adapterProgress.setData(listPd);
     }
 
 
-    @OnClick({R.id.rl_ge_ren,R.id.tv_follow_status, R.id.tv_praise_status, R.id.tv_collect_status, R.id.tv_commendation_Num, R.id.tv_comments_num})
+    @OnClick({R.id.rl_ge_ren, R.id.tv_follow_status, R.id.tv_praise_status, R.id.tv_collect_status, R.id.tv_commendation_Num, R.id.tv_comments_num})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_ge_ren:
@@ -315,11 +306,11 @@ public class DetailsReviewAllActivity extends BaseActivity {
             case R.id.tv_follow_status:
                 tvFollowStatus.setEnabled(false);
                 NetUtil.addSaveFollow(tvFollowStatus,
-                        Constants.SaveFollow.USER,Integer.valueOf(createUserId), new NetUtil.SaveFollowImp() {
+                        Constants.SaveFollow.USER, Integer.valueOf(createUserId), new NetUtil.SaveFollowImp() {
                             @Override
                             public void finishFollow(String str) {
                                 tvFollowStatus.setEnabled(true);
-                                if(!str.equals(Constants.FOLLOW_ERROR)){
+                                if (!str.equals(Constants.FOLLOW_ERROR)) {
                                     tvFollowStatus.setText(str);
                                 }
                             }
@@ -328,14 +319,14 @@ public class DetailsReviewAllActivity extends BaseActivity {
             case R.id.tv_praise_status:
                 tvPraiseStatus.setEnabled(false);
                 String str;
-                if(tvPraiseStatus.isSelected()){
-                    str = getString(R.string.like) + String.valueOf(praiseNum+1);
-                }else{
-                    str = getString(R.string.like) + String.valueOf(praiseNum-1);
+                if (tvPraiseStatus.isSelected()) {
+                    str = getString(R.string.like) + String.valueOf(praiseNum + 1);
+                } else {
+                    str = getString(R.string.like) + String.valueOf(praiseNum - 1);
                 }
                 tvPraiseStatus.setText(str);
                 tvPraiseStatus.setSelected(!tvPraiseStatus.isSelected());
-                setPraise(!tvPraiseStatus.isSelected(),Integer.valueOf(postId));
+                setPraise(!tvPraiseStatus.isSelected(), Integer.valueOf(postId));
                 break;
             case R.id.tv_collect_status:
                 tvCollectStatus.setEnabled(false);
@@ -343,24 +334,24 @@ public class DetailsReviewAllActivity extends BaseActivity {
                 NetUtil.saveCollect(tvCollectStatus.isSelected(),
                         Integer.valueOf(postId), new NetUtil.SaveCollectImp() {
                             @Override
-                            public void finishCollect(String str,boolean status) {
+                            public void finishCollect(String str, boolean status) {
                                 tvCollectStatus.setEnabled(true);
-                                if(!str.equals(Constants.COLLECT_ERROR)){
+                                if (!str.equals(Constants.COLLECT_ERROR)) {
                                     tvCollectStatus.setSelected(status);
                                 }
                             }
                         });
                 break;
             case R.id.tv_commendation_Num:
-                DialogUtils.showEditTextDialog(this, getString(R.string.sponsor_title),"", new DialogUtils.EditTextDialogInterface() {
+                DialogUtils.showEditTextDialog(this, getString(R.string.sponsor_title), "", new DialogUtils.EditTextDialogInterface() {
                     @Override
                     public void btnConfirm(String season) {
-                        NetUtil.commendation(Integer.valueOf(postId), createUserId,Double.valueOf(season), projectId, new NetUtil.SaveCommendationImp() {
+                        NetUtil.commendation(Integer.valueOf(postId), createUserId, Double.valueOf(season), projectId, new NetUtil.SaveCommendationImp() {
                             @Override
                             public void finishCommendation(String commendationNum, String donateNum, boolean status) {
-                                if(status){
-                                    tvCommendationNum.setText(getString(R.string.sponsor)+ commendationNum);
-                                    tvDonateNum.setText(donateNum+getString(R.string.sponsor_num));
+                                if (status) {
+                                    tvCommendationNum.setText(getString(R.string.sponsor) + commendationNum);
+                                    tvDonateNum.setText(donateNum + getString(R.string.sponsor_num));
                                 }
                             }
                         });
@@ -368,28 +359,30 @@ public class DetailsReviewAllActivity extends BaseActivity {
                 });
                 break;
             case R.id.tv_comments_num:
-                Intent intent = new Intent(this,DetailsArticleCommentActivity.class);
-                intent.putExtra("postId",String.valueOf(postId));
-                intent.putExtra("url",Constants.EVLUATION_COMMENT_LIST);
+                Intent intent = new Intent(this, DetailsArticleCommentActivity.class);
+                intent.putExtra("postId", String.valueOf(postId));
+                intent.putExtra("url", Constants.EVLUATION_COMMENT_LIST);
                 startActivity(intent);
                 break;
         }
     }
+
     private void setPraise(boolean isPraise, int postId) {
         NetUtil.setPraise(isPraise, postId, new NetUtil.SaveFollowImpl() {
             @Override
-            public void finishFollow(String praiseNum,boolean status) {
+            public void finishFollow(String praiseNum, boolean status) {
                 tvPraiseStatus.setEnabled(true);
                 ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
-                if(!praiseNum.equals(Constants.PRAISE_ERROR)){
+                if (!praiseNum.equals(Constants.PRAISE_ERROR)) {
                     DetailsReviewAllActivity.this.praiseNum = Integer.valueOf(praiseNum);
                     tvPraiseStatus.setSelected(status);
-                    tvPraiseStatus.setText("赞"+praiseNum);
+                    tvPraiseStatus.setText("赞" + praiseNum);
                 }
 
             }
         });
     }
+
     private TextView buildLabel(final String text) {
         TextView textView = new TextView(this);
         textView.setText(text);
@@ -400,7 +393,6 @@ public class DetailsReviewAllActivity extends BaseActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.getInstance().show("dinada");
             }
         });
         return textView;
@@ -410,4 +402,5 @@ public class DetailsReviewAllActivity extends BaseActivity {
         return TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }
+
 }

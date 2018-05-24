@@ -130,7 +130,11 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
                     return;
                 }
                 tvRowCount.setText("共"+detailsBean.getRowCount()+"篇文章");
-                adapter.setData(detailsBean.getRows());
+                if(pageIndex>2){
+                    adapter.setAddData(detailsBean.getRows());
+                }else {
+                    adapter.setData(detailsBean.getRows());
+                }
             }
 
             @Override

@@ -1,17 +1,35 @@
 package com.secretk.move.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.apiService.HttpCallBackImpl;
+import com.secretk.move.apiService.RetrofitUtil;
+import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.bean.base.BaseRes;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.MD5;
+import com.secretk.move.utils.NetUtil;
+import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.EvaluationSliderView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 作者： litongge
@@ -23,6 +41,11 @@ public class EvaluationSimplenessActivity extends BaseActivity {
 
     @BindView(R.id.es_viewa)
     EvaluationSliderView esViewa;
+    @BindView(R.id.tv_evaluation_state)
+    TextView tvEvaluationState;
+    @BindView(R.id.et_evaluation_content)
+    EditText etEvaluationContent;
+    int projectId;
 
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
@@ -30,9 +53,10 @@ public class EvaluationSimplenessActivity extends BaseActivity {
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitleColor(R.color.title_gray);
         mHeadView.setTitle(getString(R.string.evaluation_simpleness));
-        mMenuInfos.add(0,new MenuInfo(R.string.evaluation_professional, getString(R.string.evaluation_professional), 0));
+        mMenuInfos.add(0, new MenuInfo(R.string.evaluation_professional, getString(R.string.evaluation_professional), 0));
         return mHeadView;
     }
+
     @Override
     protected int setOnCreate() {
         return R.layout.activity_evaluation_simpleness;
@@ -40,6 +64,7 @@ public class EvaluationSimplenessActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        projectId = getIntent().getIntExtra("projectId",0);
         esViewa.setScore(4.5f);
         esViewa.setEsvBackground(R.color.app_background);
     }
@@ -51,6 +76,62 @@ public class EvaluationSimplenessActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        IntentUtil.startActivity(EvaluationProfessionalActivity.class);
+        Intent intent = new Intent(this,EvaluationProfessionalActivity.class);
+        intent.putExtra("projectId",projectId);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.rl_submit)
+    public void onViewClicked() {
+        Float num = Float.valueOf(esViewa.getTvEvaluationMun());
+        if (StringUtil.isBlank(etEvaluationContent.getText().toString().trim())) {
+            ToastUtils.getInstance().show("评测内容不能为空");
+            return;
+        }
+        if (!NetUtil.isNetworkAvailable()) {
+            ToastUtils.getInstance().show(getString(R.string.network_error));
+            return;
+        }
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+            //针对某个项目发表文章
+            node.put("projectId", getIntent().getIntExtra("projectId",0));
+            //1-简单评测；2-全面系统专业评测;3-部分系统专业评测；4-专业评测-自定义类型
+            node.put("modelType", 1);
+            //	 modelType=1对应为值为“简单评测", 2 为 "ALL-专业评测" 3 为 "PART—项目立项、核心团队" 4 为 "ALL-专业评测"
+            node.put("postTitle", "简单评测");
+            //精确到小数点1位。简单评测 和部分评测 需要给出此值；ALL-专业评测 可以不用给。
+            node.put("totalScore", num);
+            //包含 fileName,fileUrl,size,extension 信息的json数组,最多3个
+//            node.put("postSmallImages", token);
+            node.put("evauationContent", etEvaluationContent.getText().toString().trim());
+            //包含 modelId , modelName, score 三项的json数组
+//            node.put("postSmallImages", token);
+            //包含 tagId,tagName 的json数组，数量最多3个
+//            node.put("professionalEvaDetail", token);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        loadingDialog.show();
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.SAVE_EVALUATION)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, BaseRes.class, new HttpCallBackImpl<BaseRes>() {
+            @Override
+            public void onCompleted(BaseRes str) {
+                ToastUtils.getInstance().show("评测成功");
+                EvaluationSimplenessActivity.this.finish();
+            }
+
+            @Override
+            public void onFinish() {
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+            }
+        });
     }
 }

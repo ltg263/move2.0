@@ -148,7 +148,7 @@ public class AddDimensionalityPopupWindow extends PopupWindow implements OnClick
        public abstract void popupOnClick(View view, String name, float weight, float grade);
     }
 
-    public void setEtValue(String name,Float weight,Float grade){
+    public void setEtValue(String name,Float grade,Float weight){
         etEvaluationName.setText(name);
         etEvaluationGrade.setText(String.valueOf(grade));
         etEvaluationWeight.setText(String.valueOf(weight));
