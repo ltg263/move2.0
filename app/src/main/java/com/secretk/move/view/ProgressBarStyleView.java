@@ -67,7 +67,7 @@ public class ProgressBarStyleView extends FrameLayout {
         }
     }
     public void setAllTv(String ont,String two,double three) {
-        if(StringUtil.isNotBlank(two)){
+        if(StringUtil.isNotBlank(two) && two.contains("人")){
             ivRightIcon.setVisibility(View.VISIBLE);
         }
         tvOneTitle.setText(ont);
@@ -121,6 +121,9 @@ public class ProgressBarStyleView extends FrameLayout {
             tvTwoTitle.setText(setTwoTitle);
             tvThreeTitle.setText(setThreeTitle);
         }
+    }
+    public String getTotalScore(){
+        return tvThreeTitle.getText().toString().trim();
     }
 
     public void setPbProgressMaxVisible() {

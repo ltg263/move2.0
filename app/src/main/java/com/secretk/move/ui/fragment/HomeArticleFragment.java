@@ -85,7 +85,11 @@ public class HomeArticleFragment extends LazyFragment{
                 if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
                     return;
                 }
-                adapter.setData(detailsBean.getRows());
+                if(pageIndex>2){
+                    adapter.setAddData(detailsBean.getRows());
+                }else {
+                    adapter.setData(detailsBean.getRows());
+                }
             }
 
             @Override
@@ -105,5 +109,4 @@ public class HomeArticleFragment extends LazyFragment{
         userId = ((HomeActivity)context).getUserId();
         loadingDialog = ((HomeActivity)context).getLoadingDialog();
     }
-
 }

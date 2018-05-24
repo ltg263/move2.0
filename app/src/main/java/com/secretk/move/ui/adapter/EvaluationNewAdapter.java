@@ -10,9 +10,7 @@ import android.widget.TextView;
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.bean.EvaluationNewBean;
-import com.secretk.move.bean.base.BaseRes;
 import com.secretk.move.ui.activity.EvaluationNewActivity;
-import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.EvaluationSliderView;
 import com.secretk.move.view.SwipeMenuLayout;
 
@@ -81,9 +79,9 @@ public class EvaluationNewAdapter extends RecyclerView.Adapter<EvaluationNewAdap
 
         public void refresh(final int position, List<EvaluationNewBean> lists) {
             EvaluationNewBean res = lists.get(position);
-            float f = res.getGrade();
+            float f = res.getScore();
             esv.setScore(f);
-            esv.setTvDimensionalityName(res.getName());
+            esv.setTvDimensionalityName(res.getModelName());
             esv.setEsvBackground(R.color.tzfx);
             esv.setSetSlide(false);
             esv.setCompileState(new EvaluationSliderView.Compile() {

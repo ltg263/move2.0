@@ -7,31 +7,40 @@ package com.secretk.move.bean;
  * 描述：
  */
 public class EvaluationNewBean {
-    String name;
-    float weight;
-    float grade;
+    String modelName;
+    float score;
+    int modelWeight;
 
-    public String getName() {
-        return name;
+    public String getModelName() {
+        return modelName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
     }
 
-    public float getWeight() {
-        return weight;
+    public float getScore() {
+        return score;
     }
 
-    public void setWeight(float weight) {
-        this.weight = weight;
+    public void setScore(float score) {
+        this.score = score;
     }
 
-    public float getGrade() {
-        return grade;
+    public int getModelWeight() {
+        return modelWeight;
     }
 
-    public void setGrade(float grade) {
-        this.grade = grade;
+    public void setModelWeight(int modelWeight) {
+        this.modelWeight = modelWeight;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "modelName:'" + modelName + '\'' +
+                ", score:" + score +
+                ", modelWeight:" + modelWeight +
+                '}';
     }
 }

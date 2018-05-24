@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
-import com.secretk.move.bean.base.BaseRes;
+import com.secretk.move.bean.SysEvaluationModelBean;
 import com.secretk.move.view.EvaluationSliderView;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
 public class EvaluationCompileAdapter extends RecyclerView.Adapter<EvaluationCompileAdapter.EvaluationHolder> {
 
 
-    private List<BaseRes> lists = new ArrayList<>();
+    private List<SysEvaluationModelBean.DataBean.ModeDetailListBean> lists = new ArrayList<>();
     private Context context;
 
     public EvaluationCompileAdapter(Context context) {
@@ -52,12 +52,12 @@ public class EvaluationCompileAdapter extends RecyclerView.Adapter<EvaluationCom
         return lists.size();
     }
 
-    public void setData(List<BaseRes> list) {
+    public void setData(List<SysEvaluationModelBean.DataBean.ModeDetailListBean> list) {
         this.lists = list;
         notifyDataSetChanged();
     }
 
-    public List<BaseRes> getData() {
+    public List<SysEvaluationModelBean.DataBean.ModeDetailListBean> getData() {
         return lists;
     }
 
@@ -70,11 +70,15 @@ public class EvaluationCompileAdapter extends RecyclerView.Adapter<EvaluationCom
             ButterKnife.bind(this, itemView);
         }
 
-        public void refresh(int position, List<BaseRes> lists) {
-            BaseRes res = lists.get(position);
-            float f = res.getCode() / 10f;
-            esv.setScore(f);
-            esv.setTvDimensionalityName(res.getMsg());
+        public void refresh(int position, List<SysEvaluationModelBean.DataBean.ModeDetailListBean> lists) {
+            SysEvaluationModelBean.DataBean.ModeDetailListBean res = lists.get(position);
+            float f = res.getTotalScore();
+            if(f == (int)f){
+                esv.setScore((int)f);
+            }else{
+                esv.setScore(f);
+            }
+            esv.setTvDimensionalityName(res.getDetailName());
             switch (position) {
                 case 0:
                     esv.setEsvBackground(R.color.app_background);

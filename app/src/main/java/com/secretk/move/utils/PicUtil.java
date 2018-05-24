@@ -143,8 +143,8 @@ public class PicUtil {
        intent.putExtra("aspectX", 1);
        intent.putExtra("aspectY", 1);
        // outputX outputY 是裁剪图片宽高
-       intent.putExtra("outputX", 320);
-       intent.putExtra("outputY", 320);
+       intent.putExtra("outputX", 96);
+       intent.putExtra("outputY", 96);
 //        intent.putExtra("return-data", true);
        /**
         * 此方法返回的图片只能是小图片（sumsang测试为高宽160px的图片）

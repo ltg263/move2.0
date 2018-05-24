@@ -1,25 +1,36 @@
 package com.secretk.move.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.apiService.HttpCallBackImpl;
+import com.secretk.move.apiService.RetrofitUtil;
+import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
-import com.secretk.move.bean.base.BaseRes;
+import com.secretk.move.bean.SysEvaluationModelBean;
 import com.secretk.move.ui.adapter.EvaluationTypeAdapter;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.MD5;
+import com.secretk.move.utils.NetUtil;
+import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.Clickable;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -36,6 +47,12 @@ public class EvaluationProfessionalActivity extends BaseActivity {
     EvaluationTypeAdapter adapter;
     @BindView(R.id.tv_status)
     TextView textView;
+    @BindView(R.id.tv_zw_name)
+    TextView tvZwName;
+    @BindView(R.id.tv_yw_mane)
+    TextView tvYwMane;
+    private List<SysEvaluationModelBean.DataBean.ModeDetailListBean> listBeans;
+    private int projectId;
 
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
@@ -54,6 +71,7 @@ public class EvaluationProfessionalActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        projectId = getIntent().getIntExtra("projectId",0);
         setVerticalManager(rvTypeLists);
         adapter = new EvaluationTypeAdapter(this);
         rvTypeLists.setAdapter(adapter);
@@ -73,13 +91,36 @@ public class EvaluationProfessionalActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        List<BaseRes> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            BaseRes res = new BaseRes();
-            res.setMsg("我是" + i);
-            list.add(res);
+        if (!NetUtil.isNetworkAvailable()) {
+            ToastUtils.getInstance().show(getString(R.string.network_error));
+            return;
         }
-        adapter.setData(list);
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        loadingDialog.show();
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.GET_SYSEVALUATION_MODEL)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, SysEvaluationModelBean.class, new HttpCallBackImpl<SysEvaluationModelBean>() {
+            @Override
+            public void onCompleted(SysEvaluationModelBean str) {
+                listBeans = str.getData().getModeDetailList();
+                adapter.setData(listBeans);
+            }
+
+            @Override
+            public void onFinish() {
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+            }
+        });
 
     }
 
@@ -93,14 +134,30 @@ public class EvaluationProfessionalActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_project:
-                IntentUtil.startProjectActivity(3);
+                IntentUtil.startProjectActivity(projectId);
                 break;
             case R.id.btn_new:
-                IntentUtil.startActivity(EvaluationNewActivity.class);
+                Intent intents = new Intent(this,EvaluationNewActivity.class);
+                intents.putExtra("projectId",projectId);
+                startActivity(intents);
                 break;
             case R.id.btn_compile:
-                IntentUtil.startActivity(EvaluationCompileListActivity.class);
+                if(listBeans==null || listBeans.size()==0){
+                    ToastUtils.getInstance().show("有没系统模板");
+                    return;
+                }
+                Intent intent = new Intent(this,EvaluationCompileListActivity.class);
+                intent.putExtra("projectId",projectId);
+                intent.putParcelableArrayListExtra("sys_evaluation_model", (ArrayList<? extends Parcelable>) listBeans);
+                startActivity(intent);
                 break;
         }
+    }
+
+    public String getProjectName() {
+        return tvZwName.getText().toString() + tvYwMane.getText().toString();
+    }
+    public int getProjectId() {
+        return projectId;
     }
 }

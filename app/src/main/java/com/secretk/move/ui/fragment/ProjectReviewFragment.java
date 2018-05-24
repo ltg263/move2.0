@@ -100,7 +100,11 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
                 if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
                     return;
                 }
-                adapter.setData(detailsBean.getRows());
+                if(pageIndex>2){
+                    adapter.setAddData(detailsBean.getRows());
+                }else {
+                    adapter.setData(detailsBean.getRows());
+                }
             }
 
             @Override
@@ -147,35 +151,36 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
         for(int postion=0;postion<beans.size();postion++){
             ProjectHomeBean.DataBean.ProjectEvaStatBean bean = beans.get(postion);
             String detailName = bean.getDetailName();
-            if(getString(R.string.project_location).equals(detailName)){
+//            if(getString(R.string.project_location).equals(detailName)){
+            if(postion==0){
                 pbProjectLocation.setVisibility(View.VISIBLE);
                 pbProjectLocation.setProgressDrawable(R.drawable.pb_view_xmdw,R.color.xmdw);
-                pbProjectLocation.setAllTv(getResources().getString(R.string.project_location),
-                        "/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
+                pbProjectLocation.setAllTv(detailName,"/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
             }
-            if(getString(R.string.technical_framework).equals(detailName)){
+//            if(getString(R.string.technical_framework).equals(detailName)){
+            if(postion==1){
                 pbTechnicalFramework.setVisibility(View.VISIBLE);
                 pbTechnicalFramework.setProgressDrawable(R.drawable.pb_view_jskj,R.color.jskj);
-                pbTechnicalFramework.setAllTv(getResources().getString(R.string.technical_framework),
+                pbTechnicalFramework.setAllTv(detailName,
                         "/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
             }
-            if(getString(R.string.team_strength).equals(detailName)){
+//            if(getString(R.string.team_strength).equals(detailName)){
+                if(postion==2){
                 pbTeamStrength.setVisibility(View.VISIBLE);
                 pbTeamStrength.setProgressDrawable(R.drawable.pb_view_tdsl,R.color.tdsl);
-                pbTeamStrength.setAllTv(getResources().getString(R.string.team_strength),
-                        "/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
+                pbTeamStrength.setAllTv(detailName,"/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
             }
-            if(getString(R.string.project_schedule).equals(detailName)){
+//            if(getString(R.string.project_schedule).equals(detailName)){
+            if(postion==3){
                 pbProjectSchedule.setVisibility(View.VISIBLE);
                 pbProjectSchedule.setProgressDrawable(R.drawable.pb_view_xmjd,R.color.xmjd);
-                pbProjectSchedule.setAllTv(getResources().getString(R.string.project_schedule),
-                        "/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
+                pbProjectSchedule.setAllTv(getResources().getString(R.string.project_schedule),"/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
             }
-            if(getString(R.string.speculative_risk).equals(detailName)){
+//            if(getString(R.string.speculative_risk).equals(detailName)){
+            if(postion==4){
                 pbSpeculativeRisk.setVisibility(View.VISIBLE);
                 pbSpeculativeRisk.setProgressDrawable(R.drawable.pb_view_tzfx,R.color.tzfx);
-                pbSpeculativeRisk.setAllTv(getResources().getString(R.string.speculative_risk),
-                        "/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
+                pbSpeculativeRisk.setAllTv(detailName,"/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
             }
 
         }

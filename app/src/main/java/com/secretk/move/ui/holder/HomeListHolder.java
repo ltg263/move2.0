@@ -1,5 +1,6 @@
 package com.secretk.move.ui.holder;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,9 +15,11 @@ import com.secretk.move.bean.RowsBean;
 import com.secretk.move.ui.activity.DetailsArticleActivity;
 import com.secretk.move.ui.activity.DetailsDiscussActivity;
 import com.secretk.move.ui.activity.DetailsReviewAllActivity;
+import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.TimeToolUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,6 +52,8 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
     ImageView ivCreateUserIcon;
     @BindView(R.id.tv_create_user_name)
     TextView tvCreateUserName;
+    @BindView(R.id.tv_time)
+    TextView tvTime;
     @BindView(R.id.tv_create_time)
     TextView tvCreateTime;
     @BindView(R.id.tv_follow_status)
@@ -79,6 +84,7 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
     ImageView ivComment;
     @BindView(R.id.tv_comments_num)
     TextView tvCommentsNum;
+    boolean isProject=true;//当前的Activity是项目
 
     public HomeListHolder(View itemView) {
         super(itemView);
@@ -87,13 +93,16 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
     }
 
     public void refresh(final int position, List<RowsBean> lists, Context context) {
+        if(context instanceof HomeActivity){
+            isProject=false;
+        }
         final RowsBean rowsBean = lists.get(position);
         GlideUtils.loadCircleUrl(ivCreateUserIcon, Constants.BASE_IMG_URL + rowsBean.getProjectIcon());
         tvCreateUserName.setText(rowsBean.getProjectChineseName());
         tvEnglishName.setText("/" + rowsBean.getProjectCode());
         tvCreateTime.setText(StringUtil.getTimeToM(rowsBean.getCreateTime()));
         tvPostTitle.setText(rowsBean.getPostTitle());
-        tvTotalScore.setText(String.valueOf(rowsBean.getTotalScore()));
+        tvTotalScore.setText(String.valueOf(rowsBean.getTotalScore())+"分");
         tvPostShortDesc.setText(rowsBean.getPostShortDesc());
         tvPraiseNum.setText(String.valueOf(rowsBean.getPraiseNum()));
         tvCommentsNum.setText(String.valueOf(rowsBean.getCollectNum()));
@@ -111,9 +120,14 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
         }
         switch (rowsBean.getPostType()) {//帖子类型，数字，帖子类型：1-评测；2-讨论；3-文章
             case 1:
+                if(isProject){
+                    rlDiscuss.setVisibility(View.VISIBLE);//发表
+                    GlideUtils.loadCircleUrl(imgHead,Constants.BASE_IMG_URL+rowsBean.getCreateUserIcon());
+                    tvHead.setText(rowsBean.getCreateUserName());
+                    tvTime.setText(TimeToolUtils.convertTimeToFormat(rowsBean.getCreateTime()));
+                }
                 tvTotalScore.setVisibility(View.VISIBLE);//分数
                 tvFollowStatus.setVisibility(View.GONE);//关注
-                rlDiscuss.setVisibility(View.GONE);//发表
                 if (StringUtil.isNotBlank(tagName)) {
                     tvCrackDown.setVisibility(View.VISIBLE);//标签
                     tvCrackDown.setText(tagName);
@@ -147,7 +161,7 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
         }
         List<RowsBean.PostSmallImagesListBean> imgs = rowsBean.getPostSmallImagesList();
         if (imgs != null) {
-            if (imgs.size() >= 2) {
+            if (imgs.size() > 2) {
                 llMultiImg.setVisibility(View.VISIBLE);
                 ivFileName.setVisibility(View.GONE);
                 GlideUtils.loadImage(context, ivOnt, Constants.BASE_IMG_URL + imgs.get(0).getFileUrl());
@@ -165,27 +179,35 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
         rlProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                IntentUtil.startProjectActivity(rowsBean.getProjectId());
+                if(isProject){
+                    llStartActivity(rowsBean);
+                }else {
+                    IntentUtil.startProjectActivity(rowsBean.getProjectId());
+                }
             }
         });
         llDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String postId = String.valueOf(rowsBean.getPostId());
-                String key[] = {"postId"};
-                String values[] = {postId};
-                switch (rowsBean.getPostType()) {//帖子类型，数字，帖子类型：1-评测；2-讨论；3-文章
-                    case 1:
-                        IntentUtil.startActivity(DetailsReviewAllActivity.class, key, values);
-                        break;
-                    case 2://
-                        IntentUtil.startActivity(DetailsDiscussActivity.class, key, values);
-                        break;
-                    case 3:
-                        IntentUtil.startActivity(DetailsArticleActivity.class, key, values);
-                        break;
-                }
+                llStartActivity(rowsBean);
             }
         });
+    }
+
+    private void llStartActivity(RowsBean rowsBean) {
+        String postId = String.valueOf(rowsBean.getPostId());
+        String key[] = {"postId"};
+        String values[] = {postId};
+        switch (rowsBean.getPostType()) {//帖子类型，数字，帖子类型：1-评测；2-讨论；3-文章
+            case 1:
+                IntentUtil.startActivity(DetailsReviewAllActivity.class, key, values);
+                break;
+            case 2://
+                IntentUtil.startActivity(DetailsDiscussActivity.class, key, values);
+                break;
+            case 3:
+                IntentUtil.startActivity(DetailsArticleActivity.class, key, values);
+                break;
+        }
     }
 }

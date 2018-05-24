@@ -1,5 +1,6 @@
 package com.secretk.move.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -7,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,7 +24,6 @@ import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.ProjectHomeBean;
-import com.secretk.move.bean.RowsBean;
 import com.secretk.move.ui.adapter.HomePageAdapter;
 import com.secretk.move.ui.fragment.ProjectArticleFragment;
 import com.secretk.move.ui.fragment.ProjectDiscussFragment;
@@ -35,7 +34,6 @@ import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
-import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
@@ -184,10 +182,10 @@ public class ProjectActivity extends BaseActivity {
                     tvRaterNum.setText(String.valueOf(projectInfo.getRaterNum()));
                     tvProjectSignature.setText(projectInfo.getProjectSignature());
                     // 0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
-                    if(projectInfo.getFollowStatus()==1){
+                    if(projectInfo.getFollowStatus()==0){
                         tvFollowStatus.setSelected(false);
                         tvFollowStatus.setText(getResources().getString(R.string.follow_status_0));
-                    }else if(projectInfo.getFollowStatus() == 0){
+                    }else if(projectInfo.getFollowStatus() == 1){
                         tvFollowStatus.setSelected(true);
                         tvFollowStatus.setText(getResources().getString(R.string.follow_status_1));
                     }else{
@@ -329,7 +327,9 @@ public class ProjectActivity extends BaseActivity {
                 IntentUtil.startActivity(DetailsUserGradeActivity.class);
                 break;
             case R.id.tv_review:
-                ToastUtils.getInstance().show("简单测评");
+                Intent intent = new Intent(this,EvaluationSimplenessActivity.class);
+                intent.putExtra("projectId",projectInfo.getProjectId());
+                startActivity(intent);
                 break;
             case R.id.tv_follow_status:
                 tvFollowStatus.setEnabled(false);

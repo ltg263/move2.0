@@ -88,8 +88,9 @@
                         android:id="@+id/tv_create_user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/iv_create_user_icon"
                         android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_toRightOf="@id/iv_create_user_icon"
+                        android:layout_toRightOf="@+id/iv_create_user_icon"
                         android:textColor="#333333"
                         android:textSize="@dimen/sp_16" />
 
@@ -97,9 +98,8 @@
                         android:id="@+id/tv_create_user_signature"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_toRightOf="@id/iv_create_user_icon"
+                        android:layout_alignBottom="@+id/iv_create_user_icon"
+                        android:layout_alignStart="@+id/tv_create_user_name"
                         android:textColor="#aaaaaa"
                         android:textSize="@dimen/sp_12" />
 
@@ -127,43 +127,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
-                    <LinearLayout
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_review"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/dp_10"
-                        android:background="@drawable/shape_rectangle_topic"
-                        android:orientation="vertical">
-
-                        <com.secretk.move.view.ProgressBarStyleView
-                            android:id="@+id/pb_project_location"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone" />
-
-                        <com.secretk.move.view.ProgressBarStyleView
-                            android:id="@+id/pb_technical_framework"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone" />
-
-                        <com.secretk.move.view.ProgressBarStyleView
-                            android:id="@+id/pb_team_strength"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone" />
-
-                        <com.secretk.move.view.ProgressBarStyleView
-                            android:id="@+id/pb_project_schedule"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone" />
-
-                        <com.secretk.move.view.ProgressBarStyleView
-                            android:id="@+id/pb_speculative_risk"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone" />
-                    </LinearLayout>
+                        android:visibility="gone" />
                     <!--评分結束-->
                     <!--项目介绍結束-->
                     <TextView
@@ -218,8 +187,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:flChildSpacing="7dp"
-                        app:flRowSpacing="8dp"/>
-
+                        app:flRowSpacing="8dp" />
 
 
                     <TextView

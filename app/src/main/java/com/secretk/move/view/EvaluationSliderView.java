@@ -1,8 +1,10 @@
 package com.secretk.move.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -10,6 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.ui.activity.EvaluationCompileListActivity;
+import com.secretk.move.utils.LogUtil;
 
 /**
  * 作者： litongge
@@ -28,7 +32,7 @@ public class EvaluationSliderView extends FrameLayout {
     RelativeLayout rl;
     private View esv;
     private TextView tvDimensionalityEvaluate;
-
+    Context context;
     public EvaluationSliderView(Context context) {
         super(context);
         initView(context, null);
@@ -36,6 +40,7 @@ public class EvaluationSliderView extends FrameLayout {
 
     public EvaluationSliderView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
         initView(context, attrs);
     }
 
@@ -64,9 +69,18 @@ public class EvaluationSliderView extends FrameLayout {
                     strValue=String.valueOf(value);
                 }
                 tvEvaluationMun.setText(strValue);
+                setHdListener(Float.valueOf(strValue));
             }
         });
     }
+
+    private void setHdListener(float value) {
+        Activity activity = (Activity)context;
+        if((activity  instanceof EvaluationCompileListActivity)){
+            ((EvaluationCompileListActivity) activity).setComprehensiveGrade(getTvDimensionalityName(),value);
+        }
+    }
+
     public void setCompileState(final Compile compile){
         tvDimensionalityCompile.setVisibility(View.VISIBLE);
         tvDimensionalityEvaluate.setVisibility(View.GONE);

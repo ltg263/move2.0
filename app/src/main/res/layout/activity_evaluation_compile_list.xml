@@ -17,6 +17,7 @@
         android:background="@color/cut_off_rule" />
 
     <com.secretk.move.view.RecycleScrollView
+        android:id="@+id/rsv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fillViewport="true"
@@ -25,6 +26,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_10"
             android:orientation="vertical">
 
             <com.secretk.move.view.ProgressBarStyleView
@@ -53,6 +55,7 @@
                     android:textSize="@dimen/sp_14" />
 
                 <TextView
+                    android:id="@+id/tv_project_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

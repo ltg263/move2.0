@@ -86,7 +86,7 @@ public interface Constants {
     /**
      * 张栋栋
      */
-//    String BASE_URL = "http://192.168.10.151:802/rest/";
+//    String BASE_URL = "http://192.168.10.151:803/";
 
 //    String BASE_URL = "http://192.168.10.201/";
 
@@ -111,7 +111,8 @@ public interface Constants {
     String MAIN_BLUE_SKY = BASE_URL + "/kff/home/projectRankList";
 
     //上传用户头像
-    String UPLOAD_USER_ICON_FILE = BASE_URL + "kff/user/uploadUserIconFile";
+    String UPLOAD_USER_ICON_FILE = BASE_URL + "kff/home/uploadImgFile";
+//    String UPLOAD_USER_ICON_FILE = BASE_URL + "/kff/upload/idcard";
     //	更新用户信息（头像，昵称）
     String UPDATE_USER_INFO = BASE_URL + "/kff/user/updateUserInfo";
     //	我的收藏列表
@@ -172,7 +173,12 @@ public interface Constants {
     String EVLUATION_COMMENT_LIST = BASE_URL + "kff/home/evaluationCommentList";
     //捐赠(赞赏)
     String COMMENDATION = BASE_URL + "kff/token/commendation";
-
+    //发表评测类型的帖子
+    String SAVE_EVALUATION = BASE_URL + "kff/evaluation/saveEvaluation";
+    //发表全面或部分 专业评测时需要用到此接口来获取 生效中的系统专业评测详情
+    String GET_SYSEVALUATION_MODEL = BASE_URL + "kff/evaluation/getSysEvaluationModel";
+    //发表评测 用户 自建评测模型
+    String SAVE_EVALUATION_MODEL = BASE_URL + "kff/evaluation/saveEvaluationModel";
 
     //=======
     //讨论详情 页
@@ -195,6 +201,20 @@ public interface Constants {
         int PROJECT = 1;
         int INVITATION = 2;
         int USER = 3;
+    }
+
+    /**
+     * 1对应为值为“简单评测",
+     * 2 为 "ALL-专业评测"
+     * 3 为 "PART—项目立项、核心团队"
+     * 4 为 "ALL-专业评测"
+     */
+    interface ModelType{
+        String MODEL_TYPE = "model_type_key";
+        int MODEL_TYPE_SIMPLENESS = 1;
+        int MODEL_TYPE_ALL = 2;
+        int MODEL_TYPE_PART = 3;
+        int MODEL_TYPE_ALL_NEW = 4;
     }
 
     int TOPIC_SORT_BY_NUM = 1;

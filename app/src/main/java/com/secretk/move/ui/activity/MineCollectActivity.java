@@ -118,7 +118,11 @@ public class MineCollectActivity extends BaseActivity {
                 if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
                     return;
                 }
-                adapter.setData(detailsBean.getRows());
+                if(pageIndex>2){
+                    adapter.setAddData(detailsBean.getRows());
+                }else {
+                    adapter.setData(detailsBean.getRows());
+                }
             }
 
             @Override

@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
+import com.secretk.move.bean.RowsBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.utils.GlideUtils;
 
@@ -63,6 +64,9 @@ private Context mContext;
     public void addData(String str) {
         list.add(str);
         notifyDataSetChanged();
+    }
+    public List<String> getData() {
+        return list;
     }
 
     public class ViewHolder extends RecyclerViewBaseHolder {
