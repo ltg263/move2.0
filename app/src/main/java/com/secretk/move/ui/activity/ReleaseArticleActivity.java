@@ -150,6 +150,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         }
        if (SelectedPicActivity.picArray!=null){
            releasePicAdapter.addSparseData(SelectedPicActivity.picArray);
+           SelectedPicActivity.picArray=null;
        }
     }
 }

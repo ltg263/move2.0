@@ -34,8 +34,9 @@ public class ReleasePicAdapter extends RecyclerView.Adapter<ReleasePicAdapter.Vi
     private Context mContext;
 
     public ReleasePicAdapter() {
-        list = new ArrayList<String>();
+       this.list=new ArrayList<>();
     }
+
 
     public void setItemListener(ItemClickListener mListener) {
         this.mListener = mListener;
@@ -69,8 +70,12 @@ public class ReleasePicAdapter extends RecyclerView.Adapter<ReleasePicAdapter.Vi
         this.list = list;
         notifyDataSetChanged();
     }
-
-    public void addSparseData(LongSparseArray<PicBean> picArray) {
+  private  LongSparseArray<PicBean> picArray;
+    public void addSparseData(LongSparseArray<PicBean> xPicArray) {
+        if (xPicArray==null){
+            return;
+        }
+        this.picArray=xPicArray;
         for (int i = 0; i < picArray.size(); i++) {
             long key = picArray.keyAt(i);
             PicBean bean = picArray.get(key);
