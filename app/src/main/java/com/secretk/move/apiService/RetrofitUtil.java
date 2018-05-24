@@ -15,6 +15,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -51,8 +52,10 @@ public class RetrofitUtil {
 
                 .build();
     }
+
     public static OkHttpClient genericClient() {
         OkHttpClient httpClient = new OkHttpClient.Builder()
+                .connectTimeout(15, TimeUnit.SECONDS)
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
@@ -68,7 +71,6 @@ public class RetrofitUtil {
                                 .build();
                         return chain.proceed(request);
                     }
-
                 })
                 .build();
         return httpClient;
@@ -80,7 +82,7 @@ public class RetrofitUtil {
      * @param params
      * @param clz
      * @param callBack
-     * @param <T> 对象数据
+     * @param <T>      对象数据
      */
     public static <T> void request(RxHttpParams params, final Class<T> clz, final HttpCallBackImpl<T> callBack) {
         if (params == null || clz == null) {
@@ -92,7 +94,7 @@ public class RetrofitUtil {
         String url = params.getUrl();
         Call<ResponseBody> call;
 
-       if (params.getParamsBody() != null) {
+        if (params.getParamsBody() != null) {
             call = apiService.post(url, params.getParamsBody());
         } else if (params.getPartParams().isEmpty() && params.getQueryParams().isEmpty()
                 && params.getPart() == null) {
@@ -120,17 +122,17 @@ public class RetrofitUtil {
                          @Override
                          public void onResponse(Call call, retrofit2.Response response) {
                              ResponseBody body = (ResponseBody) response.body();
-                            // InputStream is = body.byteStream();
+                             // InputStream is = body.byteStream();
                              LogUtil.w("************************************************************************************");
                              LogUtil.i("request " + response.raw().toString());
-                             if (body != null ) {
+                             if (body != null) {
                                  String jsonStr = new String(read(body.byteStream()), Charset.forName("UTF-8"));
-                                 LogUtil.w("jsonStr:"+jsonStr);
+                                 LogUtil.w("jsonStr:" + jsonStr);
                                  try {
                                      JSONObject jsonObject = new JSONObject(jsonStr);
                                      int code = jsonObject.getInt("code");
                                      String msg = jsonObject.getString("msg");
-                                     if((code!=0 && !msg.equals("Success"))){
+                                     if ((code != 0 && !msg.equals("Success"))) {
                                          Toast.makeText(MoveApplication.getContext(), msg, Toast.LENGTH_SHORT).show();
                                          callBack.onFinish();
                                          return;
@@ -138,7 +140,7 @@ public class RetrofitUtil {
                                  } catch (JSONException e) {
                                      e.printStackTrace();
                                  }
-                                 if(clz==null){
+                                 if (clz == null) {
                                      callBack.onFinish();
                                      callBack.onError(jsonStr);
                                      return;
@@ -149,11 +151,11 @@ public class RetrofitUtil {
                                  } else {
                                      t = gson.fromJson(jsonStr, clz);
                                  }
-                                if(t==null){
-                                    ToastUtils.getInstance().show("实体类有误");
-                                    callBack.onFinish();
-                                    return;
-                                }
+                                 if (t == null) {
+                                     ToastUtils.getInstance().show("实体类有误");
+                                     callBack.onFinish();
+                                     return;
+                                 }
                                  if (callBack != null) {
                                      callBack.onFinish();
                                      callBack.onCompleted(t);

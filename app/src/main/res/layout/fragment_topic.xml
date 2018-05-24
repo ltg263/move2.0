@@ -87,6 +87,7 @@
 
         <com.secretk.move.customview.QuickIndexBar
             android:id="@+id/qbar"
+            android:visibility="gone"
             android:layout_width="20dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
