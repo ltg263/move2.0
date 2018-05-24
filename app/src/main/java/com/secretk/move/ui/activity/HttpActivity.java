@@ -3,7 +3,10 @@ package com.secretk.move.ui.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -24,6 +27,8 @@ import com.secretk.move.utils.ToastUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
 
 public class HttpActivity extends AppCompatActivity {
     String key="0987654321qazxcv";
@@ -78,7 +83,7 @@ public class HttpActivity extends AppCompatActivity {
             }
         });
     }
-    public void jyhLogin(View view) throws Exception{
+    public void jyhLoginx(View view) throws Exception{
       String token=  SharedUtils.singleton().get("token","");
         JSONObject node = new JSONObject();
         try {
@@ -102,5 +107,46 @@ public class HttpActivity extends AppCompatActivity {
             }
         });
     }
+    public void jyhLogin(View view) throws Exception{
+//        String path="/storage/emulated/0/Pictures/Screenshots/Screenshot_20180522-180533.png";
+        String path="/storage/emulated/0/DCIM/Camera/IMG_20180523_103223.jpg";
+        File file = new File(path);
+        LogUtil.w("file.exists(:"+file.exists());
+        if(!file.exists()){
+            return;
+        }
+        String token = SharedUtils.singleton().get("token", "");
+        String name=getMimeType(file.getName());
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.UPLOAD_IMG_FILE)
+                .addPart("token", token)
+                .addPart("uploadfile", "multipart/form-data",file)
+                .addPart("imgtype","3")
+                .build();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onCompleted(String str) {
+                Log.e("jyh_onCompleted",str);
+            }
 
+            @Override
+            public void onError(String message) {
+                super.onError(message);
+                Log.e("jyh_onError",message);
+            }
+        });
+    }
+    public String getMimeType(String fileName) {
+        String result = "";
+        int extPos = fileName.lastIndexOf(".");
+        if(extPos != -1) {
+            String ext = fileName.substring(extPos + 1);
+            result = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext);
+        }
+        if(TextUtils.isEmpty(result)){
+            result = "application/octet-stream";
+        }
+
+        return result;
+    }
 }
