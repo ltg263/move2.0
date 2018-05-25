@@ -266,7 +266,6 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
                 }
                 Log.e("jyh_onCompleted", data.getMsg());
             }
-
             @Override
             public void onError(String message) {
                 super.onError(message);
@@ -289,7 +288,6 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
                 httpRelease();
             }
         }
-
     }
 
     public String getEdTitle() {
@@ -297,7 +295,6 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
     }
 
     public String getEdContent() {
-
         return ed_content.getText().toString().trim();
     }
 }

@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.SearchedBean;
 import com.secretk.move.utils.UiUtils;
 
@@ -27,6 +28,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * 快速索引栏
@@ -126,10 +128,10 @@ public class QuickIndexBar extends View {
             case MotionEvent.ACTION_UP:
                 this.setBackgroundColor(Color.TRANSPARENT);
                 touchIndex = -1;
-
-                if (pop != null) {
-                    pop.dismiss();
-                }
+//todo
+//                if (pop != null) {
+//                    pop.dismiss();
+//                }
 
                 break;
             default:
@@ -159,12 +161,12 @@ public class QuickIndexBar extends View {
                     onLetterChangeListener.onLetterChange(letter);
                 }
 
-
-                int pop_y = (int) event.getRawY();
-                pop.showAtLocation(this, Gravity.LEFT, UiUtils.dip2px(20), pop_y - UiUtils.getWindowWidth() / 2 - UiUtils.dip2px(110));
-                tvShow.setText(letter);
-                pop.update();
-                tvShow.invalidate();
+//todo
+//                int pop_y = (int) event.getRawY();
+//                pop.showAtLocation(this, Gravity.LEFT, UiUtils.dip2px(20), pop_y - UiUtils.getWindowWidth() / 2 - UiUtils.dip2px(110));
+//                tvShow.setText(letter);
+//                pop.update();
+//                tvShow.invalidate();
 
                 touchIndex = index;
             }
@@ -194,13 +196,19 @@ public class QuickIndexBar extends View {
         this.list = list;
         postInvalidate();
     }
+    Pattern p = Pattern.compile("[a-zA-z]");
     public void setDatax( List<SearchedBean.Projects> xlist) {
         for (int i=0;i<xlist.size();i++){
             String str=xlist.get(i).getProjectCode().charAt(0)+"";
             if (list==null){
                 list=new ArrayList<>();
             }
-            this.list.add(str.toUpperCase());
+            if (p.matcher(str).find()){
+                this.list.add(str.toUpperCase());
+            }else {
+                this.list.add("#");
+            }
+
         }
         removeDuplicateWithOrder( this.list);
     }
@@ -221,11 +229,11 @@ public class QuickIndexBar extends View {
 
     public void initPop() {
 
-        View contentView = LayoutInflater.from(MoveApplication.getContext()).inflate(R.layout.fragment_topic_pop, null);
-        tvShow = contentView.findViewById(R.id.tvShow);
-        pop = new PopupWindow(contentView, RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        // 指定 PopupWindow 的背景
-        pop.setFocusable(true);                   // 设定 PopupWindow 取的焦点，创建出来的 PopupWindow 默认无焦点
+//        View contentView = LayoutInflater.from(MoveApplication.getContext()).inflate(R.layout.fragment_topic_pop, null);
+//        tvShow = contentView.findViewById(R.id.tvShow);
+//        pop = new PopupWindow(contentView, RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+//        // 指定 PopupWindow 的背景
+//        pop.setFocusable(true);                   // 设定 PopupWindow 取的焦点，创建出来的 PopupWindow 默认无焦点
 
 
     }

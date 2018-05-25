@@ -223,7 +223,9 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
                     List<SearchedBean.Projects> list = bean.getData().getProjects();
                     tv_count.setText("共" + list.size() + "个币种");
                     adapter.setData(list, type);
-                    qbar.setDatax(list);
+                   if (type==Constants.TOPIC_SORT_BY_NAME){
+                       qbar.setDatax(list);
+                   }
                 }
             }
 
