@@ -49,8 +49,9 @@ public class ImgExtraHorizontalAdapter extends RecyclerView.Adapter {
         ImageView img = horizontalHolder.img_extra;
         ViewGroup.LayoutParams params = img.getLayoutParams();
         if (list.size()==1){
-            params.width = UiUtils.getNewsPicBrowSize()[0];
-            params.height = 187;
+            params.width = UiUtils.getWindowWidth()-UiUtils.dip2px(25);
+//
+            params.height =UiUtils.getWindowWidth()/5*2;
         }else {
             params.width = UiUtils.getNewsPicSize()[0];
             params.height = UiUtils.getNewsPicSize()[1];

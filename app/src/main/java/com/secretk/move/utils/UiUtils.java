@@ -121,7 +121,7 @@ public class UiUtils {
 	 * */
 	public  static  int [] getNewsPicSize(){
 		int [] size=new int[2];
-		size[0]=getWindowWidth()/3;
+		size[0]=(getWindowWidth()-UiUtils.dip2px(25))/3;
 		size[1]=size[0]/5*3;
 		return  size;
 	};
