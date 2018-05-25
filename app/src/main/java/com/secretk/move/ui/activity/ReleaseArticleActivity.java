@@ -67,7 +67,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
     LinearLayoutManager layoutManager;
     List<String> serverImgList = new ArrayList<>();
     LoadingDialog loadingDialog;
-
+    String token = SharedUtils.singleton().get("token", "");
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -202,7 +202,6 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
     String postSmallImages = null;
 
     public void httpRelease() {
-        String token = SharedUtils.singleton().get("token", "");
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -245,7 +244,11 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         if (!file.exists()) {
             return;
         }
-        String token = SharedUtils.singleton().get("token", "");
+
+        if (TextUtils.isEmpty(token)){
+            ToastUtils.getInstance().show("请先登录账号");
+            return;
+        }
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.UPLOAD_IMG_FILE)
                 .addPart("token", token)
@@ -279,7 +282,8 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         for (int i=0;i<list.size();i++){
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("fileName", "");
-            jsonObject.put("fileUrl", list.get(i));
+            String str=list.get(i);
+            jsonObject.put("fileUrl", str);
             jsonObject.put("size", "");
             jsonObject.put("extension", "");
             array.put(jsonObject);

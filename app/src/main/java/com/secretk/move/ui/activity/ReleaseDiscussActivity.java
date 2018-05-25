@@ -66,6 +66,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
     EditText ed_content;
     List<String> serverImgList = new ArrayList<>();
     LoadingDialog loadingDialog;
+    String token = SharedUtils.singleton().get("token", "");
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +93,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         recycler_horizontal.setAdapter(releaseArticleLabelAdapter);
 
         ed_title.setHint(Html.fromHtml("请输入标题 <small>(6-30字之间)</small>"));
+        loadingDialog=new LoadingDialog(this);
     }
 
     @OnClick(R.id.img_return)
@@ -203,7 +205,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
     String discussImages = null;
 
     public void httpRelease() {
-        String token = SharedUtils.singleton().get("token", "");
+
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -245,7 +247,10 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         if (!file.exists()) {
             return;
         }
-        String token = SharedUtils.singleton().get("token", "");
+        if (TextUtils.isEmpty(token)){
+            ToastUtils.getInstance().show("请先登录账号");
+            return;
+        }
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.UPLOAD_IMG_FILE)
                 .addPart("token", token)
@@ -280,7 +285,9 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         for (int i=0;i<list.size();i++){
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("fileName", "");
-            jsonObject.put("fileUrl", list.get(i));
+
+            String str=list.get(i);
+            jsonObject.put("fileUrl", str);
             jsonObject.put("size", "");
             jsonObject.put("extension", "");
             array.put(jsonObject);
