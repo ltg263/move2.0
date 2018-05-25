@@ -63,7 +63,7 @@
                   android:layout_height="wrap_content"
                   android:background="@null"
                   android:textSize="@dimen/sp_18"
-                  android:maxLength="2000"
+                  android:maxLength="30"
                   android:padding="@dimen/dp_10"
                   android:textCursorDrawable="@drawable/shape_edit_cursor" />
 
@@ -74,6 +74,7 @@
                   android:background="#dddddd" />
 
               <EditText
+                  android:id="@+id/ed_content"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="@dimen/dp_5"

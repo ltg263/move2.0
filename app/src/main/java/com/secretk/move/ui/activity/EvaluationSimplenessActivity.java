@@ -104,10 +104,10 @@ public class EvaluationSimplenessActivity extends BaseActivity {
             //精确到小数点1位。简单评测 和部分评测 需要给出此值；ALL-专业评测 可以不用给。
             node.put("totalScore", num);
             //包含 fileName,fileUrl,size,extension 信息的json数组,最多3个
-//            node.put("postSmallImages", token);
+//            node.put("discussImages", token);
             node.put("evauationContent", etEvaluationContent.getText().toString().trim());
             //包含 modelId , modelName, score 三项的json数组
-//            node.put("postSmallImages", token);
+//            node.put("discussImages", token);
             //包含 tagId,tagName 的json数组，数量最多3个
 //            node.put("professionalEvaDetail", token);
         } catch (JSONException e) {

@@ -18,6 +18,7 @@ import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.bean.DynamicValidateCodeSend;
 
 import com.secretk.move.bean.MainRfBean;
+import com.secretk.move.bean.UpImgBean;
 import com.secretk.move.bean.base.BaseRes;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
@@ -31,12 +32,14 @@ import org.json.JSONObject;
 import java.io.File;
 
 public class HttpActivity extends AppCompatActivity {
-    String key="0987654321qazxcv";
+    String key = "0987654321qazxcv";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_http);
     }
+
     public void rxDemo(View view) throws Exception {
 //       String str2="=%22{%22phone%22:%2215967158669%22,%22module%22:%22register%22}%22 ";
 //        PostRegisterBean registerBean=new PostRegisterBean("15967158669","register");
@@ -60,7 +63,8 @@ public class HttpActivity extends AppCompatActivity {
 //            }
 //        });
     }
-    public void rxGetVerificationCode(View view){
+
+    public void rxGetVerificationCode(View view) {
         //String str = "{\"phone\":\"15967158669\",\"module\":\"register\"}";
         JSONObject node = new JSONObject();
         try {
@@ -83,8 +87,9 @@ public class HttpActivity extends AppCompatActivity {
             }
         });
     }
-    public void jyhLoginx(View view) throws Exception{
-      String token=  SharedUtils.singleton().get("token","");
+
+    public void jyhLoginx(View view) throws Exception {
+        String token = SharedUtils.singleton().get("token", "");
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -103,50 +108,41 @@ public class HttpActivity extends AppCompatActivity {
         RetrofitUtil.request(params, BaseRes.class, new HttpCallBackImpl<BaseRes>() {
             @Override
             public void onCompleted(BaseRes bean) {
-               int code=bean.getCode();
+                int code = bean.getCode();
             }
         });
     }
-    public void jyhLogin(View view) throws Exception{
-//        String path="/storage/emulated/0/Pictures/Screenshots/Screenshot_20180522-180533.png";
-        String path="/storage/emulated/0/DCIM/Camera/IMG_20180523_103223.jpg";
+
+    public void jyhLogin(View view) throws Exception {
+        String path="/storage/emulated/0/Pictures/Screenshots/Screenshot_20180522-180533.png";
+//        String path = "/storage/emulated/0/DCIM/Camera/IMG_20180523_103223.jpg";
         File file = new File(path);
-        LogUtil.w("file.exists(:"+file.exists());
-        if(!file.exists()){
+        LogUtil.w("file.exists(:" + file.exists());
+        if (!file.exists()) {
             return;
         }
         String token = SharedUtils.singleton().get("token", "");
-        String name=getMimeType(file.getName());
+
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.UPLOAD_IMG_FILE)
                 .addPart("token", token)
-                .addPart("uploadfile", "multipart/form-data",file)
-                .addPart("imgtype","3")
+                .addPart("uploadfile", "multipart/form-data", file)
+                .addPart("imgtype", "3")
                 .build();
-        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+        RetrofitUtil.request(params, UpImgBean.class, new HttpCallBackImpl<UpImgBean>() {
             @Override
-            public void onCompleted(String str) {
-                Log.e("jyh_onCompleted",str);
+            public void onCompleted(UpImgBean data) {
+                String srt = data.getData().getImgUrl();
+                Log.e("jyh_onCompleted", data.getMsg());
             }
 
             @Override
             public void onError(String message) {
                 super.onError(message);
-                Log.e("jyh_onError",message);
+                Log.e("jyh_onError", message);
             }
         });
     }
-    public String getMimeType(String fileName) {
-        String result = "";
-        int extPos = fileName.lastIndexOf(".");
-        if(extPos != -1) {
-            String ext = fileName.substring(extPos + 1);
-            result = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext);
-        }
-        if(TextUtils.isEmpty(result)){
-            result = "application/octet-stream";
-        }
 
-        return result;
-    }
+
 }

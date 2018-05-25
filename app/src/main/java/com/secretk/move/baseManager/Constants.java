@@ -112,7 +112,7 @@ public interface Constants {
 
     //上传用户头像
     String UPLOAD_USER_ICON_FILE = BASE_URL + "kff/home/uploadImgFile";
-//    String UPLOAD_USER_ICON_FILE = BASE_URL + "/kff/upload/idcard";
+    //    String UPLOAD_USER_ICON_FILE = BASE_URL + "/kff/upload/idcard";
     //	更新用户信息（头像，昵称）
     String UPDATE_USER_INFO = BASE_URL + "/kff/user/updateUserInfo";
     //	我的收藏列表
@@ -189,10 +189,10 @@ public interface Constants {
     //发表讨论时 添加标签 获取标签列表
     String RELEASE_DISCUSS_LIST = BASE_URL + "/kff/discuss/tagList";
     String RELEASE_ARTICLE = BASE_URL + "/kff/article/saveArticle";
-
+    String RELEASE_DISCUSS = BASE_URL + "/kff/discuss/saveDiscuss";
     String SEARCH_PROJECTS = BASE_URL + "/kff/project/searchProjects";
 
-    String UPLOAD_IMG_FILE=BASE_URL + "kff/home/uploadImgFile";
+    String UPLOAD_IMG_FILE = BASE_URL + "kff/home/uploadImgFile";
 
     /**
      * 1-关注项目;2-关注帖子；3-关注用户
@@ -209,7 +209,7 @@ public interface Constants {
      * 3 为 "PART—项目立项、核心团队"
      * 4 为 "ALL-专业评测"
      */
-    interface ModelType{
+    interface ModelType {
         String MODEL_TYPE = "model_type_key";
         int MODEL_TYPE_SIMPLENESS = 1;
         int MODEL_TYPE_ALL = 2;
