@@ -66,12 +66,13 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
         tv_score.setText(bean.getTotalScore());
         tv_follow.setText(bean.getFollowerNum());
         if (bean.getFollowStatus()==0){
-            tvIsFollw.setPressed(true);
-            tvIsFollw.setSelected(true);
-            tvIsFollw.setText("+ 关注");
-        }else {
             tvIsFollw.setPressed(false);
             tvIsFollw.setSelected(false);
+
+            tvIsFollw.setText("+ 关注");
+        }else {
+            tvIsFollw.setPressed(true);
+            tvIsFollw.setSelected(true);
             tvIsFollw.setText("已关注");
         }
         tvIsFollw.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +104,7 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
               default:
                   img_order.setVisibility(View.INVISIBLE);
                   tv_order.setVisibility(View.VISIBLE);
-                  tv_order.setText(position+1+"");
+
                   break;
       }
     }
@@ -126,14 +127,15 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
             public void onCompleted(BaseRes bean) {
                 if (bean.getCode()==0){
                     if (getString().equals("已关注")) {
-
+                        tvIsFollw.setText("+ 关注");
                         tvIsFollw.setPressed(false);
                         tvIsFollw.setSelected(false);
-                        tvIsFollw.setText("+ 关注");
+
                     } else {
+                        tvIsFollw.setText("已关注");
                         tvIsFollw.setPressed(true);
                         tvIsFollw.setSelected(true);
-                        tvIsFollw.setText("已关注");
+
                     }
                 }
             }
