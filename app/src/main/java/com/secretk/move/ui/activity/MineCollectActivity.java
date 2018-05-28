@@ -68,6 +68,7 @@ public class MineCollectActivity extends BaseActivity {
         adapter = new HomeListAdapter(this);
         rvCollect.setAdapter(adapter);
         initRefresh();
+        loadingDialog.show();
     }
 
     private void initRefresh() {
@@ -77,6 +78,7 @@ public class MineCollectActivity extends BaseActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                refreshLayout.setLoadmoreFinished(false);
                 pageIndex = 1;
                 initData();
             }
@@ -106,17 +108,19 @@ public class MineCollectActivity extends BaseActivity {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.GET_H5_URLS)
+                .url(Constants.MYC_OLLECT_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        loadingDialog.show();
         RetrofitUtil.request(params, MyCollectList.class, new HttpCallBackImpl<MyCollectList>() {
             @Override
             public void onCompleted(MyCollectList bean) {
                 MyCollectList.DataBean.MyTokenRecordsBean detailsBean = bean.getData().getMyTokenRecords();
                 if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
                     return;
+                }
+                if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
+                    refreshLayout.setLoadmoreFinished(true);
                 }
                 if(pageIndex>2){
                     adapter.setAddData(detailsBean.getRows());
@@ -129,6 +133,9 @@ public class MineCollectActivity extends BaseActivity {
             public void onFinish() {
                 if (refreshLayout.isRefreshing()) {
                     refreshLayout.finishRefresh();
+                }
+                if (refreshLayout.isLoading()) {
+                    refreshLayout.finishLoadmore(true);
                 }
                 if(loadingDialog.isShowing()){
                     loadingDialog.dismiss();

@@ -101,6 +101,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
     @Override
     public void onFirstUserVisible() {
+        LogUtil.w("");
         if(isLoginZt){
             rlNoLogin.setVisibility(View.GONE);
             rlUserInfo.setVisibility(View.VISIBLE);

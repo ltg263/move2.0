@@ -12,7 +12,6 @@ import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.bean.EvaluationNewBean;
 import com.secretk.move.ui.activity.EvaluationNewActivity;
 import com.secretk.move.view.EvaluationSliderView;
-import com.secretk.move.view.SwipeMenuLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +66,8 @@ public class EvaluationNewAdapter extends RecyclerView.Adapter<EvaluationNewAdap
     public class EvaluationHolder extends RecyclerViewBaseHolder {
         @BindView(R.id.esv)
         EvaluationSliderView esv;
-        @BindView(R.id.sml_msg)
-        SwipeMenuLayout sml_msg;
+//        @BindView(R.id.sml_msg)
+//        SwipeMenuLayout sml_msg;
         @BindView(R.id.tv_delete)
         TextView tvDelete;
 

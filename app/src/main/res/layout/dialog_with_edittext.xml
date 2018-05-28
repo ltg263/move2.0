@@ -45,11 +45,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:gravity="center"
-                android:inputType="number|numberDecimal"
-                android:hint="请输入赞助金额"
                 android:padding="10dp"
                 android:textColor="@color/title_gray"
                 android:textColorHint="@color/title_gray_66"
+                android:textCursorDrawable="@drawable/shape_edit_cursor"
                 android:textSize="16sp" />
 
         </RelativeLayout>

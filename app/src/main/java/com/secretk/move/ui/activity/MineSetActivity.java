@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
@@ -20,7 +19,6 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.UserLoginInfo;
 import com.secretk.move.utils.GlideUtils;
-import com.secretk.move.utils.ImageUtils;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
@@ -157,7 +155,6 @@ public class MineSetActivity extends BaseActivity {
             case R.id.tv_email:
                 break;
             case R.id.ll_reset_passwords:
-                toolbarTopRightBtn1();
                 break;
         }
     }
@@ -184,6 +181,7 @@ public class MineSetActivity extends BaseActivity {
 
         return result;
     }
+
     @Override
     protected void OnToolbarRightListener() {
         File file = new File(PicUtil.uritempFile.getPath());
@@ -191,36 +189,30 @@ public class MineSetActivity extends BaseActivity {
         if(!file.exists()){
             return;
         }
-        imgBase64 = ImageUtils.getImageBase64(PicUtil.uritempFile.getPath());
-//        JSONObject node = new JSONObject();
-//        try {
-//            node.put("token", token);
-//            node.put("imgdata", imgBase64);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-        LogUtil.w("file:"+file);
         String[] split = file.getPath().split("\\.");
         String suffix = split[split.length - 1];
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.UPLOAD_USER_ICON_FILE)
                 .addPart("token", token)
-                .addPart("uploadfile",getMimeType(file.getName()) ,file)
-//                .addPart("uploadfile",suffix)
+                .addPart("uploadfile ",getMimeType(file.getName()) ,file)
+                .addPart("imgtype","1")
                 .build();
-//        File file = new File(path);
-//        String[] split = path.split("\\.");
-//        String suffix = split[split.length - 1];
-//        String mimeType = getMimeType(file.getName());
-//        params.addPart("file", mimeType,file);
-//        params.addPart("suffix",suffix);
+        loadingDialog.show();
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
+                saveData();
+            }
+
+            @Override
+            public void onError(String message) {
+                if(loadingDialog.isShowing()){
+                    loadingDialog.dismiss();
+                }
             }
         });
     }
-    protected void toolbarTopRightBtn1() {
+    protected void saveData() {
         if(!NetUtil.isNetworkAvailable()){
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
@@ -236,7 +228,6 @@ public class MineSetActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        loadingDialog.show();
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.UPDATE_USER_INFO)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
@@ -248,7 +239,7 @@ public class MineSetActivity extends BaseActivity {
                 try {
                     JSONObject object = new JSONObject(str);
                     JSONObject userInfo = object.getJSONObject("data").getJSONObject("user");
-                    sharedUtils.put("userInfo",userInfo.toString());
+                    sharedUtils.put(Constants.USER_INFOS,userInfo.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -320,12 +311,8 @@ public class MineSetActivity extends BaseActivity {
             PicUtil.startPhotoZoom(Uri.fromFile(tempFile),MineSetActivity.this);
         }
     }
-    String imgBase64;
     private void onPicTrimResult() {
        GlideUtils.loadImage(ivHeadImg,PicUtil.uritempFile.getPath());
     }
-
-    //=========================================================================
-
 
 }

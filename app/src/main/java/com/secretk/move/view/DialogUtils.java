@@ -124,21 +124,20 @@ public class DialogUtils {
         dialog.show();
         TextView tvLogPrompt = view.findViewById(R.id.tv_log_prompt);
         final EditText etLogContent = view.findViewById(R.id.et_log_content);
+        if(StringUtil.isNotBlank(content)){
+            etLogContent.setText(content);
+        }
         if(context.getString(R.string.sponsor_title).equals(title)){
+            etLogContent.setHint("请输入赞助金额");
             etLogContent.setInputType(InputType.TYPE_CLASS_NUMBER);
             etLogContent.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
         }
         if(context.getString(R.string.set_my_name).equals(title)){
             etLogContent.setHint("请输入昵称");
-            if(StringUtil.isNotBlank(content)){
-                etLogContent.setText(content);
-            }
+
         }
         if(context.getString(R.string.set_my_signature).equals(title)){
             etLogContent.setHint("请输入简介");
-            if(StringUtil.isNotBlank(content)){
-                etLogContent.setText(content);
-            }
         }
         TextView tvLogConfirm = view.findViewById(R.id.tv_log_confirm);
         TextView tvLogCancel = view.findViewById(R.id.tv_log_cancel);

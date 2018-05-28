@@ -29,9 +29,10 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
             android:background="@drawable/shape_rectangle_code"
+            android:hint="请输入标签名称"
             android:padding="@dimen/dp_10"
-            android:textSize="@dimen/sp_12"
-           android:hint="请输入标签名称" />
+            android:textCursorDrawable="@drawable/shape_edit_cursor"
+            android:textSize="@dimen/sp_12" />
 
         <View
             android:layout_width="match_parent"

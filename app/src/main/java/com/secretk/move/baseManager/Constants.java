@@ -130,6 +130,12 @@ public interface Constants {
 
     //项目主页 ，显示项目基本信息
     String PROJECT_INDEX = BASE_URL + "/kff/project/index";
+    //我的消息列表。
+    String MESSAGE_LIST = BASE_URL + "kff/message/messageList";
+    //消息详情
+    String MESSAGE_DETAIL = BASE_URL + "kff/message/messageDetail";
+    //消息详情
+    String DELETE_MESSAGE = BASE_URL + "kff/message/deleteMessage";
     //项目主页 评测列表
     String PROJECT_EVALUATION_LIST = BASE_URL + "/kff/project/evaluationList";
     //项目讨论列表

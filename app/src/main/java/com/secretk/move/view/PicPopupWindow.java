@@ -13,12 +13,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.secretk.move.R;
 import com.secretk.move.bean.AreaListBean;
-import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.widget.OnWheelChangedListener;
 import com.secretk.move.view.widget.WheelView;
 import com.secretk.move.view.widget.adapters.ArrayWheelAdapter;
@@ -30,8 +28,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import butterknife.OnItemClick;
 /**
  * 作者： litongge
  * 时间： 2018/5/19 18:54
@@ -126,7 +122,6 @@ public class PicPopupWindow extends PopupWindow  implements  OnWheelChangedListe
 
             @SuppressLint("ClickableViewAccessibility")
             public boolean onTouch(View v, MotionEvent event) {
-
                 int height = mMenuView.findViewById(R.id.pop_layout).getTop();
                 int y = (int) event.getY();
                 if (event.getAction() == MotionEvent.ACTION_UP) {
