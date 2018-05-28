@@ -65,15 +65,16 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
         tv_content.setText(bean.getProjectSignature());
         tv_score.setText(bean.getTotalScore());
         tv_follow.setText(bean.getFollowerNum());
-        if (bean.getFollowStatus()==0){
-            tvIsFollw.setPressed(false);
-            tvIsFollw.setSelected(false);
-
+        if (0 == bean.getFollowStatus()) {
             tvIsFollw.setText("+ 关注");
-        }else {
-            tvIsFollw.setPressed(true);
-            tvIsFollw.setSelected(true);
+            tvIsFollw.setSelected(false);
+            tvIsFollw.setPressed(false);
+        } else if (1 == bean.getFollowStatus()) {
             tvIsFollw.setText("已关注");
+            tvIsFollw.setSelected(true);
+            tvIsFollw.setPressed(true);
+        } else {
+            tvIsFollw.setVisibility(View.GONE);
         }
         tvIsFollw.setOnClickListener(new View.OnClickListener() {
             @Override
