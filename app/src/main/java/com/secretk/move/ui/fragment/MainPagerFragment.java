@@ -101,7 +101,7 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
             public void onClick(View view) {
                 intent = new Intent(getContext(), EvaluationWriteActivity.class);
                 intent.putExtra("professionalEvaDetail","professionalEvaDetail");
-                intent.putExtra("totalScore",0);
+                intent.putExtra("totalScore","0");
                 intent.putExtra("projectId",1);
                 startActivity(intent);
                 dialog.dismiss();
