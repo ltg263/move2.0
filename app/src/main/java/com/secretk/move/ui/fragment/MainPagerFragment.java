@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.LazyFragment;
+import com.secretk.move.ui.activity.EvaluationWriteActivity;
 import com.secretk.move.ui.activity.ReleaseArticleActivity;
 import com.secretk.move.ui.activity.ReleaseDiscussActivity;
 import com.secretk.move.ui.activity.ReleaseEvaluationActivity;
@@ -98,7 +99,10 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         view.findViewById(R.id.ll_evaluation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent = new Intent(getContext(), ReleaseEvaluationActivity.class);
+                intent = new Intent(getContext(), EvaluationWriteActivity.class);
+                intent.putExtra("professionalEvaDetail","professionalEvaDetail");
+                intent.putExtra("totalScore",0);
+                intent.putExtra("projectId",1);
                 startActivity(intent);
                 dialog.dismiss();
             }
@@ -107,6 +111,7 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
             @Override
             public void onClick(View view) {
                 intent = new Intent(getContext(), ReleaseArticleActivity.class);
+                intent.putExtra("projectId",1);
                 startActivity(intent);
                 dialog.dismiss();
             }
@@ -115,6 +120,7 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
             @Override
             public void onClick(View view) {
                 intent = new Intent(getContext(), ReleaseDiscussActivity.class);
+                intent.putExtra("projectId",1);
                 startActivity(intent);
                 dialog.dismiss();
             }
