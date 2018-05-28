@@ -1,5 +1,6 @@
 package com.secretk.move.ui.holder;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -69,10 +70,12 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             tvIsFollw.setText("+ 关注");
             tvIsFollw.setSelected(false);
             tvIsFollw.setPressed(false);
+            tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
         } else if (1 == currenBean.getFollowStatus()) {
             tvIsFollw.setText("已关注");
             tvIsFollw.setSelected(true);
             tvIsFollw.setPressed(true);
+            tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
         } else {
             tvIsFollw.setVisibility(View.GONE);
         }
@@ -143,10 +146,12 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                         tvIsFollw.setText("+ 关注");
                         tvIsFollw.setSelected(false);
                         tvIsFollw.setPressed(false);
+                        tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
                     } else {
                         tvIsFollw.setText("已关注");
                         tvIsFollw.setSelected(true);
                         tvIsFollw.setPressed(true);
+                        tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
                     }
                 }
             }

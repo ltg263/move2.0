@@ -135,7 +135,6 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
                         tvIsFollw.setPressed(false);
                         tvIsFollw.setSelected(false);
                         tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
-
                     } else {
                         tvIsFollw.setText("已关注");
                         tvIsFollw.setPressed(true);
