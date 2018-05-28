@@ -89,7 +89,8 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     public TextView tvUserDynamic2;
     @BindView(R.id.tv_release_time)
     public TextView tv_release_time;
-
+    @BindView(R.id.img_comment)
+    public ImageView img_comment;
 
     /**
      * 横向多张图的adapter
@@ -114,6 +115,7 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvTime.setOnClickListener(this);
         ll_user.setOnClickListener(this);
         ll_user2.setOnClickListener(this);
+        img_comment.setOnClickListener(this);
     }
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public  void  setData(final MainRfBean.Rows bean){

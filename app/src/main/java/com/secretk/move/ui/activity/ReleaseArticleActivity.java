@@ -67,6 +67,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
     LinearLayoutManager layoutManager;
     List<String> serverImgList = new ArrayList<>();
     LoadingDialog loadingDialog;
+    int projectId;
     String token = SharedUtils.singleton().get("token", "");
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,6 +95,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         recycler_horizontal.setAdapter(releaseArticleLabelAdapter);
         ed_title.setHint(Html.fromHtml("请输入标题 <small>(6-30字之间)</small>"));
         loadingDialog=new LoadingDialog(this);
+        projectId = getIntent().getIntExtra("projectId",0);
     }
 
     @OnClick(R.id.img_return)
@@ -205,7 +207,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            node.put("projectId", 1);
+            node.put("projectId", projectId);
             node.put("postTitle", getEdTitle());
             node.put("articleContents", getEdContent());
             if (!TextUtils.isEmpty(postSmallImages)) {
