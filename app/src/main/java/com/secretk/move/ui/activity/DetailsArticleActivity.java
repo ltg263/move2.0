@@ -156,7 +156,7 @@ public class DetailsArticleActivity extends BaseActivity {
         }else{
             tvFollowStatus.setVisibility(View.GONE);
         }
-        tvPostShortDesc.setText(StringUtil.getBeanString(initData.getPostShortDesc()));
+        tvPostShortDesc.setText(StringUtil.getBeanString(initData.getArticleContents()));
         tvProjectCode.setText(StringUtil.getBeanString(initData.getProjectCode()));
         tvCreateTime.setText(StringUtil.getTimeToM(initData.getCreateTime()));
         tvDonateNum.setText(initData.getDonateNum() + getString(R.string.sponsor_num));

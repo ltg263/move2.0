@@ -1,6 +1,5 @@
 package com.secretk.move.ui.holder;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
@@ -160,7 +159,7 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
             tvFollowStatus.setVisibility(View.GONE);
         }
         List<RowsBean.PostSmallImagesListBean> imgs = rowsBean.getPostSmallImagesList();
-        if (imgs != null) {
+        if (imgs != null && imgs.size()>0) {
             if (imgs.size() > 2) {
                 llMultiImg.setVisibility(View.VISIBLE);
                 ivFileName.setVisibility(View.GONE);

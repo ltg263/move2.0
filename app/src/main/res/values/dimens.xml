@@ -24,6 +24,7 @@
 
     <dimen name="dp_40">40dp</dimen>
     <dimen name="dp_60">60dp</dimen>
+    <dimen name="dp_65">65dp</dimen>
     <dimen name="dp_80">80dp</dimen>
     <dimen name="dp_120">120dp</dimen>
     <dimen name="dp_130">130dp</dimen>
@@ -38,6 +39,7 @@
     <dimen name="sp_17">17sp</dimen>
     <dimen name="sp_18">18sp</dimen>
     <dimen name="sp_22">22sp</dimen>
+    <dimen name="sp_28">28sp</dimen>
     <dimen name="sp_40">40sp</dimen>
 
     <dimen name="unify_interval_padding">10dp</dimen>

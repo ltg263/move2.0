@@ -535,4 +535,28 @@ public class ImageUtils {
         }
         return result;
     }
+    /**
+     * 根据路径获得突破并压缩返回bitmap用于显示
+     *
+     * @return
+     */
+    public static Bitmap getSmallBitmap(String filePath, int newWidth, int newHeight) {
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filePath, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, newWidth, newHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
+        Bitmap newBitmap = compressImage(bitmap, 500);
+        if (bitmap != null){
+            bitmap.recycle();
+        }
+        return newBitmap;
+    }
+
 }

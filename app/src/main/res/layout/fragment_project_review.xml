@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v4.widget.NestedScrollView
+    <com.secretk.move.view.RecycleNestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -110,5 +110,5 @@
                 android:layout_height="@dimen/dp_1"
                 android:background="@color/cut_off_rule" />
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </com.secretk.move.view.RecycleNestedScrollView>
 </LinearLayout>

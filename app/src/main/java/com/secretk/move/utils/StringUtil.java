@@ -405,4 +405,28 @@ public class StringUtil {
         }
         return result;
     }
+
+    public static String getStateValueStr(float score){
+        if(score>=9.5){
+            return "AAA";
+        }else if(score>=9){
+            return "AA";
+        }else if(score>=8.5){
+            return "A";
+        }else if(score>=8){
+            return "BBB";
+        }else if(score>=7){
+            return "BB";
+        }else if(score>=6){
+            return "B";
+        }else if(score>=5){
+            return "CCC";
+        }else if(score>=4){
+            return "CC";
+        }else if(score>=3){
+            return "C";
+        }else{
+          return "D";
+        }
+    }
 }

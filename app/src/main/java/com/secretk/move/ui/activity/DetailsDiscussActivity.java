@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -70,6 +71,14 @@ public class DetailsDiscussActivity extends BaseActivity {
     ImageView ivCreateUserIcon;
     @BindView(R.id.tv_project_code)
     TextView tvProjectCode;
+    @BindView(R.id.ll_rm)
+    LinearLayout llRm;
+    @BindView(R.id.ll_zx)
+    LinearLayout llZx;
+    @BindView(R.id.tv_rm)
+    TextView tvRm;
+    @BindView(R.id.tv_zx)
+    TextView tvZx;
     @BindView(R.id.tv_create_user_name)
     TextView tvCreateUserName;
     @BindView(R.id.tv_create_user_signature)
@@ -96,9 +105,10 @@ public class DetailsDiscussActivity extends BaseActivity {
     private ImagesAdapter imagesadapter;
     private String imgUrl;
     private String imgName;
+    private boolean isFinish=false;
     private int userId;
     private int createUserId;
-
+    int pageIndex = 1;
     @Override
     protected int setOnCreate() {
         return R.layout.activity_details_discuss;
@@ -175,7 +185,14 @@ public class DetailsDiscussActivity extends BaseActivity {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 pageIndex = 1;
-                initData();
+                refreshLayout.setLoadmoreFinished(false);
+                if(!NetUtil.isNetworkAvailable()){
+                    ToastUtils.getInstance().show(getString(R.string.network_error));
+                    return;
+                }
+                initDataList();
+
+                initNewsDataList();
             }
         });
         /**
@@ -232,6 +249,18 @@ public class DetailsDiscussActivity extends BaseActivity {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
         }
+        loadingDialog.show();
+        initDataList();
+
+        initNewsDataList();
+    }
+
+
+
+    /**
+     * 详情信息
+     */
+    public void initDataList() {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -244,18 +273,18 @@ public class DetailsDiscussActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        loadingDialog.show();
         RetrofitUtil.request(params, DetailsDiscussBase.class, new HttpCallBackImpl<DetailsDiscussBase>() {
+
             @Override
-            public void onError(String message) {
-                if(loadingDialog.isShowing()){
+            public void onFinish() {
+                if(isFinish && loadingDialog.isShowing()){
                     loadingDialog.dismiss();
                 }
+                isFinish=true;
             }
 
             @Override
             public void onCompleted(DetailsDiscussBase bean) {
-                initNewsDataList();
                 DetailsDiscussBase.DataBean.DiscussDetailBean discussDetail = bean.getData().getDiscussDetail();
                 createUserId = discussDetail.getCreateUserId();
                 mHeadView.setTitle(discussDetail.getProjectCode());
@@ -278,7 +307,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                 }else{
                     tvFollowStatus.setVisibility(View.GONE);
                 }
-                tvPostShortDesc.setText(discussDetail.getPostShortDesc());
+                tvPostShortDesc.setText(discussDetail.getDisscussContents());
                 tvCreateTime.setText(StringUtil.getTimeToM(discussDetail.getCreateTime()));
                 try {
                     //{"fileUrl":"/upload/posts/201805/1.jpg","fileName":"进度讨论","extension":"jpg"},
@@ -296,41 +325,46 @@ public class DetailsDiscussActivity extends BaseActivity {
                         if (lists.size() == 1) {
                             imgUrl = lists.get(0).getUrl();
                             imgName = lists.get(0).getName();
-                            rvImg.setVisibility(View.GONE);
-                            GlideUtils.loadCircleUrl(ivPostSmallImages, Constants.BASE_IMG_URL + imgUrl);
+                            ivPostSmallImages.setVisibility(View.VISIBLE);
+                            GlideUtils.loadImage(DetailsDiscussActivity.this,ivPostSmallImages, Constants.BASE_IMG_URL + imgUrl);
                         } else {
-                            ivPostSmallImages.setVisibility(View.GONE);
+                            rvImg.setVisibility(View.VISIBLE);
                             imagesadapter.setData(lists);
                         }
                     }
-
-                    JSONArray object = new JSONArray(discussDetail.getTagInfos());
-                    //[{"tagId":1,"tagName":"进度讨论"},{"tagId":3,"tagName":"项目前景讨论"},{"tagId":4,"tagName":"打假"}]
-                    String tagAll = "";
-                    String tagOnly[]= new String[object.length()];
-                    for (int i = 0; i < object.length(); i++) {
-                        JSONObject strObj = object.getJSONObject(i);
-                        tagOnly[i]="#" + strObj.getString("tagName") + "#";
-                        tagAll+="#" + strObj.getString("tagName") + "#   ";
-                    }
-                    Clickable.getSpannableString(tagAll, tagOnly, tvTagName, new Clickable.ClickListener() {
-                        @Override
-                        public void setOnClick(String name) {
-                            //ToastUtils.getInstance().show(name);
+                    if(discussDetail.getTagInfos()!=null){
+                        JSONArray object = new JSONArray(discussDetail.getTagInfos());
+                        //[{"tagId":1,"tagName":"进度讨论"},{"tagId":3,"tagName":"项目前景讨论"},{"tagId":4,"tagName":"打假"}]
+                        String tagAll = "";
+                        String tagOnly[]= new String[object.length()];
+                        for (int i = 0; i < object.length(); i++) {
+                            JSONObject strObj = object.getJSONObject(i);
+                            tagOnly[i]="#" + strObj.getString("tagName") + "#";
+                            tagAll+="#" + strObj.getString("tagName") + "#   ";
                         }
-                    });
-//                    tvTagName.setText(tag);
-
+                        Clickable.getSpannableString(tagAll, tagOnly, tvTagName, new Clickable.ClickListener() {
+                            @Override
+                            public void setOnClick(String name) {
+                                //ToastUtils.getInstance().show(name);
+                            }
+                        });
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                adapter.setData(discussDetail.getHotComments());
+                if(discussDetail.getHotComments()!=null && discussDetail.getHotComments().size()>0){
+                    llRm.setVisibility(View.VISIBLE);
+                    tvRm.setText("热门测评("+discussDetail.getHotComments().size()+")");
+                    adapter.setData(discussDetail.getHotComments());
+                }
             }
         });
+
     }
 
-    int pageIndex = 1;
-
+    /**
+     * 评论最新
+     */
     public void initNewsDataList() {
         JSONObject node = new JSONObject();
         try {
@@ -346,17 +380,27 @@ public class DetailsDiscussActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        loadingDialog.show();
         RetrofitUtil.request(params, DiscussNewInfoBean.class, new HttpCallBackImpl<DiscussNewInfoBean>() {
             @Override
             public void onCompleted(DiscussNewInfoBean newInfoBean) {
                 DiscussNewInfoBean.DataBean.CommentsBean commentsBean = newInfoBean.getData().getComments();
-                adapterNew.setData(commentsBean.getRows());
-                if (commentsBean.getCurPageNum() == commentsBean.getPageSize()) {
+                if(commentsBean!=null){
+                    if(commentsBean.getRows()!=null && commentsBean.getRows().size()>0){
+                        llZx.setVisibility(View.VISIBLE);
+                        tvZx.setText("最新测评("+commentsBean.getRowCount()+")");
+                        if(pageIndex>2){
+                            adapterNew.addData(commentsBean.getRows());
+                        }else{
+                            adapterNew.setData(commentsBean.getRows());
+                        }
+                    }
+                    if (commentsBean.getCurPageNum() == commentsBean.getPageSize()) {
+                        refreshLayout.setLoadmoreFinished(true);
+                    }
+                }else{
                     refreshLayout.setLoadmoreFinished(true);
                 }
             }
-
             @Override
             public void onFinish() {
                 if (refreshLayout.isRefreshing()) {
@@ -365,10 +409,12 @@ public class DetailsDiscussActivity extends BaseActivity {
                 if (refreshLayout.isLoading()) {
                     refreshLayout.finishLoadmore(true);
                 }
-                if(loadingDialog.isShowing()){
+                if(isFinish && loadingDialog.isShowing()){
                     loadingDialog.dismiss();
                 }
+                isFinish=true;
             }
+
         });
     }
 

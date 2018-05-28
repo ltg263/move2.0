@@ -121,6 +121,7 @@
                         android:id="@+id/iv_post_small_images"
                         android:layout_width="match_parent"
                         android:layout_height="187dp"
+                        android:visibility="gone"
                         android:layout_marginBottom="@dimen/dp_5"
                         android:layout_marginTop="@dimen/dp_2" />
 
@@ -128,7 +129,7 @@
                         android:id="@+id/rv_img"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/tv_create_time"
@@ -178,50 +179,68 @@
                     android:layout_height="@dimen/dp_line"
                     android:background="@color/cut_off_rule" />
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/ll_rm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:padding="@dimen/dp_10"
-                    android:text="热门测评"
-                    android:textColor="@color/title_gray"
-                    android:textSize="@dimen/sp_14" />
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_line"
-                    android:background="@color/cut_off_rule" />
+                    <TextView
+                        android:id="@+id/tv_rm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="@dimen/dp_10"
+                        android:textColor="@color/title_gray"
+                        android:textSize="@dimen/sp_14"
+                        android:visibility="visible" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_hot_review"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="@dimen/dp_10" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_line"
+                        android:background="@color/cut_off_rule" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_line"
-                    android:background="@color/cut_off_rule" />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_hot_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/dp_10" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:padding="@dimen/dp_10"
-                    android:text="最新测评"
-                    android:textColor="@color/title_gray"
-                    android:textSize="@dimen/sp_14" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_line"
+                        android:background="@color/cut_off_rule" />
+                </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_line"
-                    android:background="@color/cut_off_rule" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_new_review"
+                <LinearLayout
+                    android:id="@+id/ll_zx"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dp_10" />
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_zx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="@dimen/dp_10"
+                        android:text="最新测评"
+                        android:textColor="@color/title_gray"
+                        android:textSize="@dimen/sp_14" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_line"
+                        android:background="@color/cut_off_rule" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_new_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10" />
+                </LinearLayout>
             </LinearLayout>
         </com.secretk.move.view.RecycleScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>

@@ -50,6 +50,10 @@ public class DetailsDiscussAdapter extends RecyclerView.Adapter<DetailsDiscussHo
         this.lists = list;
         notifyDataSetChanged();
     }
+    public void addData(List<CommonCommentsBean> list) {
+        lists.addAll(list);
+        notifyDataSetChanged();
+    }
 
     public List<CommonCommentsBean> getData() {
         return lists;

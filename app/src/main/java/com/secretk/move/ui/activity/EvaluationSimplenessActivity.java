@@ -67,6 +67,10 @@ public class EvaluationSimplenessActivity extends BaseActivity {
         projectId = getIntent().getIntExtra("projectId",0);
         esViewa.setScore(4.5f);
         esViewa.setEsvBackground(R.color.app_background);
+        tvEvaluationState.setText(StringUtil.getStateValueStr(4.5f));
+    }
+    public void setTvEvaluationState(String value){
+        tvEvaluationState.setText(value);
     }
 
     @Override

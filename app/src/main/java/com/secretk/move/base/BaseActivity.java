@@ -11,12 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.secretk.move.R;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
-import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
@@ -24,6 +22,7 @@ import com.secretk.move.utils.UiUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.LoadingDialog;
+import com.secretk.move.view.ShareView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -178,9 +177,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }else if(item.getItemId() == R.string.share){
-            IntentUtil.showShare("区动","http://qufen.top","我是分享的内容",
-                    Constants.BASE_IMG_URL+"/upload/posts/201805/2.jpg");
-            Toast.makeText(this, "您点击了分享", Toast.LENGTH_SHORT).show();
+//            IntentUtil.showShare("区动","http://qufen.top","我是分享的内容",
+////                    Constants.BASE_IMG_URL+"/upload/posts/201805/2.jpg");
+////            Toast.makeText(this, "您点击了分享", Toast.LENGTH_SHORT).show();
+////            ShareView.showShare("分享");
+            ShareView.showShare("http://qufen.top","我是分享的标题","我是分享文章的内容很长爱丽丝的积分垃圾上单废了静安寺拉升阶段");
         }
         return super.onOptionsItemSelected(item);
     }
