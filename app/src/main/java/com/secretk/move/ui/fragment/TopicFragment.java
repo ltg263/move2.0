@@ -68,6 +68,7 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
 
     private LoadingDialog loadingDialog;
 
+
     @Override
     public int setFragmentView() {
         return R.layout.fragment_topic;
@@ -126,8 +127,14 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
     //1-按关注数量倒序；2-按名称排序
     @Override
     public void onFirstUserVisible() {
-        http(Constants.TOPIC_SORT_BY_NUM);
+        if (isLoginZt){
+            http(Constants.TOPIC_SORT_BY_NUM);
+        }else {
+            ToastUtils.getInstance().show("账号未登录,请先登录账号");
+        }
     }
+
+//
 
     @OnClick(R.id.tv_sort_name)
     public void sortByName(View view) {
@@ -201,6 +208,10 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
     }
 
     public void http(final int type) {
+        if (!isLoginZt){
+            ToastUtils.getInstance().show("账号未登录,请先登录账号");
+            return;
+        }
         loadingDialog.show();
         JSONObject node = new JSONObject();
         try {
