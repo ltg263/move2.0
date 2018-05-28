@@ -28,6 +28,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_15"
                 android:text="发评测" />
         </LinearLayout>
 
@@ -49,6 +51,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_15"
                 android:text="发文章" />
         </LinearLayout>
 
@@ -70,6 +74,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_15"
                 android:text="发讨论"/>
         </LinearLayout>
     </LinearLayout>

@@ -86,7 +86,7 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
     @Override
     public boolean onMenuItemClick(MenuItem item) {
 
-//        initDailog();
+        initDailog();
         return false;
     }
 

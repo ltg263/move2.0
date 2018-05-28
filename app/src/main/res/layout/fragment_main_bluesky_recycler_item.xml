@@ -12,7 +12,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="7dp"
         android:textColor="#aaaaaa"
-        android:text="1" />
+        />
     <ImageView
         android:id="@+id/img_order"
         android:layout_width="@dimen/dp_12"
