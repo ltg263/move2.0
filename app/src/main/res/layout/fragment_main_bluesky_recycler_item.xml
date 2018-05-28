@@ -11,15 +11,15 @@
         android:layout_height="@dimen/dp_18"
         android:layout_centerVertical="true"
         android:layout_marginLeft="7dp"
-        android:textColor="#aaaaaa"
-        />
+        android:textColor="#aaaaaa" />
+
     <ImageView
         android:id="@+id/img_order"
         android:layout_width="@dimen/dp_12"
         android:layout_height="@dimen/dp_18"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="7dp"
-       />
+        android:layout_marginLeft="7dp" />
+
     <ImageView
         android:id="@+id/img_head"
         android:layout_width="33dp"
@@ -56,18 +56,20 @@
         android:layout_above="@+id/view_center"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_toRightOf="@id/img_head"
-        android:textColor="#333333"
         android:text="EOS"
+        android:textColor="#333333"
         android:textSize="16sp" />
+
     <TextView
         android:id="@+id/tv_name"
-        android:text="/柚子"
-       android:layout_toRightOf="@id/tv_code"
-        android:layout_alignBaseline="@id/tv_code"
         android:layout_width="wrap_content"
-        android:textColor="#888888"
         android:layout_height="wrap_content"
-        android:textSize="12sp"/>
+        android:layout_alignBaseline="@id/tv_code"
+        android:layout_toRightOf="@id/tv_code"
+        android:text="/柚子"
+        android:textColor="#888888"
+        android:textSize="12sp" />
+
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
@@ -89,9 +91,9 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_toRightOf="@+id/view_center"
         android:text="6.5"
-        android:textStyle="bold"
         android:textColor="@color/app_background"
-        android:textSize="@dimen/sp_12" />
+        android:textSize="@dimen/sp_12"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_follow"

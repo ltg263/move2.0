@@ -1,5 +1,6 @@
 package com.secretk.move.ui.holder;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
@@ -137,10 +138,12 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             tvIsFollw.setText("+ 关注");
             tvIsFollw.setSelected(false);
             tvIsFollw.setPressed(false);
+            tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
         } else if (1 == bean.getFollowStatus()) {
             tvIsFollw.setText("已关注");
             tvIsFollw.setSelected(true);
             tvIsFollw.setPressed(true);
+            tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
         } else {
             tvIsFollw.setVisibility(View.GONE);
         }
@@ -194,10 +197,12 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                         tvIsFollw.setText("+ 关注");
                         tvIsFollw.setSelected(false);
                         tvIsFollw.setPressed(false);
+                        tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
                     } else {
                         tvIsFollw.setText("已关注");
                         tvIsFollw.setSelected(true);
                         tvIsFollw.setPressed(true);
+                        tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
                     }
                 }
             }
