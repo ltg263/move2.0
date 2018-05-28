@@ -177,7 +177,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
         } else {
             tvFollowStatus.setVisibility(View.GONE);
         }
-        tvPostShortDesc.setText(StringUtil.getBeanString(evaluationDetail.getPostShortDesc()));
+        tvPostShortDesc.setText(StringUtil.getBeanString(evaluationDetail.getEvauationContent()));
         tvCreateTime.setText(StringUtil.getTimeToM(evaluationDetail.getCreateTime()));
         tvDonateNum.setText(evaluationDetail.getDonateNum() + getString(R.string.sponsor_num));
         praiseNum = evaluationDetail.getPraiseNum();

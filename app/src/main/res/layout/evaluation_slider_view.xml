@@ -30,7 +30,6 @@
             android:drawablePadding="@dimen/dp_3"
             android:paddingHorizontal="@dimen/dp_8"
             android:paddingVertical="@dimen/dp_3"
-            android:text="好看"
             android:textColor="@color/title_gray"
             android:textSize="@dimen/sp_14" />
         <TextView

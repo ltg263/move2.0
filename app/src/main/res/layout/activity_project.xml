@@ -218,7 +218,7 @@
                                     android:layout_weight="1"
                                     android:background="@drawable/selector_follow_state"
                                     android:gravity="center"
-                                    android:text="已关注"
+                                    android:text="+关注"
                                     android:textColor="@drawable/selector_follow_state_text" />
                             </LinearLayout>
                         </LinearLayout>

@@ -4,36 +4,33 @@ apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'com.mob.sdk'
 // 在MobSDK的扩展中注册UMSSDK的相关信息
 MobSDK {
-    appKey "25a50eb847f42"
-    appSecret "a7e0e0573cfa42235472b21ed0b41758"
-
+    appKey "25fecb277347b"
+    appSecret "32ee70fd96c34aeb83b639f7a06ae04b"
     ShareSDK {
         //平台配置信息
         devInfo {
             Wechat {
-                appId ""
-                appSecret ""
+                appId "wx10b942072a71089d"
+                appSecret "02bcd92a7a4c82fd6a48bb46121f6d03"
                 sortId 0
             }
             WechatMoments {
-                appId ""
-                appSecret ""
+                appId "wx10b942072a71089d"
+                appSecret "02bcd92a7a4c82fd6a48bb46121f6d03"
+
                 sortId 1
             }
             QQ {
                 appId ""
                 appKey ""
+                shareByAppClient true
                 sortId 2
-            }
-            QZone {
-                appId ""
-                appKey ""
-                sortId 3
             }
             SinaWeibo {
                 appId ""
                 appKey ""
-                sortId 4
+                shareByAppClient true
+                sortId 3
             }
         }
     }
@@ -72,12 +69,14 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.0.2'
+    //noinspection GradleCompatible
+//    implementation 'com.android.support:appcompat-v7:27.0.2'
+    implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation 'com.android.support:design:27.0.2'
+//    implementation 'com.android.support:design:27.0.2'
     //图片处理
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'

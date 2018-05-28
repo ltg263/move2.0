@@ -47,20 +47,19 @@
     <uses-feature android:name="android.hardware.camera" />
 
     <!--微信分享-->
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
         android:name=".MoveApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:name">
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".ui.activity.SplashScreenActivity"
             android:windowSoftInputMode="stateHidden|stateUnchanged">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -69,11 +68,21 @@
         </activity>
         <!-- 微信分享回调 -->
         <activity
-            android:name=".ui.activity.WXEntryActivity"
+            android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
 
+        </activity>
+        <activity
+            android:name=".sharesdk.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.LoginHomeActivity"
             android:theme="@style/AppEditTextStyle" />
@@ -148,7 +157,7 @@
             android:name=".ui.activity.ReleaseArticleActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity android:name=".ui.activity.ReleaseDiscussActivity" />
-        <activity android:name=".ui.activity.ReleaseEvaluationActivity"/>
+        <activity android:name=".ui.activity.ReleaseEvaluationActivity" />
         <activity android:name=".ui.activity.SelectedPicActivity" />
 
         <provider

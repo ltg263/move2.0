@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -13,7 +12,8 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.ui.activity.EvaluationCompileListActivity;
-import com.secretk.move.utils.LogUtil;
+import com.secretk.move.ui.activity.EvaluationSimplenessActivity;
+import com.secretk.move.utils.StringUtil;
 
 /**
  * 作者： litongge
@@ -69,6 +69,7 @@ public class EvaluationSliderView extends FrameLayout {
                     strValue=String.valueOf(value);
                 }
                 tvEvaluationMun.setText(strValue);
+                setEvaluate(StringUtil.getStateValueStr(Float.valueOf(strValue)));
                 setHdListener(Float.valueOf(strValue));
             }
         });
@@ -78,6 +79,8 @@ public class EvaluationSliderView extends FrameLayout {
         Activity activity = (Activity)context;
         if((activity  instanceof EvaluationCompileListActivity)){
             ((EvaluationCompileListActivity) activity).setComprehensiveGrade(getTvDimensionalityName(),value);
+        }else if(activity instanceof EvaluationSimplenessActivity){
+            ((EvaluationSimplenessActivity) activity).setTvEvaluationState(StringUtil.getStateValueStr(value));
         }
     }
 
@@ -99,6 +102,7 @@ public class EvaluationSliderView extends FrameLayout {
     public void setScore(float score){
         esView.setSelectorValue(score);
         tvEvaluationMun.setText(String.valueOf(score));
+        setEvaluate(StringUtil.getStateValueStr(score));
     }
 
     /**

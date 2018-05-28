@@ -39,13 +39,11 @@ public class MoveApplication extends Application {
         BlockCanary.install(mContext, new AppBlockCanaryContext()).start();
         Network.initOkhttp(mContext);
         AppConfig.initAppConfig(this);
-//        MobSDK.init(this);
-        MobSDK.init(this,"wx10b942072a71089d","02bcd92a7a4c82fd6a48bb46121f6d03");
         initDao();
+        MobSDK.init(this,"25fecb277347b","32ee70fd96c34aeb83b639f7a06ae04");
     }
 
     private void initDao() {
-
 
     }
 
