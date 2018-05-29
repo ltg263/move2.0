@@ -7,18 +7,20 @@ import android.widget.EditText;
 
 import com.secretk.move.R;
 import com.secretk.move.base.MvpBaseActivity;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.SearchBean;
+import com.secretk.move.bean.SearchedBean;
 import com.secretk.move.contract.ActivitySearchContract;
 import com.secretk.move.customview.ProgressWheel;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.presenter.ActivitySearchPresenterImpl;
-import com.secretk.move.ui.adapter.SearchFromNetAdapter;
 import com.secretk.move.ui.adapter.SearchHistoryAdapter;
+import com.secretk.move.ui.adapter.TopicFragmentRecyclerAdapter;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
+import com.secretk.move.view.LoadingDialog;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,14 +32,13 @@ import butterknife.BindView;
 public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl> implements ItemClickListener, ActivitySearchContract.View {
     @BindView(R.id.recycler)
     RecyclerView recycler;
-    @BindView(R.id.progress_bar)
-    ProgressWheel progress_bar;
+   LoadingDialog loadingDialog;
     @BindView(R.id.ed_search)
     EditText ed_search;
 
     private LinearLayoutManager layoutManager;
     private SearchHistoryAdapter historyAdapter;
-    private SearchFromNetAdapter searchFromNetAdapter;
+    private TopicFragmentRecyclerAdapter adapter;
     @Override
     protected int setLayout() {
         return R.layout.activity_search;
@@ -50,11 +51,12 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.main_background), 0);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        loadingDialog=new LoadingDialog(this);
         recycler.setLayoutManager(layoutManager);
         historyAdapter = new SearchHistoryAdapter();
-        searchFromNetAdapter=new SearchFromNetAdapter();
+        adapter = new TopicFragmentRecyclerAdapter();
         historyAdapter.setItemListener(this);
-        searchFromNetAdapter.setItemListener(this);
+
     }
 
     @Override
@@ -72,7 +74,8 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
 
     @Override
     public void onItemClick(View view, int postion) {
-
+        SearchBean bean=historyAdapter.getDataInPosition(postion);
+        presenter.SearchBean(bean);
     }
 
     @Override
@@ -81,12 +84,12 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
     }
     @Override
     public void showLoading() {
-        progress_bar.setVisibility(android.view.View.VISIBLE);
+        loadingDialog.show();
     }
 
     @Override
     public void hideLoading() {
-        progress_bar.setVisibility(android.view.View.INVISIBLE);
+        loadingDialog.dismiss();
     }
 
     @Override
@@ -101,9 +104,9 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
     }
 
     @Override
-    public void loadSearchSuccess(List<SearchBean> list) {
-        recycler.setAdapter(searchFromNetAdapter);
-        searchFromNetAdapter.setData(list);
+    public void loadSearchSuccess(List<SearchedBean.Projects> list) {
+        recycler.setAdapter(adapter);
+        adapter.setData(list, Constants.TOPIC_SORT_BY_NUM);
     }
 
     @Override

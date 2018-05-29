@@ -1,5 +1,7 @@
 package com.secretk.move.bean;
 
+import android.util.Log;
+
 import com.secretk.move.bean.base.BaseRes;
 
 import java.util.List;
@@ -88,6 +90,17 @@ public class BlueSkyBean extends BaseRes {
         String projectEnglishName;
         String projectChineseName;
         String projectSignature;
+
+        public String getPosition() {
+            return position;
+        }
+
+        public void setPosition(String position) {
+            this.position = position;
+            Log.e("jyh_position","position="+position);
+        }
+
+        String position;
 
         public int getFollowStatus() {
             return followStatus;

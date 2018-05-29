@@ -45,14 +45,13 @@ public class AddLabelActivityRecyclerAdapter extends RecyclerView.Adapter<AddLab
     public void onBindViewHolder(ViewHolder holder, int position) {
         DiscussLabelListbean.TagList bean = list.get(position);
         holder.setItemListener(mListener);
-        if (position==0){
+        holder.tvlabel.setText(bean.getTagName());
+        holder.tvlabel.setSelected(bean.getSelected());
+        if (bean.getSelected()){
             holder.tvlabel.setTextColor(UiUtils.getColor(R.color.app_background));
         }else {
             holder.tvlabel.setTextColor(Color.parseColor("#333333"));
         }
-        holder.tvlabel.setText(bean.getTagName());
-
-        holder.tvlabel.setSelected(bean.getSelected());
 
     }
 
