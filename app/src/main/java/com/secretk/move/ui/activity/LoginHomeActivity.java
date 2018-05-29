@@ -138,6 +138,11 @@ public class LoginHomeActivity extends BaseActivity {
                     e.printStackTrace();
                 }
             }
+
+            @Override
+            public void onFinish() {
+                loadingDialog.dismiss();
+            }
         });
     }
 }

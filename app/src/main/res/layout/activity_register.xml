@@ -55,21 +55,36 @@
             android:text="@string/get_verification" />
     </RelativeLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_35">
 
-        <EditText
-            android:id="@+id/ed_password"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/reg_password"
-            android:inputType="textPassword"
-            android:textColor="@color/white" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20">
+
+            <EditText
+                android:id="@+id/ed_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reg_password"
+                android:inputType="textPassword"
+                android:textColor="@color/white" />
+        </android.support.design.widget.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/iv_visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_25"
+            android:padding="@dimen/dp_10"
+            android:src="@drawable/selector_visible_password" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/but_register"

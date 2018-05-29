@@ -1,9 +1,12 @@
 package com.secretk.move.ui.activity;
 
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -15,7 +18,6 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.UserLoginInfo;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
@@ -47,6 +49,8 @@ public class LoginActivity extends BaseActivity {
     TextView tvVerificationCodeLogin;
     @BindView(R.id.tv_forget_password)
     TextView tvForgetPassword;
+    @BindView(R.id.iv_visible)
+    ImageView ivVisible;
     @BindView(R.id.but_login)
     Button butLogin;
 
@@ -91,7 +95,7 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.tv_verification_code_login, R.id.tv_forget_password, R.id.but_login})
+    @OnClick({R.id.tv_verification_code_login, R.id.tv_forget_password, R.id.but_login,R.id.iv_visible})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_verification_code_login:
@@ -102,6 +106,15 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.but_login:
                 login();
+                break;
+            case R.id.iv_visible:
+                if(ivVisible.isSelected()){
+                    edPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    ivVisible.setSelected(false);
+                }else{
+                    edPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    ivVisible.setSelected(true);
+                }
                 break;
         }
     }

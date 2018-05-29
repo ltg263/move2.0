@@ -3,9 +3,12 @@ package com.secretk.move.ui.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +51,8 @@ public class ForgetPasswordActivity extends BaseActivity {
     TextView getVerification;
     @BindView(R.id.ed_password)
     EditText edPassword;
+    @BindView(R.id.iv_visible)
+    ImageView ivVisible;
     @BindView(R.id.but_login)
     Button butLogin;
 
@@ -97,7 +102,7 @@ public class ForgetPasswordActivity extends BaseActivity {
     }
 
     private int recLen = -1;
-    @OnClick({R.id.get_verification, R.id.but_login})
+    @OnClick({R.id.get_verification, R.id.but_login,R.id.iv_visible})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.get_verification:
@@ -133,6 +138,15 @@ public class ForgetPasswordActivity extends BaseActivity {
                     resetPassword();
                 }else{
                     ToastUtils.getInstance().show("请保持密码长度在6-16位");
+                }
+                break;
+            case R.id.iv_visible:
+                if(ivVisible.isSelected()){
+                    edPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    ivVisible.setSelected(false);
+                }else{
+                    edPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    ivVisible.setSelected(true);
                 }
                 break;
         }

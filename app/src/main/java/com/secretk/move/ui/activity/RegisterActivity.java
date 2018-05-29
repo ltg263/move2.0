@@ -3,9 +3,12 @@ package com.secretk.move.ui.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +53,8 @@ public class RegisterActivity extends BaseActivity {
     EditText edPassword;
     @BindView(R.id.but_register)
     Button butRegister;
+    @BindView(R.id.iv_visible)
+    ImageView ivVisible;
 
     String strYzm;
     String strPsw;
@@ -94,7 +99,7 @@ public class RegisterActivity extends BaseActivity {
 
     private int recLen = -1;
 
-    @OnClick({R.id.get_verification, R.id.but_register})
+    @OnClick({R.id.get_verification, R.id.but_register,R.id.iv_visible})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.get_verification:
@@ -118,6 +123,15 @@ public class RegisterActivity extends BaseActivity {
 //                    ToastUtils.getInstance().show("请保持密码长度在6-16位");
 //                }
 
+                break;
+            case R.id.iv_visible:
+                if(ivVisible.isSelected()){
+                    edPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    ivVisible.setSelected(false);
+                }else{
+                    edPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    ivVisible.setSelected(true);
+                }
                 break;
         }
     }
