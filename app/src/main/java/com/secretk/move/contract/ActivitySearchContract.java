@@ -3,6 +3,7 @@ package com.secretk.move.contract;
 import com.secretk.move.base.BasePresenter;
 import com.secretk.move.base.BaseView;
 import com.secretk.move.bean.SearchBean;
+import com.secretk.move.bean.SearchedBean;
 
 import java.util.List;
 
@@ -16,18 +17,22 @@ public interface ActivitySearchContract {
         void initHistoryInfo();
 
         void search();
+
+        void SearchBean(SearchBean bean);
+
+        void cleanHistoryInfo();
     }
 
     interface View extends BaseView {
         void loadHistorySuccess(List<SearchBean> list);
 
-        void loadSearchSuccess(List<SearchBean> list);
+        void loadSearchSuccess(List<SearchedBean.Projects> list);
 
         String getSearchTxt();
     }
 
     interface CallBack {
-        void searchSuccess(List<SearchBean> list, String searchTxt);
+        void searchSuccess(List<SearchedBean.Projects> list, String searchTxt);
 
         void onError(String str);
     }

@@ -5,13 +5,7 @@
     android:layout_marginTop="@dimen/dp_2"
     android:background="#fff">
 
-    <TextView
-        android:id="@+id/tv_order"
-        android:layout_width="@dimen/dp_12"
-        android:layout_height="@dimen/dp_18"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="7dp"
-        android:textColor="#aaaaaa" />
+
 
     <ImageView
         android:id="@+id/img_order"
@@ -19,7 +13,14 @@
         android:layout_height="@dimen/dp_18"
         android:layout_centerVertical="true"
         android:layout_marginLeft="7dp" />
-
+    <TextView
+        android:id="@+id/tv_order"
+        android:gravity="center"
+        android:layout_width="@dimen/dp_12"
+        android:layout_height="@dimen/dp_18"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="7dp"
+        android:textColor="#aaaaaa" />
     <ImageView
         android:id="@+id/img_head"
         android:layout_width="33dp"

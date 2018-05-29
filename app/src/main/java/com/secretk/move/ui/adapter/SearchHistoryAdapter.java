@@ -90,4 +90,7 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter {
         this.list = xlist;
         notifyDataSetChanged();
     }
+    public SearchBean getDataInPosition(int position){
+        return list.get(position);
+    }
 }

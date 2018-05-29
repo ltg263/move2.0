@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.secretk.move.MoveApplication;
 import com.secretk.move.bean.SearchBean;
 import com.secretk.move.bean.SearchBeanDao;
+import com.secretk.move.bean.SearchedBean;
 import com.secretk.move.contract.ActivitySearchContract;
 import com.secretk.move.interactor.ActivitySearchInteractorImpl;
 import com.secretk.move.utils.GreenDaoMananger;
@@ -40,9 +41,10 @@ public class ActivitySearchPresenterImpl implements ActivitySearchContract.Prese
             bean.setSearchTxt("历史搜索");
             SearchBean bean1 = new SearchBean();
             bean1.setType(2);
-            bean.setSearchTxt("清空历史搜索");
+            bean1.setSearchTxt("清空历史搜索");
             list.add(0, bean);
             list.add(bean1);
+            view.loadHistorySuccess(list);
         }
     }
 
@@ -56,22 +58,44 @@ public class ActivitySearchPresenterImpl implements ActivitySearchContract.Prese
         interactor.search(txt);
     }
 
+    @Override
+    public void SearchBean(SearchBean bean) {
+        int type = bean.getType();
+        if (type == 1) {
+            interactor.search(bean.getSearchTxt());
+        } else if (type == 2) {
+            cleanHistoryInfo();
+        }
+    }
 
     @Override
-    public void searchSuccess(List<SearchBean> list, String searchTxt) {
+    public void cleanHistoryInfo() {
+        dao.deleteAll();
+        initHistoryInfo();
+    }
+
+
+    @Override
+    public void searchSuccess(List<SearchedBean.Projects> list, String searchTxt) {
+        if (list==null||list.size()==0){
+            view.showMsg("未找到数据");
+        }
         view.hideLoading();
         view.loadSearchSuccess(list);
+        List<SearchBean> lists =  dao.queryBuilder().where(SearchBeanDao.Properties.SearchTxt.like("%"+searchTxt+"%")).build().list();
+        if (lists==null||lists.size()==0){
+            SearchBean searchBean = new SearchBean();
+            searchBean.setType(1);
+            searchBean.setTime(System.currentTimeMillis());
+            searchBean.setSearchTxt(searchTxt);
+            dao.insertOrReplace(searchBean);
+        }
 
-        SearchBean searchBean = new SearchBean();
-        searchBean.setType(1);
-        searchBean.setTime(System.currentTimeMillis());
-        searchBean.setSearchTxt(searchTxt);
-        dao.insertOrReplace(searchBean);
     }
 
     @Override
     public void onError(String str) {
-        view.showLoading();
+        view.hideLoading();
         view.showMsg(str);
     }
 

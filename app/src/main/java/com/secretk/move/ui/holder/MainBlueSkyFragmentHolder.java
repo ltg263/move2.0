@@ -66,6 +66,9 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
         tv_content.setText(bean.getProjectSignature());
         tv_score.setText(bean.getTotalScore());
         tv_follow.setText(bean.getFollowerNum());
+        tv_order.setVisibility(View.VISIBLE);
+        bean.setPosition(position+1+"");
+        tv_order.setText(bean.getPosition());
         if (0 == bean.getFollowStatus()) {
             tvIsFollw.setText("+ 关注");
             tvIsFollw.setSelected(false);
@@ -108,7 +111,6 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
               default:
                   img_order.setVisibility(View.INVISIBLE);
                   tv_order.setVisibility(View.VISIBLE);
-
                   break;
       }
     }

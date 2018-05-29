@@ -40,7 +40,6 @@ public class MainBlueSkyFragmentRecyclerAdapter extends RecyclerView.Adapter<Mai
         holder.setItemListener(mListener);
         BlueSkyBean.RankList  bean=list.get(position);
         holder.setData(bean,position);
-        holder.tv_order.setText(position+1+"");
     }
 
     @Override
