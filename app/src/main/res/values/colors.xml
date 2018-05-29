@@ -93,8 +93,10 @@
     <color name="title_gray">#333333</color>
     <color name="title_gray_66">#666666</color>
     <color name="title_gray_88">#888888</color>
+    <color name="title_gray_99">#999999</color>
     <color name="title_gray_aa">#aaaaaa</color>
     <color name="title_gray_ee">#eeeeee</color>
+    <color name="title_gray_cc">#cccccc</color>
     <color name="background_gray">#f4f4f4</color>
     <color name="follow_true">#f5f4f4</color>
     <!--评分进度色-->
@@ -103,6 +105,7 @@
     <color name="tdsl">#ffce01 </color>
     <color name="xmjd">#ff739c </color>
     <color name="tzfx">#ff2851 </color>
+    <color name="zdmx">#ff7b59</color>
 
 
 </resources>

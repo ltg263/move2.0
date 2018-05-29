@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
@@ -23,111 +24,64 @@
         android:fillViewport="true"
         android:scrollbars="none">
 
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dp_10">
+                android:background="@color/app_background"
+                android:orientation="vertical">
 
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_distributed"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:padding="@dimen/dp_10">
 
                     <TextView
-                        android:id="@+id/tv_ont"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:paddingVertical="@dimen/dp_12"
-                        android:text="@string/yi_send"
-                        android:textColor="@color/title_gray"
-                        android:textSize="@dimen/sp_12" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_ont"
-                        android:layout_centerHorizontal="true">
-
-                        <TextView
-                            android:id="@+id/tv_ont_num"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="23423423"
-                            android:textColor="@color/title_gray"
-                            android:textSize="@dimen/sp_14" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="FIND"
-                            android:textColor="@color/title_gray_66"
-                            android:textSize="@dimen/sp_10" />
-                    </LinearLayout>
-
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/background_gray"
-                    android:orientation="vertical"
-                    android:padding="@dimen/dp_10">
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:text="@string/send_find"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14" />
 
                     <TextView
-                        android:id="@+id/tv_two"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:paddingVertical="@dimen/dp_12"
-                        android:text="@string/yi_send"
-                        android:textColor="@color/title_gray"
-                        android:textSize="@dimen/sp_12" />
+                        android:layout_margin="@dimen/dp_10"
+                        android:text="52000.22"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_32" />
 
-                    <LinearLayout
+                    <View
+                        android:layout_width="208dp"
+                        android:layout_height="@dimen/dp_2"
+                        android:layout_marginVertical="@dimen/dp_20"
+                        android:background="#5199ff" />
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_two"
-                        android:layout_centerHorizontal="true">
+                        android:text="@string/yi_send_find"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14" />
 
-                        <TextView
-                            android:id="@+id/tv_two_num"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="23423423"
-                            android:textColor="@color/title_gray"
-                            android:textSize="@dimen/sp_14" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="FIND"
-                            android:textColor="@color/title_gray_66"
-                            android:textSize="@dimen/sp_10" />
-                    </LinearLayout>
-                </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_10"
+                        android:text="52000.22"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_22" />
+                </LinearLayout>
 
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_10"
-                android:text="说明：实名认证后开发发放奖励，每天登陆可领取1%的奖励。"
-                android:textColor="@color/title_gray_66"
-                android:textSize="@dimen/dp_12" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -146,7 +100,6 @@
                 android:id="@+id/rv_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
         </LinearLayout>
 
     </com.secretk.move.view.RecycleScrollView>

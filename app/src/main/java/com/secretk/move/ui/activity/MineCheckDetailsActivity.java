@@ -2,7 +2,7 @@ package com.secretk.move.ui.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -45,8 +45,10 @@ public class MineCheckDetailsActivity extends BaseActivity {
     TextView tvCoinDistributedSum;
     @BindView(R.id.tv_coin_usable_sum)
     TextView tvCoinUsableSum;
-    @BindView(R.id.rl_submit)
-    RelativeLayout rlSubmit;
+    @BindView(R.id.ll_coin_lock_sum)
+    LinearLayout llCoinLockSum;
+    @BindView(R.id.ll_pinless_wallet)
+    LinearLayout llPinlessWallet;
 
 
     @Override
@@ -55,6 +57,7 @@ public class MineCheckDetailsActivity extends BaseActivity {
         mHeadView.setTitleColor(R.color.title_gray);
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitle(getString(R.string.asset_details));
+        mMenuInfos.add(0, new MenuInfo(R.string.bill, getString(R.string.bill), 0));
         return mHeadView;
     }
 
@@ -99,27 +102,35 @@ public class MineCheckDetailsActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.tv_bill,R.id.ll_coin_lock_sum, R.id.ll_pinless_wallet, R.id.ll_coin_distributed_sum, R.id.ll_coin_usable_sum, R.id.rl_submit})
+    @Override
+    protected void OnToolbarRightListener() {
+        IntentUtil.startActivity(MineAssetDetailsActivity.class);
+    }
+
+    @OnClick({R.id.ll_coin_lock_sum, R.id.ll_pinless_wallet, R.id.ll_coin_distributed_sum, R.id.ll_coin_usable_sum,
+            R.id.tv_extract, R.id.tv_recharge})
     public void onViewClicked(View view) {
         String key[] = {"key"};
         switch (view.getId()) {
-            case R.id.tv_bill:
-                IntentUtil.startActivity(MineAssetDetailsActivity.class);
-                break;
             case R.id.ll_coin_lock_sum:
+                IntentUtil.startActivity(MineAssetCoinActivity.class);
                 break;
             case R.id.ll_pinless_wallet:
+                IntentUtil.startActivity(MineAssetPinlessActivity.class);
                 break;
             case R.id.ll_coin_distributed_sum:
                 IntentUtil.startActivity(MineAssetDistributedActivity.class);
                 break;
             case R.id.ll_coin_usable_sum:
-                String[] values = {"1"};
-                IntentUtil.startActivity(MineAssetBindingActivity.class,key,values);
+                IntentUtil.startActivity(MineAssetUsableActivity.class);
                 break;
-            case R.id.rl_submit:
+            case R.id.tv_extract:
+                String[] values = {"1"};
+                IntentUtil.startActivity(MineAssetBindingActivity.class, key, values);
+                break;
+            case R.id.tv_recharge:
                 String[] valuesa = {"2"};
-                IntentUtil.startActivity(MineAssetBindingActivity.class,key,valuesa);
+                IntentUtil.startActivity(MineAssetBindingActivity.class, key, valuesa);
                 break;
         }
     }

@@ -96,6 +96,12 @@
             android:name=".ui.activity.ForgetPasswordActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.MineAssetCoinActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.MineAssetPinlessActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.VerificationLoginActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
@@ -157,6 +163,9 @@
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.MineAssetDistributedActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.MineAssetUsableActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.EvaluationCompileListActivity"

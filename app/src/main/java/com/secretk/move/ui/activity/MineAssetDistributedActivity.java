@@ -2,7 +2,6 @@ package com.secretk.move.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 作者： litongge
@@ -24,14 +22,6 @@ import butterknife.ButterKnife;
  * 描述：发放中
  */
 public class MineAssetDistributedActivity extends BaseActivity {
-    @BindView(R.id.tv_ont)
-    TextView tvOnt;
-    @BindView(R.id.tv_ont_num)
-    TextView tvOntNum;
-    @BindView(R.id.tv_two)
-    TextView tvTwo;
-    @BindView(R.id.tv_two_num)
-    TextView tvTwoNum;
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
     @BindView(R.id.rsv)
@@ -96,11 +86,4 @@ public class MineAssetDistributedActivity extends BaseActivity {
 //        });
     }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

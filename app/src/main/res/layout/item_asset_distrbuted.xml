@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="奖励名称"
             android:textColor="@color/title_gray"
-            android:textSize="@dimen/sp_12" />
+            android:textSize="@dimen/sp_16" />
 
         <TextView
             android:id="@+id/tv_time"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="20190129"
-            android:textColor="@color/title_gray_66"
+            android:textColor="@color/title_gray_aa"
             android:textSize="@dimen/sp_12" />
     </RelativeLayout>
 
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/dp_10"
         android:text="+5000"
-        android:textColor="@color/title_gray"
+        android:textColor="@color/title_gray_66"
         android:textSize="@dimen/sp_14"
         android:textStyle="bold" />
 
@@ -61,12 +61,12 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:text="20%"
             android:textColor="@color/title_gray_66"
-            android:textSize="@dimen/sp_12" />
+            android:textSize="@dimen/sp_14" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/dash_line"
-        android:layerType="software" />
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/cut_off_rule" />
 </LinearLayout>

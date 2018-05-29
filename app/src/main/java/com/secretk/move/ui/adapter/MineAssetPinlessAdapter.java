@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
-import com.secretk.move.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,22 +20,22 @@ import butterknife.ButterKnife;
  * 作者： litongge
  * 时间： 2018/4/27 19:51
  * 邮箱；ltg263@126.com
- * 描述：收支明细
+ * 描述：发放中 各种明细
  */
 
-public class MineAssetDetailsAdapter extends RecyclerView.Adapter<MineAssetDetailsAdapter.DetailsHolder> {
+public class MineAssetPinlessAdapter extends RecyclerView.Adapter<MineAssetPinlessAdapter.DetailsHolder> {
 
 
     private List<String> lists = new ArrayList<>();
     Context context;
 
-    public MineAssetDetailsAdapter(Context context) {
+    public MineAssetPinlessAdapter(Context context) {
         this.context = context;
     }
 
     @Override
     public DetailsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_asset_details, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_asset_pinless, parent, false);
         DetailsHolder holder = new DetailsHolder(view);
         return holder;
     }
@@ -61,13 +60,12 @@ public class MineAssetDetailsAdapter extends RecyclerView.Adapter<MineAssetDetai
     }
 
     class DetailsHolder extends RecyclerViewBaseHolder {
-        @BindView(R.id.tv_asset_name)
-        TextView tvAssetName;
-        @BindView(R.id.tv_asset_time)
-        TextView tvAssetTime;
-        @BindView(R.id.tv_asset_num)
-        TextView tvAssetNum;
-
+        @BindView(R.id.tv_time)
+        TextView tvTime;
+        @BindView(R.id.tv_num)
+        TextView tvNum;
+        @BindView(R.id.tv_type)
+        TextView tvType;
         public DetailsHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -75,13 +73,7 @@ public class MineAssetDetailsAdapter extends RecyclerView.Adapter<MineAssetDetai
 
         public void refresh(int position, List<String> lists) {
             String str = lists.get(position);
-
-            if (true) {//正数
-                tvAssetNum.setTextColor(context.getResources().getColor(R.color.app_background));
-            } else {
-                tvAssetNum.setTextColor(context.getResources().getColor(R.color.zdmx));
-            }
-            tvAssetName.setText(StringUtil.getBeanString(str));
+            tvType.setText(str);
         }
     }
 }

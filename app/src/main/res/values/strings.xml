@@ -13,7 +13,7 @@
     <string name="registered_account">注册账号</string>
     <string name="registered_login">注册登录</string>
     <string name="forget_password_btn">确定</string>
-   <!-- 主界面-->
+    <!-- 主界面-->
     <string name="search">搜索</string>
     <string name="main_tab_home_page">主页</string>
     <string name="main_tab_topic">话题</string>
@@ -23,7 +23,7 @@
     <string name="main_fragment_follow">关注</string>
     <string name="main_fragment_bluesky">青天榜</string>
     <string name="main_publish">发表</string>
-   <!-- 注册界面-->
+    <!-- 注册界面-->
     <string name="register_account">注册账号</string>
     <string name="phone">手机</string>
     <string name="password">密码</string>
@@ -97,20 +97,39 @@
     <!--我的资金-->
     <string name="asset_details">资产明细</string>
     <string name="bill">账单</string>
-    <string name="bill_find">&#160;&#160;FIND</string>
+    <string name="find_num">FIND总数 (个)</string>
+    <string name="usable_num">可用数量 (FIND)</string>
     <string name="lock">锁定</string>
+    <string name="record">记录</string>
     <string name="unlock_the">解锁中</string>
     <string name="send">发放中</string>
     <string name="usable">可用</string>
     <string name="wallet_site">綁定钱包地址</string>
-    <string name="expenditure">收支明细</string>
+    <string name="expenditure">账单明细</string>
     <string name="award_expenditure">奖励明细</string>
-    <string name="yi_send">已发放</string>
+    <string name="send_find">发放中(FIND)</string>
+    <string name="yi_send_find">已发放(FIND)</string>
     <string name="ytf_site">以太坊地址</string>
     <string name="ytf_site_infuse">注：请绑定以太坊地址。</string>
     <string name="binding_ok">确认绑定</string>
     <string name="binding_end">已绑定</string>
     <string name="change_site">更换地址</string>
+    <string name="extract_find">提取&#160;&#160;FIND</string>
+    <string name="recharge_find">充值&#160;&#160;FIND</string>
+    <!--我的资金  锁定-->
+    <string name="lock_find_num">锁定数量 (FIND)</string>
+    <string name="clear_find">解锁FIND</string>
+    <string name="input_num">请输入解锁数量</string>
+    <string name="warn">锁仓数量和时间影响您的区分指数，请慎重解锁</string>
+    <string name="warn_usable">增加锁仓数量将提高您的区分指数，锁仓后可在系统内使用。</string>
+    <string name="explain_title">说明：</string>
+    <string name="explain_1">1、</string>
+    <string name="explain_11">2、</string>
+    <string name="explain_2">区分指数与锁定FIND的数量和时间密切相关，锁仓数量越多，锁仓时间越长，区分指数越高。</string>
+    <string name="explain_3">2、解锁需要等待30天。</string>
+
+    <string name="explain_4">锁仓数量越多，锁仓时间越长，区分指数越高。</string>
+    <string name="explain_5">锁仓后的Find可以在系统内使用，譬如发起评测、打赏、提问等。</string>
 
     <string name="permission_ask_now">您需要打开%1$s权限</string>
     <string name="permission_ask_error">申请%1$s权限失敗，请在应用详情中打开</string>

@@ -16,6 +16,7 @@ import com.secretk.move.presenter.impl.MineFragmentPresenterImpl;
 import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.activity.MineAttentionActivity;
+import com.secretk.move.ui.activity.MineCheckDetailsActivity;
 import com.secretk.move.ui.activity.MineCollectActivity;
 import com.secretk.move.ui.activity.MineSetActivity;
 import com.secretk.move.utils.GlideUtils;
@@ -118,6 +119,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     @Override
     public void loadInfoSuccess(UserLoginInfo.DataBean.UserBean infos) {
         userInfos = infos;
+        LogUtil.w("++++++++++++++:"+Constants.BASE_IMG_URL+infos.getIcon());
         GlideUtils.loadCircleUrl(ivHeadImg, Constants.BASE_IMG_URL+infos.getIcon());
         tvUserName.setText(infos.getUserName());
         //300 粉丝 •1568 赞
@@ -155,6 +157,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
             case R.id.rl_essay:
                 break;
             case R.id.ll_check_details:
+                IntentUtil.startActivity(MineCheckDetailsActivity.class);
                 break;
             case R.id.ll_my_attention:
                 IntentUtil.startActivity(MineAttentionActivity.class);

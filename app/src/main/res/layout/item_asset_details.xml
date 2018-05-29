@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="測批-獎勵"
             android:textColor="@color/title_gray"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/sp_16" />
 
         <TextView
             android:id="@+id/tv_asset_time"
@@ -24,8 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_asset_name"
             android:text="2018-20-18 13:00:12"
-            android:textColor="@color/title_gray_66"
-            android:textSize="@dimen/sp_14" />
+            android:textColor="@color/title_gray_aa"
+            android:textSize="@dimen/sp_12" />
 
         <TextView
             android:id="@+id/tv_asset_num"
@@ -35,7 +35,7 @@
             android:layout_centerVertical="true"
             android:text="+5000"
             android:textColor="@color/title_gray"
-            android:textSize="@dimen/sp_16" />
+            android:textSize="@dimen/sp_14" />
     </RelativeLayout>
 
     <View
