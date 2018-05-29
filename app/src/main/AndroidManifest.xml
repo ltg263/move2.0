@@ -144,6 +144,9 @@
             android:name=".ui.activity.SearchActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.MineAttentionActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.EvaluationNewActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity

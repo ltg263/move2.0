@@ -262,13 +262,17 @@
             </android.support.design.widget.CoordinatorLayout>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </LinearLayout>
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/dp_20"
+        android:layout_margin="20dp"
         android:src="@drawable/ic_publish"
-        app:elevation="8dp" />
+        android:layout_gravity="bottom|end"
+        app:backgroundTint="#fff"
+        app:borderWidth="0.0dip"
+        app:elevation="5.0dip"
+        app:fabSize="normal"
+        app:pressedTranslationZ="10.0dip"
+        app:rippleColor="#a6a6a6" />
 </FrameLayout>

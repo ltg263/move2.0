@@ -91,6 +91,8 @@
     <string name="mine_text_13">重置密码</string>
     <string name="set_my_name">设置个人昵称</string>
     <string name="set_my_signature">设置个人简介</string>
+    <string name="mine_topic">话题</string>
+    <string name="mine_user">用户</string>
 
     <string name="permission_ask_now">您需要打开%1$s权限</string>
     <string name="permission_ask_error">申请%1$s权限失敗，请在应用详情中打开</string>

@@ -6,6 +6,11 @@
         <item>@string/main_fragment_bluesky</item>
 
     </string-array>
+    <string-array name="mine_attention_titles">
+        <item>@string/mine_topic</item>
+        <item>@string/mine_user</item>
+
+    </string-array>
 
     <declare-styleable name="TitleBar">
         <attr name="setTitle" format="string" />

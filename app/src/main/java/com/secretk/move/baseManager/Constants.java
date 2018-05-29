@@ -117,6 +117,8 @@ public interface Constants {
     String UPDATE_USER_INFO = BASE_URL + "/kff/user/updateUserInfo";
     //	我的收藏列表
     String MYC_OLLECT_LIST = BASE_URL + "kff/user/myCollectList";
+    //	我的收藏列表
+    String MY_FOLLOW_LIST = BASE_URL + "kff/user/myFollowList";
     String GET_H5_URLS = BASE_URL + "/kff/user/getH5URLs";
 
     //用户主页
