@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_gray"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <com.secretk.move.view.AppBarHeadView
+        android:id="@+id/head_app_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_bar_background" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_line"
+        android:background="@color/cut_off_rule" />
+
+    <com.secretk.move.view.RecycleScrollView
+        android:id="@+id/rsv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10">
+
+                <ImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/icon_close" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_icon"
+                    android:layout_centerHorizontal="true">
+
+                    <TextView
+                        android:id="@+id/tv_total_assets"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1333.21"
+                        android:textColor="@color/title_gray"
+                        android:textSize="@dimen/sp_22"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bill_find"
+                        android:textColor="@color/title_gray"
+                        android:textSize="@dimen/sp_16" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_line"
+                android:background="@color/cut_off_rule" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10"
+                android:text="@string/expenditure"
+                android:textColor="@color/title_gray"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </com.secretk.move.view.RecycleScrollView>
+</LinearLayout>

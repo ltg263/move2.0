@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_gray"
+    android:orientation="vertical">
+
+    <com.secretk.move.view.AppBarHeadView
+        android:id="@+id/head_app_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_bar_background" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_line"
+        android:background="@color/cut_off_rule" />
+
+    <com.secretk.move.view.RecycleScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10">
+
+                    <TextView
+                        android:id="@+id/tv_bill"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:padding="@dimen/dp_10"
+                        android:text="@string/bill"
+                        android:textColor="@color/app_background"
+                        android:textSize="@dimen/sp_16" />
+
+                    <ImageView
+                        android:id="@+id/iv_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:src="@drawable/icon_close" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/iv_icon"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginVertical="@dimen/dp_10">
+
+                        <TextView
+                            android:id="@+id/tv_total_assets"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1333.21"
+                            android:textColor="@color/title_gray"
+                            android:textSize="@dimen/sp_22"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/bill_find"
+                            android:textColor="@color/title_gray"
+                            android:textSize="@dimen/sp_16" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_line"
+                    android:background="@color/cut_off_rule" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/ll_coin_lock_sum"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_120"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_bj_gray_selector"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_10"
+                            android:text="@string/lock"
+                            android:textColor="@color/title_gray"
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_coin_lock_sum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1222.22"
+                            android:textColor="@color/title_gray_66"
+                            android:textSize="@dimen/sp_14" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="@dimen/dp_line"
+                        android:layout_height="match_parent"
+                        android:background="@color/cut_off_rule" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_pinless_wallet"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_120"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_bj_gray_selector"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_10"
+                            android:text="@string/unlock_the"
+                            android:textColor="@color/title_gray"
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_my_pinless_wallet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1222.22"
+                            android:textColor="@color/title_gray_66"
+                            android:textSize="@dimen/sp_14" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_line"
+                    android:background="@color/cut_off_rule" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/ll_coin_distributed_sum"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_120"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_bj_gray_selector"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_10"
+                            android:text="@string/send"
+                            android:textColor="@color/title_gray"
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_coin_distributed_sum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1222.22"
+                            android:textColor="@color/title_gray_66"
+                            android:textSize="@dimen/sp_14" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="@dimen/dp_line"
+                        android:layout_height="match_parent"
+                        android:background="@color/cut_off_rule" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_coin_usable_sum"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_120"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_bj_gray_selector"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp_10"
+                            android:text="@string/usable"
+                            android:textColor="@color/title_gray"
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_coin_usable_sum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1222.22"
+                            android:textColor="@color/title_gray_66"
+                            android:textSize="@dimen/sp_14" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_line"
+                    android:background="@color/cut_off_rule" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/btn_bj_selector"
+                android:padding="@dimen/dp_10">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/wallet_site"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_18" />
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </com.secretk.move.view.RecycleScrollView>
+</LinearLayout>

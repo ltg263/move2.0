@@ -105,6 +105,9 @@
             android:name=".ui.activity.MoreCommentsActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.MineCheckDetailsActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.ProjectActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
@@ -132,6 +135,9 @@
             android:name=".ui.activity.DetailsUserGradeActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.MineAssetDetailsActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.EvaluationProfessionalActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
@@ -150,7 +156,13 @@
             android:name=".ui.activity.EvaluationNewActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.MineAssetDistributedActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.EvaluationCompileListActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.MineAssetBindingActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.MineCollectActivity"

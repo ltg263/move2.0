@@ -102,6 +102,8 @@ public interface Constants {
     String USER_LOGIN = BASE_URL + "kff/user/login";
     //重置密码
     String FORGET_PASSWORD = BASE_URL + "kff/user/forgetPassword";
+    //总产明细列表的接口
+    String MY_TOKEN_RECORDS = BASE_URL + "kff/user/myTokenRecords";
 
     //首页推荐
     String MAIN_RECOMMEND = BASE_URL + "/kff/home/recommendList";
