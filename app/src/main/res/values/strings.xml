@@ -104,7 +104,7 @@
     <string name="unlock_the">解锁中</string>
     <string name="send">发放中</string>
     <string name="usable">可用</string>
-    <string name="wallet_site">綁定钱包地址</string>
+    <string name="wallet_site">绑定钱包地址</string>
     <string name="expenditure">账单明细</string>
     <string name="award_expenditure">奖励明细</string>
     <string name="send_find">发放中(FIND)</string>
@@ -116,6 +116,7 @@
     <string name="change_site">更换地址</string>
     <string name="extract_find">提取&#160;&#160;FIND</string>
     <string name="recharge_find">充值&#160;&#160;FIND</string>
+    <string name="extract_find_title">提取FIND</string>
     <!--我的资金  锁定-->
     <string name="lock_find_num">锁定数量 (FIND)</string>
     <string name="clear_find">解锁FIND</string>
@@ -127,9 +128,17 @@
     <string name="explain_11">2、</string>
     <string name="explain_2">区分指数与锁定FIND的数量和时间密切相关，锁仓数量越多，锁仓时间越长，区分指数越高。</string>
     <string name="explain_3">2、解锁需要等待30天。</string>
-
     <string name="explain_4">锁仓数量越多，锁仓时间越长，区分指数越高。</string>
     <string name="explain_5">锁仓后的Find可以在系统内使用，譬如发起评测、打赏、提问等。</string>
+    <string name="explain_6">说明：最小提取数量为2000，每月可提取1次，</string>
+    <!--提取FIND-->
+    <string name="confirm_extract">确认提取</string>
+    <string name="all_extract">全部提取</string>
+    <string name="extract_record">提取记录</string>
+    <string name="wallet_site_1">钱包地址</string>
+    <string name="wallet_change">更换钱包</string>
+    <string name="find_usable">可提取数量 (FIND)</string>
+    <string name="find_usable_add">累计提取数量 (FIND)</string>
 
     <string name="permission_ask_now">您需要打开%1$s权限</string>
     <string name="permission_ask_error">申请%1$s权限失敗，请在应用详情中打开</string>

@@ -31,7 +31,7 @@ import butterknife.OnClick;
  * 作者： litongge
  * 时间：  2018/5/29 15:05
  * 邮箱；ltg263@126.com
- * 描述：
+ * 描述：绑定錢包地址
  */
 public class MineAssetBindingActivity extends BaseActivity {
     @BindView(R.id.et_binding)

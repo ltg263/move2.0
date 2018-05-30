@@ -7,6 +7,7 @@ import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.ui.adapter.MineAssetPinlessAdapter;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.view.AppBarHeadView;
 
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ public class MineAssetPinlessActivity extends BaseActivity {
         for(int i=0;i<10;i++){
             list.add("hah啊："+i);
         }
+        LogUtil.w("list:"+list.size());
         adapter.setData(list);
     }
 }

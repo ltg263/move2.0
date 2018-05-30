@@ -174,6 +174,12 @@
             android:name=".ui.activity.MineAssetBindingActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.MineAssetFindExtractActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.MineAssetExtractRecordActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.MineCollectActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity android:name=".ui.activity.AddLabelActivity" />

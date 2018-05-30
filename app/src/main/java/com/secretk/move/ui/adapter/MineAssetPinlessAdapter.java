@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
+import com.secretk.move.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +73,7 @@ public class MineAssetPinlessAdapter extends RecyclerView.Adapter<MineAssetPinle
         }
 
         public void refresh(int position, List<String> lists) {
+            LogUtil.w("list:11111111");
             String str = lists.get(position);
             tvType.setText(str);
         }
