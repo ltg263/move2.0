@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.secretk.move.view.AppBarHeadView
+            android:id="@+id/head_app_server"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app_bar_background" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_line"
+            android:background="@color/cut_off_rule" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp_10">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_wallet_address" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_weight="1"
+                android:text="@string/wallet_site_1"
+                android:textColor="@color/title_gray"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/tv_wallet_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wallet_change"
+                android:textColor="@color/app_background"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_wallet_site"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@color/background_gray"
+            android:padding="6dp"
+            android:text="123"
+            android:textColor="@color/title_gray_99"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:drawableLeft="@drawable/ic_tiqu_qx"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:text="@string/extract_find_title" />
+
+        <EditText
+            android:id="@+id/et_binding_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@null"
+            android:hint="@string/input_num"
+            android:textColor="@color/title_gray"
+            android:textColorHint="@color/title_gray_cc"
+            android:textCursorDrawable="@drawable/shape_edit_cursor"
+            android:textSize="@dimen/sp_14" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_line"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@color/cut_off_rule" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10">
+
+            <TextView
+                android:id="@+id/tv_all_find"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="可用数量400000FIND"
+                android:textColor="@color/title_gray_66"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:id="@+id/tv_all_extract"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all_extract"
+                android:textColor="#00b25e"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/but_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="@dimen/dp_15"
+            android:layout_marginVertical="@dimen/dp_20"
+            android:background="@drawable/btn_max_selected_top_radius"
+            android:text="@string/confirm_extract"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_18" />
+
+        <TextView
+            android:id="@+id/tv_extract_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="@dimen/dp_10"
+            android:text="@string/extract_record"
+            android:textColor="@color/app_background"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_12"
+            android:text="@string/explain_6"
+            android:textColor="@color/title_gray_99"
+            android:textSize="@dimen/sp_12" />
+    </LinearLayout>
+</LinearLayout>

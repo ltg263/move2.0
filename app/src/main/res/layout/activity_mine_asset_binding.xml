@@ -20,21 +20,36 @@
         android:id="@+id/ll_binding_no"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
-        <EditText
-            android:id="@+id/et_binding"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_20"
-            android:background="@null"
-            android:hint="@string/ytf_site"
-            android:textColor="@color/title_gray"
-            android:textColorHint="@color/title_gray_66"
-            android:textCursorDrawable="@drawable/shape_edit_cursor"
-            android:textSize="@dimen/sp_14" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp_10"
+                android:gravity="center_vertical"
+                android:src="@drawable/ic_location_site" />
+
+            <EditText
+                android:id="@+id/et_binding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@null"
+                android:hint="@string/ytf_site"
+                android:textColor="@color/title_gray"
+                android:textColorHint="@color/title_gray_66"
+                android:textCursorDrawable="@drawable/shape_edit_cursor"
+                android:textSize="@dimen/sp_14" />
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -42,7 +57,6 @@
             android:layout_marginHorizontal="@dimen/dp_20"
             android:layout_marginVertical="@dimen/dp_10"
             android:background="@color/cut_off_rule" />
-
 
         <Button
             android:id="@+id/but_submit"
@@ -50,57 +64,23 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/dp_20"
-            android:background="@drawable/selector_login_bnt"
+            android:background="@drawable/btn_max_selected_radius"
             android:text="@string/binding_ok"
             android:textColor="@drawable/selector_login_text"
             android:textSize="@dimen/sp_18" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_binding_ok"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/tv_binding"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_20"
-            android:text="@string/ytf_site"
-            android:textColor="@color/title_gray_88"
-            android:textSize="@dimen/sp_14" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_line"
-            android:layout_marginHorizontal="@dimen/dp_20"
-            android:layout_marginVertical="@dimen/dp_10"
-            android:background="@color/cut_off_rule" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="@dimen/dp_10"
-            android:text="@string/binding_end"
-            android:textColor="@color/title_gray"
-            android:textSize="@dimen/sp_14" />
 
         <TextView
             android:id="@+id/tv_change_site"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/dp_20"
             android:padding="@dimen/dp_10"
             android:text="@string/change_site"
             android:textColor="@color/app_background"
             android:textSize="@dimen/sp_12" />
-
     </LinearLayout>
+
 
     <TextView
         android:layout_width="wrap_content"

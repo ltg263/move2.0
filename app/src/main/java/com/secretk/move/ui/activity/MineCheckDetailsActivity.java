@@ -108,29 +108,36 @@ public class MineCheckDetailsActivity extends BaseActivity {
     }
 
     @OnClick({R.id.ll_coin_lock_sum, R.id.ll_pinless_wallet, R.id.ll_coin_distributed_sum, R.id.ll_coin_usable_sum,
-            R.id.tv_extract, R.id.tv_recharge})
+            R.id.tv_extract, R.id.tv_recharge,R.id.tv_wallet_site})
     public void onViewClicked(View view) {
         String key[] = {"key"};
         switch (view.getId()) {
             case R.id.ll_coin_lock_sum:
-                IntentUtil.startActivity(MineAssetCoinActivity.class);
+                ToastUtils.getInstance().show("努力开发中...");
+//                IntentUtil.startActivity(MineAssetCoinActivity.class);
                 break;
             case R.id.ll_pinless_wallet:
-                IntentUtil.startActivity(MineAssetPinlessActivity.class);
+                ToastUtils.getInstance().show("努力开发中...");
+//                IntentUtil.startActivity(MineAssetPinlessActivity.class);
                 break;
             case R.id.ll_coin_distributed_sum:
-                IntentUtil.startActivity(MineAssetDistributedActivity.class);
+                ToastUtils.getInstance().show("努力开发中...");
+//                IntentUtil.startActivity(MineAssetDistributedActivity.class);
                 break;
             case R.id.ll_coin_usable_sum:
-                IntentUtil.startActivity(MineAssetUsableActivity.class);
+                ToastUtils.getInstance().show("努力开发中...");
+//                IntentUtil.startActivity(MineAssetUsableActivity.class);
                 break;
-            case R.id.tv_extract:
+            case R.id.tv_wallet_site:
                 String[] values = {"1"};
                 IntentUtil.startActivity(MineAssetBindingActivity.class, key, values);
                 break;
+            case R.id.tv_extract:
+                ToastUtils.getInstance().show("努力开发中...");
+//                IntentUtil.startActivity(MineAssetFindExtractActivity.class);
+                break;
             case R.id.tv_recharge:
-                String[] valuesa = {"2"};
-                IntentUtil.startActivity(MineAssetBindingActivity.class, key, valuesa);
+                ToastUtils.getInstance().show("努力开发中...");
                 break;
         }
     }

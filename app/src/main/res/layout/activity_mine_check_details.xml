@@ -250,10 +250,21 @@
                 android:layout_height="@dimen/dp_line"
                 android:background="@color/background_gray" />
 
+            <TextView
+                android:id="@+id/tv_wallet_site"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/btn_max_selected_top_radius"
+                android:gravity="center"
+                android:text="@string/wallet_site"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_17" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_extract"
@@ -271,7 +282,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_bj_selector"
+                    android:background="@drawable/btn_max_selected_top_radius"
                     android:gravity="center"
                     android:text="@string/recharge_find"
                     android:textColor="@color/white"

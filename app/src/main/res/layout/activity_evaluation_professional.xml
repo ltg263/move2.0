@@ -86,14 +86,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/app_background">
+        android:background="@color/white">
 
         <Button
             android:id="@+id/btn_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/btn_bj_selector"
+            android:background="@drawable/btn_max_selected_top_radius"
             android:text="@string/evaluation_btn_new"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_16" />
@@ -109,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/btn_bj_selector"
+            android:background="@drawable/btn_max_selected_top_radius"
             android:text="@string/evaluation_btn_compile"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_16" />
