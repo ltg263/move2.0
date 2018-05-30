@@ -103,7 +103,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
     public void img_return() {
         finish();
     }
-
+    List<String> adapterImgList;
     @OnClick(R.id.tv_release)
     public void tv_release() {
         if (TextUtils.isEmpty(getEdTitle())) {
@@ -118,17 +118,12 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
             ToastUtils.getInstance().show("标题不能少于6个汉字");
             return;
         }
-        List<String> adapterImgList = releasePicAdapter.getData();
-        for (int i = 0; i < adapterImgList.size(); i++) {
-            if (i == 0) {
-                loadingDialog.show();
-            }
-            String str = adapterImgList.get(i);
-            upImgHttp(str);
-            return;
-        }
         loadingDialog.show();
-        httpRelease();
+        adapterImgList= releasePicAdapter.getData();
+        if (adapterImgList!=null|adapterImgList.size()!=0){
+            upImgHttp(adapterImgList.get(0),0);
+        }
+
     }
 
     @OnClick(R.id.localphoto)
@@ -245,7 +240,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         });
     }
 
-    public void upImgHttp(String path) {
+    public void upImgHttp(String path, final int position) {
         File file = new File(path);
         LogUtil.w("file.exists(:" + file.exists());
         if (!file.exists()) {
@@ -272,6 +267,8 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }else {
+                    upImgHttp(adapterImgList.get(position+1),position+1);
                 }
                 Log.e("jyh_onCompleted", data.getMsg());
             }
