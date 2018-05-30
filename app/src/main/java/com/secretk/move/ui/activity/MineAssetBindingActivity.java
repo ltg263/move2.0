@@ -2,9 +2,8 @@ package com.secretk.move.ui.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -36,12 +35,8 @@ import butterknife.OnClick;
 public class MineAssetBindingActivity extends BaseActivity {
     @BindView(R.id.et_binding)
     EditText etBinding;
-    @BindView(R.id.ll_binding_no)
-    LinearLayout llBindingNo;
-    @BindView(R.id.tv_binding)
-    TextView tvBinding;
-    @BindView(R.id.ll_binding_ok)
-    LinearLayout llBindingOk;
+    @BindView(R.id.but_submit)
+    Button butSubmit;
 
     @Override
     protected int setOnCreate() {
@@ -52,9 +47,12 @@ public class MineAssetBindingActivity extends BaseActivity {
     protected void initUI(Bundle savedInstanceState) {
         String key = getIntent().getStringExtra("key");
         if (key.equals("1")) {
-            llBindingOk.setVisibility(View.VISIBLE);
+            etBinding.setCursorVisible(false);
+            etBinding.setFocusable(false);
+            etBinding.setFocusableInTouchMode(false);
+            butSubmit.setText(getResources().getString(R.string.binding_end));
         } else {
-            llBindingNo.setVisibility(View.VISIBLE);
+
         }
     }
 
@@ -72,15 +70,17 @@ public class MineAssetBindingActivity extends BaseActivity {
         return mHeadView;
     }
 
-    @OnClick({R.id.but_submit, R.id.tv_change_site})
+    @OnClick({R.id.but_submit,R.id.tv_change_site})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.but_submit:
                 submit();
                 break;
             case R.id.tv_change_site:
-                llBindingNo.setVisibility(View.VISIBLE);
-                llBindingOk.setVisibility(View.GONE);
+                etBinding.setCursorVisible(true);
+                etBinding.setFocusable(true);
+                etBinding.setFocusableInTouchMode(true);
+                etBinding.requestFocus();
                 break;
         }
     }
