@@ -34,7 +34,7 @@ public class ReleasePicAdapter extends RecyclerView.Adapter<ReleasePicAdapter.Vi
     private Context mContext;
 
     public ReleasePicAdapter() {
-       this.list=new ArrayList<>();
+        this.list = new ArrayList<>();
     }
 
 
@@ -70,12 +70,14 @@ public class ReleasePicAdapter extends RecyclerView.Adapter<ReleasePicAdapter.Vi
         this.list = list;
         notifyDataSetChanged();
     }
-  private  LongSparseArray<PicBean> picArray;
+
+    private LongSparseArray<PicBean> picArray;
+
     public void addSparseData(LongSparseArray<PicBean> xPicArray) {
-        if (xPicArray==null){
+        if (xPicArray == null) {
             return;
         }
-        this.picArray=xPicArray;
+        this.picArray = xPicArray;
         for (int i = 0; i < picArray.size(); i++) {
             long key = picArray.keyAt(i);
             PicBean bean = picArray.get(key);
@@ -90,6 +92,11 @@ public class ReleasePicAdapter extends RecyclerView.Adapter<ReleasePicAdapter.Vi
         notifyDataSetChanged();
     }
 
+    public void removeIndex(int index) {
+        list.remove(index);
+        notifyDataSetChanged();
+    }
+
     public List<String> getData() {
         return list;
     }
@@ -98,10 +105,13 @@ public class ReleasePicAdapter extends RecyclerView.Adapter<ReleasePicAdapter.Vi
 
         @BindView(R.id.img)
         public ImageView img;
+        @BindView(R.id.img_delect)
+        public ImageView img_delect;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            img_delect.setOnClickListener(this);
         }
     }
 

@@ -68,6 +68,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
     LoadingDialog loadingDialog;
     int projectId;
     String token = SharedUtils.singleton().get("token", "");
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,8 +95,8 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         recycler_horizontal.setAdapter(releaseArticleLabelAdapter);
 
         ed_title.setHint(Html.fromHtml("请输入标题 <small>(6-30字之间)</small>"));
-        loadingDialog=new LoadingDialog(this);
-        projectId = getIntent().getIntExtra("projectId",0);
+        loadingDialog = new LoadingDialog(this);
+        projectId = getIntent().getIntExtra("projectId", 0);
     }
 
     @OnClick(R.id.img_return)
@@ -119,7 +120,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         }
         List<String> adapterImgList = releasePicAdapter.getData();
         for (int i = 0; i < adapterImgList.size(); i++) {
-            if (i==0){
+            if (i == 0) {
                 loadingDialog.show();
             }
             String str = adapterImgList.get(i);
@@ -180,7 +181,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
 
     @Override
     public void onItemClick(View view, int postion) {
-
+        releasePicAdapter.removeIndex(postion);
     }
 
     @Override
@@ -204,6 +205,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return super.onKeyDown(keyCode, event);
     }
+
     String discussImages = null;
 
     public void httpRelease() {
@@ -249,7 +251,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         if (!file.exists()) {
             return;
         }
-        if (TextUtils.isEmpty(token)){
+        if (TextUtils.isEmpty(token)) {
             ToastUtils.getInstance().show("请先登录账号");
             return;
         }
@@ -282,19 +284,21 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
             }
         });
     }
-    JSONArray array=new JSONArray();
+
+    JSONArray array = new JSONArray();
+
     public void generatePostSmallImages(List<String> list) throws JSONException {
-        for (int i=0;i<list.size();i++){
+        for (int i = 0; i < list.size(); i++) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("fileName", "");
 
-            String str=list.get(i);
+            String str = list.get(i);
             jsonObject.put("fileUrl", str);
             jsonObject.put("size", "");
             jsonObject.put("extension", "");
             array.put(jsonObject);
-            if (i==list.size()-1){
-                discussImages =array.toString();
+            if (i == list.size() - 1) {
+                discussImages = array.toString();
                 httpRelease();
             }
         }
@@ -306,7 +310,6 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
     }
 
     public String getEdContent() {
-
         return ed_content.getText().toString().trim();
     }
 }
