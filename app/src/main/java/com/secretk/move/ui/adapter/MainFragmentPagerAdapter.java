@@ -23,7 +23,7 @@ public class MainFragmentPagerAdapter extends FragmentStatePagerAdapter {
             return new MainBlueSkyFragment();
         }
         return MainRfFragment.newInstance(position);
-//       return MainPagerFragmentsFactory.getFragment(position);
+
 
     }
 
