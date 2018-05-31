@@ -128,7 +128,7 @@ public class PicUtil {
      *
      * @param uri
      */
-   public static void startPhotoZoom(Uri uri,Activity mActivity) {
+   public static void startPhotoZoom(Uri uri,Activity mActivity,boolean isShear) {
        File file = new  File(Constants.LOCAL_PATH);
        LogUtil.w("file:"+file.exists());
        if(!file.exists()){
@@ -137,14 +137,16 @@ public class PicUtil {
        LogUtil.w("file:"+file.exists());
        Intent intent = new Intent("com.android.camera.action.CROP");
        intent.setDataAndType(uri, "image/*");
-       // 设置裁剪
        intent.putExtra("crop", "true");
-       // aspectX aspectY 是宽高的比例
-       intent.putExtra("aspectX", 1);
-       intent.putExtra("aspectY", 1);
-       // outputX outputY 是裁剪图片宽高
-       intent.putExtra("outputX", 96);
-       intent.putExtra("outputY", 96);
+       if(isShear){
+           // aspectX aspectY 是宽高的比例
+           intent.putExtra("aspectX", 1);
+           intent.putExtra("aspectY", 1);
+           // outputX outputY 是裁剪图片宽高
+           intent.putExtra("outputX", 96);
+           intent.putExtra("outputY", 96);
+       }
+       // 设置裁剪
 //        intent.putExtra("return-data", true);
        /**
         * 此方法返回的图片只能是小图片（sumsang测试为高宽160px的图片）

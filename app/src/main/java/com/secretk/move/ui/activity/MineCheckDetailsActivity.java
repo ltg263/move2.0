@@ -12,7 +12,6 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
-import com.secretk.move.bean.MyCollectList;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
@@ -89,9 +88,9 @@ public class MineCheckDetailsActivity extends BaseActivity {
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
         loadingDialog.show();
-        RetrofitUtil.request(params, MyCollectList.class, new HttpCallBackImpl<MyCollectList>() {
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
-            public void onCompleted(MyCollectList bean) {
+            public void onCompleted(String bean) {
 
             }
 
@@ -121,8 +120,7 @@ public class MineCheckDetailsActivity extends BaseActivity {
 //                IntentUtil.startActivity(MineAssetPinlessActivity.class);
                 break;
             case R.id.ll_coin_distributed_sum:
-                ToastUtils.getInstance().show("努力开发中...");
-//                IntentUtil.startActivity(MineAssetDistributedActivity.class);
+                IntentUtil.startActivity(MineAssetDistributedActivity.class);
                 break;
             case R.id.ll_coin_usable_sum:
                 ToastUtils.getInstance().show("努力开发中...");

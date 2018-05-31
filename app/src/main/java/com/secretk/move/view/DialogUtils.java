@@ -43,7 +43,7 @@ public class DialogUtils {
         tvLogTop.setText(content[0]);
         tvLogZhong.setText(content[1]);
         tvLogBottom.setText(content[2]);
-        if (!content[0].equals("修改头像")) {
+        if (content[0].equals("修改性别")) {
             if ("男".equals(content[3])) {
                 ivXbNan.setVisibility(View.VISIBLE);
                 ivXbNv.setVisibility(View.GONE);

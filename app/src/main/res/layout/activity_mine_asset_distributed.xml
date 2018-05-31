@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -17,90 +18,98 @@
         android:layout_height="@dimen/dp_line"
         android:background="@color/cut_off_rule" />
 
-    <com.secretk.move.view.RecycleScrollView
-        android:id="@+id/rsv"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fillViewport="true"
-        android:scrollbars="none">
+        android:layout_height="match_parent"
+        app:srlEnablePreviewInEditMode="false">
 
-        <LinearLayout
+        <com.secretk.move.view.RecycleScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/app_background"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/ic_distributed"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:padding="@dimen/dp_10">
+                    android:layout_height="wrap_content"
+                    android:background="@color/app_background"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_20"
-                        android:text="@string/send_find"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_14" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_distributed"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_10">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_10"
-                        android:text="52000.22"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_32" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_20"
+                            android:text="@string/send_find"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14" />
 
-                    <View
-                        android:layout_width="208dp"
-                        android:layout_height="@dimen/dp_2"
-                        android:layout_marginVertical="@dimen/dp_20"
-                        android:background="#5199ff" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_10"
+                            android:text="52000.22"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_32" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/yi_send_find"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_14" />
+                        <View
+                            android:layout_width="208dp"
+                            android:layout_height="@dimen/dp_2"
+                            android:layout_marginVertical="@dimen/dp_20"
+                            android:background="#5199ff" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_10"
-                        android:text="52000.22"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_22" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/yi_send_find"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_10"
+                            android:text="52000.22"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_22" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"
+                    android:text="@string/award_expenditure"
+                    android:textColor="@color/title_gray"
+                    android:textSize="@dimen/sp_14" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_line"
+                    android:background="@color/cut_off_rule" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
+        </com.secretk.move.view.RecycleScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dp_10"
-                android:text="@string/award_expenditure"
-                android:textColor="@color/title_gray"
-                android:textSize="@dimen/sp_14" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_line"
-                android:background="@color/cut_off_rule" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_review"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-    </com.secretk.move.view.RecycleScrollView>
 </LinearLayout>

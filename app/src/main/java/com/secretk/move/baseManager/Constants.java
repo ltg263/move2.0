@@ -86,7 +86,7 @@ public interface Constants {
     /**
      * 张栋栋
      */
-//    String BASE_URL = "http://192.168.10.151:803/";
+//    String BASE_URL = "http://192.168.10.151:809/";
 
 //    String BASE_URL = "http://192.168.10.201/";
 
@@ -104,6 +104,8 @@ public interface Constants {
     String FORGET_PASSWORD = BASE_URL + "kff/user/forgetPassword";
     //总产明细列表的接口
     String MY_TOKEN_RECORDS = BASE_URL + "kff/user/myTokenRecords";
+    //发放中的接口
+    String TOKEN_IN_DISTRIBUTED = BASE_URL + "kff/user/TokenInDistributed";
 
     //首页推荐
     String MAIN_RECOMMEND = BASE_URL + "/kff/home/recommendList";
@@ -114,7 +116,10 @@ public interface Constants {
 
     //上传用户头像
     String UPLOAD_USER_ICON_FILE = BASE_URL + "kff/home/uploadImgFile";
-    //    String UPLOAD_USER_ICON_FILE = BASE_URL + "/kff/upload/idcard";
+    //上传认证照片
+    String ID_CARD = BASE_URL + "/kff/upload/idcard";
+    //上传认证信息
+    String UPLOAD_USER_CARD = BASE_URL + "kff/userCard/uploadUserCard ";
     //	更新用户信息（头像，昵称）
     String UPDATE_USER_INFO = BASE_URL + "/kff/user/updateUserInfo";
     //	我的收藏列表
@@ -134,6 +139,8 @@ public interface Constants {
 
     //项目主页 ，显示项目基本信息
     String PROJECT_INDEX = BASE_URL + "/kff/project/index";
+    //首页审核展示状态
+    String USERCARD_STATUS = BASE_URL + "kff/userCard/usercardStatus ";
     //我的消息列表。
     String MESSAGE_LIST = BASE_URL + "kff/message/messageList";
     //消息详情
