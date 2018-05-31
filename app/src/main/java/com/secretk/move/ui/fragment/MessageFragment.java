@@ -84,6 +84,9 @@ public class MessageFragment extends LazyFragment{
         RetrofitUtil.request(params, MessageBean.class, new HttpCallBackImpl<MessageBean>() {
             @Override
             public void onCompleted(MessageBean str) {
+                if(str.getData().getMessages()==null){
+                    return;
+                }
                 if (str.getData().getMessages().getCurPageNum() == str.getData().getMessages().getPageSize()) {
                     refreshLayout.setLoadmoreFinished(true);
                 }

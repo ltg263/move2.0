@@ -308,7 +308,7 @@ public class MineSetActivity extends BaseActivity {
     private void onPicResult(String picPath) {
         if(StringUtil.isNotBlank(picPath)){
             File tempFile = new File(picPath);
-            PicUtil.startPhotoZoom(Uri.fromFile(tempFile),MineSetActivity.this);
+            PicUtil.startPhotoZoom(Uri.fromFile(tempFile),MineSetActivity.this,true);
         }
     }
     private void onPicTrimResult() {

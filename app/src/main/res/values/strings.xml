@@ -93,6 +93,23 @@
     <string name="set_my_signature">设置个人简介</string>
     <string name="mine_topic">话题</string>
     <string name="mine_user">用户</string>
+    <!--实名认证-->
+    <string name="mine_title">实名认证</string>
+    <string name="mine_name">姓名</string>
+    <string name="mine_input_name">请输入姓名</string>
+    <string name="mine_defeated">失败原因：</string>
+    <string name="mine_number">身份证号</string>
+    <string name="mine_anew">重新认证</string>
+    <string name="mine_input_number">请输入身份证号</string>
+    <string name="mine_input_number_ok">身份证号格式不正确</string>
+
+    <string name="mine_uploading_pic">请上传手持身份证照</string>
+    <string name="under_review">审核中</string>
+    <string name="under_not_review">审核未通过</string>
+    <string name="under_yes_review">审核通过</string>
+    <string name="mine_last_step">上一步</string>
+    <string name="mine_submit">提交</string>
+    <string name="mine_submit_require">上传要求：\n1、照片需免冠，手持证件人的五官清晰可见，完整露出双手手臂\n2、照片内容真实有效，不得做任何修改\n3、支持jpg/jepg/png格式，最大不超过5M\n4、手写文案：我确认在“区分”上所有行为为本人操作\n&#160;&#160;&#160;&#160;（附上自己签名以及当天日期）</string>
 
     <!--我的资金-->
     <string name="asset_details">资产明细</string>
