@@ -82,6 +82,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTask"
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.LoginHomeActivity"
@@ -118,6 +119,12 @@
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.DetailsArticleCommentActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.MineApproveSubmitiCertificateActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.MineApproveSubmitiPicActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.EvaluationSimplenessActivity"
