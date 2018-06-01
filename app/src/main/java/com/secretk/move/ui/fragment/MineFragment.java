@@ -19,7 +19,10 @@ import com.secretk.move.ui.activity.MineApproveSubmitiCertificateActivity;
 import com.secretk.move.ui.activity.MineAttentionActivity;
 import com.secretk.move.ui.activity.MineCheckDetailsActivity;
 import com.secretk.move.ui.activity.MineCollectActivity;
+import com.secretk.move.ui.activity.MineOpinionBackActivity;
+import com.secretk.move.ui.activity.MineRecommendActivity;
 import com.secretk.move.ui.activity.MineSetActivity;
+import com.secretk.move.ui.activity.WebViewActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
@@ -143,37 +146,41 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                     startActivityForResult(intent,0);
                 }
                 break;
-            case R.id.tv_go_login:
+            case R.id.tv_go_login://登陆
                 IntentUtil.startActivity(LoginHomeActivity.class);
                 break;
-            case R.id.tv_go_register:
+            case R.id.tv_go_register://注册
                 break;
-            case R.id.rl_user_info:
+            case R.id.rl_user_info://用户Head
                 IntentUtil.startActivity(HomeActivity.class);
                 break;
-            case R.id.rl_appraisal:
+            case R.id.rl_appraisal://评测
                 break;
-            case R.id.rl_discuss:
+            case R.id.rl_discuss://讨论
                 break;
-            case R.id.rl_essay:
+            case R.id.rl_essay://文章
                 break;
-            case R.id.ll_my_approve:
-                IntentUtil.startActivity(MineAttentionActivity.class);
-                break;
-            case R.id.ll_check_details:
-                IntentUtil.startActivity(MineCheckDetailsActivity.class);
-                break;
-            case R.id.ll_my_attention:
-                break;
-            case R.id.ll_my_collect:
-                IntentUtil.startActivity(MineCollectActivity.class);
-                break;
-            case R.id.ll_my_recommend:
-                break;
-            case R.id.ll_my_about:
+            case R.id.ll_my_approve://实名认证
                 IntentUtil.startActivity(MineApproveSubmitiCertificateActivity.class);
                 break;
-            case R.id.ll_my_feedback:
+            case R.id.ll_check_details://资产明细
+                IntentUtil.startActivity(MineCheckDetailsActivity.class);
+                break;
+            case R.id.ll_my_attention://我的关注
+                IntentUtil.startActivity(MineAttentionActivity.class);
+                break;
+            case R.id.ll_my_collect://收藏
+                IntentUtil.startActivity(MineCollectActivity.class);
+                break;
+            case R.id.ll_my_recommend://推荐好友
+                IntentUtil.startActivity(MineRecommendActivity.class);
+                break;
+            case R.id.ll_my_about://关于我们
+                String htmlUrl= "http://192.168.10.196:5000/mine/help";
+                startActivity(new Intent(getActivity(), WebViewActivity.class).putExtra("url", htmlUrl));
+                break;
+            case R.id.ll_my_feedback://意见反馈
+                IntentUtil.startActivity(MineOpinionBackActivity.class);
                 break;
             case R.id.btn:
                 sharedUtils.clear();

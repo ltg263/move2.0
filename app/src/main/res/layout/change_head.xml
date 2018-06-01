@@ -56,7 +56,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/my_infro_select"
+                android:src="@drawable/ic_correct"
                 android:visibility="gone" />
 
         </RelativeLayout>
@@ -90,7 +90,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/my_infro_select"
+                android:src="@drawable/ic_correct"
                 android:visibility="gone" />
 
         </RelativeLayout>

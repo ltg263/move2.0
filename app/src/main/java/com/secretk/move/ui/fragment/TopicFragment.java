@@ -2,19 +2,12 @@ package com.secretk.move.ui.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -25,6 +18,7 @@ import com.secretk.move.bean.SearchedBean;
 import com.secretk.move.customview.QuickIndexBar;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.SearchActivity;
+import com.secretk.move.ui.activity.SubmitProjectActivity;
 import com.secretk.move.ui.adapter.TopicFragmentRecyclerAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
@@ -33,11 +27,9 @@ import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.LoadingDialog;
 
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -88,7 +80,7 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.getInstance().show("跳转界面");
+                IntentUtil.startActivity(SubmitProjectActivity.class);
             }
         });
 //        List<String> list = new ArrayList<>();

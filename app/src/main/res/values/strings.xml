@@ -134,6 +134,7 @@
     <string name="extract_find">提取&#160;&#160;FIND</string>
     <string name="recharge_find">充值&#160;&#160;FIND</string>
     <string name="extract_find_title">提取FIND</string>
+    <string name="extract_find_jl"><![CDATA[邀请总收益<font color="#FFD87C"><b>%1$s</b></font> FINd]]></string>
     <!--我的资金  锁定-->
     <string name="lock_find_num">锁定数量 (FIND)</string>
     <string name="clear_find">解锁FIND</string>
@@ -196,4 +197,23 @@
     <string name="evaluation_hint_weight">填写权重(0-1)，最多2位小数</string>
     <string name="evaluation_hint_grade">填写分数(1-10)，最多1位小数</string>
     <string name="evaluation_hint">请安规则输入</string>
+
+    <!--提交项目-->
+    <string name="submit_project_title">提交项目</string>
+    <string name="submit_project_0">点击上传代币主图</string>
+    <string name="submit_project_1">代币名称</string>
+    <string name="submit_project_11">请输入名称</string>
+    <string name="submit_project_2">英文名称</string>
+    <string name="submit_project_22">请输入英文名</string>
+    <string name="submit_project_3">中文名称</string>
+    <string name="submit_project_33">请输入中文名称</string>
+    <string name="submit_project_4">官网</string>
+    <string name="submit_project_44">请输入官网</string>
+    <string name="submit_project_5">发行量</string>
+    <string name="submit_project_55">请输入发行量</string>
+    <string name="submit_project_6">发行时间</string>
+    <string name="submit_project_66">请选择</string>
+    <string name="submit_project_7">是否上市</string>
+    <string name="submit_project_77">是</string>
+    <string name="submit_project_777">否</string>
 </resources>

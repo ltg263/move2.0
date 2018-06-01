@@ -150,7 +150,6 @@ public class ProjectActivity extends BaseActivity {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            projectId = "1";
             node.put("projectId", Integer.valueOf(projectId));//查看的项目ID
         } catch (JSONException e) {
             e.printStackTrace();

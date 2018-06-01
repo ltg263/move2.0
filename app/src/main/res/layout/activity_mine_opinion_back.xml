@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_gray"
+    android:orientation="vertical">
+
+    <com.secretk.move.view.AppBarHeadView
+        android:id="@+id/head_app_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_bar_background" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_line"
+        android:background="@color/cut_off_rule" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dp_4"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10"
+        android:text="意见描述" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_10">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请输入不少于10个字的意见描述..."
+            android:textColor="@color/title_gray_aa"
+            android:textSize="@dimen/sp_14" />
+
+        <EditText
+            android:id="@+id/et_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="top"
+            android:minLines="3"
+            android:textColor="@color/title_gray"
+            android:textCursorDrawable="@drawable/shape_edit_cursor"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dp_4"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10"
+        android:text="联系方式" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_10">
+
+
+        <EditText
+            android:id="@+id/et_relation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="为了更快的解决相关问题请提供您的联系方式..."
+            android:textColor="@color/title_gray"
+            android:textColorHint="@color/title_gray_aa"
+            android:textCursorDrawable="@drawable/shape_edit_cursor"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+
+</LinearLayout>

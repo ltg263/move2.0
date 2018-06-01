@@ -18,7 +18,6 @@ import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
-import com.secretk.move.baseManager.BaseManager;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeUserIndexBean;
 import com.secretk.move.bean.MenuInfo;
@@ -30,7 +29,6 @@ import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
-import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
@@ -109,7 +107,6 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void initUI(Bundle savedInstanceState) {
         userId = getIntent().getStringExtra("userId");
-        GlideUtils.loadCircle(ivHead, R.mipmap.ic_launcher);
         refreshLayout.setEnableRefresh(false);//禁止下拉刷新
         reviewFragment = new HomeReviewFragment();
         discussFragment = new HomeDiscussFragment();

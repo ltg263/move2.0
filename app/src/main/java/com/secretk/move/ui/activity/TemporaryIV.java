@@ -3,12 +3,11 @@ package com.secretk.move.ui.activity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
-import com.secretk.move.baseManager.BaseManager;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.view.AppBarHeadView;
 
 import java.util.List;
@@ -36,8 +35,13 @@ public class TemporaryIV extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        String imgName = getIntent().getStringExtra("imgName");
         ImageView iv = findViewById(R.id.iv);
-        Glide.with(BaseManager.app).load(Constants.BASE_IMG_URL+getIntent().getStringExtra("imgUrl")).into(iv);
+        if(imgName.equals("邀请海报")){
+            GlideUtils.loadImage(this,iv,getIntent().getStringExtra("imgUrl"));
+        }else {
+            GlideUtils.loadImage(this,iv,Constants.BASE_IMG_URL + getIntent().getStringExtra("imgUrl"));
+        }
     }
 
     @Override

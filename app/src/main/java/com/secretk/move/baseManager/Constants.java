@@ -87,8 +87,14 @@ public interface Constants {
      * 张栋栋
      */
 //    String BASE_URL = "http://192.168.10.151:809/";
-
-//    String BASE_URL = "http://192.168.10.201/";
+    /**
+     * 张栋栋 --证件的URL
+     */
+    String BASE_URL_ZJ = "http://192.168.10.151:8080/";
+    /**
+     * 罗艳清
+     */
+//    String BASE_URL = "http://192.168.10.199:8080/rest/";
 
     //发送验证码通用接口
     String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/send";
@@ -126,6 +132,12 @@ public interface Constants {
     String MYC_OLLECT_LIST = BASE_URL + "kff/user/myCollectList";
     //	我的收藏列表
     String MY_FOLLOW_LIST = BASE_URL + "kff/user/myFollowList";
+    //点击生成邀请奖励
+    String CREATE_URLIN_REGISTER = BASE_URL + "kff/user/createUrlInRegister";
+    //点击生成poster 海报
+    String CREATE_POSTE = BASE_URL + "kff/user/createPoster";
+    //提交意见反馈。
+    String SUBMIT_SUGGEST = BASE_URL + "kff/system/submitSuggest";
     String GET_H5_URLS = BASE_URL + "/kff/user/getH5URLs";
 
     //用户主页

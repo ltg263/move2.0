@@ -54,7 +54,7 @@
                 android:id="@+id/iv_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/upvote_selected" />
+                android:src="@drawable/ic_red_spot" />
         </LinearLayout>
 
         <View
