@@ -4,6 +4,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.VersionBean;
 import com.secretk.move.contract.ActivityMainContract;
 import com.secretk.move.interactor.impl.MainInteractorImpl;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.NetUtil;
 
 /**
@@ -22,7 +23,6 @@ public class MainPresenterImpl implements ActivityMainContract.Presenter, Activi
     @Override
     public void initialized() {
         Boolean isNetworkAvailable = NetUtil.isNetworkAvailable();
-
         if (isNetworkAvailable) {
            interactor.NetWorkVersion();
         } else {
@@ -41,14 +41,15 @@ public class MainPresenterImpl implements ActivityMainContract.Presenter, Activi
     }
 
     @Override
-    public void requestSuccess(VersionBean bean) {
-        int localVerison = interactor.localVerison();
-        if (localVerison < bean.build) {
-            mainView.showDialog(bean.changelog);
-            downLoadUrl=bean.installUrl;
-        } else {
-            mainView.showMsg("当前没有新版本");
-            downLoadApk();
+    public void requestSuccess(VersionBean.DataBean bean) {
+        if(bean.getForce()==1){//0普通更新，1强制更新
+            downLoadUrl=bean.getUpgradeUrl();
+            mainView.showDialog(bean.getUpExplain(),true);
+        }else if(bean.getUpgrade()==1){//0不需更新，1需要更新
+            downLoadUrl=bean.getGuideUrl();
+            mainView.showDialog(bean.getUpExplain(),false);
+        }else{
+            LogUtil.w("没有最新版本");
         }
     }
 

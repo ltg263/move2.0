@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.secretk.move.MoveApplication;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.utils.LogUtil;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 
 import org.json.JSONException;
@@ -54,6 +55,7 @@ public class RetrofitUtil {
     }
 
     public static OkHttpClient genericClient() {
+        LogUtil.w("StringUtil.getVersionCode()"+StringUtil.getVersionCode());
         OkHttpClient httpClient = new OkHttpClient.Builder()
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .addInterceptor(new Interceptor() {
@@ -64,7 +66,7 @@ public class RetrofitUtil {
                                 .addHeader("platform", "2")
                                 .addHeader("phoneModel", "iphone6p")
                                 .addHeader("systemVersion", "MEIUI7")
-                                .addHeader("appVersion", "1.0.0")
+                                .addHeader("appVersion", StringUtil.getVersionCode())
                                 .addHeader("operator", "china mobile")
                                 .addHeader("networkType", "wifi")
                                 .addHeader("deviceId", "12acd229822")

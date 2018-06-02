@@ -47,7 +47,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -323,9 +322,9 @@ public class DetailsDiscussActivity extends BaseActivity {
                     for (int i = 0; i < images.length(); i++) {
                         JSONObject strObj = images.getJSONObject(i);
                         PostDataInfo info = new PostDataInfo();
-                        info.setUrl(strObj.getString("fileUrl"));
-                        info.setName(strObj.getString("fileName"));
-                        info.setTitle(strObj.getString("extension"));
+                        info.setUrl(StringUtil.getBeanString(strObj.getString("fileUrl")));
+                        info.setName(StringUtil.getBeanString(strObj.getString("fileName")));
+                        info.setTitle(StringUtil.getBeanString(strObj.getString("extension")));
                         lists.add(info);
                     }
                     if (lists.size() != 0) {
@@ -437,12 +436,5 @@ public class DetailsDiscussActivity extends BaseActivity {
                 initData();
             }
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }

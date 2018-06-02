@@ -1,6 +1,7 @@
 package com.secretk.move.utils;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.view.ViewPager;
@@ -10,6 +11,13 @@ import android.text.TextWatcher;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.secretk.move.baseManager.BaseManager;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.net.URLEncoder;
 import java.text.ParseException;
@@ -404,6 +412,37 @@ public class StringUtil {
             return fileName.substring(extPos + 1);
         }
         return result;
+    }
+    /**
+     * 将html文本内容中包含img标签的图片，宽度变为屏幕宽度，高度根据宽度比例自适应
+     **/
+    public static String getNewContent(String htmltext){
+        try {
+            Document doc= Jsoup.parse(htmltext);
+            Elements elements=doc.getElementsByTag("img");
+            for (Element element : elements) {
+                element.attr("width","100%").attr("height","auto");
+            }
+
+            return doc.toString();
+        } catch (Exception e) {
+            return htmltext;
+        }
+    }
+    /**
+     * 获取软件版本号
+     *
+     * @return
+     */
+    public static String getVersionCode() {
+        try {
+            return BaseManager.app.getPackageManager().getPackageInfo(
+                    BaseManager.app.getPackageName(), 0).versionName;
+
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     public static String getStateValueStr(float score){

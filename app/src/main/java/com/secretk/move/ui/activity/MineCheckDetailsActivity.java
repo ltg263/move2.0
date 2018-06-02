@@ -12,7 +12,9 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.bean.MineRecommendBase;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -48,6 +50,7 @@ public class MineCheckDetailsActivity extends BaseActivity {
     LinearLayout llCoinLockSum;
     @BindView(R.id.ll_pinless_wallet)
     LinearLayout llPinlessWallet;
+    private List<MineRecommendBase.DataBean.WalletBean> wallet;
 
 
     @Override
@@ -88,10 +91,18 @@ public class MineCheckDetailsActivity extends BaseActivity {
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
         loadingDialog.show();
-        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+        RetrofitUtil.request(params, MineRecommendBase.class, new HttpCallBackImpl<MineRecommendBase>() {
             @Override
-            public void onCompleted(String bean) {
-
+            public void onCompleted(MineRecommendBase res) {
+                List<MineRecommendBase.DataBean.MyTokenRecordsBean> data = res.getData().getMyTokenRecords();
+                if(data!=null && data.size()>0){
+                    tvTotalAssets.setText(String.valueOf(data.get(0).getTotalAssets()));
+                    tvCoinLockSum.setText(String.valueOf(data.get(0).getCoinLock()));
+                    tvMyPinlessWallet.setText(String.valueOf(data.get(0).getCoinUnlock()));
+                    tvCoinDistributedSum.setText(String.valueOf(data.get(0).getCoinDistributed()));
+                    tvCoinUsableSum.setText(String.valueOf(data.get(0).getCoinUsable()));
+                }
+                wallet = res.getData().getWallet();
             }
 
             @Override
@@ -109,7 +120,6 @@ public class MineCheckDetailsActivity extends BaseActivity {
     @OnClick({R.id.ll_coin_lock_sum, R.id.ll_pinless_wallet, R.id.ll_coin_distributed_sum, R.id.ll_coin_usable_sum,
             R.id.tv_extract, R.id.tv_recharge,R.id.tv_wallet_site})
     public void onViewClicked(View view) {
-        String key[] = {"key"};
         switch (view.getId()) {
             case R.id.ll_coin_lock_sum:
                 ToastUtils.getInstance().show("努力开发中...");
@@ -127,8 +137,13 @@ public class MineCheckDetailsActivity extends BaseActivity {
 //                IntentUtil.startActivity(MineAssetUsableActivity.class);
                 break;
             case R.id.tv_wallet_site:
-                String[] values = {"1"};
-                IntentUtil.startActivity(MineAssetBindingActivity.class, key, values);
+                if(wallet!=null){
+                    //钱包状态0-未绑定 1-已绑定
+                    String key[] = {"wallet","walletType"};
+                    String[] values = {wallet.get(0).getWallet(),String.valueOf(wallet.get(0).getWalletType())};
+                    LogUtil.w("String.valueOf(wallet.get(0).getWalletType():"+String.valueOf(wallet.get(0).getWalletType()));
+                    IntentUtil.startActivity(MineAssetBindingActivity.class, key, values);
+                }
                 break;
             case R.id.tv_extract:
                 ToastUtils.getInstance().show("努力开发中...");

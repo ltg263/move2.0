@@ -144,6 +144,8 @@ public class LoginActivity extends BaseActivity {
                 ////用户信息
 //                UserLoginInfo.DataBean dataBean = userInfo.getData();
                 sharedUtils.put(Constants.USER_INFOS,userInfo.getData().getUser().toString());
+                sharedUtils.put(Constants.USER_TYPE,userInfo.getData().getUser().getUserType());
+                sharedUtils.put(Constants.MOBILE,userInfo.getData().getUser().getMobile());
                 IntentUtil.startActivity(MainActivity.class);
             }
 

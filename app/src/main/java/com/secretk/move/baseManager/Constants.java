@@ -1,5 +1,7 @@
 package com.secretk.move.baseManager;
 
+import android.os.Environment;
+
 import com.secretk.move.MoveApplication;
 
 import java.io.File;
@@ -32,6 +34,14 @@ public interface Constants {
      */
     String USER_INFOS = "userInfos";
     /**
+     * 登录的用户类型
+     */
+    String USER_TYPE = "UserType";
+    /**
+     * 登录的用户手机号
+     */
+    String MOBILE = "mobile";
+    /**
      * 分页单次请求数量
      */
     int PAGE_SIZE = 10;
@@ -49,6 +59,10 @@ public interface Constants {
      */
     String LOCAL_PATH = MoveApplication.getContext().getExternalFilesDir(null).getAbsolutePath()
             + File.separator + SHAREDPREFS_NAME;
+    /**
+     * 常用外母目录
+     */
+    String IMG_PATH = Environment.getRootDirectory().getPath()+File.separator+SHAREDPREFS_NAME;
     /**
      * 是否开启调试模式
      */
@@ -77,16 +91,16 @@ public interface Constants {
     /**
      * 外网
      */
-    String BASE_URL = "http://47.98.197.101/rest/";
+//    String BASE_URL = "http://47.98.197.101/rest/";
 
     /**
      * 王晗
      */
-//    String BASE_URL = "http://192.168.10.122:8082/";
+//    String BASE_URL = "http://192.168.10.123:8082/";
     /**
      * 张栋栋
      */
-//    String BASE_URL = "http://192.168.10.151:809/";
+    String BASE_URL = "http://192.168.10.151:809/";
     /**
      * 张栋栋 --证件的URL
      */
@@ -95,6 +109,10 @@ public interface Constants {
      * 罗艳清
      */
 //    String BASE_URL = "http://192.168.10.199:8080/rest/";
+    /**
+     * 关于我们
+      */
+    String HELP = "http://192.168.10.196:5000/mine/help";
 
     //发送验证码通用接口
     String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/send";
@@ -110,8 +128,12 @@ public interface Constants {
     String FORGET_PASSWORD = BASE_URL + "kff/user/forgetPassword";
     //总产明细列表的接口
     String MY_TOKEN_RECORDS = BASE_URL + "kff/user/myTokenRecords";
+    //总产明细列表的接口
+    String MY_TOKEN_BILL = BASE_URL + "kff/user/myTokenBill";
     //发放中的接口
     String TOKEN_IN_DISTRIBUTED = BASE_URL + "kff/user/TokenInDistributed";
+    //绑定钱包的接口
+    String MY_PINLESS_WALLET = BASE_URL + "kff/user/myPinlessWallet";
 
     //首页推荐
     String MAIN_RECOMMEND = BASE_URL + "/kff/home/recommendList";
@@ -120,12 +142,16 @@ public interface Constants {
     //青天榜
     String MAIN_BLUE_SKY = BASE_URL + "/kff/home/projectRankList";
 
-    //上传用户头像
+    //上传用户头像 1用户头像；2帖子中内容图片；3项目图标
     String UPLOAD_USER_ICON_FILE = BASE_URL + "kff/home/uploadImgFile";
     //上传认证照片
     String ID_CARD = BASE_URL + "/kff/upload/idcard";
     //上传认证信息
-    String UPLOAD_USER_CARD = BASE_URL + "kff/userCard/uploadUserCard ";
+    String UPLOAD_USER_CARD = BASE_URL + "kff/userCard/uploadUserCard";
+    //提交项目。
+    String SUBMIT_PROJECT = BASE_URL + "kff/project/submitProject";
+    //获取项目类型列表
+    String PROJECT_TYPE_LIST = BASE_URL + "kff/project/projectTypeList";
     //	更新用户信息（头像，昵称）
     String UPDATE_USER_INFO = BASE_URL + "/kff/user/updateUserInfo";
     //	我的收藏列表
@@ -142,6 +168,8 @@ public interface Constants {
 
     //用户主页
     String USERHOME_INDEX = BASE_URL + "kff/userhome/index";
+    //判断用户当前版本确定是否提示用户升级。
+    String UPGRADE = BASE_URL + "/kff/system/upgrade";
     //用户 测评列表
     String USERHOME_EVALUATION_LIST = BASE_URL + "kff/userhome/evaluationList";
     //用户讨论列表

@@ -1,11 +1,7 @@
 package com.secretk.move.ui.activity;
 
 
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
 import android.widget.RadioGroup;
 
 import com.secretk.move.R;
@@ -16,7 +12,6 @@ import com.secretk.move.presenter.impl.MainPresenterImpl;
 import com.secretk.move.ui.adapter.MainActivityPagerAdapter;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.UiUtils;
-
 
 import butterknife.BindView;
 
@@ -95,23 +90,13 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
 
 
     @Override
-    public void showDialog(String str) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("检测到新版本,是否升级");
-        if (!TextUtils.isEmpty(str)) {
-            builder.setMessage(str);
-        }
-        builder.setNegativeButton("取消", null);
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                presenter.downLoadApk();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#3F51B5"));
-        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#3F51B5"));
+    public void showDialog(String str,boolean force) {
+//        DialogUtils.showDialogAppUpdate(this, force, str, new DialogUtils.ErrorDialogInterface() {
+//            @Override
+//            public void btnConfirm() {
+//                presenter.downLoadApk();
+//            }
+//        });
     }
 
 

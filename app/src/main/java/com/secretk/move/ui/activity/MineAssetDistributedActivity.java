@@ -2,6 +2,7 @@ package com.secretk.move.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -13,8 +14,8 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.bean.DistributedList;
 import com.secretk.move.bean.MenuInfo;
-import com.secretk.move.bean.MyCollectList;
 import com.secretk.move.ui.adapter.MineAssetDistributeAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
@@ -41,6 +42,10 @@ public class MineAssetDistributedActivity extends BaseActivity {
     int pageIndex = 1;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.tv_top)
+    TextView tvTop;
+    @BindView(R.id.tv_b)
+    TextView tvB;
     private MineAssetDistributeAdapter adapter;
 
     @Override
@@ -63,6 +68,9 @@ public class MineAssetDistributedActivity extends BaseActivity {
         adapter = new MineAssetDistributeAdapter(this);
         rvReview.setAdapter(adapter);
         initRefresh();
+        //暂不支持上拉下拉
+        refreshLayout.setEnableRefresh(false);
+        refreshLayout.setEnableLoadmore(false);
         loadingDialog.show();
     }
 
@@ -76,8 +84,8 @@ public class MineAssetDistributedActivity extends BaseActivity {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            node.put("pageIndex", pageIndex++);//帖子ID
-            node.put("pageSize", Constants.PAGE_SIZE);//帖子ID
+//            node.put("pageIndex", pageIndex++);//帖子ID
+//            node.put("pageSize", Constants.PAGE_SIZE);//帖子ID
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -86,21 +94,16 @@ public class MineAssetDistributedActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, MyCollectList.class, new HttpCallBackImpl<MyCollectList>() {
+        RetrofitUtil.request(params, DistributedList.class, new HttpCallBackImpl<DistributedList>() {
             @Override
-            public void onCompleted(MyCollectList bean) {
-                MyCollectList.DataBean.MyTokenRecordsBean detailsBean = bean.getData().getMyTokenRecords();
-                if (detailsBean.getRows() == null || detailsBean.getRows().size() == 0) {
+            public void onCompleted(DistributedList bean) {
+                tvTop.setText(String.valueOf(bean.getData().getSum().getGiveNext()));
+                tvB.setText(String.valueOf(bean.getData().getSum().getRewardToken()));
+                List<DistributedList.DataBean.InDistributionBean> detailsBean = bean.getData().getInDistribution();
+                if (detailsBean == null || detailsBean.size() == 0) {
                     return;
                 }
-                if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
-                    refreshLayout.setLoadmoreFinished(true);
-                }
-                if (pageIndex > 2) {
-//                    adapter.setAddData(detailsBean.getRows());
-                } else {
-//                    adapter.setData(list);
-                }
+                adapter.setData(detailsBean);
             }
 
             @Override
@@ -115,6 +118,7 @@ public class MineAssetDistributedActivity extends BaseActivity {
             }
         });
     }
+
     private void initRefresh() {
         /**
          * 下拉刷新

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
+import com.secretk.move.bean.DistributedList;
 import com.secretk.move.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import butterknife.ButterKnife;
 
 public class MineAssetDistributeAdapter extends RecyclerView.Adapter<MineAssetDistributeAdapter.DetailsHolder> {
 
-    private List<String> lists = new ArrayList<>();
+    private List<DistributedList.DataBean.InDistributionBean> lists = new ArrayList<>();
     Context context;
 
     public MineAssetDistributeAdapter(Context context) {
@@ -51,12 +52,12 @@ public class MineAssetDistributeAdapter extends RecyclerView.Adapter<MineAssetDi
         return lists.size();
     }
 
-    public void setData(List<String> list) {
+    public void setData(List<DistributedList.DataBean.InDistributionBean> list) {
         this.lists = list;
         notifyDataSetChanged();
     }
 
-    public List<String> getData() {
+    public List<DistributedList.DataBean.InDistributionBean> getData() {
         return lists;
     }
 
@@ -77,10 +78,13 @@ public class MineAssetDistributeAdapter extends RecyclerView.Adapter<MineAssetDi
             ButterKnife.bind(this, itemView);
         }
 
-        public void refresh(int position, List<String> lists) {
-            String str = lists.get(position);
-            pbMax.setProgress(position*10);
-            tvName.setText(StringUtil.getBeanString(str));
+        public void refresh(int position, List<DistributedList.DataBean.InDistributionBean> lists) {
+            DistributedList.DataBean.InDistributionBean str = lists.get(position);
+            pbMax.setProgress(str.getCounter());
+            tvTime.setText(StringUtil.getTimeToM(str.getCreateTime()));
+            tvName.setText(StringUtil.getBeanString(str.getTokenAwardFunctionDesc()));
+            tvNum.setText(StringUtil.getBeanString(String.valueOf(str.getInviteRewards())));
+            tvMax.setText(StringUtil.getBeanString(String.valueOf(str.getCounter()))+"%");
         }
     }
 }

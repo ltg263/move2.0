@@ -2,6 +2,9 @@ package com.secretk.move.view;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +15,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.bean.ProjectTypeListBean;
+import com.secretk.move.listener.ItemClickListener;
+import com.secretk.move.ui.activity.MainActivity;
+import com.secretk.move.ui.adapter.DiaLogListAdapter;
+import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.StringUtil;
+
+import java.util.List;
 
 
 /**
@@ -114,6 +124,39 @@ public class DialogUtils {
     }
 
     /**
+     * 单个按钮，设置监听；
+     *
+     * @param context
+     * @param
+     */
+    public static void showDialogImage(final Context context, String url, final ErrorDialogInterface anInterface) {
+        final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
+        final View view = LayoutInflater.from(context).inflate(R.layout.dialog_image, null);
+        ImageView ivIcon = view.findViewById(R.id.iv_icon);
+        GlideUtils.loadImage(context,ivIcon,url);
+        ivIcon.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                new PopupWindowUtils(context, new PopupWindowUtils.ErrorDialogInterface() {
+                    @Override
+                    public void btnConfirm() {
+                        anInterface.btnConfirm();
+                    }
+                });
+                return false;
+            }
+        });
+        ivIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog5.dismiss();
+            }
+        });
+        dialog5.setContentView(view);
+        dialog5.show();
+    }
+
+    /**
      * 描述: 自定义ShowUnifiedDialog
      * 统一 确认取消的Dialog
      */
@@ -168,6 +211,13 @@ public class DialogUtils {
          */
         public void btnConfirm();
     }
+    public interface ListDialogInterface {
+        /**
+         * 确定
+         * @param postion
+         */
+        public void btnConfirm(int postion);
+    }
 
     public interface EditTextDialogInterface {
         /**
@@ -178,5 +228,77 @@ public class DialogUtils {
         public void btnConfirm(String season);
     }
 
+    /**
+     * 单个按钮，设置监听；
+     *
+     * @param context
+     * @param
+     */
+    public static void showListView(Context context, List<ProjectTypeListBean.DataBean.ProjectTypesBean> list, final ListDialogInterface anInterface) {
+
+        final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
+        final View view = LayoutInflater.from(context).inflate(R.layout.dia_list_view, null);
+        RecyclerView bt_ok = view.findViewById(R.id.lv_list);
+        LinearLayoutManager manager = new LinearLayoutManager(context);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        bt_ok.setLayoutManager(manager);
+        DiaLogListAdapter adapter = new DiaLogListAdapter(context);
+        bt_ok.setAdapter(adapter);
+        adapter.setData(list);
+        adapter.setItemListener(new ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int postion) {
+                anInterface.btnConfirm(postion);
+                dialog5.dismiss();
+            }
+
+            @Override
+            public void onItemLongClick(View view, int postion) {}
+        });
+
+        dialog5.setContentView(view);
+        dialog5.show();
+    }
+    /**
+     * 单个按钮，设置监听；
+     *
+     * @param context
+     * @param
+     */
+    public static void showDialogAppUpdate(final Context context, boolean force,String contact, final ErrorDialogInterface anInterface) {
+        final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
+        final View view = LayoutInflater.from(context).inflate(R.layout.dialog_app_update, null);
+        TextView tv_update_name = view.findViewById(R.id.tv_update_name);
+        TextView tv_bnt = view.findViewById(R.id.tv_bnt);
+        ImageView iv_cloes = view.findViewById(R.id.iv_cloes);
+        if(force){
+            iv_cloes.setVisibility(View.GONE);
+        }
+        tv_update_name.setText(contact);
+        tv_bnt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                anInterface.btnConfirm();
+                dialog5.dismiss();
+            }
+        });
+        iv_cloes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog5.dismiss();
+            }
+        });
+        dialog5.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                if(context instanceof MainActivity){
+                    ((MainActivity)context).finish();
+                }
+            }
+        });
+        dialog5.setCanceledOnTouchOutside(false);
+        dialog5.setContentView(view);
+        dialog5.show();
+    }
 
 }

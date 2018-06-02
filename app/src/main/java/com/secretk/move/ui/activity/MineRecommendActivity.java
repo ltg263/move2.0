@@ -35,7 +35,7 @@ import butterknife.OnClick;
  * 作者： litongge
  * 时间：  2018/5/31 09:54
  * 邮箱；ltg263@126.com
- * 描述：
+ * 描述：我的邀请
  */
 public class MineRecommendActivity extends BaseActivity {
     @BindView(R.id.tv_link)
@@ -160,7 +160,7 @@ public class MineRecommendActivity extends BaseActivity {
                     String url = obj.getJSONObject("data").getString("url");
                     String key[]={"imgUrl","imgName"};
                     String values[]={Constants.BASE_URL_ZJ+url,"邀请海报"};
-                    IntentUtil.startActivity(TemporaryIV.class,key,values);
+                    IntentUtil.startActivity(InvitePosterActivity.class,key,values);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

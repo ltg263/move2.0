@@ -109,6 +109,9 @@
             android:name=".ui.activity.SubmitProjectActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.SubmitProjectTwoActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.HomeActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
@@ -123,11 +126,11 @@
         <activity
             android:name=".ui.activity.WebViewActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.activity.MineOpinionBackActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.activity.MineRecommendActivity"
             android:theme="@style/AppEditTextStyle" />
@@ -166,6 +169,7 @@
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.EvaluationProfessionalActivity"
+            android:launchMode="singleTask"
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.EvaluationProfessionalItemActivity"
@@ -193,6 +197,9 @@
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.MineAssetBindingActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.InvitePosterActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.MineAssetFindExtractActivity"

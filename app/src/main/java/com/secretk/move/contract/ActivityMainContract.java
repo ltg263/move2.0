@@ -23,7 +23,7 @@ public interface ActivityMainContract {
      */
 
     interface View extends BaseView{
-        void showDialog(String str);
+        void showDialog(String str,boolean force);
     }
 
     /**
@@ -32,7 +32,7 @@ public interface ActivityMainContract {
 
     interface CallBack {
         void requestFailed(String str);
-        void requestSuccess(VersionBean data);
+        void requestSuccess(VersionBean.DataBean data);
         void isDownLoadSuccess(Boolean isSuccess);
     }
 
@@ -44,8 +44,6 @@ public interface ActivityMainContract {
         void downLoadApk(String url);
 
         void NetWorkVersion();
-
-        int localVerison();
 
         void install(String apkPath);
 

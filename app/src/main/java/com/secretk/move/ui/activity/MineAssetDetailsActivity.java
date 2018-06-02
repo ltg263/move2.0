@@ -4,6 +4,10 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -11,6 +15,7 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.bean.MineAssetDetailsBean;
 import com.secretk.move.ui.adapter.MineAssetDetailsAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
@@ -22,7 +27,6 @@ import com.secretk.move.view.RecycleScrollView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,7 +45,9 @@ public class MineAssetDetailsActivity extends BaseActivity {
     @BindView(R.id.rsv)
     RecycleScrollView rsv;
     private MineAssetDetailsAdapter adapter;
-
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
+    int pageIndex=1;
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
         mHeadView = findViewById(R.id.head_app_server);
@@ -61,6 +67,7 @@ public class MineAssetDetailsActivity extends BaseActivity {
         setVerticalManager(rvReview);
         adapter = new MineAssetDetailsAdapter(this);
         rvReview.setAdapter(adapter);
+        initRefresh();
     }
 
     @Override
@@ -72,30 +79,66 @@ public class MineAssetDetailsActivity extends BaseActivity {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
+            node.put("pageIndex", pageIndex);
+            node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.MY_TOKEN_RECORDS)
+                .url(Constants.MY_TOKEN_BILL)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
         loadingDialog.show();
-        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+        RetrofitUtil.request(params, MineAssetDetailsBean.class, new HttpCallBackImpl<MineAssetDetailsBean>() {
             @Override
-            public void onCompleted(String bean) {
-
+            public void onCompleted(MineAssetDetailsBean rsn) {
+                MineAssetDetailsBean.DataBean.MyTokenBillBean data = rsn.getData().getMyTokenBill();
+                if(data.getRows()==null ||data.getRows().size()==0){
+                    return;
+                }
+                if (data.getCurPageNum() == data.getPageSize()) {
+                    refreshLayout.setLoadmoreFinished(true);
+                }
+                if(pageIndex>2){
+                    adapter.setAddData(data.getRows());
+                }else {
+                    adapter.setData(data.getRows());
+                }
             }
 
             @Override
             public void onFinish() {
                 loadingDialog.dismiss();
+                if (refreshLayout.isRefreshing()) {
+                    refreshLayout.finishRefresh();
+                }
+                if (refreshLayout.isLoading()) {
+                    refreshLayout.finishLoadmore(true);
+                }
             }
         });
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            list.add("我是：" + i);
-        }
-        adapter.setData(list);
+    }
+    private void initRefresh() {
+        /**
+         * 下拉刷新
+         */
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshLayout.setLoadmoreFinished(false);
+                pageIndex = 1;
+                initData();
+            }
+        });
+        /**
+         * 上啦加载
+         */
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                initData();
+            }
+        });
     }
 }

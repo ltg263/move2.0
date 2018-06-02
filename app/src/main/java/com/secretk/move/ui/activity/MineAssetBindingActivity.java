@@ -12,9 +12,11 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 
@@ -45,14 +47,15 @@ public class MineAssetBindingActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-        String key = getIntent().getStringExtra("key");
+//        wallet","walletType
+        String key = getIntent().getStringExtra("walletType");
+        LogUtil.w("key:"+key);
         if (key.equals("1")) {
             etBinding.setCursorVisible(false);
             etBinding.setFocusable(false);
+            etBinding.setText(getIntent().getStringExtra("wallet"));
             etBinding.setFocusableInTouchMode(false);
             butSubmit.setText(getResources().getString(R.string.binding_end));
-        } else {
-
         }
     }
 
@@ -86,6 +89,10 @@ public class MineAssetBindingActivity extends BaseActivity {
     }
 
     private void submit() {
+        if(StringUtil.isBlank(etBinding.getText().toString().trim())){
+            ToastUtils.getInstance().show("钱包地址不能为空");
+            return;
+        }
         if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
@@ -93,11 +100,12 @@ public class MineAssetBindingActivity extends BaseActivity {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
+            node.put("wallet", etBinding.getText().toString().trim());
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.MY_TOKEN_RECORDS)
+                .url(Constants.MY_PINLESS_WALLET)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();

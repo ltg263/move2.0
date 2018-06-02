@@ -1,15 +1,16 @@
 package com.secretk.move.utils;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import com.jzxiang.pickerview.TimePickerDialog;
+import com.jzxiang.pickerview.data.Type;
+import com.jzxiang.pickerview.listener.OnDateSetListener;
+import com.secretk.move.R;
+import com.secretk.move.ui.activity.SubmitProjectActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -185,4 +186,47 @@ public class TimeToolUtils {
         }
         return 0;
     }
+    @TargetApi(Build.VERSION_CODES.M)
+    public static void showTimeView(Context context, Type Type, long minTime, long currentTime, boolean isCycle, final OnTimeChangedListener onTimeChangedListener) {
+        showTimeView(context, Type, minTime, 0, currentTime, isCycle, onTimeChangedListener);
+    }
+    public static void showTimeView(Context context, Type Type, long minTime, long maxTime, long currentTime, boolean isCycle, final OnTimeChangedListener onTimeChangedListener) {
+        if (currentTime == 0) {
+            currentTime = System.currentTimeMillis();
+        }
+        if (maxTime == 0) {
+            long tenYears = 50L * 365 * 1000 * 60 * 60 * 24L;
+//            maxTime = System.currentTimeMillis() + tenYears;
+            maxTime = System.currentTimeMillis();//最大的时间为当前时间
+        }
+        TimePickerDialog mDialogAll = new TimePickerDialog.Builder()
+                .setCallBack(new OnDateSetListener() {
+                    @Override
+                    public void onDateSet(TimePickerDialog timePickerView, long millseconds) {
+                        onTimeChangedListener.onDateSet(timePickerView, millseconds);
+                    }
+                })
+                .setCancelStringId(context.getString(R.string.no))
+                .setSureStringId(context.getString(R.string.yes))
+                .setTitleStringId(context.getString(R.string.select_time))
+                .setCyclic(isCycle)
+                .setMinMillseconds(minTime)
+                .setMaxMillseconds(maxTime)
+                .setCurrentMillseconds(currentTime)
+                .setThemeColor(ContextCompat.getColor(context, R.color.app_background))
+                .setType(Type)
+                .setWheelItemTextNormalColor(ContextCompat.getColor(context, R.color.title_gray_aa))
+                .setWheelItemTextSelectorColor(ContextCompat.getColor(context, R.color.app_background))
+                .setWheelItemTextSize(14)
+                .build();
+        mDialogAll.show(((SubmitProjectActivity) context).getSupportFragmentManager(), Type.toString());
+    }
+
+    /**
+     * 时间控件
+     */
+    public interface OnTimeChangedListener {
+        void onDateSet(TimePickerDialog timePickerView, long millseconds);
+    }
+
 }

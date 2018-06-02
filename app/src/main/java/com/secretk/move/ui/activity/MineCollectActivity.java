@@ -34,7 +34,7 @@ import butterknife.BindView;
  * 作者： litongge
  * 时间： 2018/5/3 16:53
  * 邮箱；ltg263@126.com
- * 描述：文章-评测--评论详情列表
+ * 描述：我的收藏
  */
 public class MineCollectActivity extends BaseActivity {
 

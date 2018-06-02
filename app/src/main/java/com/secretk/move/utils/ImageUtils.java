@@ -1,17 +1,20 @@
 package com.secretk.move.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Base64;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,6 +22,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * bitmap操作类
@@ -557,6 +562,45 @@ public class ImageUtils {
             bitmap.recycle();
         }
         return newBitmap;
+    }
+
+    public static void downloadPicture(final String urlList, final Handler handler, final String path) {
+        new Thread(new Runnable(){
+            @Override
+            public void run() {
+                URL url = null;
+                try {
+                    url = new URL(urlList);
+                    DataInputStream dataInputStream = new DataInputStream(url.openStream());
+                    FileOutputStream fileOutputStream = new FileOutputStream(new File(path));
+                    ByteArrayOutputStream output = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[1024];
+                    int length;
+                    while ((length = dataInputStream.read(buffer)) > 0) {
+                        output.write(buffer, 0, length);
+                    }
+                    fileOutputStream.write(output.toByteArray());
+                    dataInputStream.close();
+                    fileOutputStream.close();
+                    handler.sendEmptyMessage(0);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+    /**
+     * 添加到图库
+     */
+    public static void galleryAddPic(Context context, String path) {
+        Intent mediaScanIntent = new Intent(
+                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(path);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        context.sendBroadcast(mediaScanIntent);
     }
 
 }

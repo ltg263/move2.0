@@ -1,16 +1,23 @@
 package com.secretk.move.interactor.impl;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.FileProvider;
 
 import com.secretk.move.MoveApplication;
+import com.secretk.move.apiService.HttpCallBackImpl;
+import com.secretk.move.apiService.RetrofitUtil;
+import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.VersionBean;
 import com.secretk.move.contract.ActivityMainContract;
-import com.secretk.move.http.Network;
+import com.secretk.move.utils.MD5;
+import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.SharedUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 
@@ -42,6 +49,7 @@ public class MainInteractorImpl implements ActivityMainContract.Interactor {
 
     @Override
     public void downLoadApk(final String url) {
+
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> emitter) throws Exception {
@@ -64,31 +72,23 @@ public class MainInteractorImpl implements ActivityMainContract.Interactor {
 
     @Override
     public void NetWorkVersion() {
-        Network.getMethods().getVersionInfos().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<VersionBean>() {
-            @Override
-            public void accept(VersionBean versionBean) throws Exception {
-                callBack.requestSuccess(versionBean);
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-//                CrashHandler.getInstance().saveCrashInfo2File(throwable);
-                callBack.requestFailed("NetWorkVersion异常了");
-            }
-        });
-    }
-
-    @Override
-    public int localVerison() {
-        int versionCode = 0;
+        JSONObject node = new JSONObject();
         try {
-            //获取软件版本号，对应AndroidManifest.xml下android:versionCode
-            versionCode = MoveApplication.getContext().getPackageManager().
-                    getPackageInfo(MoveApplication.getContext().getPackageName(), 0).versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
+            node.put("token", SharedUtils.singleton().get("token",""));
+        } catch (JSONException e) {
             e.printStackTrace();
         }
-        return versionCode;
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.UPGRADE)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, VersionBean.class, new HttpCallBackImpl<VersionBean>() {
+            @Override
+            public void onCompleted(VersionBean str) {
+                callBack.requestSuccess(str.getData());
+            }
+        });
     }
 
     public boolean okHttpDownLoad(String url) {
@@ -118,10 +118,7 @@ public class MainInteractorImpl implements ActivityMainContract.Interactor {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            Uri contentUri = FileProvider.
-                    getUriForFile(MoveApplication.getContext(),
-                            "com.secretk.move.fileprovider",
-                            new File(apkPath));
+            Uri contentUri = FileProvider.getUriForFile(MoveApplication.getContext(), "com.secretk.move.fileprovider", new File(apkPath));
             intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
         } else {
             intent.setDataAndType(Uri.fromFile(new File(apkPath)), "application/vnd.android.package-archive");

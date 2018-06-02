@@ -123,7 +123,6 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     @Override
     public void loadInfoSuccess(UserLoginInfo.DataBean.UserBean infos) {
         userInfos = infos;
-        LogUtil.w("++++++++++++++:"+Constants.BASE_IMG_URL+infos.getIcon());
         GlideUtils.loadCircleUrl(ivHeadImg, Constants.BASE_IMG_URL+infos.getIcon());
         tvUserName.setText(infos.getUserName());
         //300 粉丝 •1568 赞
@@ -176,8 +175,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 IntentUtil.startActivity(MineRecommendActivity.class);
                 break;
             case R.id.ll_my_about://关于我们
-                String htmlUrl= "http://192.168.10.196:5000/mine/help";
-                startActivity(new Intent(getActivity(), WebViewActivity.class).putExtra("url", htmlUrl));
+                startActivity(new Intent(getActivity(), WebViewActivity.class).putExtra("url", Constants.HELP));
                 break;
             case R.id.ll_my_feedback://意见反馈
                 IntentUtil.startActivity(MineOpinionBackActivity.class);

@@ -267,7 +267,8 @@ public class RichTextEditor extends ScrollView {
         String editStr1 = lastEditStr.substring(0, cursorIndex);
         int lastEditIndex = allLayout.indexOfChild(lastFocusEdit);
 
-        if (lastEditStr.length() == 0 || editStr1.length() == 0) {
+//        if (lastEditStr.length() == 0 || editStr1.length() == 0) {
+        if (false) {
             // 如果EditText为空，或者光标已经顶在了editText的最前面，则直接插入图片，并且EditText下移即可
             addImageViewAtIndex(lastEditIndex, imagePath);
         } else {
@@ -364,5 +365,25 @@ public class RichTextEditor extends ScrollView {
     public class EditData {
         public String inputStr;
         public String imagePath;
+    }
+    /**
+     * 生成控件中的数据
+     */
+    public static String getEditData(List<RichTextEditor.EditData> editList) {
+        StringBuilder content = new StringBuilder();
+        if (editList.size() > 0) {
+            content.append("<div class=\"content\">");
+            for (RichTextEditor.EditData itemData : editList) {
+                if (itemData.inputStr != null) {
+                    //将EditText中的换行符、空格符转换成html
+                    String inputStr = itemData.inputStr.replace("\n", "</p><p>").replace(" ", "&nbsp");
+                    content.append("<p>").append(inputStr).append("</p>");
+                } else if (itemData.imagePath != null) {
+                    content.append("<p style=\"text-align:center\"><img width=\"100%\" src=\"").append(itemData.imagePath).append("\"/></p>");
+                }
+            }
+            content.append("</div>");
+        }
+        return content.toString();
     }
 }

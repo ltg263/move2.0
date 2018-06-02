@@ -194,7 +194,7 @@ public class MineSetActivity extends BaseActivity {
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.UPLOAD_USER_ICON_FILE)
                 .addPart("token", token)
-                .addPart("uploadfile ",getMimeType(file.getName()) ,file)
+                .addPart("uploadfile",getMimeType(file.getName()) ,file)
                 .addPart("imgtype","1")
                 .build();
         loadingDialog.show();

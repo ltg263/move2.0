@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
+import com.secretk.move.bean.MineAssetDetailsBean;
 import com.secretk.move.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import butterknife.ButterKnife;
 public class MineAssetDetailsAdapter extends RecyclerView.Adapter<MineAssetDetailsAdapter.DetailsHolder> {
 
 
-    private List<String> lists = new ArrayList<>();
+    private List<MineAssetDetailsBean.DataBean.MyTokenBillBean.RowsBean> lists = new ArrayList<>();
     Context context;
 
     public MineAssetDetailsAdapter(Context context) {
@@ -51,12 +52,16 @@ public class MineAssetDetailsAdapter extends RecyclerView.Adapter<MineAssetDetai
         return lists.size();
     }
 
-    public void setData(List<String> list) {
+    public void setData(List<MineAssetDetailsBean.DataBean.MyTokenBillBean.RowsBean> list) {
         this.lists = list;
         notifyDataSetChanged();
     }
 
-    public List<String> getData() {
+    public void setAddData(List<MineAssetDetailsBean.DataBean.MyTokenBillBean.RowsBean> list) {
+        lists.addAll(list);
+        notifyDataSetChanged();
+    }
+    public List<MineAssetDetailsBean.DataBean.MyTokenBillBean.RowsBean> getData() {
         return lists;
     }
 
@@ -73,15 +78,19 @@ public class MineAssetDetailsAdapter extends RecyclerView.Adapter<MineAssetDetai
             ButterKnife.bind(this, itemView);
         }
 
-        public void refresh(int position, List<String> lists) {
-            String str = lists.get(position);
+        public void refresh(int position, List<MineAssetDetailsBean.DataBean.MyTokenBillBean.RowsBean> lists) {
+            MineAssetDetailsBean.DataBean.MyTokenBillBean.RowsBean str = lists.get(position);
+            double asset = str.getInviteRewards();
 
-            if (true) {//正数
-                tvAssetNum.setTextColor(context.getResources().getColor(R.color.app_background));
-            } else {
+            if (asset<0) {//正数
                 tvAssetNum.setTextColor(context.getResources().getColor(R.color.zdmx));
+            } else {
+                tvAssetNum.setTextColor(context.getResources().getColor(R.color.app_background));
             }
-            tvAssetName.setText(StringUtil.getBeanString(str));
+            tvAssetName.setText(StringUtil.getBeanString(str.getTokenAwardFunctionDesc()));
+            tvAssetTime.setText(StringUtil.getBeanString(str.getCreateTimeStr()));
+//            tvAssetTime.setText(StringUtil.getTimeToM(str.getCreateTime()));
+            tvAssetNum.setText(StringUtil.getBeanString(String.valueOf(str.getInviteRewards())));
         }
     }
 }

@@ -10,7 +10,6 @@ import com.secretk.move.ui.adapter.MineAssetDetailsAdapter;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.RecycleScrollView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,11 +50,11 @@ public class MineAssetExtractRecordActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            list.add("我是：" + i);
-        }
-        adapter.setData(list);
+//        List<String> list = new ArrayList<>();
+//        for (int i = 0; i < 9; i++) {
+//            list.add("我是：" + i);
+//        }
+//        adapter.setData(list);
 
 //        if (!NetUtil.isNetworkAvailable()) {
 //            ToastUtils.getInstance().show(getString(R.string.network_error));

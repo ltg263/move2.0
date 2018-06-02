@@ -1,8 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <!--上中下-->
+    <RelativeLayout
+        android:id="@+id/rl_top_theme"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/tv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_name"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_issue_succeed" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_submit"
+            android:layout_centerHorizontal="true"
+            android:padding="@dimen/dp_10"
+            android:text="测评发布成功！"
+            android:textColor="@color/title_gray_66"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/dp_10"
+            android:layout_weight="1"
+            android:background="@drawable/btn_max_selected_radius"
+            android:gravity="center"
+            android:padding="@dimen/dp_12"
+            android:text="@string/mine_submit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14" />
+
+    </RelativeLayout>
+</RelativeLayout>

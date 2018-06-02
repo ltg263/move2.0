@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -58,6 +60,8 @@ public class DetailsArticleActivity extends BaseActivity {
     TextView tvFollowStatus;
     @BindView(R.id.tv_post_short_desc)
     TextView tvPostShortDesc;
+    @BindView(R.id.wv_post_short_desc)
+    WebView wvPostShortDesc;
     @BindView(R.id.tv_project_code)
     TextView tvProjectCode;
     @BindView(R.id.tv_create_time)
@@ -102,6 +106,8 @@ public class DetailsArticleActivity extends BaseActivity {
         setVerticalManager(rvImg);
         adapter = new ImagesAdapter(this);
         rvImg.setAdapter(adapter);
+        WebSettings webSettings = wvPostShortDesc.getSettings();//获取webview设置属性
+        webSettings.setDefaultTextEncodingName("UTF-8");//设置默认为utf-8
     }
 
     protected void initData() {
@@ -125,12 +131,16 @@ public class DetailsArticleActivity extends BaseActivity {
         RetrofitUtil.request(params, DetailsArticleBean.class, new HttpCallBackImpl<DetailsArticleBean>() {
             @Override
             public void onCompleted(DetailsArticleBean bean) {
-                if(loadingDialog.isShowing()){
-                    loadingDialog.dismiss();
-                }
                 if (bean.getData() != null) {
                     setInitData(bean.getData().getArticleDetail());
                 }
+            }
+
+            @Override
+            public void onFinish() {
+                loadingDialog.dismiss();
+                findViewById(R.id.yes_data).setVisibility(View.VISIBLE);
+                findViewById(R.id.no_data).setVisibility(View.GONE);
             }
         });
     }
@@ -156,7 +166,8 @@ public class DetailsArticleActivity extends BaseActivity {
         }else{
             tvFollowStatus.setVisibility(View.GONE);
         }
-        tvPostShortDesc.setText(StringUtil.getBeanString(initData.getArticleContents()));
+//        tvPostShortDesc.setText(StringUtil.getBeanString(initData.getArticleContents()));
+        wvPostShortDesc.loadData(StringUtil.getNewContent(StringUtil.getBeanString(initData.getArticleContents())), "text/html; charset=UTF-8", null);//这种写法可以正确解码
         tvProjectCode.setText(StringUtil.getBeanString(initData.getProjectCode()));
         tvCreateTime.setText(StringUtil.getTimeToM(initData.getCreateTime()));
         tvDonateNum.setText(initData.getDonateNum() + getString(R.string.sponsor_num));

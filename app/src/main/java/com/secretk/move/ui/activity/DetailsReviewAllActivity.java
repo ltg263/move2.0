@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -88,6 +89,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
     TextView tvCommentsNum;
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
+    @BindView(R.id.wv_post_short_desc)
+    WebView wvPostShortDesc;
     private int createUserId;
     private ImagesAdapter adapter;
     private int projectId;
@@ -119,6 +122,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
         rvReview.setAdapter(adapterProgress);
         adapter = new ImagesAdapter(this);
         rvImg.setAdapter(adapter);
+        wvPostShortDesc.getSettings().setDefaultTextEncodingName("UTF-8");//设置默认为utf-8
     }
 
     protected void initData() {
@@ -147,9 +151,9 @@ public class DetailsReviewAllActivity extends BaseActivity {
 
             @Override
             public void onFinish() {
-                if (loadingDialog.isShowing()) {
-                    loadingDialog.dismiss();
-                }
+                loadingDialog.dismiss();
+                findViewById(R.id.yes_data).setVisibility(View.VISIBLE);
+                findViewById(R.id.no_data).setVisibility(View.GONE);
             }
         });
     }
@@ -177,7 +181,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
         } else {
             tvFollowStatus.setVisibility(View.GONE);
         }
-        tvPostShortDesc.setText(StringUtil.getBeanString(evaluationDetail.getEvauationContent()));
+        wvPostShortDesc.loadData(evaluationDetail.getEvauationContent(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
         tvCreateTime.setText(StringUtil.getTimeToM(evaluationDetail.getCreateTime()));
         tvDonateNum.setText(evaluationDetail.getDonateNum() + getString(R.string.sponsor_num));
         praiseNum = evaluationDetail.getPraiseNum();
@@ -250,7 +254,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
                     info.setTitle(strObj.getString("extension"));
                     lists.add(info);
                 }
-                rvImg.setVisibility(View.VISIBLE);
+//                rvImg.setVisibility(View.VISIBLE);
             }
             adapter.setData(lists);
         } catch (JSONException e) {
@@ -260,7 +264,6 @@ public class DetailsReviewAllActivity extends BaseActivity {
         if (pileLists != null) {
             initPraises(pileLists);
         }
-
     }
 
     /**
@@ -402,5 +405,4 @@ public class DetailsReviewAllActivity extends BaseActivity {
         return TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }
-
 }
