@@ -124,7 +124,7 @@ public class DetailsDiscussActivity extends BaseActivity {
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitleColor(R.color.title_gray);
         mHeadView.getImageView().setVisibility(View.VISIBLE);
-        mMenuInfos.add(0, new MenuInfo(R.string.share, "分享", R.drawable.ic_share));
+        mMenuInfos.add(0, new MenuInfo(R.string.share, getResources().getString(R.string.share), R.drawable.ic_share));
         return mHeadView;
     }
 
@@ -297,9 +297,9 @@ public class DetailsDiscussActivity extends BaseActivity {
                 mHeadView.setTitleVice("/" + discussDetail.getProjectEnglishName());
                 mHeadView.setToolbarListener(discussDetail.getProjectId());
                 tvProjectCode.setText(discussDetail.getProjectCode());
-                GlideUtils.loadCircleUrl(mHeadView.getImageView(), Constants.BASE_IMG_URL + discussDetail.getProjectIcon());
+                GlideUtils.loadCircleProjectUrl(DetailsDiscussActivity.this,mHeadView.getImageView(), Constants.BASE_IMG_URL + discussDetail.getProjectIcon());
                 tvPostTitle.setText(discussDetail.getPostTitle());
-                GlideUtils.loadCircleUrl(ivCreateUserIcon, Constants.BASE_IMG_URL + discussDetail.getCreateUserIcon());
+                GlideUtils.loadCircleUserUrl(DetailsDiscussActivity.this,ivCreateUserIcon, Constants.BASE_IMG_URL + discussDetail.getCreateUserIcon());
                 tvCreateUserName.setText(discussDetail.getCreateUserName());
                 userId = discussDetail.getCreateUserId();
                 tvCreateUserSignature.setText(discussDetail.getCreateUserSignature());

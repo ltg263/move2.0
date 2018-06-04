@@ -152,7 +152,7 @@ public class DetailsArticleActivity extends BaseActivity {
         mHeadView.setToolbarListener(initData.getProjectId());
         projectId = initData.getProjectId();
         tvPostTitle.setText(StringUtil.getBeanString(initData.getPostTitle()));
-        GlideUtils.loadCircleUrl(ivCreateUserIcon, Constants.BASE_IMG_URL + initData.getCreateUserIcon());
+        GlideUtils.loadCircleUserUrl(this,ivCreateUserIcon, Constants.BASE_IMG_URL + initData.getCreateUserIcon());
         tvCreateUserName.setText(StringUtil.getBeanString(initData.getCreateUserName()));
         tvCreateUserSignature.setText(StringUtil.getBeanString(initData.getCreateUserSignature()));
         createUserId = initData.getCreateUserId();
@@ -219,7 +219,7 @@ public class DetailsArticleActivity extends BaseActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         for (int i = 0; i < pileLists.size() && i<7; i++) {
             ImageView imageView = (ImageView) inflater.inflate(R.layout.item_praise, pileLayout, false);
-            GlideUtils.loadCircleUrl(imageView, Constants.BASE_IMG_URL + pileLists.get(i).getSendUserIcon());
+            GlideUtils.loadCircleUserUrl(this,imageView, Constants.BASE_IMG_URL + pileLists.get(i).getSendUserIcon());
             pileLayout.addView(imageView);
         }
     }
@@ -244,6 +244,9 @@ public class DetailsArticleActivity extends BaseActivity {
                         });
                 break;
             case R.id.tv_praise_status:
+                if(!tvPraiseStatus.isSelected()){
+                    return;
+                }
                 tvPraiseStatus.setEnabled(false);
                 String str;
                 if(tvPraiseStatus.isSelected()){

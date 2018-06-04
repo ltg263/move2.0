@@ -2,11 +2,10 @@ package com.secretk.move.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -47,12 +46,6 @@ public class EvaluationSimplenessActivity extends BaseActivity {
     @BindView(R.id.et_evaluation_content)
     EditText etEvaluationContent;
     int projectId;
-    @BindView(R.id.tv_name)
-    TextView tvName;
-    @BindView(R.id.tv_submit)
-    TextView tvSubmit;
-    @BindView(R.id.rl_top_theme)
-    RelativeLayout rlTopTheme;
 
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
@@ -71,18 +64,11 @@ public class EvaluationSimplenessActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+
         projectId = getIntent().getIntExtra("projectId", 0);
         esViewa.setScore(4.5f);
         esViewa.setEsvBackground(R.color.app_background);
         tvEvaluationState.setText(StringUtil.getStateValueStr(4.5f));
-        tvSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String key[] = {"postId"};
-                String values[] = {""};
-                IntentUtil.startActivity(DetailsReviewAllActivity.class, key, values);
-            }
-        });
     }
 
     public void setTvEvaluationState(String value) {
@@ -91,7 +77,7 @@ public class EvaluationSimplenessActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        MoveApplication.getContext().addActivity(this);
     }
 
     @Override
@@ -142,12 +128,8 @@ public class EvaluationSimplenessActivity extends BaseActivity {
         RetrofitUtil.request(params, BaseRes.class, new HttpCallBackImpl<BaseRes>() {
             @Override
             public void onCompleted(BaseRes str) {
-                rlTopTheme.setVisibility(View.VISIBLE);
-                findViewById(R.id.submit_ok).setVisibility(View.VISIBLE);
-                findViewById(R.id.rl).setVisibility(View.GONE);
-                tvName.setText("测评发布成功！");
-                tvSubmit.setText("去看看");
-                ToastUtils.getInstance().show("评测成功");
+                IntentUtil.startPublishSucceedActivity("postId",
+                        getString(R.string.evaluation_simpleness), getResources().getString(R.string.evaluation_succeed), Constants.PublishSucceed.EVALUATION);
             }
 
             @Override

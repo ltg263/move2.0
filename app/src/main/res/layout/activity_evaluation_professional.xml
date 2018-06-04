@@ -65,10 +65,7 @@
         android:id="@+id/rv_type_lists"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_5"
-        android:background="@drawable/btn_dialog_bjcolor"
-        android:padding="@dimen/dp_5"
-        android:paddingBottom="@dimen/dp_10" />
+        android:background="@drawable/ic_shade_grey" />
 
     <TextView
         android:id="@+id/tv_status"

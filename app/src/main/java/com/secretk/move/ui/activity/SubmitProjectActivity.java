@@ -231,6 +231,6 @@ public class SubmitProjectActivity extends BaseActivity {
         }
     }
     private void onPicTrimResult() {
-        GlideUtils.loadCircleUrl(ivIcon,PicUtil.uritempFile.getPath());
+        GlideUtils.loadCircleProjectUrl(this,ivIcon,PicUtil.uritempFile.getPath());
     }
 }

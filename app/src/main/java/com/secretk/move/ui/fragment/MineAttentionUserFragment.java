@@ -2,6 +2,10 @@ package com.secretk.move.ui.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -14,7 +18,9 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MineAttentionBean;
+import com.secretk.move.ui.activity.MainActivity;
 import com.secretk.move.ui.adapter.MineAttentionAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.view.LoadingDialog;
@@ -23,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by zc on 2018/4/6.
@@ -33,6 +40,14 @@ public class MineAttentionUserFragment extends LazyFragment {
     RecyclerView recycler;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.tv_icon)
+    ImageView tvIcon;
+    @BindView(R.id.tv_name)
+    TextView tvName;
+    @BindView(R.id.tv_submit)
+    TextView tvSubmit;
+    @BindView(R.id.rl_top_theme)
+    RelativeLayout rlTopTheme;
     private LoadingDialog loadingDialog;
     private LinearLayoutManager layoutManager;
     private MineAttentionAdapter adapter;
@@ -48,10 +63,14 @@ public class MineAttentionUserFragment extends LazyFragment {
         layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler.setLayoutManager(layoutManager);
-        adapter = new MineAttentionAdapter();
+        adapter = new MineAttentionAdapter(getActivity());
         recycler.setAdapter(adapter);
         initRefresh();
         loadingDialog=new LoadingDialog(getActivity());
+        rlTopTheme.setVisibility(View.VISIBLE);
+        tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_not_message));
+        tvName.setText(getActivity().getResources().getString(R.string.not_attention));
+        tvSubmit.setText(getActivity().getResources().getString(R.string.not_go_look));
     }
     private void initRefresh() {
         /**
@@ -101,6 +120,8 @@ public class MineAttentionUserFragment extends LazyFragment {
             public void onCompleted(MineAttentionBean mainRecommendBean) {
                 MineAttentionBean.DataBean.MyFollowsBean follows = mainRecommendBean.getData().getMyFollows();
                 if(follows.getRows()==null ||follows.getRows().size()==0){
+                    getActivity().findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+                    refreshLayout.setVisibility(View.GONE);
                     return;
                 }
                 if (follows.getCurPageNum() == follows.getPageSize()) {
@@ -125,6 +146,11 @@ public class MineAttentionUserFragment extends LazyFragment {
                 loadingDialog.dismiss();
             }
         });
+    }
+    @OnClick(R.id.tv_submit)
+    public void onViewClicked() {
+        IntentUtil.startActivity(MainActivity.class);
+        getActivity().finish();
     }
 
 }

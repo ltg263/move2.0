@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:paddingHorizontal="@dimen/dp_10"
-    android:paddingTop="@dimen/dp_10">
+    android:paddingVertical="@dimen/dp_5">
 
     <TextView
         android:id="@+id/tv_name"

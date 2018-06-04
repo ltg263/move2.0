@@ -91,7 +91,7 @@ public interface Constants {
     /**
      * 外网
      */
-//    String BASE_URL = "http://47.98.197.101/rest/";
+    String BASE_URL = "http://47.98.197.101/rest/";
 
     /**
      * 王晗
@@ -100,7 +100,7 @@ public interface Constants {
     /**
      * 张栋栋
      */
-    String BASE_URL = "http://192.168.10.151:809/";
+//    String BASE_URL = "http://192.168.10.151:809/";
     /**
      * 张栋栋 --证件的URL
      */
@@ -148,6 +148,8 @@ public interface Constants {
     String ID_CARD = BASE_URL + "/kff/upload/idcard";
     //上传认证信息
     String UPLOAD_USER_CARD = BASE_URL + "kff/userCard/uploadUserCard";
+    //重新上传认证信息
+    String CARD_TI_FORM_AGAIN = BASE_URL + "kff/userCard/submitUserCardTiFormAgain";
     //提交项目。
     String SUBMIT_PROJECT = BASE_URL + "kff/project/submitProject";
     //获取项目类型列表
@@ -273,6 +275,20 @@ public interface Constants {
         int MODEL_TYPE_PART = 3;
         int MODEL_TYPE_ALL_NEW = 4;
     }
+
+    /**
+     * 发布成功 跳转对应的key
+     *
+     */
+    interface PublishSucceed {
+        String SUBMIT_TEXT = "submit_text";
+        String SUBMIT_TITLE = "submit_title";
+        String PUBLISH_TYPE = "publish_type";
+        String PUBLISH_POST_ID = "publish_post_id";
+        //评测
+        String EVALUATION = "evaluation";
+    }
+
 
     int TOPIC_SORT_BY_NUM = 1;
     int TOPIC_SORT_BY_NAME = 2;

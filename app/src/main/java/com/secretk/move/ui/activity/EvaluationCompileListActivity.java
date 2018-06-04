@@ -3,17 +3,15 @@ package com.secretk.move.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.TextView;
 
+import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.SysEvaluationModelBean;
 import com.secretk.move.ui.adapter.EvaluationCompileAdapter;
-import com.secretk.move.utils.LogUtil;
-import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.ProgressBarStyleView;
 import com.secretk.move.view.RecycleScrollView;
@@ -25,7 +23,6 @@ import org.json.JSONObject;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 作者： litongge
@@ -63,6 +60,7 @@ public class EvaluationCompileListActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        MoveApplication.getContext().addActivity(this);
         projectId = getIntent().getIntExtra("projectId",0);
         setVerticalManager(rvEvaluationList);
         adapter = new EvaluationCompileAdapter(this);

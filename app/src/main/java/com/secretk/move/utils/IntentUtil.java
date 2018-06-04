@@ -5,11 +5,13 @@ import android.content.Intent;
 
 import com.secretk.move.MoveApplication;
 import com.secretk.move.baseManager.BaseManager;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.ui.activity.DetailsArticleActivity;
 import com.secretk.move.ui.activity.DetailsDiscussActivity;
 import com.secretk.move.ui.activity.DetailsReviewAllActivity;
 import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.activity.ProjectActivity;
+import com.secretk.move.ui.activity.PublishSucceedActivity;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -143,6 +145,15 @@ public class IntentUtil {
         String key[] = {"userId"};
         String values[] = {String.valueOf(userId)};
         IntentUtil.startActivity(HomeActivity.class, key, values);
+    }
+    /**
+     * 发布测评文章讨论成功以后 跳转界面
+     * @param
+     */
+    public static void startPublishSucceedActivity(String postId,String title,String name,String type) {
+        String key[] = {Constants.PublishSucceed.PUBLISH_POST_ID,Constants.PublishSucceed.SUBMIT_TITLE,Constants.PublishSucceed.SUBMIT_TEXT,Constants.PublishSucceed.PUBLISH_TYPE};
+        String values[] = {postId,title,name,type};
+        IntentUtil.startActivity(PublishSucceedActivity.class, key, values);
     }
 
     public static void go2DetailsByType(int type,String postId) {

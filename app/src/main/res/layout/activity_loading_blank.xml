@@ -39,7 +39,8 @@
             android:layout_weight="1"
             android:background="@drawable/btn_max_selected_radius"
             android:gravity="center"
-            android:padding="@dimen/dp_12"
+            android:paddingHorizontal="@dimen/dp_35"
+            android:paddingVertical="@dimen/dp_12"
             android:text="@string/mine_submit"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_14" />

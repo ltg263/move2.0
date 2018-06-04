@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -71,6 +72,7 @@ public class EvaluationProfessionalActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        MoveApplication.getContext().addActivity(this);
         projectId = getIntent().getIntExtra("projectId",0);
         setVerticalManager(rvTypeLists);
         adapter = new EvaluationTypeAdapter(this);

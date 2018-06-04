@@ -1,5 +1,6 @@
 package com.secretk.move;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -20,6 +21,8 @@ import com.secretk.move.http.Network;
 import com.secretk.move.utils.AppBlockCanaryContext;
 import com.secretk.move.utils.CrashHandler;
 
+import java.util.Stack;
+
 
 /**
  * Created by zc on 2018/4/5.
@@ -29,7 +32,8 @@ public class MoveApplication extends Application {
     /**
      * 上下文对象
      */
-    private static Context mContext;
+    private static MoveApplication mContext;
+    private static Stack<Activity> activityStack;
 
     @Override
     public void onCreate() {
@@ -50,8 +54,44 @@ public class MoveApplication extends Application {
     /**
      * 全局上下文
      */
-    public static Context getContext() {
+   /* public static Context getContext() {
         return mContext;
+    }*/
+    public static MoveApplication getContext() {
+        return mContext;
+    }
+
+    /**
+     * add Activity 添加Activity到栈
+     */
+    public void addActivity(Activity activity){
+        if(activityStack ==null){
+            activityStack =new Stack<>();
+        }
+        if(!activityStack.contains(activity)){
+            activityStack.add(activity);
+        }
+    }
+
+    /**
+     * 退出应用程序
+     */
+    public void AppExit() {
+        try {
+            finishAllActivity();
+        } catch (Exception e) {
+        }
+    }
+    /**
+     * 结束所有Activity
+     */
+    public void finishAllActivity() {
+        for (int i = 0, size = activityStack.size(); i < size; i++) {
+            if (null != activityStack.get(i)) {
+                activityStack.get(i).finish();
+            }
+        }
+        activityStack.clear();
     }
 
     static {

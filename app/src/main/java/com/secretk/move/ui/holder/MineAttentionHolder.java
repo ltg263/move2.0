@@ -1,5 +1,6 @@
 package com.secretk.move.ui.holder;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,7 +42,7 @@ public class MineAttentionHolder extends RecyclerViewBaseHolder {
     public void setAdapterType(int type) {
         this.type=type;
     }
-    public void refresh(int position, final MineAttentionBean.DataBean.MyFollowsBean.RowsBean rowsBean) {
+    public void refresh(int position, final MineAttentionBean.DataBean.MyFollowsBean.RowsBean rowsBean, Context context) {
         tvSaveFollow.setSelected(true);
         ////关注类型，数字，关注类型：1-关注项目;2-关注帖子；3-关注用户
         if(rowsBean.getFollowType()==3){
@@ -50,7 +51,7 @@ public class MineAttentionHolder extends RecyclerViewBaseHolder {
 //            IntentUtil.startProjectActivity(rowsBean.getFollowedProjectId());
         }
         tvSaveFollow.setText(BaseManager.app.getResources().getString(R.string.follow_status_1));
-        GlideUtils.loadCircleUrl(img,Constants.UPLOAD_IMG_FILE+StringUtil.getBeanString(rowsBean.getFollowedUserIcon()));
+        GlideUtils.loadCircleUserUrl(context,img,Constants.UPLOAD_IMG_FILE+StringUtil.getBeanString(rowsBean.getFollowedUserIcon()));
         tvName.setText(StringUtil.getBeanString(rowsBean.getFollowerUserName()));
         tvLastContent.setText(StringUtil.getBeanString(rowsBean.getFollowedUserSignature()));
         ll.setOnClickListener(new View.OnClickListener() {

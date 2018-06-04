@@ -1,6 +1,7 @@
 package com.secretk.move.ui.adapter;
 
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,11 @@ public class MineAttentionAdapter extends RecyclerView.Adapter<MineAttentionHold
     private ItemClickListener mListener;
 
     private int type;
+    private Context context;
+    public MineAttentionAdapter(Context context) {
+        this.context = context;
+    }
+
     public void setItemListener(ItemClickListener mListener) {
         this.mListener = mListener;
     }
@@ -38,7 +44,7 @@ public class MineAttentionAdapter extends RecyclerView.Adapter<MineAttentionHold
     @Override
     public void onBindViewHolder(MineAttentionHolder holder, int position) {
         holder.setItemListener(mListener);
-        holder.refresh(position, list.get(position));
+        holder.refresh(position, list.get(position),context);
         holder.setAdapterType(type);
 
     }

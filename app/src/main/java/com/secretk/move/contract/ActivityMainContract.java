@@ -23,7 +23,7 @@ public interface ActivityMainContract {
      */
 
     interface View extends BaseView{
-        void showDialog(String str,boolean force);
+        void showDialog(VersionBean.DataBean str,boolean force);
     }
 
     /**

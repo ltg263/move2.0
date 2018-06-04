@@ -18,11 +18,9 @@ import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonCommentsBean;
 import com.secretk.move.bean.MenuInfo;
-import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.MoreCommentsAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -101,7 +99,7 @@ public class MoreCommentsActivity extends BaseActivity{
 
     protected void initData() {
         CommonCommentsBean commentsBean = getIntent().getParcelableExtra("commentsBean");
-        GlideUtils.loadCircleUrl(ivCommentedUserIcon, Constants.BASE_IMG_URL + commentsBean.getCommentUserIcon());
+        GlideUtils.loadCircleUserUrl(this,ivCommentedUserIcon, Constants.BASE_IMG_URL + commentsBean.getCommentUserIcon());
         postId = commentsBean.getPostId();
         parentCommentsId = commentsBean.getCommentsId();
         commentsId = commentsBean.getCommentsId();
@@ -129,12 +127,15 @@ public class MoreCommentsActivity extends BaseActivity{
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_praise_num:
+                if(!tvPraiseNum.isSelected()){
+                    return;
+                }
                 tvPraiseNum.setEnabled(false);
                 String strNum;
                 if(tvPraiseNum.isSelected()){
-                    strNum = getString(R.string.like) + String.valueOf(praiseNum+1);
+                    strNum =  String.valueOf(praiseNum+1);
                 }else{
-                    strNum = getString(R.string.like) + String.valueOf(praiseNum-1);
+                    strNum = String.valueOf(praiseNum-1);
                 }
                 tvPraiseNum.setText(strNum);
                 tvPraiseNum.setSelected(!tvPraiseNum.isSelected());

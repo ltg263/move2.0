@@ -44,7 +44,8 @@ public class SplashScreenActivity extends Activity {
 //            SharedUtils.singleton().put("isFirst", false);
             intent.setClass(SplashScreenActivity.this, MainActivity.class);
         } else {
-            if(isLogin){
+//            if(isLogin){
+            if(true){
                 intent.setClass(SplashScreenActivity.this, MainActivity.class);
             }else{
                 intent.setClass(SplashScreenActivity.this, LoginHomeActivity.class);

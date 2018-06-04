@@ -133,6 +133,10 @@ public class MineApproveSubmitiPicActivity extends BaseActivity {
     }
 
     private void saveData(String picPath) {
+        String url = Constants.UPLOAD_USER_CARD;
+        if("yes".equals(getIntent().getStringExtra("isOrmAgain"))){
+            url = Constants.CARD_TI_FORM_AGAIN;
+        }
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -143,7 +147,7 @@ public class MineApproveSubmitiPicActivity extends BaseActivity {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.UPLOAD_USER_CARD)
+                .url(url)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();

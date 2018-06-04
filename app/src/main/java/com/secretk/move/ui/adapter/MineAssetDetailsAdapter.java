@@ -80,17 +80,17 @@ public class MineAssetDetailsAdapter extends RecyclerView.Adapter<MineAssetDetai
 
         public void refresh(int position, List<MineAssetDetailsBean.DataBean.MyTokenBillBean.RowsBean> lists) {
             MineAssetDetailsBean.DataBean.MyTokenBillBean.RowsBean str = lists.get(position);
-            double asset = str.getInviteRewards();
-
-            if (asset<0) {//正数
+            double asset = str.getTradeType();
+            //交易类型:1-收入；2-支出
+            if (asset==2) {//正数
                 tvAssetNum.setTextColor(context.getResources().getColor(R.color.zdmx));
             } else {
                 tvAssetNum.setTextColor(context.getResources().getColor(R.color.app_background));
             }
-            tvAssetName.setText(StringUtil.getBeanString(str.getTokenAwardFunctionDesc()));
+            tvAssetName.setText(StringUtil.getBeanString(str.getFunctionDesc()));
             tvAssetTime.setText(StringUtil.getBeanString(str.getCreateTimeStr()));
 //            tvAssetTime.setText(StringUtil.getTimeToM(str.getCreateTime()));
-            tvAssetNum.setText(StringUtil.getBeanString(String.valueOf(str.getInviteRewards())));
+            tvAssetNum.setText(StringUtil.getBeanString(String.valueOf(str.getAmount())));
         }
     }
 }

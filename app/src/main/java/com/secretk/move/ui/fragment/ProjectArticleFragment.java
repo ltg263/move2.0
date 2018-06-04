@@ -68,6 +68,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
                     tvSort.setText(getString(R.string.sort_love));
                 }
                 pageIndex=1;
+                loadingDialog.show();
                 getLoadData(null,getString(R.string.sort_time));
             }
         });
@@ -75,6 +76,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
 
     @Override
     public void onFirstUserVisible() {
+        loadingDialog.show();
         getLoadData(null,"");
     }
 
@@ -113,7 +115,6 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        loadingDialog.show();
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.PROJECT_ARTICLE_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
@@ -142,9 +143,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
                 if(refreshlayout!=null){
                     refreshlayout.finishLoadmore();
                 }
-                if(loadingDialog.isShowing()){
-                    loadingDialog.dismiss();
-                }
+                loadingDialog.dismiss();
             }
         });
     }

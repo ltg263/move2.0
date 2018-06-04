@@ -6,6 +6,7 @@ import android.widget.RadioGroup;
 
 import com.secretk.move.R;
 import com.secretk.move.base.MvpBaseActivity;
+import com.secretk.move.bean.VersionBean;
 import com.secretk.move.contract.ActivityMainContract;
 import com.secretk.move.customview.TabViewpager;
 import com.secretk.move.presenter.impl.MainPresenterImpl;
@@ -90,11 +91,18 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
 
 
     @Override
-    public void showDialog(String str,boolean force) {
-//        DialogUtils.showDialogAppUpdate(this, force, str, new DialogUtils.ErrorDialogInterface() {
+    public void showDialog(final VersionBean.DataBean str, final boolean force) {
+//        DialogUtils.showDialogAppUpdate(this, force, str.getUpExplain(), new DialogUtils.ErrorDialogInterface() {
 //            @Override
 //            public void btnConfirm() {
-//                presenter.downLoadApk();
+////                presenter.downLoadApk();
+//                Intent service = new Intent(MainActivity.this, DownloadService.class);
+//                if(force){
+//                    service.putExtra("Url",str.getGuideUrl());
+//                }else{
+//                    service.putExtra("Url",str.getUpgradeUrl());
+//                }
+//                startService(service);
 //            }
 //        });
     }

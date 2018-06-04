@@ -1,5 +1,6 @@
 package com.secretk.move.ui.holder;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,8 +12,6 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.ProjectHomeBean;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.NetUtil;
-import com.secretk.move.utils.SharedUtils;
-import com.secretk.move.utils.ToastUtils;
 
 import java.util.List;
 
@@ -39,9 +38,9 @@ public class ProjectIntroHolder extends RecyclerViewBaseHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void refresh(final int position, List<ProjectHomeBean.DataBean.ProjectBean.ActiveUsersBean> lists) {
+    public void refresh(final int position, List<ProjectHomeBean.DataBean.ProjectBean.ActiveUsersBean> lists, Context context) {
         final ProjectHomeBean.DataBean.ProjectBean.ActiveUsersBean usersBean = lists.get(position);
-        GlideUtils.loadCircleUrl(ivIcon, Constants.BASE_IMG_URL+usersBean.getIcon());
+        GlideUtils.loadCircleUserUrl(context,ivIcon, Constants.BASE_IMG_URL+usersBean.getIcon());
         tvUserUame.setText(usersBean.getUserName());
         tvUserSignature.setText(usersBean.getUserSignature());
         //0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮

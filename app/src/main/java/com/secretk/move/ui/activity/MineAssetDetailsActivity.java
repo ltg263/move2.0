@@ -20,6 +20,7 @@ import com.secretk.move.ui.adapter.MineAssetDetailsAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.RecycleScrollView;
@@ -79,7 +80,7 @@ public class MineAssetDetailsActivity extends BaseActivity {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            node.put("pageIndex", pageIndex);
+            node.put("pageIndex", pageIndex++);
             node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -97,6 +98,7 @@ public class MineAssetDetailsActivity extends BaseActivity {
                 if(data.getRows()==null ||data.getRows().size()==0){
                     return;
                 }
+                tvTotalAssets.setText(StringUtil.getBeanString(String.valueOf(rsn.getData().getSum())));
                 if (data.getCurPageNum() == data.getPageSize()) {
                     refreshLayout.setLoadmoreFinished(true);
                 }

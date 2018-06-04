@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -17,11 +16,9 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.CommonCommentsBean;
 import com.secretk.move.bean.DetailsArticleCommentBean;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.ui.adapter.DetailsDiscussAdapter;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -90,6 +87,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
         adapterNew = new DetailsDiscussAdapter(this);
         rvNewReview.setAdapter(adapterNew);
         initRefresh();
+        loadingDialog.show();
     }
 
     private void initRefresh() {
@@ -133,7 +131,6 @@ public class DetailsArticleCommentActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        loadingDialog.show();
         RetrofitUtil.request(params, DetailsArticleCommentBean.class, new HttpCallBackImpl<DetailsArticleCommentBean>() {
             @Override
             public void onCompleted(DetailsArticleCommentBean bean) {
@@ -163,9 +160,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
                 if (refreshLayout.isLoading()) {
                     refreshLayout.finishLoadmore(true);
                 }
-                if(loadingDialog.isShowing()){
-                    loadingDialog.dismiss();
-                }
+                loadingDialog.dismiss();
             }
         });
     }

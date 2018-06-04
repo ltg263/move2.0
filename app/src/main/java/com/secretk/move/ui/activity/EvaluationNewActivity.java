@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -15,10 +16,8 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.EvaluationNewBean;
-import com.secretk.move.bean.HomeReviewBase;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.ui.adapter.EvaluationNewAdapter;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.ToastUtils;
@@ -70,6 +69,7 @@ public class EvaluationNewActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        MoveApplication.getContext().addActivity(this);
         projectId = getIntent().getIntExtra("projectId",0);
         pbsComprehensive.setPbProgressMaxVisible();
         pbsComprehensive.setTvOne(getResources().getString(R.string.comprehensive_evaluation),0,
@@ -168,6 +168,7 @@ public class EvaluationNewActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
+        loadingDialog.show();
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String bean) {
@@ -177,6 +178,11 @@ public class EvaluationNewActivity extends BaseActivity {
                 intent.putExtra("totalScore",pbsComprehensive.getTotalScore());
                 intent.putExtra(Constants.ModelType.MODEL_TYPE,Constants.ModelType.MODEL_TYPE_ALL_NEW);
                 startActivity(intent);
+            }
+
+            @Override
+            public void onFinish() {
+                loadingDialog.dismiss();
             }
         });
     }

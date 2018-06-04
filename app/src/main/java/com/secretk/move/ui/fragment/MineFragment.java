@@ -123,7 +123,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     @Override
     public void loadInfoSuccess(UserLoginInfo.DataBean.UserBean infos) {
         userInfos = infos;
-        GlideUtils.loadCircleUrl(ivHeadImg, Constants.BASE_IMG_URL+infos.getIcon());
+        GlideUtils.loadCircleUserUrl(getActivity(),ivHeadImg, Constants.BASE_IMG_URL+infos.getIcon());
         tvUserName.setText(infos.getUserName());
         //300 粉丝 •1568 赞
         String fansNum = String.valueOf(infos.getFansNum())+"  粉丝 • "+String.valueOf(infos.getPraiseNum())+" 赞";

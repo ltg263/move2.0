@@ -12,7 +12,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#f5f5f5"
+            android:background="@color/white"
             android:orientation="vertical">
             <!--评分开始-->
             <com.secretk.move.view.ProgressBarStyleView
@@ -25,52 +25,46 @@
                 android:layout_height="@dimen/dp_line"
                 android:background="@color/cut_off_rule" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_line"
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="@color/cut_off_rule" />
-
-            <com.secretk.move.view.ProgressBarStyleView
-                android:id="@+id/pb_project_location"
+            <LinearLayout
+                android:id="@+id/ll_not"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/ic_shade_grey_mix"
                 android:visibility="gone"
-                android:layout_marginHorizontal="@dimen/dp_10" />
+                android:orientation="vertical">
 
-            <com.secretk.move.view.ProgressBarStyleView
-                android:id="@+id/pb_technical_framework"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_marginHorizontal="@dimen/dp_10" />
+                <com.secretk.move.view.ProgressBarStyleView
+                    android:id="@+id/pb_project_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
 
-            <com.secretk.move.view.ProgressBarStyleView
-                android:id="@+id/pb_team_strength"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_marginHorizontal="@dimen/dp_10" />
+                <com.secretk.move.view.ProgressBarStyleView
+                    android:id="@+id/pb_technical_framework"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
 
-            <com.secretk.move.view.ProgressBarStyleView
-                android:id="@+id/pb_project_schedule"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_marginHorizontal="@dimen/dp_10" />
+                <com.secretk.move.view.ProgressBarStyleView
+                    android:id="@+id/pb_team_strength"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
 
-            <com.secretk.move.view.ProgressBarStyleView
-                android:id="@+id/pb_speculative_risk"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_marginHorizontal="@dimen/dp_10" />
+                <com.secretk.move.view.ProgressBarStyleView
+                    android:id="@+id/pb_project_schedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <com.secretk.move.view.ProgressBarStyleView
+                    android:id="@+id/pb_speculative_risk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+            </LinearLayout>
             <!--评分結束-->
             <!--项目介绍結束-->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
-                android:background="@color/cut_off_rule" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -94,6 +88,7 @@
                     android:text="@string/assessment"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_12" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_line"

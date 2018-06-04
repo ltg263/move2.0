@@ -160,8 +160,8 @@ public class HomeActivity extends BaseActivity {
             public void onCompleted(HomeUserIndexBean userInfo) {
                 HomeUserIndexBean.DataBean.UserBean userData = userInfo.getData().getUser();
                 String iconUrl = Constants.BASE_IMG_URL+userData.getIcon();
-                GlideUtils.loadCircleUrl(ivHead, iconUrl);
-                GlideUtils.loadCircleUrl(mHeadView.getImageView(), iconUrl);
+                GlideUtils.loadCircleUserUrl(HomeActivity.this,ivHead, iconUrl);
+                GlideUtils.loadCircleUserUrl(HomeActivity.this,mHeadView.getImageView(), iconUrl);
                 mHeadView.setTitle(userData.getHomePageTitle());
                 tvUserName.setText(userData.getUserName());
                 tvIndividualResume.setText(userData.getUserSignature());

@@ -22,9 +22,6 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!-- 上面都是扫一扫权限 -->
-    <!-- 定位权限begin -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -84,6 +81,7 @@
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppEditTextStyle" />
+        <service android:name=".utils.DownloadService"/>
         <activity
             android:name=".ui.activity.LoginHomeActivity"
             android:theme="@style/AppEditTextStyle" />
@@ -116,6 +114,9 @@
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.MoreCommentsActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.PublishSucceedActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.MineCheckDetailsActivity"

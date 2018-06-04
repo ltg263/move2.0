@@ -172,7 +172,7 @@ public class ProjectActivity extends BaseActivity {
                     mHeadView.setTitleVice("/" + projectInfo.getProjectChineseName());
                     introFragment.initUiData(projectInfo);
                     //  discussFragment.initUiData(30);
-                    GlideUtils.loadCircleUrl(ivProjectIcon, Constants.BASE_IMG_URL + projectInfo.getProjectIcon());
+                    GlideUtils.loadCircleProjectUrl(ProjectActivity.this,ivProjectIcon, Constants.BASE_IMG_URL + projectInfo.getProjectIcon());
                     tvProjectCode.setText(projectInfo.getProjectCode());
                     tvProjectChineseName.setText("/" + projectInfo.getProjectChineseName());
                     tvCreateTime.setText("发布时间：" + StringUtil.getTimeToM(projectInfo.getCreateTime()));
@@ -320,7 +320,7 @@ public class ProjectActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fab:
-                ToastUtils.getInstance().show("简单测评111");
+                startAcy();
                 break;
             case R.id.rl_grade:
                 IntentUtil.startActivity(DetailsUserGradeActivity.class);
@@ -343,6 +343,27 @@ public class ProjectActivity extends BaseActivity {
                                 }
                             }
                         });
+                break;
+        }
+    }
+
+    private void startAcy() {
+        Intent intent;
+        switch (viewPager.getCurrentItem()){
+            case 1:
+                intent = new Intent(this, EvaluationSimplenessActivity.class);
+                intent.putExtra("projectId",projectInfo.getProjectId());
+                startActivity(intent);
+                break;
+            case 2:
+                intent = new Intent(this, ReleaseArticleActivity.class);
+                intent.putExtra("projectId",projectInfo.getProjectId());
+                startActivity(intent);
+                break;
+            case 3:
+                intent = new Intent(this, ReleaseDiscussActivity.class);
+                intent.putExtra("projectId",projectInfo.getProjectId());
+                startActivity(intent);
                 break;
         }
     }

@@ -11,10 +11,8 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
+import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -26,6 +24,7 @@ import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.PicBean;
 import com.secretk.move.bean.base.BaseRes;
 import com.secretk.move.ui.adapter.ReleaseArticleLabelAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -54,14 +53,6 @@ import butterknife.OnClick;
  */
 public class EvaluationWriteActivity extends BaseActivity {
     InputMethodManager imm;
-    @BindView(R.id.tv_icon)
-    ImageView tvIcon;
-    @BindView(R.id.tv_name)
-    TextView tvName;
-    @BindView(R.id.tv_submit)
-    TextView tvSubmit;
-    @BindView(R.id.rl_top_theme)
-    RelativeLayout rlTopTheme;
     private List<String> picList;
     @BindView(R.id.rv_post_small_images)
     RecyclerView rvPostSmallImages;
@@ -105,6 +96,7 @@ public class EvaluationWriteActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        MoveApplication.getContext().addActivity(this);
         modelPbTitle = getResources().getString(R.string.comprehensive_evaluation);
         imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
         picList = new ArrayList<>();
@@ -164,7 +156,7 @@ public class EvaluationWriteActivity extends BaseActivity {
     String picPath;
     int REQUEST_CODE_CAMERA = 199;
 
-    @OnClick({R.id.localphoto, R.id.takephoto, R.id.addlabel, R.id.swithKeyboard, R.id.tv_submit})
+    @OnClick({R.id.localphoto, R.id.takephoto, R.id.addlabel, R.id.swithKeyboard})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -192,11 +184,6 @@ public class EvaluationWriteActivity extends BaseActivity {
                 break;
             case R.id.swithKeyboard:
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                break;
-            case R.id.tv_submit:
-                intent = new Intent(this, DetailsReviewAllActivity.class);
-//                intent.putExtra("postId",postId);
-                startActivity(intent);
                 break;
         }
     }
@@ -340,12 +327,8 @@ public class EvaluationWriteActivity extends BaseActivity {
         RetrofitUtil.request(params, BaseRes.class, new HttpCallBackImpl<BaseRes>() {
             @Override
             public void onCompleted(BaseRes str) {
-                findViewById(R.id.submit_ok).setVisibility(View.VISIBLE);
-                rlTopTheme.setVisibility(View.VISIBLE);
-                findViewById(R.id.rl).setVisibility(View.GONE);
-                tvName.setText("测评发布成功！");
-                mHeadView.setTitle(postTitle);
-                tvSubmit.setText("去看看");
+                IntentUtil.startPublishSucceedActivity("postId",
+                        postTitle, getResources().getString(R.string.evaluation_succeed), Constants.PublishSucceed.EVALUATION);
             }
 
             @Override

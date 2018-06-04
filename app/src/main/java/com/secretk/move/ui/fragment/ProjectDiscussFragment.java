@@ -64,6 +64,7 @@ public class ProjectDiscussFragment extends LazyFragment{
     @Override
     public void onFirstUserVisible() {
         adapterNot.setData(newData);
+        loadingDialog.show();
         getLoadData(null);
     }
     public void getLoadData(final RefreshLayout refreshlayout) {
@@ -81,7 +82,6 @@ public class ProjectDiscussFragment extends LazyFragment{
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        loadingDialog.show();
         RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
             @Override
             public void onCompleted(CommonListBase bean) {
@@ -104,9 +104,7 @@ public class ProjectDiscussFragment extends LazyFragment{
                 if(refreshlayout!=null){
                     refreshlayout.finishLoadmore();
                 }
-                if(loadingDialog.isShowing()){
-                    loadingDialog.dismiss();
-                }
+                loadingDialog.dismiss();
             }
         });
     }

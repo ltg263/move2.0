@@ -75,7 +75,7 @@ public class DetailsReviewOnlyActivity extends BaseActivity  implements ItemClic
         LayoutInflater inflater = LayoutInflater.from(this);
         for (int i = 0; i < urls.length; i++) {
             ImageView imageView = (ImageView) inflater.inflate(R.layout.item_praise, pileLayout, false);
-            GlideUtils.loadCircleUrl(imageView, urls[i]);
+            GlideUtils.loadCircleUserUrl(this,imageView, urls[i]);
             pileLayout.addView(imageView);
         }
 

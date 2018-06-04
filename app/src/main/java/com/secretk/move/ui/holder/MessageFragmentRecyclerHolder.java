@@ -54,7 +54,7 @@ public class MessageFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     public void refresh(final Context context, final int position, final List<MessageBean.DataBean.MessagesBean.RowsBean> lists,
                         final MessageFragmentRecyclerAdapter adapter){
         MessageBean.DataBean.MessagesBean.RowsBean currenBean = lists.get(position);
-        GlideUtils.loadCircleUrl(img, Constants.BASE_IMG_URL+currenBean.getSenderUserIcon());
+        GlideUtils.loadCircleUserUrl(context,img, Constants.BASE_IMG_URL+currenBean.getSenderUserIcon());
         // 阅读状态 ，数字，状态：1-未读；2-已读
         if(currenBean.getState()==1){
             ivState.setVisibility(View.VISIBLE);

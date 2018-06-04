@@ -72,6 +72,7 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
 
     @Override
     public void onFirstUserVisible() {
+        loadingDialog.show();
         getLoadData(null);
     }
     public void getLoadData(final RefreshLayout refreshlayout) {
@@ -89,7 +90,6 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        loadingDialog.show();
         RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
             @Override
             public void onCompleted(CommonListBase bean) {
@@ -147,42 +147,45 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
             pbComprehensiveEvaluation.setTvThree(project.getTotalScore(),16,R.color.app_background);
             pbComprehensiveEvaluation.setPbProgressMaxVisible();
         }
-        //设置评分样式
-        for(int postion=0;postion<beans.size();postion++){
-            ProjectHomeBean.DataBean.ProjectEvaStatBean bean = beans.get(postion);
-            String detailName = bean.getDetailName();
+        if(beans!=null && beans.size()>0){
+            getActivity().findViewById(R.id.ll_not).setVisibility(View.VISIBLE);
+            //设置评分样式
+            for(int postion=0;postion<beans.size();postion++){
+                ProjectHomeBean.DataBean.ProjectEvaStatBean bean = beans.get(postion);
+                String detailName = bean.getDetailName();
 //            if(getString(R.string.project_location).equals(detailName)){
-            if(postion==0){
-                pbProjectLocation.setVisibility(View.VISIBLE);
-                pbProjectLocation.setProgressDrawable(R.drawable.pb_view_xmdw,R.color.xmdw);
-                pbProjectLocation.setAllTv(detailName,"/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
-            }
+                if(postion==0){
+                    pbProjectLocation.setVisibility(View.VISIBLE);
+                    pbProjectLocation.setProgressDrawable(R.drawable.pb_view_xmdw,R.color.xmdw);
+                    pbProjectLocation.setAllTv(detailName,"/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
+                }
 //            if(getString(R.string.technical_framework).equals(detailName)){
-            if(postion==1){
-                pbTechnicalFramework.setVisibility(View.VISIBLE);
-                pbTechnicalFramework.setProgressDrawable(R.drawable.pb_view_jskj,R.color.jskj);
-                pbTechnicalFramework.setAllTv(detailName,
-                        "/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
-            }
+                if(postion==1){
+                    pbTechnicalFramework.setVisibility(View.VISIBLE);
+                    pbTechnicalFramework.setProgressDrawable(R.drawable.pb_view_jskj,R.color.jskj);
+                    pbTechnicalFramework.setAllTv(detailName,
+                            "/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
+                }
 //            if(getString(R.string.team_strength).equals(detailName)){
                 if(postion==2){
-                pbTeamStrength.setVisibility(View.VISIBLE);
-                pbTeamStrength.setProgressDrawable(R.drawable.pb_view_tdsl,R.color.tdsl);
-                pbTeamStrength.setAllTv(detailName,"/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
-            }
+                    pbTeamStrength.setVisibility(View.VISIBLE);
+                    pbTeamStrength.setProgressDrawable(R.drawable.pb_view_tdsl,R.color.tdsl);
+                    pbTeamStrength.setAllTv(detailName,"/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
+                }
 //            if(getString(R.string.project_schedule).equals(detailName)){
-            if(postion==3){
-                pbProjectSchedule.setVisibility(View.VISIBLE);
-                pbProjectSchedule.setProgressDrawable(R.drawable.pb_view_xmjd,R.color.xmjd);
-                pbProjectSchedule.setAllTv(getResources().getString(R.string.project_schedule),"/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
-            }
+                if(postion==3){
+                    pbProjectSchedule.setVisibility(View.VISIBLE);
+                    pbProjectSchedule.setProgressDrawable(R.drawable.pb_view_xmjd,R.color.xmjd);
+                    pbProjectSchedule.setAllTv(getResources().getString(R.string.project_schedule),"/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
+                }
 //            if(getString(R.string.speculative_risk).equals(detailName)){
-            if(postion==4){
-                pbSpeculativeRisk.setVisibility(View.VISIBLE);
-                pbSpeculativeRisk.setProgressDrawable(R.drawable.pb_view_tzfx,R.color.tzfx);
-                pbSpeculativeRisk.setAllTv(detailName,"/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
-            }
+                if(postion==4){
+                    pbSpeculativeRisk.setVisibility(View.VISIBLE);
+                    pbSpeculativeRisk.setProgressDrawable(R.drawable.pb_view_tzfx,R.color.tzfx);
+                    pbSpeculativeRisk.setAllTv(detailName,"/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
+                }
 
+            }
         }
     }
 }

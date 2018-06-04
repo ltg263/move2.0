@@ -1,6 +1,9 @@
 package com.secretk.move.ui.fragment;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -29,12 +32,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Created by zc on 2018/4/5.
  */
 
-public class MessageFragment extends LazyFragment{
+public class MessageFragment extends LazyFragment {
     @BindView(R.id.recycler)
     RecyclerView recycler;
     @BindView(R.id.tv_status)
@@ -43,9 +47,19 @@ public class MessageFragment extends LazyFragment{
     RecycleScrollView rcv;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.tv_icon)
+    ImageView tvIcon;
+    @BindView(R.id.tv_name)
+    TextView tvName;
+    @BindView(R.id.tv_submit)
+    TextView tvSubmit;
+    @BindView(R.id.rl_top_theme)
+    RelativeLayout rlTopTheme;
+    Unbinder unbinder;
     private MessageFragmentRecyclerAdapter adapter;
     int pageIndex = 1;
     private List<MessageBean.DataBean.MessagesBean.RowsBean> list;
+//    private LoadingDialog loadingDialog;
 
     @Override
     public int setFragmentView() {
@@ -58,12 +72,17 @@ public class MessageFragment extends LazyFragment{
         setVerticalManager(recycler);
         adapter = new MessageFragmentRecyclerAdapter(getActivity());
         recycler.setAdapter(adapter);
+        rlTopTheme.setVisibility(View.VISIBLE);
+        tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_not_message));
+        tvName.setText(getActivity().getResources().getString(R.string.not_message));
+        tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
+//        loadingDialog.show();
     }
 
     @Override
     public void onFirstUserVisible() {
 //        MESSAGE_LIST
-        if(!NetUtil.isNetworkAvailable()){
+        if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
         }
@@ -84,17 +103,25 @@ public class MessageFragment extends LazyFragment{
         RetrofitUtil.request(params, MessageBean.class, new HttpCallBackImpl<MessageBean>() {
             @Override
             public void onCompleted(MessageBean str) {
-                if(str.getData().getMessages()==null){
+                if (str.getData().getMessages() == null) {
+                    getActivity().findViewById(R.id.no_data).setVisibility(View.VISIBLE);
                     return;
                 }
                 if (str.getData().getMessages().getCurPageNum() == str.getData().getMessages().getPageSize()) {
                     refreshLayout.setLoadmoreFinished(true);
                 }
                 list = str.getData().getMessages().getRows();
-                if(pageIndex>2){
+                if (pageIndex > 2) {
                     adapter.addData(list);
-                }else{
+                } else {
                     adapter.setData(list);
+                    if(list.size()>0){
+                        getActivity().findViewById(R.id.no_data).setVisibility(View.GONE);
+                        refreshLayout.setVisibility(View.VISIBLE);
+                        tvStatus.setVisibility(View.VISIBLE);
+                    }else{
+                        getActivity().findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
@@ -106,10 +133,13 @@ public class MessageFragment extends LazyFragment{
                 if (refreshLayout.isLoading()) {
                     refreshLayout.finishLoadmore(true);
                 }
+//                loadingDialog.dismiss();
             }
         });
     }
+
     private void initRefresh() {
+//        loadingDialog = new LoadingDialog(getActivity());
         /**
          * 下拉刷新
          */
@@ -117,7 +147,7 @@ public class MessageFragment extends LazyFragment{
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 refreshLayout.setLoadmoreFinished(false);
-                pageIndex=1;
+                pageIndex = 1;
                 onFirstUserVisible();
 
             }
@@ -132,7 +162,16 @@ public class MessageFragment extends LazyFragment{
             }
         });
     }
-    @OnClick(R.id.tv_status)
-    public void onViewClicked() {
+
+
+    @OnClick({R.id.tv_status, R.id.tv_submit})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_status:
+                break;
+            case R.id.tv_submit:
+                onFirstUserVisible();
+                break;
+        }
     }
 }

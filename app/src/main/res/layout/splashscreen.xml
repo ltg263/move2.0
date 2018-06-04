@@ -5,79 +5,91 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/ic_splash_screen" />
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_160"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/tv"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="-40dp"
-            android:text="@string/block_chain"
-            android:textColor="@color/title_gray"
-            android:textSize="@dimen/sp_28" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv"
-            android:gravity="center_vertical"
-            android:padding="@dimen/dp_10">
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_160"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/bound_to"
+                android:layout_marginLeft="-40dp"
+                android:text="@string/block_chain"
                 android:textColor="@color/title_gray"
                 android:textSize="@dimen/sp_28" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bound_to"
+                    android:textColor="@color/title_gray"
+                    android:textSize="@dimen/sp_28" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:text="@string/find"
+                    android:textColor="@color/app_background"
+                    android:textSize="35sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dp_25">
+
+            <ImageView
+                android:id="@+id/iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/iv"
+                android:text="@string/find"
+                android:textColor="@color/app_background"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/dp_10"
-                android:text="@string/find"
-                android:textColor="@color/app_background"
-                android:textSize="35sp"
+                android:layout_below="@id/tv_name"
+                android:layout_toRightOf="@id/iv"
+                android:text="find"
+                android:textColor="@color/title_gray_66"
+                android:textSize="@dimen/sp_16"
                 android:textStyle="bold" />
-        </LinearLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_25">
-
-        <ImageView
-            android:id="@+id/iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher" />
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/iv"
-            android:text="@string/find"
-            android:textColor="@color/app_background"
-            android:textSize="@dimen/sp_16"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_name"
-            android:layout_toRightOf="@id/iv"
-            android:text="find"
-            android:textColor="@color/title_gray_66"
-            android:textSize="@dimen/sp_16"
-            android:textStyle="bold" />
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

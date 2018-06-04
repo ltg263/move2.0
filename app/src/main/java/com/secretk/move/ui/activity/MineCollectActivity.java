@@ -2,6 +2,10 @@ package com.secretk.move.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -16,6 +20,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.MyCollectList;
 import com.secretk.move.ui.adapter.HomeListAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -28,6 +33,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
 /**
@@ -42,6 +48,14 @@ public class MineCollectActivity extends BaseActivity {
     RecyclerView rvCollect;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.tv_icon)
+    ImageView tvIcon;
+    @BindView(R.id.tv_name)
+    TextView tvName;
+    @BindView(R.id.tv_submit)
+    TextView tvSubmit;
+    @BindView(R.id.rl_top_theme)
+    RelativeLayout rlTopTheme;
     private String postId;
     private int pageIndex = 1;
     private HomeListAdapter adapter;
@@ -69,6 +83,10 @@ public class MineCollectActivity extends BaseActivity {
         rvCollect.setAdapter(adapter);
         initRefresh();
         loadingDialog.show();
+        rlTopTheme.setVisibility(View.VISIBLE);
+        tvIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_not_data));
+        tvName.setText(getResources().getString(R.string.not_collect));
+        tvSubmit.setText(getResources().getString(R.string.not_go_look));
     }
 
     private void initRefresh() {
@@ -116,15 +134,17 @@ public class MineCollectActivity extends BaseActivity {
             @Override
             public void onCompleted(MyCollectList bean) {
                 MyCollectList.DataBean.MyTokenRecordsBean detailsBean = bean.getData().getMyTokenRecords();
-                if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
+                if (detailsBean.getRows() == null || detailsBean.getRows().size() == 0) {
+                    findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+                    refreshLayout.setVisibility(View.GONE);
                     return;
                 }
                 if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
                     refreshLayout.setLoadmoreFinished(true);
                 }
-                if(pageIndex>2){
+                if (pageIndex > 2) {
                     adapter.setAddData(detailsBean.getRows());
-                }else {
+                } else {
                     adapter.setData(detailsBean.getRows());
                 }
             }
@@ -137,10 +157,16 @@ public class MineCollectActivity extends BaseActivity {
                 if (refreshLayout.isLoading()) {
                     refreshLayout.finishLoadmore(true);
                 }
-                if(loadingDialog.isShowing()){
+                if (loadingDialog.isShowing()) {
                     loadingDialog.dismiss();
                 }
             }
         });
+    }
+
+    @OnClick(R.id.tv_submit)
+    public void onViewClicked() {
+        IntentUtil.startActivity(MainActivity.class);
+        finish();
     }
 }

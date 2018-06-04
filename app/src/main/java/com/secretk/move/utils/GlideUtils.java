@@ -34,4 +34,21 @@ public class GlideUtils {
         Glide.with(MoveApplication.getContext()).applyDefaultRequestOptions(new RequestOptions().placeholder(R.drawable.ic_silent_plate_max).error(R.drawable.ic_silent_plate_max)).
                 load(url).into(img);
     }
+
+    /**
+     * 圆ImageView
+     * 与用户有关ImageView
+     */
+    public static void loadCircleUserUrl(Context context,ImageView img, String url) {
+        Glide.with(context).applyDefaultRequestOptions(new RequestOptions().transform(new GlideCircleTransform()).placeholder(R.drawable.ic_head_silent).error(R.drawable.ic_head_silent)).
+                load(url).into(img);
+    }
+    /**
+     * 圆ImageView
+     * 与项目有关ImageView
+     */
+    public static void loadCircleProjectUrl(Context context,ImageView img, String url) {
+        Glide.with(context).applyDefaultRequestOptions(new RequestOptions().transform(new GlideCircleTransform()).placeholder(R.drawable.ic_project_silent).error(R.drawable.ic_project_silent)).
+                load(url).into(img);
+    }
 }

@@ -96,7 +96,7 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
             isProject=false;
         }
         final RowsBean rowsBean = lists.get(position);
-        GlideUtils.loadCircleUrl(ivCreateUserIcon, Constants.BASE_IMG_URL + rowsBean.getProjectIcon());
+        GlideUtils.loadCircleProjectUrl(context,ivCreateUserIcon, Constants.BASE_IMG_URL + rowsBean.getProjectIcon());
         tvCreateUserName.setText(rowsBean.getProjectChineseName());
         tvEnglishName.setText("/" + rowsBean.getProjectCode());
         tvCreateTime.setText(StringUtil.getTimeToM(rowsBean.getCreateTime()));
@@ -121,7 +121,7 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
             case 1:
                 if(isProject){
                     rlDiscuss.setVisibility(View.VISIBLE);//发表
-                    GlideUtils.loadCircleUrl(imgHead,Constants.BASE_IMG_URL+rowsBean.getCreateUserIcon());
+                    GlideUtils.loadCircleUserUrl(context,imgHead,Constants.BASE_IMG_URL+rowsBean.getCreateUserIcon());
                     tvHead.setText(rowsBean.getCreateUserName());
                     tvTime.setText(TimeToolUtils.convertTimeToFormat(rowsBean.getCreateTime()));
                 }

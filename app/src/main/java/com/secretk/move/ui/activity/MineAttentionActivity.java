@@ -25,7 +25,7 @@ import butterknife.BindView;
  * 作者： litongge
  * 时间：  2018/5/28 14:50
  * 邮箱；ltg263@126.com
- * 描述：
+ * 描述：我的关注
  */
 public class MineAttentionActivity extends BaseActivity{
     @BindView(R.id.vp_main_children)

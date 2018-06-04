@@ -1,5 +1,6 @@
 package com.secretk.move.ui.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,10 @@ public class ProjectIntroAdapter extends RecyclerView.Adapter<ProjectIntroHolder
 
     private List<ProjectHomeBean.DataBean.ProjectBean.ActiveUsersBean> lists = new ArrayList<>();
     private ItemClickListener mListener;
+    private Context context;
+    public ProjectIntroAdapter(Context context) {
+        this.context=context;
+    }
 
     public void setItemListener(ItemClickListener mListener) {
         this.mListener = mListener;
@@ -38,7 +43,7 @@ public class ProjectIntroAdapter extends RecyclerView.Adapter<ProjectIntroHolder
 
     @Override
     public void onBindViewHolder(ProjectIntroHolder holder, int position) {
-        holder.refresh(position, lists);
+        holder.refresh(position, lists,context);
         holder.setItemListener(mListener);
     }
 

@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.SysEvaluationModelBean;
-import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
-import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.EvaluationSliderView;
 
@@ -22,7 +20,6 @@ import org.json.JSONObject;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 作者： litongge
@@ -55,6 +52,7 @@ public class EvaluationProfessionalItemActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        MoveApplication.getContext().addActivity(this);
         sysEvaluationModel = getIntent().getParcelableExtra("sys_evaluation_model");
         String projectName = getIntent().getStringExtra("project_name");
         projectId = getIntent().getIntExtra("projectId",0);

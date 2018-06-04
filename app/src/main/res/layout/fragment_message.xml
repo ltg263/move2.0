@@ -18,8 +18,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
                 android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
                 android:text="消息"
                 android:textColor="@color/title_gray"
                 android:textSize="@dimen/sp_18" />
@@ -32,7 +32,8 @@
                 android:padding="@dimen/dp_10"
                 android:text="全部已读"
                 android:textColor="@color/app_background"
-                android:textSize="@dimen/sp_15" />
+                android:textSize="@dimen/sp_15"
+                android:visibility="gone" />
         </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
@@ -42,10 +43,19 @@
         android:layout_height="@dimen/dp_line"
         android:background="@color/cut_off_rule" />
 
+    <include
+        android:id="@+id/no_data"
+        layout="@layout/activity_loading_blank"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/view"
+        android:visibility="gone" />
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:srlEnablePreviewInEditMode="false">
 
         <com.secretk.move.view.RecycleScrollView
@@ -59,6 +69,7 @@
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
         </com.secretk.move.view.RecycleScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

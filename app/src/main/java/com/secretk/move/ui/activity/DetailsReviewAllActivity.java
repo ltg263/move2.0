@@ -161,13 +161,13 @@ public class DetailsReviewAllActivity extends BaseActivity {
     private void initUiData(DetailsReviewBean.DataBean.EvaluationDetailBean evaluationDetail){
         mHeadView.setTitle(StringUtil.getBeanString(evaluationDetail.getProjectCode()));
         mHeadView.setTitleVice("/" + StringUtil.getBeanString(evaluationDetail.getProjectChineseName()));
-        GlideUtils.loadCircleUrl(mHeadView.getImageView(), Constants.BASE_IMG_URL +
+        GlideUtils.loadCircleProjectUrl(this,mHeadView.getImageView(), Constants.BASE_IMG_URL +
                 StringUtil.getBeanString(evaluationDetail.getProjectIcon()));
         createUserId = evaluationDetail.getCreateUserId();
         projectId = evaluationDetail.getProjectId();
         tvPostTitle.setText(StringUtil.getBeanString(evaluationDetail.getPostTitle()));
         tvTotalScore.setText(String.valueOf(evaluationDetail.getTotalScore()));
-        GlideUtils.loadCircleUrl(ivCreateUserIcon,
+        GlideUtils.loadCircleUserUrl(this,ivCreateUserIcon,
                 Constants.BASE_IMG_URL + StringUtil.getBeanString(evaluationDetail.getCreateUserIcon()));
         tvCreateUserName.setText(StringUtil.getBeanString(evaluationDetail.getCreateUserName()));
         tvCreateUserSignature.setText(StringUtil.getBeanString(evaluationDetail.getCreateUserSignature()));
@@ -275,7 +275,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         for (int i = 0; i < pileLists.size(); i++) {
             ImageView imageView = (ImageView) inflater.inflate(R.layout.item_praise, pileLayout, false);
-            GlideUtils.loadCircleUrl(imageView, Constants.BASE_IMG_URL + pileLists.get(i).getSendUserIcon());
+            GlideUtils.loadCircleUserUrl(this,imageView, Constants.BASE_IMG_URL + pileLists.get(i).getSendUserIcon());
             pileLayout.addView(imageView);
         }
     }
@@ -320,6 +320,9 @@ public class DetailsReviewAllActivity extends BaseActivity {
                         });
                 break;
             case R.id.tv_praise_status:
+                if(!tvPraiseStatus.isSelected()){
+                    return;
+                }
                 tvPraiseStatus.setEnabled(false);
                 String str;
                 if (tvPraiseStatus.isSelected()) {

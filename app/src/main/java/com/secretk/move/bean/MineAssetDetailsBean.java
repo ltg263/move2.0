@@ -13,7 +13,7 @@ import java.util.List;
 public class MineAssetDetailsBean extends BaseRes{
 
     /**
-     * data : {"myTokenBill":{"rowCount":9,"rows":[{"tokenAwardId":29,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"点赞奖励","tokenAwardFunctionType":17,"inviteRewards":null,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":null,"containerAward":null,"createTime":1527758715000,"createTimeStr":"2018-05-31 17:25:15","giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":null,"distributionType":2,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":28,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"点赞奖励","tokenAwardFunctionType":17,"inviteRewards":null,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":null,"containerAward":null,"createTime":1527757704000,"createTimeStr":"2018-05-31 17:08:24","giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":null,"distributionType":2,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":27,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"点赞奖励","tokenAwardFunctionType":17,"inviteRewards":null,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":null,"containerAward":null,"createTime":1527757109000,"createTimeStr":"2018-05-31 16:58:29","giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":null,"distributionType":2,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":26,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"点赞奖励","tokenAwardFunctionType":17,"inviteRewards":null,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":null,"containerAward":null,"createTime":1527755746000,"createTimeStr":"2018-05-31 16:35:46","giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":null,"distributionType":2,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":25,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"点赞奖励","tokenAwardFunctionType":17,"inviteRewards":null,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":null,"containerAward":null,"createTime":1527754938000,"createTimeStr":"2018-05-31 16:22:18","giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":null,"distributionType":2,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":24,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"邀请奖励","tokenAwardFunctionType":18,"inviteRewards":500,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":0,"containerAward":0,"createTime":1527752450000,"createTimeStr":"2018-05-31 15:40:50","giveNext":null,"updateTime":1527752452000,"updateTimeStr":"2018-05-31 15:40:52","rewardToken":0,"inviteNumber":0,"distributionType":null,"counter":0,"grantType":0,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":23,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":null,"tokenAwardFunctionType":17,"inviteRewards":0,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":0,"containerAward":0,"createTime":null,"createTimeStr":null,"giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":0,"distributionType":null,"counter":0,"grantType":0,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":22,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"邀请奖励","tokenAwardFunctionType":17,"inviteRewards":500,"giveTime":null,"giveTimeStr":null,"priaiseAward":null,"awardBalance":null,"containerAward":null,"createTime":1527739335000,"createTimeStr":"2018-05-31 12:02:15","giveNext":null,"updateTime":1527739337000,"updateTimeStr":"2018-05-31 12:02:17","rewardToken":null,"inviteNumber":null,"distributionType":null,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":21,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"邀请奖励","tokenAwardFunctionType":18,"inviteRewards":500,"giveTime":null,"giveTimeStr":null,"priaiseAward":null,"awardBalance":null,"containerAward":null,"createTime":1527739273000,"createTimeStr":"2018-05-31 12:01:13","giveNext":null,"updateTime":1527739276000,"updateTimeStr":"2018-05-31 12:01:16","rewardToken":null,"inviteNumber":null,"distributionType":null,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null}],"pageSize":1,"rowsPerPage":10,"curPageNum":1,"queryParameters":"userId=3"}}
+     * data : {"myTokenBill":{"rowCount":20,"rows":[{"userId":3,"tradeType":1,"functionDesc":1,"functionType":"","amount":11111,"createTime":1528036223000,"createTimeStr":"2018-06-03 22:30:23","status":1,"rewardGrantType":1,"tokenRecordsId":null,"tradeCode":null,"tradeDate":null,"tradeDateStr":null,"balance":null,"updateTime":null,"updateTimeStr":null,"memo":null,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":1,"functionDesc":"点赞奖励","functionType":null,"amount":0.45,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1527758715000,"createTimeStr":"2018-05-31 17:25:15","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":1,"functionDesc":"点赞奖励","functionType":null,"amount":0.45,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1527757671000,"createTimeStr":"2018-05-31 17:07:51","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":1,"functionDesc":"邀请奖励","functionType":null,"amount":55555,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1527752450000,"createTimeStr":"2018-05-31 15:40:50","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":1,"functionDesc":"用户赞赏","functionType":null,"amount":0.5,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1527738347000,"createTimeStr":"2018-05-31 11:45:47","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":1,"functionDesc":null,"functionType":null,"amount":11111,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1527570281000,"createTimeStr":"2018-05-29 13:04:41","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":2,"functionDesc":"赞赏他人","functionType":null,"amount":1,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1526353508000,"createTimeStr":"2018-05-15 11:05:08","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":2,"functionDesc":"赞赏他人","functionType":null,"amount":5.5,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1526300239000,"createTimeStr":"2018-05-14 20:17:19","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":2,"functionDesc":"赞赏他人","functionType":null,"amount":0.6,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1526299485000,"createTimeStr":"2018-05-14 20:04:45","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":2,"functionDesc":"赞赏他人","functionType":null,"amount":0.5,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1526297869000,"createTimeStr":"2018-05-14 19:37:49","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null}],"pageSize":2,"rowsPerPage":10,"curPageNum":1,"queryParameters":"userId=3"},"sum":77793.3}
      */
 
     private DataBean data;
@@ -28,10 +28,12 @@ public class MineAssetDetailsBean extends BaseRes{
 
     public static class DataBean {
         /**
-         * myTokenBill : {"rowCount":9,"rows":[{"tokenAwardId":29,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"点赞奖励","tokenAwardFunctionType":17,"inviteRewards":null,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":null,"containerAward":null,"createTime":1527758715000,"createTimeStr":"2018-05-31 17:25:15","giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":null,"distributionType":2,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":28,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"点赞奖励","tokenAwardFunctionType":17,"inviteRewards":null,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":null,"containerAward":null,"createTime":1527757704000,"createTimeStr":"2018-05-31 17:08:24","giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":null,"distributionType":2,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":27,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"点赞奖励","tokenAwardFunctionType":17,"inviteRewards":null,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":null,"containerAward":null,"createTime":1527757109000,"createTimeStr":"2018-05-31 16:58:29","giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":null,"distributionType":2,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":26,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"点赞奖励","tokenAwardFunctionType":17,"inviteRewards":null,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":null,"containerAward":null,"createTime":1527755746000,"createTimeStr":"2018-05-31 16:35:46","giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":null,"distributionType":2,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":25,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"点赞奖励","tokenAwardFunctionType":17,"inviteRewards":null,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":null,"containerAward":null,"createTime":1527754938000,"createTimeStr":"2018-05-31 16:22:18","giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":null,"distributionType":2,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":24,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"邀请奖励","tokenAwardFunctionType":18,"inviteRewards":500,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":0,"containerAward":0,"createTime":1527752450000,"createTimeStr":"2018-05-31 15:40:50","giveNext":null,"updateTime":1527752452000,"updateTimeStr":"2018-05-31 15:40:52","rewardToken":0,"inviteNumber":0,"distributionType":null,"counter":0,"grantType":0,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":23,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":null,"tokenAwardFunctionType":17,"inviteRewards":0,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":0,"containerAward":0,"createTime":null,"createTimeStr":null,"giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":0,"distributionType":null,"counter":0,"grantType":0,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":22,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"邀请奖励","tokenAwardFunctionType":17,"inviteRewards":500,"giveTime":null,"giveTimeStr":null,"priaiseAward":null,"awardBalance":null,"containerAward":null,"createTime":1527739335000,"createTimeStr":"2018-05-31 12:02:15","giveNext":null,"updateTime":1527739337000,"updateTimeStr":"2018-05-31 12:02:17","rewardToken":null,"inviteNumber":null,"distributionType":null,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":21,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"邀请奖励","tokenAwardFunctionType":18,"inviteRewards":500,"giveTime":null,"giveTimeStr":null,"priaiseAward":null,"awardBalance":null,"containerAward":null,"createTime":1527739273000,"createTimeStr":"2018-05-31 12:01:13","giveNext":null,"updateTime":1527739276000,"updateTimeStr":"2018-05-31 12:01:16","rewardToken":null,"inviteNumber":null,"distributionType":null,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null}],"pageSize":1,"rowsPerPage":10,"curPageNum":1,"queryParameters":"userId=3"}
+         * myTokenBill : {"rowCount":20,"rows":[{"userId":3,"tradeType":1,"functionDesc":1,"functionType":"","amount":11111,"createTime":1528036223000,"createTimeStr":"2018-06-03 22:30:23","status":1,"rewardGrantType":1,"tokenRecordsId":null,"tradeCode":null,"tradeDate":null,"tradeDateStr":null,"balance":null,"updateTime":null,"updateTimeStr":null,"memo":null,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":1,"functionDesc":"点赞奖励","functionType":null,"amount":0.45,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1527758715000,"createTimeStr":"2018-05-31 17:25:15","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":1,"functionDesc":"点赞奖励","functionType":null,"amount":0.45,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1527757671000,"createTimeStr":"2018-05-31 17:07:51","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":1,"functionDesc":"邀请奖励","functionType":null,"amount":55555,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1527752450000,"createTimeStr":"2018-05-31 15:40:50","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":1,"functionDesc":"用户赞赏","functionType":null,"amount":0.5,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1527738347000,"createTimeStr":"2018-05-31 11:45:47","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":1,"functionDesc":null,"functionType":null,"amount":11111,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1527570281000,"createTimeStr":"2018-05-29 13:04:41","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":2,"functionDesc":"赞赏他人","functionType":null,"amount":1,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1526353508000,"createTimeStr":"2018-05-15 11:05:08","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":2,"functionDesc":"赞赏他人","functionType":null,"amount":5.5,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1526300239000,"createTimeStr":"2018-05-14 20:17:19","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":2,"functionDesc":"赞赏他人","functionType":null,"amount":0.6,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1526299485000,"createTimeStr":"2018-05-14 20:04:45","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":2,"functionDesc":"赞赏他人","functionType":null,"amount":0.5,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1526297869000,"createTimeStr":"2018-05-14 19:37:49","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null}],"pageSize":2,"rowsPerPage":10,"curPageNum":1,"queryParameters":"userId=3"}
+         * sum : 77793.3
          */
 
         private MyTokenBillBean myTokenBill;
+        private double sum;
 
         public MyTokenBillBean getMyTokenBill() {
             return myTokenBill;
@@ -41,11 +43,19 @@ public class MineAssetDetailsBean extends BaseRes{
             this.myTokenBill = myTokenBill;
         }
 
+        public double getSum() {
+            return sum;
+        }
+
+        public void setSum(double sum) {
+            this.sum = sum;
+        }
+
         public static class MyTokenBillBean {
             /**
-             * rowCount : 9
-             * rows : [{"tokenAwardId":29,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"点赞奖励","tokenAwardFunctionType":17,"inviteRewards":null,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":null,"containerAward":null,"createTime":1527758715000,"createTimeStr":"2018-05-31 17:25:15","giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":null,"distributionType":2,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":28,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"点赞奖励","tokenAwardFunctionType":17,"inviteRewards":null,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":null,"containerAward":null,"createTime":1527757704000,"createTimeStr":"2018-05-31 17:08:24","giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":null,"distributionType":2,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":27,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"点赞奖励","tokenAwardFunctionType":17,"inviteRewards":null,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":null,"containerAward":null,"createTime":1527757109000,"createTimeStr":"2018-05-31 16:58:29","giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":null,"distributionType":2,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":26,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"点赞奖励","tokenAwardFunctionType":17,"inviteRewards":null,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":null,"containerAward":null,"createTime":1527755746000,"createTimeStr":"2018-05-31 16:35:46","giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":null,"distributionType":2,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":25,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"点赞奖励","tokenAwardFunctionType":17,"inviteRewards":null,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":null,"containerAward":null,"createTime":1527754938000,"createTimeStr":"2018-05-31 16:22:18","giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":null,"distributionType":2,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":24,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"邀请奖励","tokenAwardFunctionType":18,"inviteRewards":500,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":0,"containerAward":0,"createTime":1527752450000,"createTimeStr":"2018-05-31 15:40:50","giveNext":null,"updateTime":1527752452000,"updateTimeStr":"2018-05-31 15:40:52","rewardToken":0,"inviteNumber":0,"distributionType":null,"counter":0,"grantType":0,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":23,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":null,"tokenAwardFunctionType":17,"inviteRewards":0,"giveTime":null,"giveTimeStr":null,"priaiseAward":0,"awardBalance":0,"containerAward":0,"createTime":null,"createTimeStr":null,"giveNext":null,"updateTime":null,"updateTimeStr":null,"rewardToken":0,"inviteNumber":0,"distributionType":null,"counter":0,"grantType":0,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":22,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"邀请奖励","tokenAwardFunctionType":17,"inviteRewards":500,"giveTime":null,"giveTimeStr":null,"priaiseAward":null,"awardBalance":null,"containerAward":null,"createTime":1527739335000,"createTimeStr":"2018-05-31 12:02:15","giveNext":null,"updateTime":1527739337000,"updateTimeStr":"2018-05-31 12:02:17","rewardToken":null,"inviteNumber":null,"distributionType":null,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null},{"tokenAwardId":21,"userId":3,"tokenRecordsId":null,"praiseId":null,"tokenAwardFunctionDesc":"邀请奖励","tokenAwardFunctionType":18,"inviteRewards":500,"giveTime":null,"giveTimeStr":null,"priaiseAward":null,"awardBalance":null,"containerAward":null,"createTime":1527739273000,"createTimeStr":"2018-05-31 12:01:13","giveNext":null,"updateTime":1527739276000,"updateTimeStr":"2018-05-31 12:01:16","rewardToken":null,"inviteNumber":null,"distributionType":null,"counter":0,"grantType":null,"userName":null,"mobile":null,"issuer":null,"remark":null}]
-             * pageSize : 1
+             * rowCount : 20
+             * rows : [{"userId":3,"tradeType":1,"functionDesc":1,"functionType":"","amount":11111,"createTime":1528036223000,"createTimeStr":"2018-06-03 22:30:23","status":1,"rewardGrantType":1},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":1,"functionDesc":"点赞奖励","functionType":null,"amount":0.45,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1527758715000,"createTimeStr":"2018-05-31 17:25:15","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":1,"functionDesc":"点赞奖励","functionType":null,"amount":0.45,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1527757671000,"createTimeStr":"2018-05-31 17:07:51","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":1,"functionDesc":"邀请奖励","functionType":null,"amount":55555,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1527752450000,"createTimeStr":"2018-05-31 15:40:50","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":1,"functionDesc":"用户赞赏","functionType":null,"amount":0.5,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1527738347000,"createTimeStr":"2018-05-31 11:45:47","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":1,"functionDesc":null,"functionType":null,"amount":11111,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1527570281000,"createTimeStr":"2018-05-29 13:04:41","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":2,"functionDesc":"赞赏他人","functionType":null,"amount":1,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1526353508000,"createTimeStr":"2018-05-15 11:05:08","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":2,"functionDesc":"赞赏他人","functionType":null,"amount":5.5,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1526300239000,"createTimeStr":"2018-05-14 20:17:19","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":2,"functionDesc":"赞赏他人","functionType":null,"amount":0.6,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1526299485000,"createTimeStr":"2018-05-14 20:04:45","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null},{"tokenRecordsId":null,"userId":3,"tradeCode":null,"tradeType":2,"functionDesc":"赞赏他人","functionType":null,"amount":0.5,"tradeDate":null,"tradeDateStr":null,"balance":null,"createTime":1526297869000,"createTimeStr":"2018-05-14 19:37:49","updateTime":null,"updateTimeStr":null,"status":1,"memo":null,"rewardGrantType":1,"user_id":null,"function_type":null,"function_desc":null,"sum":null,"rewardToken":null}]
+             * pageSize : 2
              * rowsPerPage : 10
              * curPageNum : 1
              * queryParameters : userId=3
@@ -108,68 +118,39 @@ public class MineAssetDetailsBean extends BaseRes{
 
             public static class RowsBean {
                 /**
-                 * tokenAwardId : 29
                  * userId : 3
+                 * tradeType : 1
+                 * functionDesc : 1
+                 * functionType :
+                 * amount : 11111
+                 * createTime : 1528036223000
+                 * createTimeStr : 2018-06-03 22:30:23
+                 * status : 1
+                 * rewardGrantType : 1
                  * tokenRecordsId : null
-                 * praiseId : null
-                 * tokenAwardFunctionDesc : 点赞奖励
-                 * tokenAwardFunctionType : 17
-                 * inviteRewards : null
-                 * giveTime : null
-                 * giveTimeStr : null
-                 * priaiseAward : 0
-                 * awardBalance : null
-                 * containerAward : null
-                 * createTime : 1527758715000
-                 * createTimeStr : 2018-05-31 17:25:15
-                 * giveNext : null
+                 * tradeCode : null
+                 * tradeDate : null
+                 * tradeDateStr : null
+                 * balance : null
                  * updateTime : null
                  * updateTimeStr : null
-                 * rewardToken : 0
-                 * inviteNumber : null
-                 * distributionType : 2
-                 * counter : 0
-                 * grantType : null
-                 * userName : null
-                 * mobile : null
-                 * issuer : null
-                 * remark : null
+                 * memo : null
+                 * user_id : null
+                 * function_type : null
+                 * function_desc : null
+                 * sum : null
+                 * rewardToken : null
                  */
 
-                private int tokenAwardId;
                 private int userId;
-                private Object tokenRecordsId;
-                private Object praiseId;
-                private String tokenAwardFunctionDesc;
-                private int tokenAwardFunctionType;
-                private double inviteRewards;
-                private Object giveTime;
-                private Object giveTimeStr;
-                private int priaiseAward;
-                private Object awardBalance;
-                private Object containerAward;
+                private int tradeType;
+                private String functionDesc;
+                private int functionType;
+                private double amount;
                 private long createTime;
                 private String createTimeStr;
-                private Object giveNext;
-                private Object updateTime;
-                private Object updateTimeStr;
-                private int rewardToken;
-                private Object inviteNumber;
-                private int distributionType;
-                private int counter;
-                private Object grantType;
-                private Object userName;
-                private Object mobile;
-                private Object issuer;
-                private Object remark;
-
-                public int getTokenAwardId() {
-                    return tokenAwardId;
-                }
-
-                public void setTokenAwardId(int tokenAwardId) {
-                    this.tokenAwardId = tokenAwardId;
-                }
+                private int status;
+                private int rewardGrantType;
 
                 public int getUserId() {
                     return userId;
@@ -179,84 +160,36 @@ public class MineAssetDetailsBean extends BaseRes{
                     this.userId = userId;
                 }
 
-                public Object getTokenRecordsId() {
-                    return tokenRecordsId;
+                public int getTradeType() {
+                    return tradeType;
                 }
 
-                public void setTokenRecordsId(Object tokenRecordsId) {
-                    this.tokenRecordsId = tokenRecordsId;
+                public void setTradeType(int tradeType) {
+                    this.tradeType = tradeType;
                 }
 
-                public Object getPraiseId() {
-                    return praiseId;
+                public String getFunctionDesc() {
+                    return functionDesc;
                 }
 
-                public void setPraiseId(Object praiseId) {
-                    this.praiseId = praiseId;
+                public void setFunctionDesc(String functionDesc) {
+                    this.functionDesc = functionDesc;
                 }
 
-                public String getTokenAwardFunctionDesc() {
-                    return tokenAwardFunctionDesc;
+                public int getFunctionType() {
+                    return functionType;
                 }
 
-                public void setTokenAwardFunctionDesc(String tokenAwardFunctionDesc) {
-                    this.tokenAwardFunctionDesc = tokenAwardFunctionDesc;
+                public void setFunctionType(int functionType) {
+                    this.functionType = functionType;
                 }
 
-                public int getTokenAwardFunctionType() {
-                    return tokenAwardFunctionType;
+                public double getAmount() {
+                    return amount;
                 }
 
-                public void setTokenAwardFunctionType(int tokenAwardFunctionType) {
-                    this.tokenAwardFunctionType = tokenAwardFunctionType;
-                }
-
-                public double getInviteRewards() {
-                    return inviteRewards;
-                }
-
-                public void setInviteRewards(double inviteRewards) {
-                    this.inviteRewards = inviteRewards;
-                }
-
-                public Object getGiveTime() {
-                    return giveTime;
-                }
-
-                public void setGiveTime(Object giveTime) {
-                    this.giveTime = giveTime;
-                }
-
-                public Object getGiveTimeStr() {
-                    return giveTimeStr;
-                }
-
-                public void setGiveTimeStr(Object giveTimeStr) {
-                    this.giveTimeStr = giveTimeStr;
-                }
-
-                public int getPriaiseAward() {
-                    return priaiseAward;
-                }
-
-                public void setPriaiseAward(int priaiseAward) {
-                    this.priaiseAward = priaiseAward;
-                }
-
-                public Object getAwardBalance() {
-                    return awardBalance;
-                }
-
-                public void setAwardBalance(Object awardBalance) {
-                    this.awardBalance = awardBalance;
-                }
-
-                public Object getContainerAward() {
-                    return containerAward;
-                }
-
-                public void setContainerAward(Object containerAward) {
-                    this.containerAward = containerAward;
+                public void setAmount(double amount) {
+                    this.amount = amount;
                 }
 
                 public long getCreateTime() {
@@ -275,100 +208,20 @@ public class MineAssetDetailsBean extends BaseRes{
                     this.createTimeStr = createTimeStr;
                 }
 
-                public Object getGiveNext() {
-                    return giveNext;
+                public int getStatus() {
+                    return status;
                 }
 
-                public void setGiveNext(Object giveNext) {
-                    this.giveNext = giveNext;
+                public void setStatus(int status) {
+                    this.status = status;
                 }
 
-                public Object getUpdateTime() {
-                    return updateTime;
+                public int getRewardGrantType() {
+                    return rewardGrantType;
                 }
 
-                public void setUpdateTime(Object updateTime) {
-                    this.updateTime = updateTime;
-                }
-
-                public Object getUpdateTimeStr() {
-                    return updateTimeStr;
-                }
-
-                public void setUpdateTimeStr(Object updateTimeStr) {
-                    this.updateTimeStr = updateTimeStr;
-                }
-
-                public int getRewardToken() {
-                    return rewardToken;
-                }
-
-                public void setRewardToken(int rewardToken) {
-                    this.rewardToken = rewardToken;
-                }
-
-                public Object getInviteNumber() {
-                    return inviteNumber;
-                }
-
-                public void setInviteNumber(Object inviteNumber) {
-                    this.inviteNumber = inviteNumber;
-                }
-
-                public int getDistributionType() {
-                    return distributionType;
-                }
-
-                public void setDistributionType(int distributionType) {
-                    this.distributionType = distributionType;
-                }
-
-                public int getCounter() {
-                    return counter;
-                }
-
-                public void setCounter(int counter) {
-                    this.counter = counter;
-                }
-
-                public Object getGrantType() {
-                    return grantType;
-                }
-
-                public void setGrantType(Object grantType) {
-                    this.grantType = grantType;
-                }
-
-                public Object getUserName() {
-                    return userName;
-                }
-
-                public void setUserName(Object userName) {
-                    this.userName = userName;
-                }
-
-                public Object getMobile() {
-                    return mobile;
-                }
-
-                public void setMobile(Object mobile) {
-                    this.mobile = mobile;
-                }
-
-                public Object getIssuer() {
-                    return issuer;
-                }
-
-                public void setIssuer(Object issuer) {
-                    this.issuer = issuer;
-                }
-
-                public Object getRemark() {
-                    return remark;
-                }
-
-                public void setRemark(Object remark) {
-                    this.remark = remark;
+                public void setRewardGrantType(int rewardGrantType) {
+                    this.rewardGrantType = rewardGrantType;
                 }
             }
         }

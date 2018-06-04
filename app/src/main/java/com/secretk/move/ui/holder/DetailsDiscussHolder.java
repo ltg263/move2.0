@@ -10,13 +10,11 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
-import com.secretk.move.baseManager.BaseManager;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonCommentsBean;
 import com.secretk.move.ui.activity.MoreCommentsActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.Clickable;
@@ -69,7 +67,7 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
             view.setVisibility(View.GONE);
         }
         commentsBean = lists.get(position);
-        GlideUtils.loadCircleUrl(ivCommentedUserIcon, Constants.BASE_IMG_URL+commentsBean.getCommentUserIcon());
+        GlideUtils.loadCircleUserUrl(context,ivCommentedUserIcon, Constants.BASE_IMG_URL+commentsBean.getCommentUserIcon());
         tvCommentedUserName.setText(commentsBean.getCommentUserName());
         tvPraiseNum.setText(String.valueOf(commentsBean.getPraiseNum()));
         tvCreateTime.setText(commentsBean.getFloor() +"楼    "+StringUtil.getTimeToM(commentsBean.getCreateTime()));
@@ -85,6 +83,9 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         tvPraiseNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!tvPraiseNum.isSelected()){
+                    return;
+                }
                 tvPraiseNum.setEnabled(false);
                 setPraise(tvPraiseNum,commentsBean.getCommentsId());
             }
@@ -105,7 +106,6 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
             public void onClick(View view) {
                 Intent intent = new Intent(context,MoreCommentsActivity.class);
                 intent.putExtra("commentsBean", commentsBean);
-//                context.startActivity(intent);
                 ((Activity)context).startActivityForResult(intent,0);
             }
         });
@@ -117,9 +117,9 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         final int praiseNumA = commentsBean.getPraiseNum();
         String strNum;
         if(tvPraiseNum.isSelected()){
-            strNum = BaseManager.app.getString(R.string.like) + String.valueOf(praiseNumA +1);
+            strNum = String.valueOf(praiseNumA +1);
         }else{
-            strNum = BaseManager.app.getString(R.string.like) + String.valueOf(praiseNumA -1);
+            strNum = String.valueOf(praiseNumA -1);
         }
         tvPraiseNum.setText(strNum);
         tvPraiseNum.setSelected(!tvPraiseNum.isSelected());

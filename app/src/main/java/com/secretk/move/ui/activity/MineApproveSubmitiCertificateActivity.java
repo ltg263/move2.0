@@ -95,7 +95,6 @@ public class MineApproveSubmitiCertificateActivity extends BaseActivity {
                 try {
                     JSONObject obj = new JSONObject(str);
                     JSONObject data = obj.getJSONObject("data");
-
                     int praiseNum = data.getInt("status");
                     //praiseNum 1 审核成功 2 审核中 3 审核不通过 4 未提交审核
                     switch (praiseNum){
@@ -132,7 +131,7 @@ public class MineApproveSubmitiCertificateActivity extends BaseActivity {
         });
     }
 
-
+    String ormAgain= "no";
     @OnClick({R.id.but_next, R.id.but_anew})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -140,6 +139,7 @@ public class MineApproveSubmitiCertificateActivity extends BaseActivity {
                 butAnew();
                 break;
             case R.id.but_anew://审核不通过 重新認證
+                ormAgain="yes";
                 llNotPass.setVisibility(View.GONE);
                 llNot.setVisibility(View.VISIBLE);
                 break;
@@ -160,8 +160,8 @@ public class MineApproveSubmitiCertificateActivity extends BaseActivity {
             ToastUtils.getInstance().show(getResources().getString(R.string.mine_input_number_ok));
             return;
         }
-        String key[] = {"name", "number"};
-        String values[] = {name, number};
+        String key[] = {"name", "number","isOrmAgain"};
+        String values[] = {name, number ,ormAgain};
         IntentUtil.startActivity(MineApproveSubmitiPicActivity.class, key, values);
     }
 }

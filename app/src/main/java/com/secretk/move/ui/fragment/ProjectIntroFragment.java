@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.secretk.move.R;
 import com.secretk.move.base.LazyFragment;
@@ -16,9 +15,7 @@ import com.secretk.move.ui.adapter.ProjectIntroAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.NetUtil;
-import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
-import com.secretk.move.utils.ToastUtils;
 
 import java.util.List;
 
@@ -75,7 +72,7 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
     @Override
     public void initViews() {
         setVerticalManager(rvActiveUsers);
-        adapter = new ProjectIntroAdapter();
+        adapter = new ProjectIntroAdapter(getActivity());
         rvActiveUsers.setAdapter(adapter);
         adapter.setItemListener(this);
     }
@@ -99,7 +96,7 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
             adapter.setData(activeUsers);
             ProjectHomeBean.DataBean.ProjectBean.OwnerBean owner = projectIntro.getOwner();
             if (owner != null) {
-                GlideUtils.loadCircleUrl(ivIcon, Constants.BASE_IMG_URL + owner.getIcon());
+                GlideUtils.loadCircleUserUrl(getActivity(),ivIcon, Constants.BASE_IMG_URL + owner.getIcon());
                 tvUserName.setText(owner.getUserName());
                 tvUserSignature.setText(owner.getUserSignature());
                 //0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
