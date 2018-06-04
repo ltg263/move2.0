@@ -312,7 +312,7 @@ public class MineSetActivity extends BaseActivity {
         }
     }
     private void onPicTrimResult() {
-       GlideUtils.loadImage(ivHeadImg,PicUtil.uritempFile.getPath());
+       GlideUtils.loadCircleUserUrl(this,ivHeadImg,PicUtil.uritempFile.getPath());
     }
 
 }

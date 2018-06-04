@@ -85,7 +85,7 @@ public class DetailsReviewOnlyActivity extends BaseActivity  implements ItemClic
     protected void initUI(Bundle savedInstanceState) {
         pbReview.setAllTv(getResources().getString(R.string.technical_framework),
                 "/ 20% (2018人)",7.2);
-        GlideUtils.loadCircle(mHeadView.getImageView(),R.drawable.ic_collect_have);
+//        GlideUtils.loadCircleUserUrl(this,mHeadView.getImageView(),R.drawable.ic_collect_have);
         tvComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

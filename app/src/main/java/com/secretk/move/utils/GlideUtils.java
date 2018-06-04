@@ -14,24 +14,12 @@ import com.secretk.move.customview.GlideCircleTransform;
  */
 
 public class GlideUtils {
-    public static void loadCircle(ImageView img, int where) {
-        Glide.with(MoveApplication.getContext()).applyDefaultRequestOptions(new RequestOptions().transform(new GlideCircleTransform()).placeholder(R.drawable.ic_head_silent).error(R.drawable.ic_head_silent)).
-                load(where).into(img);
-    }
     public static void loadCircleUrl(ImageView img, String url) {
         Glide.with(MoveApplication.getContext()).applyDefaultRequestOptions(new RequestOptions().transform(new GlideCircleTransform()).placeholder(R.drawable.ic_head_silent).error(R.drawable.ic_head_silent)).
                 load(url).into(img);
     }
     public static void loadImage(Context context,ImageView img, String url) {
         Glide.with(context).applyDefaultRequestOptions(new RequestOptions().placeholder(R.drawable.ic_silent_plate_max).error(R.drawable.ic_silent_plate_max)).
-                load(url).into(img);
-    }
-    public static void loadImage(ImageView img, String url) {
-        Glide.with(MoveApplication.getContext()).applyDefaultRequestOptions(new RequestOptions().placeholder(R.drawable.ic_silent_plate_max).error(R.drawable.ic_silent_plate_max)).
-                load(url).into(img);
-    }
-    public static void loadImage(ImageView img, int url) {
-        Glide.with(MoveApplication.getContext()).applyDefaultRequestOptions(new RequestOptions().placeholder(R.drawable.ic_silent_plate_max).error(R.drawable.ic_silent_plate_max)).
                 load(url).into(img);
     }
 
