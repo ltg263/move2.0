@@ -184,9 +184,14 @@ public class MineSetActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
+        if(PicUtil.uritempFile==null){
+            saveData();
+            return;
+        }
         File file = new File(PicUtil.uritempFile.getPath());
         LogUtil.w("file.exists(:"+file.exists());
         if(!file.exists()){
+            saveData();
             return;
         }
         String[] split = file.getPath().split("\\.");

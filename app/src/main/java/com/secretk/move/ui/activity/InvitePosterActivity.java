@@ -50,7 +50,7 @@ public class InvitePosterActivity extends BaseActivity {
         imgUrl = getIntent().getStringExtra("imgUrl");
         ImageView iv = findViewById(R.id.iv);
         if(imgName.equals("邀请海报")){
-            GlideUtils.loadImage(this,iv,imgUrl);
+            GlideUtils.loadSideMaxImage(this,iv,imgUrl);
         }
         iv.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

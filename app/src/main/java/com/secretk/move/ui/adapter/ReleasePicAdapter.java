@@ -3,20 +3,14 @@ package com.secretk.move.ui.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.LongSparseArray;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.bean.PicBean;
-import com.secretk.move.bean.RowsBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.utils.GlideUtils;
 
@@ -54,7 +48,7 @@ public class ReleasePicAdapter extends RecyclerView.Adapter<ReleasePicAdapter.Vi
     public void onBindViewHolder(ViewHolder holder, int position) {
         String str = list.get(position);
         holder.setItemListener(mListener);
-        GlideUtils.loadImage(mContext, holder.img, str);
+        GlideUtils.loadSideMaxImage(mContext, holder.img, str);
     }
 
     @Override

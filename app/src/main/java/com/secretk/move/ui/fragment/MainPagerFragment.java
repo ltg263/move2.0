@@ -2,10 +2,8 @@ package com.secretk.move.ui.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.renderscript.Allocation;
@@ -25,20 +23,12 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.LazyFragment;
-import com.secretk.move.ui.activity.EvaluationWriteActivity;
-import com.secretk.move.ui.activity.ReleaseArticleActivity;
-import com.secretk.move.ui.activity.ReleaseDiscussActivity;
-import com.secretk.move.ui.activity.ReleaseEvaluationActivity;
 import com.secretk.move.ui.activity.SearchActivity;
+import com.secretk.move.ui.activity.SelectProjectActivity;
 import com.secretk.move.ui.adapter.MainFragmentPagerAdapter;
 import com.secretk.move.utils.UiUtils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.UUID;
 
 import butterknife.BindView;
 
@@ -123,10 +113,8 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         view.findViewById(R.id.ll_evaluation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent = new Intent(getContext(), EvaluationWriteActivity.class);
-                intent.putExtra("professionalEvaDetail", "professionalEvaDetail");
-                intent.putExtra("totalScore", "0");
-                intent.putExtra("projectId", 1);
+                intent = new Intent(getContext(), SelectProjectActivity.class);
+                intent.putExtra("publication_type",1);
                 startActivity(intent);
                 dialog.dismiss();
             }
@@ -134,8 +122,8 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         view.findViewById(R.id.ll_article).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent = new Intent(getContext(), ReleaseArticleActivity.class);
-                intent.putExtra("projectId", 1);
+                intent = new Intent(getContext(), SelectProjectActivity.class);
+                intent.putExtra("publication_type",2);
                 startActivity(intent);
                 dialog.dismiss();
             }
@@ -143,8 +131,8 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         view.findViewById(R.id.ll_discuss).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent = new Intent(getContext(), ReleaseDiscussActivity.class);
-                intent.putExtra("projectId", 1);
+                intent = new Intent(getContext(), SelectProjectActivity.class);
+                intent.putExtra("publication_type",3);
                 startActivity(intent);
                 dialog.dismiss();
             }

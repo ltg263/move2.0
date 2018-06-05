@@ -9,6 +9,8 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.ui.activity.DetailsArticleActivity;
 import com.secretk.move.ui.activity.DetailsDiscussActivity;
 import com.secretk.move.ui.activity.DetailsReviewAllActivity;
+import com.secretk.move.ui.activity.EvaluationSimplenessActivity;
+import com.secretk.move.ui.activity.EvaluationWriteActivity;
 import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.activity.PublishSucceedActivity;
@@ -137,6 +139,27 @@ public class IntentUtil {
     }
 
     /**
+     * 跳转到项目的简单评测Activity
+     *
+     * @param projectId
+     */
+    public static void startProjectSimplenessActivity(int projectId,String projectIcon,String projectName,String projectPay) {
+        String key[] = {"projectId","projectIcon","projectName","projectPay"};
+        String values[] = {String.valueOf(projectId),projectIcon,projectName,projectPay};
+        IntentUtil.startActivity(EvaluationSimplenessActivity.class, key, values);
+    }
+    /**
+     * 跳转到项目的专业评测Activity
+     *
+     * @param projectId
+     */
+    public static void startProjectCompileActivity(String modelType, String projectId,String projectName,String professionalEvaDetail,String totalScore,String modelName) {
+        String key[] = {Constants.ModelType.MODEL_TYPE,"projectId","projectName","professionalEvaDetail","totalScore","modelName"};
+        String values[] = {modelType,projectId,projectName,professionalEvaDetail,totalScore,modelName};
+        IntentUtil.startActivity(EvaluationWriteActivity.class, key, values);
+    }
+
+    /**
      * 跳转到用户的Activity
      *
      * @param userId
@@ -164,7 +187,7 @@ public class IntentUtil {
                 intent.putExtra("postId",postId);
                 startActivity(intent);
                 break;
-            case 2:
+            case 2://
                 intent=new Intent(MoveApplication.getContext(), DetailsDiscussActivity.class);
                 intent.putExtra("postId",postId);
                 startActivity(intent);

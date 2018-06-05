@@ -84,27 +84,30 @@ public interface Constants {
      */
     String REQUEST_CODE = "requestCode";
 
+
     /**
-     * 图片
+     * 外网
+     * 外网图片
      */
+    String BASE_URL = "http://47.98.197.101/rest/";
     String BASE_IMG_URL = "http://47.98.197.101/";
     /**
      * 外网
+     * 外网图片
      */
-    String BASE_URL = "http://47.98.197.101/rest/";
+//    String BASE_URL = "http://192.168.10.203:80/rest/";
+//    String BASE_IMG_URL = "http://192.168.10.203:80/rest/";
 
+    /**
+     * 张栋栋
+     * 张栋栋 图片
+     */
+//    String BASE_URL = "http://192.168.10.151:809/";
+//        String BASE_IMG_URL = "http://192.168.10.151:8080/";
     /**
      * 王晗
      */
 //    String BASE_URL = "http://192.168.10.123:8082/";
-    /**
-     * 张栋栋
-     */
-//    String BASE_URL = "http://192.168.10.151:809/";
-    /**
-     * 张栋栋 --证件的URL
-     */
-    String BASE_URL_ZJ = "http://192.168.10.151:8080/";
     /**
      * 罗艳清
      */
@@ -124,6 +127,8 @@ public interface Constants {
     String USER_REGISTER = BASE_URL + "kff/user/register";
     //老用户用户登录
     String USER_LOGIN = BASE_URL + "kff/user/login";
+    //获取登录用户信息。
+    String GET_USER_INFO = BASE_URL + " kff/user/getUserInfo";
     //重置密码
     String FORGET_PASSWORD = BASE_URL + "kff/user/forgetPassword";
     //总产明细列表的接口
@@ -136,16 +141,16 @@ public interface Constants {
     String MY_PINLESS_WALLET = BASE_URL + "kff/user/myPinlessWallet";
 
     //首页推荐
-    String MAIN_RECOMMEND = BASE_URL + "/kff/home/recommendList";
+    String MAIN_RECOMMEND = BASE_URL + "kff/home/recommendList";
     //首页关注
-    String MAIN_FOLLOW = BASE_URL + " /kff/home/followList";
+    String MAIN_FOLLOW = BASE_URL + " kff/home/followList";
     //青天榜
-    String MAIN_BLUE_SKY = BASE_URL + "/kff/home/projectRankList";
+    String MAIN_BLUE_SKY = BASE_URL + "kff/home/projectRankList";
 
     //上传用户头像 1用户头像；2帖子中内容图片；3项目图标
     String UPLOAD_USER_ICON_FILE = BASE_URL + "kff/home/uploadImgFile";
     //上传认证照片
-    String ID_CARD = BASE_URL + "/kff/upload/idcard";
+    String ID_CARD = BASE_URL + "kff/upload/idcard";
     //上传认证信息
     String UPLOAD_USER_CARD = BASE_URL + "kff/userCard/uploadUserCard";
     //重新上传认证信息
@@ -155,7 +160,7 @@ public interface Constants {
     //获取项目类型列表
     String PROJECT_TYPE_LIST = BASE_URL + "kff/project/projectTypeList";
     //	更新用户信息（头像，昵称）
-    String UPDATE_USER_INFO = BASE_URL + "/kff/user/updateUserInfo";
+    String UPDATE_USER_INFO = BASE_URL + "kff/user/updateUserInfo";
     //	我的收藏列表
     String MYC_OLLECT_LIST = BASE_URL + "kff/user/myCollectList";
     //	我的收藏列表
@@ -166,12 +171,12 @@ public interface Constants {
     String CREATE_POSTE = BASE_URL + "kff/user/createPoster";
     //提交意见反馈。
     String SUBMIT_SUGGEST = BASE_URL + "kff/system/submitSuggest";
-    String GET_H5_URLS = BASE_URL + "/kff/user/getH5URLs";
+    String GET_H5_URLS = BASE_URL + "kff/user/getH5URLs";
 
     //用户主页
     String USERHOME_INDEX = BASE_URL + "kff/userhome/index";
     //判断用户当前版本确定是否提示用户升级。
-    String UPGRADE = BASE_URL + "/kff/system/upgrade";
+    String UPGRADE = BASE_URL + "kff/system/upgrade";
     //用户 测评列表
     String USERHOME_EVALUATION_LIST = BASE_URL + "kff/userhome/evaluationList";
     //用户讨论列表
@@ -180,7 +185,7 @@ public interface Constants {
     String USERHOME_ARTICLE_LIST = BASE_URL + "kff/userhome/articleList";
 
     //项目主页 ，显示项目基本信息
-    String PROJECT_INDEX = BASE_URL + "/kff/project/index";
+    String PROJECT_INDEX = BASE_URL + "kff/project/index";
     //首页审核展示状态
     String USERCARD_STATUS = BASE_URL + "kff/userCard/usercardStatus ";
     //我的消息列表。
@@ -190,13 +195,13 @@ public interface Constants {
     //消息详情
     String DELETE_MESSAGE = BASE_URL + "kff/message/deleteMessage";
     //项目主页 评测列表
-    String PROJECT_EVALUATION_LIST = BASE_URL + "/kff/project/evaluationList";
+    String PROJECT_EVALUATION_LIST = BASE_URL + "kff/project/evaluationList";
     //项目讨论列表
     String PROJECT_DISCUSS_LIST = BASE_URL + "kff/project/discussList";
     //项目  文章列表
     String PROJECT_ARTICLE_LIST = BASE_URL + "kff/project/articleList";
     //讨论详情 页
-    String DISCUSS_DETAIL = BASE_URL + "/kff/home/discussDetail";
+    String DISCUSS_DETAIL = BASE_URL + "kff/home/discussDetail";
     //对(评测/文章/讨论)类型的帖子进行评论或者对评论内容进行评论
     String SAVE_COMMENT = BASE_URL + "kff/comments/saveComment";
     //讨论详情 最新评测列表和单个评论详情页childCommentList
@@ -204,7 +209,7 @@ public interface Constants {
     //文章详情 页面
     String ARTICLE_DETAIL = BASE_URL + "kff/home/articleDetail";
     //文章评论列表
-    String ARTICLE_COMMENT_LIST = BASE_URL + "/kff/home/articleCommentList";
+    String ARTICLE_COMMENT_LIST = BASE_URL + "kff/home/articleCommentList";
 
     //对 评论进行点赞
     String SAVE_COMMENTS_PRAISE = BASE_URL + "kff/praise/saveCommentsPraise";
@@ -216,7 +221,7 @@ public interface Constants {
     //取消对帖子的点赞  包括 文章 评测
     String CANCEL_POST_PRAISE = BASE_URL + "kff/praise/cancelPostPraise";
     //取消关注 项目 / 帖子 /人
-    String CANCEL_FOLLOW = BASE_URL + "/kff/follow/cancelFollow";
+    String CANCEL_FOLLOW = BASE_URL + "kff/follow/cancelFollow";
     //关注 项目 / 帖子 /人
     String SAVE_FOLLOW = BASE_URL + "kff/follow/saveFollow";
 
@@ -246,10 +251,10 @@ public interface Constants {
     String ARTICLE_COMMENT_REPLY_LIST = BASE_URL + "kff/home/articleCommentReplyList";
 
     //发表讨论时 添加标签 获取标签列表
-    String RELEASE_DISCUSS_LIST = BASE_URL + "/kff/discuss/tagList";
-    String RELEASE_ARTICLE = BASE_URL + "/kff/article/saveArticle";
-    String RELEASE_DISCUSS = BASE_URL + "/kff/discuss/saveDiscuss";
-    String SEARCH_PROJECTS = BASE_URL + "/kff/project/searchProjects";
+    String RELEASE_DISCUSS_LIST = BASE_URL + "kff/discuss/tagList";
+    String RELEASE_ARTICLE = BASE_URL + "kff/article/saveArticle";
+    String RELEASE_DISCUSS = BASE_URL + "kff/discuss/saveDiscuss";
+    String SEARCH_PROJECTS = BASE_URL + "kff/project/searchProjects";
 
     String UPLOAD_IMG_FILE = BASE_URL + "kff/home/uploadImgFile";
 

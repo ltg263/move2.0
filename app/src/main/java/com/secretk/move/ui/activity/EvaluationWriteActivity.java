@@ -22,7 +22,6 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.PicBean;
-import com.secretk.move.bean.base.BaseRes;
 import com.secretk.move.ui.adapter.ReleaseArticleLabelAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
@@ -128,9 +127,9 @@ public class EvaluationWriteActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        projectId = getIntent().getIntExtra("projectId", 0);
+        projectId = Integer.valueOf(getIntent().getStringExtra("projectId"));
         totalScore = getIntent().getStringExtra("totalScore");
-        modelType = getIntent().getIntExtra(Constants.ModelType.MODEL_TYPE, 0);
+        modelType = Integer.valueOf(getIntent().getStringExtra(Constants.ModelType.MODEL_TYPE));
         professionalEvaDetail = getIntent().getStringExtra("professionalEvaDetail");
         //	modelType = 1-简单评测；2-全面系统专业评测;3-部分系统专业评测；4-专业评测-自定义类型
         //modelType=1对应为值为“简单评测", 2 为 "ALL-专业评测" 3 为 "PART—项目立项、核心团队" 4 为 "ALL-专业评测"
@@ -324,11 +323,17 @@ public class EvaluationWriteActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, BaseRes.class, new HttpCallBackImpl<BaseRes>() {
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
-            public void onCompleted(BaseRes str) {
-                IntentUtil.startPublishSucceedActivity("postId",
-                        postTitle, getResources().getString(R.string.evaluation_succeed), Constants.PublishSucceed.EVALUATION);
+            public void onCompleted(String str) {
+                try {
+                    JSONObject object = new JSONObject(str);
+                    int postId = object.getJSONObject("data").getInt("postId");
+                    IntentUtil.startPublishSucceedActivity(String.valueOf(postId),
+                            postTitle, getResources().getString(R.string.evaluation_succeed), Constants.PublishSucceed.EVALUATION);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -337,4 +342,5 @@ public class EvaluationWriteActivity extends BaseActivity {
             }
         });
     }
+
 }

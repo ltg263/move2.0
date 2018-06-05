@@ -38,9 +38,9 @@ public class TemporaryIV extends BaseActivity {
         String imgName = getIntent().getStringExtra("imgName");
         ImageView iv = findViewById(R.id.iv);
         if(imgName.equals("邀请海报")){
-            GlideUtils.loadImage(this,iv,getIntent().getStringExtra("imgUrl"));
+            GlideUtils.loadSideMaxImage(this,iv,getIntent().getStringExtra("imgUrl"));
         }else {
-            GlideUtils.loadImage(this,iv,Constants.BASE_IMG_URL + getIntent().getStringExtra("imgUrl"));
+            GlideUtils.loadSideMaxImage(this,iv,Constants.BASE_IMG_URL + getIntent().getStringExtra("imgUrl"));
         }
     }
 

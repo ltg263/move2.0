@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.secretk.move.MoveApplication;
@@ -17,6 +18,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.SysEvaluationModelBean;
 import com.secretk.move.ui.adapter.EvaluationTypeAdapter;
+import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
@@ -48,12 +50,16 @@ public class EvaluationProfessionalActivity extends BaseActivity {
     EvaluationTypeAdapter adapter;
     @BindView(R.id.tv_status)
     TextView textView;
+    @BindView(R.id.iv_project_icon)
+    ImageView ivProjectIcon;
     @BindView(R.id.tv_zw_name)
     TextView tvZwName;
     @BindView(R.id.tv_yw_mane)
     TextView tvYwMane;
     private List<SysEvaluationModelBean.DataBean.ModeDetailListBean> listBeans;
     private int projectId;
+    private String projectName;
+    private String projectPay;
 
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
@@ -73,10 +79,16 @@ public class EvaluationProfessionalActivity extends BaseActivity {
     @Override
     protected void initUI(Bundle savedInstanceState) {
         MoveApplication.getContext().addActivity(this);
-        projectId = getIntent().getIntExtra("projectId",0);
+        Intent intent = getIntent();
+        projectId = intent.getIntExtra("projectId",0);
         setVerticalManager(rvTypeLists);
         adapter = new EvaluationTypeAdapter(this);
         rvTypeLists.setAdapter(adapter);
+        GlideUtils.loadCircleProjectUrl(this,ivProjectIcon,Constants.BASE_IMG_URL+intent.getStringExtra("projectIcon"));
+        projectName = intent.getStringExtra("projectName");
+        projectPay = intent.getStringExtra("projectPay");
+        tvZwName.setText(projectName);
+        tvYwMane.setText("/"+projectPay);
 
         String tagAll = "经过科学筛选，系统提供以下几个评测纬度，可完整评测，" +
                 "也可部分评测；您也可以自己新建模型进行测评。"
@@ -129,7 +141,7 @@ public class EvaluationProfessionalActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        IntentUtil.startActivity(EvaluationSimplenessActivity.class);
+        finish();
     }
 
     @OnClick({R.id.ll_project, R.id.btn_new, R.id.btn_compile})
@@ -140,6 +152,8 @@ public class EvaluationProfessionalActivity extends BaseActivity {
                 break;
             case R.id.btn_new:
                 Intent intents = new Intent(this,EvaluationNewActivity.class);
+                intents.putExtra("projectName",projectName);
+                intents.putExtra("projectPay",projectPay);
                 intents.putExtra("projectId",projectId);
                 startActivity(intents);
                 break;
@@ -149,6 +163,8 @@ public class EvaluationProfessionalActivity extends BaseActivity {
                     return;
                 }
                 Intent intent = new Intent(this,EvaluationCompileListActivity.class);
+                intent.putExtra("projectName",projectName);
+                intent.putExtra("projectPay",projectPay);
                 intent.putExtra("projectId",projectId);
                 intent.putParcelableArrayListExtra("sys_evaluation_model", (ArrayList<? extends Parcelable>) listBeans);
                 startActivity(intent);
@@ -157,7 +173,10 @@ public class EvaluationProfessionalActivity extends BaseActivity {
     }
 
     public String getProjectName() {
-        return tvZwName.getText().toString() + tvYwMane.getText().toString();
+        return tvZwName.getText().toString();
+    }
+    public String getprojectPay() {
+        return tvYwMane.getText().toString();
     }
     public int getProjectId() {
         return projectId;

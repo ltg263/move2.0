@@ -320,7 +320,7 @@ public class RichTextEditor extends ScrollView {
     public void addImageViewAtIndex(final int index, String imagePath) {
         final RelativeLayout imageLayout = createImageLayout();
         DataImageView imageView = imageLayout.findViewById(R.id.edit_imageView);
-        GlideUtils.loadImage(context, imageView, imagePath);
+        GlideUtils.loadSideMaxImage(context, imageView, imagePath);
         imageView.setAbsolutePath(imagePath);//保留这句，后面保存数据会用
         allLayout.addView(imageLayout, index);
     }

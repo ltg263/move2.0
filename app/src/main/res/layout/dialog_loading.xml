@@ -2,16 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/rl_loadingall"
-    android:background="@drawable/ic_loading_bg">
-
+    android:id="@+id/rl_loadingall">
+<!--android:background="@drawable/ic_loading_bg"-->
     <ImageView
         android:id="@+id/iv_loading_ring"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="4dp"
-        android:background="@drawable/ic_loading_circle"
         />
     <!--android:src="@drawable/ic_loading_circle"-->
 
@@ -29,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/iv_loading_ring"
         android:layout_centerHorizontal="true"
+        android:visibility="gone"
         android:layout_marginTop="8dp"
         android:text="@string/dialog_loading"
         android:textColor="@color/title_gray_ee" />

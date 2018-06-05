@@ -10,13 +10,9 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
-import com.secretk.move.bean.RowsBean;
 import com.secretk.move.bean.SysEvaluationModelBean;
-import com.secretk.move.bean.base.BaseRes;
 import com.secretk.move.ui.activity.EvaluationProfessionalActivity;
 import com.secretk.move.ui.activity.EvaluationProfessionalItemActivity;
-import com.secretk.move.ui.holder.HomeListHolder;
-import com.secretk.move.utils.IntentUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +105,8 @@ public class EvaluationTypeAdapter extends RecyclerView.Adapter<EvaluationTypeAd
                 public void onClick(View view) {
                     Intent intent = new Intent(context,EvaluationProfessionalItemActivity.class);
                     intent.putExtra("sys_evaluation_model",lists.get(position));
-                    intent.putExtra("project_name",((EvaluationProfessionalActivity)context).getProjectName());
+                    intent.putExtra("projectName",((EvaluationProfessionalActivity)context).getProjectName());
+                    intent.putExtra("projectPay",((EvaluationProfessionalActivity)context).getprojectPay());
                     intent.putExtra("projectId",((EvaluationProfessionalActivity)context).getProjectId());
                     context.startActivity(intent);
                 }

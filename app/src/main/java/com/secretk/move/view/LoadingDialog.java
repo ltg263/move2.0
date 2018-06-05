@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.AnimationDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,6 +20,7 @@ import com.secretk.move.baseManager.BaseManager;
 
 public class LoadingDialog {
 
+	private final AnimationDrawable drawable;
 	private View loadingRing;
 	private TextView loadingMsg;
 	private ImageView loadingLogo;
@@ -31,6 +33,10 @@ public class LoadingDialog {
 		loadingRing = view.findViewById(R.id.iv_loading_ring);
 		loadingMsg =  view.findViewById(R.id.tv_loading_text);
 		loadingLogo =  view.findViewById(R.id.iv_loading_logo);
+		drawable = (AnimationDrawable) BaseManager.app.getResources().getDrawable(R.drawable.start_loading_dialog);
+//		loadingRing.setBackgroundDrawable(drawable);
+		loadingRing.setBackground(drawable);
+		drawable.setOneShot(false);
 		dialog = new Dialog(ownerActivity, R.style.RemindDialog);
 		dialog.getWindow().setContentView(view);
 		dialog.setCancelable(true);
@@ -39,13 +45,18 @@ public class LoadingDialog {
 
 	public void show() {
 		if (dialog != null && !dialog.isShowing()) {
+
+
 			RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f,
 					Animation.RELATIVE_TO_SELF, 0.5f);
 			rotate.setDuration(1000);
 			rotate.setRepeatCount(Animation.INFINITE);
 			rotate.setRepeatMode(Animation.RESTART);
 			rotate.setInterpolator(new LinearInterpolator());
-			loadingRing.startAnimation(rotate);
+//			loadingRing.startAnimation(rotate);转圈
+			if(!drawable.isRunning()){
+				drawable.start();
+			}
 			dialog.show();
 		}
 	}
@@ -80,6 +91,9 @@ public class LoadingDialog {
 
 	public void dismiss() {
 		if (dialog != null && dialog.isShowing()) {
+			if(drawable.isRunning()){
+				drawable.stop();
+			}
 			dialog.dismiss();
 		}
 	}

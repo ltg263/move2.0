@@ -163,13 +163,13 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
             if (imgs.size() > 2) {
                 llMultiImg.setVisibility(View.VISIBLE);
                 ivFileName.setVisibility(View.GONE);
-                GlideUtils.loadImage(context, ivOnt, Constants.BASE_URL_ZJ + imgs.get(0).getFileUrl());
-                GlideUtils.loadImage(context, ivTwo, Constants.BASE_URL_ZJ + imgs.get(1).getFileUrl());
-                GlideUtils.loadImage(context, ivThree, Constants.BASE_URL_ZJ + imgs.get(2).getFileUrl());
+                GlideUtils.loadSideMinImage(context, ivOnt, Constants.BASE_IMG_URL + imgs.get(0).getFileUrl());
+                GlideUtils.loadSideMinImage(context, ivTwo, Constants.BASE_IMG_URL + imgs.get(1).getFileUrl());
+                GlideUtils.loadSideMinImage(context, ivThree, Constants.BASE_IMG_URL + imgs.get(2).getFileUrl());
             } else {
                 llMultiImg.setVisibility(View.GONE);
                 ivFileName.setVisibility(View.VISIBLE);
-                GlideUtils.loadImage(context, ivFileName, Constants.BASE_URL_ZJ + imgs.get(0).getFileUrl());
+                GlideUtils.loadSideMaxImage(context, ivFileName, Constants.BASE_IMG_URL + imgs.get(0).getFileUrl());
             }
         }else{
             llMultiImg.setVisibility(View.GONE);

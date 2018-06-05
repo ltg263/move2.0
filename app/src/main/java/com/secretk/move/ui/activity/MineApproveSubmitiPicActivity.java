@@ -195,6 +195,6 @@ public class MineApproveSubmitiPicActivity extends BaseActivity {
         }
     }
     private void onPicTrimResult() {
-        GlideUtils.loadImage(this,ivIcon,PicUtil.uritempFile.getPath());
+        GlideUtils.loadSideMaxImage(this,ivIcon,PicUtil.uritempFile.getPath());
     }
 }

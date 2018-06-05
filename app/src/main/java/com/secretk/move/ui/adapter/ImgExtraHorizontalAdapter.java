@@ -58,7 +58,7 @@ public class ImgExtraHorizontalAdapter extends RecyclerView.Adapter {
         }
         img.setLayoutParams(params);
         img.setPadding(0, 0, UiUtils.dip2px(5), 0);
-        GlideUtils.loadImage(mContext,img, str);
+        GlideUtils.loadSideMaxImage(mContext,img, str);
     }
 
     @Override

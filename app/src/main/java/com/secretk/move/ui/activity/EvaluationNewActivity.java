@@ -1,6 +1,5 @@
 package com.secretk.move.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -18,6 +17,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.EvaluationNewBean;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.ui.adapter.EvaluationNewAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.ToastUtils;
@@ -75,6 +75,10 @@ public class EvaluationNewActivity extends BaseActivity {
         pbsComprehensive.setTvOne(getResources().getString(R.string.comprehensive_evaluation),0,
                 getResources().getColor(R.color.title_gray));
         pbsComprehensive.setTvThree(0,16,R.color.app_background);
+
+        String projectName = getIntent().getStringExtra("projectName");
+        String projectPay = getIntent().getStringExtra("projectPay");
+        tvEvaluationObject.setText(projectPay+"/"+projectName);
 
         setVerticalManager(mRecyclerView);
         adapter = new EvaluationNewAdapter(this);
@@ -172,12 +176,9 @@ public class EvaluationNewActivity extends BaseActivity {
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String bean) {
-                Intent intent = new Intent(EvaluationNewActivity.this,EvaluationWriteActivity.class);
-                intent.putExtra("projectId",projectId);
-                intent.putExtra("professionalEvaDetail",list.toString());
-                intent.putExtra("totalScore",pbsComprehensive.getTotalScore());
-                intent.putExtra(Constants.ModelType.MODEL_TYPE,Constants.ModelType.MODEL_TYPE_ALL_NEW);
-                startActivity(intent);
+                IntentUtil.startProjectCompileActivity(String.valueOf(Constants.ModelType.MODEL_TYPE_ALL_NEW),
+                        String.valueOf(projectId),getIntent().getStringExtra("projectName"),
+                        list.toString(),pbsComprehensive.getTotalScore(),"");
             }
 
             @Override

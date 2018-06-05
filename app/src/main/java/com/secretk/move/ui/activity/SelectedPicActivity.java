@@ -1,6 +1,12 @@
 package com.secretk.move.ui.activity;
 
+import android.content.ContentResolver;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.provider.MediaStore.Files.FileColumns;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.bean.PicBean;
@@ -23,20 +28,13 @@ import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-import android.content.ContentResolver;
-import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.provider.MediaStore.Files.FileColumns;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SelectedPicActivity extends AppCompatActivity {
     @BindView(R.id.tv_release)
@@ -143,7 +141,7 @@ public class SelectedPicActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
             final PicBean bean = list.get(position);
-            GlideUtils.loadImage(mContext, holder.img, bean.getPath());
+            GlideUtils.loadSideMinImage(mContext, holder.img, bean.getPath());
             if (picArray.get(bean.getId()) != null) {
                 Glide.with(mContext).
                         load(R.drawable.check_checked).into(holder.check);

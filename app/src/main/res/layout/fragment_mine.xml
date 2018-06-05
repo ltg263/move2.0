@@ -356,16 +356,23 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dp_10"
-            android:layout_weight="10"
+            android:layout_weight="1"
             android:text="推荐好友"
             android:textColor="@color/title_gray"
             android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_10"
+            android:text="邀请一人得100KFF"
+            android:textColor="#fc514f"
+            android:textSize="@dimen/sp_12" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
             android:background="@drawable/right_boult" />
     </LinearLayout>
 

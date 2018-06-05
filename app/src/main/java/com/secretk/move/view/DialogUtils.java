@@ -133,7 +133,7 @@ public class DialogUtils {
         final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_image, null);
         ImageView ivIcon = view.findViewById(R.id.iv_icon);
-        GlideUtils.loadImage(context,ivIcon,url);
+        GlideUtils.loadSideMaxImage(context,ivIcon,url);
         ivIcon.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {

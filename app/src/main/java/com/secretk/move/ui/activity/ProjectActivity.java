@@ -326,9 +326,8 @@ public class ProjectActivity extends BaseActivity {
                 IntentUtil.startActivity(DetailsUserGradeActivity.class);
                 break;
             case R.id.tv_review:
-                Intent intent = new Intent(this,EvaluationSimplenessActivity.class);
-                intent.putExtra("projectId",projectInfo.getProjectId());
-                startActivity(intent);
+                IntentUtil.startProjectSimplenessActivity(projectInfo.getProjectId(),projectInfo.getProjectIcon(),
+                        projectInfo.getProjectChineseName(),projectInfo.getProjectCode());
                 break;
             case R.id.tv_follow_status:
                 tvFollowStatus.setEnabled(false);
@@ -351,9 +350,8 @@ public class ProjectActivity extends BaseActivity {
         Intent intent;
         switch (viewPager.getCurrentItem()){
             case 1:
-                intent = new Intent(this, EvaluationSimplenessActivity.class);
-                intent.putExtra("projectId",projectInfo.getProjectId());
-                startActivity(intent);
+                IntentUtil.startProjectSimplenessActivity(projectInfo.getProjectId(),projectInfo.getProjectIcon(),
+                        projectInfo.getProjectChineseName(),projectInfo.getProjectCode());
                 break;
             case 2:
                 intent = new Intent(this, ReleaseArticleActivity.class);

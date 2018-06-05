@@ -1,6 +1,5 @@
 package com.secretk.move.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -10,6 +9,7 @@ import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.SysEvaluationModelBean;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.EvaluationSliderView;
 
@@ -54,9 +54,10 @@ public class EvaluationProfessionalItemActivity extends BaseActivity {
     protected void initUI(Bundle savedInstanceState) {
         MoveApplication.getContext().addActivity(this);
         sysEvaluationModel = getIntent().getParcelableExtra("sys_evaluation_model");
-        String projectName = getIntent().getStringExtra("project_name");
+        String projectName = getIntent().getStringExtra("projectName");
+        String projectPay = getIntent().getStringExtra("projectPay");
+        tvProjectName.setText(projectPay+"/"+projectName);
         projectId = getIntent().getIntExtra("projectId",0);
-        tvProjectName.setText(projectName);
         esViewa.setScore(sysEvaluationModel.getDetailWeight() / 10f);
         esViewa.setTvDimensionalityName(sysEvaluationModel.getDetailName());
         esViewa.setEsvBackground(R.color.app_background);
@@ -79,12 +80,9 @@ public class EvaluationProfessionalItemActivity extends BaseActivity {
         }
         JSONArray array = new JSONArray();
         array.put(node);
-        Intent intent = new Intent(this,EvaluationWriteActivity.class);
-        intent.putExtra("professionalEvaDetail",array.toString());
-        intent.putExtra("modelName",sysEvaluationModel.getDetailName());
-        intent.putExtra("projectId",projectId);
-        intent.putExtra("totalScore",esViewa.getTvEvaluationMun());
-        intent.putExtra(Constants.ModelType.MODEL_TYPE,Constants.ModelType.MODEL_TYPE_PART);
-        startActivity(intent);
+
+        IntentUtil.startProjectCompileActivity(String.valueOf(Constants.ModelType.MODEL_TYPE_PART),
+                String.valueOf(projectId),getIntent().getStringExtra("projectName"),
+                array.toString(),esViewa.getTvEvaluationMun(),sysEvaluationModel.getDetailName());
     }
 }

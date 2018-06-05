@@ -12,7 +12,6 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.BaseManager;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.base.BaseRes;
 
 import org.json.JSONException;
 import org.json.JSONObject;

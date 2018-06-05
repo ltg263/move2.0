@@ -1,6 +1,5 @@
 package com.secretk.move.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
@@ -12,6 +11,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.SysEvaluationModelBean;
 import com.secretk.move.ui.adapter.EvaluationCompileAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.ProgressBarStyleView;
 import com.secretk.move.view.RecycleScrollView;
@@ -69,8 +69,9 @@ public class EvaluationCompileListActivity extends BaseActivity {
         rsv.setFocusableInTouchMode(true);
         sysEvaluationModel =
                 getIntent().getParcelableArrayListExtra("sys_evaluation_model");
-        String projectName = getIntent().getStringExtra("project_name");
-        tvProjectName.setText(projectName);
+        String projectName = getIntent().getStringExtra("projectName");
+        String projectPay = getIntent().getStringExtra("projectPay");
+        tvProjectName.setText(projectPay+"/"+projectName);
 
         pbComprehensiveEvaluation.setTvOne(getResources().getString(R.string.comprehensive_evaluation), 0,
                 getResources().getColor(R.color.title_gray));
@@ -103,12 +104,9 @@ public class EvaluationCompileListActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
-        Intent intent = new Intent(this,EvaluationWriteActivity.class);
-        intent.putExtra("professionalEvaDetail",professionalEvaDetail.toString());
-        intent.putExtra("totalScore",pbComprehensiveEvaluation.getTotalScore());
-        intent.putExtra("projectId",projectId);
-        intent.putExtra(Constants.ModelType.MODEL_TYPE, Constants.ModelType.MODEL_TYPE_ALL);
-        startActivity(intent);
+        IntentUtil.startProjectCompileActivity(String.valueOf(Constants.ModelType.MODEL_TYPE_ALL),
+                String.valueOf(projectId),getIntent().getStringExtra("projectName"),
+                professionalEvaDetail.toString(),pbComprehensiveEvaluation.getTotalScore(),"");
     }
 
     @Override

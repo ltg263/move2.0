@@ -13,7 +13,6 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
-import com.secretk.move.bean.base.BaseRes;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
@@ -84,6 +83,9 @@ public class EvaluationSimplenessActivity extends BaseActivity {
     protected void OnToolbarRightListener() {
         Intent intent = new Intent(this, EvaluationProfessionalActivity.class);
         intent.putExtra("projectId", projectId);
+        intent.putExtra("projectIcon", getIntent().getStringExtra("projectIcon"));
+        intent.putExtra("projectName", getIntent().getStringExtra("projectName"));
+        intent.putExtra("projectPay", getIntent().getStringExtra("projectPay"));
         startActivity(intent);
     }
 
@@ -125,11 +127,17 @@ public class EvaluationSimplenessActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, BaseRes.class, new HttpCallBackImpl<BaseRes>() {
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
-            public void onCompleted(BaseRes str) {
-                IntentUtil.startPublishSucceedActivity("postId",
-                        getString(R.string.evaluation_simpleness), getResources().getString(R.string.evaluation_succeed), Constants.PublishSucceed.EVALUATION);
+            public void onCompleted(String str) {
+                try {
+                    JSONObject object = new JSONObject(str);
+                    int postId = object.getJSONObject("data").getInt("postId");
+                    IntentUtil.startPublishSucceedActivity(String.valueOf(postId),
+                            getString(R.string.evaluation_simpleness), getResources().getString(R.string.evaluation_succeed), Constants.PublishSucceed.EVALUATION);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

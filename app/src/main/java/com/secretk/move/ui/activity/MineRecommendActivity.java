@@ -159,7 +159,7 @@ public class MineRecommendActivity extends BaseActivity {
                     JSONObject obj = new JSONObject(str);
                     String url = obj.getJSONObject("data").getString("url");
                     String key[]={"imgUrl","imgName"};
-                    String values[]={Constants.BASE_URL_ZJ+url,"邀请海报"};
+                    String values[]={Constants.BASE_IMG_URL+url,"邀请海报"};
                     IntentUtil.startActivity(InvitePosterActivity.class,key,values);
                 } catch (JSONException e) {
                     e.printStackTrace();

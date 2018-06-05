@@ -45,7 +45,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesHold
 
     @Override
     public void onBindViewHolder(ImagesHolder holder, final int position) {
-        GlideUtils.loadImage(context,holder.img, Constants.BASE_IMG_URL+lists.get(position).getUrl());
+        GlideUtils.loadSideMaxImage(context,holder.img, Constants.BASE_IMG_URL+lists.get(position).getUrl());
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

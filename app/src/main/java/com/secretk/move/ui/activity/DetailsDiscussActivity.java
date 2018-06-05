@@ -332,7 +332,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                             imgUrl = lists.get(0).getUrl();
                             imgName = lists.get(0).getName();
                             ivPostSmallImages.setVisibility(View.VISIBLE);
-                            GlideUtils.loadImage(DetailsDiscussActivity.this, ivPostSmallImages, Constants.BASE_IMG_URL + imgUrl);
+                            GlideUtils.loadSideMaxImage(DetailsDiscussActivity.this, ivPostSmallImages, Constants.BASE_IMG_URL + imgUrl);
                         } else {
                             rvImg.setVisibility(View.VISIBLE);
                             imagesadapter.setData(lists);

@@ -8,6 +8,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.apiService.HttpCallBackImpl;
+import com.secretk.move.apiService.RetrofitUtil;
+import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.UserLoginInfo;
@@ -26,7 +29,13 @@ import com.secretk.move.ui.activity.WebViewActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
+import com.secretk.move.utils.MD5;
+import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.FragmentMineView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -188,16 +197,64 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
         }
     }
 
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        LogUtil.w("requestCode:"+requestCode);
+//        LogUtil.w("data:"+data);
+//        if(requestCode==0 && data!=null){
+//            LogUtil.w("data:"+data.getExtras().getBoolean(Constants.REQUEST_CODE));
+//            if(data.getExtras().getBoolean(Constants.REQUEST_CODE)){
+////                onFirstUserVisible();
+//            }
+//        }
+//    }
+
+
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        LogUtil.w("requestCode:"+requestCode);
-        LogUtil.w("data:"+data);
-        if(requestCode==0 && data!=null){
-            LogUtil.w("data:"+data.getExtras().getBoolean(Constants.REQUEST_CODE));
-            if(data.getExtras().getBoolean(Constants.REQUEST_CODE)){
+    public void onResume() {
+        super.onResume();
+        isLoginZt = sharedUtils.get(Constants.IS_LOGIN_KEY,false);
+        if(isLoginZt){
+            token = sharedUtils.get(Constants.TOKEN_KEY,"");
+            if(StringUtil.isNotBlank(token)){
+                getUserInfo(token);
+            }
+        }else{
+            token = "";
+        }
+    }
+
+    private  void getUserInfo(String token) {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String url =Constants.GET_USER_INFO;
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(url)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, UserLoginInfo.class, new HttpCallBackImpl<UserLoginInfo>() {
+            @Override
+            public void onCompleted(UserLoginInfo userInfo) {
+                //将token存入Shared中
+//                sharedUtils.put(Constants.TOKEN_KEY,userInfo.getData().getToken());
+                //登录的状态
+                sharedUtils.put(Constants.IS_LOGIN_KEY,true);
+                ////用户信息
+                sharedUtils.put(Constants.USER_INFOS,userInfo.getData().getUser().toString());
+                sharedUtils.put(Constants.USER_TYPE,userInfo.getData().getUser().getUserType());
+                sharedUtils.put(Constants.MOBILE,userInfo.getData().getUser().getMobile());
                 onFirstUserVisible();
             }
-        }
+
+            @Override
+            public void onError(String message) {
+            }
+        });
     }
 }

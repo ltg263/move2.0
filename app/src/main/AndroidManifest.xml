@@ -113,6 +113,9 @@
             android:name=".ui.activity.HomeActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.SelectProjectActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.MoreCommentsActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
