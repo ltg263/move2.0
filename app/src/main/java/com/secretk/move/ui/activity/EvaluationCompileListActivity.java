@@ -105,7 +105,7 @@ public class EvaluationCompileListActivity extends BaseActivity {
             }
         }
         IntentUtil.startProjectCompileActivity(String.valueOf(Constants.ModelType.MODEL_TYPE_ALL),
-                String.valueOf(projectId),getIntent().getStringExtra("projectName"),
+                String.valueOf(projectId),getIntent().getStringExtra("projectPay"),
                 professionalEvaDetail.toString(),pbComprehensiveEvaluation.getTotalScore(),"");
     }
 

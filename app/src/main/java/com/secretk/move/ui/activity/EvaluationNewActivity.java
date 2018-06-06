@@ -177,7 +177,7 @@ public class EvaluationNewActivity extends BaseActivity {
             @Override
             public void onCompleted(String bean) {
                 IntentUtil.startProjectCompileActivity(String.valueOf(Constants.ModelType.MODEL_TYPE_ALL_NEW),
-                        String.valueOf(projectId),getIntent().getStringExtra("projectName"),
+                        String.valueOf(projectId),getIntent().getStringExtra("projectPay"),
                         list.toString(),pbsComprehensive.getTotalScore(),"");
             }
 

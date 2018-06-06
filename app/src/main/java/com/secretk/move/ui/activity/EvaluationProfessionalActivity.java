@@ -173,10 +173,10 @@ public class EvaluationProfessionalActivity extends BaseActivity {
     }
 
     public String getProjectName() {
-        return tvZwName.getText().toString();
+        return projectName;
     }
     public String getprojectPay() {
-        return tvYwMane.getText().toString();
+        return projectPay;
     }
     public int getProjectId() {
         return projectId;

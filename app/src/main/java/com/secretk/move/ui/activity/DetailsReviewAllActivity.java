@@ -183,7 +183,9 @@ public class DetailsReviewAllActivity extends BaseActivity {
         }
         wvPostShortDesc.loadData(evaluationDetail.getEvauationContent(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
         tvCreateTime.setText(StringUtil.getTimeToM(evaluationDetail.getCreateTime()));
-        tvDonateNum.setText(evaluationDetail.getDonateNum() + getString(R.string.sponsor_num));
+        if(evaluationDetail.getDonateNum()>0){
+            tvDonateNum.setText(evaluationDetail.getDonateNum() + getString(R.string.sponsor_num));
+        }
         praiseNum = evaluationDetail.getPraiseNum();
         tvPraiseStatus.setText(getString(R.string.like) + String.valueOf(praiseNum));
         ///0-未点赞，1-已点赞，数字

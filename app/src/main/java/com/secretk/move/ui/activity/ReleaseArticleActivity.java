@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.LongSparseArray;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -22,11 +23,11 @@ import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.bean.PicBean;
 import com.secretk.move.bean.base.BaseRes;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.ReleaseArticleLabelAdapter;
-import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -89,6 +90,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recycler_horizontal.setLayoutManager(layoutManager);
         recycler_horizontal.setAdapter(releaseArticleLabelAdapter);
+        releaseArticleLabelAdapter.setItemListener(this);
         ed_title.setHint(Html.fromHtml("请输入标题 <small>(6-30字之间)</small>"));
         loadingDialog = new LoadingDialog(this);
         projectId = getIntent().getIntExtra("projectId", 0);
@@ -147,7 +149,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
                 .url(Constants.UPLOAD_USER_ICON_FILE)
                 .addPart("token", token)
                 .addPart("uploadfile ", StringUtil.getMimeType(file.getName()), file)
-                .addPart("imgtype", "3")
+                .addPart(Constants.UPLOADIMG_TYPE.IMG_TYPE_KEY, Constants.UPLOADIMG_TYPE.PROJECT_ICON)
                 .build();
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
@@ -184,7 +186,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
             node.put("token", token);
             node.put("projectId", projectId);
             node.put("postTitle", getEdTitle());
-            node.put("articleContents", getEditData(list));
+            node.put("articleContents", richtext_editor.getEditData(list));
             if (!TextUtils.isEmpty(postSmallImages.toString())) {
                 node.put("discussImages", postSmallImages.toString());
             }
@@ -210,27 +212,6 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
                 }
             }
         });
-    }
-
-    /**
-     * 生成控件中的数据
-     */
-    private String getEditData(List<RichTextEditor.EditData> editList) {
-        StringBuilder content = new StringBuilder();
-        if (editList.size() > 0) {
-            content.append("<div class=\"content\">");
-            for (RichTextEditor.EditData itemData : editList) {
-                if (itemData.inputStr != null) {
-                    //将EditText中的换行符、空格符转换成html
-                    String inputStr = itemData.inputStr.replace("\n", "</p><p>").replace(" ", "&nbsp");
-                    content.append("<p>").append(inputStr).append("</p>");
-                } else if (itemData.imagePath != null) {
-                    content.append("<p style=\"text-align:center\"><img width=\"100%\" src=\"").append(itemData.imagePath).append("\"/></p>");
-                }
-            }
-            content.append("</div>");
-        }
-        return content.toString();
     }
 
     @OnClick(R.id.localphoto)
@@ -282,7 +263,12 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
 
     @Override
     public void onItemClick(View view, int postion) {
-
+//        if(postion==0){
+//            Intent intent = new Intent(this, SelectProjectActivity.class);
+//            intent.putExtra("publication_type",2);
+//            intent.putExtra("projectId",projectId);
+//            startActivity(intent);
+//        }
     }
 
     @Override
@@ -290,12 +276,26 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
 
     }
 
+    SparseArray<DiscussLabelListbean.TagList> arrayTags;//默认标签
+    DiscussLabelListbean.TagList beans;//
     @Override
     protected void onResume() {
         super.onResume();
+        arrayTags = new SparseArray<>();
+        beans = new DiscussLabelListbean.TagList();
+        beans.setTagId(String.valueOf(projectId));
+        beans.setTagName(getIntent().getStringExtra("projectPay"));
+        arrayTags.put(-1,beans);
+
         if (AddLabelActivity.array != null) {
-            releaseArticleLabelAdapter.setData(AddLabelActivity.array);
+            for (int i = 0; i < AddLabelActivity.array.size(); i++) {
+                DiscussLabelListbean.TagList bean = AddLabelActivity.array.get(AddLabelActivity.array.keyAt(i));
+                arrayTags.put(AddLabelActivity.array.keyAt(i),bean);
+            }
+            AddLabelActivity.array = null;
         }
+        releaseArticleLabelAdapter.setData(arrayTags);
+
         if (SelectedPicActivity.picArray != null) {
             LongSparseArray<PicBean> picArray = SelectedPicActivity.picArray;
             for(int i= 0 ;i<picArray.size();i++){

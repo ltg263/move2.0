@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.bean.DiscussLabelListbean;
@@ -41,6 +42,9 @@ public class ReleaseArticleLabelAdapter extends RecyclerView.Adapter<ReleaseArti
         DiscussLabelListbean.TagList bean = list.get(key);
         holder.setItemListener(mListener);
         holder.tvlabel.setText(bean.getTagName());
+        if(position==0){
+            holder.tvlabel.setBackground(MoveApplication.getContext().getResources().getDrawable(R.drawable.garden_crack));
+        }
 
     }
 

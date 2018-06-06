@@ -142,9 +142,7 @@ public class EvaluationSimplenessActivity extends BaseActivity {
 
             @Override
             public void onFinish() {
-                if (loadingDialog.isShowing()) {
-                    loadingDialog.dismiss();
-                }
+                loadingDialog.dismiss();
             }
         });
     }

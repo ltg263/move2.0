@@ -22,8 +22,10 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.PicBean;
+import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.ReleaseArticleLabelAdapter;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -50,7 +52,7 @@ import butterknife.OnClick;
  * 邮箱；ltg263@126.com
  * 描述：写评测  专业
  */
-public class EvaluationWriteActivity extends BaseActivity {
+public class EvaluationWriteActivity extends BaseActivity  implements ItemClickListener {
     InputMethodManager imm;
     private List<String> picList;
     @BindView(R.id.rv_post_small_images)
@@ -110,6 +112,7 @@ public class EvaluationWriteActivity extends BaseActivity {
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rvEvaluationTags.setLayoutManager(layoutManager);
         rvEvaluationTags.setAdapter(releaseArticleLabelAdapter);
+        releaseArticleLabelAdapter.setItemListener(this);
     }
 
     @Override
@@ -198,12 +201,18 @@ public class EvaluationWriteActivity extends BaseActivity {
         }
     }
 
-
+    SparseArray<DiscussLabelListbean.TagList> arrayTags;//默认标签
+    DiscussLabelListbean.TagList beans;//
     @Override
     protected void onResume() {
         super.onResume();
+        arrayTags = new SparseArray<>();
+        beans = new DiscussLabelListbean.TagList();
+        beans.setTagId(String.valueOf(projectId));
+        beans.setTagName(getIntent().getStringExtra("projectPay"));
+        arrayTags.put(-1,beans);
+
         if (SelectedPicActivity.picArray != null) {
-//            releasePicAdapter.addSparseData(SelectedPicActivityedPicActivity.picArray);
             LongSparseArray<PicBean> picArray = SelectedPicActivity.picArray;
             for (int i = 0; i < picArray.size(); i++) {
                 etNewContent.insertImage(null, picArray.get(picArray.keyAt(i)).getPath());
@@ -211,11 +220,11 @@ public class EvaluationWriteActivity extends BaseActivity {
             SelectedPicActivity.picArray = null;
         }
         if (AddLabelActivity.array != null) {
-            SparseArray<DiscussLabelListbean.TagList> arrayTags = AddLabelActivity.array;
             JSONArray array = new JSONArray();
-            for (int i = 0; i < arrayTags.size(); i++) {
+            for (int i = 0; i < AddLabelActivity.array.size(); i++) {
                 JSONObject object = new JSONObject();
-                DiscussLabelListbean.TagList bean = arrayTags.get(arrayTags.keyAt(i));
+                DiscussLabelListbean.TagList bean = AddLabelActivity.array.get(AddLabelActivity.array.keyAt(i));
+                arrayTags.put(AddLabelActivity.array.keyAt(i),bean);
                 //tagId,tagName
                 try {
                     object.put("tagId", bean.getTagId());
@@ -226,9 +235,10 @@ public class EvaluationWriteActivity extends BaseActivity {
                 }
             }
             evaluationTags = array.toString();
-            releaseArticleLabelAdapter.setData(AddLabelActivity.array);
+            LogUtil.w("evaluationTags:"+evaluationTags);
             AddLabelActivity.array = null;
         }
+        releaseArticleLabelAdapter.setData(arrayTags);
     }
 
     List<RichTextEditor.EditData> list;
@@ -260,7 +270,7 @@ public class EvaluationWriteActivity extends BaseActivity {
                 .url(Constants.UPLOAD_USER_ICON_FILE)
                 .addPart("token", token)
                 .addPart("uploadfile ", StringUtil.getMimeType(file.getName()), file)
-                .addPart("imgtype", "2")
+                .addPart(Constants.UPLOADIMG_TYPE.IMG_TYPE_KEY, Constants.UPLOADIMG_TYPE.POST_ICON)
                 .build();
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
@@ -343,4 +353,20 @@ public class EvaluationWriteActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void onItemClick(View view, int postion) {
+//        if(postion==0){
+////            String tagList = arrayTags.get(arrayTags.keyAt(postion)).getTagId();
+//            Intent intent = new Intent(this, SelectProjectActivity.class);
+//            intent.putExtra("publication_type",1);
+//            intent.putExtra("projectId",projectId);
+//            startActivity(intent);
+//        }
+
+    }
+
+    @Override
+    public void onItemLongClick(View view, int postion) {
+
+    }
 }

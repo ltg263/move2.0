@@ -39,11 +39,14 @@ public class SelectProjectHolder extends RecyclerViewBaseHolder {
     }
 
 
-    public void refresh(int position, List<SearchedBean.Projects> listNum) {
+    public void refresh(int position, List<SearchedBean.Projects> listNum , int projectId) {
         final SearchedBean.Projects currenBean= listNum.get(position);
         GlideUtils.loadCircleUrl(img, Constants.BASE_IMG_URL + currenBean.getProjectIcon());
         tvCode.setText(currenBean.getProjectCode()+"/");
         tvName.setText(currenBean.getProjectChineseName());
         tvFollws.setText(currenBean.getFollowerNum()+"关注");
+        if(projectId==currenBean.getProjectId()){
+            ivSlected.setSelected(true);
+        }
     }
 }

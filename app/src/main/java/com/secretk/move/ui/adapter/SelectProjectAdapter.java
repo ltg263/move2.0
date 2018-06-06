@@ -19,7 +19,7 @@ import java.util.List;
 
 public class SelectProjectAdapter extends RecyclerView.Adapter<SelectProjectHolder> {
     private List<SearchedBean.Projects> listNum = new ArrayList<>();
-
+    private int projectId;
     @Override
     public SelectProjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_select_project, parent, false);
@@ -34,7 +34,7 @@ public class SelectProjectAdapter extends RecyclerView.Adapter<SelectProjectHold
     }
     @Override
     public void onBindViewHolder(SelectProjectHolder holder, int position) {
-        holder.refresh(position, listNum);
+        holder.refresh(position, listNum ,projectId);
         holder.setItemListener(mListener);
     }
 
@@ -43,8 +43,9 @@ public class SelectProjectAdapter extends RecyclerView.Adapter<SelectProjectHold
         return listNum.size();
     }
 
-    public void setData(List<SearchedBean.Projects> list) {
+    public void setData(List<SearchedBean.Projects> list,int projectId) {
         this.listNum = list;
+        this.projectId = projectId;
         notifyDataSetChanged();
     }
 

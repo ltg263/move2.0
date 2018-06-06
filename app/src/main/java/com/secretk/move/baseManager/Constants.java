@@ -103,7 +103,7 @@ public interface Constants {
      * 张栋栋 图片
      */
 //    String BASE_URL = "http://192.168.10.151:809/";
-//        String BASE_IMG_URL = "http://192.168.10.151:8080/";
+//    String BASE_IMG_URL = "http://192.168.10.151:8080/";
     /**
      * 王晗
      */
@@ -149,6 +149,7 @@ public interface Constants {
 
     //上传用户头像 1用户头像；2帖子中内容图片；3项目图标
     String UPLOAD_USER_ICON_FILE = BASE_URL + "kff/home/uploadImgFile";
+
     //上传认证照片
     String ID_CARD = BASE_URL + "kff/upload/idcard";
     //上传认证信息
@@ -279,6 +280,18 @@ public interface Constants {
         int MODEL_TYPE_ALL = 2;
         int MODEL_TYPE_PART = 3;
         int MODEL_TYPE_ALL_NEW = 4;
+    }
+    /**
+     *上传用户头像
+     * 1用户头像；
+     * 2帖子中内容图片；
+     * 3项目图标
+     */
+    interface UPLOADIMG_TYPE {
+        String IMG_TYPE_KEY = "imgtype";
+        String USER_ICON = "1";
+        String POST_ICON = "2";
+        String PROJECT_ICON = "3";
     }
 
     /**

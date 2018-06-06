@@ -10,15 +10,17 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:theme="@style/ToolbarTheme">
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/img_return"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_10"
@@ -32,6 +34,7 @@
                 android:paddingLeft="@dimen/dp_20"
                 android:background="@drawable/shape_fragment_topic_search"
                 android:drawableLeft="@drawable/main_search_gray"
+                android:textCursorDrawable="@drawable/shape_edit_cursor"
                 android:drawablePadding="@dimen/dp_10"
                 android:gravity="center_vertical"
                 android:hint="搜索相关币种"

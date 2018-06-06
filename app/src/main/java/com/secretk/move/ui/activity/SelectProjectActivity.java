@@ -21,11 +21,14 @@ import com.secretk.move.ui.adapter.SelectProjectAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -57,6 +60,12 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
 
     private List<SearchedBean.Projects> list;
     private int publicationType;
+    private int projectId;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
@@ -70,7 +79,8 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-        publicationType = getIntent().getIntExtra("publication_type",0);
+        publicationType = getIntent().getIntExtra("publication_type", 0);
+        projectId = getIntent().getIntExtra("projectId", -1);
         setVerticalManager(recycler);
         adapter = new SelectProjectAdapter();
         recycler.setAdapter(adapter);
@@ -98,7 +108,7 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
             public void onCompleted(SearchedBean bean) {
                 list = bean.getData().getProjects();
                 tvCount.setText("共" + list.size() + "个币种");
-                adapter.setData(list);
+                adapter.setData(list,projectId);
             }
 
             @Override
@@ -106,10 +116,6 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
                 loadingDialog.dismiss();
             }
         });
-    }
-
-    @OnClick(R.id.tv_search)
-    public void onViewClicked() {
     }
 
     /**
@@ -120,16 +126,18 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
     @Override
     public void onItemClick(View view, int postion) {
         SearchedBean.Projects bean = list.get(postion);
-        if(publicationType==1){
-            IntentUtil.startProjectSimplenessActivity(bean.getProjectId(),bean.getProjectIcon(),
-                    bean.getProjectChineseName(),bean.getProjectCode());
-        }else if(publicationType==2){
-            Intent intent = new Intent(this,ReleaseArticleActivity.class);
-            intent.putExtra("projectId",list.get(postion).getProjectId());
+        if (publicationType == 1) {
+            IntentUtil.startProjectSimplenessActivity(bean.getProjectId(), bean.getProjectIcon(),
+                    bean.getProjectChineseName(), bean.getProjectCode());
+        } else if (publicationType == 2) {
+            Intent intent = new Intent(this, ReleaseArticleActivity.class);
+            intent.putExtra("projectId", list.get(postion).getProjectId());
+            intent.putExtra("projectPay", bean.getProjectCode());
             startActivity(intent);
-        }else{
-            Intent intent = new Intent(this,ReleaseDiscussActivity.class);
-            intent.putExtra("projectId",list.get(postion).getProjectId());
+        } else {
+            Intent intent = new Intent(this, ReleaseDiscussActivity.class);
+            intent.putExtra("projectId", list.get(postion).getProjectId());
+            intent.putExtra("projectPay", bean.getProjectCode());
             startActivity(intent);
         }
 
@@ -138,5 +146,39 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
     @Override
     public void onItemLongClick(View view, int postion) {
 
+    }
+
+    @OnClick({R.id.img_return, R.id.tv_search})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.img_return:
+                finish();
+                break;
+            case R.id.tv_search:
+                searchProject();
+                break;
+        }
+    }
+
+    private void searchProject() {
+        String searchContent = edSearch.getText().toString().trim();
+        if(StringUtil.isBlank(searchContent)){
+            ToastUtils.getInstance().show("搜索币种不能为空");
+//            adapter.setData(list);
+            return;
+        }
+        List<SearchedBean.Projects> listSearch = new ArrayList<>();
+        for(int i = 0;i<list.size();i++){
+            if(list.get(i).getProjectCode().contains(searchContent)
+                    || list.get(i).getProjectCode().contains(searchContent.toUpperCase())){
+                listSearch.add(list.get(i));
+            }
+        }
+        if(listSearch.size()==0){
+            ToastUtils.getInstance().show("没有相关的币种");
+            return;
+        }
+        tvCount.setText("共搜索到" + listSearch.size() + "个币种");
+        adapter.setData(listSearch,projectId);
     }
 }

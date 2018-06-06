@@ -82,7 +82,7 @@ public class EvaluationProfessionalItemActivity extends BaseActivity {
         array.put(node);
 
         IntentUtil.startProjectCompileActivity(String.valueOf(Constants.ModelType.MODEL_TYPE_PART),
-                String.valueOf(projectId),getIntent().getStringExtra("projectName"),
+                String.valueOf(projectId),getIntent().getStringExtra("projectPay"),
                 array.toString(),esViewa.getTvEvaluationMun(),sysEvaluationModel.getDetailName());
     }
 }

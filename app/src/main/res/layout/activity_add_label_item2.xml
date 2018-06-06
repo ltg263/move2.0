@@ -14,11 +14,9 @@
         android:layout_height="wrap_content"
         android:background="@drawable/shape_verification_code_blue"
         android:gravity="center"
-        android:paddingBottom="@dimen/dp_5"
-        android:paddingLeft="@dimen/dp_10"
-        android:paddingRight="@dimen/dp_10"
-        android:paddingTop="@dimen/dp_5"
+        android:paddingVertical="@dimen/dp_5"
+        android:paddingHorizontal="@dimen/dp_10"
         android:text="翻倍"
         android:textColor="@color/app_background"
-        android:textSize="@dimen/sp_14" />
+        android:textSize="@dimen/sp_12" />
 </LinearLayout>
