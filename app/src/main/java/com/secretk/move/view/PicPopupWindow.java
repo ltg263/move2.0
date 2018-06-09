@@ -193,7 +193,11 @@ public class PicPopupWindow extends PopupWindow  implements  OnWheelChangedListe
             for(int j=0;j<beans.size();j++){
                 String c = beans.get(j).getCode().substring(0,2);
                 if(c.equals(code)){
-                    list.add(beans.get(j).getName());
+                    if(!code.equals(beans.get(j).getCode())
+                            || code.equals("11") || code.equals("12")
+                            || code.equals("31") || code.equals("50")){
+                        list.add(beans.get(j).getName());
+                    }
                 }
                 if(code.equals(beans.get(j).getCode())){
                     mProvinceDatas[i]=beans.get(j).getName();

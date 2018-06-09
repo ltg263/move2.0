@@ -1,5 +1,6 @@
 package com.secretk.move.ui.holder;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,7 +14,9 @@ import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.BlueSkyBean;
 import com.secretk.move.bean.base.BaseRes;
+import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -31,90 +34,101 @@ import butterknife.ButterKnife;
 public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
 
     @BindView(R.id.img_head)
-    public ImageView img_head;
+    ImageView img_head;
     @BindView(R.id.tv_name)
-    public   TextView  tv_name;
+    TextView tv_name;
     @BindView(R.id.tv_code)
-    public   TextView  tv_code;
+    TextView tv_code;
 
     @BindView(R.id.tv_content)
-    public   TextView  tv_content;
+    TextView tv_content;
     @BindView(R.id.tv_score)
-    public   TextView  tv_score;
+    TextView tv_score;
     @BindView(R.id.tv_follow)
-    public   TextView  tv_follow;
+    TextView tv_follow;
     @BindView(R.id.tvIsFollw)
-    public   TextView  tvIsFollw;
+    TextView tvIsFollw;
 
     @BindView(R.id.tv_order)
-    public   TextView  tv_order;
+    TextView tv_order;
     @BindView(R.id.img_order)
-    public ImageView img_order;
-
-    String token = SharedUtils.singleton().get("token", "");
-
+    ImageView img_order;
 
     public MainBlueSkyFragmentHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         tvIsFollw.setOnClickListener(this);
     }
-    public  void  setData(final BlueSkyBean.RankList bean,int position){
-        GlideUtils.loadCircleUrl(img_head, Constants.BASE_IMG_URL+bean.getProjectIcon());
+
+    public void setData(final BlueSkyBean.RankList bean, int position, Context context) {
+        GlideUtils.loadCircleUserUrl(context,img_head, Constants.BASE_IMG_URL + bean.getProjectIcon());
         tv_code.setText(bean.getProjectCode());
-        tv_name.setText(" /"+bean.getProjectChineseName());
+        tv_name.setText(" /" + bean.getProjectChineseName());
         tv_content.setText(bean.getProjectSignature());
         tv_score.setText(bean.getTotalScore());
         tv_follow.setText(bean.getFollowerNum());
         tv_order.setVisibility(View.VISIBLE);
-        bean.setPosition(position+1+"");
+        bean.setPosition(position + 1 + "");
         tv_order.setText(bean.getPosition());
-        if (0 == bean.getFollowStatus()) {
+        if (!SharedUtils.getLoginZt()) {
             tvIsFollw.setText("+ 关注");
             tvIsFollw.setSelected(false);
             tvIsFollw.setPressed(false);
             tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
-        } else if (1 == bean.getFollowStatus()) {
-            tvIsFollw.setText("已关注");
-            tvIsFollw.setSelected(true);
-            tvIsFollw.setPressed(true);
-            tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
+            tvIsFollw.setVisibility(View.VISIBLE);
         } else {
-            tvIsFollw.setVisibility(View.GONE);
+            if (0 == bean.getFollowStatus()) {
+                tvIsFollw.setText("+ 关注");
+                tvIsFollw.setSelected(false);
+                tvIsFollw.setPressed(false);
+                tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
+            } else if (1 == bean.getFollowStatus()) {
+                tvIsFollw.setText("已关注");
+                tvIsFollw.setSelected(true);
+                tvIsFollw.setPressed(true);
+                tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
+            } else {
+                tvIsFollw.setVisibility(View.GONE);
+            }
         }
         tvIsFollw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (getString().equals("已关注")) {
-                    http(Constants.CANCEL_FOLLOW,bean.getProjectId());
+                if (!SharedUtils.getLoginZt()) {
+                    IntentUtil.startActivity(LoginHomeActivity.class);
                 } else {
-                    http(Constants.SAVE_FOLLOW,bean.getProjectId());
+                    if (getString().equals("已关注")) {
+                        http(Constants.CANCEL_FOLLOW, bean.getProjectId(),SharedUtils.getToken());
+                    } else {
+                        http(Constants.SAVE_FOLLOW, bean.getProjectId(),SharedUtils.getToken());
+                    }
                 }
             }
         });
-      switch (position){
-          case 0:
-              tv_order.setVisibility(View.INVISIBLE);
-              img_order.setVisibility(View.VISIBLE);
-              img_order.setBackgroundResource(R.drawable.topic_one);
-              break;
-          case 1:
-              tv_order.setVisibility(View.INVISIBLE);
-              img_order.setVisibility(View.VISIBLE);
-              img_order.setBackgroundResource(R.drawable.topic_two);
-              break;
-          case 2:
-              tv_order.setVisibility(View.INVISIBLE);
-              img_order.setVisibility(View.VISIBLE);
-              img_order.setBackgroundResource(R.drawable.topic_three);
-              break;
-              default:
-                  img_order.setVisibility(View.INVISIBLE);
-                  tv_order.setVisibility(View.VISIBLE);
-                  break;
-      }
+        switch (position) {
+            case 0:
+                tv_order.setVisibility(View.INVISIBLE);
+                img_order.setVisibility(View.VISIBLE);
+                img_order.setBackgroundResource(R.drawable.topic_one);
+                break;
+            case 1:
+                tv_order.setVisibility(View.INVISIBLE);
+                img_order.setVisibility(View.VISIBLE);
+                img_order.setBackgroundResource(R.drawable.topic_two);
+                break;
+            case 2:
+                tv_order.setVisibility(View.INVISIBLE);
+                img_order.setVisibility(View.VISIBLE);
+                img_order.setBackgroundResource(R.drawable.topic_three);
+                break;
+            default:
+                img_order.setVisibility(View.INVISIBLE);
+                tv_order.setVisibility(View.VISIBLE);
+                break;
+        }
     }
-    public void http(String url,int id) {
+
+    public void http(String url, int id,String token) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -131,7 +145,7 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
         RetrofitUtil.request(params, BaseRes.class, new HttpCallBackImpl<BaseRes>() {
             @Override
             public void onCompleted(BaseRes bean) {
-                if (bean.getCode()==0){
+                if (bean.getCode() == 0) {
                     if (getString().equals("已关注")) {
                         tvIsFollw.setText("+ 关注");
                         tvIsFollw.setPressed(false);
@@ -153,7 +167,8 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
         });
 
     }
-    public String getString(){
+
+    public String getString() {
         return tvIsFollw.getText().toString();
     }
 }

@@ -74,8 +74,8 @@ public class VerificationLoginActivity extends BaseActivity {
     private StringUtil.EtChange etChangListener = new StringUtil.EtChange() {
         @Override
         public void etYes() {
-            if (StringUtil.isNotBlank(edPhone.getText().toString().trim())
-                    &&  StringUtil.isNotBlank(edVerification.getText().toString().trim())) {
+            if (StringUtil.isNotBlank(edPhone.getText().toString())
+                    &&  StringUtil.isNotBlank(edVerification.getText().toString())) {
                 butLogin.setSelected(true);
             } else {
                 butLogin.setSelected(false);
@@ -92,7 +92,7 @@ public class VerificationLoginActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.get_verification:
-                if(StringUtil.isBlank(edPhone.getText().toString().trim())){
+                if(StringUtil.isBlank(edPhone.getText().toString())){
                     Toast.makeText(this, "手机号不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -104,11 +104,11 @@ public class VerificationLoginActivity extends BaseActivity {
                 }
                 break;
             case R.id.but_login:
-                if(StringUtil.isBlank(edPhone.getText().toString().trim())){
+                if(StringUtil.isBlank(edPhone.getText().toString())){
                     Toast.makeText(this, "手机号不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(StringUtil.isBlank(edVerification.getText().toString().trim())){
+                if(StringUtil.isBlank(edVerification.getText().toString())){
                     Toast.makeText(this, "验证码不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -124,9 +124,9 @@ public class VerificationLoginActivity extends BaseActivity {
     private void verificatilonLogin() {
         JSONObject node = new JSONObject();
         try {
-            node.put("phone", edPhone.getText().toString().trim());
+            node.put("phone", edPhone.getText().toString());
             node.put("module", "login");
-            node.put("code", edVerification.getText().toString().trim());
+            node.put("code", edVerification.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -165,7 +165,7 @@ public class VerificationLoginActivity extends BaseActivity {
     private void sendVerification() {
         JSONObject node = new JSONObject();
         try {
-            node.put("phone", edPhone.getText().toString().trim());
+            node.put("phone", edPhone.getText().toString());
             node.put("module", "login");
         } catch (JSONException e) {
             e.printStackTrace();

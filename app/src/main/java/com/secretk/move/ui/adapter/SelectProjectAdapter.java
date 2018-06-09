@@ -1,5 +1,6 @@
 package com.secretk.move.ui.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,12 @@ import java.util.List;
 public class SelectProjectAdapter extends RecyclerView.Adapter<SelectProjectHolder> {
     private List<SearchedBean.Projects> listNum = new ArrayList<>();
     private int projectId;
+    private Context context;
+
+    public SelectProjectAdapter(Context context) {
+        this.context=context;
+    }
+
     @Override
     public SelectProjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_select_project, parent, false);
@@ -34,7 +41,7 @@ public class SelectProjectAdapter extends RecyclerView.Adapter<SelectProjectHold
     }
     @Override
     public void onBindViewHolder(SelectProjectHolder holder, int position) {
-        holder.refresh(position, listNum ,projectId);
+        holder.refresh(position, listNum ,projectId,context);
         holder.setItemListener(mListener);
     }
 

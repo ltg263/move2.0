@@ -5,17 +5,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.R;
 import com.secretk.move.base.MvpBaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.SearchBean;
 import com.secretk.move.bean.SearchedBean;
 import com.secretk.move.contract.ActivitySearchContract;
-import com.secretk.move.customview.ProgressWheel;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.presenter.ActivitySearchPresenterImpl;
 import com.secretk.move.ui.adapter.SearchHistoryAdapter;
 import com.secretk.move.ui.adapter.TopicFragmentRecyclerAdapter;
+import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
@@ -35,6 +39,8 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
    LoadingDialog loadingDialog;
     @BindView(R.id.ed_search)
     EditText ed_search;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
 
     private LinearLayoutManager layoutManager;
     private SearchHistoryAdapter historyAdapter;
@@ -49,14 +55,46 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
     protected void initView() {
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.main_background), 0);
+        initRefresh();
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        loadingDialog=new LoadingDialog(this);
         recycler.setLayoutManager(layoutManager);
+        loadingDialog=new LoadingDialog(this);
         historyAdapter = new SearchHistoryAdapter();
-        adapter = new TopicFragmentRecyclerAdapter();
+        adapter = new TopicFragmentRecyclerAdapter(this);
         historyAdapter.setItemListener(this);
+        adapter.setItemListener(new ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int postion) {
+                boolean isLoginZt = SharedUtils.singleton().get(Constants.IS_LOGIN_KEY,false);
+                if(isLoginZt){
+                    int id = adapter.getData().get(postion).getProjectId();
+                    IntentUtil.startProjectActivity(id);
+                }else{
+                    IntentUtil.startActivity(LoginHomeActivity.class);
+                }
+            }
 
+            @Override
+            public void onItemLongClick(View view, int postion) {
+
+            }
+        });
+
+    }
+    private void initRefresh() {
+        refreshLayout.setEnableLoadmore(false);
+        refreshLayout.setEnableRefresh(false);
+        /**
+         * 下拉刷新
+         */
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshLayout.setLoadmoreFinished(false);
+
+            }
+        });
     }
 
     @Override

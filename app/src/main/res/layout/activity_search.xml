@@ -32,9 +32,9 @@
                     android:drawableLeft="@drawable/main_search_gray"
                     android:gravity="center_vertical"
                     android:hint="  搜索相关币种"
-                    android:maxLines="1"
-                    android:inputType="text"
                     android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1"
                     android:paddingBottom="@dimen/dp_5"
                     android:paddingLeft="@dimen/dp_25"
                     android:paddingTop="@dimen/dp_5"
@@ -47,16 +47,33 @@
                     android:layout_height="match_parent"
                     android:layout_weight="8"
                     android:gravity="center_vertical"
-                    android:text="搜索"
                     android:onClick="search"
+                    android:text="搜索"
                     android:textColor="@color/colorPrimary" />
             </LinearLayout>
         </android.support.v7.widget.Toolbar>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_below="@id/view"
+            android:visibility="visible"
+            app:srlEnablePreviewInEditMode="false">
+
+            <com.secretk.move.view.RecycleScrollView
+                android:id="@+id/rcv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:scrollbars="none">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </com.secretk.move.view.RecycleScrollView>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </LinearLayout>
 
 </RelativeLayout>

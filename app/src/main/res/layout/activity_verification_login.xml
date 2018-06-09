@@ -17,7 +17,7 @@
         android:layout_marginTop="@dimen/dp_25"
         android:text="验证码登录!"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp_40" />
+        android:textSize="@dimen/sp_28" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"

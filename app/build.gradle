@@ -62,7 +62,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 21
         versionCode 5
-        versionName "1.0"
+        versionName "1.1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -87,8 +87,9 @@ dependencies {
 //    implementation 'com.android.support:design:27.0.2'
     //图片处理
     implementation 'com.github.bumptech.glide:glide:4.6.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+//    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
     implementation 'jp.wasabeef:glide-transformations:2.0.1'
+
     //依赖注解
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
@@ -110,7 +111,7 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
     implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
     //recyclerview
-    implementation 'com.jcodecraeer:xrecyclerview:1.2.7'
+//    implementation 'com.jcodecraeer:xrecyclerview:1.2.7'
     implementation 'com.nex3z:flow-layout:1.0.0'
     implementation 'com.jzxiang.pickerview:TimePickerDialog:1.0.1'
     implementation 'org.jsoup:jsoup:1.10.2'

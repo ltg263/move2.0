@@ -69,6 +69,7 @@ public class ForgetPasswordActivity extends BaseActivity {
         AppBarHeadView mHeadView = findViewById(R.id.head_app_server);
         isLoginUi=true;
         mHeadView.setTitle("忘记密码");
+        mHeadView.setTitleColor(R.color.white);
         mHeadView.setHeadBackShow(true);
         return mHeadView;
     }
@@ -84,9 +85,9 @@ public class ForgetPasswordActivity extends BaseActivity {
     private StringUtil.EtChange etChangListener = new StringUtil.EtChange() {
         @Override
         public void etYes() {
-            strPhone = edPhone.getText().toString().trim();
-            strYzm = edVerification.getText().toString().trim();
-            strPsw = edPassword.getText().toString().trim();
+            strPhone = edPhone.getText().toString();
+            strYzm = edVerification.getText().toString();
+            strPsw = edPassword.getText().toString();
             if (StringUtil.isNotBlank(strPhone)
                     && StringUtil.isNotBlank(strYzm) && StringUtil.isNotBlank(strPsw)) {
                 butLogin.setSelected(true);
@@ -106,7 +107,7 @@ public class ForgetPasswordActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.get_verification:
-                strPhone = edPhone.getText().toString().trim();
+                strPhone = edPhone.getText().toString();
                 if (StringUtil.isBlank(strPhone)) {
                     ToastUtils.getInstance().show("手机号不能为空");
                     return;
@@ -123,9 +124,9 @@ public class ForgetPasswordActivity extends BaseActivity {
                 }
                 break;
             case R.id.but_login:
-                strPhone = edPhone.getText().toString().trim();
-                strYzm = edVerification.getText().toString().trim();
-                strPsw = edPassword.getText().toString().trim();
+                strPhone = edPhone.getText().toString();
+                strYzm = edVerification.getText().toString();
+                strPsw = edPassword.getText().toString();
                 if (StringUtil.isBlank(strPhone) || StringUtil.isBlank(strYzm) || StringUtil.isBlank(strPsw)) {
                     ToastUtils.getInstance().show("填写不完整");
                     return;
@@ -227,7 +228,7 @@ public class ForgetPasswordActivity extends BaseActivity {
     private void sendVerification() {
         JSONObject node = new JSONObject();
         try {
-            node.put("phone",edPhone.getText().toString().trim());
+            node.put("phone",edPhone.getText().toString());
             node.put("module", "forgetPassword");
         } catch (JSONException e) {
             e.printStackTrace();

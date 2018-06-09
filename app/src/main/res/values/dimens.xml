@@ -45,5 +45,8 @@
     <dimen name="sp_37">37sp</dimen>
     <dimen name="sp_40">40sp</dimen>
 
+    <dimen name="login_number_length">11</dimen>
+    <dimen name="login_password_length">16</dimen>
+
     <dimen name="unify_interval_padding">10dp</dimen>
 </resources>

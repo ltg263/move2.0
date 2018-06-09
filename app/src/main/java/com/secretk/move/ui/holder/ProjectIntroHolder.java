@@ -12,6 +12,8 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.ProjectHomeBean;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.NetUtil;
+import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.utils.StringUtil;
 
 import java.util.List;
 
@@ -40,9 +42,10 @@ public class ProjectIntroHolder extends RecyclerViewBaseHolder {
 
     public void refresh(final int position, List<ProjectHomeBean.DataBean.ProjectBean.ActiveUsersBean> lists, Context context) {
         final ProjectHomeBean.DataBean.ProjectBean.ActiveUsersBean usersBean = lists.get(position);
-        GlideUtils.loadCircleUserUrl(context,ivIcon, Constants.BASE_IMG_URL+usersBean.getIcon());
-        tvUserUame.setText(usersBean.getUserName());
-        tvUserSignature.setText(usersBean.getUserSignature());
+
+        GlideUtils.loadCircleUserUrl(context,ivIcon, Constants.BASE_IMG_URL+ StringUtil.getBeanString(usersBean.getIcon()));
+        tvUserUame.setText(StringUtil.getBeanString(usersBean.getUserName()));
+        tvUserSignature.setText(StringUtil.getBeanString(usersBean.getUserSignature()));
         //0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
         if(usersBean.getFollowStatus()==0){
             tvFollowStatus.setSelected(false);
@@ -51,6 +54,10 @@ public class ProjectIntroHolder extends RecyclerViewBaseHolder {
             tvFollowStatus.setSelected(true);
             tvFollowStatus.setText(BaseManager.app.getResources().getString(R.string.follow_status_1));
         }else{
+            tvFollowStatus.setVisibility(View.GONE);
+        }
+
+        if(SharedUtils.singleton().get(Constants.USER_ID,0)==usersBean.getUserId()){
             tvFollowStatus.setVisibility(View.GONE);
         }
         tvFollowStatus.setOnClickListener(new View.OnClickListener() {

@@ -44,7 +44,7 @@ public class EvaluationSimplenessActivity extends BaseActivity {
     TextView tvEvaluationState;
     @BindView(R.id.et_evaluation_content)
     EditText etEvaluationContent;
-    int projectId;
+    String projectId;
 
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
@@ -64,7 +64,7 @@ public class EvaluationSimplenessActivity extends BaseActivity {
     @Override
     protected void initUI(Bundle savedInstanceState) {
 
-        projectId = getIntent().getIntExtra("projectId", 0);
+        projectId = getIntent().getStringExtra("projectId");
         esViewa.setScore(4.5f);
         esViewa.setEsvBackground(R.color.app_background);
         tvEvaluationState.setText(StringUtil.getStateValueStr(4.5f));
@@ -82,7 +82,7 @@ public class EvaluationSimplenessActivity extends BaseActivity {
     @Override
     protected void OnToolbarRightListener() {
         Intent intent = new Intent(this, EvaluationProfessionalActivity.class);
-        intent.putExtra("projectId", projectId);
+        intent.putExtra("projectId", Integer.valueOf(projectId));
         intent.putExtra("projectIcon", getIntent().getStringExtra("projectIcon"));
         intent.putExtra("projectName", getIntent().getStringExtra("projectName"));
         intent.putExtra("projectPay", getIntent().getStringExtra("projectPay"));
@@ -104,7 +104,7 @@ public class EvaluationSimplenessActivity extends BaseActivity {
         try {
             node.put("token", token);
             //针对某个项目发表文章
-            node.put("projectId", getIntent().getIntExtra("projectId", 0));
+            node.put("projectId", Integer.valueOf(projectId));
             //1-简单评测；2-全面系统专业评测;3-部分系统专业评测；4-专业评测-自定义类型
             node.put("modelType", 1);
             //	 modelType=1对应为值为“简单评测", 2 为 "ALL-专业评测" 3 为 "PART—项目立项、核心团队" 4 为 "ALL-专业评测"

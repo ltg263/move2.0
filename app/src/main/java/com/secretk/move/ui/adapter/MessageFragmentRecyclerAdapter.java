@@ -39,6 +39,7 @@ public class MessageFragmentRecyclerAdapter extends RecyclerView.Adapter<Message
     @Override
     public void onBindViewHolder(MessageFragmentRecyclerHolder holder, int position) {
         holder.refresh(context,position,list,this);
+        holder.setItemListener(mListener);
     }
 
     @Override

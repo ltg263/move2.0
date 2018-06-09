@@ -96,7 +96,7 @@ public class DetailsDiscussBase extends BaseRes{
             private int praiseNum;
             private int pageviewNum;
             private int donateNum;
-            private Object collectStatus;
+            private int collectStatus;
             private int collectNum;
             private int createUserId;
             private String createUserIcon;
@@ -268,11 +268,11 @@ public class DetailsDiscussBase extends BaseRes{
                 this.donateNum = donateNum;
             }
 
-            public Object getCollectStatus() {
+            public int getCollectStatus() {
                 return collectStatus;
             }
 
-            public void setCollectStatus(Object collectStatus) {
+            public void setCollectStatus(int collectStatus) {
                 this.collectStatus = collectStatus;
             }
 

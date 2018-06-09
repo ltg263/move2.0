@@ -18,7 +18,7 @@
         android:layout_marginTop="@dimen/dp_25"
         android:text="欢迎回来!"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp_40" />
+        android:textSize="@dimen/sp_28" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -51,6 +51,7 @@
                 android:id="@+id/ed_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:digits="@string/text_password"
                 android:hint="@string/hint_password"
                 android:inputType="textPassword"
                 android:textColor="@color/white" />
@@ -100,4 +101,5 @@
         android:text="@string/login_in"
         android:textColor="@drawable/selector_login_text"
         android:textSize="@dimen/sp_18" />
+
 </LinearLayout>

@@ -82,8 +82,8 @@ public class RegisterActivity extends BaseActivity {
     StringUtil.EtChange etChangListener = new StringUtil.EtChange() {
         @Override
         public void etYes() {
-            strYzm = edVerification.getText().toString().trim();
-            strPsw = edPassword.getText().toString().trim();
+            strYzm = edVerification.getText().toString();
+            strPsw = edPassword.getText().toString();
             if (StringUtil.isNotBlank(strYzm) && StringUtil.isNotBlank(strPsw)) {
                 butRegister.setSelected(true);
             } else {
@@ -111,8 +111,8 @@ public class RegisterActivity extends BaseActivity {
                 }
                 break;
             case R.id.but_register:
-                strYzm = edVerification.getText().toString().trim();
-                strPsw = edPassword.getText().toString().trim();
+                strYzm = edVerification.getText().toString();
+                strPsw = edPassword.getText().toString();
                 if (StringUtil.isBlank(strYzm) || StringUtil.isBlank(strPsw)) {
                     ToastUtils.getInstance().show("填写不完整");
                     return;
@@ -142,6 +142,7 @@ public class RegisterActivity extends BaseActivity {
     private void sendVerification() {
         JSONObject node = new JSONObject();
         try {
+            //modue：login   register    forgetPassword
             node.put("phone", getIntent().getStringExtra("phone"));
             node.put("module", "register");
         } catch (JSONException e) {

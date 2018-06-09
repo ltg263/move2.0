@@ -35,7 +35,7 @@
             <RelativeLayout
                 android:id="@+id/rl_ge_ren"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="65dp"
                 android:background="@color/white"
                 android:padding="@dimen/dp_10">
 

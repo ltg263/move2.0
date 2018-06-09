@@ -99,7 +99,7 @@
                                         android:paddingLeft="@dimen/dp_10"
                                         android:paddingRight="@dimen/dp_10"
                                         android:paddingTop="@dimen/dp_3"
-                                        android:visibility="gone"
+                                        android:visibility="visible"
                                         android:text="+关注"
                                         android:textColor="@drawable/selector_follow_state_text" />
                                 </RelativeLayout>

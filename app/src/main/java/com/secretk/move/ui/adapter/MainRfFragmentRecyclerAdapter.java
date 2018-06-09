@@ -1,18 +1,16 @@
 package com.secretk.move.ui.adapter;
 
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
-
-import com.secretk.move.bean.MainRfBean;
-
+import com.secretk.move.bean.MainGzBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.holder.MainRfFragmentRecyclerHolder;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +20,13 @@ import java.util.List;
  */
 
 public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFragmentRecyclerHolder> {
-    private List<MainRfBean.Rows> list = new ArrayList<MainRfBean.Rows>();
+    private List<MainGzBean.DataBean.FollowsBean.RowsBean> list = new ArrayList<>();
     private ItemClickListener mListener;
-    private int type;
+    Context context;
+    public MainRfFragmentRecyclerAdapter(Context context) {
+        this.context = context;
+    }
+
     public void setItemListener(ItemClickListener mListener) {
         this.mListener = mListener;
     }
@@ -39,9 +41,8 @@ public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFr
     @Override
     public void onBindViewHolder(MainRfFragmentRecyclerHolder holder, int position) {
         holder.setItemListener(mListener);
-        MainRfBean.Rows bean = list.get(position);
-        holder.setAdapterType(type);
-        holder.setData(bean);
+        MainGzBean.DataBean.FollowsBean.RowsBean bean = list.get(position);
+        holder.setData(bean,context);
 
     }
 
@@ -52,27 +53,17 @@ public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFr
         }
         return list.size();
     }
-
-
-    public void loadHead(List<MainRfBean.Rows> data) {
-        if (data == null) return;
-        list.clear();
-        list.addAll(data);
+    public void setData(List<MainGzBean.DataBean.FollowsBean.RowsBean> list) {
+        this.list = list;
+        notifyDataSetChanged();
+    }
+    public void setAddData(List<MainGzBean.DataBean.FollowsBean.RowsBean> list) {
+        this.list.addAll(list);
         notifyDataSetChanged();
     }
 
-    public void loadMore(List<MainRfBean.Rows> data) {
-        if (list == null) return;
-        list.addAll(data);
-        notifyDataSetChanged();
-    }
 
-    public MainRfBean.Rows getDataIndex(int position) {
+    public MainGzBean.DataBean.FollowsBean.RowsBean getDataIndex(int position) {
         return list.get(position);
     }
-
-    public void setAdapterType(int type) {
-        this.type=type;
-    }
-
 }

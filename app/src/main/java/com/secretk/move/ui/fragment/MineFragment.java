@@ -84,6 +84,8 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     RelativeLayout rlDiscuss;
     @BindView(R.id.tv_article_mun)
     TextView tvArticleMun;
+    @BindView(R.id.tv_user_type)
+    TextView tvUserType;
     @BindView(R.id.tv_article)
     TextView tvArticle;
     @BindView(R.id.rl_essay)
@@ -111,7 +113,6 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
     @Override
     public void initViews() {
-
     }
 
     @Override
@@ -133,6 +134,8 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     public void loadInfoSuccess(UserLoginInfo.DataBean.UserBean infos) {
         userInfos = infos;
         GlideUtils.loadCircleUserUrl(getActivity(),ivHeadImg, Constants.BASE_IMG_URL+infos.getIcon());
+        LogUtil.w("img:"+Constants.BASE_IMG_URL+infos.getIcon());
+//        x.image().bind(ivHeadImg, Constants.BASE_IMG_URL+infos.getIcon(), mOptions);
         tvUserName.setText(infos.getUserName());
         //300 粉丝 •1568 赞
         String fansNum = String.valueOf(infos.getFansNum())+"  粉丝 • "+String.valueOf(infos.getPraiseNum())+" 赞";
@@ -142,10 +145,17 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
         tvDiscussMun.setText(String.valueOf(infos.getDiscussNum()));
         tvArticleMun.setText(String.valueOf(infos.getArticleNum()));
         tvBalance.setText(String.valueOf(infos.getKffCoinNum()));
+        // //用户类型，数字，用户类型:1-普通用户；2-项目方；3-评测机构；4-机构用户
+        tvUserType.setText(StringUtil.getUserType(infos.getUserType()));
     }
 
-    @OnClick({R.id.btn,R.id.iv_my_set,R.id.ll_my_approve, R.id.tv_go_login, R.id.tv_go_register, R.id.rl_user_info, R.id.rl_appraisal, R.id.rl_discuss, R.id.rl_essay, R.id.ll_check_details, R.id.ll_my_attention, R.id.ll_my_collect, R.id.ll_my_recommend, R.id.ll_my_about, R.id.ll_my_feedback})
+    @OnClick({R.id.iv_my_set,R.id.ll_my_approve, R.id.tv_go_login, R.id.tv_go_register, R.id.rl_user_info, R.id.rl_appraisal, R.id.rl_discuss, R.id.rl_essay, R.id.ll_check_details, R.id.ll_my_attention, R.id.ll_my_collect, R.id.ll_my_recommend, R.id.ll_my_about, R.id.ll_my_feedback})
     public void onViewClicked(View view) {
+        if(!isLoginZt){
+            IntentUtil.startActivity(LoginHomeActivity.class);
+            return;
+        }
+        String key[] = {"currentType"};
         switch (view.getId()) {
             case R.id.iv_my_set:
                 if(userInfos!=null){
@@ -163,10 +173,16 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 IntentUtil.startActivity(HomeActivity.class);
                 break;
             case R.id.rl_appraisal://评测
+                String value0[] = {String.valueOf(0)};
+                IntentUtil.startActivity(HomeActivity.class, key, value0);
                 break;
             case R.id.rl_discuss://讨论
+                String value1[] = {String.valueOf(1)};
+                IntentUtil.startActivity(HomeActivity.class, key, value1);
                 break;
             case R.id.rl_essay://文章
+                String value2[] = {String.valueOf(2)};
+                IntentUtil.startActivity(HomeActivity.class, key, value2);
                 break;
             case R.id.ll_my_approve://实名认证
                 IntentUtil.startActivity(MineApproveSubmitiCertificateActivity.class);
@@ -188,11 +204,6 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 break;
             case R.id.ll_my_feedback://意见反馈
                 IntentUtil.startActivity(MineOpinionBackActivity.class);
-                break;
-            case R.id.btn:
-                sharedUtils.clear();
-                IntentUtil.startActivity(LoginHomeActivity.class);
-                getActivity().finish();
                 break;
         }
     }
@@ -221,7 +232,8 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 getUserInfo(token);
             }
         }else{
-            token = "";
+            token="";
+            onFirstUserVisible();
         }
     }
 

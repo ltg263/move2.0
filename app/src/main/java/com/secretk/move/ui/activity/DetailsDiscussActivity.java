@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -37,6 +36,7 @@ import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.Clickable;
+import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.RecycleScrollView;
 
 import org.json.JSONArray;
@@ -102,6 +102,10 @@ public class DetailsDiscussActivity extends BaseActivity {
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.have_data)
     RelativeLayout haveData;
+    @BindView(R.id.tv_collect_status)
+    TextView tvCollectStatus;
+    @BindView(R.id.tv_praise_status)
+    TextView tvPraiseStatus;
     private DetailsDiscussAdapter adapter;
     private DetailsDiscussAdapter adapterNew;
     private String postId;
@@ -112,6 +116,7 @@ public class DetailsDiscussActivity extends BaseActivity {
     private int userId;
     private int createUserId;
     int pageIndex = 1;
+    private int projectId;
 
     @Override
     protected int setOnCreate() {
@@ -147,7 +152,8 @@ public class DetailsDiscussActivity extends BaseActivity {
         initRefresh();
     }
 
-    @OnClick({R.id.tv_follow_status, R.id.iv_post_small_images, R.id.but_login, R.id.rl_ge_ren})
+    @OnClick({R.id.tv_follow_status, R.id.iv_post_small_images, R.id.but_login, R.id.rl_ge_ren,
+            R.id.tv_commendation_Num, R.id.tv_collect_status, R.id.tv_praise_status})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_follow_status:
@@ -178,6 +184,52 @@ public class DetailsDiscussActivity extends BaseActivity {
                 } else {
                     ToastUtils.getInstance().show("内容不能为空");
                 }
+                break;
+            case R.id.tv_commendation_Num:
+                DialogUtils.showEditTextDialog(this, getString(R.string.sponsor_title),"", new DialogUtils.EditTextDialogInterface() {
+                    @Override
+                    public void btnConfirm(String season) {
+                        NetUtil.commendation(Integer.valueOf(postId), createUserId,Double.valueOf(season), projectId, new NetUtil.SaveCommendationImp() {
+                            @Override
+                            public void finishCommendation(String commendationNum, String donateNum, boolean status) {
+                                if(status){
+//                                    tvCommendationNum.setText(getString(R.string.sponsor)+ commendationNum);
+//                                    tvDonateNum.setText(donateNum+getString(R.string.sponsor_num));
+                                }
+                            }
+                        });
+                    }
+                });
+                break;
+            case R.id.tv_collect_status:
+                tvCollectStatus.setEnabled(false);
+                tvCollectStatus.setSelected(!tvCollectStatus.isSelected());
+                NetUtil.saveCollect(tvCollectStatus.isSelected(),
+                        Integer.valueOf(postId), new NetUtil.SaveCollectImp() {
+                            @Override
+                            public void finishCollect(String str,boolean status) {
+                                tvCollectStatus.setEnabled(true);
+                                if(!str.equals(Constants.COLLECT_ERROR)){
+                                    tvCollectStatus.setSelected(status);
+                                }
+                            }
+                        });
+
+                break;
+            case R.id.tv_praise_status:
+                if(!tvPraiseStatus.isSelected()){
+                    return;
+                }
+                tvPraiseStatus.setEnabled(false);
+                String strS;
+                if(tvPraiseStatus.isSelected()){
+                    strS = String.valueOf(praiseNum+1);
+                }else{
+                    strS = String.valueOf(praiseNum-1);
+                }
+                tvPraiseStatus.setText(strS);
+                tvPraiseStatus.setSelected(!tvPraiseStatus.isSelected());
+                setPraise(!tvPraiseStatus.isSelected(),Integer.valueOf(postId));
                 break;
         }
     }
@@ -234,6 +286,7 @@ public class DetailsDiscussActivity extends BaseActivity {
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onError(String message) {
+                ToastUtils.getInstance().show(message);
                 if (loadingDialog.isShowing()) {
                     loadingDialog.dismiss();
                 }
@@ -241,9 +294,11 @@ public class DetailsDiscussActivity extends BaseActivity {
 
             @Override
             public void onCompleted(String str) {
-                ToastUtils.getInstance().show("评论成功");
+//                ToastUtils.getInstance().show("评论成功");
                 etCommentContent.setText("");
-                rcv.fullScroll(ScrollView.FOCUS_UP);
+//                rcv.fullScroll(ScrollView.FOCUS_UP);
+//                initDataList();
+
                 initNewsDataList();
             }
         });
@@ -295,14 +350,28 @@ public class DetailsDiscussActivity extends BaseActivity {
                 createUserId = discussDetail.getCreateUserId();
                 mHeadView.setTitle(discussDetail.getProjectCode());
                 mHeadView.setTitleVice("/" + discussDetail.getProjectEnglishName());
-                mHeadView.setToolbarListener(discussDetail.getProjectId());
+                projectId = discussDetail.getProjectId();
+                mHeadView.setToolbarListener(projectId);
                 tvProjectCode.setText(discussDetail.getProjectCode());
-                GlideUtils.loadCircleProjectUrl(DetailsDiscussActivity.this,mHeadView.getImageView(), Constants.BASE_IMG_URL + discussDetail.getProjectIcon());
+                GlideUtils.loadCircleProjectUrl(DetailsDiscussActivity.this, mHeadView.getImageView(), Constants.BASE_IMG_URL + discussDetail.getProjectIcon());
                 tvPostTitle.setText(discussDetail.getPostTitle());
-                GlideUtils.loadCircleUserUrl(DetailsDiscussActivity.this,ivCreateUserIcon, Constants.BASE_IMG_URL + discussDetail.getCreateUserIcon());
+                GlideUtils.loadCircleUserUrl(DetailsDiscussActivity.this, ivCreateUserIcon, Constants.BASE_IMG_URL + discussDetail.getCreateUserIcon());
                 tvCreateUserName.setText(discussDetail.getCreateUserName());
                 userId = discussDetail.getCreateUserId();
                 tvCreateUserSignature.setText(discussDetail.getCreateUserSignature());
+                //0-未收藏，1-已收藏，数字
+                if (discussDetail.getCollectStatus() == 0) {
+                    tvCollectStatus.setSelected(true);
+                } else {
+                    tvCollectStatus.setSelected(false);
+                }
+                tvPraiseStatus.setText(String.valueOf(discussDetail.getPraiseNum()));
+                ///0-未点赞，1-已点赞，数字
+                if (discussDetail.getPraiseStatus() == 0) {
+                    tvPraiseStatus.setSelected(true);
+                } else {
+                    tvPraiseStatus.setSelected(false);
+                }
                 //关注状态  "//0 未关注；1-已关注；2-不显示关注按钮"
                 if (discussDetail.getFollowStatus() == 1) {
                     tvFollowStatus.setSelected(false);
@@ -311,6 +380,9 @@ public class DetailsDiscussActivity extends BaseActivity {
                     tvFollowStatus.setSelected(true);
                     tvFollowStatus.setText(getResources().getString(R.string.follow_status_1));
                 } else {
+                    tvFollowStatus.setVisibility(View.GONE);
+                }
+                if(baseUserId==discussDetail.getCreateUserId()){
                     tvFollowStatus.setVisibility(View.GONE);
                 }
                 tvPostShortDesc.setText(discussDetail.getDisscussContents());
@@ -436,5 +508,22 @@ public class DetailsDiscussActivity extends BaseActivity {
                 initData();
             }
         }
+    }
+
+    private int praiseNum;
+
+    private void setPraise(boolean isPraise, int postId) {
+        NetUtil.setPraise(isPraise, postId, new NetUtil.SaveFollowImpl() {
+            @Override
+            public void finishFollow(String praiseNum,boolean status) {
+                tvPraiseStatus.setEnabled(true);
+                ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
+                if(!praiseNum.equals(Constants.PRAISE_ERROR)){
+                    tvPraiseStatus.setSelected(status);
+                    DetailsDiscussActivity.this.praiseNum=Integer.valueOf(praiseNum);
+                    tvPraiseStatus.setText(praiseNum);
+                }
+            }
+        });
     }
 }

@@ -5,7 +5,6 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.github.moduth.blockcanary.BlockCanary;
 import com.mob.MobSDK;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
@@ -17,9 +16,6 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.secretk.move.baseManager.AppConfig;
-import com.secretk.move.http.Network;
-import com.secretk.move.utils.AppBlockCanaryContext;
-import com.secretk.move.utils.CrashHandler;
 
 import java.util.Stack;
 
@@ -39,9 +35,7 @@ public class MoveApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = this;
-        CrashHandler.getInstance().init(mContext);
-        BlockCanary.install(mContext, new AppBlockCanaryContext()).start();
-        Network.initOkhttp(mContext);
+//        BlockCanary.install(mContext, new AppBlockCanaryContext()).start();
         AppConfig.initAppConfig(this);
         initDao();
         MobSDK.init(this,"25fecb277347b","32ee70fd96c34aeb83b639f7a06ae04");

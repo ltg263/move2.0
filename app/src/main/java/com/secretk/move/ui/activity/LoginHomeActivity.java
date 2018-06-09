@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -30,7 +31,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 
-
 /**
  * 作者： litongge
  * 时间： 2018/4/24 17:02
@@ -48,6 +48,8 @@ public class LoginHomeActivity extends BaseActivity {
     TextView tvOldUserLogin;
     @BindView(R.id.but_login)
     Button butLogin;
+    @BindView(R.id.iv_delete)
+    ImageView ivDelete;
 
     @Override
     protected int setOnCreate() {
@@ -57,7 +59,7 @@ public class LoginHomeActivity extends BaseActivity {
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
         AppBarHeadView mHeadView = findViewById(R.id.head_app_server);
-        isLoginUi=true;
+        isLoginUi = true;
         mHeadView.setHeadBackShow(true);
         //mHeadView.setTitle(getString(R.string.registered_account));
         return mHeadView;
@@ -66,10 +68,21 @@ public class LoginHomeActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-        StringUtil.etSearchChangedListener(etPhone,butLogin ,new StringUtil.EtChange() {
+        StringUtil.etSearchChangedListener(etPhone, butLogin, new StringUtil.EtChange() {
             @Override
             public void etYes() {
                 butLogin.setSelected(true);
+            }
+        });
+        StringUtil.etSearchChangedListener(etPhone, ivDelete, new StringUtil.EtChange() {
+            @Override
+            public void etYes() {
+                ivDelete.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void etNo() {
+                ivDelete.setVisibility(View.GONE);
             }
         });
     }
@@ -78,19 +91,22 @@ public class LoginHomeActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.tv_old_user_login, R.id.but_login})
+    @OnClick({R.id.tv_old_user_login, R.id.but_login,R.id.iv_delete})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_old_user_login:
                 IntentUtil.startActivity(LoginActivity.class);
                 break;
+            case R.id.iv_delete:
+                etPhone.setText("");
+                break;
             case R.id.but_login:
-                String phoneNumber = etPhone.getText().toString().trim();
-                if(StringUtil.isBlank(phoneNumber)){
+                String phoneNumber = etPhone.getText().toString();
+                if (StringUtil.isBlank(phoneNumber)) {
                     ToastUtils.getInstance().show("手机号不能为空");
                     return;
                 }
-                if(!StringUtil.isMobileNO(phoneNumber)){
+                if (!StringUtil.isMobileNO(phoneNumber)) {
                     ToastUtils.getInstance().show("手机号格式不对");
                     return;
                 }
@@ -100,7 +116,7 @@ public class LoginHomeActivity extends BaseActivity {
     }
 
     private void postHttpLogin(final String phoneNumber) {
-        if(!NetUtil.isNetworkAvailable()){
+        if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
         }
@@ -120,19 +136,19 @@ public class LoginHomeActivity extends BaseActivity {
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
-                if(loadingDialog.isShowing()){
+                if (loadingDialog.isShowing()) {
                     loadingDialog.dismiss();
                 }
                 try {
                     JSONObject jsonObject = new JSONObject(str);
                     //"isRegister":0 // 是否已注册 ： 1-已注册过；0-未注册
                     int regIndex = jsonObject.getJSONObject("data").getInt("isRegister");
-                    String key[]={"phone"};
-                    String values[]={phoneNumber};
-                    if(regIndex==0){
-                        IntentUtil.startActivity(RegisterActivity.class,key,values);
-                    }else{
-                        IntentUtil.startActivity(LoginActivity.class,key,values);
+                    String key[] = {"phone"};
+                    String values[] = {phoneNumber};
+                    if (regIndex == 0) {
+                        IntentUtil.startActivity(RegisterActivity.class, key, values);
+                    } else {
+                        IntentUtil.startActivity(LoginActivity.class, key, values);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

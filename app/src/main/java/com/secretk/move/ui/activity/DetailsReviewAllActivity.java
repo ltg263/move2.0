@@ -181,6 +181,9 @@ public class DetailsReviewAllActivity extends BaseActivity {
         } else {
             tvFollowStatus.setVisibility(View.GONE);
         }
+        if(baseUserId==evaluationDetail.getCreateUserId()){
+            tvFollowStatus.setVisibility(View.GONE);
+        }
         wvPostShortDesc.loadData(evaluationDetail.getEvauationContent(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
         tvCreateTime.setText(StringUtil.getTimeToM(evaluationDetail.getCreateTime()));
         if(evaluationDetail.getDonateNum()>0){

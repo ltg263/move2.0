@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.view.LoadingDialog;
 
 import butterknife.ButterKnife;
 
@@ -25,10 +27,11 @@ import butterknife.ButterKnife;
 public abstract class LazyFragment extends Fragment {
     private Boolean isFrist = true;
     private Boolean isPrepared = false;
-    private View convertView;
+    protected View convertView;
     protected SharedUtils sharedUtils;
     protected boolean isLoginZt;
     protected String token;
+    protected LoadingDialog loadingDialog;
 
     @Nullable
     @Override
@@ -56,8 +59,23 @@ public abstract class LazyFragment extends Fragment {
         }else{
             token = "";
         }
+        if(loadingDialog==null){
+            loadingDialog = new LoadingDialog(getActivity());
+        }
         initViews();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        isLoginZt = sharedUtils.get(Constants.IS_LOGIN_KEY,false);
+        LogUtil.w("isLoginZt:"+isLoginZt);
+        if(isLoginZt){
+            token = sharedUtils.get(Constants.TOKEN_KEY,"");
+        }else{
+            token = "";
+            sharedUtils.put(Constants.IS_LOGIN_KEY,false);
+        }
     }
 
     @Override

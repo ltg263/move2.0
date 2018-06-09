@@ -85,6 +85,7 @@ public class HomeActivity extends BaseActivity {
     public static final int HOME_ARTICLE_FRAGMENT = 2;
     String userId;
     private String homePageTitle;
+    private String currentType;
 
     @Override
     protected int setOnCreate() {
@@ -95,7 +96,6 @@ public class HomeActivity extends BaseActivity {
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
         mHeadView = findViewById(R.id.head_app_server);
         mHeadView.setHeadBackShow(true);
-        mHeadView.setTitle("XXX的主页");
         mHeadView.setTitleColor(R.color.title_gray);
         return mHeadView;
     }
@@ -107,6 +107,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void initUI(Bundle savedInstanceState) {
         userId = getIntent().getStringExtra("userId");
+        currentType = getIntent().getStringExtra("currentType");
         refreshLayout.setEnableRefresh(false);//禁止下拉刷新
         reviewFragment = new HomeReviewFragment();
         discussFragment = new HomeDiscussFragment();
@@ -117,7 +118,11 @@ public class HomeActivity extends BaseActivity {
         adapter.addFragment(articleFragment, getString(R.string.article));
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
-        viewPager.setCurrentItem(1);
+        if(StringUtil.isNotBlank(currentType)){
+            viewPager.setCurrentItem(Integer.valueOf(currentType));
+        }else{
+            viewPager.setCurrentItem(1);
+        }
         viewPager.setOffscreenPageLimit(3);
         tabs.post(new Runnable() {
             @Override
@@ -177,16 +182,16 @@ public class HomeActivity extends BaseActivity {
                     tvEvaluatingSign.setVisibility(View.GONE);
                 }
                 //“showFollow”: 0 , //是否显示 关注按钮 0- 不显示；1-显示关注  2-显示取消关注
-                if(userData.getShowFollow()!=0){
-                    tvSaveFollow.setVisibility(View.VISIBLE);
-                }
-
                 if(userData.getShowFollow()==1){
                     tvSaveFollow.setSelected(false);
                     tvSaveFollow.setText(getResources().getString(R.string.follow_status_0));
                 }else{
                     tvSaveFollow.setSelected(true);
                     tvSaveFollow.setText(getResources().getString(R.string.follow_status_1));
+                }
+
+                if(baseUserId==userData.getUserId()){
+                    tvSaveFollow.setVisibility(View.GONE);
                 }
                 homePageTitle =  userData.getHomePageTitle();
                 mHeadView.setTitle(homePageTitle);

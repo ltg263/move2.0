@@ -69,6 +69,10 @@ public class MineOpinionBackActivity extends BaseActivity {
             return;
 
         }
+        if(contact.length()<10){
+            ToastUtils.getInstance().show("意见内容不能小于10个字");
+            return;
+        }
         if(!NetUtil.isNetworkAvailable()){
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;

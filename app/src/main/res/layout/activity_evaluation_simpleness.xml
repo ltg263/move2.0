@@ -103,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:paddingRight="@dimen/dp_10"
-                    android:src="@drawable/ic_user_feedback" />
+                    android:src="@drawable/ic_release_top" />
 
                 <TextView
                     android:layout_width="wrap_content"

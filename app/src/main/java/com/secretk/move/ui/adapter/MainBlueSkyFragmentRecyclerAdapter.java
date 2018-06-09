@@ -1,5 +1,6 @@
 package com.secretk.move.ui.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,11 +8,8 @@ import android.view.ViewGroup;
 
 import com.secretk.move.R;
 import com.secretk.move.bean.BlueSkyBean;
-
 import com.secretk.move.listener.ItemClickListener;
-
 import com.secretk.move.ui.holder.MainBlueSkyFragmentHolder;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +21,11 @@ import java.util.List;
 public class MainBlueSkyFragmentRecyclerAdapter extends RecyclerView.Adapter<MainBlueSkyFragmentHolder> {
     private List<BlueSkyBean.RankList> list = new ArrayList<BlueSkyBean.RankList>();
     private ItemClickListener mListener;
+    Context context;
+
+    public MainBlueSkyFragmentRecyclerAdapter(Context context) {
+        this.context=context;
+    }
 
     public void setItemListener(ItemClickListener mListener) {
         this.mListener = mListener;
@@ -39,7 +42,7 @@ public class MainBlueSkyFragmentRecyclerAdapter extends RecyclerView.Adapter<Mai
     public void onBindViewHolder(MainBlueSkyFragmentHolder holder, int position) {
         holder.setItemListener(mListener);
         BlueSkyBean.RankList  bean=list.get(position);
-        holder.setData(bean,position);
+        holder.setData(bean,position,context);
     }
 
     @Override

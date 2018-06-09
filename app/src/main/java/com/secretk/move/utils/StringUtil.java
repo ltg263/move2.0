@@ -8,8 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.secretk.move.baseManager.BaseManager;
@@ -338,7 +338,7 @@ public class StringUtil {
     /**
      * 监听输入框输的变化
      */
-    public static void etSearchChangedListener(final EditText et, final Button btn, final EtChange etChange) {
+    public static void etSearchChangedListener(final EditText et, final View btn, final EtChange etChange) {
         et.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -428,6 +428,32 @@ public class StringUtil {
         } catch (Exception e) {
             return htmltext;
         }
+    }
+
+    /**
+     *  //用户类型，数字，用户类型:
+     *  1-普通用户；
+     *  2-项目方；
+     *  3-评测机构；4-机构用户
+     * @return
+     */
+    public static String getUserType(int userType){
+        String ut="";
+        switch (userType){
+            case 1:
+                ut="普通用户";
+                break;
+            case 2:
+                ut="项目方";
+                break;
+            case 3:
+                ut="评测机构";
+                break;
+            case 4:
+                ut="机构用户";
+                break;
+        }
+        return ut;
     }
     /**
      * 获取软件版本号

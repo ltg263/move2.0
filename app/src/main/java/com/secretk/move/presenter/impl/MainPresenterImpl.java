@@ -45,6 +45,7 @@ public class MainPresenterImpl implements ActivityMainContract.Presenter, Activi
         if(bean.getForce()==1){//0普通更新，1强制更新
             downLoadUrl=bean.getUpgradeUrl();
             mainView.showDialog(bean,true);
+//            downLoadApk();
         }else if(bean.getUpgrade()==1){//0不需更新，1需要更新
             downLoadUrl=bean.getGuideUrl();
             mainView.showDialog(bean,false);

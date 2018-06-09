@@ -1,5 +1,6 @@
 package com.secretk.move.ui.holder;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -39,9 +40,9 @@ public class SelectProjectHolder extends RecyclerViewBaseHolder {
     }
 
 
-    public void refresh(int position, List<SearchedBean.Projects> listNum , int projectId) {
+    public void refresh(int position, List<SearchedBean.Projects> listNum , int projectId, Context context) {
         final SearchedBean.Projects currenBean= listNum.get(position);
-        GlideUtils.loadCircleUrl(img, Constants.BASE_IMG_URL + currenBean.getProjectIcon());
+        GlideUtils.loadCircleProjectUrl(context,img, Constants.BASE_IMG_URL + currenBean.getProjectIcon());
         tvCode.setText(currenBean.getProjectCode()+"/");
         tvName.setText(currenBean.getProjectChineseName());
         tvFollws.setText(currenBean.getFollowerNum()+"关注");

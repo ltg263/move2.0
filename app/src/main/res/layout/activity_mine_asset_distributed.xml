@@ -70,7 +70,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/dp_10"
-                            android:text="52000.22"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_32" />
 
@@ -92,7 +91,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/dp_10"
-                            android:text="52000.22"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_22" />
                     </LinearLayout>

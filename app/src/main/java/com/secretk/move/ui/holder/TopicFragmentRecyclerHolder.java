@@ -1,5 +1,6 @@
 package com.secretk.move.ui.holder;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,9 +13,10 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.SearchedBean;
-
 import com.secretk.move.bean.base.BaseRes;
+import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PatternUtils;
 import com.secretk.move.utils.PolicyUtil;
@@ -52,9 +54,9 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         ButterKnife.bind(this, itemView);
     }
     //1-按关注数量倒序；2-按名称排序
-    public void setData(List<SearchedBean.Projects> list, int position,int type ){
-        final SearchedBean.Projects  currenBean= list.get(position);
-        GlideUtils.loadCircleUrl(img, Constants.BASE_IMG_URL + currenBean.getProjectIcon());
+    public void setData(List<SearchedBean.Projects> list, int position, int type, Context context){
+        final SearchedBean.Projects currenBean= list.get(position);
+        GlideUtils.loadCircleProjectUrl(context,img, Constants.BASE_IMG_URL + currenBean.getProjectIcon());
         tvCode.setText(currenBean.getProjectCode()+"/");
         tvName.setText(currenBean.getProjectChineseName());
         switch (type){
@@ -77,16 +79,24 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             tvIsFollw.setPressed(true);
             tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
         } else {
-            tvIsFollw.setVisibility(View.GONE);
+//            tvIsFollw.setVisibility(View.GONE);
+            tvIsFollw.setText("+ 关注");
+            tvIsFollw.setSelected(false);
+            tvIsFollw.setPressed(false);
+            tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
         }
         tvIsFollw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (getString().equals("已关注")) {
-                    http(Constants.CANCEL_FOLLOW,currenBean.getProjectId());
-                } else {
-                    http(Constants.SAVE_FOLLOW,currenBean.getProjectId());
+                boolean isLogin = SharedUtils.singleton().get(Constants.IS_LOGIN_KEY,false);
+                if(isLogin){
+                    if (getString().equals("已关注")) {
+                        http(Constants.CANCEL_FOLLOW,currenBean.getProjectId());
+                    } else {
+                        http(Constants.SAVE_FOLLOW,currenBean.getProjectId());
+                    }
+                }else{
+                    IntentUtil.startActivity(LoginHomeActivity.class);
                 }
             }
         });
@@ -162,6 +172,7 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             }
         });
     }
+
     public String getString(){
         return tvIsFollw.getText().toString();
     }

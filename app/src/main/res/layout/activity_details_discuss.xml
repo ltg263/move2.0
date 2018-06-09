@@ -70,7 +70,7 @@
                     <RelativeLayout
                         android:id="@+id/rl_ge_ren"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="wrap_content"
                         android:padding="@dimen/dp_10">
 
                         <ImageView
@@ -84,8 +84,9 @@
                             android:id="@+id/tv_create_user_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/iv_create_user_icon"
                             android:layout_marginLeft="@dimen/dp_10"
-                            android:layout_toRightOf="@id/iv_create_user_icon"
+                            android:layout_toRightOf="@+id/iv_create_user_icon"
                             android:textColor="#333333"
                             android:textSize="@dimen/sp_16" />
 
@@ -93,9 +94,8 @@
                             android:id="@+id/tv_create_user_signature"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginLeft="@dimen/dp_10"
-                            android:layout_toRightOf="@id/iv_create_user_icon"
+                            android:layout_alignBottom="@+id/iv_create_user_icon"
+                            android:layout_alignStart="@+id/tv_create_user_name"
                             android:textColor="#aaaaaa"
                             android:textSize="@dimen/sp_12" />
 
@@ -110,7 +110,6 @@
                             android:paddingLeft="@dimen/dp_10"
                             android:paddingRight="@dimen/dp_10"
                             android:paddingTop="@dimen/dp_3"
-                            android:text="+关注"
                             android:textColor="@drawable/selector_follow_state_text" />
                     </RelativeLayout>
 
@@ -173,7 +172,7 @@
                             android:paddingHorizontal="@dimen/dp_15"
                             android:paddingVertical="@dimen/dp_4"
                             android:textColor="#3b88f6"
-                            android:textSize="@dimen/sp_15"
+                            android:textSize="@dimen/sp_14"
                             android:visibility="visible" />
 
                         <TextView
@@ -193,9 +192,67 @@
                         android:background="@color/cut_off_rule" />
 
                     <LinearLayout
+                        android:id="@+id/ll_bottom_bnt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingHorizontal="@dimen/dp_15">
+
+
+                        <TextView
+                            android:id="@+id/tv_commendation_Num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_sponsor"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:padding="@dimen/dp_15"
+                            android:text="赞助"
+                            android:textColor="#aaaaaa"
+                            android:textSize="@dimen/sp_12" />
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_line"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/tv_collect_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/selector_collect_img"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:padding="@dimen/dp_15"
+                            android:text="收藏"
+                            android:textColor="@drawable/selector_assist_text"
+                            android:textSize="@dimen/sp_12" />
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp_line"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/tv_praise_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/selector_assist_img"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:padding="@dimen/dp_15"
+                            android:text="12313"
+                            android:textColor="@drawable/selector_assist_text"
+                            android:textSize="@dimen/sp_12" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_10"
+                        android:background="@color/background_gray" />
+
+                    <LinearLayout
                         android:id="@+id/ll_rm"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:orientation="vertical"
                         android:visibility="gone">
 
@@ -207,7 +264,7 @@
                             android:padding="@dimen/dp_10"
                             android:textColor="@color/title_gray"
                             android:textSize="@dimen/sp_14"
-                            android:visibility="visible" />
+                            android:visibility="gone" />
 
                         <View
                             android:layout_width="match_parent"

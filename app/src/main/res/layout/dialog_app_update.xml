@@ -38,7 +38,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/dp_20"
             android:layout_marginHorizontal="@dimen/dp_35"
-            android:background="@drawable/btn_max_selected_top_radius"
+            android:background="@drawable/btn_max_selected_radius"
             android:gravity="center"
             android:padding="@dimen/dp_10"
             android:text="抢先体验"

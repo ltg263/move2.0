@@ -44,6 +44,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Boolean isLoginUi = false;
     protected Boolean isLoginZt = false;//登录状态
     protected String token ;
+    protected int baseUserId;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         isLoginZt = sharedUtils.get(Constants.IS_LOGIN_KEY,false);
         if(isLoginZt){
             token = sharedUtils.get(Constants.TOKEN_KEY,"");
+            baseUserId = sharedUtils.get(Constants.USER_ID,0);
         }else{
             token = "";
         }

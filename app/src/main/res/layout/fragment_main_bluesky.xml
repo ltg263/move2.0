@@ -2,65 +2,86 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/rl_title"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#fff"
-        android:visibility="gone">
+        android:layout_height="match_parent"
+        android:layout_below="@id/view"
+        android:visibility="visible"
+        app:srlEnablePreviewInEditMode="false">
 
-        <View
-            android:id="@+id/view_center"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:layout_centerInParent="true" />
+        <com.secretk.move.view.RecycleScrollView
+            android:id="@+id/rcv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
 
-        <TextView
-            android:id="@+id/tv_one"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="30dp"
-            android:paddingBottom="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_10"
-            android:text="排名"
-            android:textColor="#aaaaaa"
-            android:textSize="@dimen/sp_12" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_two"
-            android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/rl_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:visibility="gone">
 
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_toRightOf="@+id/view_center"
-            android:paddingBottom="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_10"
-            android:text="评分"
-            android:textColor="#aaaaaa"
-            android:textSize="@dimen/sp_12" />
+                    <View
+                        android:id="@+id/view_center"
+                        android:layout_width="1dp"
+                        android:layout_height="1dp"
+                        android:layout_centerInParent="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_toRightOf="@+id/tv_two"
-            android:paddingBottom="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_10"
-            android:text="关注度"
-            android:textColor="#aaaaaa"
-            android:textSize="@dimen/sp_12" />
-    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tv_one"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="30dp"
+                        android:paddingBottom="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_10"
+                        android:text="排名"
+                        android:textColor="#aaaaaa"
+                        android:textSize="@dimen/sp_12" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_title" />
+                    <TextView
+                        android:id="@+id/tv_two"
+                        android:layout_width="wrap_content"
 
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_toRightOf="@+id/view_center"
+                        android:paddingBottom="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_10"
+                        android:text="评分"
+                        android:textColor="#aaaaaa"
+                        android:textSize="@dimen/sp_12" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_toRightOf="@+id/tv_two"
+                        android:paddingBottom="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_10"
+                        android:text="关注度"
+                        android:textColor="#aaaaaa"
+                        android:textSize="@dimen/sp_12" />
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_title" />
+
+            </RelativeLayout>
+        </com.secretk.move.view.RecycleScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </RelativeLayout>

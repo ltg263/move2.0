@@ -194,17 +194,16 @@ public class MoreCommentsActivity extends BaseActivity{
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
-                ToastUtils.getInstance().show("评论成功");
                 etMessage.setText("");
-               // rvReview.fullScroll(ScrollView.FOCUS_UP);
-//                initData();
+//                rvReview.fullScroll(ScrollView.FOCUS_UP);
+                initData();
             }
 
             @Override
             public void onFinish() {
-                if(loadingDialog.isShowing()){
-                    loadingDialog.dismiss();
-                }
+//                if(loadingDialog.isShowing()){
+//                    loadingDialog.dismiss();
+//                }
             }
         });
     }

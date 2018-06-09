@@ -6,8 +6,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -17,6 +23,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.SearchedBean;
 import com.secretk.move.customview.QuickIndexBar;
 import com.secretk.move.listener.ItemClickListener;
+import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.activity.SearchActivity;
 import com.secretk.move.ui.activity.SubmitProjectActivity;
 import com.secretk.move.ui.adapter.TopicFragmentRecyclerAdapter;
@@ -36,15 +43,19 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * Created by zc on 2018/4/5.
+ * 作者： litongge
+ * 时间： 2018/6/7 16:03
+ * 邮箱；ltg263@126.com
+ * 描述：主页话题
  */
-
 public class TopicFragment extends LazyFragment implements ItemClickListener, QuickIndexBar.OnLetterChangeListener {
 
     @BindView(R.id.qbar)
     QuickIndexBar qbar;
     @BindView(R.id.recycler)
     RecyclerView recycler;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
 
     @BindView(R.id.tv_count)
     TextView tv_count;
@@ -54,12 +65,21 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
     TextView tv_sort_follow;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-
-    private LinearLayoutManager layoutManager;
+    @BindView(R.id.tv_icon)
+    ImageView tvIcon;
+    @BindView(R.id.tv_name)
+    TextView tvName;
+    @BindView(R.id.tv_submit)
+    TextView tvSubmit;
+    @BindView(R.id.rl_top_theme)
+    RelativeLayout rlTopTheme;
+    @BindView(R.id.ll_have_data)
+    LinearLayout llHaveData;
     private TopicFragmentRecyclerAdapter adapter;
-
     private LoadingDialog loadingDialog;
-
+    String lsToken="";
+    boolean showFragment = false;
+    private int currentType = Constants.TOPIC_SORT_BY_NUM;
 
     @Override
     public int setFragmentView() {
@@ -68,113 +88,65 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
 
     @Override
     public void initViews() {
-
-        layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recycler.setLayoutManager(layoutManager);
-        adapter = new TopicFragmentRecyclerAdapter();
+        initRefresh();
+        setVerticalManager(recycler);
+        adapter = new TopicFragmentRecyclerAdapter(getContext());
         recycler.setAdapter(adapter);
         adapter.setItemListener(this);
         qbar.setOnLetterChangeListener(this);
         loadingDialog = new LoadingDialog(getActivity());
-        fab.setOnClickListener(new View.OnClickListener() {
+        rlTopTheme.setVisibility(View.VISIBLE);
+        tvName.setText(getActivity().getResources().getString(R.string.not_currency));
+        tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
+    }
+    private void initRefresh() {
+//        loadingDialog = new LoadingDialog(getActivity());
+        refreshLayout.setEnableLoadmore(false);
+        refreshLayout.setEnableRefresh(false);
+        /**
+         * 下拉刷新
+         */
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onClick(View v) {
-                IntentUtil.startActivity(SubmitProjectActivity.class);
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshLayout.setLoadmoreFinished(false);
+                http(currentType);
             }
         });
-//        List<String> list = new ArrayList<>();
-//        list.add("#");
-//        list.add("A");
-//        list.add("B");
-//        list.add("C");
-//        list.add("d");
-//        list.add("e");
-//        list.add("f");
-//        list.add("g");
-//        list.add("h");
-//        list.add("i");
-//        list.add("j");
-//        list.add("k");
-//        list.add("l");
-//        list.add("m");
-//        list.add("n");
-//        list.add("o");
-//        list.add("p");
-//        list.add("q");
-//        list.add("r");
-//        list.add("s");
-//        list.add("t");
-//        list.add("y");
-//        list.add("v");
-//        list.add("u");
-//        list.add("x");
-//        list.add("g");
-//        list.add("z");
-//
-//        qbar.setData(list);
-
     }
-
     //1-按关注数量倒序；2-按名称排序
     @Override
     public void onFirstUserVisible() {
-        if (isLoginZt){
+        if (true) {
+//        if (isLoginZt){
             http(Constants.TOPIC_SORT_BY_NUM);
-        }else {
+        } else {
             ToastUtils.getInstance().show("账号未登录,请先登录账号");
         }
     }
 
-//
-
-    @OnClick(R.id.tv_sort_name)
-    public void sortByName(View view) {
-
-        qbar.setVisibility(View.VISIBLE);
-        tv_count.setText("共" + 0 + "个币种");
-        tv_sort_name.setTextColor(Color.parseColor("#3b88f6"));
-        tv_sort_follow.setTextColor(Color.parseColor("#dddddd"));
-        List<SearchedBean.Projects> list = adapter.getDataByType(Constants.TOPIC_SORT_BY_NAME);
-        if (list == null || list.size() == 0) {
-            http(Constants.TOPIC_SORT_BY_NAME);
-            return;
-        }
-        adapter.swithData(Constants.TOPIC_SORT_BY_NAME);
-        int count = adapter.getDataByType(Constants.TOPIC_SORT_BY_NAME).size();
-        tv_count.setText("共" + count + "个币种");
-
-
-    }
-
-    @OnClick(R.id.tv_sort_follow)
-    public void sortByFollow(View view) {
-
-        qbar.setVisibility(View.GONE);
-        tv_count.setText("共" + 0 + "个币种");
-        tv_sort_name.setTextColor(Color.parseColor("#dddddd"));
-        tv_sort_follow.setTextColor(Color.parseColor("#3b88f6"));
-        List<SearchedBean.Projects> list = adapter.getDataByType(Constants.TOPIC_SORT_BY_NUM);
-        if (list == null || list.size() == 0) {
-            http(Constants.TOPIC_SORT_BY_NUM);
-            return;
-        }
-        adapter.swithData(Constants.TOPIC_SORT_BY_NUM);
-        int count = adapter.getDataByType(Constants.TOPIC_SORT_BY_NUM).size();
-        tv_count.setText("共" + count + "个币种");
-
-    }
-
-
     @Override
     public void onItemClick(View view, int postion) {
-        int id = adapter.getData().get(postion).getProjectId();
-        IntentUtil.startProjectActivity(id);
+        if(isLoginZt){
+            int id = adapter.getData().get(postion).getProjectId();
+            IntentUtil.startProjectActivity(id);
+        }else{
+            IntentUtil.startActivity(LoginHomeActivity.class);
+        }
     }
 
     @Override
     public void onItemLongClick(View view, int postion) {
-        ToastUtils.getInstance().show("onItemLongClick postion=" + postion);
+//        ToastUtils.getInstance().show("onItemLongClick postion=" + postion);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!lsToken.equals(token) && showFragment){
+            lsToken = token;
+            http(currentType);
+        }
     }
 
     @Override
@@ -193,18 +165,13 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
         }
     }
 
-    @OnClick(R.id.toolbar)
-    public void goSearch(View view) {
-        Intent intent = new Intent(getContext(), SearchActivity.class);
-        startActivity(intent);
-    }
 
     public void http(final int type) {
-        if (!isLoginZt){
-            ToastUtils.getInstance().show("账号未登录,请先登录账号");
-            return;
+        currentType = type;
+        if(!showFragment){
+            loadingDialog.show();
         }
-        loadingDialog.show();
+        showFragment=true;
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -221,22 +188,87 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
         RetrofitUtil.request(params, SearchedBean.class, new HttpCallBackImpl<SearchedBean>() {
             @Override
             public void onCompleted(SearchedBean bean) {
-                loadingDialog.dismiss();
                 if (bean.getCode() == 0) {
                     List<SearchedBean.Projects> list = bean.getData().getProjects();
                     tv_count.setText("共" + list.size() + "个币种");
+                    if (list.size() > 0) {
+                        convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
+                        llHaveData.setVisibility(View.VISIBLE);
+                    } else {
+                        llHaveData.setVisibility(View.GONE);
+                        convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+                    }
                     adapter.setData(list, type);
-                   if (type==Constants.TOPIC_SORT_BY_NAME){
-                       qbar.setDatax(list);
-                   }
+                    if (type == Constants.TOPIC_SORT_BY_NAME) {
+                        qbar.setDatax(list);
+                    }
                 }
             }
 
             @Override
-            public void onError(String message) {
+            public void onFinish() {
+                super.onFinish();
+                if (refreshLayout.isRefreshing()) {
+                    refreshLayout.finishRefresh();
+                }
                 loadingDialog.dismiss();
             }
         });
     }
 
+    @OnClick({R.id.tv_submit, R.id.fab,R.id.toolbar,R.id.tv_sort_follow,R.id.tv_sort_name})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_submit:
+                http(Constants.TOPIC_SORT_BY_NUM);
+                break;
+            case R.id.fab:
+                if(isLoginZt){
+                    IntentUtil.startActivity(SubmitProjectActivity.class);
+                    return;
+                }
+                IntentUtil.startActivity(LoginHomeActivity.class);
+                break;
+            case R.id.toolbar:
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.tv_sort_follow:
+                sortFollow();
+                break;
+            case R.id.tv_sort_name:
+                sortName();
+                break;
+        }
+    }
+
+    private void sortName() {
+        qbar.setVisibility(View.VISIBLE);
+        tv_count.setText("共" + 0 + "个币种");
+        tv_sort_name.setTextColor(Color.parseColor("#3b88f6"));
+        tv_sort_follow.setTextColor(Color.parseColor("#dddddd"));
+        List<SearchedBean.Projects> list = adapter.getDataByType(Constants.TOPIC_SORT_BY_NAME);
+        if (list == null || list.size() == 0) {
+            http(Constants.TOPIC_SORT_BY_NAME);
+            return;
+        }
+        adapter.swithData(Constants.TOPIC_SORT_BY_NAME);
+        int count = adapter.getDataByType(Constants.TOPIC_SORT_BY_NAME).size();
+        tv_count.setText("共" + count + "个币种");
+    }
+
+    private void sortFollow() {
+        qbar.setVisibility(View.GONE);
+        tv_count.setText("共" + 0 + "个币种");
+        tv_sort_name.setTextColor(Color.parseColor("#dddddd"));
+        tv_sort_follow.setTextColor(Color.parseColor("#3b88f6"));
+        List<SearchedBean.Projects> list = adapter.getDataByType(Constants.TOPIC_SORT_BY_NUM);
+        if (list == null || list.size() == 0) {
+            http(Constants.TOPIC_SORT_BY_NUM);
+            return;
+        }
+        adapter.swithData(Constants.TOPIC_SORT_BY_NUM);
+        int count = adapter.getDataByType(Constants.TOPIC_SORT_BY_NUM).size();
+        tv_count.setText("共" + count + "个币种");
+    }
 }

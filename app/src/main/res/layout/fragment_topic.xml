@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
-    android:orientation="vertical">
+    android:background="@color/white">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -27,87 +26,126 @@
             android:textColor="#aaaaaa" />
     </android.support.v7.widget.Toolbar>
 
-    <RelativeLayout
-        android:id="@+id/rl_parent"
+    <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#fff"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:layout_height="@dimen/dp_line"
+        android:layout_below="@id/toolbar"
+        android:background="@color/cut_off_rule" />
 
-        <TextView
-            android:id="@+id/tv_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="共0个币种"
-            android:textColor="#000000"
-            android:textSize="@dimen/sp_14" />
-
-        <TextView
-            android:id="@+id/tv_sort_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:text="按名称"
-            android:textColor="#aaaaaa"
-            android:textSize="@dimen/sp_12" />
-
-        <TextView
-            android:id="@+id/tv_line"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="12dp"
-            android:layout_toLeftOf="@+id/tv_sort_name"
-            android:text="|"
-            android:textColor="#dddddd"
-            android:textSize="@dimen/sp_12" />
-
-        <TextView
-            android:id="@+id/tv_sort_follow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="12dp"
-            android:layout_toLeftOf="@+id/tv_line"
-            android:text="按关注"
-            android:textColor="#3b88f6"
-
-            android:textSize="@dimen/sp_12" />
-    </RelativeLayout>
-
-    <RelativeLayout
+    <include
+        android:id="@+id/no_data"
+        layout="@layout/activity_loading_blank"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/view"
+        android:visibility="gone" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/view"
+        android:visibility="visible"
+        app:srlEnablePreviewInEditMode="false">
+
+        <com.secretk.move.view.RecycleScrollView
+            android:id="@+id/rcv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <com.secretk.move.customview.QuickIndexBar
-            android:id="@+id/qbar"
-            android:visibility="gone"
-            android:layout_width="20dp"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="@dimen/dp_40"
-            android:layout_marginTop="@dimen/dp_40" />
+            android:fillViewport="true"
+            android:scrollbars="none">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:src="@drawable/main_menu_publish"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            app:backgroundTint="#fff"
-            app:borderWidth="0.0dip"
-            app:elevation="5.0dip"
-            app:fabSize="normal"
-            app:pressedTranslationZ="10.0dip"
-            app:rippleColor="#a6a6a6" />
-    </RelativeLayout>
-</LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_have_data"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp">
+
+                    <TextView
+                        android:id="@+id/tv_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="共0个币种"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_sort_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="15dp"
+                        android:text="按名称"
+                        android:textColor="#aaaaaa"
+                        android:textSize="@dimen/sp_12" />
+
+                    <TextView
+                        android:id="@+id/tv_line"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="12dp"
+                        android:layout_toLeftOf="@+id/tv_sort_name"
+                        android:text="|"
+                        android:textColor="#dddddd"
+                        android:textSize="@dimen/sp_12" />
+
+                    <TextView
+                        android:id="@+id/tv_sort_follow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="12dp"
+                        android:layout_toLeftOf="@+id/tv_line"
+                        android:text="按关注"
+                        android:textColor="#3b88f6"
+
+                        android:textSize="@dimen/sp_12" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <com.secretk.move.customview.QuickIndexBar
+                        android:id="@+id/qbar"
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="@dimen/dp_40"
+                        android:layout_marginTop="@dimen/dp_40"
+                        android:visibility="gone" />
+                </RelativeLayout>
+            </LinearLayout>
+        </com.secretk.move.view.RecycleScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20dp"
+        android:src="@drawable/main_menu_publish"
+        app:backgroundTint="#fff"
+        app:borderWidth="0.0dip"
+        app:elevation="5.0dip"
+        app:fabSize="normal"
+        app:pressedTranslationZ="10.0dip"
+        app:rippleColor="#a6a6a6" />
+</RelativeLayout>

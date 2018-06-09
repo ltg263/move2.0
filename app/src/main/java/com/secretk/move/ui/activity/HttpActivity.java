@@ -3,21 +3,15 @@ package com.secretk.move.ui.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.BlueSkyBean;
-import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.bean.DynamicValidateCodeSend;
-
-import com.secretk.move.bean.MainRfBean;
 import com.secretk.move.bean.UpImgBean;
 import com.secretk.move.bean.base.BaseRes;
 import com.secretk.move.utils.LogUtil;

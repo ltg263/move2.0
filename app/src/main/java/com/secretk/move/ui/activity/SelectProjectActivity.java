@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -21,8 +24,10 @@ import com.secretk.move.ui.adapter.SelectProjectAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
+import com.secretk.move.utils.UiUtils;
 import com.secretk.move.view.AppBarHeadView;
 
 import org.json.JSONException;
@@ -56,6 +61,8 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
     TextView tvCount;
     @BindView(R.id.recycler)
     RecyclerView recycler;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     private SelectProjectAdapter adapter;
 
     private List<SearchedBean.Projects> list;
@@ -79,17 +86,33 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        StatusBarUtil.setLightMode(this);
+        StatusBarUtil.setColor(this, UiUtils.getColor(R.color.background_gray), 0);
+        initRefresh();
         publicationType = getIntent().getIntExtra("publication_type", 0);
         projectId = getIntent().getIntExtra("projectId", -1);
         setVerticalManager(recycler);
-        adapter = new SelectProjectAdapter();
+        adapter = new SelectProjectAdapter(this);
         recycler.setAdapter(adapter);
         adapter.setItemListener(this);
+        loadingDialog.show();
     }
-
+    private void initRefresh() {
+        refreshLayout.setEnableLoadmore(false);
+        refreshLayout.setEnableRefresh(false);
+        /**
+         * 下拉刷新
+         */
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshLayout.setLoadmoreFinished(false);
+                initData();
+            }
+        });
+    }
     @Override
     protected void initData() {
-        loadingDialog.show();
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -111,8 +134,13 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
                 adapter.setData(list,projectId);
             }
 
+
             @Override
             public void onFinish() {
+                super.onFinish();
+                if (refreshLayout.isRefreshing()) {
+                    refreshLayout.finishRefresh();
+                }
                 loadingDialog.dismiss();
             }
         });
@@ -125,6 +153,10 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
      */
     @Override
     public void onItemClick(View view, int postion) {
+        if(!isLoginZt){
+            IntentUtil.startActivity(LoginHomeActivity.class);
+            return;
+        }
         SearchedBean.Projects bean = list.get(postion);
         if (publicationType == 1) {
             IntentUtil.startProjectSimplenessActivity(bean.getProjectId(), bean.getProjectIcon(),
@@ -165,6 +197,9 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
         if(StringUtil.isBlank(searchContent)){
             ToastUtils.getInstance().show("搜索币种不能为空");
 //            adapter.setData(list);
+            return;
+        }
+        if(list==null){
             return;
         }
         List<SearchedBean.Projects> listSearch = new ArrayList<>();

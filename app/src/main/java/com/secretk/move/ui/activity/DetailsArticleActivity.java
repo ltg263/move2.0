@@ -166,6 +166,9 @@ public class DetailsArticleActivity extends BaseActivity {
         }else{
             tvFollowStatus.setVisibility(View.GONE);
         }
+        if(baseUserId==initData.getCreateUserId()){
+            tvFollowStatus.setVisibility(View.GONE);
+        }
 //        tvPostShortDesc.setText(StringUtil.getBeanString(initData.getArticleContents()));
         wvPostShortDesc.loadData(StringUtil.getNewContent(StringUtil.getBeanString(initData.getArticleContents())), "text/html; charset=UTF-8", null);//这种写法可以正确解码
         tvProjectCode.setText(StringUtil.getBeanString(initData.getProjectCode()));

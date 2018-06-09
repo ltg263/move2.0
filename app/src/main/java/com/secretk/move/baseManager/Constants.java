@@ -38,6 +38,10 @@ public interface Constants {
      */
     String USER_TYPE = "UserType";
     /**
+     * 登录的用户ID
+     */
+    String USER_ID = "userId";
+    /**
      * 登录的用户手机号
      */
     String MOBILE = "mobile";
@@ -86,11 +90,17 @@ public interface Constants {
 
 
     /**
+     * 正式
+     * 外网图片
+     */
+    String BASE_URL = "http://app.qufen.top/rest/";
+    String BASE_IMG_URL = "http://app.qufen.top/";
+    /**
      * 外网
      * 外网图片
      */
-    String BASE_URL = "http://47.98.197.101/rest/";
-    String BASE_IMG_URL = "http://47.98.197.101/";
+//    String BASE_URL = "http://47.98.197.101/rest/";
+//    String BASE_IMG_URL = "http://47.98.197.101/";
     /**
      * 外网
      * 外网图片
@@ -118,7 +128,9 @@ public interface Constants {
     String HELP = "http://192.168.10.196:5000/mine/help";
 
     //发送验证码通用接口
-    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/send";
+//    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/send";
+    ////发送验证码通用接口 阿里云 modue ：login   register    forgetPassword
+    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/sendAliyun";
     //校验验证码接口。
     String DYNAMIC_VALIDATE_CODE_VERIFY = BASE_URL + "kff/dynamicValidateCode/verify";
     //验证手机号是否已经存在
@@ -128,7 +140,7 @@ public interface Constants {
     //老用户用户登录
     String USER_LOGIN = BASE_URL + "kff/user/login";
     //获取登录用户信息。
-    String GET_USER_INFO = BASE_URL + " kff/user/getUserInfo";
+    String GET_USER_INFO = BASE_URL + "kff/user/getUserInfo";
     //重置密码
     String FORGET_PASSWORD = BASE_URL + "kff/user/forgetPassword";
     //总产明细列表的接口
@@ -203,6 +215,8 @@ public interface Constants {
     String PROJECT_ARTICLE_LIST = BASE_URL + "kff/project/articleList";
     //讨论详情 页
     String DISCUSS_DETAIL = BASE_URL + "kff/home/discussDetail";
+    //项目评分统计
+    String EVA_STAT_SCORE = BASE_URL + "kff/project/evaStatScore";
     //对(评测/文章/讨论)类型的帖子进行评论或者对评论内容进行评论
     String SAVE_COMMENT = BASE_URL + "kff/comments/saveComment";
     //讨论详情 最新评测列表和单个评论详情页childCommentList

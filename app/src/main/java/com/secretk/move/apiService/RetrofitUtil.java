@@ -136,6 +136,7 @@ public class RetrofitUtil {
                                      String msg = jsonObject.getString("msg");
                                      if ((code != 0 && !msg.equals("Success"))) {
                                          Toast.makeText(MoveApplication.getContext(), msg, Toast.LENGTH_SHORT).show();
+                                         callBack.onError(msg);
                                          callBack.onFinish();
                                          return;
                                      }

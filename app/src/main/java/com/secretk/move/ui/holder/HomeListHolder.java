@@ -147,14 +147,13 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
                 tvCrackDown.setVisibility(View.GONE);
                 break;
         }
+        tvPraiseNum.setSelected(true);
+        ivAssist.setSelected(true);
         if (rowsBean.getFollowStatus() == 1) { //关注状态  "//0 未关注；1-已关注；2-不显示关注按钮"
             tvFollowStatus.setText(context.getString(R.string.follow_status_1));
-            tvPraiseNum.setSelected(true);
-            ivAssist.setSelected(true);
         } else if (rowsBean.getFollowStatus() == 0) {
             tvFollowStatus.setText(context.getString(R.string.follow_status_0));
-            tvPraiseNum.setSelected(false);
-            ivAssist.setSelected(false);
+
         } else {
             tvFollowStatus.setVisibility(View.GONE);
         }

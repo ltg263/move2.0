@@ -154,7 +154,7 @@ public class IntentUtil {
      * @param projectId
      */
     public static void startProjectCompileActivity(String modelType, String projectId,String projectName,String professionalEvaDetail,String totalScore,String modelName) {
-        String key[] = {Constants.ModelType.MODEL_TYPE,"projectId","projectName","professionalEvaDetail","totalScore","modelName"};
+        String key[] = {Constants.ModelType.MODEL_TYPE,"projectId","projectPay","professionalEvaDetail","totalScore","modelName"};
         String values[] = {modelType,projectId,projectName,professionalEvaDetail,totalScore,modelName};
         IntentUtil.startActivity(EvaluationWriteActivity.class, key, values);
     }

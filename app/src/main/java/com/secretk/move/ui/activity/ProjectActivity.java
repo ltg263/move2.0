@@ -323,7 +323,9 @@ public class ProjectActivity extends BaseActivity {
                 startAcy();
                 break;
             case R.id.rl_grade:
-                IntentUtil.startActivity(DetailsUserGradeActivity.class);
+                String key[] = {"projectId"};
+                String values[] = {projectId};
+                IntentUtil.startActivity(DetailsUserGradeActivity.class, key, values);
                 break;
             case R.id.tv_review:
                 IntentUtil.startProjectSimplenessActivity(projectInfo.getProjectId(),projectInfo.getProjectIcon(),
@@ -356,11 +358,13 @@ public class ProjectActivity extends BaseActivity {
             case 2:
                 intent = new Intent(this, ReleaseArticleActivity.class);
                 intent.putExtra("projectId",projectInfo.getProjectId());
+                intent.putExtra("projectPay",projectInfo.getProjectCode());
                 startActivity(intent);
                 break;
             case 3:
                 intent = new Intent(this, ReleaseDiscussActivity.class);
                 intent.putExtra("projectId",projectInfo.getProjectId());
+                intent.putExtra("projectPay",projectInfo.getProjectCode());
                 startActivity(intent);
                 break;
         }

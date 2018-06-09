@@ -197,7 +197,7 @@
                         android:paddingRight="@dimen/dp_10"
                         android:text="@string/crack_down"
                         android:textColor="#3b88f6"
-                        android:textSize="@dimen/sp_15"
+                        android:textSize="@dimen/sp_14"
                         android:visibility="visible" />
 
 

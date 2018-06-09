@@ -10,5 +10,6 @@ import android.app.Application;
 public class AppConfig {
     public static void initAppConfig(Application app) {
         BaseManager.init(app);
+//        x.Ext.init(app);
     }
 }

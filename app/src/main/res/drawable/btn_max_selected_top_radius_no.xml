@@ -3,7 +3,7 @@
     <item>
         <shape>
             <solid android:color="@color/login_bnt" />
-            <corners android:topLeftRadius="6dp" android:topRightRadius="6dp" />
+            <corners android:topLeftRadius="2dp" android:topRightRadius="2dp" />
         </shape>
     </item>
 </selector>

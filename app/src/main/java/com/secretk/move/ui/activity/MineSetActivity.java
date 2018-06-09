@@ -18,12 +18,16 @@ import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.UserLoginInfo;
+import com.secretk.move.bean.VersionBean;
+import com.secretk.move.utils.DownloadService;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PicUtil;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
@@ -70,6 +74,8 @@ public class MineSetActivity extends BaseActivity {
     LinearLayout llResetPasswords;
     @BindView(R.id.ll_my_head)
     LinearLayout llMyHead;
+    @BindView(R.id.tv_current_version)
+    TextView tvCurrentVersion;
 
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
@@ -77,7 +83,7 @@ public class MineSetActivity extends BaseActivity {
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitleColor(R.color.title_gray);
         mHeadView.setTitle("设置");
-        mMenuInfos.add(0,new MenuInfo(R.string.save, getString(R.string.save), 0));
+        mMenuInfos.add(0, new MenuInfo(R.string.save, getString(R.string.save), 0));
         return mHeadView;
     }
 
@@ -89,22 +95,23 @@ public class MineSetActivity extends BaseActivity {
     @Override
     protected void initUI(Bundle savedInstanceState) {
         //接收对象
-        UserLoginInfo.DataBean.UserBean infos=getIntent().getParcelableExtra(Constants.USER_INFOS);
-        GlideUtils.loadCircleUserUrl(this,ivHeadImg,Constants.BASE_IMG_URL+infos.getIcon());
+        UserLoginInfo.DataBean.UserBean infos = getIntent().getParcelableExtra(Constants.USER_INFOS);
+        GlideUtils.loadCircleUserUrl(this, ivHeadImg, Constants.BASE_IMG_URL + infos.getIcon());
         tvUserName.setText(infos.getUserName());
-        if(infos.getSex()==1){
+        if (infos.getSex() == 1) {
             tvSex.setText("男");
-        }else if(infos.getSex()==2){
+        } else if (infos.getSex() == 2) {
             tvSex.setText("女");
         }
+        tvCurrentVersion.setText("V "+StringUtil.getVersionCode());
         tvAreaName.setText(infos.getAreaName());
         tvMobile.setText(infos.getMobile());
         tvUserDegree.setText(String.valueOf(infos.getUserDegree()));
         tvUserSignature.setText(infos.getUserSignature());
-        if(StringUtil.isNotBlank(infos.getEmail())){
+        if (StringUtil.isNotBlank(infos.getEmail())) {
             tvEmail.setText(infos.getEmail());
         }
-        if(StringUtil.isNotBlank(infos.getWechat())){
+        if (StringUtil.isNotBlank(infos.getWechat())) {
             tvWechat.setText(infos.getWechat());
         }
     }
@@ -115,8 +122,9 @@ public class MineSetActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.ll_user_name, R.id.ll_sex, R.id.ll_area_name, R.id.ll_user_signature,
-            R.id.tv_user_degree, R.id.tv_mobile, R.id.tv_wechat, R.id.tv_email, R.id.ll_reset_passwords, R.id.ll_my_head})
+    @OnClick({R.id.ll_user_name, R.id.ll_sex, R.id.ll_area_name, R.id.ll_user_signature,R.id.tv_current_version,
+            R.id.tv_user_degree, R.id.tv_mobile, R.id.tv_wechat, R.id.tv_email,
+            R.id.ll_reset_passwords, R.id.ll_my_head,R.id.tv_esc_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_my_head:
@@ -124,12 +132,12 @@ public class MineSetActivity extends BaseActivity {
                 break;
             case R.id.ll_user_name:
                 DialogUtils.showEditTextDialog(this, getString(R.string.set_my_name),
-                        tvUserName.getText().toString().trim(),new DialogUtils.EditTextDialogInterface() {
-                    @Override
-                    public void btnConfirm(String season) {
-                        tvUserName.setText(season);
-                    }
-                });
+                        tvUserName.getText().toString().trim(), new DialogUtils.EditTextDialogInterface() {
+                            @Override
+                            public void btnConfirm(String season) {
+                                tvUserName.setText(season);
+                            }
+                        });
                 break;
             case R.id.ll_sex:
                 openChangeSexDialog();
@@ -139,7 +147,7 @@ public class MineSetActivity extends BaseActivity {
                 break;
             case R.id.ll_user_signature:
                 DialogUtils.showEditTextDialog(this, getString(R.string.set_my_signature),
-                        tvUserSignature.getText().toString().trim(),new DialogUtils.EditTextDialogInterface() {
+                        tvUserSignature.getText().toString().trim(), new DialogUtils.EditTextDialogInterface() {
                             @Override
                             public void btnConfirm(String season) {
                                 tvUserSignature.setText(season);
@@ -156,11 +164,68 @@ public class MineSetActivity extends BaseActivity {
                 break;
             case R.id.ll_reset_passwords:
                 break;
+            case R.id.tv_esc_login:
+                DialogUtils.showDialogHint(this, "您确定要退出吗？", new DialogUtils.ErrorDialogInterface() {
+                    @Override
+                    public void btnConfirm() {
+                        sharedUtils.clear();
+                        IntentUtil.startActivity(LoginHomeActivity.class);
+                        finish();
+                    }
+                });
+                break;
+            case R.id.tv_current_version:
+                updataVersion();
+                break;
         }
     }
 
+    private void updataVersion() {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", SharedUtils.singleton().get("token",""));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.UPGRADE)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, VersionBean.class, new HttpCallBackImpl<VersionBean>() {
+            @Override
+            public void onCompleted(VersionBean str) {
+//                callBack.requestSuccess(str.getData());
+                boolean force;
+                VersionBean.DataBean bean = str.getData();
+                if(bean.getForce()==1){//0普通更新，1强制更新
+                    dialogUpdata(bean,true);
+                }else if(bean.getUpgrade()==1){//0不需更新，1需要更新
+                    dialogUpdata(bean,false);
+                }else{
+                    LogUtil.w("没有最新版本");
+                }
+            }
+        });
+    }
+
+    private void dialogUpdata(final VersionBean.DataBean str, final boolean force) {
+        DialogUtils.showDialogAppUpdate(this, force, str.getUpExplain(), new DialogUtils.ErrorDialogInterface() {
+            @Override
+            public void btnConfirm() {
+                Intent service = new Intent(MineSetActivity.this, DownloadService.class);
+                if(force){
+                    service.putExtra("Url",str.getGuideUrl());
+                }else{
+                    service.putExtra("Url",str.getUpgradeUrl());
+                }
+                startService(service);
+            }
+        });
+    }
+
     private void setAreaName() {
-       new PicPopupWindow(this,tvAreaName, new PicPopupWindow.OnItemClick() {
+        new PicPopupWindow(this, tvAreaName, new PicPopupWindow.OnItemClick() {
             @Override
             public void onclick(String result) {
                 tvAreaName.setText(result);
@@ -168,14 +233,15 @@ public class MineSetActivity extends BaseActivity {
         });
 
     }
+
     public String getMimeType(String fileName) {
         String result = "";
         int extPos = fileName.lastIndexOf(".");
-        if(extPos != -1) {
+        if (extPos != -1) {
             String ext = fileName.substring(extPos + 1);
             result = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext);
         }
-        if(TextUtils.isEmpty(result)){
+        if (TextUtils.isEmpty(result)) {
             result = "application/octet-stream";
         }
 
@@ -184,13 +250,13 @@ public class MineSetActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        if(PicUtil.uritempFile==null){
+        if (PicUtil.uritempFile == null) {
             saveData();
             return;
         }
         File file = new File(PicUtil.uritempFile.getPath());
-        LogUtil.w("file.exists(:"+file.exists());
-        if(!file.exists()){
+        LogUtil.w("file.exists(:" + file.exists());
+        if (!file.exists()) {
             saveData();
             return;
         }
@@ -199,8 +265,8 @@ public class MineSetActivity extends BaseActivity {
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.UPLOAD_USER_ICON_FILE)
                 .addPart("token", token)
-                .addPart("uploadfile",getMimeType(file.getName()) ,file)
-                .addPart("imgtype","1")
+                .addPart("uploadfile", getMimeType(file.getName()), file)
+                .addPart("imgtype", "1")
                 .build();
         loadingDialog.show();
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
@@ -211,14 +277,15 @@ public class MineSetActivity extends BaseActivity {
 
             @Override
             public void onError(String message) {
-                if(loadingDialog.isShowing()){
+                if (loadingDialog.isShowing()) {
                     loadingDialog.dismiss();
                 }
             }
         });
     }
+
     protected void saveData() {
-        if(!NetUtil.isNetworkAvailable()){
+        if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
         }
@@ -227,7 +294,7 @@ public class MineSetActivity extends BaseActivity {
         try {
             node.put("token", token);
             node.put("userName", tvUserName.getText().toString().trim());
-            node.put("sex", sex=="男"?1:2);
+            node.put("sex", sex == "男" ? 1 : 2);
             node.put("userSignature", tvUserSignature.getText().toString().trim());
             node.put("areaName", tvAreaName.getText().toString().trim());
         } catch (JSONException e) {
@@ -244,13 +311,13 @@ public class MineSetActivity extends BaseActivity {
                 try {
                     JSONObject object = new JSONObject(str);
                     JSONObject userInfo = object.getJSONObject("data").getJSONObject("user");
-                    sharedUtils.put(Constants.USER_INFOS,userInfo.toString());
+                    sharedUtils.put(Constants.USER_INFOS, userInfo.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 Intent intent = new Intent();
-                intent.putExtra(Constants.REQUEST_CODE,true);
-                setResult(RESULT_OK,intent);
+                intent.putExtra(Constants.REQUEST_CODE, true);
+                setResult(RESULT_OK, intent);
                 finish();
             }
 
@@ -270,23 +337,24 @@ public class MineSetActivity extends BaseActivity {
         DialogUtils.ShowAlertDialog(this, srt, new DialogUtils.AlertDialogInterface() {
             @Override
             public void btnLineListener(int index) {
-                if(index==1){//从手机相册中选择
+                if (index == 1) {//从手机相册中选择
                     PicUtil.openPhoto(MineSetActivity.this);
-                }else if(index ==2){//拍照上传
-                     PicUtil.openCamera(MineSetActivity.this);
+                } else if (index == 2) {//拍照上传
+                    PicUtil.openCamera(MineSetActivity.this);
                 }
             }
         });
     }
+
     //打开修改性别对话框
     private void openChangeSexDialog() {
         String[] srt = {"修改性别", "男", "女", tvSex.getText().toString()};
         DialogUtils.ShowAlertDialog(this, srt, new DialogUtils.AlertDialogInterface() {
             @Override
             public void btnLineListener(int index) {
-                if(index==1){//从手机相册中选择
+                if (index == 1) {//从手机相册中选择
                     tvSex.setText("男");
-                }else if(index ==2){//拍照上传
+                } else if (index == 2) {//拍照上传
                     tvSex.setText("女");
                 }
             }
@@ -296,28 +364,29 @@ public class MineSetActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==PicUtil.CODE_CAMERA_PIC){
+        if (requestCode == PicUtil.CODE_CAMERA_PIC) {
             Object o = PicUtil.filePath;
-            if (o != null && o.toString().length()>0) {
+            if (o != null && o.toString().length() > 0) {
                 onPicResult(o.toString());
             }
-        }else if(requestCode==PicUtil.CODE_SELECT_PIC){
+        } else if (requestCode == PicUtil.CODE_SELECT_PIC) {
             Object o = PicUtil.onActivityResult(this, requestCode, resultCode, data);
-            if (o != null && o.toString().length()>0) {
+            if (o != null && o.toString().length() > 0) {
                 onPicResult(o.toString());
             }
-        }else if(requestCode== PicUtil.CODE_CROP_PIC){
+        } else if (requestCode == PicUtil.CODE_CROP_PIC) {
             onPicTrimResult();
         }
     }
+
     private void onPicResult(String picPath) {
-        if(StringUtil.isNotBlank(picPath)){
+        if (StringUtil.isNotBlank(picPath)) {
             File tempFile = new File(picPath);
-            PicUtil.startPhotoZoom(Uri.fromFile(tempFile),MineSetActivity.this,true);
+            PicUtil.startPhotoZoom(Uri.fromFile(tempFile), MineSetActivity.this, true);
         }
     }
-    private void onPicTrimResult() {
-       GlideUtils.loadCircleUserUrl(this,ivHeadImg,PicUtil.uritempFile.getPath());
-    }
 
+    private void onPicTrimResult() {
+        GlideUtils.loadCircleUserUrl(this, ivHeadImg, PicUtil.uritempFile.getPath());
+    }
 }

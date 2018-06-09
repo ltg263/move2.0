@@ -20,12 +20,39 @@
         android:layout_below="@id/head_app_server"
         android:background="@color/cut_off_rule" />
 
+    <LinearLayout
+        android:id="@+id/rl_not_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/tv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_not_message"
+            android:layout_above="@id/tv_name" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="留言信息为空"
+            android:textColor="@color/title_gray_66"
+            android:textSize="@dimen/sp_14" />
+
+    </LinearLayout>
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/ll"
         android:layout_below="@id/view"
+        android:visibility="gone"
         app:srlEnablePreviewInEditMode="false">
 
         <com.secretk.move.view.RecycleScrollView
@@ -42,57 +69,74 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_line"
-                    android:background="@color/cut_off_rule" />
-
-                <TextView
+                <LinearLayout
+                    android:id="@+id/ll_hot"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:padding="@dimen/dp_10"
-                    android:text="热门测评"
-                    android:textColor="@color/title_gray"
-                    android:textSize="@dimen/sp_14" />
+                    android:visibility="gone"
+                    android:orientation="vertical">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_line"
-                    android:background="@color/cut_off_rule" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_line"
+                        android:background="@color/cut_off_rule" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_hot_review"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="@dimen/dp_10" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="@dimen/dp_10"
+                        android:text="热门测评"
+                        android:textColor="@color/title_gray"
+                        android:textSize="@dimen/sp_14" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_line"
-                    android:background="@color/cut_off_rule" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_line"
+                        android:background="@color/cut_off_rule" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:padding="@dimen/dp_10"
-                    android:text="最新测评"
-                    android:textColor="@color/title_gray"
-                    android:textSize="@dimen/sp_14" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_line"
-                    android:background="@color/cut_off_rule" />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_hot_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/dp_10" />
+                </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_new_review"
+                <LinearLayout
+                    android:id="@+id/ll_new"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dp_10" />
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_line"
+                        android:background="@color/cut_off_rule" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="@dimen/dp_10"
+                        android:text="最新测评"
+                        android:textColor="@color/title_gray"
+                        android:textSize="@dimen/sp_14" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_line"
+                        android:background="@color/cut_off_rule" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_new_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10" />
 
 
+                </LinearLayout>
             </LinearLayout>
         </com.secretk.move.view.RecycleScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>

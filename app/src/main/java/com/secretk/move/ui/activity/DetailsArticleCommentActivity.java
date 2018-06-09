@@ -3,8 +3,12 @@ package com.secretk.move.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -53,6 +57,16 @@ public class DetailsArticleCommentActivity extends BaseActivity {
     EditText etContent;
     @BindView(R.id.but_send)
     Button butSend;
+    @BindView(R.id.tv_icon)
+    ImageView tvIcon;
+    @BindView(R.id.tv_name)
+    TextView tvName;
+    @BindView(R.id.rl_not_data)
+    LinearLayout rlNotData;
+    @BindView(R.id.ll_hot)
+    LinearLayout llHot;
+    @BindView(R.id.ll_new)
+    LinearLayout llNew;
     private DetailsDiscussAdapter adapter;
     private DetailsDiscussAdapter adapterNew;
     private String postId;
@@ -135,19 +149,26 @@ public class DetailsArticleCommentActivity extends BaseActivity {
             @Override
             public void onCompleted(DetailsArticleCommentBean bean) {
                 DetailsArticleCommentBean.DataBean data = bean.getData();
-                if(data==null){
+                if (data == null) {
                     return;
                 }
-                if(data.getNewestComments().getCurPageNum()==1){
-                    if(data.getHotComments()!=null&&data.getHotComments().size()>0){
+                rlNotData.setVisibility(View.VISIBLE);
+                if (data.getNewestComments().getCurPageNum() == 1) {
+                    if (data.getHotComments() != null && data.getHotComments().size() > 0) {
+                        refreshLayout.setVisibility(View.VISIBLE);
+                        llHot.setVisibility(View.VISIBLE);
+                        rlNotData.setVisibility(View.GONE);
                         adapter.setData(data.getHotComments());
                     }
                 }
                 if (data.getNewestComments().getCurPageNum() == data.getNewestComments().getPageSize()) {
                     refreshLayout.setLoadmoreFinished(true);
                 }
-                if(bean.getData().getNewestComments().getRows()!=null
-                        && bean.getData().getNewestComments().getRows().size()>0){
+                if (bean.getData().getNewestComments().getRows() != null
+                        && bean.getData().getNewestComments().getRows().size() > 0) {
+                    refreshLayout.setVisibility(View.VISIBLE);
+                    llNew.setVisibility(View.VISIBLE);
+                    rlNotData.setVisibility(View.GONE);
                     adapterNew.setData(bean.getData().getNewestComments().getRows());
                 }
             }
@@ -179,7 +200,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
      * @param content
      */
     private void saveComment(String content) {
-        if(!NetUtil.isNetworkAvailable()){
+        if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
         }
@@ -207,7 +228,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
 
             @Override
             public void onError(String message) {
-                if(loadingDialog.isShowing()){
+                if (loadingDialog.isShowing()) {
                     loadingDialog.dismiss();
                 }
             }

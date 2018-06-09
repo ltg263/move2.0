@@ -77,7 +77,7 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
             tvPraiseNum.setSelected(false);
         }else if(commentsBean.getPraiseStatus()==0){
             tvPraiseNum.setSelected(true);
-        }else if(commentsBean.getPraiseStatus()==3){
+        }else if(commentsBean.getPraiseStatus()==2){
             tvPraiseNum.setVisibility(View.GONE);
         }
         tvPraiseNum.setOnClickListener(new View.OnClickListener() {

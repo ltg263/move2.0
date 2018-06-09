@@ -18,7 +18,7 @@
         android:layout_marginTop="@dimen/dp_25"
         android:text="欢迎注册使用!"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp_40" />
+        android:textSize="@dimen/sp_28" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -71,6 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/reg_password"
+                android:digits="@string/text_password"
                 android:inputType="textPassword"
                 android:textColor="@color/white" />
         </android.support.design.widget.TextInputLayout>

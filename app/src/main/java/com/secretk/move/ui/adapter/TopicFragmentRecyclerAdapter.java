@@ -1,5 +1,6 @@
 package com.secretk.move.ui.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +21,13 @@ import java.util.List;
 
 public class TopicFragmentRecyclerAdapter extends RecyclerView.Adapter<TopicFragmentRecyclerHolder> {
     private ItemClickListener mListener;
-    private List<SearchedBean.Projects> listNum = new ArrayList<SearchedBean.Projects>();
-    private List<SearchedBean.Projects> listName = new ArrayList<SearchedBean.Projects>();
+    private List<SearchedBean.Projects> listNum = new ArrayList<>();
+    private List<SearchedBean.Projects> listName = new ArrayList<>();
+
+    private final Context context;
+    public TopicFragmentRecyclerAdapter(Context context) {
+        this.context= context;
+    }
 
     public void setItemListener(ItemClickListener mListener) {
         this.mListener = mListener;
@@ -39,14 +45,12 @@ public class TopicFragmentRecyclerAdapter extends RecyclerView.Adapter<TopicFrag
         holder.setItemListener(mListener);
         switch (type) {
             case Constants.TOPIC_SORT_BY_NUM:
-                holder.setData(listNum, position,type);
+                holder.setData(listNum, position,type,context);
                 break;
             case Constants.TOPIC_SORT_BY_NAME:
-                holder.setData(listName, position,type);
+                holder.setData(listName, position,type,context);
                 break;
         }
-
-
     }
 
     @Override

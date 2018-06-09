@@ -92,4 +92,10 @@ public class SharedUtils {
 		edit.remove(key);
 		edit.commit();
 	}
+	public static boolean getLoginZt(){
+		return singleton().get(Constants.IS_LOGIN_KEY,false);
+	}
+	public static String getToken(){
+		return singleton().get(Constants.TOKEN_KEY,"");
+	}
 }

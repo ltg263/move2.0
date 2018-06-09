@@ -34,6 +34,7 @@ import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
 import com.secretk.move.view.LoadingDialog;
@@ -122,9 +123,12 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
             return;
         }
         loadingDialog.show();
+        discussImages="";
         adapterImgList= releasePicAdapter.getData();
-        if (adapterImgList!=null|adapterImgList.size()!=0){
+        if (adapterImgList!=null&&adapterImgList.size()!=0){
             upImgHttp(adapterImgList.get(0),0);
+        }else{
+            httpRelease();
         }
 
     }
@@ -218,7 +222,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         return super.onKeyDown(keyCode, event);
     }
 
-    String discussImages = null;
+    String discussImages = "";
 
     public void httpRelease() {
 
@@ -228,7 +232,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
             node.put("projectId", projectId);
             node.put("postTitle", getEdTitle());
             node.put("disscussContents", getEdContent());
-            if (!TextUtils.isEmpty(discussImages)) {
+            if (StringUtil.isNotBlank(discussImages)) {
                 node.put("discussImages", discussImages);
             }
         } catch (JSONException e) {
@@ -249,9 +253,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
             }
 
             @Override
-            public void onError(String message) {
-                super.onError(message);
-                Log.e("jyh_e", message);
+            public void onFinish() {
                 loadingDialog.dismiss();
             }
         });
@@ -270,8 +272,8 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.UPLOAD_IMG_FILE)
                 .addPart("token", token)
-                .addPart("uploadfile", "multipart/form-data", file)
-                .addPart("imgtype", "3")
+                .addPart("uploadfile", StringUtil.getMimeType(file.getName()), file)
+                .addPart("imgtype", Constants.UPLOADIMG_TYPE.PROJECT_ICON)
                 .build();
         RetrofitUtil.request(params, UpImgBean.class, new HttpCallBackImpl<UpImgBean>() {
             @Override

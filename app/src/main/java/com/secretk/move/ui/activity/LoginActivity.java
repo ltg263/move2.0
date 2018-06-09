@@ -81,8 +81,8 @@ public class LoginActivity extends BaseActivity {
     private StringUtil.EtChange etChangListener = new StringUtil.EtChange() {
         @Override
         public void etYes() {
-            if(StringUtil.isNotBlank(edPassword.getText().toString().trim())
-                    && StringUtil.isNotBlank(edPhone.getText().toString().trim())){
+            if(StringUtil.isNotBlank(edPassword.getText().toString())
+                    && StringUtil.isNotBlank(edPhone.getText().toString())){
                 butLogin.setSelected(true);
             }else{
                 butLogin.setSelected(false);
@@ -146,6 +146,7 @@ public class LoginActivity extends BaseActivity {
                 sharedUtils.put(Constants.USER_INFOS,userInfo.getData().getUser().toString());
                 sharedUtils.put(Constants.USER_TYPE,userInfo.getData().getUser().getUserType());
                 sharedUtils.put(Constants.MOBILE,userInfo.getData().getUser().getMobile());
+                sharedUtils.put(Constants.USER_ID,userInfo.getData().getUser().getUserId());
                 IntentUtil.startActivity(MainActivity.class);
             }
 
