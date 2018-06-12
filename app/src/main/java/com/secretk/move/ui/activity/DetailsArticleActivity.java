@@ -1,10 +1,13 @@
 package com.secretk.move.ui.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -28,8 +31,8 @@ import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
-import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.PileLayout;
+import com.secretk.move.view.PopupWindowUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -100,6 +103,7 @@ public class DetailsArticleActivity extends BaseActivity {
         return mHeadView;
     }
 
+
     @Override
     protected void initUI(Bundle savedInstanceState) {
         postId = getIntent().getStringExtra("postId");
@@ -108,6 +112,11 @@ public class DetailsArticleActivity extends BaseActivity {
         rvImg.setAdapter(adapter);
         WebSettings webSettings = wvPostShortDesc.getSettings();//获取webview设置属性
         webSettings.setDefaultTextEncodingName("UTF-8");//设置默认为utf-8
+        webSettings.setJavaScriptEnabled(true); // 启用js
+        webSettings.setBlockNetworkImage(false); // 解决图片不显示
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
     }
 
     protected void initData() {
@@ -170,7 +179,8 @@ public class DetailsArticleActivity extends BaseActivity {
             tvFollowStatus.setVisibility(View.GONE);
         }
 //        tvPostShortDesc.setText(StringUtil.getBeanString(initData.getArticleContents()));
-        wvPostShortDesc.loadData(StringUtil.getNewContent(StringUtil.getBeanString(initData.getArticleContents())), "text/html; charset=UTF-8", null);//这种写法可以正确解码
+//        wvPostShortDesc.loadData(StringUtil.getNewContent(StringUtil.getBeanString(initData.getArticleContents())), "text/html; charset=UTF-8", null);//这种写法可以正确解码
+        wvPostShortDesc.loadData(initData.getArticleContents(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
         tvProjectCode.setText(StringUtil.getBeanString(initData.getProjectCode()));
         tvCreateTime.setText(StringUtil.getTimeToM(initData.getCreateTime()));
         tvDonateNum.setText(initData.getDonateNum() + getString(R.string.sponsor_num));
@@ -250,6 +260,10 @@ public class DetailsArticleActivity extends BaseActivity {
                 if(!tvPraiseStatus.isSelected()){
                     return;
                 }
+
+                if(!NetUtil.isPraise(createUserId,baseUserId)){
+                    return;
+                }
                 tvPraiseStatus.setEnabled(false);
                 String str;
                 if(tvPraiseStatus.isSelected()){
@@ -277,20 +291,25 @@ public class DetailsArticleActivity extends BaseActivity {
 
                 break;
             case R.id.tv_commendation_Num:
-                DialogUtils.showEditTextDialog(this, getString(R.string.sponsor_title),"", new DialogUtils.EditTextDialogInterface() {
+                if(!NetUtil.isSponsor(createUserId,baseUserId)){
+                    return;
+                }
+                PopupWindowUtils window = new PopupWindowUtils(this, new PopupWindowUtils.GiveDialogInterface() {
                     @Override
                     public void btnConfirm(String season) {
-                        NetUtil.commendation(Integer.valueOf(postId), createUserId,Double.valueOf(season), projectId, new NetUtil.SaveCommendationImp() {
+                        NetUtil.commendation(Integer.valueOf(postId), createUserId, Double.valueOf(season), projectId, new NetUtil.SaveCommendationImp() {
                             @Override
                             public void finishCommendation(String commendationNum, String donateNum, boolean status) {
-                                if(status){
-                                    tvCommendationNum.setText(getString(R.string.sponsor)+ commendationNum);
-                                    tvDonateNum.setText(donateNum+getString(R.string.sponsor_num));
+                                if (status) {
+                                    tvCommendationNum.setText(getString(R.string.sponsor) + commendationNum);
+                                    tvDonateNum.setText(donateNum + getString(R.string.sponsor_num));
                                 }
                             }
                         });
                     }
                 });
+                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                window.showAtLocation(findViewById(R.id.head_app_server), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); // 设置layout在PopupWindow中显示的位置
                 break;
             case R.id.tv_comments_num:
                 Intent intent = new Intent(this,DetailsArticleCommentActivity.class);
@@ -315,4 +334,5 @@ public class DetailsArticleActivity extends BaseActivity {
             }
         });
     }
+
 }

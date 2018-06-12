@@ -35,7 +35,6 @@ public class WebViewActivity extends BaseActivity {
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenuInfos) {
         mHeadView = findViewById(R.id.head_app_server);
         mHeadView.setHeadBackShow(true);
-        mHeadView.setTitle("帮助中心");
         mHeadView.setTitleColor(R.color.title_gray);
         return mHeadView;
     }
@@ -48,6 +47,8 @@ public class WebViewActivity extends BaseActivity {
     @Override
     protected void initUI(Bundle savedInstanceState) {
         url = getIntent().getStringExtra("url");
+        String name = getIntent().getStringExtra("name");
+        mHeadView.setTitle(name);
         initWebView();
     }
 

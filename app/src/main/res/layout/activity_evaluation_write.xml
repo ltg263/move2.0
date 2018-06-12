@@ -45,26 +45,6 @@
                     android:layout_height="@dimen/dp_10"
                     android:background="@color/background_gray" />
 
-                <EditText
-                    android:id="@+id/et_evaluation_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:gravity="top"
-                    android:hint="请在此填写您对此项目的总体总结..."
-                    android:minLines="3"
-                    android:padding="@dimen/dp_10"
-                    android:textColorHint="@color/title_gray_88"
-                    android:textCursorDrawable="@drawable/shape_edit_cursor"
-                    android:textSize="@dimen/sp_14"
-                    android:visibility="gone" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_post_small_images"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:visibility="gone" />
 
                 <com.secretk.move.view.RichTextEditor
                     android:id="@+id/richtext_editor"

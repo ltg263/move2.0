@@ -96,7 +96,7 @@ public interface Constants {
     String BASE_URL = "http://app.qufen.top/rest/";
     String BASE_IMG_URL = "http://app.qufen.top/";
     /**
-     * 外网
+     * song外网
      * 外网图片
      */
 //    String BASE_URL = "http://47.98.197.101/rest/";
@@ -118,14 +118,32 @@ public interface Constants {
      * 王晗
      */
 //    String BASE_URL = "http://192.168.10.123:8082/";
+//   String BASE_IMG_URL = "http://192.168.10.123/";
     /**
      * 罗艳清
      */
 //    String BASE_URL = "http://192.168.10.199:8080/rest/";
+//    String BASE_IMG_URL = "http://192.168.10.199:8080/";
     /**
      * 关于我们
       */
     String HELP = "http://192.168.10.196:5000/mine/help";
+    /**
+     * 注册协议
+      */
+    String AGREEMENT = "http://196.168.10.101:5000/user/agreement";
+    /**
+     * 注册协议
+      */
+    String EVALUATION_LITT = "http://192.168.10.101:5000/project/evaluationLitt?id=";
+    /**
+     * 注册协议
+      */
+    String articleInfo = "http://196.168.10.101:5000/project/articleInfo?id=";
+    /**
+     * 注册协议
+      */
+//    String EVALUATION_LITT = "http://app.qufen.top/article";
 
     //发送验证码通用接口
 //    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/send";
@@ -262,8 +280,8 @@ public interface Constants {
     //=======
     //讨论详情 页
     String HOME_DISCUSS_DETAIL = BASE_URL + "kff/home/discussDetail";
-    //针对文章单个评论的评论列表页
-    String ARTICLE_COMMENT_REPLY_LIST = BASE_URL + "kff/home/articleCommentReplyList";
+    //讨论，评测，文章 中 某个评论的评论列表
+    String COMMENT_COMMENTS_LIST = BASE_URL + "kff/home/commentCommentsList";
 
     //发表讨论时 添加标签 获取标签列表
     String RELEASE_DISCUSS_LIST = BASE_URL + "kff/discuss/tagList";
@@ -313,12 +331,19 @@ public interface Constants {
      *
      */
     interface PublishSucceed {
+        String PUBLISH_TYPE = "publish_type";
         String SUBMIT_TEXT = "submit_text";
         String SUBMIT_TITLE = "submit_title";
-        String PUBLISH_TYPE = "publish_type";
+        String PUBLISH_BTN_TEXT = "publish_btn_text";
         String PUBLISH_POST_ID = "publish_post_id";
         //评测
         String EVALUATION = "evaluation";
+        //文章
+        String ARTICLE = "article";
+        //讨论
+        String DISCUSS = "discuss";
+        //发布项目
+        String PUBLISH_PROJECT = "publish_project";
     }
 
 

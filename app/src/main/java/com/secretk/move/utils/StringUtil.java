@@ -1,5 +1,6 @@
 package com.secretk.move.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
@@ -9,6 +10,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 
@@ -420,13 +422,31 @@ public class StringUtil {
         try {
             Document doc= Jsoup.parse(htmltext);
             Elements elements=doc.getElementsByTag("img");
+            LogUtil.w("elements.toString():"+elements.toString());
             for (Element element : elements) {
                 element.attr("width","100%").attr("height","auto");
             }
-
+            LogUtil.w("doc.toString():"+doc.toString());
             return doc.toString();
         } catch (Exception e) {
             return htmltext;
+        }
+    }
+    /**
+     * EditText获取焦点并显示软键盘
+     */
+    public static void showSoftInputFromWindow(Activity activity, EditText editText) {
+        //其中editText为dialog中的输入框的 EditText
+        if(editText!=null){
+            //设置可获得焦点
+            editText.setFocusable(true);
+            editText.setFocusableInTouchMode(true);
+            //请求获得焦点
+            editText.requestFocus();
+            //调用系统输入法
+            InputMethodManager inputManager = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.showSoftInput(editText, 0);
+            editText.setSelection(editText.getText().toString().length());
         }
     }
 
@@ -455,6 +475,29 @@ public class StringUtil {
         }
         return ut;
     }
+    /**
+     * 用户等级
+     * 1-普通用户；
+     * 2-高级用户;
+     * 3-VIP
+     * @return
+     */
+    public static String getUserDegree(int userType){
+        String ut="";
+        switch (userType){
+            case 1:
+                ut="普通用户";
+                break;
+            case 2:
+                ut="高级用户";
+                break;
+            case 3:
+                ut="VIP";
+                break;
+        }
+        return ut;
+    }
+
     /**
      * 获取软件版本号
      *

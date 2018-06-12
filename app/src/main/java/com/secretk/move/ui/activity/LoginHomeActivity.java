@@ -91,7 +91,7 @@ public class LoginHomeActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.tv_old_user_login, R.id.but_login,R.id.iv_delete})
+    @OnClick({R.id.tv_old_user_login, R.id.but_login,R.id.iv_delete,R.id.tv_xieyi})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_old_user_login:
@@ -99,6 +99,9 @@ public class LoginHomeActivity extends BaseActivity {
                 break;
             case R.id.iv_delete:
                 etPhone.setText("");
+                break;
+            case R.id.tv_xieyi:
+                IntentUtil.startWebViewActivity(Constants.AGREEMENT,"区分服务协议");
                 break;
             case R.id.but_login:
                 String phoneNumber = etPhone.getText().toString();

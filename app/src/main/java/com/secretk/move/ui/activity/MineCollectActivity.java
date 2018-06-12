@@ -19,7 +19,7 @@ import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.MyCollectList;
-import com.secretk.move.ui.adapter.HomeListAdapter;
+import com.secretk.move.ui.adapter.MineCollectAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
@@ -58,7 +58,7 @@ public class MineCollectActivity extends BaseActivity {
     RelativeLayout rlTopTheme;
     private String postId;
     private int pageIndex = 1;
-    private HomeListAdapter adapter;
+    private MineCollectAdapter adapter;
 
     @Override
     protected int setOnCreate() {
@@ -79,7 +79,7 @@ public class MineCollectActivity extends BaseActivity {
     protected void initUI(Bundle savedInstanceState) {
         postId = getIntent().getStringExtra("postId");
         setVerticalManager(rvCollect);
-        adapter = new HomeListAdapter(this);
+        adapter = new MineCollectAdapter(this);
         rvCollect.setAdapter(adapter);
         initRefresh();
         loadingDialog.show();

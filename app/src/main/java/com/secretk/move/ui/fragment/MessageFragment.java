@@ -225,7 +225,7 @@ public class MessageFragment extends LazyFragment {
         RetrofitUtil.request(params, MessageBean.class, new HttpCallBackImpl<MessageBean>() {
             @Override
             public void onCompleted(MessageBean str) {
-
+                loadData();
             }
 
             @Override

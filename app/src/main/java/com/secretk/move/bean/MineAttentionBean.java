@@ -165,13 +165,13 @@ public class MineAttentionBean extends BaseRes {
                 private Object collectNum;
                 private Object createUserIcon;
                 private Object createUserSignature;
-                private Object createUserName;
-                private int totalScore;
+                private String createUserName;
+                private double totalScore;
                 private String projectIcon;
-                private Object projectCode;
-                private Object projectEnglishName;
-                private Object projectChineseName;
-                private Object projectSignature;
+                private String projectCode;
+                private String projectEnglishName;
+                private String projectChineseName;
+                private String projectSignature;
 
                 public int getFollowId() {
                     return followId;
@@ -373,19 +373,19 @@ public class MineAttentionBean extends BaseRes {
                     this.createUserSignature = createUserSignature;
                 }
 
-                public Object getCreateUserName() {
+                public String getCreateUserName() {
                     return createUserName;
                 }
 
-                public void setCreateUserName(Object createUserName) {
+                public void setCreateUserName(String createUserName) {
                     this.createUserName = createUserName;
                 }
 
-                public int getTotalScore() {
+                public double getTotalScore() {
                     return totalScore;
                 }
 
-                public void setTotalScore(int totalScore) {
+                public void setTotalScore(double totalScore) {
                     this.totalScore = totalScore;
                 }
 
@@ -397,35 +397,35 @@ public class MineAttentionBean extends BaseRes {
                     this.projectIcon = projectIcon;
                 }
 
-                public Object getProjectCode() {
+                public String getProjectCode() {
                     return projectCode;
                 }
 
-                public void setProjectCode(Object projectCode) {
+                public void setProjectCode(String projectCode) {
                     this.projectCode = projectCode;
                 }
 
-                public Object getProjectEnglishName() {
+                public String getProjectEnglishName() {
                     return projectEnglishName;
                 }
 
-                public void setProjectEnglishName(Object projectEnglishName) {
+                public void setProjectEnglishName(String projectEnglishName) {
                     this.projectEnglishName = projectEnglishName;
                 }
 
-                public Object getProjectChineseName() {
+                public String getProjectChineseName() {
                     return projectChineseName;
                 }
 
-                public void setProjectChineseName(Object projectChineseName) {
+                public void setProjectChineseName(String projectChineseName) {
                     this.projectChineseName = projectChineseName;
                 }
 
-                public Object getProjectSignature() {
+                public String getProjectSignature() {
                     return projectSignature;
                 }
 
-                public void setProjectSignature(Object projectSignature) {
+                public void setProjectSignature(String projectSignature) {
                     this.projectSignature = projectSignature;
                 }
             }

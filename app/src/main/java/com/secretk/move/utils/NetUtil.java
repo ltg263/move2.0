@@ -234,6 +234,7 @@ public class NetUtil {
             }
             @Override
             public void onError(String message) {
+                LogUtil.w("message:"+message);
                 follow.finishFollow(Constants.PRAISE_ERROR,isLove);
             }
         });
@@ -338,5 +339,28 @@ public class NetUtil {
     }
     public static abstract class SaveCommendationImp{
         public abstract void finishCommendation(String commendationNum,String donateNum,boolean status);
+    }
+
+    /**
+     * 能否点赞
+     * @return
+     */
+    public static boolean isPraise(int currentUserId,int loginUserId) {
+        if(currentUserId==loginUserId){
+            ToastUtils.getInstance().show("不能给自己点赞");
+            return false;
+        }
+        return true;
+    }
+    /**
+     * 能否赞赏
+     * @return
+     */
+    public static boolean isSponsor(int currentUserId,int loginUserId) {
+        if(currentUserId==loginUserId){
+            ToastUtils.getInstance().show("不能给自己赞助");
+            return false;
+        }
+        return true;
     }
 }

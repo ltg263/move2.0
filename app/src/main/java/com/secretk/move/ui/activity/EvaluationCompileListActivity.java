@@ -48,7 +48,6 @@ public class EvaluationCompileListActivity extends BaseActivity {
         mHeadView = findViewById(R.id.head_app_server);
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitleColor(R.color.title_gray);
-        mHeadView.setTitle(getString(R.string.evaluation_professional));
         mMenuInfos.add(0, new MenuInfo(R.string.evaluation_next, getString(R.string.evaluation_next), 0));
         return mHeadView;
     }
@@ -71,6 +70,7 @@ public class EvaluationCompileListActivity extends BaseActivity {
                 getIntent().getParcelableArrayListExtra("sys_evaluation_model");
         String projectName = getIntent().getStringExtra("projectName");
         String projectPay = getIntent().getStringExtra("projectPay");
+        mHeadView.setTitle(projectPay+"-完整版"+getString(R.string.evaluation_professional));
         tvProjectName.setText(projectPay+"/"+projectName);
 
         pbComprehensiveEvaluation.setTvOne(getResources().getString(R.string.comprehensive_evaluation), 0,

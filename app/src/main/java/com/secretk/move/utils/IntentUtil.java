@@ -14,6 +14,7 @@ import com.secretk.move.ui.activity.EvaluationWriteActivity;
 import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.activity.PublishSucceedActivity;
+import com.secretk.move.ui.activity.WebViewActivity;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -137,6 +138,14 @@ public class IntentUtil {
         String values[] = {String.valueOf(projectId)};
         IntentUtil.startActivity(ProjectActivity.class, key, values);
     }
+    /**
+     * 跳转到WevView的Activity
+     */
+    public static void startWebViewActivity(String url,String name) {
+        String key[] = {"url","name"};
+        String values[] = {url,name};
+        IntentUtil.startActivity(WebViewActivity.class, key, values);
+    }
 
     /**
      * 跳转到项目的简单评测Activity
@@ -173,9 +182,9 @@ public class IntentUtil {
      * 发布测评文章讨论成功以后 跳转界面
      * @param
      */
-    public static void startPublishSucceedActivity(String postId,String title,String name,String type) {
-        String key[] = {Constants.PublishSucceed.PUBLISH_POST_ID,Constants.PublishSucceed.SUBMIT_TITLE,Constants.PublishSucceed.SUBMIT_TEXT,Constants.PublishSucceed.PUBLISH_TYPE};
-        String values[] = {postId,title,name,type};
+    public static void startPublishSucceedActivity(String postId,String title,String name,String btnText,String type) {
+        String key[] = {Constants.PublishSucceed.PUBLISH_POST_ID,Constants.PublishSucceed.SUBMIT_TITLE,Constants.PublishSucceed.SUBMIT_TEXT,Constants.PublishSucceed.PUBLISH_BTN_TEXT,Constants.PublishSucceed.PUBLISH_TYPE};
+        String values[] = {postId,title,name,btnText,type};
         IntentUtil.startActivity(PublishSucceedActivity.class, key, values);
     }
 
@@ -197,8 +206,6 @@ public class IntentUtil {
                 intent.putExtra("postId",postId);
                 startActivity(intent);
                 break;
-                default:
-                    break;
         }
     }
 }

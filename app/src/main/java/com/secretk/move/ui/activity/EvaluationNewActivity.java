@@ -57,7 +57,6 @@ public class EvaluationNewActivity extends BaseActivity {
         mHeadView = findViewById(R.id.head_app_server);
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitleColor(R.color.title_gray);
-        mHeadView.setTitle(getString(R.string.evaluation_btn_new));
         mMenuInfos.add(0, new MenuInfo(R.string.evaluation_next, getString(R.string.evaluation_next), 0));
         return mHeadView;
     }
@@ -80,6 +79,7 @@ public class EvaluationNewActivity extends BaseActivity {
         String projectPay = getIntent().getStringExtra("projectPay");
         tvEvaluationObject.setText(projectPay+"/"+projectName);
 
+        mHeadView.setTitle(projectPay+"-完整版自建模型评测");
         setVerticalManager(mRecyclerView);
         adapter = new EvaluationNewAdapter(this);
         mRecyclerView.setAdapter(adapter);
@@ -95,6 +95,12 @@ public class EvaluationNewActivity extends BaseActivity {
 
     @OnClick(R.id.tv_add_dimensionality)
     public void onViewClicked() {
+
+        if(list.size()>10){
+            ToastUtils.getInstance().show("自建评测模型最多10个");
+            return;
+        }
+
         showPopupWindow(-1);
 
     }
@@ -111,7 +117,7 @@ public class EvaluationNewActivity extends BaseActivity {
     }
 
     private void showPopupWindow(final int position) {
-        AddDimensionalityPopupWindow window = new AddDimensionalityPopupWindow(this, new AddDimensionalityPopupWindow.PopupOnClickListener() {
+        AddDimensionalityPopupWindow window = new AddDimensionalityPopupWindow(this, list,position,new AddDimensionalityPopupWindow.PopupOnClickListener() {
             @Override
             public void popupOnClick(View view, String name, float weight, float grade) {
                 if (position != -1) {
@@ -119,7 +125,6 @@ public class EvaluationNewActivity extends BaseActivity {
                     newBean.setModelName(name);
                     newBean.setScore(grade);
                     newBean.setModelWeight((int) (weight*100));
-                    list.add(newBean);
                     adapter.notifyDataSetChanged();
                 }else {
                     EvaluationNewBean bean = new EvaluationNewBean();
@@ -147,7 +152,7 @@ public class EvaluationNewActivity extends BaseActivity {
     @Override
     protected void OnToolbarRightListener() {
         if(list.size()<3){
-            ToastUtils.getInstance().show("测评维度最少3个");
+            ToastUtils.getInstance().show("评测维度最少3个");
             return;
         }
         int weight=0;

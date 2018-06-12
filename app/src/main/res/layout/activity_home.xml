@@ -85,8 +85,11 @@
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
                                         android:layout_marginLeft="@dimen/dp_10"
+                                        android:paddingHorizontal="@dimen/dp_5"
                                         android:layout_toRightOf="@id/tv_user_name"
-                                        android:textColor="@color/colorAccent" />
+                                        android:background="@drawable/garden_crack"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="@dimen/sp_12" />
 
                                     <TextView
                                         android:id="@+id/tv_save_follow"
@@ -99,9 +102,9 @@
                                         android:paddingLeft="@dimen/dp_10"
                                         android:paddingRight="@dimen/dp_10"
                                         android:paddingTop="@dimen/dp_3"
-                                        android:visibility="visible"
                                         android:text="+关注"
-                                        android:textColor="@drawable/selector_follow_state_text" />
+                                        android:textColor="@drawable/selector_follow_state_text"
+                                        android:visibility="visible" />
                                 </RelativeLayout>
 
                                 <View

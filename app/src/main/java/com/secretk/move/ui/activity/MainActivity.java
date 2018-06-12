@@ -70,6 +70,8 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_main:
+                        if(vp_main.getCurrentItem()==0){
+                        }
                         vp_main.setCurrentItem(0);
                         break;
                     case R.id.rb_topic:

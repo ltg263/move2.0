@@ -57,7 +57,7 @@ public class EvaluationSliderView extends FrameLayout {
         tvEvaluationMun = esv.findViewById(R.id.tv_evaluation_mun);
         esView = esv.findViewById(R.id.es_view);
         rl = esv.findViewById(R.id.rl);
-        setScore(6);
+        setScore(8);
         setEsvBackground(R.color.app_background);
         esView.setOnValueChangeListener(new EvaluationItemView.OnValueChangeListener() {
             @Override

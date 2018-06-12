@@ -78,7 +78,7 @@ public class EvaluationCompileAdapter extends RecyclerView.Adapter<EvaluationCom
             }else{
                 esv.setScore(f);
             }
-            esv.setTvDimensionalityName(res.getDetailName());
+            esv.setTvDimensionalityName(res.getDetailName()+"/"+res.getDetailWeight()+"%");
             switch (position) {
                 case 0:
                     esv.setEsvBackground(R.color.app_background);

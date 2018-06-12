@@ -12,10 +12,13 @@ import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonCommentsBean;
+import com.secretk.move.ui.activity.DetailsArticleCommentActivity;
+import com.secretk.move.ui.activity.DetailsDiscussActivity;
 import com.secretk.move.ui.activity.MoreCommentsActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.NetUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.Clickable;
 
@@ -56,10 +59,11 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.rl_ge_ren)
     RelativeLayout rlGeRen;
     private CommonCommentsBean commentsBean;
-
+    int loginUserId;
     public DetailsDiscussHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        loginUserId = SharedUtils.singleton().get(Constants.USER_ID,0);
     }
 
     public void refresh(int position, List<CommonCommentsBean> lists, final Context context) {
@@ -80,16 +84,21 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         }else if(commentsBean.getPraiseStatus()==2){
             tvPraiseNum.setVisibility(View.GONE);
         }
+        //点赞
         tvPraiseNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!tvPraiseNum.isSelected()){
                     return;
                 }
+                if (!NetUtil.isPraise(commentsBean.getCommentUserId(), loginUserId)){
+                    return;
+                }
                 tvPraiseNum.setEnabled(false);
                 setPraise(tvPraiseNum,commentsBean.getCommentsId());
             }
         });
+        //跳转到用户
         rlGeRen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,10 +106,11 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
             }
         });
         if(commentsBean.getChildCommentsNum()!=0){
+            tvChildCommentsNum.setVisibility(View.VISIBLE);
             tvChildCommentsNum.setText("更多"+commentsBean.getChildCommentsNum()+"条评论");
         }
         final List<CommonCommentsBean.ChildCommentsListBean> childLists = commentsBean.getChildCommentsList();
-
+        //更多评论
         tvChildCommentsNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,11 +121,37 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         });
         setChildLists(childLists,context);
 
+        tvChildContent1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,MoreCommentsActivity.class);
+                intent.putExtra("commentsBean", commentsBean);
+                ((Activity)context).startActivityForResult(intent,0);
+            }
+        });
+        tvChildContent2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,MoreCommentsActivity.class);
+                intent.putExtra("commentsBean", commentsBean);
+                ((Activity)context).startActivityForResult(intent,0);
+            }
+        });
+        tvCommentContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(context instanceof DetailsDiscussActivity){
+                    ((DetailsDiscussActivity)context).setIntput(commentsBean.getCommentUserName(),commentsBean.getCommentsId());
+                }else if(context instanceof DetailsArticleCommentActivity){
+                    ((DetailsArticleCommentActivity)context).setIntput(commentsBean.getCommentUserName(),commentsBean.getCommentsId());
+                }
+            }
+        });
     }
 
     private void setPraise(TextView finalIsLove, int commentsId) {
         final int praiseNumA = commentsBean.getPraiseNum();
-        String strNum;
+        final String strNum;
         if(tvPraiseNum.isSelected()){
             strNum = String.valueOf(praiseNumA +1);
         }else{
@@ -134,6 +170,9 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
                     tvPraiseNum.setSelected(status);
                     ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
                     commentsBean.setPraiseStatus(status?0:1);
+                }else{
+//                    tvPraiseNum.setSelected(false);
+//                    tvPraiseNum.setText(String.valueOf(Integer.valueOf(strNum)-1));
                 }
             }
         });
@@ -158,11 +197,11 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
                     Clickable.getSpannableString(all, name, tvChildContent1,new Clickable.ClickListener() {
                         @Override
                         public void setOnClick(String name) {
-                            if(name.equals(userName)){
-                                IntentUtil.startHomeActivity(childLists.get(0).getCommentUserId());
-                            }else{
-                                IntentUtil.startHomeActivity(childLists.get(0).getBecommentedUserId());
-                            }
+//                            if(name.equals(userName)){
+//                                IntentUtil.startHomeActivity(childLists.get(0).getCommentUserId());
+//                            }else{
+//                                IntentUtil.startHomeActivity(childLists.get(0).getBecommentedUserId());
+//                            }
                         }
                     });
                 }
@@ -172,11 +211,11 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
                     Clickable.getSpannableString(all, name, tvChildContent2,new Clickable.ClickListener() {
                         @Override
                         public void setOnClick(String name) {
-                            if(name.equals(userName)){
-                                IntentUtil.startHomeActivity(childLists.get(1).getCommentUserId());
-                            }else{
-                                IntentUtil.startHomeActivity(childLists.get(1).getBecommentedUserId());
-                            }
+//                            if(name.equals(userName)){
+//                                IntentUtil.startHomeActivity(childLists.get(1).getCommentUserId());
+//                            }else{
+//                                IntentUtil.startHomeActivity(childLists.get(1).getBecommentedUserId());
+//                            }
                         }
                     });
                 }

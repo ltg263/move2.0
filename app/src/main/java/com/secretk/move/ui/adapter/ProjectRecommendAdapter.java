@@ -1,17 +1,18 @@
 package com.secretk.move.ui.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
-import com.secretk.move.bean.HomeReviewBase;
-import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.holder.HomeListHolder;
+import com.secretk.move.bean.RowsBean;
+import com.secretk.move.ui.holder.ProjectListHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * 作者： litongge
@@ -20,26 +21,25 @@ import java.util.List;
  * 描述：我的项目 列表 item
  */
 
-public class ProjectRecommendAdapter extends RecyclerView.Adapter<HomeListHolder> {
+public class ProjectRecommendAdapter extends RecyclerView.Adapter<ProjectListHolder> {
 
 
-    private List<HomeReviewBase> lists = new ArrayList<>();
-    private ItemClickListener mListener;
-    public void setItemListener(ItemClickListener mListener){
-        this.mListener = mListener;
+    private List<RowsBean> lists = new ArrayList<>();
+    private Context context;
+    public ProjectRecommendAdapter(Context context) {
+        this.context=context;
     }
 
     @Override
-    public HomeListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ProjectListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_home_item, parent, false);
-        HomeListHolder holder = new HomeListHolder(view);
+        ProjectListHolder holder = new ProjectListHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(HomeListHolder holder, int position) {
-       // holder.refresh(position, lists);
-        holder.setItemListener(mListener);
+    public void onBindViewHolder(ProjectListHolder holder, int position) {
+        holder.refresh(position, lists,context);
     }
 
     @Override
@@ -47,12 +47,16 @@ public class ProjectRecommendAdapter extends RecyclerView.Adapter<HomeListHolder
         return lists.size();
     }
 
-    public void setData(List<HomeReviewBase> list) {
+    public void setData(List<RowsBean> list) {
         this.lists = list;
         notifyDataSetChanged();
     }
+    public void setAddData(List<RowsBean> list) {
+        lists.addAll(list);
+        notifyDataSetChanged();
+    }
 
-    public List<HomeReviewBase> getData() {
+    public List<RowsBean> getData() {
         return lists;
     }
 }

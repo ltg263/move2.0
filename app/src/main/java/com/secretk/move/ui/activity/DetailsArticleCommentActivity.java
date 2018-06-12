@@ -102,6 +102,16 @@ public class DetailsArticleCommentActivity extends BaseActivity {
         rvNewReview.setAdapter(adapterNew);
         initRefresh();
         loadingDialog.show();
+        StringUtil.etSearchChangedListener(etContent, null, new StringUtil.EtChange() {
+            @Override
+            public void etYes() {
+                if(!etContent.getText().toString().contains(strLs) && !strLs.equals("find_apk")){
+                    parentCommentsId=0;
+                    strLs="find_apk";
+                    etContent.setText("");
+                }
+            }
+        });
     }
 
     private void initRefresh() {
@@ -190,12 +200,15 @@ public class DetailsArticleCommentActivity extends BaseActivity {
     public void onViewClicked() {
         String str = etContent.getText().toString().trim();
         if (StringUtil.isNotBlank(str)) {
+            if(str.contains(strLs)){
+                str = str.replaceAll( strLs,"");
+            }
             saveComment(str);
         } else {
             ToastUtils.getInstance().show("内容不能为空");
         }
     }
-
+    int parentCommentsId = 0;
     /**
      * @param content
      */
@@ -210,6 +223,9 @@ public class DetailsArticleCommentActivity extends BaseActivity {
             node.put("token", token);
             node.put("commentContent", content);//帖子ID
             node.put("postId", Integer.valueOf(postId));
+            if(parentCommentsId!=0){
+                node.put("parentCommentsId", parentCommentsId);//parentCommentsId 未null
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -251,5 +267,12 @@ public class DetailsArticleCommentActivity extends BaseActivity {
                 initData();
             }
         }
+    }
+    String strLs = "find_apk";
+    public void setIntput(String str,int parentCommentsId){
+        strLs="@"+str+":";
+        etContent.setText(strLs);
+        this.parentCommentsId=parentCommentsId;
+        StringUtil.showSoftInputFromWindow(this,etContent);
     }
 }

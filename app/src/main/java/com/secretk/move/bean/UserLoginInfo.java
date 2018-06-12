@@ -38,6 +38,16 @@ public class UserLoginInfo extends BaseRes{
         private String token;
         private UserBean user;
 
+        private int userCardStatus;
+
+        public int getUserCardStatus() {
+            return userCardStatus;
+        }
+
+        public void setUserCardStatus(int userCardStatus) {
+            this.userCardStatus = userCardStatus;
+        }
+
         public String getToken() {
             return token;
         }

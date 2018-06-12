@@ -8,12 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.listener.ItemClickListener;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +41,7 @@ public class ReleaseArticleLabelAdapter extends RecyclerView.Adapter<ReleaseArti
         holder.setItemListener(mListener);
         holder.tvlabel.setText(bean.getTagName());
         if(position==0){
-            holder.tvlabel.setBackground(MoveApplication.getContext().getResources().getDrawable(R.drawable.garden_crack));
+//            holder.tvlabel.setBackground(MoveApplication.getContext().getResources().getDrawable(R.drawable.garden_crack));
         }
 
     }

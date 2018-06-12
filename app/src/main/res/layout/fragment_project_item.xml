@@ -105,7 +105,7 @@
             android:id="@+id/tv_head_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ALL-团队测评"
+            android:text="ALL-团队评测"
             android:textColor="#333333"
             android:textSize="@dimen/sp_16" />
 

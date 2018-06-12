@@ -46,61 +46,54 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-      <ScrollView
-          android:id="@+id/scr_parent"
-          android:layout_alignParentTop="true"
-          android:layout_above="@id/recycler_horizontal"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+        <ScrollView
+            android:id="@+id/scr_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/recycler_horizontal"
+            android:layout_alignParentTop="true"
+            android:fillViewport="true"
+            android:scrollbars="none">
 
-              <EditText
-                  android:id="@+id/ed_title"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:background="@null"
-                  android:textSize="@dimen/sp_18"
-                  android:maxLength="30"
-                  android:padding="@dimen/dp_10"
-                  android:textCursorDrawable="@drawable/shape_edit_cursor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-              <View
-                  android:layout_width="match_parent"
-                  android:layout_height="@dimen/dp_1"
-                  android:layout_marginTop="@dimen/dp_5"
-                  android:background="#dddddd" />
+                <EditText
+                    android:id="@+id/ed_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:maxLength="30"
+                    android:padding="@dimen/dp_10"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor"
+                    android:textSize="@dimen/sp_18" />
 
-              <EditText
-                  android:id="@+id/ed_content"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="@dimen/dp_5"
-                  android:background="@null"
-                  android:maxLength="2000"
-                  android:hint="请输入字数小于2000字的正文"
-                  android:padding="@dimen/dp_10"
-                  android:textSize="@dimen/sp_14"
-                  android:textCursorDrawable="@drawable/shape_edit_cursor" />
-              <com.secretk.move.view.RichTextEditor
-                  android:id="@+id/richtext_editor"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:layout_margin="@dimen/dp_10"
-                  android:textColor="@color/title_gray"
-                  android:textColorHint="@color/title_gray_88"
-                  android:textSize="@dimen/sp_14" />
-          </LinearLayout>
-      </ScrollView>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:background="#dddddd" />
+
+                <com.secretk.move.view.RichTextEditor
+                    android:id="@+id/richtext_editor"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dp_10"
+                    android:textColor="@color/title_gray"
+                    android:textColorHint="@color/title_gray_88"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+        </ScrollView>
 
         <android.support.v7.widget.RecyclerView
-          android:layout_marginBottom="@dimen/dp_5"
-            android:layout_above="@id/rg_bottom"
             android:id="@+id/recycler_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_above="@id/rg_bottom"
+            android:layout_marginBottom="@dimen/dp_5" />
+
         <LinearLayout
             android:id="@+id/rg_bottom"
             android:layout_width="match_parent"
@@ -130,6 +123,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -141,14 +135,16 @@
                 android:id="@+id/addlabel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:visibility="gone">
+
                 <TextView
-                    android:textSize="@dimen/sp_22"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:text="A"
                     android:textColor="#aaaaaa"
-                    android:text="A" />
+                    android:textSize="@dimen/sp_22" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -156,6 +152,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

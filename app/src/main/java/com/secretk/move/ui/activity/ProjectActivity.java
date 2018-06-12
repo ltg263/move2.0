@@ -356,13 +356,13 @@ public class ProjectActivity extends BaseActivity {
                         projectInfo.getProjectChineseName(),projectInfo.getProjectCode());
                 break;
             case 2:
-                intent = new Intent(this, ReleaseArticleActivity.class);
+                intent = new Intent(this, ReleaseDiscussActivity.class);
                 intent.putExtra("projectId",projectInfo.getProjectId());
                 intent.putExtra("projectPay",projectInfo.getProjectCode());
                 startActivity(intent);
                 break;
             case 3:
-                intent = new Intent(this, ReleaseDiscussActivity.class);
+                intent = new Intent(this, ReleaseArticleActivity.class);
                 intent.putExtra("projectId",projectInfo.getProjectId());
                 intent.putExtra("projectPay",projectInfo.getProjectCode());
                 startActivity(intent);

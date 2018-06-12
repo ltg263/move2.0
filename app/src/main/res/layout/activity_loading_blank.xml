@@ -26,7 +26,7 @@
             android:layout_above="@id/tv_submit"
             android:layout_centerHorizontal="true"
             android:padding="@dimen/dp_10"
-            android:text="测评发布成功！"
+            android:text="评测发布成功！"
             android:textColor="@color/title_gray_66"
             android:textSize="@dimen/sp_14" />
 

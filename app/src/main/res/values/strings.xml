@@ -18,12 +18,12 @@
     <!-- 主界面-->
     <string name="search">搜索</string>
     <string name="main_tab_home_page">主页</string>
-    <string name="main_tab_topic">话题</string>
+    <string name="main_tab_topic">发现</string>
     <string name="main_tab_message">消息</string>
     <string name="main_tab_mine">我的</string>
-    <string name="main_fragment_recommend">发现</string>
+    <string name="main_fragment_recommend">推荐</string>
     <string name="main_fragment_follow">关注</string>
-    <string name="main_fragment_bluesky">青天榜</string>
+    <string name="main_fragment_bluesky">新榜</string>
     <string name="main_publish">发表</string>
     <!-- 注册界面-->
     <string name="register_account">注册账号</string>
@@ -39,10 +39,10 @@
 
     <!--用户 @ 项目 界面-->
     <string name="intro">简介</string>
-    <string name="review">测评</string>
-    <string name="discuss">讨论</string>
+    <string name="review">评测</string>
+    <string name="discuss">打假讨论</string>
     <string name="article">文章</string>
-    <string name="assessment_agenc">测评机构</string>
+    <string name="assessment_agenc">评测机构</string>
     <string name="answer">回答</string>
     <string name="like">赞</string>
     <string name="fan">粉丝</string>
@@ -71,9 +71,9 @@
     <string name="team_strength">团队实力</string>
     <string name="project_schedule">项目进度</string>
     <string name="speculative_risk">投资风险</string>
-    <string name="assessment">精选测评</string>
+    <string name="assessment">精选评测</string>
     <string name="crack_down">打假</string>
-    <string name="project_was_assessed">测评了项目</string>
+    <string name="project_was_assessed">评测了项目</string>
 
 
     <string name="network_error">请检查您的网络</string>
@@ -85,7 +85,7 @@
     <string name="mine_text_5">性别</string>
     <string name="mine_text_6">所在地</string>
     <string name="mine_text_7">个人简介</string>
-    <string name="mine_text_8">用户等级</string>
+    <string name="mine_text_8">用户类型</string>
     <string name="mine_text_9">账户设置</string>
     <string name="mine_text_10">绑定手机号</string>
     <string name="mine_text_11">绑定微信</string>
@@ -95,7 +95,7 @@
     <string name="mine_exe_login">退出当前账号</string>
     <string name="set_my_name">设置个人昵称</string>
     <string name="set_my_signature">设置个人简介</string>
-    <string name="mine_topic">话题</string>
+    <string name="mine_topic">项目</string>
     <string name="mine_user">用户</string>
     <!--实名认证-->
     <string name="mine_title">实名认证</string>
@@ -181,18 +181,17 @@
     <!--写测评-->
     <string name="evaluation_simpleness">简单评测</string>
     <string name="evaluation_professional">专业评测</string>
-    <string name="evaluation_btn_new">新建测评模型</string>
+    <string name="evaluation_btn_new">新建评测模型</string>
     <string name="evaluation_btn_compile">编写完整评测</string>
-    <string name="evaluation">测评</string>
-    <string name="evaluation_dimensionality">测评维度</string>
+    <string name="evaluation">评测</string>
+    <string name="evaluation_dimensionality">评测维度</string>
     <string name="evaluation_add_dimensionality">添加纬度</string>
     <string name="evaluation_num">*最少3个</string>
-    <string name="evaluation_object">测评对象</string>
+    <string name="evaluation_object">评测对象</string>
     <string name="evaluation_next">下一步</string>
     <string name="evaluation_issue">发布</string>
     <string name="evaluation_state">评测模型说明></string>
-    <string name="evaluation_write">写测评</string>
-    <string name="evaluation_state_select">主要从竞争对手、市场前景、可行性等各方面进行评测。</string>
+    <string name="evaluation_write">写评测</string>
     <string name="evaluation_custom_dimensionality">自定义纬度</string>
     <string name="evaluation_name">名称</string>
     <string name="evaluation_weight">权重</string>
@@ -242,5 +241,7 @@
     <string name="not_attention">你还没关注过别人～</string>
     <string name="not_refresh">刷一刷</string>
     <string name="not_go_look">去看看</string>
-    <string name="evaluation_succeed">测评发布成功！</string>
+    <string name="evaluation_succeed">评测发布成功！</string>
+    <string name="article_succeed">文章发布成功！</string>
+    <string name="discuss_succeed">打假发布成功！</string>
 </resources>

@@ -32,7 +32,10 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * Created by zc on 2018/4/6.
+ * 作者： litongge
+ * 时间： 2018/6/10 14:45
+ * 邮箱；ltg263@126.com
+ * 描述：关注的用户
  */
 
 public class MineAttentionUserFragment extends LazyFragment {
@@ -68,7 +71,7 @@ public class MineAttentionUserFragment extends LazyFragment {
         initRefresh();
         loadingDialog=new LoadingDialog(getActivity());
         rlTopTheme.setVisibility(View.VISIBLE);
-        tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_not_message));
+        tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_attention_user));
         tvName.setText(getActivity().getResources().getString(R.string.not_attention));
         tvSubmit.setText(getActivity().getResources().getString(R.string.not_go_look));
     }
@@ -120,7 +123,7 @@ public class MineAttentionUserFragment extends LazyFragment {
             public void onCompleted(MineAttentionBean mainRecommendBean) {
                 MineAttentionBean.DataBean.MyFollowsBean follows = mainRecommendBean.getData().getMyFollows();
                 if(follows.getRows()==null ||follows.getRows().size()==0){
-                    getActivity().findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+                    convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
                     refreshLayout.setVisibility(View.GONE);
                     return;
                 }

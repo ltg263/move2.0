@@ -33,6 +33,8 @@ public class EvaluationProfessionalItemActivity extends BaseActivity {
     EvaluationSliderView esViewa;
     @BindView(R.id.tv_project_name)
     TextView tvProjectName;
+    @BindView(R.id.tv_detail_desc)
+    TextView tvDetailDesc;
     int projectId;
     SysEvaluationModelBean.DataBean.ModeDetailListBean sysEvaluationModel;
     @Override
@@ -40,7 +42,6 @@ public class EvaluationProfessionalItemActivity extends BaseActivity {
         mHeadView = findViewById(R.id.head_app_server);
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitleColor(R.color.title_gray);
-        mHeadView.setTitle(getString(R.string.evaluation_professional));
         mMenuInfos.add(0, new MenuInfo(R.string.evaluation_write, getString(R.string.evaluation_write), 0));
         return mHeadView;
     }
@@ -58,9 +59,12 @@ public class EvaluationProfessionalItemActivity extends BaseActivity {
         String projectPay = getIntent().getStringExtra("projectPay");
         tvProjectName.setText(projectPay+"/"+projectName);
         projectId = getIntent().getIntExtra("projectId",0);
-        esViewa.setScore(sysEvaluationModel.getDetailWeight() / 10f);
+        mHeadView.setTitle(projectPay+"-"+sysEvaluationModel.getDetailName()+"评测");
+//        esViewa.setScore(sysEvaluationModel.getDetailWeight() / 10f);
+        esViewa.setScore(sysEvaluationModel.getTotalScore());
         esViewa.setTvDimensionalityName(sysEvaluationModel.getDetailName());
         esViewa.setEsvBackground(R.color.app_background);
+        tvDetailDesc.setText(sysEvaluationModel.getDetailDesc());
     }
 
     @Override

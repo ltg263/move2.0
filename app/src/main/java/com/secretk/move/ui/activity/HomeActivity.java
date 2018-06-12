@@ -171,16 +171,7 @@ public class HomeActivity extends BaseActivity {
                 tvUserName.setText(userData.getUserName());
                 tvIndividualResume.setText(userData.getUserSignature());
                 //"userType": 1,// 用户类型:1-普通用户；2-项目方；3-评测机构；4-机构用户
-                if(userData.getUserType()==2){
-                    tvEvaluatingSign.setText("项目方");
-                }else if(userData.getUserType()==3){
-                    tvEvaluatingSign.setText("评测机构");
-                }else if(userData.getUserType()==4){
-                    tvEvaluatingSign.setText("机构用户");
-                }else{
-                    tvEvaluatingSign.setText("普通用户");
-                    tvEvaluatingSign.setVisibility(View.GONE);
-                }
+                tvEvaluatingSign.setText(StringUtil.getUserType(userData.getUserType()));
                 //“showFollow”: 0 , //是否显示 关注按钮 0- 不显示；1-显示关注  2-显示取消关注
                 if(userData.getShowFollow()==1){
                     tvSaveFollow.setSelected(false);

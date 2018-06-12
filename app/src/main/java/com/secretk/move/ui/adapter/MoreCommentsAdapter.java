@@ -9,9 +9,10 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
-import com.secretk.move.bean.CommonCommentsBean;
+import com.secretk.move.bean.MoreCommentsBean;
 import com.secretk.move.ui.activity.MoreCommentsActivity;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.Clickable;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ import butterknife.ButterKnife;
 public class MoreCommentsAdapter extends RecyclerView.Adapter<MoreCommentsAdapter.MoreCommentsHolder> {
 
 
-    private List<CommonCommentsBean.ChildCommentsListBean> lists = new ArrayList<>();
+    private List<MoreCommentsBean.DataBean.CommentsBean.RowsBean> lists = new ArrayList<>();
     Context context;
     public MoreCommentsAdapter(Context context) {
         this.context=context;
@@ -53,12 +54,12 @@ public class MoreCommentsAdapter extends RecyclerView.Adapter<MoreCommentsAdapte
         return lists.size();
     }
 
-    public void setData(List<CommonCommentsBean.ChildCommentsListBean> list) {
+    public void setData(List<MoreCommentsBean.DataBean.CommentsBean.RowsBean> list) {
         this.lists = list;
         notifyDataSetChanged();
     }
 
-    public List<CommonCommentsBean.ChildCommentsListBean> getData() {
+    public List<MoreCommentsBean.DataBean.CommentsBean.RowsBean> getData() {
         return lists;
     }
 
@@ -69,12 +70,12 @@ public class MoreCommentsAdapter extends RecyclerView.Adapter<MoreCommentsAdapte
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-
-        public void refresh(int position, List<CommonCommentsBean.ChildCommentsListBean> lists) {
-            final CommonCommentsBean.ChildCommentsListBean bean = lists.get(position);
-            final String userName = bean.getCommentUserName();
-            String userNameB = ": @"+bean.getBecommentedUserName();
-            final String content = bean.getCommentContent();
+//"commentUserName": @ "becommentedUserName":  "commentContent":
+        public void refresh(int position, List<MoreCommentsBean.DataBean.CommentsBean.RowsBean> lists) {
+            final MoreCommentsBean.DataBean.CommentsBean.RowsBean bean = lists.get(position);
+            final String userName = StringUtil.getBeanString(bean.getCommentUserName());
+            String userNameB = ": @"+StringUtil.getBeanString(bean.getBecommentedUserName());
+            final String content = StringUtil.getBeanString(bean.getCommentContent());
             String all = userName+userNameB+content;
             String name[] = {userName,userNameB};
             Clickable.getSpannableString(all, name, tvEaveContent,new Clickable.ClickListener() {
@@ -90,7 +91,8 @@ public class MoreCommentsAdapter extends RecyclerView.Adapter<MoreCommentsAdapte
             tvEaveContent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((MoreCommentsActivity)context).setSendEd(bean.getCommentUserName(),bean.getCommentUserId());
+                    ((MoreCommentsActivity)context).setSendEd(bean.getCommentUserName(),bean.getCommentsId());
+//                    ((MoreCommentsActivity)context).setSendEd(bean.getCommentUserName(),0);
                 }
             });
         }

@@ -18,6 +18,7 @@ import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 
@@ -70,7 +71,7 @@ public class MineCheckDetailsActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-
+        loadingDialog.show();
     }
 
     @Override
@@ -90,7 +91,6 @@ public class MineCheckDetailsActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        loadingDialog.show();
         RetrofitUtil.request(params, MineRecommendBase.class, new HttpCallBackImpl<MineRecommendBase>() {
             @Override
             public void onCompleted(MineRecommendBase res) {
@@ -137,12 +137,14 @@ public class MineCheckDetailsActivity extends BaseActivity {
 //                IntentUtil.startActivity(MineAssetUsableActivity.class);
                 break;
             case R.id.tv_wallet_site:
-                if(wallet!=null){
+                if(wallet!=null && wallet.size()!=0){
                     //钱包状态0-未绑定 1-已绑定
                     String key[] = {"wallet","walletType"};
-                    String[] values = {wallet.get(0).getWallet(),String.valueOf(wallet.get(0).getWalletType())};
-                    LogUtil.w("String.valueOf(wallet.get(0).getWalletType():"+String.valueOf(wallet.get(0).getWalletType()));
+                    String[] values = {StringUtil.getBeanString(wallet.get(0).getWallet()),
+                            StringUtil.getBeanString(String.valueOf(wallet.get(0).getWalletType()))};
                     IntentUtil.startActivity(MineAssetBindingActivity.class, key, values);
+                }else{
+                    ToastUtils.getInstance().show("数据错误");
                 }
                 break;
             case R.id.tv_extract:
@@ -153,5 +155,12 @@ public class MineCheckDetailsActivity extends BaseActivity {
                 ToastUtils.getInstance().show("努力开发中...");
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogUtil.w("------------------------------");
+        initData();
     }
 }

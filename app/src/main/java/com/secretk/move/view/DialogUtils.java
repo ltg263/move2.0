@@ -176,10 +176,12 @@ public class DialogUtils {
             etLogContent.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         }
         if(context.getString(R.string.set_my_name).equals(title)){
+            etLogContent.setMaxLines(10);
             etLogContent.setHint("请输入昵称");
 
         }
         if(context.getString(R.string.set_my_signature).equals(title)){
+            etLogContent.setMaxLines(20);
             etLogContent.setHint("请输入简介");
         }
         TextView tvLogConfirm = view.findViewById(R.id.tv_log_confirm);
@@ -201,6 +203,123 @@ public class DialogUtils {
             @Override
             public void onClick(View arg0) {
                 dialog.dismiss();
+            }
+        });
+    }
+    /**
+     * 描述: 自定义ShowUnifiedDialog
+     * 统一 赞赏
+     */
+    public static void showGiveRewardDialog(final Context context, String title, String content, final EditTextDialogInterface editTextDialogInterface) {
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_give_reward, null);// 获得dialog布局
+        final Dialog dialog = new Dialog(context, R.style.RemindDialog);
+        final TextView tvGive1 = view.findViewById(R.id.tv_give_1);
+        final TextView tvGive2 = view.findViewById(R.id.tv_give_2);
+        final TextView tvGive3 = view.findViewById(R.id.tv_give_3);
+        final TextView tvGive4 = view.findViewById(R.id.tv_give_4);
+        final TextView tvGive5 = view.findViewById(R.id.tv_give_5);
+        final TextView tvGive6 = view.findViewById(R.id.tv_give_6);
+        final EditText etLogContent = view.findViewById(R.id.et_log_content);
+        TextView tvLogPrompt = view.findViewById(R.id.tv_log_prompt);
+        TextView tvLogConfirm = view.findViewById(R.id.tv_log_confirm);
+        TextView tvLogCancel = view.findViewById(R.id.tv_log_cancel);
+        tvLogPrompt.setText(title);
+        if(StringUtil.isNotBlank(content)){
+            etLogContent.setText(content);
+        }
+        if(context.getString(R.string.sponsor_title).equals(title)){
+            etLogContent.setHint("请输入赞助金额");
+            etLogContent.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        }
+
+        dialog.setContentView(view);
+        dialog.show();
+        View.OnClickListener giveReward = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()){
+                    case R.id.tv_give_1:
+                        etLogContent.setText(tvGive1.getText().toString());
+                        tvGive1.setSelected(true);
+                        tvGive2.setSelected(false);
+                        tvGive3.setSelected(false);
+                        tvGive4.setSelected(false);
+                        tvGive5.setSelected(false);
+                        tvGive6.setSelected(false);
+                        break;
+                    case R.id.tv_give_2:
+                        etLogContent.setText(tvGive2.getText().toString());
+                        tvGive1.setSelected(false);
+                        tvGive2.setSelected(true);
+                        tvGive3.setSelected(false);
+                        tvGive4.setSelected(false);
+                        tvGive5.setSelected(false);
+                        tvGive6.setSelected(false);
+                        break;
+                    case R.id.tv_give_3:
+                        etLogContent.setText(tvGive3.getText().toString());
+                        tvGive1.setSelected(false);
+                        tvGive2.setSelected(false);
+                        tvGive3.setSelected(true);
+                        tvGive4.setSelected(false);
+                        tvGive5.setSelected(false);
+                        tvGive6.setSelected(false);
+                        break;
+                    case R.id.tv_give_4:
+                        etLogContent.setText(tvGive4.getText().toString());
+                        tvGive1.setSelected(false);
+                        tvGive2.setSelected(false);
+                        tvGive3.setSelected(false);
+                        tvGive4.setSelected(true);
+                        tvGive5.setSelected(false);
+                        tvGive6.setSelected(false);
+                        break;
+                    case R.id.tv_give_5:
+                        etLogContent.setText(tvGive5.getText().toString());
+                        tvGive1.setSelected(false);
+                        tvGive2.setSelected(false);
+                        tvGive3.setSelected(false);
+                        tvGive4.setSelected(false);
+                        tvGive5.setSelected(true);
+                        tvGive6.setSelected(false);
+                        break;
+                    case R.id.tv_give_6:
+                        etLogContent.setText(tvGive6.getText().toString());
+                        tvGive1.setSelected(false);
+                        tvGive2.setSelected(false);
+                        tvGive3.setSelected(false);
+                        tvGive4.setSelected(false);
+                        tvGive5.setSelected(false);
+                        tvGive6.setSelected(true);
+                        break;
+                    case R.id.tv_log_confirm:
+                        String season = etLogContent.getText().toString().trim();
+                        editTextDialogInterface.btnConfirm(season);
+                        dialog.dismiss();
+                        break;
+                    case R.id.tv_log_cancel:
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        };
+        tvGive1.setOnClickListener(giveReward);
+        tvGive2.setOnClickListener(giveReward);
+        tvGive3.setOnClickListener(giveReward);
+        tvGive4.setOnClickListener(giveReward);
+        tvGive5.setOnClickListener(giveReward);
+        tvGive6.setOnClickListener(giveReward);
+        tvLogConfirm.setOnClickListener(giveReward);
+        tvLogCancel.setOnClickListener(giveReward);
+        StringUtil.etSearchChangedListener(etLogContent, null, new StringUtil.EtChange() {
+            @Override
+            public void etYes() {
+                tvGive1.setSelected(false);
+                tvGive2.setSelected(false);
+                tvGive3.setSelected(false);
+                tvGive4.setSelected(false);
+                tvGive5.setSelected(false);
+                tvGive6.setSelected(false);
             }
         });
     }
@@ -306,7 +425,7 @@ public class DialogUtils {
      * @param context
      * @param
      */
-    public static void showDialogHint(Context context, String title, final ErrorDialogInterface dialogConfirm) {
+    public static void showDialogHint(Context context, String title, boolean isOne,final ErrorDialogInterface dialogConfirm) {
 
             final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
             final View view = LayoutInflater.from(context).inflate(R.layout.dialog_hine, null);
@@ -314,6 +433,9 @@ public class DialogUtils {
             TextView suanle = (TextView) view.findViewById(R.id.bt_suanle);
             TextView tv_title = (TextView) view.findViewById(R.id.tv_title);
             tv_title.setText(title);
+            if(isOne){
+                suanle.setVisibility(View.GONE);
+            }
             suanle.setOnClickListener(new View.OnClickListener() {
 
                 @Override

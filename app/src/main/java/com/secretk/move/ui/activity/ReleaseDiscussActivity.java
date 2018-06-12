@@ -11,13 +11,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -25,11 +25,10 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.bean.UpImgBean;
-import com.secretk.move.bean.base.BaseRes;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.ReleaseArticleLabelAdapter;
 import com.secretk.move.ui.adapter.ReleasePicAdapter;
-import com.secretk.move.utils.LogUtil;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -81,6 +80,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
     }
 
     private void init() {
+        MoveApplication.getContext().addActivity(this);
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.main_background), 0);
         imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
@@ -243,13 +243,17 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, BaseRes.class, new HttpCallBackImpl<BaseRes>() {
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
-            public void onCompleted(BaseRes bean) {
-                loadingDialog.dismiss();
-                int code = bean.getCode();
-                finish();
-                Log.e("jyh_onCompleted", "code=" + code);
+            public void onCompleted(String str) {
+                try {
+                    JSONObject object = new JSONObject(str);
+                    int postId = object.getJSONObject("data").getInt("postId");
+                    IntentUtil.startPublishSucceedActivity(String.valueOf(postId),
+                            "发表打假", getResources().getString(R.string.discuss_succeed),getResources().getString(R.string.not_go_look), Constants.PublishSucceed.DISCUSS);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -261,7 +265,6 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
 
     public void upImgHttp(String path, final int position) {
         File file = new File(path);
-        LogUtil.w("file.exists(:" + file.exists());
         if (!file.exists()) {
             return;
         }
@@ -289,13 +292,11 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
                 }else {
                     upImgHttp(adapterImgList.get(position+1),position+1);
                 }
-                Log.e("jyh_onCompleted", data.getMsg());
             }
 
             @Override
             public void onError(String message) {
                 super.onError(message);
-                Log.e("jyh_onError", message);
                 loadingDialog.dismiss();
             }
         });

@@ -16,8 +16,11 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 import com.secretk.move.R;
+import com.secretk.move.bean.EvaluationNewBean;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
+
+import java.util.List;
 
 
 public class AddDimensionalityPopupWindow extends PopupWindow implements OnClickListener{
@@ -33,8 +36,9 @@ public class AddDimensionalityPopupWindow extends PopupWindow implements OnClick
     private final ImageView ivDeleteGrade;
     private final PopupOnClickListener itemsOnClick;
     private final Context context;
+    private final List<EvaluationNewBean> list;
+    private int pos=0;
     private View mMenuView;
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -44,18 +48,26 @@ public class AddDimensionalityPopupWindow extends PopupWindow implements OnClick
                     return;
                 }
                 if(StringUtil.isBlank(getString(etEvaluationWeight))
-                        || isNumTwo(getString(etEvaluationWeight))
+                        || isNumTwo(getString(etEvaluationWeight),2)
                         || Float.valueOf(getString(etEvaluationWeight))==0
                         || Float.valueOf(getString(etEvaluationWeight))>1){
                     ToastUtils.getInstance().show(context.getString(R.string.evaluation_hint)+"权重");
                     return;
                 }
                 if(StringUtil.isBlank(getString(etEvaluationGrade))
-                        || isNumTwo(getString(etEvaluationGrade))
+                        || isNumTwo(getString(etEvaluationGrade),1)
                         || Float.valueOf(getString(etEvaluationGrade))<1
                         || Float.valueOf(getString(etEvaluationGrade))>10){
                     ToastUtils.getInstance().show(context.getString(R.string.evaluation_hint)+"分数");
                     return;
+                }
+                if(list != null && pos!=-1){
+                    for(int i=0;i<list.size();i++){
+                        if(list.get(i).getModelName().equals(getString(etEvaluationName))){
+                            ToastUtils.getInstance().show("自建维度名称不能重复");
+                            return;
+                        }
+                    }
                 }
                 //销毁弹出框
                 itemsOnClick.popupOnClick(view,etEvaluationName.getText().toString().trim(),
@@ -78,7 +90,7 @@ public class AddDimensionalityPopupWindow extends PopupWindow implements OnClick
         }
     }
     @SuppressLint("InflateParams")
-    public AddDimensionalityPopupWindow(Activity context, final PopupOnClickListener itemsOnClick) {
+    public AddDimensionalityPopupWindow(Activity context, List<EvaluationNewBean> list,int pos, final PopupOnClickListener itemsOnClick) {
         super(context);
         this.context = context;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -91,7 +103,8 @@ public class AddDimensionalityPopupWindow extends PopupWindow implements OnClick
         ivDeleteName = mMenuView.findViewById(R.id.iv_delete_name);
         ivDeleteWeight = mMenuView.findViewById(R.id.iv_delete_weight);
         ivDeleteGrade = mMenuView.findViewById(R.id.iv_delete_grade);
-
+        this.list = list;
+        this.pos = pos;
         this.itemsOnClick = itemsOnClick;
         btnSave.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
@@ -136,10 +149,10 @@ public class AddDimensionalityPopupWindow extends PopupWindow implements OnClick
     public String getString(EditText et){
         return et.getText().toString().trim();
     }
-    public Boolean isNumTwo(String stra){
+    public Boolean isNumTwo(String stra,int i){
         String str = String.valueOf(stra);
         str = str.substring(str.indexOf('.') + 1);
-        if(str.length()>2){
+        if(str.length()>i){
             return true;
         }
         return false;

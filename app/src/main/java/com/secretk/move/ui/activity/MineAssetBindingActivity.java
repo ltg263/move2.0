@@ -12,7 +12,6 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -49,15 +48,22 @@ public class MineAssetBindingActivity extends BaseActivity {
     protected void initUI(Bundle savedInstanceState) {
 //        wallet","walletType
         String key = getIntent().getStringExtra("walletType");
-        LogUtil.w("key:"+key);
+        String wallet = getIntent().getStringExtra("wallet");
         if (key.equals("1")) {
-            etBinding.setCursorVisible(false);
-            etBinding.setFocusable(false);
-            etBinding.setText(getIntent().getStringExtra("wallet"));
-            etBinding.setFocusableInTouchMode(false);
-            butSubmit.setText(getResources().getString(R.string.binding_end));
+            setZj(wallet);
         }
     }
+
+    private void setZj(String wallet) {
+        etBinding.setCursorVisible(false);
+        etBinding.setFocusable(false);
+        etBinding.setText(wallet);
+        etBinding.setFocusableInTouchMode(false);
+        butSubmit.setBackgroundColor(getResources().getColor(R.color.title_gray_ee));
+        butSubmit.setText(getResources().getString(R.string.binding_end));
+        butSubmit.setTextColor(getResources().getColor(R.color.title_gray));
+    }
+
 
     @Override
     protected void initData() {
@@ -84,6 +90,10 @@ public class MineAssetBindingActivity extends BaseActivity {
                 etBinding.setFocusable(true);
                 etBinding.setFocusableInTouchMode(true);
                 etBinding.requestFocus();
+                butSubmit.setBackground(getResources().getDrawable(R.drawable.btn_max_selected_radius));
+                butSubmit.setText(getResources().getString(R.string.binding_end));
+                butSubmit.setTextColor(getResources().getColor(R.color.white));
+                butSubmit.setText(getResources().getString(R.string.binding_ok));
                 break;
         }
     }
@@ -113,7 +123,17 @@ public class MineAssetBindingActivity extends BaseActivity {
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
-
+                try {
+                    JSONObject obj = new JSONObject(str);
+                    JSONObject myPinlessWallet = obj.getJSONObject("data").getJSONObject("myPinlessWallet");
+                    String wallet = myPinlessWallet.getString("wallet");
+                    int walletType = myPinlessWallet.getInt("walletType");
+                    if(walletType==1){
+                        setZj(wallet);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

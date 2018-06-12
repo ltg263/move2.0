@@ -97,8 +97,8 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
         }
         final RowsBean rowsBean = lists.get(position);
         GlideUtils.loadCircleProjectUrl(context,ivCreateUserIcon, Constants.BASE_IMG_URL + rowsBean.getProjectIcon());
-        tvCreateUserName.setText(rowsBean.getProjectChineseName());
-        tvEnglishName.setText("/" + rowsBean.getProjectCode());
+        tvCreateUserName.setText(rowsBean.getProjectCode());
+        tvEnglishName.setText("/" + rowsBean.getProjectChineseName());
         tvCreateTime.setText(StringUtil.getTimeToM(rowsBean.getCreateTime()));
         tvPostTitle.setText(rowsBean.getPostTitle());
         tvTotalScore.setText(String.valueOf(rowsBean.getTotalScore())+"分");

@@ -219,7 +219,6 @@
             android:name=".ui.activity.ReleaseArticleActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity android:name=".ui.activity.ReleaseDiscussActivity" />
-        <activity android:name=".ui.activity.ReleaseEvaluationActivity" />
         <activity android:name=".ui.activity.SelectedPicActivity" />
 
         <provider

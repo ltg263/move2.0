@@ -101,6 +101,10 @@ public class MineApproveSubmitiPicActivity extends BaseActivity {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
         }
+        if (PicUtil.uritempFile == null) {
+            ToastUtils.getInstance().show("请上传照片");
+            return;
+        }
         File file = new File(PicUtil.uritempFile.getPath());
         if(!file.exists()){
             ToastUtils.getInstance().show("照片上传失败，请重新上传");
@@ -135,7 +139,7 @@ public class MineApproveSubmitiPicActivity extends BaseActivity {
     private void saveData(String picPath) {
         String url = Constants.UPLOAD_USER_CARD;
         if("yes".equals(getIntent().getStringExtra("isOrmAgain"))){
-            url = Constants.CARD_TI_FORM_AGAIN;
+            url = Constants.UPLOAD_USER_CARD;
         }
         JSONObject node = new JSONObject();
         try {

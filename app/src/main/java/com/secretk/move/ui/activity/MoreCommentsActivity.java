@@ -18,6 +18,7 @@ import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonCommentsBean;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.bean.MoreCommentsBean;
 import com.secretk.move.ui.adapter.MoreCommentsAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
@@ -41,7 +42,7 @@ import butterknife.OnClick;
  * 作者： litongge
  * 时间： 2018/5/2 18:53
  * 邮箱；ltg263@126.com
- * 描述：评论详情------更多评论
+ * 描述：所有的 评论详情------更多评论
  */
 public class MoreCommentsActivity extends BaseActivity{
 
@@ -73,7 +74,7 @@ public class MoreCommentsActivity extends BaseActivity{
     private int parentCommentsId;
     boolean isBianHua = false;
     private int praiseNum;
-
+    private int pageIndex=1;
     @Override
     protected int setOnCreate() {
         return R.layout.activity_comments_more;
@@ -95,10 +96,21 @@ public class MoreCommentsActivity extends BaseActivity{
         setVerticalManager(rvReview);
         adapter = new MoreCommentsAdapter(this);
         rvReview.setAdapter(adapter);
+        StringUtil.etSearchChangedListener(etMessage, null, new StringUtil.EtChange() {
+            @Override
+            public void etYes() {
+                if(!etMessage.getText().toString().contains(strLs) && !strLs.equals("find_apk")){
+                    parentCommentsId = 0;
+                    strLs="find_apk";
+                    etMessage.setText("");
+                }
+            }
+        });
+        etMessage.setHint("请下你的留言...");
     }
-
+    CommonCommentsBean commentsBean;
     protected void initData() {
-        CommonCommentsBean commentsBean = getIntent().getParcelableExtra("commentsBean");
+        commentsBean = getIntent().getParcelableExtra("commentsBean");
         GlideUtils.loadCircleUserUrl(this,ivCommentedUserIcon, Constants.BASE_IMG_URL + commentsBean.getCommentUserIcon());
         postId = commentsBean.getPostId();
         parentCommentsId = commentsBean.getCommentsId();
@@ -117,10 +129,8 @@ public class MoreCommentsActivity extends BaseActivity{
         } else if (commentsBean.getPraiseStatus() == 2) {
             tvPraiseNum.setVisibility(View.GONE);
         }
-        List<CommonCommentsBean.ChildCommentsListBean> commentsList = commentsBean.getChildCommentsList();
-        if (commentsList != null && commentsList.size() > 0) {
-            adapter.setData(commentsList);
-        }
+        loadingDialog.show();
+        getWlData();
     }
 
     @OnClick({R.id.tv_praise_num, R.id.rl_ge_ren, R.id.but_send})
@@ -128,6 +138,9 @@ public class MoreCommentsActivity extends BaseActivity{
         switch (view.getId()) {
             case R.id.tv_praise_num:
                 if(!tvPraiseNum.isSelected()){
+                    return;
+                }
+                if(!NetUtil.isPraise(userId,baseUserId)){
                     return;
                 }
                 tvPraiseNum.setEnabled(false);
@@ -158,6 +171,9 @@ public class MoreCommentsActivity extends BaseActivity{
             case R.id.but_send:
                 String str = etMessage.getText().toString().trim();
                 if (StringUtil.isNotBlank(str)) {
+                    if(str.contains(strLs)){
+                        str = str.replaceAll( strLs,"");
+                    }
                     saveComment(str);
                 } else {
                     ToastUtils.getInstance().show("内容不能为空");
@@ -165,11 +181,14 @@ public class MoreCommentsActivity extends BaseActivity{
                 break;
         }
     }
+    String strLs = "find_apk";
     public void setSendEd(String user,int id){
-        etMessage.setHint("回复："+user);
-        etMessage.setFocusable(true);
-        parentCommentsId=id;
-//        ToastUtils.getInstance().show(user);
+        strLs="@"+user+":";
+        etMessage.setText(strLs);
+        if(id!=0){
+            this.parentCommentsId=id;
+        }
+        StringUtil.showSoftInputFromWindow(this,etMessage);
     }
     private void saveComment(String content) {
         if(!NetUtil.isNetworkAvailable()){
@@ -181,6 +200,9 @@ public class MoreCommentsActivity extends BaseActivity{
             node.put("token", token);
             node.put("commentContent", content);//帖子ID
             node.put("postId", Integer.valueOf(postId));
+            if(parentCommentsId==0){
+                parentCommentsId=commentsBean.getCommentsId();
+            }
             node.put("parentCommentsId", parentCommentsId);//parentCommentsId 未null
         } catch (JSONException e) {
             e.printStackTrace();
@@ -194,25 +216,59 @@ public class MoreCommentsActivity extends BaseActivity{
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
+                isBianHua=true;
                 etMessage.setText("");
-//                rvReview.fullScroll(ScrollView.FOCUS_UP);
-                initData();
+                getWlData();
             }
 
             @Override
-            public void onFinish() {
-//                if(loadingDialog.isShowing()){
-//                    loadingDialog.dismiss();
-//                }
+            public void onError(String message) {
+                loadingDialog.dismiss();
             }
         });
     }
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         Intent intent = new Intent();
         intent.putExtra(Constants.REQUEST_CODE,isBianHua);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    public void getWlData() {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+            node.put("commentsId", commentsId);
+            node.put("postId", postId);
+            node.put("pageIndex", pageIndex);
+            node.put("pageSize", 100);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.COMMENT_COMMENTS_LIST)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, MoreCommentsBean.class, new HttpCallBackImpl<MoreCommentsBean>() {
+            @Override
+            public void onCompleted(MoreCommentsBean bean) {
+                MoreCommentsBean.DataBean.CommentsBean commentsBean = bean.getData().getComments();
+                if(commentsBean!=null){
+                    List<MoreCommentsBean.DataBean.CommentsBean.RowsBean> commentsList = commentsBean.getRows();
+                    if (commentsList != null && commentsList.size() > 0) {
+                        adapter.setData(commentsList);
+                    }
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                loadingDialog.dismiss();
+            }
+        });
     }
 }

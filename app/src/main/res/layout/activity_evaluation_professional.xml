@@ -38,14 +38,14 @@
 
 
             <TextView
-                android:id="@+id/tv_zw_name"
+                android:id="@+id/tv_yw_mane"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/title_gray"
                 android:textSize="@dimen/sp_18" />
 
             <TextView
-                android:id="@+id/tv_yw_mane"
+                android:id="@+id/tv_zw_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/title_gray_88"
@@ -66,13 +66,32 @@
         android:layout_height="wrap_content"
         android:background="@drawable/ic_shade_grey_mix" />
 
-    <TextView
-        android:id="@+id/tv_status"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dp_10"
-        android:textColor="@color/title_gray_88"
-        android:textSize="@dimen/sp_12" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_10"
+            android:lineSpacingExtra="@dimen/dp_5"
+            android:text="经过科学筛选，系统提供以下几个评测纬度，可完整评测，也可部分评测；您也可以自己新建模型进行测评。"
+            android:textColor="@color/title_gray_88"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/tv_html"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_status"
+            android:layout_alignEnd="@+id/tv_status"
+            android:text="@string/evaluation_state"
+            android:textColor="@color/app_background"
+            android:textSize="@dimen/sp_12" />
+
+
+    </RelativeLayout>
 
     <View
         android:layout_width="wrap_content"

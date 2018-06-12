@@ -14,7 +14,6 @@ import android.view.ViewConfiguration;
 import android.widget.Scroller;
 
 import com.secretk.move.R;
-import com.secretk.move.utils.LogUtil;
 
 
 /**
@@ -36,7 +35,7 @@ public class EvaluationItemView extends View {
     //最大值
     private float mMaxValue = 100.0f;
     //最小值
-    private float mMinValue = 0.0f;
+    private float mMinValue = 1.0f;
     //转化单位
     private float mPerValue = 1;
     //刻度间距
@@ -149,7 +148,7 @@ public class EvaluationItemView extends View {
 
     public void setSelectorValue(float selectorValue) {
         mSelectorValue = selectorValue;
-        setValue(mSelectorValue, 0, 10, 0.1f);
+        setValue(mSelectorValue, 1, 10, 0.1f);
     }
 
     public void setTextColor(int color) {

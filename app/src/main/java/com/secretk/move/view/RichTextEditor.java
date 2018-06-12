@@ -20,10 +20,13 @@ import android.widget.TextView;
 import com.secretk.move.R;
 import com.secretk.move.utils.BaseUtils;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.StringUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by litong on 2018/3/1.
@@ -107,7 +110,7 @@ public class RichTextEditor extends ScrollView {
         LinearLayout.LayoutParams firstEditParam = new LinearLayout.LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         //editNormalPadding = dip2px(EDIT_PADDING);
-        firstEdit = createEditText("请在此填写您对此项目的总体总结...", dip2px(context, EDIT_PADDING));
+        firstEdit = createEditText("请发表您对当前项目的看法，字数少于10000。", dip2px(context, EDIT_PADDING));
         allLayout.addView(firstEdit, firstEditParam);
         lastFocusEdit = firstEdit;
     }
@@ -197,7 +200,7 @@ public class RichTextEditor extends ScrollView {
         imgCount--;
         if (imgCount == 0) //当没有图片的时候，显示写得好，有打赏
         {
-            firstEdit.setHint("请在此填写您对此项目的总体总结...");
+            firstEdit.setHint("请发表您对当前项目的看法，字数少于10000。");
         }
     }
 
@@ -209,7 +212,6 @@ public class RichTextEditor extends ScrollView {
         int lastEditIndex = allLayout.getChildCount();
         return lastEditIndex;
     }
-
     /**
      * 生成文本输入框
      */
@@ -385,5 +387,30 @@ public class RichTextEditor extends ScrollView {
             content.append("</div>");
         }
         return content.toString();
+    }
+    /**
+     * 生成控件中的数据
+     */
+    public static boolean isBlankEd(List<RichTextEditor.EditData> editList) {
+        if (editList.size() > 0) {
+            for (RichTextEditor.EditData itemData : editList) {
+                if (StringUtil.isNotBlank(replaceBlank(itemData.inputStr))) {
+                    return false;
+                }
+                if (StringUtil.isNotBlank(itemData.imagePath)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public static String replaceBlank(String str) {
+        String dest = "";
+        if (StringUtil.isNotBlank(str)) {
+            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+            Matcher m = p.matcher(str);
+            dest = m.replaceAll("");
+        }
+        return dest;
     }
 }

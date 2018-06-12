@@ -66,6 +66,8 @@ public class MineSetActivity extends BaseActivity {
     TextView tvUserDegree;
     @BindView(R.id.tv_mobile)
     TextView tvMobile;
+    @BindView(R.id.tv_user_find)
+    TextView tvUserFind;
     @BindView(R.id.tv_wechat)
     TextView tvWechat;
     @BindView(R.id.tv_email)
@@ -76,6 +78,7 @@ public class MineSetActivity extends BaseActivity {
     LinearLayout llMyHead;
     @BindView(R.id.tv_current_version)
     TextView tvCurrentVersion;
+    private int userCardStatus;
 
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
@@ -96,18 +99,23 @@ public class MineSetActivity extends BaseActivity {
     protected void initUI(Bundle savedInstanceState) {
         //接收对象
         UserLoginInfo.DataBean.UserBean infos = getIntent().getParcelableExtra(Constants.USER_INFOS);
-        GlideUtils.loadCircleUserUrl(this, ivHeadImg, Constants.BASE_IMG_URL + infos.getIcon());
-        tvUserName.setText(infos.getUserName());
+        GlideUtils.loadCircleUserUrl(this, ivHeadImg, Constants.BASE_IMG_URL + StringUtil.getBeanString(infos.getIcon()));
+        tvUserName.setText(StringUtil.getBeanString(infos.getUserName()));
         if (infos.getSex() == 1) {
             tvSex.setText("男");
         } else if (infos.getSex() == 2) {
             tvSex.setText("女");
         }
+        //userCardStatus
         tvCurrentVersion.setText("V "+StringUtil.getVersionCode());
-        tvAreaName.setText(infos.getAreaName());
-        tvMobile.setText(infos.getMobile());
-        tvUserDegree.setText(String.valueOf(infos.getUserDegree()));
-        tvUserSignature.setText(infos.getUserSignature());
+        tvAreaName.setText(StringUtil.getBeanString(infos.getAreaName()));
+        tvMobile.setText(StringUtil.getBeanString(infos.getMobile()));
+        //  "userType":1, //用户类型，数字，用户类型:1-普通用户；2-项目方；3-评测机构；4-机构用户
+        userCardStatus = infos.getUserType();
+        tvUserDegree.setText(StringUtil.getUserType(infos.getUserType()));
+        // 1  待审核  2   审核通过  3   未通过审核  4   未提交   身份验证  和账号验证的审核状态
+        tvUserFind.setText("");
+        tvUserSignature.setText(StringUtil.getBeanString(infos.getUserSignature()));
         if (StringUtil.isNotBlank(infos.getEmail())) {
             tvEmail.setText(infos.getEmail());
         }
@@ -131,6 +139,15 @@ public class MineSetActivity extends BaseActivity {
                 openChangeHeadDialog();
                 break;
             case R.id.ll_user_name:
+                if(userCardStatus!=1){
+                    DialogUtils.showDialogHint(this, "已认证用户无法修改",true, new DialogUtils.ErrorDialogInterface() {
+                        @Override
+                        public void btnConfirm() {
+
+                        }
+                    });
+                    return;
+                }
                 DialogUtils.showEditTextDialog(this, getString(R.string.set_my_name),
                         tvUserName.getText().toString().trim(), new DialogUtils.EditTextDialogInterface() {
                             @Override
@@ -165,7 +182,7 @@ public class MineSetActivity extends BaseActivity {
             case R.id.ll_reset_passwords:
                 break;
             case R.id.tv_esc_login:
-                DialogUtils.showDialogHint(this, "您确定要退出吗？", new DialogUtils.ErrorDialogInterface() {
+                DialogUtils.showDialogHint(this, "您确定要退出吗？",false, new DialogUtils.ErrorDialogInterface() {
                     @Override
                     public void btnConfirm() {
                         sharedUtils.clear();
@@ -266,7 +283,7 @@ public class MineSetActivity extends BaseActivity {
                 .url(Constants.UPLOAD_USER_ICON_FILE)
                 .addPart("token", token)
                 .addPart("uploadfile", getMimeType(file.getName()), file)
-                .addPart("imgtype", "1")
+                .addPart("imgtype", Constants.UPLOADIMG_TYPE.USER_ICON)
                 .build();
         loadingDialog.show();
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {

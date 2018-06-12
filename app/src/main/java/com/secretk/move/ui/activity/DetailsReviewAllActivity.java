@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,9 +32,10 @@ import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
-import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.PileLayout;
+import com.secretk.move.view.PopupWindowUtils;
 import com.secretk.move.view.ProgressBarStyleView;
+import com.secretk.move.view.ShareView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -96,6 +99,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
     private int projectId;
     private int praiseNum;
     private ProgressAdapter adapterProgress;
+    private String postShortDesc;
 
     @Override
     protected int setOnCreate() {
@@ -112,6 +116,11 @@ public class DetailsReviewAllActivity extends BaseActivity {
         return mHeadView;
     }
 
+    @Override
+    protected void OnToolbarRightListener() {
+        String str =  postShortDesc.substring(0, 10);
+        ShareView.showShare(Constants.EVALUATION_LITT+Integer.valueOf(postId),tvPostTitle.getText().toString(),str);
+    }
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
@@ -163,6 +172,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
         mHeadView.setTitleVice("/" + StringUtil.getBeanString(evaluationDetail.getProjectChineseName()));
         GlideUtils.loadCircleProjectUrl(this,mHeadView.getImageView(), Constants.BASE_IMG_URL +
                 StringUtil.getBeanString(evaluationDetail.getProjectIcon()));
+        postShortDesc = evaluationDetail.getPostShortDesc();
         createUserId = evaluationDetail.getCreateUserId();
         projectId = evaluationDetail.getProjectId();
         tvPostTitle.setText(StringUtil.getBeanString(evaluationDetail.getPostTitle()));
@@ -328,6 +338,9 @@ public class DetailsReviewAllActivity extends BaseActivity {
                 if(!tvPraiseStatus.isSelected()){
                     return;
                 }
+                if(!NetUtil.isPraise(createUserId,baseUserId)){
+                    return;
+                }
                 tvPraiseStatus.setEnabled(false);
                 String str;
                 if (tvPraiseStatus.isSelected()) {
@@ -354,7 +367,10 @@ public class DetailsReviewAllActivity extends BaseActivity {
                         });
                 break;
             case R.id.tv_commendation_Num:
-                DialogUtils.showEditTextDialog(this, getString(R.string.sponsor_title), "", new DialogUtils.EditTextDialogInterface() {
+                if(!NetUtil.isSponsor(createUserId,baseUserId)){
+                    return;
+                }
+                PopupWindowUtils window = new PopupWindowUtils(this, new PopupWindowUtils.GiveDialogInterface() {
                     @Override
                     public void btnConfirm(String season) {
                         NetUtil.commendation(Integer.valueOf(postId), createUserId, Double.valueOf(season), projectId, new NetUtil.SaveCommendationImp() {
@@ -368,6 +384,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
                         });
                     }
                 });
+                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                window.showAtLocation(findViewById(R.id.head_app_server), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); // 设置layout在PopupWindow中显示的位置
                 break;
             case R.id.tv_comments_num:
                 Intent intent = new Intent(this, DetailsArticleCommentActivity.class);

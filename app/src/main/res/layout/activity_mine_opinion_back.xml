@@ -31,20 +31,14 @@
         android:orientation="vertical"
         android:padding="@dimen/dp_10">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="请输入不少于10个字的意见描述..."
-            android:textColor="@color/title_gray_aa"
-            android:textSize="@dimen/sp_14" />
-
         <EditText
             android:id="@+id/et_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="请输入不少于10个字的意见描述..."
             android:background="@null"
             android:gravity="top"
-            android:minLines="3"
+            android:minLines="5"
             android:textColor="@color/title_gray"
             android:textCursorDrawable="@drawable/shape_edit_cursor"
             android:textSize="@dimen/sp_14" />

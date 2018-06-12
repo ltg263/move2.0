@@ -111,7 +111,7 @@ public class MineAttentionFragment extends LazyFragment {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            node.put("followType", 2);
+            node.put("followType", 1);
             node.put("pageIndex", pageIndex++);
             node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
@@ -127,7 +127,7 @@ public class MineAttentionFragment extends LazyFragment {
             public void onCompleted(MineAttentionBean mainRecommendBean) {
                 MineAttentionBean.DataBean.MyFollowsBean follows = mainRecommendBean.getData().getMyFollows();
                 if (follows.getRows() == null || follows.getRows().size() == 0) {
-                    getActivity().findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+                    convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
                     refreshLayout.setVisibility(View.GONE);
                     return;
                 }

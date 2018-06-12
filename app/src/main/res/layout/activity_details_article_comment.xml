@@ -86,7 +86,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:padding="@dimen/dp_10"
-                        android:text="热门测评"
+                        android:text="热门评测"
                         android:textColor="@color/title_gray"
                         android:textSize="@dimen/sp_14" />
 
@@ -120,7 +120,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:padding="@dimen/dp_10"
-                        android:text="最新测评"
+                        android:text="最新评测"
                         android:textColor="@color/title_gray"
                         android:textSize="@dimen/sp_14" />
 

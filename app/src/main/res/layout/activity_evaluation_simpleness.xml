@@ -46,7 +46,6 @@
                 android:drawablePadding="@dimen/dp_3"
                 android:paddingHorizontal="@dimen/dp_8"
                 android:paddingVertical="@dimen/dp_3"
-                android:text="好看"
                 android:textColor="@color/title_gray"
                 android:textSize="@dimen/sp_14" />
         </LinearLayout>
@@ -75,12 +74,25 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_project_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_et"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/shape_verification_code_blue"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:textColor="#3b88f6"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_et"
             android:gravity="right"
+            android:maxLength="1000"
             android:padding="@dimen/dp_10"
-            android:text="* 300字以内"
+            android:text="* 1000字以内"
             android:textColor="@color/title_gray_aa"
             android:textSize="@dimen/dp_12" />
 

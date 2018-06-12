@@ -130,8 +130,6 @@ public class MineApproveSubmitiCertificateActivity extends BaseActivity {
             }
         });
     }
-
-    String ormAgain= "no";
     @OnClick({R.id.but_next, R.id.but_anew})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -139,12 +137,38 @@ public class MineApproveSubmitiCertificateActivity extends BaseActivity {
                 butAnew();
                 break;
             case R.id.but_anew://审核不通过 重新認證
-                ormAgain="yes";
-                llNotPass.setVisibility(View.GONE);
-                llNot.setVisibility(View.VISIBLE);
+                setFormAgain();
                 break;
         }
     }
+
+    private void setFormAgain() {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.CARD_TI_FORM_AGAIN)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        loadingDialog.show();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onCompleted(String str) {
+                llNotPass.setVisibility(View.GONE);
+                llNot.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFinish() {
+                loadingDialog.dismiss();
+            }
+        });
+    }
+
     private void butAnew() {
         String name = etUserName.getText().toString().toString();
         String number = etUserNumber.getText().toString().toString();
@@ -160,8 +184,8 @@ public class MineApproveSubmitiCertificateActivity extends BaseActivity {
             ToastUtils.getInstance().show(getResources().getString(R.string.mine_input_number_ok));
             return;
         }
-        String key[] = {"name", "number","isOrmAgain"};
-        String values[] = {name, number ,ormAgain};
+        String key[] = {"name", "number"};
+        String values[] = {name, number };
         IntentUtil.startActivity(MineApproveSubmitiPicActivity.class, key, values);
     }
 }

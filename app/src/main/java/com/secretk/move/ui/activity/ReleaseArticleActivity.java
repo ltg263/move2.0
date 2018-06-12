@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -25,9 +26,9 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.bean.PicBean;
-import com.secretk.move.bean.base.BaseRes;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.ReleaseArticleLabelAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -43,7 +44,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -53,15 +53,12 @@ import butterknife.OnClick;
 /*发表文章*/
 public class ReleaseArticleActivity extends AppCompatActivity implements ItemClickListener {
     InputMethodManager imm;
-    private List<String> picList;
 
     @BindView(R.id.recycler_horizontal)
     RecyclerView recycler_horizontal;
     @BindView(R.id.ed_title)
     EditText ed_title;
 
-    @BindView(R.id.ed_content)
-    EditText ed_content;
     ReleaseArticleLabelAdapter releaseArticleLabelAdapter;
     LinearLayoutManager layoutManager;
 
@@ -81,10 +78,10 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
     }
 
     private void init() {
+        MoveApplication.getContext().addActivity(this);
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.main_background), 0);
         imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
-        picList = new ArrayList<>();
         releaseArticleLabelAdapter = new ReleaseArticleLabelAdapter();
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -107,8 +104,9 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
             ToastUtils.getInstance().show("请输入标题");
             return;
         }
-        if (TextUtils.isEmpty(getEdContent())) {
-            ToastUtils.getInstance().show("请输入内容");
+        list = richtext_editor.buildEditData();
+        if (richtext_editor.isBlankEd(list)) {
+            ToastUtils.getInstance().show("文章内容不能为空");
             return;
         }
         if (getEdTitle().length() < 6) {
@@ -126,7 +124,6 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         postSmallImages = new JSONArray();
 
         loadingDialog.show();
-        list = richtext_editor.buildEditData();
         uploadImgFile(0, list.size());
     }
 
@@ -199,11 +196,17 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, BaseRes.class, new HttpCallBackImpl<BaseRes>() {
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
-            public void onCompleted(BaseRes str) {
-                ToastUtils.getInstance().show("发布文章成功");
-                finish();
+            public void onCompleted(String str) {
+                try {
+                    JSONObject object = new JSONObject(str);
+                    int postId = object.getJSONObject("data").getInt("postId");
+                    IntentUtil.startPublishSucceedActivity(String.valueOf(postId),
+                            "发表文章", getResources().getString(R.string.article_succeed),getResources().getString(R.string.not_go_look), Constants.PublishSucceed.ARTICLE);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
             @Override
             public void onFinish() {
@@ -311,7 +314,4 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         return ed_title.getText().toString().trim();
     }
 
-    public String getEdContent() {
-        return ed_content.getText().toString().trim();
-    }
 }

@@ -133,14 +133,14 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     @Override
     public void loadInfoSuccess(UserLoginInfo.DataBean.UserBean infos) {
         userInfos = infos;
-        GlideUtils.loadCircleUserUrl(getActivity(),ivHeadImg, Constants.BASE_IMG_URL+infos.getIcon());
+        GlideUtils.loadCircleUserUrl(getActivity(),ivHeadImg, Constants.BASE_IMG_URL+StringUtil.getBeanString(infos.getIcon()));
         LogUtil.w("img:"+Constants.BASE_IMG_URL+infos.getIcon());
 //        x.image().bind(ivHeadImg, Constants.BASE_IMG_URL+infos.getIcon(), mOptions);
-        tvUserName.setText(infos.getUserName());
+        tvUserName.setText(StringUtil.getBeanString(infos.getUserName()));
         //300 粉丝 •1568 赞
         String fansNum = String.valueOf(infos.getFansNum())+"  粉丝 • "+String.valueOf(infos.getPraiseNum())+" 赞";
         tvFansNum.setText(fansNum);
-        tvUserState.setText(infos.getUserSignature());
+        tvUserState.setText(StringUtil.getBeanString(infos.getUserSignature()));
         tvEvaluationMun.setText(String.valueOf(infos.getEvaluationNum()));
         tvDiscussMun.setText(String.valueOf(infos.getDiscussNum()));
         tvArticleMun.setText(String.valueOf(infos.getArticleNum()));
@@ -261,6 +261,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 sharedUtils.put(Constants.USER_INFOS,userInfo.getData().getUser().toString());
                 sharedUtils.put(Constants.USER_TYPE,userInfo.getData().getUser().getUserType());
                 sharedUtils.put(Constants.MOBILE,userInfo.getData().getUser().getMobile());
+                sharedUtils.put("userCardStatus",userInfo.getData().getUserCardStatus());
                 onFirstUserVisible();
             }
 

@@ -16,7 +16,7 @@
             android:id="@+id/tv_dimensionality_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="项目定位"
+            android:text="项目评分"
             android:textColor="@color/title_gray"
             android:textSize="@dimen/sp_14"
             android:textStyle="" />
@@ -86,7 +86,7 @@
             app:lineSpaceWidth="8dp"
             app:lineWidth="2dp"
             app:maxValue="10"
-            app:minValue="0"
+            app:minValue="1"
             app:perValue="0.1"
             app:rvLineColor="#aaaaaa"
             app:rvTextColor="#aaaaaa"

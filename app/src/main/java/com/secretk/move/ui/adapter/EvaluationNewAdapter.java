@@ -80,7 +80,7 @@ public class EvaluationNewAdapter extends RecyclerView.Adapter<EvaluationNewAdap
             EvaluationNewBean res = lists.get(position);
             float f = res.getScore();
             esv.setScore(f);
-            esv.setTvDimensionalityName(res.getModelName());
+            esv.setTvDimensionalityName(res.getModelName()+"/"+res.getModelWeight()+"%");
             esv.setEsvBackground(R.color.tzfx);
             esv.setSetSlide(false);
             esv.setCompileState(new EvaluationSliderView.Compile() {

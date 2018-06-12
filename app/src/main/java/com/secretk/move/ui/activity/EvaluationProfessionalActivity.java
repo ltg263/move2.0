@@ -19,13 +19,11 @@ import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.SysEvaluationModelBean;
 import com.secretk.move.ui.adapter.EvaluationTypeAdapter;
 import com.secretk.move.utils.GlideUtils;
-import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
-import com.secretk.move.view.Clickable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,20 +85,20 @@ public class EvaluationProfessionalActivity extends BaseActivity {
         GlideUtils.loadCircleProjectUrl(this,ivProjectIcon,Constants.BASE_IMG_URL+intent.getStringExtra("projectIcon"));
         projectName = intent.getStringExtra("projectName");
         projectPay = intent.getStringExtra("projectPay");
-        tvZwName.setText(projectName);
-        tvYwMane.setText("/"+projectPay);
+        tvZwName.setText("/"+projectName);
+        tvYwMane.setText(projectPay);
 
-        String tagAll = "经过科学筛选，系统提供以下几个评测纬度，可完整评测，" +
-                "也可部分评测；您也可以自己新建模型进行测评。"
-                + getResources().getString(R.string.evaluation_state);
-        String tagOnly[] = new String[1];
-        tagOnly[0] = getResources().getString(R.string.evaluation_state);
-        Clickable.getSpannableString(tagAll, tagOnly, textView, new Clickable.ClickListener() {
-            @Override
-            public void setOnClick(String name) {
-                ToastUtils.getInstance().show(name);
-            }
-        });
+//        String tagAll = "经过科学筛选，系统提供以下几个评测纬度，可完整评测，" +
+//                "也可部分评测；您也可以自己新建模型进行测评。       "
+//                + getResources().getString(R.string.evaluation_state);
+//        String tagOnly[] = new String[1];
+//        tagOnly[0] = getResources().getString(R.string.evaluation_state);
+//        Clickable.getSpannableString(tagAll, tagOnly, textView, new Clickable.ClickListener() {
+//            @Override
+//            public void setOnClick(String name) {
+//                ToastUtils.getInstance().show(name);
+//            }
+//        });
     }
 
     @Override
@@ -144,11 +142,14 @@ public class EvaluationProfessionalActivity extends BaseActivity {
         finish();
     }
 
-    @OnClick({R.id.ll_project, R.id.btn_new, R.id.btn_compile})
+    @OnClick({R.id.ll_project, R.id.btn_new, R.id.btn_compile,R.id.tv_html})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_project:
-                IntentUtil.startProjectActivity(projectId);
+//                IntentUtil.startProjectActivity(projectId);
+                break;
+            case R.id.tv_html:
+                ToastUtils.getInstance().show("跳转到H5");
                 break;
             case R.id.btn_new:
                 Intent intents = new Intent(this,EvaluationNewActivity.class);

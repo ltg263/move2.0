@@ -42,6 +42,8 @@ public class EvaluationSimplenessActivity extends BaseActivity {
     EvaluationSliderView esViewa;
     @BindView(R.id.tv_evaluation_state)
     TextView tvEvaluationState;
+    @BindView(R.id.tv_project_code)
+    TextView tvProjectCode;
     @BindView(R.id.et_evaluation_content)
     EditText etEvaluationContent;
     String projectId;
@@ -51,7 +53,6 @@ public class EvaluationSimplenessActivity extends BaseActivity {
         mHeadView = findViewById(R.id.head_app_server);
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitleColor(R.color.title_gray);
-        mHeadView.setTitle(getString(R.string.evaluation_simpleness));
         mMenuInfos.add(0, new MenuInfo(R.string.evaluation_professional, getString(R.string.evaluation_professional), 0));
         return mHeadView;
     }
@@ -63,11 +64,12 @@ public class EvaluationSimplenessActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-
+        mHeadView.setTitle(getIntent().getStringExtra("projectPay")+"-"+getString(R.string.evaluation_simpleness));
         projectId = getIntent().getStringExtra("projectId");
-        esViewa.setScore(4.5f);
+        esViewa.setScore(8.0f);
         esViewa.setEsvBackground(R.color.app_background);
-        tvEvaluationState.setText(StringUtil.getStateValueStr(4.5f));
+        tvEvaluationState.setText(StringUtil.getStateValueStr(8.0f));
+        tvProjectCode.setText(getIntent().getStringExtra("projectPay"));
     }
 
     public void setTvEvaluationState(String value) {
@@ -134,7 +136,8 @@ public class EvaluationSimplenessActivity extends BaseActivity {
                     JSONObject object = new JSONObject(str);
                     int postId = object.getJSONObject("data").getInt("postId");
                     IntentUtil.startPublishSucceedActivity(String.valueOf(postId),
-                            getString(R.string.evaluation_simpleness), getResources().getString(R.string.evaluation_succeed), Constants.PublishSucceed.EVALUATION);
+                            getString(R.string.evaluation_simpleness), getResources().getString(R.string.evaluation_succeed),
+                            getResources().getString(R.string.not_go_look) ,Constants.PublishSucceed.EVALUATION);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -118,7 +118,6 @@
                                 android:id="@+id/tv_user_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="小霸王"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/sp_15"
                                 android:textStyle="bold" />
@@ -140,7 +139,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginVertical="@dimen/dp_10"
-                            android:text="300 粉丝 •1568 赞"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_12" />
 
@@ -148,7 +146,6 @@
                             android:id="@+id/tv_user_state"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="区块链创业者,早期投资人"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_12" />
 
@@ -194,7 +191,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
-                        android:text="测评"
+                        android:text="评测"
                         android:textColor="@color/title_gray_aa"
                         android:textSize="@dimen/sp_12" />
                 </RelativeLayout>
@@ -221,7 +218,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
-                        android:text="讨论"
+                        android:text="打假"
                         android:textColor="@color/title_gray_aa"
                         android:textSize="@dimen/sp_12" />
                 </RelativeLayout>
@@ -268,9 +265,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="KFF余额"
+                    android:text="FIND余额"
                     android:textColor="@color/title_gray_88"
-                    android:textSize="@dimen/sp_12" />
+                    android:textSize="@dimen/sp_14" />
 
                 <TextView
                     android:id="@+id/tv_balance"
@@ -280,7 +277,7 @@
                     android:layout_weight="1"
                     android:text="0"
                     android:textColor="@color/title_gray_88"
-                    android:textSize="@dimen/sp_12"
+                    android:textSize="@dimen/sp_14"
                     android:textStyle="bold" />
 
                 <TextView
@@ -391,7 +388,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dp_10"
-                    android:text="邀请一人得100KFF"
+                    android:text="邀请好友奖励FIND"
                     android:textColor="#fc514f"
                     android:textSize="@dimen/sp_12" />
 

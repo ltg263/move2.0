@@ -24,8 +24,8 @@ public class MineAttentionAdapter extends RecyclerView.Adapter<MineAttentionHold
     private List<MineAttentionBean.DataBean.MyFollowsBean.RowsBean> list = new ArrayList<>();
     private ItemClickListener mListener;
 
-    private int type;
     private Context context;
+
     public MineAttentionAdapter(Context context) {
         this.context = context;
     }
@@ -44,8 +44,7 @@ public class MineAttentionAdapter extends RecyclerView.Adapter<MineAttentionHold
     @Override
     public void onBindViewHolder(MineAttentionHolder holder, int position) {
         holder.setItemListener(mListener);
-        holder.refresh(position, list.get(position),context);
-        holder.setAdapterType(type);
+        holder.refresh(list.get(position), context);
 
     }
 
@@ -61,7 +60,8 @@ public class MineAttentionAdapter extends RecyclerView.Adapter<MineAttentionHold
         this.list = list;
         notifyDataSetChanged();
     }
-    public List<MineAttentionBean.DataBean.MyFollowsBean.RowsBean> getData(){
+
+    public List<MineAttentionBean.DataBean.MyFollowsBean.RowsBean> getData() {
         return list;
     }
 

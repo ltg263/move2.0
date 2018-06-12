@@ -10,7 +10,6 @@ import android.util.LongSparseArray;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
 import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
@@ -55,8 +54,6 @@ import butterknife.OnClick;
 public class EvaluationWriteActivity extends BaseActivity  implements ItemClickListener {
     InputMethodManager imm;
     private List<String> picList;
-    @BindView(R.id.rv_post_small_images)
-    RecyclerView rvPostSmallImages;
     //    ReleasePicAdapter releasePicAdapter;
     @BindView(R.id.rv_evaluation_tags)
     RecyclerView rvEvaluationTags;
@@ -64,8 +61,6 @@ public class EvaluationWriteActivity extends BaseActivity  implements ItemClickL
     ProgressBarStyleView pbProjectLocation;
     ReleaseArticleLabelAdapter releaseArticleLabelAdapter;
     LinearLayoutManager layoutManager;
-    @BindView(R.id.et_evaluation_content)
-    EditText etEvaluationContent;
     @BindView(R.id.richtext_editor)
     RichTextEditor etNewContent;
 
@@ -117,10 +112,12 @@ public class EvaluationWriteActivity extends BaseActivity  implements ItemClickL
 
     @Override
     protected void OnToolbarRightListener() {
-//        if (StringUtil.isBlank(etNewContent)) {
-//            ToastUtils.getInstance().show("评测内容不能为空");
-//            return;
-//        }
+        list = etNewContent.buildEditData();
+        if (etNewContent.isBlankEd(list)) {
+            ToastUtils.getInstance().show("评测内容不能为空");
+            return;
+        }
+
         if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
@@ -245,9 +242,7 @@ public class EvaluationWriteActivity extends BaseActivity  implements ItemClickL
 
     public void setPostSmallImages() {
         postSmallImages = new JSONArray();
-
         loadingDialog.show();
-        list = etNewContent.buildEditData();
         uploadImgFile(0, list.size());
     }
 
@@ -340,7 +335,7 @@ public class EvaluationWriteActivity extends BaseActivity  implements ItemClickL
                     JSONObject object = new JSONObject(str);
                     int postId = object.getJSONObject("data").getInt("postId");
                     IntentUtil.startPublishSucceedActivity(String.valueOf(postId),
-                            postTitle, getResources().getString(R.string.evaluation_succeed), Constants.PublishSucceed.EVALUATION);
+                            postTitle, getResources().getString(R.string.evaluation_succeed),getResources().getString(R.string.not_go_look), Constants.PublishSucceed.EVALUATION);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

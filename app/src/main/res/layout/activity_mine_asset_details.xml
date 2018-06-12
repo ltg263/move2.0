@@ -71,7 +71,6 @@
                             android:id="@+id/tv_total_assets"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1333.21"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_37" />
                     </LinearLayout>

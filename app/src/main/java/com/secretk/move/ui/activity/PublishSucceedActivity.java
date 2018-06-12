@@ -50,7 +50,7 @@ public class PublishSucceedActivity extends BaseActivity {
         rlTopTheme.setVisibility(View.VISIBLE);
         tvName.setText(getIntent().getStringExtra(Constants.PublishSucceed.SUBMIT_TEXT));
         mHeadView.setTitle(getIntent().getStringExtra(Constants.PublishSucceed.SUBMIT_TITLE));
-        tvSubmit.setText("去看看");
+        tvSubmit.setText(getIntent().getStringExtra(Constants.PublishSucceed.PUBLISH_BTN_TEXT));
     }
 
     @Override
@@ -73,11 +73,26 @@ public class PublishSucceedActivity extends BaseActivity {
                 IntentUtil.go2DetailsByType(1,postId);
                 MoveApplication.getContext().finishAllActivity();
                 break;
+            case Constants.PublishSucceed.DISCUSS://评测
+                IntentUtil.go2DetailsByType(2,postId);
+                MoveApplication.getContext().finishAllActivity();
+                break;
+            case Constants.PublishSucceed.ARTICLE://评测
+                IntentUtil.go2DetailsByType(3,postId);
+                MoveApplication.getContext().finishAllActivity();
+                break;
+            case Constants.PublishSucceed.PUBLISH_PROJECT://评测
+                IntentUtil.startActivity(MainActivity.class);
+                break;
         }
     }
 
     @Override
     public void onBackPressed() {
+        if(publishType.equals(Constants.PublishSucceed.PUBLISH_PROJECT)){
+            IntentUtil.startActivity(MainActivity.class);
+            return;
+        }
         MoveApplication.getContext().finishAllActivity();
         super.onBackPressed();
     }

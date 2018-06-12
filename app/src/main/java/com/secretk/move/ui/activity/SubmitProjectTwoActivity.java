@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -44,18 +42,11 @@ public class SubmitProjectTwoActivity extends BaseActivity {
     EditText etInput01;
     @BindView(R.id.tv_sort_name)
     TextView tvSortName;
+    @BindView(R.id.tv_length)
+    TextView tvLength;
     @BindView(R.id.et_contact)
     EditText etContact;
-    @BindView(R.id.tv_name)
-    TextView tvName;
-    @BindView(R.id.tv_submit)
-    TextView tvSubmit;
-    @BindView(R.id.rl_top_theme)
-    RelativeLayout rlTopTheme;
-    @BindView(R.id.ll)
-    LinearLayout ll;
     private Intent data;
-    private boolean isAlter = false;
     List<ProjectTypeListBean.DataBean.ProjectTypesBean> projectTypes;
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
@@ -75,6 +66,18 @@ public class SubmitProjectTwoActivity extends BaseActivity {
     @Override
     protected void initUI(Bundle savedInstanceState) {
         data = getIntent();
+
+        StringUtil.etSearchChangedListener(etContact, null, new StringUtil.EtChange() {
+            @Override
+            public void etYes() {
+                tvLength.setText(etContact.getText().toString().length()+"/3000");
+            }
+
+            @Override
+            public void etNo() {
+                tvLength.setText("0/3000");
+            }
+        });
     }
 
     @Override
@@ -106,9 +109,6 @@ public class SubmitProjectTwoActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        if(isAlter){
-            return;
-        }
         if (StringUtil.isBlank(etInput01.getText().toString().trim())
                 || StringUtil.isBlank(etContact.getText().toString().trim())
                 || getString(R.string.submit_project_66).equals(tvSortName.getText().toString())) {
@@ -144,12 +144,9 @@ public class SubmitProjectTwoActivity extends BaseActivity {
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
-                isAlter=true;
-                findViewById(R.id.submit_ok).setVisibility(View.VISIBLE);
-                rlTopTheme.setVisibility(View.VISIBLE);
-                ll.setVisibility(View.GONE);
-                tvName.setText(getResources().getString(R.string.submit_project_jg));
-                tvSubmit.setText(getResources().getString(R.string.submit_project_back));
+                IntentUtil.startPublishSucceedActivity(String.valueOf(0),
+                        getString(R.string.submit_project_title), getResources().getString(R.string.submit_project_jg),
+                        getResources().getString(R.string.not_go_look),Constants.PublishSucceed.PUBLISH_PROJECT);
             }
 
             @Override
@@ -159,12 +156,9 @@ public class SubmitProjectTwoActivity extends BaseActivity {
         });
     }
     int postion=-1;
-    @OnClick({R.id.tv_submit, R.id.ll_sort_name})
+    @OnClick({R.id.ll_sort_name})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tv_submit:
-                IntentUtil.startActivity(MainActivity.class);
-                break;
             case R.id.ll_sort_name:
                 if(projectTypes!=null && projectTypes.size()>0){
                     DialogUtils.showListView(this, projectTypes, new DialogUtils.ListDialogInterface() {
@@ -179,14 +173,5 @@ public class SubmitProjectTwoActivity extends BaseActivity {
                 }
                 break;
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if(isAlter){
-            IntentUtil.startActivity(MainActivity.class);
-           return;
-        }
-        super.onBackPressed();
     }
 }
