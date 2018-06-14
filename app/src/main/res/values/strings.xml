@@ -40,10 +40,10 @@
     <!--用户 @ 项目 界面-->
     <string name="intro">简介</string>
     <string name="review">评测</string>
-    <string name="discuss">打假讨论</string>
+    <string name="discuss">打假</string>
     <string name="article">文章</string>
     <string name="assessment_agenc">评测机构</string>
-    <string name="answer">回答</string>
+    <string name="answer">内容</string>
     <string name="like">赞</string>
     <string name="fan">粉丝</string>
     <string name="my_home_page">我的主页</string>
@@ -72,6 +72,7 @@
     <string name="project_schedule">项目进度</string>
     <string name="speculative_risk">投资风险</string>
     <string name="assessment">精选评测</string>
+    <string name="assessment_new">最新评测</string>
     <string name="crack_down">打假</string>
     <string name="project_was_assessed">评测了项目</string>
 
@@ -227,11 +228,13 @@
     <string name="submit_project_77">是</string>
     <string name="submit_project_777">否</string>
     <string name="submit_project_two_1">白皮书地址</string>
+    <string name="submit_project_two_4">一句话简介</string>
+    <string name="submit_project_two_44">请控制在20字以内</string>
     <string name="submit_project_two_11">请填写地址</string>
     <string name="submit_project_two_2">项目分类</string>
     <string name="submit_project_two_3">请在此填写项目描述...</string>
     <string name="submit_project_two_33">0/3000</string>
-    <string name="submit_project_jg">项目已提交请耐心等待审核！</string>
+    <string name="submit_project_jg">项目已提交，请耐心等待审核结果！</string>
     <string name="submit_project_back">回首页</string>
     <!--空-->
     <string name="not_message">什么消息都木有～</string>
@@ -240,6 +243,7 @@
     <string name="not_currency">什么币种都木有～</string>
     <string name="not_attention">你还没关注过别人～</string>
     <string name="not_refresh">刷一刷</string>
+    <string name="go_login">立即登陆</string>
     <string name="not_go_look">去看看</string>
     <string name="evaluation_succeed">评测发布成功！</string>
     <string name="article_succeed">文章发布成功！</string>

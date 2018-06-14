@@ -11,6 +11,7 @@ import com.secretk.move.contract.ActivityMainContract;
 import com.secretk.move.customview.TabViewpager;
 import com.secretk.move.presenter.impl.MainPresenterImpl;
 import com.secretk.move.ui.adapter.MainActivityPagerAdapter;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.UiUtils;
 
@@ -90,7 +91,11 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
         });
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogUtil.w("--------------------------------------------------");
+    }
 
     @Override
     public void showDialog(final VersionBean.DataBean str, final boolean force) {

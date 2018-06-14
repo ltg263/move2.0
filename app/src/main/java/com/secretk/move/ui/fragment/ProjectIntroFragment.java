@@ -3,6 +3,7 @@ package com.secretk.move.ui.fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,7 +22,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * 作者： litongge
@@ -59,7 +59,8 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
     TextView tvUserSignature;
     @BindView(R.id.rv_active_users)
     RecyclerView rvActiveUsers;
-    Unbinder unbinder;
+    @BindView(R.id.ll_active_user)
+    LinearLayout llActiveUser;
     private ProjectIntroAdapter adapter;
     private int submitUserId;
     private List<ProjectHomeBean.DataBean.ProjectBean.ActiveUsersBean> activeUsers;
@@ -93,7 +94,10 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
             tvProjectTypeName.setText(projectIntro.getProjectTypeName());
             tvWhitepaperUrl.setText(projectIntro.getWhitepaperUrl());
             activeUsers = projectIntro.getActiveUsers();
-            adapter.setData(activeUsers);
+            if(activeUsers!=null && activeUsers.size()>0){
+                llActiveUser.setVisibility(View.VISIBLE);
+                adapter.setData(activeUsers);
+            }
             ProjectHomeBean.DataBean.ProjectBean.OwnerBean owner = projectIntro.getOwner();
             if (owner != null) {
                 GlideUtils.loadCircleUserUrl(getActivity(),ivIcon, Constants.BASE_IMG_URL + owner.getIcon());
@@ -123,7 +127,7 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
 
     }
 
-    @OnClick({R.id.tv_follow_status, R.id.rl_station_agent})
+    @OnClick({R.id.tv_follow_status, R.id.rl_station_agent,R.id.tv_website_url})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_follow_status:
@@ -141,6 +145,11 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
                 break;
             case R.id.rl_station_agent:
                 IntentUtil.startHomeActivity(submitUserId);
+                break;
+            case R.id.tv_website_url:
+                if(StringUtil.isNotBlank(tvWebsiteUrl.getText().toString().trim())){
+                    IntentUtil.startWebViewActivity(tvWebsiteUrl.getText().toString().trim(),"官网");
+                }
                 break;
         }
     }

@@ -82,15 +82,16 @@ public class MineAssetDetailsAdapter extends RecyclerView.Adapter<MineAssetDetai
             MineAssetDetailsBean.DataBean.MyTokenBillBean.RowsBean str = lists.get(position);
             double asset = str.getTradeType();
             //交易类型:1-收入；2-支出
-            if (asset==2) {//正数
+            if (asset==2) {
                 tvAssetNum.setTextColor(context.getResources().getColor(R.color.zdmx));
+                tvAssetNum.setText("-"+StringUtil.getBeanString(String.valueOf(str.getAmount())));
             } else {
                 tvAssetNum.setTextColor(context.getResources().getColor(R.color.app_background));
+                tvAssetNum.setText(StringUtil.getBeanString(String.valueOf(str.getAmount())));
             }
             tvAssetName.setText(StringUtil.getBeanString(str.getFunctionDesc()));
             tvAssetTime.setText(StringUtil.getBeanString(str.getCreateTimeStr()));
 //            tvAssetTime.setText(StringUtil.getTimeToM(str.getCreateTime()));
-            tvAssetNum.setText(StringUtil.getBeanString(String.valueOf(str.getAmount())));
         }
     }
 }

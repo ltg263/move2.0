@@ -58,6 +58,8 @@ public class HomeActivity extends BaseActivity {
     ImageView ivHead;
     @BindView(R.id.tv_user_name)
     TextView tvUserName;
+    @BindView(R.id.iv_model_type)
+    ImageView ivModelType;
     @BindView(R.id.tv_evaluating_sign)
     TextView tvEvaluatingSign;
     @BindView(R.id.tv_save_follow)
@@ -171,7 +173,11 @@ public class HomeActivity extends BaseActivity {
                 tvUserName.setText(userData.getUserName());
                 tvIndividualResume.setText(userData.getUserSignature());
                 //"userType": 1,// 用户类型:1-普通用户；2-项目方；3-评测机构；4-机构用户
-                tvEvaluatingSign.setText(StringUtil.getUserType(userData.getUserType()));
+                if(userData.getUserType()!=1){
+                    tvEvaluatingSign.setVisibility(View.VISIBLE);
+                    ivModelType.setVisibility(View.VISIBLE);
+                    tvEvaluatingSign.setText(StringUtil.getUserType(userData.getUserType(),ivModelType));
+                }
                 //“showFollow”: 0 , //是否显示 关注按钮 0- 不显示；1-显示关注  2-显示取消关注
                 if(userData.getShowFollow()==1){
                     tvSaveFollow.setSelected(false);

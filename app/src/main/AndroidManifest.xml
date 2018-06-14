@@ -89,6 +89,9 @@
             android:name=".ui.activity.LoginActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.MessageDesActivity"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.RegisterActivity"
             android:theme="@style/AppEditTextStyle" />
         <activity

@@ -99,7 +99,34 @@
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/right_boult" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="@dimen/unify_interval_padding">
 
+            <TextView
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/submit_project_two_4"
+                android:textColor="@color/title_gray_88"
+                android:textSize="@dimen/sp_14" />
+
+            <EditText
+                android:id="@+id/et_input_02"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/submit_project_two_44"
+                android:textColor="@color/title_gray"
+                android:textColorHint="@color/title_gray_88"
+                android:textCursorDrawable="@drawable/shape_edit_cursor"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

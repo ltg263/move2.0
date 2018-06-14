@@ -146,7 +146,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
                 .url(Constants.UPLOAD_USER_ICON_FILE)
                 .addPart("token", token)
                 .addPart("uploadfile ", StringUtil.getMimeType(file.getName()), file)
-                .addPart(Constants.UPLOADIMG_TYPE.IMG_TYPE_KEY, Constants.UPLOADIMG_TYPE.PROJECT_ICON)
+                .addPart(Constants.UPLOADIMG_TYPE.IMG_TYPE_KEY, Constants.UPLOADIMG_TYPE.POST_ICON)
                 .build();
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override

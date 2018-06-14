@@ -13,7 +13,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.secretk.move.MoveApplication;
+import com.secretk.move.R;
 import com.secretk.move.baseManager.BaseManager;
 
 import org.jsoup.Jsoup;
@@ -454,22 +457,31 @@ public class StringUtil {
      *  //用户类型，数字，用户类型:
      *  1-普通用户；
      *  2-项目方；
-     *  3-评测机构；4-机构用户
+     *  3-评测媒体；4-机构
      * @return
      */
-    public static String getUserType(int userType){
+    public static String getUserType(int userType, ImageView ivModelType){
         String ut="";
         switch (userType){
             case 1:
                 ut="普通用户";
                 break;
             case 2:
+                if(ivModelType!=null){
+                    GlideUtils.loadUrlDd(MoveApplication.getContext(),ivModelType, R.drawable.ic_model_type_xm);
+                }
                 ut="项目方";
                 break;
             case 3:
-                ut="评测机构";
+                if(ivModelType!=null){
+                    GlideUtils.loadUrlDd(MoveApplication.getContext(),ivModelType, R.drawable.ic_model_type_mt);
+                }
+                ut="评测媒体";
                 break;
             case 4:
+                if(ivModelType!=null){
+                    GlideUtils.loadUrlDd(MoveApplication.getContext(),ivModelType, R.drawable.ic_model_type_jg);
+                }
                 ut="机构用户";
                 break;
         }

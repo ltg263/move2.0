@@ -44,6 +44,7 @@
                 android:layout_gravity="center_vertical"
                 android:background="@null"
                 android:hint="@string/ytf_site"
+                android:digits="@string/text_password"
                 android:textColor="@color/title_gray"
                 android:textColorHint="@color/title_gray_66"
                 android:textCursorDrawable="@drawable/shape_edit_cursor"

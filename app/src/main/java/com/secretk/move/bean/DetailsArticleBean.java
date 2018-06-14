@@ -87,6 +87,7 @@ public class DetailsArticleBean extends BaseRes{
              */
 
             private int articleId;
+            private int userType;
             private int postId;
             private int followStatus;
             private String articleContents;
@@ -116,6 +117,14 @@ public class DetailsArticleBean extends BaseRes{
             private long updateTime;
             private String updateTimeStr;
             private List<CommendationListBean> commendationList;
+
+            public int getUserType() {
+                return userType;
+            }
+
+            public void setUserType(int userType) {
+                this.userType = userType;
+            }
 
             public void setCommendationNum(double commendationNum) {
                 this.commendationNum = commendationNum;

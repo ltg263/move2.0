@@ -49,7 +49,7 @@ public class MineAssetBindingActivity extends BaseActivity {
 //        wallet","walletType
         String key = getIntent().getStringExtra("walletType");
         String wallet = getIntent().getStringExtra("wallet");
-        if (key.equals("1")) {
+        if (StringUtil.isNotBlank(key) && key.equals("1")) {
             setZj(wallet);
         }
     }

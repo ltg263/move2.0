@@ -144,7 +144,7 @@ public class MineCheckDetailsActivity extends BaseActivity {
                             StringUtil.getBeanString(String.valueOf(wallet.get(0).getWalletType()))};
                     IntentUtil.startActivity(MineAssetBindingActivity.class, key, values);
                 }else{
-                    ToastUtils.getInstance().show("数据错误");
+                    IntentUtil.startActivity(MineAssetBindingActivity.class);
                 }
                 break;
             case R.id.tv_extract:

@@ -75,21 +75,31 @@
                                         android:id="@+id/tv_user_name"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:text="姓名"
                                         android:textColor="@color/title_gray"
-                                        android:textSize="@dimen/dp_20"
-                                        android:textStyle="bold" />
+                                        android:textSize="@dimen/sp_18" />
+
+                                    <ImageView
+                                        android:id="@+id/iv_model_type"
+                                        android:layout_width="@dimen/dp_18"
+                                        android:layout_height="@dimen/dp_18"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="@dimen/dp_5"
+                                        android:layout_toRightOf="@id/tv_user_name"
+                                        android:visibility="gone" />
 
                                     <TextView
                                         android:id="@+id/tv_evaluating_sign"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
-                                        android:layout_marginLeft="@dimen/dp_10"
-                                        android:paddingHorizontal="@dimen/dp_5"
-                                        android:layout_toRightOf="@id/tv_user_name"
+                                        android:layout_marginLeft="@dimen/dp_5"
+                                        android:layout_toRightOf="@id/iv_model_type"
                                         android:background="@drawable/garden_crack"
+                                        android:paddingHorizontal="@dimen/dp_5"
                                         android:textColor="@color/colorAccent"
-                                        android:textSize="@dimen/sp_12" />
+                                        android:textSize="@dimen/sp_12"
+                                        android:visibility="gone" />
 
                                     <TextView
                                         android:id="@+id/tv_save_follow"
@@ -221,12 +231,6 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/cut_off_rule" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/dp_10"
                     android:background="@color/cut_off_rule" />
 
                 <android.support.v4.view.ViewPager

@@ -241,6 +241,18 @@
                         app:tabPaddingBottom="@dimen/dp_5"
                         app:tabSelectedTextColor="@color/app_background"
                         app:tabTextColor="#aeaeae" />
+                    <!--<android.support.design.widget.TabLayout
+                        android:id="@+id/tabs"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/main_background"
+                        android:fillViewport="false"
+                        app:tabSelectedTextColor="@color/app_background"
+                        app:tabTextColor="#aeaeae"
+                        app:tabIndicatorColor="@color/app_background"
+                        app:tabTextAppearance="@style/TabLayoutTextStyle"
+                        app:tabMode="scrollable"/>-->
 
                     <View
                         android:layout_width="match_parent"
@@ -251,6 +263,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_line"
                         android:layout_marginTop="@dimen/dp_10"
+                        android:visibility="gone"
                         android:background="@color/cut_off_rule" />
 
                     <android.support.v4.view.ViewPager

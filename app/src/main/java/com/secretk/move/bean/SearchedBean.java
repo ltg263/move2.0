@@ -30,6 +30,14 @@ public class SearchedBean  extends BaseRes {
 
     }
     public class Projects{
+        public int getTotalScore() {
+            return totalScore;
+        }
+
+        public void setTotalScore(int totalScore) {
+            this.totalScore = totalScore;
+        }
+
         public int getFollowStatus() {
             return followStatus;
         }
@@ -102,6 +110,7 @@ public class SearchedBean  extends BaseRes {
   String projectChineseName;
   String projectSignature;
   int followerNum;
+  int totalScore;
 
     }
 }

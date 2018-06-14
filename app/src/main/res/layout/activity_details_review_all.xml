@@ -105,8 +105,18 @@
                             android:layout_alignTop="@+id/iv_create_user_icon"
                             android:layout_marginLeft="@dimen/dp_10"
                             android:layout_toRightOf="@+id/iv_create_user_icon"
+                            android:text="@string/evaluation"
                             android:textColor="#333333"
                             android:textSize="@dimen/sp_16" />
+
+                        <ImageView
+                            android:id="@+id/iv_model_icon"
+                            android:layout_width="@dimen/dp_16"
+                            android:layout_height="@dimen/dp_16"
+                            android:layout_alignBottom="@id/tv_create_user_name"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:visibility="gone"
+                            android:layout_toRightOf="@+id/tv_create_user_name" />
 
                         <TextView
                             android:id="@+id/tv_create_user_signature"
@@ -156,7 +166,7 @@
                             android:layout_marginHorizontal="@dimen/dp_10"
                             android:background="@color/background_gray"
                             android:padding="@dimen/dp_10"
-                            android:text="这个项目非常值得投资，但是涨幅不会超过十倍，还是有很大风险的，打假要注意防范。"
+                            android:text="以上内容仅作为作者个人观点，不代表本平台投资建议。"
                             android:textColor="@color/title_gray_66"
                             android:visibility="visible" />
 
@@ -216,7 +226,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
-                            android:textColor="@color/title_gray_66"
+                            android:textColor="#c2c2c2"
                             android:textSize="@dimen/sp_12" />
 
                     </LinearLayout>

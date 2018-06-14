@@ -44,9 +44,8 @@
             android:layout_above="@+id/view_center"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_toRightOf="@id/iv_icon"
-            android:text="EOS/柚子"
             android:textColor="@color/title_gray"
-            android:textSize="16sp" />
+            android:textSize="@dimen/sp_14" />
 
         <TextView
             android:id="@+id/tv_user_signature"
@@ -55,9 +54,8 @@
             android:layout_below="@+id/view_center"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_toRightOf="@id/iv_icon"
-            android:text="新上线"
-            android:textColor="#888888"
-            android:textSize="12sp" />
+            android:textColor="@color/title_gray_88"
+            android:textSize="@dimen/sp_10" />
     </RelativeLayout>
 
     <TextView

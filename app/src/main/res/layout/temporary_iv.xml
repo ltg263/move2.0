@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#212047"
+    android:background="@color/background_gray"
     android:orientation="vertical">
 
     <com.secretk.move.view.AppBarHeadView
@@ -11,9 +11,44 @@
         android:layout_height="wrap_content"
         android:background="#f9f9f9" />
 
-    <ImageView
-        android:id="@+id/iv"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_above="@id/tv_bnt"
+            android:background="@color/white"
+            android:layout_marginHorizontal="@dimen/dp_35">
+
+            <ImageView
+                android:id="@+id/iv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/activity_splash_backgroud" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_bnt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="@dimen/dp_35"
+            android:layout_marginVertical="@dimen/dp_20"
+            android:background="@drawable/btn_max_selected_radius"
+            android:gravity="center"
+            android:padding="@dimen/dp_10"
+            android:text="保存图片"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12" />
+
+    </RelativeLayout>
 
 </LinearLayout>

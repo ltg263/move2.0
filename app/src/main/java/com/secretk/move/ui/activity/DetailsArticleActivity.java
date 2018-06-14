@@ -1,6 +1,5 @@
 package com.secretk.move.ui.activity;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +32,7 @@ import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.PileLayout;
 import com.secretk.move.view.PopupWindowUtils;
+import com.secretk.move.view.ShareView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -71,6 +71,8 @@ public class DetailsArticleActivity extends BaseActivity {
     TextView tvCreateTime;
     @BindView(R.id.pile_layout)
     PileLayout pileLayout;
+    @BindView(R.id.iv_model_icon)
+    ImageView ivModelIcon;
     @BindView(R.id.tv_donate_num)
     TextView tvDonateNum;
     @BindView(R.id.tv_praise_status)
@@ -88,6 +90,7 @@ public class DetailsArticleActivity extends BaseActivity {
     private int createUserId;
     private int projectId;
     private int praiseNum;
+    String postShortDesc="";
 
     @Override
     protected int setOnCreate() {
@@ -103,6 +106,10 @@ public class DetailsArticleActivity extends BaseActivity {
         return mHeadView;
     }
 
+    @Override
+    protected void OnToolbarRightListener() {
+        ShareView.showShare(Constants.ARTICLE_SHARE+Integer.valueOf(postId),tvPostTitle.getText().toString(),postShortDesc);
+    }
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
@@ -117,10 +124,12 @@ public class DetailsArticleActivity extends BaseActivity {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
             webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
+        loadingDialog.show();
     }
 
     protected void initData() {
         if(!NetUtil.isNetworkAvailable()){
+            loadingDialog.dismiss();
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
         }
@@ -136,7 +145,6 @@ public class DetailsArticleActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        loadingDialog.show();
         RetrofitUtil.request(params, DetailsArticleBean.class, new HttpCallBackImpl<DetailsArticleBean>() {
             @Override
             public void onCompleted(DetailsArticleBean bean) {
@@ -161,9 +169,14 @@ public class DetailsArticleActivity extends BaseActivity {
         mHeadView.setToolbarListener(initData.getProjectId());
         projectId = initData.getProjectId();
         tvPostTitle.setText(StringUtil.getBeanString(initData.getPostTitle()));
+        postShortDesc = initData.getPostShortDesc();
         GlideUtils.loadCircleUserUrl(this,ivCreateUserIcon, Constants.BASE_IMG_URL + initData.getCreateUserIcon());
         tvCreateUserName.setText(StringUtil.getBeanString(initData.getCreateUserName()));
         tvCreateUserSignature.setText(StringUtil.getBeanString(initData.getCreateUserSignature()));
+        if(initData.getUserType()!=1){
+            ivModelIcon.setVisibility(View.VISIBLE);
+            StringUtil.getUserType(initData.getUserType(),ivModelIcon);
+        }
         createUserId = initData.getCreateUserId();
         //,//"0 未关注；1-已关注；2-不显示关注按钮"\
         if(initData.getFollowStatus()==1){
@@ -182,7 +195,7 @@ public class DetailsArticleActivity extends BaseActivity {
 //        wvPostShortDesc.loadData(StringUtil.getNewContent(StringUtil.getBeanString(initData.getArticleContents())), "text/html; charset=UTF-8", null);//这种写法可以正确解码
         wvPostShortDesc.loadData(initData.getArticleContents(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
         tvProjectCode.setText(StringUtil.getBeanString(initData.getProjectCode()));
-        tvCreateTime.setText(StringUtil.getTimeToM(initData.getCreateTime()));
+        tvCreateTime.setText("编辑于 "+StringUtil.getTimeToM(initData.getCreateTime()));
         tvDonateNum.setText(initData.getDonateNum() + getString(R.string.sponsor_num));
         praiseNum = initData.getPraiseNum();
         tvPraiseStatus.setText(getString(R.string.like) + String.valueOf(praiseNum));
@@ -229,11 +242,18 @@ public class DetailsArticleActivity extends BaseActivity {
      * @param pileLists
      */
     public void initPraises(List<DetailsArticleBean.DataBean.ArticleDetailBean.CommendationListBean> pileLists) {
-        LayoutInflater inflater = LayoutInflater.from(this);
+        LayoutInflater nflater = LayoutInflater.from(this);
+        if(pileLayout!=null){
+            pileLayout.removeAllViews();
+        }
+        List<String> lists = new ArrayList<>();
         for (int i = 0; i < pileLists.size() && i<7; i++) {
-            ImageView imageView = (ImageView) inflater.inflate(R.layout.item_praise, pileLayout, false);
-            GlideUtils.loadCircleUserUrl(this,imageView, Constants.BASE_IMG_URL + pileLists.get(i).getSendUserIcon());
-            pileLayout.addView(imageView);
+            if(!lists.contains(String.valueOf(pileLists.get(i).getReceiveUserId()))){
+                ImageView imageView = (ImageView) nflater.inflate(R.layout.item_praise, pileLayout, false);
+                GlideUtils.loadCircleUserUrl(this,imageView, Constants.BASE_IMG_URL + pileLists.get(i).getSendUserIcon());
+                pileLayout.addView(imageView);
+            }
+            lists.add(String.valueOf(pileLists.get(i).getReceiveUserId()));
         }
     }
 
@@ -301,8 +321,9 @@ public class DetailsArticleActivity extends BaseActivity {
                             @Override
                             public void finishCommendation(String commendationNum, String donateNum, boolean status) {
                                 if (status) {
-                                    tvCommendationNum.setText(getString(R.string.sponsor) + commendationNum);
-                                    tvDonateNum.setText(donateNum + getString(R.string.sponsor_num));
+//                                    tvCommendationNum.setText(getString(R.string.sponsor) + commendationNum);
+//                                    tvDonateNum.setText(donateNum + getString(R.string.sponsor_num));
+                                    initData();
                                 }
                             }
                         });
@@ -312,10 +333,8 @@ public class DetailsArticleActivity extends BaseActivity {
                 window.showAtLocation(findViewById(R.id.head_app_server), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); // 设置layout在PopupWindow中显示的位置
                 break;
             case R.id.tv_comments_num:
-                Intent intent = new Intent(this,DetailsArticleCommentActivity.class);
-                intent.putExtra("postId",String.valueOf(postId));
-                intent.putExtra("url",Constants.ARTICLE_COMMENT_LIST);
-                startActivity(intent);
+                IntentUtil.startCommentActivity(String.valueOf(postId),Constants.ARTICLE_COMMENT_LIST,
+                        Constants.ARTICLE_SHARE+Integer.valueOf(postId),tvPostTitle.getText().toString(),postShortDesc);
                 break;
         }
     }

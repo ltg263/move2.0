@@ -88,11 +88,41 @@ public class TimeToolUtils {
 
     /**
      * 将一个时间戳转换成提示性时间字符串，如刚刚，1秒前
-     *
-     * @param timeStamp
+     *  若是当天，则显示时间12:00，若是其他时间（当年），月/日；其他年份，年/月/日
+     * @param
      * @return
      */
     public static String convertTimeToFormat(long timeStamp) {
+        long curTime = System.currentTimeMillis() / 1000L;
+        long time = curTime - timeStamp;
+        if (time < 60 && time >= 0) {
+            return "刚刚";
+        } else if (time >= 60 && time < 3600) {
+            return time / 60 + "分钟前";
+        } else if (time >= 3600 && time < 3600 * 24) {
+            return time / 3600 + "小时前";
+        } else if (time >= 3600 * 24 && time < 3600 * 24 * 30) {
+            return time / 3600 / 24 + "天前";
+        } else if (time >= 3600 * 24 * 30 && time < 3600 * 24 * 30 * 12) {
+            return time / 3600 / 24 / 30 + "个月前";
+        } else if (time >= 3600 * 24 * 30 * 12) {
+            return time / 3600 / 24 / 30 / 12 + "年前";
+        } else {
+            return "刚刚";
+        }
+//        int year = getYear(period);
+//        int month = getMonth(period - year * yearLevelValue);
+//        int day = getDay(period - year * yearLevelValue - month * monthLevelValue);
+//        int hour = getHour(period - year * yearLevelValue - month * monthLevelValue - day * dayLevelValue);
+//        return
+    }
+
+    /**
+     * 将一个时间戳转换成提示性时间字符串，如刚刚，1秒前
+     * @param timeStamp
+     * @return
+     */
+    public static String convertTimeToFormatA(long timeStamp) {
         long curTime = System.currentTimeMillis() / 1000L;
         long time = curTime - timeStamp;
         if (time < 60 && time >= 0) {

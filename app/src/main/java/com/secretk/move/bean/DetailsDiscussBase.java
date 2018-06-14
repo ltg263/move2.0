@@ -75,7 +75,7 @@ public class DetailsDiscussBase extends BaseRes{
              * updateTimeStr : 2018-05-06 23:08:20
              * hotComments : [{"praiseStatus":0,"childCommentsNum":1,"childCommentsList":[{"praiseStatus":0,"childCommentsNum":0,"childCommentsList":null,"commentsId":3,"commentUserId":24,"commentUserIcon":"/upload/avatars/avatar.png","commentUserName":"用户24","commentContent":"怎么能随便评论呢？","projectId":1,"postId":4,"postType":2,"praiseNum":29,"parentCommentsId":1,"becommentedUserId":3,"becommentedUserName":"UVHaV6BJo","becommentedUserIcon":"/upload/avatars/avatar.png","createTime":1525835712000,"createTimeStr":"2018-05-09 11:15:12","updateTime":1525835714000,"updateTimeStr":"2018-05-09 11:15:14","status":1}],"commentsId":1,"commentUserId":14,"commentUserIcon":"/upload/avatars/avatar.png","commentUserName":"试试","commentContent":"随便评论一下","projectId":1,"postId":4,"postType":2,"praiseNum":1000,"parentCommentsId":null,"becommentedUserId":3,"becommentedUserName":"UVHaV6BJo","becommentedUserIcon":"/upload/avatars/avatar.png","createTime":1525835525000,"createTimeStr":"2018-05-09 11:12:05","updateTime":1525835528000,"updateTimeStr":"2018-05-09 11:12:08","status":1},{"praiseStatus":0,"childCommentsNum":0,"childCommentsList":null,"commentsId":2,"commentUserId":25,"commentUserIcon":"/upload/avatars/avatar.png","commentUserName":"@杭州","commentContent":"我也来评论一下啊","projectId":1,"postId":4,"postType":2,"praiseNum":300,"parentCommentsId":null,"becommentedUserId":3,"becommentedUserName":"UVHaV6BJo","becommentedUserIcon":"/upload/avatars/avatar.png","createTime":1525835610000,"createTimeStr":"2018-05-09 11:13:30","updateTime":1525835613000,"updateTimeStr":"2018-05-09 11:13:33","status":1}]
              */
-
+            private int userType;
             private int discussId;
             private int postId;
             private String disscussContents;
@@ -107,6 +107,14 @@ public class DetailsDiscussBase extends BaseRes{
             private long updateTime;
             private String updateTimeStr;
             private List<CommonCommentsBean> hotComments;
+
+            public int getUserType() {
+                return userType;
+            }
+
+            public void setUserType(int userType) {
+                this.userType = userType;
+            }
 
             public int getDiscussId() {
                 return discussId;

@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/btn_circle_2dp"
         android:drawablePadding="@dimen/dp_3"
-        android:drawableRight="@drawable/right_boult"
+        android:drawableRight="@drawable/ic_right_green"
         android:paddingHorizontal="@dimen/dp_8"
         android:paddingVertical="@dimen/dp_3"
         android:text="@string/evaluation"

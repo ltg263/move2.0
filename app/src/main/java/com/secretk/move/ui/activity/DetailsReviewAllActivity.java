@@ -1,6 +1,5 @@
 package com.secretk.move.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -90,6 +89,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
     TextView tvCommendationNum;
     @BindView(R.id.tv_comments_num)
     TextView tvCommentsNum;
+    @BindView(R.id.iv_model_icon)
+    ImageView ivModelIcon;
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
     @BindView(R.id.wv_post_short_desc)
@@ -100,6 +101,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
     private int praiseNum;
     private ProgressAdapter adapterProgress;
     private String postShortDesc;
+    private String shareUrl;
 
     @Override
     protected int setOnCreate() {
@@ -110,7 +112,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
         mHeadView = findViewById(R.id.head_app_server);
         mHeadView.setHeadBackShow(true);
-        mHeadView.setToolbarListener(0);
+        mHeadView.setToolbarListener(projectId);
         mHeadView.setTitleColor(R.color.title_gray);
         mMenuInfos.add(0, new MenuInfo(R.string.share, "分享", R.drawable.ic_share));
         return mHeadView;
@@ -118,8 +120,9 @@ public class DetailsReviewAllActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        String str =  postShortDesc.substring(0, 10);
-        ShareView.showShare(Constants.EVALUATION_LITT+Integer.valueOf(postId),tvPostTitle.getText().toString(),str);
+//        String str =  postShortDesc.substring(0, 10);
+//        1对应为值为“简单评测", 2 为 "ALL-专业评测" 3 为 "PART-专业评测" 4 为 "ALL-专业评测
+        ShareView.showShare(shareUrl,tvPostTitle.getText().toString(),postShortDesc);
     }
 
     @Override
@@ -132,10 +135,12 @@ public class DetailsReviewAllActivity extends BaseActivity {
         adapter = new ImagesAdapter(this);
         rvImg.setAdapter(adapter);
         wvPostShortDesc.getSettings().setDefaultTextEncodingName("UTF-8");//设置默认为utf-8
+        loadingDialog.show();
     }
 
     protected void initData() {
         if (!NetUtil.isNetworkAvailable()) {
+            loadingDialog.dismiss();
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
         }
@@ -151,7 +156,6 @@ public class DetailsReviewAllActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        loadingDialog.show();
         RetrofitUtil.request(params, DetailsReviewBean.class, new HttpCallBackImpl<DetailsReviewBean>() {
             @Override
             public void onCompleted(DetailsReviewBean bean) {
@@ -170,6 +174,13 @@ public class DetailsReviewAllActivity extends BaseActivity {
     private void initUiData(DetailsReviewBean.DataBean.EvaluationDetailBean evaluationDetail){
         mHeadView.setTitle(StringUtil.getBeanString(evaluationDetail.getProjectCode()));
         mHeadView.setTitleVice("/" + StringUtil.getBeanString(evaluationDetail.getProjectChineseName()));
+        //        1对应为值为“简单评测", 2 为 "ALL-专业评测" 3 为 "PART-专业评测" 4 为 "ALL-专业评测
+        if(evaluationDetail.getModelType()==3){
+            shareUrl=Constants.EVALUATION_PART_SHARE+Integer.valueOf(postId);
+        }else{
+            shareUrl=Constants.EVALUATION_SHARE+Integer.valueOf(postId);
+        }
+
         GlideUtils.loadCircleProjectUrl(this,mHeadView.getImageView(), Constants.BASE_IMG_URL +
                 StringUtil.getBeanString(evaluationDetail.getProjectIcon()));
         postShortDesc = evaluationDetail.getPostShortDesc();
@@ -180,6 +191,10 @@ public class DetailsReviewAllActivity extends BaseActivity {
         GlideUtils.loadCircleUserUrl(this,ivCreateUserIcon,
                 Constants.BASE_IMG_URL + StringUtil.getBeanString(evaluationDetail.getCreateUserIcon()));
         tvCreateUserName.setText(StringUtil.getBeanString(evaluationDetail.getCreateUserName()));
+        if(evaluationDetail.getUserType()!=1){
+            ivModelIcon.setVisibility(View.VISIBLE);
+            StringUtil.getUserType(evaluationDetail.getUserType(),ivModelIcon);
+        }
         tvCreateUserSignature.setText(StringUtil.getBeanString(evaluationDetail.getCreateUserSignature()));
         //,//"0 未关注；1-已关注；2-不显示关注按钮"\
         if (evaluationDetail.getFollowStatus() == 0) {
@@ -195,7 +210,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
             tvFollowStatus.setVisibility(View.GONE);
         }
         wvPostShortDesc.loadData(evaluationDetail.getEvauationContent(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
-        tvCreateTime.setText(StringUtil.getTimeToM(evaluationDetail.getCreateTime()));
+        tvCreateTime.setText("编辑于 "+StringUtil.getTimeToM(evaluationDetail.getCreateTime()));
         if(evaluationDetail.getDonateNum()>0){
             tvDonateNum.setText(evaluationDetail.getDonateNum() + getString(R.string.sponsor_num));
         }
@@ -287,14 +302,20 @@ public class DetailsReviewAllActivity extends BaseActivity {
      * @param pileLists
      */
     public void initPraises(List<DetailsReviewBean.DataBean.EvaluationDetailBean.CommendationListBean> pileLists) {
-        LayoutInflater inflater = LayoutInflater.from(this);
-        for (int i = 0; i < pileLists.size(); i++) {
-            ImageView imageView = (ImageView) inflater.inflate(R.layout.item_praise, pileLayout, false);
-            GlideUtils.loadCircleUserUrl(this,imageView, Constants.BASE_IMG_URL + pileLists.get(i).getSendUserIcon());
-            pileLayout.addView(imageView);
+        LayoutInflater nflater = LayoutInflater.from(this);
+        if(pileLayout!=null){
+            pileLayout.removeAllViews();
+        }
+        List<String> lists = new ArrayList<>();
+        for (int i = 0; i < pileLists.size() && i<7; i++) {
+            if(!lists.contains(String.valueOf(pileLists.get(i).getReceiveUserId()))){
+                ImageView imageView = (ImageView) nflater.inflate(R.layout.item_praise, pileLayout, false);
+                GlideUtils.loadCircleUserUrl(this,imageView, Constants.BASE_IMG_URL + pileLists.get(i).getSendUserIcon());
+                pileLayout.addView(imageView);
+            }
+            lists.add(String.valueOf(pileLists.get(i).getReceiveUserId()));
         }
     }
-
     /**
      * 设置评分进度
      *
@@ -377,8 +398,9 @@ public class DetailsReviewAllActivity extends BaseActivity {
                             @Override
                             public void finishCommendation(String commendationNum, String donateNum, boolean status) {
                                 if (status) {
-                                    tvCommendationNum.setText(getString(R.string.sponsor) + commendationNum);
-                                    tvDonateNum.setText(donateNum + getString(R.string.sponsor_num));
+//                                    tvCommendationNum.setText(getString(R.string.sponsor) + commendationNum);
+//                                    tvDonateNum.setText(donateNum + getString(R.string.sponsor_num));
+                                    initData();
                                 }
                             }
                         });
@@ -388,10 +410,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
                 window.showAtLocation(findViewById(R.id.head_app_server), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); // 设置layout在PopupWindow中显示的位置
                 break;
             case R.id.tv_comments_num:
-                Intent intent = new Intent(this, DetailsArticleCommentActivity.class);
-                intent.putExtra("postId", String.valueOf(postId));
-                intent.putExtra("url", Constants.EVLUATION_COMMENT_LIST);
-                startActivity(intent);
+                IntentUtil.startCommentActivity(String.valueOf(postId),Constants.ARTICLE_COMMENT_LIST,
+                        shareUrl,tvPostTitle.getText().toString(),postShortDesc);
                 break;
         }
     }

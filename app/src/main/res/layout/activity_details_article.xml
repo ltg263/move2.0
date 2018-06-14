@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/background_gray"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
@@ -59,12 +59,13 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dp_10"
                         android:textColor="@color/title_gray"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/sp_22" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_line"
                         android:background="@color/cut_off_rule" />
+
                     <RelativeLayout
                         android:id="@+id/rl_ge_ren"
                         android:layout_width="match_parent"
@@ -87,6 +88,15 @@
                             android:layout_toRightOf="@+id/iv_create_user_icon"
                             android:textColor="#333333"
                             android:textSize="@dimen/sp_16" />
+
+                        <ImageView
+                            android:id="@+id/iv_model_icon"
+                            android:layout_width="@dimen/dp_16"
+                            android:layout_height="@dimen/dp_16"
+                            android:layout_alignBottom="@id/tv_create_user_name"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_toRightOf="@+id/tv_create_user_name"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/tv_create_user_signature"
@@ -130,8 +140,9 @@
                             android:layout_alignParentBottom="true"
                             android:layout_margin="@dimen/dp_2"
                             android:textColor="#7e7d7e"
-                            android:visibility="gone"
-                            android:textSize="@dimen/sp_12" />
+                            android:textSize="@dimen/sp_12"
+                            android:visibility="gone" />
+
                         <WebView
                             android:id="@+id/wv_post_short_desc"
                             android:layout_width="match_parent"
@@ -139,10 +150,10 @@
                             tools:ignore="WebViewLayout" />
                     </LinearLayout>
 
-                    <View
+                    <!--<View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_line"
-                        android:background="@color/cut_off_rule" />
+                        android:background="@color/cut_off_rule" />-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -168,7 +179,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="right"
-                            android:textColor="@color/title_gray_66"
+                            android:textColor="#c2c2c2"
                             android:textSize="@dimen/sp_12" />
 
                     </LinearLayout>

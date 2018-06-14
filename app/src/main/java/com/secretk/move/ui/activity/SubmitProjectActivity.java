@@ -75,7 +75,7 @@ public class SubmitProjectActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-        tvSelectedNo.setSelected(true);
+        tvSelectedYes.setSelected(true);
     }
 
     @Override

@@ -49,4 +49,9 @@
     <dimen name="login_password_length">16</dimen>
 
     <dimen name="unify_interval_padding">10dp</dimen>
+
+
+    <dimen name="item_line_spacing">8dp</dimen>
+    <dimen name="item_img_max">187dp</dimen>
+    <dimen name="item_img_mix">107dp</dimen>
 </resources>

@@ -2,6 +2,8 @@ package com.secretk.move.ui.fragment;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.secretk.move.R;
@@ -33,6 +35,8 @@ import butterknife.BindView;
 public class HomeReviewFragment extends LazyFragment{
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
+    @BindView(R.id.iv_not_content)
+    ImageView ivNotContent;
     private HomeListAdapter adapter;
     int pageIndex = 1;//
     public Boolean isHaveData = true;//是否还有数据
@@ -90,6 +94,8 @@ public class HomeReviewFragment extends LazyFragment{
                 if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
                     return;
                 }
+                ivNotContent.setVisibility(View.GONE);
+                rvReview.setVisibility(View.VISIBLE);
                 if(pageIndex>2){
                     adapter.setAddData(detailsBean.getRows());
                 }else {

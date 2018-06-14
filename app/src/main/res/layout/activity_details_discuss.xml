@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dp_10"
                         android:textColor="@color/title_gray"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/sp_22" />
 
                     <View
                         android:layout_width="match_parent"
@@ -89,7 +89,14 @@
                             android:layout_toRightOf="@+id/iv_create_user_icon"
                             android:textColor="#333333"
                             android:textSize="@dimen/sp_16" />
-
+                        <ImageView
+                            android:id="@+id/iv_model_icon"
+                            android:layout_width="@dimen/dp_16"
+                            android:layout_height="@dimen/dp_16"
+                            android:layout_alignBottom="@id/tv_create_user_name"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:visibility="gone"
+                            android:layout_toRightOf="@+id/tv_create_user_name" />
                         <TextView
                             android:id="@+id/tv_create_user_signature"
                             android:layout_width="wrap_content"
@@ -328,33 +335,40 @@
                 android:background="@color/cut_off_rule" />
 
             <RelativeLayout
+                android:id="@+id/rl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:paddingHorizontal="@dimen/dp_10"
-                android:paddingTop="@dimen/dp_10">
+                android:padding="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_5">
 
                 <EditText
-                    android:id="@+id/et_comment_content"
+                    android:id="@+id/et_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/but_login"
-                    android:background="#f4f4f4"
+                    android:layout_toStartOf="@+id/tv_send"
+                    android:background="@drawable/et_circle_bj"
+                    android:drawableLeft="@drawable/ic_leave"
+                    android:drawablePadding="@dimen/dp_5"
                     android:hint="留下你的评论..."
                     android:padding="@dimen/dp_10"
                     android:textColor="@color/title_gray"
-                    android:textColorHint="#aaaaaa" />
+                    android:textColorHint="@color/title_gray_aa"
+                    android:textSize="@dimen/sp_16" />
 
-                <Button
-                    android:id="@+id/but_login"
-                    android:layout_width="100dp"
+                <TextView
+                    android:id="@+id/tv_send"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_10"
-                    android:background="@drawable/selector_login_bnt"
+                    android:background="@drawable/btn_max_selected_radius"
+                    android:paddingHorizontal="@dimen/dp_16"
+                    android:paddingVertical="@dimen/dp_10"
                     android:text="发送"
-                    android:textColor="@drawable/selector_login_text"
-                    android:textSize="@dimen/sp_18" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16" />
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>

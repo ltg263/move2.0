@@ -13,8 +13,10 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MessageBean;
+import com.secretk.move.ui.activity.MessageDesActivity;
 import com.secretk.move.ui.adapter.MessageFragmentRecyclerAdapter;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -51,14 +53,15 @@ public class MessageFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
+
     public void refresh(final Context context, final int position, final List<MessageBean.DataBean.MessagesBean.RowsBean> lists,
-                        final MessageFragmentRecyclerAdapter adapter){
+                        final MessageFragmentRecyclerAdapter adapter) {
         MessageBean.DataBean.MessagesBean.RowsBean currenBean = lists.get(position);
-        GlideUtils.loadCircleUserUrl(context,img, Constants.BASE_IMG_URL+currenBean.getSenderUserIcon());
+        GlideUtils.loadCircleUserUrl(context, img, Constants.BASE_IMG_URL + currenBean.getSenderUserIcon());
         // 阅读状态 ，数字，状态：1-未读；2-已读
-        if(currenBean.getState()==1){
+        if (currenBean.getState() == 1) {
             ivState.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             ivState.setVisibility(View.GONE);
         }
         tvName.setText(currenBean.getTitle());
@@ -66,7 +69,7 @@ public class MessageFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteMessage(lists.get(position).getMessageId(),context);
+                deleteMessage(lists.get(position).getMessageId(), context);
                 lists.remove(position);
                 adapter.notifyDataSetChanged();
             }
@@ -74,13 +77,13 @@ public class MessageFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         llDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                detaliMessage(lists.get(position).getMessageId(),context);
+                detaliMessage(lists.get(position).getMessageId(), context);
             }
         });
     }
 
     private void detaliMessage(int messageId, Context context) {
-        if(!NetUtil.isNetworkAvailable()){
+        if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(context.getString(R.string.network_error));
             return;
         }
@@ -97,10 +100,13 @@ public class MessageFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, MessageBean.class, new HttpCallBackImpl<MessageBean>() {
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
-            public void onCompleted(MessageBean str) {
-
+            public void onCompleted(String str) {
+                ivState.setVisibility(View.GONE);
+                String[] key = {"message"};
+                String[] values = {str};
+                IntentUtil.startActivity(MessageDesActivity.class, key, values);
             }
 
             @Override
@@ -109,8 +115,9 @@ public class MessageFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             }
         });
     }
+
     private void deleteMessage(int messageId, Context context) {
-        if(!NetUtil.isNetworkAvailable()){
+        if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(context.getString(R.string.network_error));
             return;
         }

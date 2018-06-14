@@ -3,6 +3,8 @@ package com.secretk.move.ui.fragment;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +43,10 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     TextView tvRowCount;
     @BindView(R.id.tv_sort)
     TextView tvSort;
+    @BindView(R.id.ll_have_data)
+    LinearLayout llHaveData;
+    @BindView(R.id.iv_not_content)
+    ImageView ivNotContent;
 
     private ProjectRecommendAdapter adapter;
     public boolean isHaveData = true;
@@ -62,14 +68,14 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
             @Override
             public void onClick(View view) {
                 String sort = tvSort.getText().toString();
-                if(sort.equals(getString(R.string.sort_love))){
+                if (sort.equals(getString(R.string.sort_love))) {
                     tvSort.setText(getString(R.string.sort_time));
-                }else{
+                } else {
                     tvSort.setText(getString(R.string.sort_love));
                 }
-                pageIndex=1;
+                pageIndex = 1;
                 loadingDialog.show();
-                getLoadData(null,getString(R.string.sort_time));
+                getLoadData(null, getString(R.string.sort_time));
             }
         });
     }
@@ -77,7 +83,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     @Override
     public void onFirstUserVisible() {
         loadingDialog.show();
-        getLoadData(null,"");
+        getLoadData(null, "");
     }
 
 
@@ -94,21 +100,21 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        projectId = ((ProjectActivity)context).getProjectId();
-        loadingDialog = ((ProjectActivity)context).getloadingDialog();
+        projectId = ((ProjectActivity) context).getProjectId();
+        loadingDialog = ((ProjectActivity) context).getloadingDialog();
     }
 
     /**
      * @param refreshlayout
-     * @param sort:排毒方式  空时间   否则赞
+     * @param sort:排毒方式     空时间   否则赞
      */
-    public void getLoadData(final RefreshLayout refreshlayout,String sort) {
+    public void getLoadData(final RefreshLayout refreshlayout, String sort) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
             node.put("projectId", Integer.valueOf(projectId));
             node.put("pageIndex", pageIndex++);
-            if(sort.equals(getString(R.string.sort_love))){
+            if (sort.equals(getString(R.string.sort_love))) {
                 node.put("praiseNum", pageIndex++);//按点赞数排序，需要传值 "praiseNum"
             }
             node.put("pageSize", Constants.PAGE_SIZE);
@@ -124,23 +130,25 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
             @Override
             public void onCompleted(CommonListBase bean) {
                 CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getArticles();
-                if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
-                    isHaveData=false;
+                if (detailsBean.getPageSize() == detailsBean.getCurPageNum()) {
+                    isHaveData = false;
                 }
-                if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
+                if (detailsBean.getRows() == null || detailsBean.getRows().size() == 0) {
                     return;
                 }
-                tvRowCount.setText("共"+detailsBean.getRowCount()+"篇文章");
-                if(pageIndex>2){
+                llHaveData.setVisibility(View.VISIBLE);
+                ivNotContent.setVisibility(View.GONE);
+                tvRowCount.setText("共" + detailsBean.getRowCount() + "篇文章");
+                if (pageIndex > 2) {
                     adapter.setAddData(detailsBean.getRows());
-                }else {
+                } else {
                     adapter.setData(detailsBean.getRows());
                 }
             }
 
             @Override
             public void onFinish() {
-                if(refreshlayout!=null){
+                if (refreshlayout != null) {
                     refreshlayout.finishLoadmore();
                 }
                 loadingDialog.dismiss();

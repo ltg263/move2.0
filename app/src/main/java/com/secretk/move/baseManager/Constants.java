@@ -94,7 +94,8 @@ public interface Constants {
      * 外网图片
      */
     String BASE_URL = "http://app.qufen.top/rest/";
-    String BASE_IMG_URL = "http://app.qufen.top/";
+//    String BASE_IMG_URL = "http://app.qufen.top/";
+    String BASE_IMG_URL = "";
     /**
      * song外网
      * 外网图片
@@ -113,7 +114,7 @@ public interface Constants {
      * 张栋栋 图片
      */
 //    String BASE_URL = "http://192.168.10.151:809/";
-//    String BASE_IMG_URL = "http://192.168.10.151:8080/";
+////    String BASE_IMG_URL = "http://192.168.10.151:8080/";
     /**
      * 王晗
      */
@@ -123,28 +124,40 @@ public interface Constants {
      * 罗艳清
      */
 //    String BASE_URL = "http://192.168.10.199:8080/rest/";
+//    String BASE_IMG_URL = "";
 //    String BASE_IMG_URL = "http://192.168.10.199:8080/";
     /**
      * 关于我们
       */
-    String HELP = "http://192.168.10.196:5000/mine/help";
+    String HELP = BASE_URL+"mine/help";
     /**
      * 注册协议
       */
-    String AGREEMENT = "http://196.168.10.101:5000/user/agreement";
+    String AGREEMENT = BASE_URL+"user/agreement";
     /**
-     * 注册协议
+     * 评测分享
       */
-    String EVALUATION_LITT = "http://192.168.10.101:5000/project/evaluationLitt?id=";
+    String EVALUATION_SHARE= BASE_URL+"project/articleInfo?id=";
     /**
-     * 注册协议
+     * 评测部分分享
       */
-    String articleInfo = "http://196.168.10.101:5000/project/articleInfo?id=";
+    String EVALUATION_PART_SHARE = BASE_URL+"project/evaluationLitt?id=";
+    /**
+     * 文章分享
+      */
+    String ARTICLE_SHARE = BASE_URL+"project/article?id=";
+    /**
+     * 打假分享
+      */
+    String DISCUSS_SHARE= BASE_URL+"project/discuss?id=";
+    /**
+     * 评测模型说明
+      */
+    String MODEL = BASE_URL+"user/model";
     /**
      * 注册协议
       */
 //    String EVALUATION_LITT = "http://app.qufen.top/article";
-
     //发送验证码通用接口
 //    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/send";
     ////发送验证码通用接口 阿里云 modue ：login   register    forgetPassword
@@ -173,7 +186,7 @@ public interface Constants {
     //首页推荐
     String MAIN_RECOMMEND = BASE_URL + "kff/home/recommendList";
     //首页关注
-    String MAIN_FOLLOW = BASE_URL + " kff/home/followList";
+    String MAIN_FOLLOW = BASE_URL + "kff/home/followList";
     //青天榜
     String MAIN_BLUE_SKY = BASE_URL + "kff/home/projectRankList";
 

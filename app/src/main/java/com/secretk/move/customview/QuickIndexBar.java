@@ -6,22 +6,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.secretk.move.MoveApplication;
-import com.secretk.move.R;
-import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.SearchedBean;
-import com.secretk.move.utils.UiUtils;
+import com.secretk.move.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -94,6 +86,7 @@ public class QuickIndexBar extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        LogUtil.w("---------------------------------------------------");
         if (list==null)
             return;
         for (int i = 0; i < list.size(); i++) {

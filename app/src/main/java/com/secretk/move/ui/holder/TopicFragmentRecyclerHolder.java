@@ -21,6 +21,7 @@ import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PatternUtils;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.utils.StringUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,6 +49,8 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     public TextView tvFollws;
     @BindView(R.id.tvIsFollw)
     public TextView tvIsFollw;
+    @BindView(R.id.tv_total_score)
+    public TextView tvTotalScore;
     String token = SharedUtils.singleton().get("token", "");
     public TopicFragmentRecyclerHolder(View itemView) {
         super(itemView);
@@ -56,9 +59,15 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     //1-按关注数量倒序；2-按名称排序
     public void setData(List<SearchedBean.Projects> list, int position, int type, Context context){
         final SearchedBean.Projects currenBean= list.get(position);
-        GlideUtils.loadCircleProjectUrl(context,img, Constants.BASE_IMG_URL + currenBean.getProjectIcon());
-        tvCode.setText(currenBean.getProjectCode()+"/");
-        tvName.setText(currenBean.getProjectChineseName());
+        GlideUtils.loadCircleProjectUrl(context,img, Constants.BASE_IMG_URL + StringUtil.getBeanString(currenBean.getProjectIcon()));
+        tvCode.setText(StringUtil.getBeanString(currenBean.getProjectCode())+"/");
+        tvName.setText(StringUtil.getBeanString(currenBean.getProjectChineseName()));
+        if(currenBean.getTotalScore()!=0){
+            tvTotalScore.setVisibility(View.VISIBLE);
+            tvTotalScore.setText(String.valueOf(currenBean.getTotalScore()));
+        }else{
+            tvTotalScore.setVisibility(View.GONE);
+        }
         switch (type){
             case Constants.TOPIC_SORT_BY_NUM:
                 sortByNum();

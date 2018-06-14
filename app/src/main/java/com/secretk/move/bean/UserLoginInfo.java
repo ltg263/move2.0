@@ -38,10 +38,27 @@ public class UserLoginInfo extends BaseRes{
         private String token;
         private UserBean user;
 
-        private int userCardStatus;
-
+        private int userCardStatus;// 1  待审核  2   审核通过  3   未通过审核  4   未提交   身份验证  和账号验证的审核状态
+        private int statusHierarchyType;
+        private String statusHierarchyDesc;
         public int getUserCardStatus() {
             return userCardStatus;
+        }
+
+        public void setStatusHierarchyDesc(String statusHierarchyDesc) {
+            this.statusHierarchyDesc = statusHierarchyDesc;
+        }
+
+        public String getStatusHierarchyDesc() {
+            return statusHierarchyDesc;
+        }
+
+        public void setStatusHierarchyType(int statusHierarchyType) {
+            this.statusHierarchyType = statusHierarchyType;
+        }
+
+        public int getStatusHierarchyType() {
+            return statusHierarchyType;
         }
 
         public void setUserCardStatus(int userCardStatus) {

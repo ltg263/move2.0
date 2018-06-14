@@ -89,16 +89,25 @@ public class MineApproveSubmitiCertificateActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
+        loadingDialog.show();
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onFinish() {
+                loadingDialog.dismiss();
+            }
+
             @Override
             public void onCompleted(String str) {
                 try {
                     JSONObject obj = new JSONObject(str);
                     JSONObject data = obj.getJSONObject("data");
                     int praiseNum = data.getInt("status");
-                    //praiseNum 1 审核成功 2 审核中 3 审核不通过 4 未提交审核
+//                    1  待审核  2   审核通过  3   未通过审核  4   未提交   身份验证  和账号验证的审核状态
                     switch (praiseNum){
                         case 1:
+                            rlUnderReview.setVisibility(View.VISIBLE);
+                            break;
+                        case 2:
                             if(StringUtil.isNotBlank(data.getString("uesrRealName"))){
                                 tvUserName.setText(data.getString("uesrRealName"));
                             }
@@ -106,9 +115,6 @@ public class MineApproveSubmitiCertificateActivity extends BaseActivity {
                                 tvUserNumber.setText(data.getString("uesrcardNum"));
                             }
                             llYesPass.setVisibility(View.VISIBLE);
-                            break;
-                        case 2:
-                            rlUnderReview.setVisibility(View.VISIBLE);
                             break;
                         case 3:
                             if(StringUtil.isNotBlank(data.getString("reason"))){
@@ -124,9 +130,6 @@ public class MineApproveSubmitiCertificateActivity extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-            @Override
-            public void onError(String message) {
             }
         });
     }

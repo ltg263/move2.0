@@ -341,7 +341,7 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_toRightOf="@id/iv_icon"
                         android:textColor="@color/title_gray"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/sp_14" />
 
                     <TextView
                         android:id="@+id/tv_user_signature"
@@ -367,11 +367,12 @@
                 android:background="@color/cut_off_rule" />
             <!--活躍用戶開始-->
             <LinearLayout
+                android:id="@+id/ll_active_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_1"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"

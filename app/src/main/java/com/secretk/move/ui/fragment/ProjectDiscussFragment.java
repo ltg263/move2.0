@@ -2,6 +2,9 @@ package com.secretk.move.ui.fragment;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.secretk.move.R;
@@ -32,16 +35,22 @@ import butterknife.BindView;
  * 描述：项目主页--讨论
  */
 
-public class ProjectDiscussFragment extends LazyFragment{
+public class ProjectDiscussFragment extends LazyFragment {
     @BindView(R.id.rv_review_hot)
     RecyclerView rvReviewHot;
     @BindView(R.id.rv_review_newest)
     RecyclerView rvReviewNewest;
+    @BindView(R.id.ll_hot)
+    LinearLayout llHot;
+    @BindView(R.id.ll_new)
+    LinearLayout llNew;
+    @BindView(R.id.iv_not_content)
+    ImageView ivNotContent;
 
     private ProjectRecommendAdapter adapterNot;
     private ProjectRecommendAdapter adapterNew;
-    public boolean isHaveData=true;
-    public int pageIndex=1;
+    public boolean isHaveData = true;
+    public int pageIndex = 1;
     private String projectId;
     private List<RowsBean> newData;
     private LoadingDialog loadingDialog;
@@ -63,10 +72,15 @@ public class ProjectDiscussFragment extends LazyFragment{
 
     @Override
     public void onFirstUserVisible() {
-        adapterNot.setData(newData);
+        if(newData!=null && newData.size()>0){
+            ivNotContent.setVisibility(View.GONE);
+            llHot.setVisibility(View.VISIBLE);
+            adapterNot.setData(newData);
+        }
         loadingDialog.show();
         getLoadData(null);
     }
+
     public void getLoadData(final RefreshLayout refreshlayout) {
         JSONObject node = new JSONObject();
         try {
@@ -86,22 +100,24 @@ public class ProjectDiscussFragment extends LazyFragment{
             @Override
             public void onCompleted(CommonListBase bean) {
                 CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getDiscusses();
-                if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
-                    isHaveData=false;
+                if (detailsBean.getPageSize() == detailsBean.getCurPageNum()) {
+                    isHaveData = false;
                 }
-                if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
+                if (detailsBean.getRows() == null || detailsBean.getRows().size() == 0) {
                     return;
                 }
-                if(pageIndex>2){
+                ivNotContent.setVisibility(View.GONE);
+                llNew.setVisibility(View.VISIBLE);
+                if (pageIndex > 2) {
                     adapterNew.setAddData(detailsBean.getRows());
-                }else {
+                } else {
                     adapterNew.setData(detailsBean.getRows());
                 }
             }
 
             @Override
             public void onFinish() {
-                if(refreshlayout!=null){
+                if (refreshlayout != null) {
                     refreshlayout.finishLoadmore();
                 }
                 loadingDialog.dismiss();
@@ -112,11 +128,12 @@ public class ProjectDiscussFragment extends LazyFragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        projectId = ((ProjectActivity)context).getProjectId();
-        loadingDialog = ((ProjectActivity)context).getloadingDialog();
+        projectId = ((ProjectActivity) context).getProjectId();
+        loadingDialog = ((ProjectActivity) context).getloadingDialog();
     }
 
     public void initUiData(List<RowsBean> rows) {
-        this.newData=rows;
+        this.newData = rows;
     }
+
 }

@@ -117,6 +117,7 @@ public class MainGzBean extends BaseRes{
 
             public static class RowsBean {
                 /**
+                 * actionType
                  * followStatus : 1
                  * postId : 2
                  * projectId : 1
@@ -149,7 +150,7 @@ public class MainGzBean extends BaseRes{
                  * disscussContents : null
                  * tagInfos : null
                  */
-
+                private int actionType;
                 private int followStatus;
                 private int postId;
                 private int projectId;
@@ -179,8 +180,16 @@ public class MainGzBean extends BaseRes{
                 private int status;
                 private Object discussId;
                 private Object disscussContents;
-                private Object tagInfos;
+                private String tagInfos;
                 private List<PostSmallImagesListBean> postSmallImagesList;
+
+                public int getActionType() {
+                    return actionType;
+                }
+
+                public void setActionType(int actionType) {
+                    this.actionType = actionType;
+                }
 
                 public int getFollowStatus() {
                     return followStatus;
@@ -414,11 +423,11 @@ public class MainGzBean extends BaseRes{
                     this.disscussContents = disscussContents;
                 }
 
-                public Object getTagInfos() {
+                public String getTagInfos() {
                     return tagInfos;
                 }
 
-                public void setTagInfos(Object tagInfos) {
+                public void setTagInfos(String tagInfos) {
                     this.tagInfos = tagInfos;
                 }
 

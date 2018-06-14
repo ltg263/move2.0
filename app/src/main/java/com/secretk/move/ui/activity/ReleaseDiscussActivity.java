@@ -70,6 +70,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
     LoadingDialog loadingDialog;
     int projectId;
     String token = SharedUtils.singleton().get("token", "");
+    private JSONArray sonArray;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -120,6 +121,27 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         }
         if (getEdTitle().length() < 6) {
             ToastUtils.getInstance().show("标题不能少于6个汉字");
+            return;
+        }
+        // tagId,tagName
+        sonArray = new JSONArray();
+        if(arrayTags!=null){
+            for(int i=0;i<arrayTags.size();i++){
+                JSONObject object = new JSONObject();
+                DiscussLabelListbean.TagList aa = arrayTags.get(arrayTags.keyAt(i));
+                try {
+                    object.put("tagId",aa.getTagId());
+                    object.put("tagName",aa.getTagName());
+                    if(i!=0){
+                        sonArray.put(object);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        if(sonArray.length()==0){
+            ToastUtils.getInstance().show("请选择#标签#");
             return;
         }
         loadingDialog.show();
@@ -183,7 +205,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
 
     @Override
     public void onItemClick(View view, int postion) {
-        releasePicAdapter.removeIndex(postion);
+//        releasePicAdapter.removeIndex(postion);
     }
 
     @Override
@@ -232,6 +254,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
             node.put("projectId", projectId);
             node.put("postTitle", getEdTitle());
             node.put("disscussContents", getEdContent());
+            node.put("tagInfos", sonArray.toString());
             if (StringUtil.isNotBlank(discussImages)) {
                 node.put("discussImages", discussImages);
             }
@@ -276,7 +299,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
                 .url(Constants.UPLOAD_IMG_FILE)
                 .addPart("token", token)
                 .addPart("uploadfile", StringUtil.getMimeType(file.getName()), file)
-                .addPart("imgtype", Constants.UPLOADIMG_TYPE.PROJECT_ICON)
+                .addPart("imgtype", Constants.UPLOADIMG_TYPE.POST_ICON)
                 .build();
         RetrofitUtil.request(params, UpImgBean.class, new HttpCallBackImpl<UpImgBean>() {
             @Override

@@ -15,6 +15,7 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MainGzBean;
+import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.bean.base.BaseRes;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.utils.GlideUtils;
@@ -22,11 +23,14 @@ import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
-import com.secretk.move.utils.TimeUtils;
+import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.TimeToolUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -67,18 +71,6 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     LinearLayout ll_user;
     @BindView(R.id.tvUserDynamic)
     TextView tvUserDynamic;
-    @BindView(R.id.rl_follow)
-    RelativeLayout rl_follow;
-    @BindView(R.id.ll_user2)
-    LinearLayout ll_user2;
-    @BindView(R.id.img_user_head2)
-    ImageView img_user_head2;
-    @BindView(R.id.tvUser2)
-    TextView tvUser2;
-    @BindView(R.id.tvUserDynamic2)
-    TextView tvUserDynamic2;
-    @BindView(R.id.tv_release_time)
-    TextView tv_release_time;
     @BindView(R.id.img_comment)
     ImageView img_comment;
     @BindView(R.id.iv_file_name)
@@ -98,9 +90,9 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     public  void  setData(final MainGzBean.DataBean.FollowsBean.RowsBean bean, Context context){
         GlideUtils.loadCircleProjectUrl(context, img_organization,Constants.BASE_IMG_URL + bean.getProjectIcon());
         showRecommend(context,bean);
-        tvName.setText(bean.getProjectChineseName());
-        tv_english_name.setText("/"+bean.getProjectEnglishName());
-        String time= TimeUtils.getChatTime(bean.getCreateTime());
+        tvName.setText(bean.getProjectCode());
+        tv_english_name.setText("/"+bean.getProjectChineseName());
+        String time= TimeToolUtils.convertTimeToFormat(bean.getCreateTime());
        tvTime.setText(time);
         tvIsFollw.setVisibility(View.VISIBLE);
         if (0 == bean.getFollowStatus()) {
@@ -123,22 +115,37 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvDesc.setText(bean.getPostShortDesc());
         tvPraise.setText(bean.getPraiseNum() + "");
         tvComments.setText(bean.getCommentsNum() + "");
-        List<MainGzBean.DataBean.FollowsBean.RowsBean.PostSmallImagesListBean> imgs = bean.getPostSmallImagesList();
-        if (imgs != null && imgs.size()>0) {
-            if (imgs.size() > 2) {
-                llMultiImg.setVisibility(View.VISIBLE);
-                ivFileName.setVisibility(View.GONE);
-                GlideUtils.loadSideMinImage(context, ivOnt, Constants.BASE_IMG_URL + imgs.get(0).getFileUrl());
-                GlideUtils.loadSideMinImage(context, ivTwo, Constants.BASE_IMG_URL + imgs.get(1).getFileUrl());
-                GlideUtils.loadSideMinImage(context, ivThree, Constants.BASE_IMG_URL + imgs.get(2).getFileUrl());
-            } else {
-                llMultiImg.setVisibility(View.GONE);
-                ivFileName.setVisibility(View.VISIBLE);
-                GlideUtils.loadSideMaxImage(context, ivFileName, Constants.BASE_IMG_URL + imgs.get(0).getFileUrl());
+        if(StringUtil.isNotBlank(bean.getPostSmallImages())){
+            try {
+                JSONArray images = new JSONArray(bean.getPostSmallImages());
+                List<PostDataInfo> lists = new ArrayList<>();
+                for (int i = 0; i < images.length(); i++) {
+                    JSONObject strObj = images.getJSONObject(i);
+                    PostDataInfo info = new PostDataInfo();
+                    info.setUrl(StringUtil.getBeanString(strObj.getString("fileUrl")));
+                    info.setName(StringUtil.getBeanString(strObj.getString("fileName")));
+                    info.setTitle(StringUtil.getBeanString(strObj.getString("extension")));
+                    lists.add(info);
+                }
+                if (lists != null && lists.size()>0) {
+                    if (lists.size() > 2) {
+                        llMultiImg.setVisibility(View.VISIBLE);
+                        ivFileName.setVisibility(View.GONE);
+                        GlideUtils.loadSideMinImage(context, ivOnt, Constants.BASE_IMG_URL + lists.get(0).getUrl());
+                        GlideUtils.loadSideMinImage(context, ivTwo, Constants.BASE_IMG_URL + lists.get(1).getUrl());
+                        GlideUtils.loadSideMinImage(context, ivThree, Constants.BASE_IMG_URL + lists.get(2).getUrl());
+                    } else {
+                        llMultiImg.setVisibility(View.GONE);
+                        ivFileName.setVisibility(View.VISIBLE);
+                        GlideUtils.loadSideMaxImage(context, ivFileName, Constants.BASE_IMG_URL + lists.get(0).getUrl());
+                    }
+                }else{
+                    llMultiImg.setVisibility(View.GONE);
+                    ivFileName.setVisibility(View.GONE);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        }else{
-            llMultiImg.setVisibility(View.GONE);
-            ivFileName.setVisibility(View.GONE);
         }
         //关注
         tvIsFollw.setOnClickListener(new View.OnClickListener() {
@@ -223,7 +230,6 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     }
 
     public void showRecommend(Context context, MainGzBean.DataBean.FollowsBean.RowsBean bean){
-        rl_follow.setVisibility(View.GONE);
         ll_user.setVisibility(View.VISIBLE);
         GlideUtils.loadCircleUserUrl(context,img_user_head, Constants.BASE_IMG_URL + bean.getCreateUserIcon());
         tvUser.setText(bean.getCreateUserName());

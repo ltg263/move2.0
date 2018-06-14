@@ -6,46 +6,72 @@
     android:fillViewport="true"
     android:scrollbars="none">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/ll_hot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dp_10"
-            android:text="热门帖"
-            android:textColor="@color/title_gray"
-            android:textSize="@dimen/sp_14" />
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_line"
-            android:background="@color/cut_off_rule" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10"
+                android:text="热门帖"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_review_hot"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_line"
+                android:background="@color/cut_off_rule" />
 
-        <TextView
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_review_hot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_new"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dp_10"
-            android:text="最新贴"
-            android:textColor="@color/title_gray"
-            android:textSize="@dimen/sp_14" />
+            android:layout_below="@id/ll_hot"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_line"
-            android:background="@color/cut_off_rule" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10"
+                android:text="最新贴"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_review_newest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_line"
+                android:background="@color/cut_off_rule" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_review_newest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_not_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_130"
+            android:src="@drawable/ic_not_content" />
+    </RelativeLayout>
 </com.secretk.move.view.RecycleNestedScrollView>

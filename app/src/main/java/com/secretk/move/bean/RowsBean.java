@@ -50,6 +50,7 @@ public class RowsBean extends CommonListBase {
     private double totalScore;
     private String postTitle;
     private int postType;
+    private int modelType;
     private String postShortDesc;
     private int commentsNum;
     private int praiseNum;
@@ -67,6 +68,7 @@ public class RowsBean extends CommonListBase {
     private int status;
     private List<PostSmallImagesListBean> postSmallImagesList;
     private String postSmallImages;
+    private String professionalEvaDetail;
 
     /**
      * discussId
@@ -84,6 +86,22 @@ public class RowsBean extends CommonListBase {
     private String evaluationTags;
     private String evauationContent;
     private String tagInfos;
+
+    public void setModelType(int modelType) {
+        this.modelType = modelType;
+    }
+
+    public int getModelType() {
+        return modelType;
+    }
+
+    public String getProfessionalEvaDetail() {
+        return professionalEvaDetail;
+    }
+
+    public void setProfessionalEvaDetail(String professionalEvaDetail) {
+        this.professionalEvaDetail = professionalEvaDetail;
+    }
 
     public void setTagInfos(String tagInfos) {
         this.tagInfos = tagInfos;

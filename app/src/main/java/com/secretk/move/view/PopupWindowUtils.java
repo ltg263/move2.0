@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.ToastUtils;
 
 /**
  * 作者： litongge
@@ -137,7 +138,8 @@ public class PopupWindowUtils extends PopupWindow {
         TextView tvLogPrompt = view.findViewById(R.id.tv_log_prompt);
         TextView tvLogConfirm = view.findViewById(R.id.tv_log_confirm);
         ImageView ivLogCancel = view.findViewById(R.id.iv_log_cancel);
-        etLogContent.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+//        etLogContent.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        etLogContent.setInputType(InputType.TYPE_CLASS_NUMBER );
         tvLogPrompt.setText("给作者鼓励FIND");
         etLogContent.setHint("可填写10-2000");
         View.OnClickListener giveReward = new View.OnClickListener() {
@@ -200,6 +202,10 @@ public class PopupWindowUtils extends PopupWindow {
                         break;
                     case R.id.tv_log_confirm:
                         String season = etLogContent.getText().toString().trim();
+                        if(Integer.valueOf(season)<10 || Integer.valueOf(season)>2000){
+                            ToastUtils.getInstance().show("请输入10-2000整数");
+                            return;
+                        }
                         dialogInterface.btnConfirm(season);
                         dismiss();
                         break;

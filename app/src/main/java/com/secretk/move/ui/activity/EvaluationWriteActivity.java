@@ -24,7 +24,6 @@ import com.secretk.move.bean.PicBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.ReleaseArticleLabelAdapter;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -232,7 +231,6 @@ public class EvaluationWriteActivity extends BaseActivity  implements ItemClickL
                 }
             }
             evaluationTags = array.toString();
-            LogUtil.w("evaluationTags:"+evaluationTags);
             AddLabelActivity.array = null;
         }
         releaseArticleLabelAdapter.setData(arrayTags);

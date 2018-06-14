@@ -19,6 +19,7 @@ import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.SysEvaluationModelBean;
 import com.secretk.move.ui.adapter.EvaluationTypeAdapter;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -149,7 +150,7 @@ public class EvaluationProfessionalActivity extends BaseActivity {
 //                IntentUtil.startProjectActivity(projectId);
                 break;
             case R.id.tv_html:
-                ToastUtils.getInstance().show("跳转到H5");
+                IntentUtil.startWebViewActivity(Constants.MODEL,"评测模型说明");
                 break;
             case R.id.btn_new:
                 Intent intents = new Intent(this,EvaluationNewActivity.class);

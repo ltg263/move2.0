@@ -152,7 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_post_title"
-                android:lineSpacingExtra="@dimen/dp_8"
+                android:lineSpacingExtra="@dimen/item_line_spacing"
                 android:maxLines="3"
                 android:paddingVertical="@dimen/dp_5"
                 android:textColor="@color/title_gray_88"
@@ -161,17 +161,17 @@
             <ImageView
                 android:id="@+id/iv_file_name"
                 android:layout_width="match_parent"
-                android:layout_height="187dp"
+                android:layout_height="@dimen/item_img_max"
                 android:layout_below="@+id/tv_post_short_desc"
                 android:layout_marginBottom="@dimen/dp_5"
                 android:layout_marginTop="@dimen/dp_2"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 android:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/ll_multi_img"
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_post_short_desc"
                 android:layout_marginBottom="@dimen/dp_5"
                 android:layout_marginTop="@dimen/dp_2"
@@ -179,8 +179,8 @@
 
                 <ImageView
                     android:id="@+id/iv_ont"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/item_img_mix"
                     android:layout_weight="1"
                     android:scaleType="fitXY" />
 
@@ -190,10 +190,10 @@
 
                 <ImageView
                     android:id="@+id/iv_two"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/item_img_mix"
                     android:layout_weight="1"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="fitXY" />
 
                 <View
                     android:layout_width="@dimen/dp_5"
@@ -201,10 +201,10 @@
 
                 <ImageView
                     android:id="@+id/iv_three"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/item_img_mix"
                     android:layout_weight="1"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="fitXY" />
             </LinearLayout>
 
         </RelativeLayout>
@@ -223,6 +223,17 @@
             android:padding="@dimen/dp_10">
 
             <TextView
+                android:id="@+id/tv_model_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/garden_crack"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:textColor="@color/app_background"
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone" />
+
+            <TextView
                 android:id="@+id/tv_crack_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -230,7 +241,7 @@
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10"
                 android:text="@string/crack_down"
-                android:textColor="#3b88f6"
+                android:textColor="@color/app_background"
                 android:textSize="@dimen/sp_14"
                 android:visibility="gone" />
 

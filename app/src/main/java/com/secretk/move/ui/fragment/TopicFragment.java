@@ -6,14 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -28,6 +22,7 @@ import com.secretk.move.ui.activity.SearchActivity;
 import com.secretk.move.ui.activity.SubmitProjectActivity;
 import com.secretk.move.ui.adapter.TopicFragmentRecyclerAdapter;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PatternUtils;
 import com.secretk.move.utils.PolicyUtil;
@@ -54,8 +49,8 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
     QuickIndexBar qbar;
     @BindView(R.id.recycler)
     RecyclerView recycler;
-    @BindView(R.id.refreshLayout)
-    SmartRefreshLayout refreshLayout;
+//    @BindView(R.id.refreshLayout)
+//    SmartRefreshLayout refreshLayout;
 
     @BindView(R.id.tv_count)
     TextView tv_count;
@@ -65,16 +60,16 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
     TextView tv_sort_follow;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-    @BindView(R.id.tv_icon)
-    ImageView tvIcon;
-    @BindView(R.id.tv_name)
-    TextView tvName;
-    @BindView(R.id.tv_submit)
-    TextView tvSubmit;
-    @BindView(R.id.rl_top_theme)
-    RelativeLayout rlTopTheme;
-    @BindView(R.id.ll_have_data)
-    LinearLayout llHaveData;
+//    @BindView(R.id.tv_icon)
+//    ImageView tvIcon;
+//    @BindView(R.id.tv_name)
+//    TextView tvName;
+//    @BindView(R.id.tv_submit)
+//    TextView tvSubmit;
+//    @BindView(R.id.rl_top_theme)
+//    RelativeLayout rlTopTheme;
+//    @BindView(R.id.ll_have_data)
+//    LinearLayout llHaveData;
     private TopicFragmentRecyclerAdapter adapter;
     private LoadingDialog loadingDialog;
     String lsToken="";
@@ -88,32 +83,32 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
 
     @Override
     public void initViews() {
-        initRefresh();
+//        initRefresh();
         setVerticalManager(recycler);
         adapter = new TopicFragmentRecyclerAdapter(getContext());
         recycler.setAdapter(adapter);
         adapter.setItemListener(this);
         qbar.setOnLetterChangeListener(this);
         loadingDialog = new LoadingDialog(getActivity());
-        rlTopTheme.setVisibility(View.VISIBLE);
-        tvName.setText(getActivity().getResources().getString(R.string.not_currency));
-        tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
+//        rlTopTheme.setVisibility(View.VISIBLE);
+//        tvName.setText(getActivity().getResources().getString(R.string.not_currency));
+//        tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
     }
-    private void initRefresh() {
-//        loadingDialog = new LoadingDialog(getActivity());
-        refreshLayout.setEnableLoadmore(false);
-        refreshLayout.setEnableRefresh(false);
-        /**
-         * 下拉刷新
-         */
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setLoadmoreFinished(false);
-                http(currentType);
-            }
-        });
-    }
+//    private void initRefresh() {
+////        loadingDialog = new LoadingDialog(getActivity());
+//        refreshLayout.setEnableLoadmore(false);
+//        refreshLayout.setEnableRefresh(false);
+//        /**
+//         * 下拉刷新
+//         */
+//        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+//            @Override
+//            public void onRefresh(RefreshLayout refreshlayout) {
+//                refreshLayout.setLoadmoreFinished(false);
+//                http(currentType);
+//            }
+//        });
+//    }
     //1-按关注数量倒序；2-按名称排序
     @Override
     public void onFirstUserVisible() {
@@ -191,15 +186,16 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
                 if (bean.getCode() == 0) {
                     List<SearchedBean.Projects> list = bean.getData().getProjects();
                     tv_count.setText("共" + list.size() + "个币种");
-                    if (list.size() > 0) {
-                        convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
-                        llHaveData.setVisibility(View.VISIBLE);
-                    } else {
-                        llHaveData.setVisibility(View.GONE);
-                        convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
-                    }
+//                    if (list.size() > 0) {
+//                        convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
+//                        llHaveData.setVisibility(View.VISIBLE);
+//                    } else {
+//                        llHaveData.setVisibility(View.GONE);
+//                        convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+//                    }
                     adapter.setData(list, type);
                     if (type == Constants.TOPIC_SORT_BY_NAME) {
+                        LogUtil.w("list:"+list.size());
                         qbar.setDatax(list);
                     }
                 }
@@ -208,20 +204,17 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
             @Override
             public void onFinish() {
                 super.onFinish();
-                if (refreshLayout.isRefreshing()) {
-                    refreshLayout.finishRefresh();
-                }
+//                if (refreshLayout.isRefreshing()) {
+//                    refreshLayout.finishRefresh();
+//                }
                 loadingDialog.dismiss();
             }
         });
     }
 
-    @OnClick({R.id.tv_submit, R.id.fab,R.id.toolbar,R.id.tv_sort_follow,R.id.tv_sort_name})
+    @OnClick({R.id.fab,R.id.toolbar,R.id.tv_sort_follow,R.id.tv_sort_name})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tv_submit:
-                http(Constants.TOPIC_SORT_BY_NUM);
-                break;
             case R.id.fab:
                 if(isLoginZt){
                     IntentUtil.startActivity(SubmitProjectActivity.class);
@@ -243,6 +236,7 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
     }
 
     private void sortName() {
+        fab.setVisibility(View.GONE);
         qbar.setVisibility(View.VISIBLE);
         tv_count.setText("共" + 0 + "个币种");
         tv_sort_name.setTextColor(Color.parseColor("#3b88f6"));
@@ -258,6 +252,7 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
     }
 
     private void sortFollow() {
+        fab.setVisibility(View.VISIBLE);
         qbar.setVisibility(View.GONE);
         tv_count.setText("共" + 0 + "个币种");
         tv_sort_name.setTextColor(Color.parseColor("#dddddd"));

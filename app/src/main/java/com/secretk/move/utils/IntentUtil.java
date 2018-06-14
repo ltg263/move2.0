@@ -7,6 +7,7 @@ import com.secretk.move.MoveApplication;
 import com.secretk.move.baseManager.BaseManager;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.ui.activity.DetailsArticleActivity;
+import com.secretk.move.ui.activity.DetailsArticleCommentActivity;
 import com.secretk.move.ui.activity.DetailsDiscussActivity;
 import com.secretk.move.ui.activity.DetailsReviewAllActivity;
 import com.secretk.move.ui.activity.EvaluationSimplenessActivity;
@@ -145,6 +146,14 @@ public class IntentUtil {
         String key[] = {"url","name"};
         String values[] = {url,name};
         IntentUtil.startActivity(WebViewActivity.class, key, values);
+    }
+    /**
+     * 跳转到文章和评测留言界面
+     */
+    public static void startCommentActivity(String postId,String url,String share_url,String share_title,String share_content) {
+        String key[] = {"postId","url","share_url","share_title","share_content"};
+        String values[] = {postId,url,share_url,share_title,share_content};
+        IntentUtil.startActivity(DetailsArticleCommentActivity.class, key, values);
     }
 
     /**

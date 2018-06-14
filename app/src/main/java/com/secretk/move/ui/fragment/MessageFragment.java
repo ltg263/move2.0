@@ -17,7 +17,9 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MessageBean;
+import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.MessageFragmentRecyclerAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -72,7 +74,7 @@ public class MessageFragment extends LazyFragment {
         recycler.setAdapter(adapter);
         rlTopTheme.setVisibility(View.VISIBLE);
         tvStatus.setVisibility(View.GONE);
-        tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_not_message));
+        tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_go_login));
         tvName.setText(getActivity().getResources().getString(R.string.not_message));
         tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
         loadingDialog = new LoadingDialog(getActivity());
@@ -116,7 +118,12 @@ public class MessageFragment extends LazyFragment {
                 detaliMessage(0);
                 break;
             case R.id.tv_submit:
-                loadData();
+                if(tvSubmit.getText().toString().equals(getString(R.string.not_refresh))){
+                    pageIndex = 1;
+                    loadData();
+                }else{
+                    IntentUtil.startActivity(LoginHomeActivity.class);
+                }
                 break;
         }
     }
@@ -134,8 +141,10 @@ public class MessageFragment extends LazyFragment {
             refreshLayout.setVisibility(View.GONE);
             convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
             rlTopTheme.setVisibility(View.VISIBLE);
+            tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_go_login));
             tvName.setText("账号未登录,请先登录账号");
-            tvSubmit.setVisibility(View.INVISIBLE);
+            tvSubmit.setText(getString(R.string.go_login));
+            tvSubmit.setVisibility(View.VISIBLE);
             tvStatus.setVisibility(View.GONE);
             list=null;
             return;
@@ -161,9 +170,12 @@ public class MessageFragment extends LazyFragment {
         RetrofitUtil.request(params, MessageBean.class, new HttpCallBackImpl<MessageBean>() {
             @Override
             public void onCompleted(MessageBean str) {
-                if (str.getData().getMessages() == null) {
+                if (str.getData().getMessages() == null && pageIndex > 2) {
                     convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+                    tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_not_message));
                     tvStatus.setVisibility(View.GONE);
+                    tvName.setText(getActivity().getResources().getString(R.string.not_message));
+                    tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
                     return;
                 }
                 if (str.getData().getMessages().getCurPageNum() == str.getData().getMessages().getPageSize()) {
@@ -204,7 +216,7 @@ public class MessageFragment extends LazyFragment {
             }
         });
     }
-    private void detaliMessage(int messageId) {
+    private void detaliMessage(final int messageId) {
         if(!NetUtil.isNetworkAvailable()){
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
@@ -225,6 +237,9 @@ public class MessageFragment extends LazyFragment {
         RetrofitUtil.request(params, MessageBean.class, new HttpCallBackImpl<MessageBean>() {
             @Override
             public void onCompleted(MessageBean str) {
+                if(messageId==0){
+                    pageIndex=1;
+                }
                 loadData();
             }
 

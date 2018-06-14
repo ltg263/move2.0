@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -63,8 +62,8 @@ public class MoreCommentsActivity extends BaseActivity{
     RecyclerView rvReview;
     @BindView(R.id.et_message)
     EditText etMessage;
-    @BindView(R.id.but_send)
-    Button butSend;
+    @BindView(R.id.tv_send)
+    TextView tvSend;
     @BindView(R.id.rl)
     RelativeLayout rl;
     private MoreCommentsAdapter adapter;
@@ -86,7 +85,7 @@ public class MoreCommentsActivity extends BaseActivity{
         mHeadView.setTitleColor(R.color.title_gray);
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitle("评论详情");
-        mMenuInfos.add(0, new MenuInfo(R.string.share, "分享", R.drawable.ic_share));
+//        mMenuInfos.add(0, new MenuInfo(R.string.share, "分享", R.drawable.ic_share));
         return mHeadView;
     }
 
@@ -133,7 +132,7 @@ public class MoreCommentsActivity extends BaseActivity{
         getWlData();
     }
 
-    @OnClick({R.id.tv_praise_num, R.id.rl_ge_ren, R.id.but_send})
+    @OnClick({R.id.tv_praise_num, R.id.rl_ge_ren, R.id.tv_send})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_praise_num:
@@ -168,7 +167,7 @@ public class MoreCommentsActivity extends BaseActivity{
             case R.id.rl_ge_ren:
                 IntentUtil.startHomeActivity(userId);
                 break;
-            case R.id.but_send:
+            case R.id.tv_send:
                 String str = etMessage.getText().toString().trim();
                 if (StringUtil.isNotBlank(str)) {
                     if(str.contains(strLs)){

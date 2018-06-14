@@ -167,6 +167,7 @@ public class ProjectActivity extends BaseActivity {
                 projectInfo = projectHomeBean.getData().getProject();
                 reviewFragment.initUiDate(projectHomeBean);
                 discussFragment.initUiData(projectHomeBean.getData().getHotDiscuss());
+                reviewFragment.initUiData(projectHomeBean.getData().getHotDiscuss());
                 if (projectInfo != null) {
                     mHeadView.setTitle(projectInfo.getProjectCode());
                     mHeadView.setTitleVice("/" + projectInfo.getProjectChineseName());

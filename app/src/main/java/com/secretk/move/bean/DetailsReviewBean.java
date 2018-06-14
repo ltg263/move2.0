@@ -103,6 +103,7 @@ public class DetailsReviewBean {
             private int postId;
             private Object postUuid;
             private int modelType;
+            private int userType;
             private double totalScore;
             private String professionalEvaDetail;
             private String evauationContent;
@@ -133,6 +134,15 @@ public class DetailsReviewBean {
             private String createUserName;
             private Object fullProEvaList;
             private Object hotEvaList;
+
+            public int getUserType() {
+                return userType;
+            }
+
+            public void setUserType(int userType) {
+                this.userType = userType;
+            }
+
             private List<CommendationListBean> commendationList;
 
             public String getProjectChineseName() {

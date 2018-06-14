@@ -25,7 +25,6 @@ import com.secretk.move.ui.activity.MineCollectActivity;
 import com.secretk.move.ui.activity.MineOpinionBackActivity;
 import com.secretk.move.ui.activity.MineRecommendActivity;
 import com.secretk.move.ui.activity.MineSetActivity;
-import com.secretk.move.ui.activity.WebViewActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
@@ -86,6 +85,10 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     TextView tvArticleMun;
     @BindView(R.id.tv_user_type)
     TextView tvUserType;
+    @BindView(R.id.iv_model_icon)
+    ImageView ivModelIcon;
+    @BindView(R.id.tv_user_card_status)
+    TextView tvUserCardStatus;
     @BindView(R.id.tv_article)
     TextView tvArticle;
     @BindView(R.id.rl_essay)
@@ -146,7 +149,26 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
         tvArticleMun.setText(String.valueOf(infos.getArticleNum()));
         tvBalance.setText(String.valueOf(infos.getKffCoinNum()));
         // //用户类型，数字，用户类型:1-普通用户；2-项目方；3-评测机构；4-机构用户
-        tvUserType.setText(StringUtil.getUserType(infos.getUserType()));
+        if(infos.getUserType()!=1){
+            tvUserType.setVisibility(View.VISIBLE);
+            ivModelIcon.setVisibility(View.VISIBLE);
+            tvUserType.setText(StringUtil.getUserType(infos.getUserType(),ivModelIcon));
+        }else{
+            tvUserType.setVisibility(View.GONE);
+            ivModelIcon.setVisibility(View.GONE);
+        }
+        int userCardStatus = sharedUtils.get("userCardStatus", 0);
+        tvUserCardStatus.setTextColor(getResources().getColor(R.color.gplus_color_5));
+        if(userCardStatus==2){
+            tvUserCardStatus.setTextColor(getResources().getColor(R.color.title_gray_66));
+            tvUserCardStatus.setText("已认证");
+        }else if(userCardStatus==1){// 1  待审核  2   审核通过  3   未通过审核  4   未提交
+            tvUserCardStatus.setText("审核中");
+        }else if(userCardStatus==3){
+            tvUserCardStatus.setText("未通过审核");
+        }else{
+            tvUserCardStatus.setText("去认证");
+        }
     }
 
     @OnClick({R.id.iv_my_set,R.id.ll_my_approve, R.id.tv_go_login, R.id.tv_go_register, R.id.rl_user_info, R.id.rl_appraisal, R.id.rl_discuss, R.id.rl_essay, R.id.ll_check_details, R.id.ll_my_attention, R.id.ll_my_collect, R.id.ll_my_recommend, R.id.ll_my_about, R.id.ll_my_feedback})
@@ -200,7 +222,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 IntentUtil.startActivity(MineRecommendActivity.class);
                 break;
             case R.id.ll_my_about://关于我们
-                startActivity(new Intent(getActivity(), WebViewActivity.class).putExtra("url", Constants.HELP));
+                IntentUtil.startWebViewActivity(Constants.HELP,"关于我们");
                 break;
             case R.id.ll_my_feedback://意见反馈
                 IntentUtil.startActivity(MineOpinionBackActivity.class);
@@ -262,6 +284,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 sharedUtils.put(Constants.USER_TYPE,userInfo.getData().getUser().getUserType());
                 sharedUtils.put(Constants.MOBILE,userInfo.getData().getUser().getMobile());
                 sharedUtils.put("userCardStatus",userInfo.getData().getUserCardStatus());
+                sharedUtils.put("statusHierarchyType",userInfo.getData().getStatusHierarchyType());
                 onFirstUserVisible();
             }
 

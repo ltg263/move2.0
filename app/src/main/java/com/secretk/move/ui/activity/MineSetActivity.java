@@ -112,10 +112,10 @@ public class MineSetActivity extends BaseActivity {
         tvMobile.setText(StringUtil.getBeanString(infos.getMobile()));
         //  "userType":1, //用户类型，数字，用户类型:1-普通用户；2-项目方；3-评测机构；4-机构用户
         userCardStatus = infos.getUserType();
-        tvUserDegree.setText(StringUtil.getUserType(infos.getUserType()));
+        tvUserDegree.setText(StringUtil.getUserType(infos.getUserType(),null));
         // 1  待审核  2   审核通过  3   未通过审核  4   未提交   身份验证  和账号验证的审核状态
-        tvUserFind.setText("");
         tvUserSignature.setText(StringUtil.getBeanString(infos.getUserSignature()));
+        tvUserFind.setText(String.valueOf(sharedUtils.get("statusHierarchyType",0)));
         if (StringUtil.isNotBlank(infos.getEmail())) {
             tvEmail.setText(infos.getEmail());
         }
@@ -220,7 +220,7 @@ public class MineSetActivity extends BaseActivity {
                 }else if(bean.getUpgrade()==1){//0不需更新，1需要更新
                     dialogUpdata(bean,false);
                 }else{
-                    LogUtil.w("没有最新版本");
+                    ToastUtils.getInstance().show("没有最新版本");
                 }
             }
         });

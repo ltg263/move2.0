@@ -101,6 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_post_title"
                 android:maxLines="3"
+                android:lineSpacingExtra="@dimen/item_line_spacing"
                 android:paddingVertical="@dimen/dp_5"
                 android:textColor="@color/title_gray_88"
                 android:textSize="@dimen/sp_12" />
@@ -108,11 +109,11 @@
             <ImageView
                 android:id="@+id/iv_file_name"
                 android:layout_width="match_parent"
-                android:layout_height="187dp"
+                android:layout_height="@dimen/item_img_max"
                 android:layout_below="@+id/tv_post_short_desc"
                 android:layout_marginBottom="@dimen/dp_5"
                 android:layout_marginTop="@dimen/dp_2"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 android:visibility="visible" />
 
             <LinearLayout
@@ -127,7 +128,7 @@
                 <ImageView
                     android:id="@+id/iv_ont"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/item_img_mix"
                     android:layout_weight="1"
                     android:scaleType="fitXY" />
 
@@ -138,9 +139,9 @@
                 <ImageView
                     android:id="@+id/iv_two"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/item_img_mix"
                     android:layout_weight="1"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="fitXY" />
 
                 <View
                     android:layout_width="@dimen/dp_5"
@@ -149,9 +150,9 @@
                 <ImageView
                     android:id="@+id/iv_three"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/item_img_mix"
                     android:layout_weight="1"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="fitXY" />
             </LinearLayout>
 
         </RelativeLayout>

@@ -28,8 +28,7 @@
             android:id="@+id/iv_project_icon"
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/account_portrait" />
+            android:layout_gravity="center_horizontal" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -64,7 +63,7 @@
         android:id="@+id/rv_type_lists"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_shade_grey_mix" />
+        android:background="@drawable/ic_shade_grey" />
 
     <RelativeLayout
         android:layout_width="match_parent"

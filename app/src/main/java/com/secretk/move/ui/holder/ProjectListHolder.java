@@ -75,6 +75,8 @@ public class ProjectListHolder extends RecyclerViewBaseHolder {
     LinearLayout llMultiImg;
     @BindView(R.id.tv_crack_down)
     TextView tvCrackDown;
+    @BindView(R.id.tv_model_type)
+    TextView tvModelType;
     @BindView(R.id.iv_assist)
     ImageView ivAssist;
     @BindView(R.id.tv_praise_num)
@@ -100,19 +102,33 @@ public class ProjectListHolder extends RecyclerViewBaseHolder {
         tvCreateUserName.setText(rowsBean.getCreateUserName());
 //        tvEnglishName.setText("/" + rowsBean.getProjectCode());
         tvEnglishName.setVisibility(View.GONE);
-        tvCreateTime.setText(StringUtil.getTimeToM(rowsBean.getCreateTime()));
+        tvCreateTime.setText(TimeToolUtils.convertTimeToFormat(rowsBean.getCreateTime()));
         tvPostTitle.setText(rowsBean.getPostTitle());
         tvTotalScore.setText(String.valueOf(rowsBean.getTotalScore())+"分");
         tvPostShortDesc.setText(rowsBean.getPostShortDesc());
         tvPraiseNum.setText(String.valueOf(rowsBean.getPraiseNum()));
         tvCommentsNum.setText(String.valueOf(rowsBean.getCollectNum()));
-        String tagInfos = rowsBean.getEvaluationTags();
+        //打假标签
+        String tagInfos = rowsBean.getTagInfos();
         String tagName = "";
         if (StringUtil.isNotBlank(tagInfos)) {
             try {
                 JSONArray array = new JSONArray(tagInfos);
                 if (array.length() > 0) {
                     tagName = array.getJSONObject(0).getString("tagName");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        //评测标签
+        String professionalEvaDetail = rowsBean.getProfessionalEvaDetail();
+        String professional = "";
+        if (StringUtil.isNotBlank(professionalEvaDetail)) {
+            try {
+                JSONArray array = new JSONArray(professionalEvaDetail);
+                if (array.length() > 0) {
+                    professional = array.getJSONObject(0).getString("modelName");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -127,12 +143,12 @@ public class ProjectListHolder extends RecyclerViewBaseHolder {
                     tvTime.setText(TimeToolUtils.convertTimeToFormat(rowsBean.getCreateTime()));
                 }
                 tvTotalScore.setVisibility(View.VISIBLE);//分数
-                tvFollowStatus.setVisibility(View.GONE);//关注
-                if (StringUtil.isNotBlank(tagName)) {
-                    tvCrackDown.setVisibility(View.VISIBLE);//标签
-                    tvCrackDown.setText(tagName);
+                tvModelType.setVisibility(View.GONE);//关注
+                if (rowsBean.getModelType()==3 && StringUtil.isNotBlank(professional)) {//部分评测
+                    tvModelType.setVisibility(View.VISIBLE);//标签
+                    tvModelType.setText(professional);
                 } else {
-                    tvCrackDown.setVisibility(View.GONE);//标签
+                    tvModelType.setVisibility(View.GONE);//标签
                 }
                 break;
             case 2:
@@ -140,6 +156,12 @@ public class ProjectListHolder extends RecyclerViewBaseHolder {
                 tvFollowStatus.setVisibility(View.VISIBLE);
                 rlDiscuss.setVisibility(View.GONE);
                 tvCrackDown.setVisibility(View.GONE);
+                if (StringUtil.isNotBlank(tagName)) {
+                    tvCrackDown.setVisibility(View.VISIBLE);//标签
+                    tvCrackDown.setText(tagName);
+                } else {
+                    tvCrackDown.setVisibility(View.GONE);//标签
+                }
                 break;
             case 3:
                 tvTotalScore.setVisibility(View.GONE);

@@ -46,6 +46,8 @@ public class SubmitProjectTwoActivity extends BaseActivity {
     TextView tvLength;
     @BindView(R.id.et_contact)
     EditText etContact;
+    @BindView(R.id.et_input_02)
+    EditText etInput02;
     private Intent data;
     List<ProjectTypeListBean.DataBean.ProjectTypesBean> projectTypes;
     @Override
@@ -111,7 +113,8 @@ public class SubmitProjectTwoActivity extends BaseActivity {
     protected void OnToolbarRightListener() {
         if (StringUtil.isBlank(etInput01.getText().toString().trim())
                 || StringUtil.isBlank(etContact.getText().toString().trim())
-                || getString(R.string.submit_project_66).equals(tvSortName.getText().toString())) {
+                || getString(R.string.submit_project_66).equals(tvSortName.getText().toString())
+                || StringUtil.isBlank(etInput02.getText().toString().trim())) {
             ToastUtils.getInstance().show("请完善信息");
             return;
         }
@@ -132,6 +135,7 @@ public class SubmitProjectTwoActivity extends BaseActivity {
             node.put("projectDesc", etContact.getText().toString().trim());
             node.put("submitUserType", sharedUtils.get(Constants.USER_TYPE, 1));//1-普通用户；2-项目方；3-评测机构；4-机构用户
             node.put("submitUserContactInfo", sharedUtils.get(Constants.MOBILE,""));//提交人联系信息   手机号
+            node.put("projectSignature", etInput02.getText().toString().trim());//项目简介
             node.put("submitReason", "无");//推荐理由
         } catch (JSONException e) {
             e.printStackTrace();

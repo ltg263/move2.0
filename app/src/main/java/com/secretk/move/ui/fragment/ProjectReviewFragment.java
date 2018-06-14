@@ -3,6 +3,7 @@ package com.secretk.move.ui.fragment;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -14,6 +15,7 @@ import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonListBase;
 import com.secretk.move.bean.ProjectHomeBean;
+import com.secretk.move.bean.RowsBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.adapter.ProjectRecommendAdapter;
@@ -39,6 +41,8 @@ import butterknife.BindView;
 public class ProjectReviewFragment extends LazyFragment implements ItemClickListener {
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
+    @BindView(R.id.rv_review_top)
+    RecyclerView rvReviewTop;
     @BindView(R.id.pb_comprehensive_evaluation)
     ProgressBarStyleView pbComprehensiveEvaluation;//综合评分
     @BindView(R.id.pb_project_location)
@@ -51,12 +55,17 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
     ProgressBarStyleView pbProjectSchedule;//项目进度
     @BindView(R.id.pb_speculative_risk)
     ProgressBarStyleView pbSpeculativeRisk;//投资风险
-
+    @BindView(R.id.ll_zxpc_top)
+    LinearLayout llZxpcTop;
+    @BindView(R.id.ll_zxpc)
+    LinearLayout llZxpc;
     private ProjectRecommendAdapter adapter;
     int pageIndex = 1;
     public boolean isHaveData = true;
     private String projectId;
     private LoadingDialog loadingDialog;
+    private ProjectRecommendAdapter adapterTop;
+    private List<RowsBean> newData;
 
     @Override
     public int setFragmentView() {
@@ -66,12 +75,19 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
     @Override
     public void initViews() {
         setVerticalManager(rvReview);
+        setVerticalManager(rvReviewTop);
         adapter = new ProjectRecommendAdapter(getActivity());
         rvReview.setAdapter(adapter);
+        adapterTop = new ProjectRecommendAdapter(getActivity());
+        rvReviewTop.setAdapter(adapterTop);
     }
 
     @Override
     public void onFirstUserVisible() {
+        if(newData!=null && newData.size()>0){
+            llZxpcTop.setVisibility(View.VISIBLE);
+            adapterTop.setData(newData);
+        }
         loadingDialog.show();
         getLoadData(null);
     }
@@ -100,6 +116,7 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
                 if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
                     return;
                 }
+                llZxpc.setVisibility(View.VISIBLE);
                 if(pageIndex>2){
                     adapter.setAddData(detailsBean.getRows());
                 }else {
@@ -118,7 +135,9 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
             }
         });
     }
-
+    public void initUiData(List<RowsBean> rows) {
+        this.newData = rows;
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -184,7 +203,6 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
                     pbSpeculativeRisk.setProgressDrawable(R.drawable.pb_view_tzfx,R.color.tzfx);
                     pbSpeculativeRisk.setAllTv(detailName,"/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
                 }
-
             }
         }
     }

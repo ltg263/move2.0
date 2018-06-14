@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,6 +28,7 @@ import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
+import com.secretk.move.view.ShareView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,8 +55,8 @@ public class DetailsArticleCommentActivity extends BaseActivity {
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.et_content)
     EditText etContent;
-    @BindView(R.id.but_send)
-    Button butSend;
+    @BindView(R.id.tv_send)
+    TextView tvSend;
     @BindView(R.id.tv_icon)
     ImageView tvIcon;
     @BindView(R.id.tv_name)
@@ -88,6 +88,14 @@ public class DetailsArticleCommentActivity extends BaseActivity {
         return mHeadView;
     }
 
+    @Override
+    protected void OnToolbarRightListener() {
+//        {"postId","url","share_url","share_title","share_content"};
+        String shareUrl = getIntent().getStringExtra("share_url");
+        String shareTitle = getIntent().getStringExtra("share_title");
+        String shareContent = getIntent().getStringExtra("share_content");
+        ShareView.showShare(shareUrl,shareTitle,shareContent);
+    }
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
@@ -196,7 +204,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.but_send)
+    @OnClick(R.id.tv_send)
     public void onViewClicked() {
         String str = etContent.getText().toString().trim();
         if (StringUtil.isNotBlank(str)) {

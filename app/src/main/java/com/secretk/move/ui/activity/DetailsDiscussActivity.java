@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,6 +39,7 @@ import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.Clickable;
 import com.secretk.move.view.PopupWindowUtils;
 import com.secretk.move.view.RecycleScrollView;
+import com.secretk.move.view.ShareView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,6 +84,8 @@ public class DetailsDiscussActivity extends BaseActivity {
     TextView tvZx;
     @BindView(R.id.tv_create_user_name)
     TextView tvCreateUserName;
+    @BindView(R.id.iv_model_icon)
+    ImageView ivModelIcon;
     @BindView(R.id.tv_create_user_signature)
     TextView tvCreateUserSignature;
     @BindView(R.id.iv_post_small_images)
@@ -96,10 +98,10 @@ public class DetailsDiscussActivity extends BaseActivity {
     TextView tvCreateTime;
     @BindView(R.id.tv_tag_name)
     TextView tvTagName;
-    @BindView(R.id.et_comment_content)
-    EditText etCommentContent;
-    @BindView(R.id.but_login)
-    Button butLogin;
+    @BindView(R.id.et_content)
+    EditText etContent;
+    @BindView(R.id.tv_send)
+    TextView tvSend;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.have_data)
@@ -119,6 +121,7 @@ public class DetailsDiscussActivity extends BaseActivity {
     private int createUserId;
     int pageIndex = 1;
     private int projectId;
+    String postShortDesc;
     @Override
     protected int setOnCreate() {
         return R.layout.activity_details_discuss;
@@ -134,6 +137,10 @@ public class DetailsDiscussActivity extends BaseActivity {
         return mHeadView;
     }
 
+    @Override
+    protected void OnToolbarRightListener() {
+        ShareView.showShare(Constants.DISCUSS_SHARE+Integer.valueOf(postId),tvPostTitle.getText().toString(),postShortDesc);
+    }
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
@@ -151,20 +158,20 @@ public class DetailsDiscussActivity extends BaseActivity {
         adapterNew = new DetailsDiscussAdapter(this);
         rvNewReview.setAdapter(adapterNew);
         initRefresh();
-        StringUtil.etSearchChangedListener(etCommentContent, null, new StringUtil.EtChange() {
+        StringUtil.etSearchChangedListener(etContent, null, new StringUtil.EtChange() {
             @Override
             public void etYes() {
-                if(!etCommentContent.getText().toString().contains(strLs) && !strLs.equals("find_apk")){
+                if(!etContent.getText().toString().contains(strLs) && !strLs.equals("find_apk")){
                     parentCommentsId = 0;
                     strLs="find_apk";
-                    etCommentContent.setText("");
+                    etContent.setText("");
                 }
             }
         });
         loadingDialog.show();
     }
 
-    @OnClick({R.id.tv_follow_status, R.id.iv_post_small_images, R.id.but_login, R.id.rl_ge_ren,
+    @OnClick({R.id.tv_follow_status, R.id.iv_post_small_images, R.id.tv_send, R.id.rl_ge_ren,
             R.id.tv_commendation_Num, R.id.tv_collect_status, R.id.tv_praise_status})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -189,8 +196,8 @@ public class DetailsDiscussActivity extends BaseActivity {
             case R.id.rl_ge_ren:
                 IntentUtil.startHomeActivity(createUserId);
                 break;
-            case R.id.but_login:
-                String str = etCommentContent.getText().toString().trim();
+            case R.id.tv_send:
+                String str = etContent.getText().toString().trim();
                 if (StringUtil.isNotBlank(str)) {
                     if(str.contains(strLs)){
                         str = str.replaceAll( strLs,"");
@@ -322,7 +329,7 @@ public class DetailsDiscussActivity extends BaseActivity {
             @Override
             public void onCompleted(String str) {
 //                ToastUtils.getInstance().show("评论成功");
-                etCommentContent.setText("");
+                etContent.setText("");
 //                rcv.fullScroll(ScrollView.FOCUS_UP);
 //                initDataList();
 
@@ -374,6 +381,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                 DetailsDiscussBase.DataBean.DiscussDetailBean discussDetail = bean.getData().getDiscussDetail();
                 createUserId = discussDetail.getCreateUserId();
                 mHeadView.setTitle(discussDetail.getProjectCode());
+                postShortDesc=discussDetail.getPostShortDesc();
                 mHeadView.setTitleVice("/" + discussDetail.getProjectEnglishName());
                 projectId = discussDetail.getProjectId();
                 mHeadView.setToolbarListener(projectId);
@@ -381,6 +389,10 @@ public class DetailsDiscussActivity extends BaseActivity {
                 GlideUtils.loadCircleProjectUrl(DetailsDiscussActivity.this, mHeadView.getImageView(), Constants.BASE_IMG_URL + discussDetail.getProjectIcon());
                 tvPostTitle.setText(discussDetail.getPostTitle());
                 GlideUtils.loadCircleUserUrl(DetailsDiscussActivity.this, ivCreateUserIcon, Constants.BASE_IMG_URL + discussDetail.getCreateUserIcon());
+                if(discussDetail.getUserType()!=1){
+                    ivModelIcon.setVisibility(View.VISIBLE);
+                    StringUtil.getUserType(discussDetail.getUserType(),ivModelIcon);
+                }
                 tvCreateUserName.setText(discussDetail.getCreateUserName());
                 userId = discussDetail.getCreateUserId();
                 tvCreateUserSignature.setText(discussDetail.getCreateUserSignature());
@@ -571,8 +583,8 @@ public class DetailsDiscussActivity extends BaseActivity {
             return;
         }
         strLs="@"+str+":";
-        etCommentContent.setText(strLs);
+        etContent.setText(strLs);
         this.parentCommentsId=commentsId;
-        StringUtil.showSoftInputFromWindow(this,etCommentContent);
+        StringUtil.showSoftInputFromWindow(this,etContent);
     }
 }
