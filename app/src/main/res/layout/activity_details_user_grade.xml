@@ -21,6 +21,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbars="none">
+
         <RelativeLayout
 
             android:layout_width="match_parent"
@@ -60,9 +61,9 @@
                 </LinearLayout>
 
                 <View
-                    android:layout_marginTop="@dimen/dp_20"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_20"
                     android:background="@color/background_gray" />
 
                 <TextView
@@ -86,7 +87,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_marginRight="@dimen/dp_5"
                         android:gravity="center_horizontal"
                         android:orientation="vertical">
 
@@ -302,8 +303,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:padding="@dimen/dp_10">
+                    android:padding="@dimen/dp_10"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -319,8 +320,9 @@
                     android:id="@+id/ll_hot_discus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
                     <TextView
                         android:id="@+id/tv_not_discuss"
                         android:layout_width="wrap_content"
@@ -339,10 +341,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
-                        android:visibility="visible"
-                        android:padding="@dimen/dp_10" />
+                        android:padding="@dimen/dp_10"
+                        android:visibility="visible" />
                 </LinearLayout>
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_write_discuss"
                 android:layout_width="match_parent"

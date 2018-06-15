@@ -203,7 +203,9 @@ public class QuickIndexBar extends View {
             }
 
         }
-        removeDuplicateWithOrder( this.list);
+        if(list!=null){
+            removeDuplicateWithOrder(this.list);
+        }
     }
     public  void removeDuplicateWithOrder(List list) {
         Set set = new HashSet();

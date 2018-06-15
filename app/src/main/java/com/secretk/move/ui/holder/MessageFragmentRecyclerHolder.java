@@ -13,10 +13,8 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MessageBean;
-import com.secretk.move.ui.activity.MessageDesActivity;
 import com.secretk.move.ui.adapter.MessageFragmentRecyclerAdapter;
 import com.secretk.move.utils.GlideUtils;
-import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -104,9 +102,9 @@ public class MessageFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             @Override
             public void onCompleted(String str) {
                 ivState.setVisibility(View.GONE);
-                String[] key = {"message"};
-                String[] values = {str};
-                IntentUtil.startActivity(MessageDesActivity.class, key, values);
+//                String[] key = {"message"};
+//                String[] values = {str};
+//                IntentUtil.startActivity(MessageDesActivity.class, key, values);
             }
 
             @Override
