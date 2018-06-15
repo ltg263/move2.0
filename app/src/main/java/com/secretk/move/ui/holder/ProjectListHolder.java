@@ -158,7 +158,7 @@ public class ProjectListHolder extends RecyclerViewBaseHolder {
                 tvCrackDown.setVisibility(View.GONE);
                 if (StringUtil.isNotBlank(tagName)) {
                     tvCrackDown.setVisibility(View.VISIBLE);//标签
-                    tvCrackDown.setText(tagName);
+                    tvCrackDown.setText("#"+tagName+"#");
                 } else {
                     tvCrackDown.setVisibility(View.GONE);//标签
                 }

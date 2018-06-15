@@ -95,7 +95,7 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
-    public  void  setData(final MainGzBean.DataBean.FollowsBean.RowsBean bean, Context context){
+    public  void  setData(final MainGzBean.DataBean.FollowsBean.RowsBean bean, final Context context){
         //actionType  //1 关注的用户 点赞帖子  2关注的用户 发表帖子  3关注的用户 关注项目 4关注的项目下发表的帖子
         GlideUtils.loadCircleUserUrl(context,imgUserHead, Constants.BASE_IMG_URL + StringUtil.getBeanString(bean.getCreateUserIcon()));
         tvUser.setText(bean.getCreateUserName());
@@ -103,25 +103,34 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvName.setText(StringUtil.getBeanString(bean.getProjectCode()));
         tvEnglishName.setText("/"+StringUtil.getBeanString(bean.getProjectChineseName()));
         tvTime.setText(TimeToolUtils.convertTimeToFormat(bean.getCreateTime()));
-        if(StringUtil.isNotBlank(bean.getTagInfos())){
-            tvDrackDown.setVisibility(View.VISIBLE);
-            tvDrackDown.setText(bean.getTagInfos());
+        if (StringUtil.isNotBlank(bean.getTagInfos())) {
+            String tagName = "";
+            try {
+                JSONArray array = new JSONArray(bean.getTagInfos());
+                if (array.length() > 0) {
+                    tagName = array.getJSONObject(0).getString("tagName");
+                }
+                tvDrackDown.setText(tagName);
+                tvDrackDown.setVisibility(View.VISIBLE);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }else{
             tvDrackDown.setVisibility(View.GONE);
         }
         tvIsFollw.setVisibility(View.VISIBLE);
         if (0 == bean.getFollowStatus()) {
-            tvIsFollw.setText("+ 关注");
+            tvIsFollw.setText(context.getString(R.string.follow_status_0));
             tvIsFollw.setSelected(false);
             tvIsFollw.setPressed(false);
             tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
         } else if (1 == bean.getFollowStatus()) {
-            tvIsFollw.setText("已关注");
+            tvIsFollw.setText(context.getString(R.string.follow_status_1));
             tvIsFollw.setSelected(true);
             tvIsFollw.setPressed(true);
             tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
         } else {
-            tvIsFollw.setText("+ 关注");
+            tvIsFollw.setText(context.getString(R.string.follow_status_0));
             tvIsFollw.setSelected(false);
             tvIsFollw.setPressed(false);
             tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
@@ -145,9 +154,9 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                     return;
                 }
                 if (getString().equals("已关注")) {
-                    http(Constants.CANCEL_FOLLOW,bean.getProjectId());
+                    http(context,Constants.CANCEL_FOLLOW,bean.getProjectId());
                 } else {
-                    http(Constants.SAVE_FOLLOW,bean.getProjectId());
+                    http(context,Constants.SAVE_FOLLOW,bean.getProjectId());
                 }
             }
         });
@@ -175,7 +184,7 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         });
 
     }
-    public void http(String url,int id) {
+    public void http(final Context context, String url, int id) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", SharedUtils.getToken());
@@ -193,13 +202,13 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             @Override
             public void onCompleted(BaseRes bean) {
                 if (bean.getCode()==0){
-                    if (getString().equals("已关注")) {
-                        tvIsFollw.setText("+ 关注");
+                    if (getString().equals(context.getString(R.string.follow_status_1))) {
+                        tvIsFollw.setText(context.getString(R.string.follow_status_0));
                         tvIsFollw.setSelected(false);
                         tvIsFollw.setPressed(false);
                         tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
                     } else {
-                        tvIsFollw.setText("已关注");
+                        tvIsFollw.setText(context.getString(R.string.follow_status_1));
                         tvIsFollw.setSelected(true);
                         tvIsFollw.setPressed(true);
                         tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));

@@ -11,20 +11,27 @@
         android:layout_height="wrap_content"
         android:background="#f9f9f9" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_line"
+        android:background="@color/cut_off_rule" />
+
     <RelativeLayout
+        android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/dp_10"
         android:background="@color/white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dp_20"
             android:layout_above="@id/tv_bnt"
-            android:background="@color/white"
-            android:layout_marginHorizontal="@dimen/dp_35">
+            android:layout_marginHorizontal="@dimen/dp_35"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/iv"
@@ -50,5 +57,13 @@
             android:textSize="@dimen/sp_12" />
 
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/activity_splash_backgroud"
+        android:visibility="gone" />
 
 </LinearLayout>

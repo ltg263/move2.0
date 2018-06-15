@@ -56,12 +56,14 @@ public class AddDimensionalityPopupWindow extends PopupWindow implements OnClick
                 }
                 if(StringUtil.isBlank(getString(etEvaluationGrade))
                         || isNumTwo(getString(etEvaluationGrade),1)
-                        || Float.valueOf(getString(etEvaluationGrade))<1
+                        || Float.valueOf(getString(etEvaluationGrade))<1.0f
                         || Float.valueOf(getString(etEvaluationGrade))>10){
-                    ToastUtils.getInstance().show(context.getString(R.string.evaluation_hint)+"分数");
-                    return;
+                    if(Float.valueOf(getString(etEvaluationGrade))!=10){
+                        ToastUtils.getInstance().show(context.getString(R.string.evaluation_hint)+"分数");
+                        return;
+                    }
                 }
-                if(list != null && pos!=-1){
+                if(list != null && pos==-1){
                     for(int i=0;i<list.size();i++){
                         if(list.get(i).getModelName().equals(getString(etEvaluationName))){
                             ToastUtils.getInstance().show("自建维度名称不能重复");

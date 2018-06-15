@@ -149,6 +149,10 @@ public class LoginHomeActivity extends BaseActivity {
                     String key[] = {"phone"};
                     String values[] = {phoneNumber};
                     if (regIndex == 0) {
+                        if(true){
+                            ToastUtils.getInstance().show("内测期间尚未开发注册");
+                            return;
+                        }
                         IntentUtil.startActivity(RegisterActivity.class, key, values);
                     } else {
                         IntentUtil.startActivity(LoginActivity.class, key, values);

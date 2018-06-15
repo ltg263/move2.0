@@ -131,7 +131,7 @@ public class EvaluationCompileListActivity extends BaseActivity {
     public void setComprehensiveGrade(String tvEvaluationName, float value) {
         for (int i = 0; i < sysEvaluationModel.size(); i++) {
             SysEvaluationModelBean.DataBean.ModeDetailListBean bean = sysEvaluationModel.get(i);
-            if (bean.getDetailName().equals(tvEvaluationName)) {
+            if (tvEvaluationName.contains(bean.getDetailName())) {
                 bean.setTotalScore(value);
             }
         }

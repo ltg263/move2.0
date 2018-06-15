@@ -37,7 +37,17 @@ public class ProjectHomeBean extends BaseRes{
 
         private ProjectBean project;
         private List<RowsBean> hotDiscuss;
+        private List<RowsBean> hotEva;
         private List<ProjectEvaStatBean> projectEvaStat;
+
+        public List<RowsBean> getHotEva() {
+            return hotEva;
+        }
+
+        public void setHotEva(List<RowsBean> hotEva) {
+            this.hotEva = hotEva;
+        }
+
 
         public ProjectBean getProject() {
             return project;

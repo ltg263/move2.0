@@ -237,10 +237,8 @@
                 android:id="@+id/tv_crack_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/garden_crack"
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10"
-                android:text="@string/crack_down"
                 android:textColor="@color/app_background"
                 android:textSize="@dimen/sp_14"
                 android:visibility="gone" />

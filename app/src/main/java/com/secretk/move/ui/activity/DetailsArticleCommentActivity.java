@@ -84,7 +84,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitle("评论详情");
         mHeadView.setTitleColor(R.color.title_gray);
-        mMenuInfos.add(0, new MenuInfo(R.string.share, "分享", R.drawable.ic_share));
+//        mMenuInfos.add(0, new MenuInfo(R.string.share, "分享", R.drawable.ic_share));
         return mHeadView;
     }
 

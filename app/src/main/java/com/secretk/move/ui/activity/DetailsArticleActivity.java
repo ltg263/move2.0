@@ -193,9 +193,9 @@ public class DetailsArticleActivity extends BaseActivity {
         }
 //        tvPostShortDesc.setText(StringUtil.getBeanString(initData.getArticleContents()));
 //        wvPostShortDesc.loadData(StringUtil.getNewContent(StringUtil.getBeanString(initData.getArticleContents())), "text/html; charset=UTF-8", null);//这种写法可以正确解码
-        wvPostShortDesc.loadData(initData.getArticleContents(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
+        wvPostShortDesc.loadData(StringUtil.getNewContent(initData.getArticleContents()), "text/html; charset=UTF-8", null);//这种写法可以正确解码
         tvProjectCode.setText(StringUtil.getBeanString(initData.getProjectCode()));
-        tvCreateTime.setText("编辑于 "+StringUtil.getTimeToM(initData.getCreateTime()));
+        tvCreateTime.setText("发布于 "+StringUtil.getTimeToM(initData.getCreateTime()));
         tvDonateNum.setText(initData.getDonateNum() + getString(R.string.sponsor_num));
         praiseNum = initData.getPraiseNum();
         tvPraiseStatus.setText(getString(R.string.like) + String.valueOf(praiseNum));

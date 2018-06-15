@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -160,18 +161,24 @@ public class DialogUtils {
      * 描述: 自定义ShowUnifiedDialog
      * 统一 确认取消的Dialog
      */
-    public static void showEditTextDialog(final Context context, String title, String content, final EditTextDialogInterface editTextDialogInterface) {
+    public static void showEditTextDialog(final Context context,int textLength, String title, String content, final EditTextDialogInterface editTextDialogInterface) {
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_with_edittext, null);// 获得dialog布局
         final Dialog dialog = new Dialog(context, R.style.RemindDialog);
         dialog.setContentView(view);
         dialog.show();
         TextView tvLogPrompt = view.findViewById(R.id.tv_log_prompt);
         final EditText etLogContent = view.findViewById(R.id.et_log_content);
+        if(textLength!=0){
+            //设置可以输入任意字符
+            etLogContent.setInputType(InputType.TYPE_CLASS_TEXT);
+            //手动设置maxLength为20
+            InputFilter[] filters = {new InputFilter.LengthFilter(textLength)};
+            etLogContent.setFilters(filters);
+        }
         if(StringUtil.isNotBlank(content)){
             etLogContent.setText(content);
         }
         if(context.getString(R.string.sponsor_title).equals(title)){
-
             etLogContent.setHint("请输入赞助金额");
             etLogContent.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         }

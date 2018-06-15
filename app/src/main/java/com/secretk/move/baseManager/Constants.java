@@ -89,12 +89,13 @@ public interface Constants {
     String REQUEST_CODE = "requestCode";
 
 
+    String BASE_IMG_HTML5 = "http://app.qufen.top/";
+
     /**
      * 正式
      * 外网图片
      */
     String BASE_URL = "http://app.qufen.top/rest/";
-//    String BASE_IMG_URL = "http://app.qufen.top/";
     String BASE_IMG_URL = "";
     /**
      * song外网
@@ -129,39 +130,41 @@ public interface Constants {
     /**
      * 关于我们
       */
-    String HELP = BASE_URL+"mine/help";
+    String ABOUT = BASE_IMG_HTML5+"mine/about";
+    /**
+     * 帮助中心
+      */
+    String HELP = BASE_IMG_HTML5+"mine/help";
     /**
      * 注册协议
       */
-    String AGREEMENT = BASE_URL+"user/agreement";
+    String AGREEMENT = BASE_IMG_HTML5+"user/agreement";
+    /**
+     * 评测模型说明
+     */
+    String MODEL = BASE_IMG_HTML5+"user/model";
     /**
      * 评测分享
       */
-    String EVALUATION_SHARE= BASE_URL+"project/articleInfo?id=";
+    String EVALUATION_SHARE= BASE_IMG_HTML5+"project/articleInfo?id=";
     /**
      * 评测部分分享
       */
-    String EVALUATION_PART_SHARE = BASE_URL+"project/evaluationLitt?id=";
+    String EVALUATION_PART_SHARE = BASE_IMG_HTML5+"project/evaluationLitt?id=";
     /**
      * 文章分享
       */
-    String ARTICLE_SHARE = BASE_URL+"project/article?id=";
+    String ARTICLE_SHARE = BASE_IMG_HTML5+"project/article?id=";
     /**
      * 打假分享
       */
-    String DISCUSS_SHARE= BASE_URL+"project/discuss?id=";
-    /**
-     * 评测模型说明
-      */
-    String MODEL = BASE_URL+"user/model";
-    /**
-     * 注册协议
-      */
-//    String EVALUATION_LITT = "http://app.qufen.top/article";
+    String DISCUSS_SHARE= BASE_IMG_HTML5+"project/discuss?id=";
+
     //发送验证码通用接口
-//    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/send";
+    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/send";
     ////发送验证码通用接口 阿里云 modue ：login   register    forgetPassword
-    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/sendAliyun";
+//    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/sendAliyun";
+    String TOKEN_POP = BASE_URL + "/kff/user/tokenPOP";
     //校验验证码接口。
     String DYNAMIC_VALIDATE_CODE_VERIFY = BASE_URL + "kff/dynamicValidateCode/verify";
     //验证手机号是否已经存在

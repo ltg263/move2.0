@@ -1,9 +1,11 @@
 package com.secretk.move.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -39,7 +41,6 @@ import butterknife.BindView;
  */
 public class DetailsUserGradeActivity extends BaseActivity implements ItemClickListener {
 
-
     @BindView(R.id.iv_project_icon)
     ImageView ivProjectIcon;
     @BindView(R.id.tv_project_code)
@@ -74,11 +75,17 @@ public class DetailsUserGradeActivity extends BaseActivity implements ItemClickL
     TextView tvNotDiscuss;
     @BindView(R.id.rv_hot_discuss)
     RecyclerView rvHotDiscuss;
+    @BindView(R.id.ll_hot_discus)
+    LinearLayout llHotDiscuss;
     @BindView(R.id.tv_write_discuss)
     TextView tvWriteDiscuss;
     ProjectHotDiscussAdapter hotDiscussAdapter;
     private DetailsUserGradeBean.DataBean.ProjectBean projectInfo;
-
+    private Intent intent;
+    private int id;
+    String code = "";
+    String chineseName = "";
+    String icon = "";
     @Override
     protected int setOnCreate() {
         return R.layout.activity_details_user_grade;
@@ -96,15 +103,23 @@ public class DetailsUserGradeActivity extends BaseActivity implements ItemClickL
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+//        {"id","code","chineseName","icon"};
+        intent = getIntent();
+        if(intent!=null){
+            id = Integer.valueOf(intent.getStringExtra("id"));
+            code = intent.getStringExtra("code");
+            chineseName = intent.getStringExtra("chineseName");
+            icon = intent.getStringExtra("icon");
+        }
         setVerticalManager(rvHotDiscuss);
         hotDiscussAdapter=new ProjectHotDiscussAdapter(this);
         rvHotDiscuss.setAdapter(hotDiscussAdapter);
         tvWriteDiscuss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(projectInfo!=null){
-                    IntentUtil.startProjectSimplenessActivity(projectInfo.getProjectId(),projectInfo.getProjectIcon(),
-                            projectInfo.getProjectChineseName(),projectInfo.getProjectCode());
+                if(id!=0){
+                    IntentUtil.startProjectSimplenessActivity(id,icon,
+                            chineseName,code);
                 }
             }
         });
@@ -114,7 +129,7 @@ public class DetailsUserGradeActivity extends BaseActivity implements ItemClickL
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            node.put("projectId", Integer.valueOf(getIntent().getStringExtra("projectId")));//查看的项目ID
+            node.put("projectId", id);//查看的项目ID
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -123,24 +138,33 @@ public class DetailsUserGradeActivity extends BaseActivity implements ItemClickL
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
+        loadingDialog.show();
         RetrofitUtil.request(params, DetailsUserGradeBean.class, new HttpCallBackImpl<DetailsUserGradeBean>() {
             @Override
             public void onCompleted(DetailsUserGradeBean bean) {
                 initUiData(bean);
             }
+
+            @Override
+            public void onFinish() {
+                loadingDialog.dismiss();
+            }
         });
     }
 
     private void initUiData(DetailsUserGradeBean bean) {
-       projectInfo = bean.getData().getProject();
-        GlideUtils.loadCircleProjectUrl(this,ivProjectIcon,Constants.BASE_IMG_URL+ StringUtil.getBeanString(projectInfo.getProjectIcon()));
-        tvProjectCode.setText(StringUtil.getBeanString(projectInfo.getProjectCode()));
-        tvProjectZw.setText(StringUtil.getBeanString("/"+projectInfo.getProjectChineseName()));
+//       projectInfo = bean.getData().getProject();
+        GlideUtils.loadCircleProjectUrl(this,ivProjectIcon,Constants.BASE_IMG_URL+ icon);
+        tvProjectCode.setText(StringUtil.getBeanString(code));
+        tvProjectZw.setText(StringUtil.getBeanString("/"+chineseName));
+
         tvTotalRaterNum.setText("评分("+StringUtil.getBeanString(String.valueOf(bean.getData().getTotalRaterNum()))+")");
-        tvTotalScore.setText(StringUtil.getBeanString(String.valueOf(projectInfo.getTotalScore())));
+        tvTotalScore.setText(StringUtil.getBeanString(String.valueOf(bean.getData().getTotalScore())));
+
         List<DetailsUserGradeBean.DataBean.EvaGradeStatBean> statBeans = bean.getData().getEvaGradeStat();
         List<DetailsUserGradeBean.DataBean.HotDiscussBean> hotDiscuss = bean.getData().getHotDiscuss();
-        if(hotDiscuss!=null){
+        if(hotDiscuss!=null && hotDiscuss.size()!=0){
+            llHotDiscuss.setVisibility(View.VISIBLE);
             tvNotDiscuss.setText("热们评论("+hotDiscuss.size()+")");
             hotDiscussAdapter.setData(hotDiscuss);
         }

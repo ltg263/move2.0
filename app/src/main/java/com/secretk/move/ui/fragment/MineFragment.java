@@ -222,7 +222,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 IntentUtil.startActivity(MineRecommendActivity.class);
                 break;
             case R.id.ll_my_about://关于我们
-                IntentUtil.startWebViewActivity(Constants.HELP,"关于我们");
+                IntentUtil.startWebViewActivity(Constants.ABOUT,"关于我们");
                 break;
             case R.id.ll_my_feedback://意见反馈
                 IntentUtil.startActivity(MineOpinionBackActivity.class);

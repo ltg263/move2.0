@@ -18,7 +18,6 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.DynamicValidateCodeSend;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
@@ -154,11 +153,11 @@ public class RegisterActivity extends BaseActivity {
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
         //网络请求方式 默认为POST
-        RetrofitUtil.request(params, DynamicValidateCodeSend.class, new HttpCallBackImpl<DynamicValidateCodeSend>() {
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
-            public void onCompleted(DynamicValidateCodeSend contactsBean) {
-                LogUtil.w(contactsBean.getMsg());
-                ToastUtils.getInstance().show(contactsBean.getData().getDynamicCode());
+            public void onCompleted(String srt) {
+//                LogUtil.w(contactsBean.getMsg());
+//                ToastUtils.getInstance().show(contactsBean.getData().getDynamicCode());
             }
         });
     }

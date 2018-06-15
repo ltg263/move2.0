@@ -348,7 +348,7 @@ public class DetailsDiscussActivity extends BaseActivity {
         initNewsDataList();
     }
 
-
+    List<PostDataInfo> imageLists;
     /**
      * 详情信息
      */
@@ -410,10 +410,10 @@ public class DetailsDiscussActivity extends BaseActivity {
                     tvPraiseStatus.setSelected(false);
                 }
                 //关注状态  "//0 未关注；1-已关注；2-不显示关注按钮"
-                if (discussDetail.getFollowStatus() == 1) {
+                if (discussDetail.getFollowStatus() == 0) {
                     tvFollowStatus.setSelected(false);
                     tvFollowStatus.setText(getResources().getString(R.string.follow_status_0));
-                } else if (discussDetail.getFollowStatus() == 0) {
+                } else if (discussDetail.getFollowStatus() == 1) {
                     tvFollowStatus.setSelected(true);
                     tvFollowStatus.setText(getResources().getString(R.string.follow_status_1));
                 } else {
@@ -428,24 +428,24 @@ public class DetailsDiscussActivity extends BaseActivity {
                     try {
                         //{"fileUrl":"/upload/posts/201805/1.jpg","fileName":"进度讨论","extension":"jpg"},
                         JSONArray images = new JSONArray(discussDetail.getPostSmallImages());
-                        List<PostDataInfo> lists = new ArrayList<>();
+                        imageLists = new ArrayList<>();
                         for (int i = 0; i < images.length(); i++) {
                             JSONObject strObj = images.getJSONObject(i);
                             PostDataInfo info = new PostDataInfo();
                             info.setUrl(StringUtil.getBeanString(strObj.getString("fileUrl")));
                             info.setName(StringUtil.getBeanString(strObj.getString("fileName")));
                             info.setTitle(StringUtil.getBeanString(strObj.getString("extension")));
-                            lists.add(info);
+                            imageLists.add(info);
                         }
-                        if (lists.size() != 0) {
-                            if (lists.size() == 1) {
-                                imgUrl = lists.get(0).getUrl();
-                                imgName = lists.get(0).getName();
+                        if (imageLists.size() != 0) {
+                            if (imageLists.size() == 1) {
+                                imgUrl = imageLists.get(0).getUrl();
+                                imgName = imageLists.get(0).getName();
                                 ivPostSmallImages.setVisibility(View.VISIBLE);
                                 GlideUtils.loadSideMaxImage(DetailsDiscussActivity.this, ivPostSmallImages, Constants.BASE_IMG_URL + imgUrl);
                             } else {
                                 rvImg.setVisibility(View.VISIBLE);
-                                imagesadapter.setData(lists);
+                                imagesadapter.setData(imageLists);
                             }
                         }
                     } catch (JSONException e) {

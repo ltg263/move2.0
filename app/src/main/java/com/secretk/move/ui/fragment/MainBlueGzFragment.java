@@ -93,8 +93,9 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LogUtil.w("-------------------------------:"+isLoginZt);
+                LogUtil.w("--------------------------------");
                 if(isLoginZt){
+                    pageIndex=1;
                     onFirstUserVisible();
                 }else {
                     IntentUtil.startActivity(LoginHomeActivity.class);
@@ -106,7 +107,6 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
     @Override
     public void onFirstUserVisible() {
         tokenLs = token;
-
         if (!isLoginZt) {
             showFragment = true;
             refreshLayout.setVisibility(View.GONE);
@@ -114,15 +114,13 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
             tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_go_login));
             tvSubmit.setText(getActivity().getResources().getString(R.string.go_login));
             tvName.setVisibility(View.VISIBLE);
-            tvName.setText("账号未登录,请先登录账号");
+            tvName.setText("您尚未登陆,无法预览已关注内容");
             return;
         }
         if (!refreshLayout.isRefreshing() && !refreshLayout.isLoading() && !showFragment) {
             loadingDialog.show();
         }
         showFragment = true;
-        refreshLayout.setVisibility(View.VISIBLE);
-        convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
         final String token = SharedUtils.singleton().get("token", "");
         JSONObject node = new JSONObject();
         try {
@@ -149,8 +147,11 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
                     tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_not_gznr));
                     tvName.setVisibility(View.INVISIBLE);
                     tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
+                    refreshLayout.setVisibility(View.GONE);
                     return;
                 }
+                refreshLayout.setVisibility(View.VISIBLE);
+                convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
                 if (pageIndex > 2) {
                     adapter.setAddData(detailsBean.getRows());
                 } else {

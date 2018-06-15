@@ -25,6 +25,7 @@ import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.TimeToolUtils;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 
@@ -116,7 +117,7 @@ public class MoreCommentsActivity extends BaseActivity{
         commentsId = commentsBean.getCommentsId();
         userId= commentsBean.getCommentUserId();
         tvCommentedUserName.setText(commentsBean.getCommentUserName());
-        tvCreateTime.setText(commentsBean.getFloor() + "楼    " + StringUtil.getTimeToM(commentsBean.getCreateTime()));
+        tvCreateTime.setText(commentsBean.getFloor() + "楼    " + TimeToolUtils.convertTimeToFormat(commentsBean.getCreateTime()));
         tvCommentContent.setText(commentsBean.getCommentContent());
         praiseNum = commentsBean.getPraiseNum();
         tvPraiseNum.setText(String.valueOf(praiseNum));

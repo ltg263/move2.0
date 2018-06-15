@@ -73,6 +73,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
     RecyclerView rvImg;
     @BindView(R.id.tv_post_short_desc)
     TextView tvPostShortDesc;
+    @BindView(R.id.tv_project_code)
+    TextView tvProjectCode;
     @BindView(R.id.fl_evaluation_tags)
     FlowLayout flEvaluationTags;
     @BindView(R.id.tv_create_time)
@@ -112,7 +114,6 @@ public class DetailsReviewAllActivity extends BaseActivity {
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
         mHeadView = findViewById(R.id.head_app_server);
         mHeadView.setHeadBackShow(true);
-        mHeadView.setToolbarListener(projectId);
         mHeadView.setTitleColor(R.color.title_gray);
         mMenuInfos.add(0, new MenuInfo(R.string.share, "分享", R.drawable.ic_share));
         return mHeadView;
@@ -183,10 +184,16 @@ public class DetailsReviewAllActivity extends BaseActivity {
 
         GlideUtils.loadCircleProjectUrl(this,mHeadView.getImageView(), Constants.BASE_IMG_URL +
                 StringUtil.getBeanString(evaluationDetail.getProjectIcon()));
+        tvProjectCode.setText(evaluationDetail.getProjectCode());
         postShortDesc = evaluationDetail.getPostShortDesc();
         createUserId = evaluationDetail.getCreateUserId();
         projectId = evaluationDetail.getProjectId();
-        tvPostTitle.setText(StringUtil.getBeanString(evaluationDetail.getPostTitle()));
+        mHeadView.setToolbarListener(projectId);
+        if(evaluationDetail.getModelType()==1){
+            tvPostTitle.setText(evaluationDetail.getProjectCode()+"-"+StringUtil.getBeanString(evaluationDetail.getPostTitle()));
+        }else {
+            tvPostTitle.setText(StringUtil.getBeanString(evaluationDetail.getPostTitle()));
+        }
         tvTotalScore.setText(String.valueOf(evaluationDetail.getTotalScore()));
         GlideUtils.loadCircleUserUrl(this,ivCreateUserIcon,
                 Constants.BASE_IMG_URL + StringUtil.getBeanString(evaluationDetail.getCreateUserIcon()));
@@ -209,8 +216,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
         if(baseUserId==evaluationDetail.getCreateUserId()){
             tvFollowStatus.setVisibility(View.GONE);
         }
-        wvPostShortDesc.loadData(evaluationDetail.getEvauationContent(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
-        tvCreateTime.setText("编辑于 "+StringUtil.getTimeToM(evaluationDetail.getCreateTime()));
+        wvPostShortDesc.loadData(StringUtil.getNewContent(evaluationDetail.getEvauationContent()), "text/html; charset=UTF-8", null);//这种写法可以正确解码
+        tvCreateTime.setText("发布于 "+StringUtil.getTimeToM(evaluationDetail.getCreateTime()));
         if(evaluationDetail.getDonateNum()>0){
             tvDonateNum.setText(evaluationDetail.getDonateNum() + getString(R.string.sponsor_num));
         }

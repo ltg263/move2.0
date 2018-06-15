@@ -142,7 +142,7 @@ public class MessageFragment extends LazyFragment {
             convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
             rlTopTheme.setVisibility(View.VISIBLE);
             tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_go_login));
-            tvName.setText("账号未登录,请先登录账号");
+            tvName.setText("您尚未登陆,无法预览消息内容");
             tvSubmit.setText(getString(R.string.go_login));
             tvSubmit.setVisibility(View.VISIBLE);
             tvStatus.setVisibility(View.GONE);
@@ -170,7 +170,7 @@ public class MessageFragment extends LazyFragment {
         RetrofitUtil.request(params, MessageBean.class, new HttpCallBackImpl<MessageBean>() {
             @Override
             public void onCompleted(MessageBean str) {
-                if (str.getData().getMessages() == null && pageIndex > 2) {
+                if (str.getData().getMessages() == null && pageIndex == 2) {
                     convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
                     tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_not_message));
                     tvStatus.setVisibility(View.GONE);

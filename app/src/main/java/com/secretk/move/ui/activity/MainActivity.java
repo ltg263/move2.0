@@ -5,15 +5,26 @@ import android.support.v4.view.ViewPager;
 import android.widget.RadioGroup;
 
 import com.secretk.move.R;
+import com.secretk.move.apiService.HttpCallBackImpl;
+import com.secretk.move.apiService.RetrofitUtil;
+import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.MvpBaseActivity;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.VersionBean;
 import com.secretk.move.contract.ActivityMainContract;
 import com.secretk.move.customview.TabViewpager;
 import com.secretk.move.presenter.impl.MainPresenterImpl;
 import com.secretk.move.ui.adapter.MainActivityPagerAdapter;
-import com.secretk.move.utils.LogUtil;
+import com.secretk.move.utils.MD5;
+import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.UiUtils;
+import com.secretk.move.view.DialogUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 
@@ -91,10 +102,50 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
         });
     }
 
+    private void showZsWind(String token) {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.TOKEN_POP)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onCompleted(String str) {
+                SharedUtils.singleton().put("aaa",true);
+                String find = "";
+                try {
+                    JSONObject data = new JSONObject(str).getJSONObject("data");
+                    if(data!=null){
+                        double tokenTodaySum = data.getDouble("tokenTodaySum");
+                        find = String.valueOf(tokenTodaySum);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                DialogUtils.showDialogHint(MainActivity.this, "今日领取 "+find+" FIND",true, new DialogUtils.ErrorDialogInterface() {
+                    @Override
+                    public void btnConfirm() {
+
+                    }
+                });
+            }
+        });
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        LogUtil.w("--------------------------------------------------");
+        if(!SharedUtils.singleton().get("aaa",false)){
+            if(SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken())){
+//                showZsWind(SharedUtils.getToken());
+            }
+        }
     }
 
     @Override

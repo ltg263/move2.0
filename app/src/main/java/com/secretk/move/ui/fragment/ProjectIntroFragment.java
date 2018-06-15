@@ -16,6 +16,7 @@ import com.secretk.move.ui.adapter.ProjectIntroAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.NetUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 
 import java.util.List;
@@ -104,12 +105,16 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
                 tvUserName.setText(owner.getUserName());
                 tvUserSignature.setText(owner.getUserSignature());
                 //0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
-                if(owner.getFollowStatus()==0){
-                    tvFollowStatus.setSelected(false);
-                    tvFollowStatus.setText(getResources().getString(R.string.follow_status_0));
-                }else if(owner.getFollowStatus() == 1){
-                    tvFollowStatus.setSelected(true);
-                    tvFollowStatus.setText(getResources().getString(R.string.follow_status_1));
+                if(SharedUtils.getUserId()!=owner.getUserId()){
+                    if(owner.getFollowStatus()==0){
+                        tvFollowStatus.setSelected(false);
+                        tvFollowStatus.setText(getResources().getString(R.string.follow_status_0));
+                    }else if(owner.getFollowStatus() == 1){
+                        tvFollowStatus.setSelected(true);
+                        tvFollowStatus.setText(getResources().getString(R.string.follow_status_1));
+                    }else{
+                        tvFollowStatus.setVisibility(View.GONE);
+                    }
                 }else{
                     tvFollowStatus.setVisibility(View.GONE);
                 }

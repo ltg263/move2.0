@@ -92,54 +92,66 @@ public class TimeToolUtils {
      * @param
      * @return
      */
-    public static String convertTimeToFormat(long timeStamp) {
-        long curTime = System.currentTimeMillis() / 1000L;
-        long time = curTime - timeStamp;
-        if (time < 60 && time >= 0) {
-            return "刚刚";
-        } else if (time >= 60 && time < 3600) {
-            return time / 60 + "分钟前";
-        } else if (time >= 3600 && time < 3600 * 24) {
-            return time / 3600 + "小时前";
-        } else if (time >= 3600 * 24 && time < 3600 * 24 * 30) {
-            return time / 3600 / 24 + "天前";
-        } else if (time >= 3600 * 24 * 30 && time < 3600 * 24 * 30 * 12) {
-            return time / 3600 / 24 / 30 + "个月前";
-        } else if (time >= 3600 * 24 * 30 * 12) {
-            return time / 3600 / 24 / 30 / 12 + "年前";
-        } else {
-            return "刚刚";
+    public static String convertTimeToFormata(long timeStamp) {
+        try {
+            String str = "";
+            Calendar now = Calendar.getInstance();
+            long ms = 1000 * (now.get(Calendar.HOUR_OF_DAY) * 3600 + now.get(Calendar.MINUTE) * 60 + now.get(Calendar.SECOND));// 毫秒数
+            long ms_now = now.getTimeInMillis();
+            String newTime = new SimpleDateFormat("HH:mm").format(new Date(timeStamp)).toString();
+            if (ms_now - timeStamp < ms) {
+                str = "今天 " + newTime;
+            } else if (ms_now - timeStamp < (ms + 24 * 3600 * 1000)) {
+
+            }
+            return str;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-//        int year = getYear(period);
-//        int month = getMonth(period - year * yearLevelValue);
-//        int day = getDay(period - year * yearLevelValue - month * monthLevelValue);
-//        int hour = getHour(period - year * yearLevelValue - month * monthLevelValue - day * dayLevelValue);
-//        return
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date(timeStamp)).toString();
     }
+
 
     /**
      * 将一个时间戳转换成提示性时间字符串，如刚刚，1秒前
      * @param timeStamp
      * @return
      */
-    public static String convertTimeToFormatA(long timeStamp) {
-        long curTime = System.currentTimeMillis() / 1000L;
-        long time = curTime - timeStamp;
-        if (time < 60 && time >= 0) {
-            return "刚刚";
-        } else if (time >= 60 && time < 3600) {
-            return time / 60 + "分钟前";
-        } else if (time >= 3600 && time < 3600 * 24) {
-            return time / 3600 + "小时前";
-        } else if (time >= 3600 * 24 && time < 3600 * 24 * 30) {
-            return time / 3600 / 24 + "天前";
-        } else if (time >= 3600 * 24 * 30 && time < 3600 * 24 * 30 * 12) {
-            return time / 3600 / 24 / 30 + "个月前";
-        } else if (time >= 3600 * 24 * 30 * 12) {
-            return time / 3600 / 24 / 30 / 12 + "年前";
-        } else {
-            return "刚刚";
+    public static String convertTimeToFormat(long timeStamp) {
+        if(isNow(timeStamp)){
+            return  new SimpleDateFormat("HH:mm").format(timeStamp).toString();
+        }else if(isYear(timeStamp)){//yyyy-MM-dd
+            return  new SimpleDateFormat("MM/dd").format(timeStamp).toString();
+        }else{
+            return  new SimpleDateFormat("yyyy/MM/dd").format(timeStamp).toString();
         }
+    }
+
+    /**
+     * 判断时间是不是今天
+     * @return    是返回true，不是返回false
+     */
+    private static boolean isNow(long timeStamp) {
+        //当前时间
+        Date now = new Date();
+        SimpleDateFormat sf = new SimpleDateFormat("yyyyMMdd");
+        //获取今天的日期
+        String nowDay = sf.format(now);
+        //对比的时间
+        String day = sf.format(new Date(timeStamp));
+        return day.equals(nowDay);
+    }
+    /**
+     * 判断时间是不是今年
+     * @return    是返回true，不是返回false
+     */
+    private static boolean isYear(long timeStamp) {
+        //当前时间
+        Calendar now = Calendar.getInstance();
+        if(String.valueOf(now.get(Calendar.YEAR)).equals(StringUtil.getTimeToMs1(timeStamp))){
+            return true;
+        }
+        return false;
     }
 
     /**

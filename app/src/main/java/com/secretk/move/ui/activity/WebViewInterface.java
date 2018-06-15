@@ -6,11 +6,10 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
 /**
- * 文件名：com.juanct.iwork99.activity.base
- * 描    述：iwork99
- * 作    者：yujian
- * 时    间：2016/8/5 17:27
- * 版    权： 99云企
+ * 作者： litongge
+ * 时间：  18:32
+ * 邮箱；ltg263@126.com
+ * 描述：
  */
 public class WebViewInterface {
     private Context mContext;

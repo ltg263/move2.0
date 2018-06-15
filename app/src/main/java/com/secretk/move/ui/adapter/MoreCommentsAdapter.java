@@ -74,7 +74,7 @@ public class MoreCommentsAdapter extends RecyclerView.Adapter<MoreCommentsAdapte
         public void refresh(int position, List<MoreCommentsBean.DataBean.CommentsBean.RowsBean> lists) {
             final MoreCommentsBean.DataBean.CommentsBean.RowsBean bean = lists.get(position);
             final String userName = StringUtil.getBeanString(bean.getCommentUserName());
-            String userNameB = ": @"+StringUtil.getBeanString(bean.getBecommentedUserName());
+            String userNameB = ": @"+StringUtil.getBeanString(bean.getBecommentedUserName())+"  ";
             final String content = StringUtil.getBeanString(bean.getCommentContent());
             String all = userName+userNameB+content;
             String name[] = {userName,userNameB};

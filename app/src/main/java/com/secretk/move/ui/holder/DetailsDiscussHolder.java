@@ -19,7 +19,7 @@ import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
-import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.TimeToolUtils;
 import com.secretk.move.view.Clickable;
 
 import java.util.List;
@@ -74,7 +74,7 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         GlideUtils.loadCircleUserUrl(context,ivCommentedUserIcon, Constants.BASE_IMG_URL+commentsBean.getCommentUserIcon());
         tvCommentedUserName.setText(commentsBean.getCommentUserName());
         tvPraiseNum.setText(String.valueOf(commentsBean.getPraiseNum()));
-        tvCreateTime.setText(commentsBean.getFloor() +"楼    "+StringUtil.getTimeToM(commentsBean.getCreateTime()));
+        tvCreateTime.setText(commentsBean.getFloor() +"楼    "+ TimeToolUtils.convertTimeToFormat(commentsBean.getCreateTime()));
         tvCommentContent.setText(commentsBean.getCommentContent());
         //"praiseStatus":0,//点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
         if(commentsBean.getPraiseStatus()==1){
@@ -105,7 +105,7 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
                 IntentUtil.startHomeActivity(commentsBean.getCommentUserId());
             }
         });
-        if(commentsBean.getChildCommentsNum()!=0){
+        if(commentsBean.getChildCommentsNum()>2){
             tvChildCommentsNum.setVisibility(View.VISIBLE);
             tvChildCommentsNum.setText("更多"+commentsBean.getChildCommentsNum()+"条评论");
         }
@@ -187,7 +187,7 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         if(childLists!=null && childLists.size()>0){
             for(int i=0;i<childLists.size();i++){
                 final String userName = childLists.get(i).getCommentUserName();
-                String userNameB = ": @"+childLists.get(i).getBecommentedUserName();
+                String userNameB = ": @"+childLists.get(i).getBecommentedUserName()+"  ";
                 String content = childLists.get(i).getCommentContent();
                 String all = userName+userNameB+content;
                 String name[] = {userName,userNameB};

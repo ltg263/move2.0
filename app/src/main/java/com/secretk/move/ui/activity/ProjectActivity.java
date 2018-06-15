@@ -167,7 +167,7 @@ public class ProjectActivity extends BaseActivity {
                 projectInfo = projectHomeBean.getData().getProject();
                 reviewFragment.initUiDate(projectHomeBean);
                 discussFragment.initUiData(projectHomeBean.getData().getHotDiscuss());
-                reviewFragment.initUiData(projectHomeBean.getData().getHotDiscuss());
+                reviewFragment.initUiData(projectHomeBean.getData().getHotEva());
                 if (projectInfo != null) {
                     mHeadView.setTitle(projectInfo.getProjectCode());
                     mHeadView.setTitleVice("/" + projectInfo.getProjectChineseName());
@@ -324,8 +324,8 @@ public class ProjectActivity extends BaseActivity {
                 startAcy();
                 break;
             case R.id.rl_grade:
-                String key[] = {"projectId"};
-                String values[] = {projectId};
+                String key[] = {"id","code","chineseName","icon"};
+                String values[] = {projectId,projectInfo.getProjectCode(),projectInfo.getProjectChineseName(),projectInfo.getProjectIcon()};
                 IntentUtil.startActivity(DetailsUserGradeActivity.class, key, values);
                 break;
             case R.id.tv_review:

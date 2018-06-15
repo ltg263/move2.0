@@ -148,7 +148,7 @@ public class MineSetActivity extends BaseActivity {
                     });
                     return;
                 }
-                DialogUtils.showEditTextDialog(this, getString(R.string.set_my_name),
+                DialogUtils.showEditTextDialog(this, 10,getString(R.string.set_my_name),
                         tvUserName.getText().toString().trim(), new DialogUtils.EditTextDialogInterface() {
                             @Override
                             public void btnConfirm(String season) {
@@ -163,7 +163,7 @@ public class MineSetActivity extends BaseActivity {
                 setAreaName();
                 break;
             case R.id.ll_user_signature:
-                DialogUtils.showEditTextDialog(this, getString(R.string.set_my_signature),
+                DialogUtils.showEditTextDialog(this, 20,getString(R.string.set_my_signature),
                         tvUserSignature.getText().toString().trim(), new DialogUtils.EditTextDialogInterface() {
                             @Override
                             public void btnConfirm(String season) {

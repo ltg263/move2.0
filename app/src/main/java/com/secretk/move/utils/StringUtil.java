@@ -234,7 +234,7 @@ public class StringUtil {
      */
     public static String getTimeToMs1(long seconds) {
         Date d = new Date(seconds);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         return sdf.format(d).toString();
     }
 

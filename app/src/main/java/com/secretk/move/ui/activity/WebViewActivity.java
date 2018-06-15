@@ -11,7 +11,9 @@ import android.widget.ProgressBar;
 
 import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.view.AppBarHeadView;
 
 import java.util.List;
@@ -48,8 +50,16 @@ public class WebViewActivity extends BaseActivity {
     protected void initUI(Bundle savedInstanceState) {
         url = getIntent().getStringExtra("url");
         String name = getIntent().getStringExtra("name");
+        if(name.equals("关于我们")){
+            mMenuInfos.add(0,new MenuInfo(R.string.mine_help, getString(R.string.mine_help), 0));
+        }
         mHeadView.setTitle(name);
         initWebView();
+    }
+
+    @Override
+    protected void OnToolbarRightListener() {
+        IntentUtil.startWebViewActivity(Constants.HELP,getResources().getString(R.string.mine_help));
     }
 
     /**

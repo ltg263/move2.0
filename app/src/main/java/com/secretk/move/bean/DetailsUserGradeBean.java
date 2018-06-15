@@ -38,6 +38,15 @@ public class DetailsUserGradeBean extends BaseRes{
         private List<HotDiscussBean> hotDiscuss;
         private List<EvaGradeStatBean> evaGradeStat;
         private int totalRaterNum;
+        private float totalScore;
+
+        public float getTotalScore() {
+            return totalScore;
+        }
+
+        public void setTotalScore(float totalScore) {
+            this.totalScore = totalScore;
+        }
 
         public ProjectBean getProject() {
             return project;

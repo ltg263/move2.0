@@ -57,6 +57,7 @@
         tools:replace="android:name">
         <activity
             android:name=".ui.activity.SplashScreenActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -80,149 +81,201 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
-            android:theme="@style/AppEditTextStyle" />
-        <service android:name=".utils.DownloadService"/>
+            android:screenOrientation="portrait" />
+
+        <service android:name=".utils.DownloadService" />
+
         <activity
             android:name=".ui.activity.LoginHomeActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MessageDesActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.RegisterActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.ForgetPasswordActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MineAssetCoinActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MineAssetPinlessActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.VerificationLoginActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.SubmitProjectActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.SubmitProjectTwoActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.HomeActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.SelectProjectActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MoreCommentsActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.PublishSucceedActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MineCheckDetailsActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.ProjectActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.WebViewActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppEditTextStyle"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.activity.MineOpinionBackActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppEditTextStyle"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.activity.MineRecommendActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.DetailsArticleCommentActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MineApproveSubmitiCertificateActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MineApproveSubmitiPicActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.EvaluationSimplenessActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.DetailsReviewAllActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.TemporaryIV"
-            android:theme="@style/AppEditTextStyle" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.DetailsArticleActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.EvaluationWriteActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.DetailsDiscussActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.DetailsUserGradeActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MineAssetDetailsActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.EvaluationProfessionalActivity"
+            android:theme="@style/AppEditTextStyle"
             android:launchMode="singleTask"
-            android:theme="@style/AppEditTextStyle" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.EvaluationProfessionalItemActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MineSetActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.SearchActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MineAttentionActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.EvaluationNewActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MineAssetDistributedActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MineAssetUsableActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.EvaluationCompileListActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MineAssetBindingActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.InvitePosterActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MineAssetFindExtractActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MineAssetExtractRecordActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MineCollectActivity"
-            android:theme="@style/AppEditTextStyle" />
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.AddLabelActivity" />
         <activity
             android:name=".ui.activity.ReleaseArticleActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity android:name=".ui.activity.ReleaseDiscussActivity" />
-        <activity android:name=".ui.activity.SelectedPicActivity" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:theme="@style/AppEditTextStyle" />
+
+        <activity
+            android:name=".ui.activity.ReleaseDiscussActivity"
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.SelectedPicActivity"
+            android:theme="@style/AppEditTextStyle"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

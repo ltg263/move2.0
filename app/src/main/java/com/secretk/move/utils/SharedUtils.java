@@ -95,6 +95,9 @@ public class SharedUtils {
 	public static boolean getLoginZt(){
 		return singleton().get(Constants.IS_LOGIN_KEY,false);
 	}
+	public static int getUserId(){
+		return singleton().get(Constants.USER_ID,0);
+	}
 	public static String getToken(){
 		return singleton().get(Constants.TOKEN_KEY,"");
 	}

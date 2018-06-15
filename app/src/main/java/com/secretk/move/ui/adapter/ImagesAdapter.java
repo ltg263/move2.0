@@ -50,7 +50,8 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesHold
             @Override
             public void onClick(View view) {
                 String key[]={"imgUrl","imgName"};
-                String values[]={lists.get(position).getUrl(),lists.get(position).getName()};
+//                String values[]={lists.get(position).getUrl(),lists.get(position).getName()};
+                String values[]={lists.get(position).getUrl(),"大图"};
                 IntentUtil.startActivity(TemporaryIV.class,key,values);
             }
         });

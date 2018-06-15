@@ -67,6 +67,7 @@
                     android:background="@null"
                     android:maxLength="30"
                     android:padding="@dimen/dp_10"
+                    android:textColorHint="@color/title_gray_aa"
                     android:textCursorDrawable="@drawable/shape_edit_cursor"
                     android:textSize="@dimen/sp_18" />
 

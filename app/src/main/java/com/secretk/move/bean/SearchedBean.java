@@ -30,11 +30,11 @@ public class SearchedBean  extends BaseRes {
 
     }
     public class Projects{
-        public int getTotalScore() {
+        public float getTotalScore() {
             return totalScore;
         }
 
-        public void setTotalScore(int totalScore) {
+        public void setTotalScore(float totalScore) {
             this.totalScore = totalScore;
         }
 
@@ -110,7 +110,7 @@ public class SearchedBean  extends BaseRes {
   String projectChineseName;
   String projectSignature;
   int followerNum;
-  int totalScore;
+  float totalScore;
 
     }
 }

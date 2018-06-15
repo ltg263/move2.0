@@ -68,14 +68,14 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
             @Override
             public void onClick(View view) {
                 String sort = tvSort.getText().toString();
+                pageIndex = 1;
+                loadingDialog.show();
                 if (sort.equals(getString(R.string.sort_love))) {
                     tvSort.setText(getString(R.string.sort_time));
                 } else {
                     tvSort.setText(getString(R.string.sort_love));
                 }
-                pageIndex = 1;
-                loadingDialog.show();
-                getLoadData(null, getString(R.string.sort_time));
+                getLoadData(null, tvSort.getText().toString().trim());
             }
         });
     }
@@ -115,7 +115,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
             node.put("projectId", Integer.valueOf(projectId));
             node.put("pageIndex", pageIndex++);
             if (sort.equals(getString(R.string.sort_love))) {
-                node.put("praiseNum", pageIndex++);//按点赞数排序，需要传值 "praiseNum"
+                node.put("sortField", "praise_num");//需要按点赞数倒序排序的话 增加传入参数ortField 值为字符串“praise_num”
             }
             node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {

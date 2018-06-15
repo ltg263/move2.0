@@ -1,5 +1,6 @@
 package com.secretk.move.apiService;
 
+import android.os.Build;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -55,7 +56,6 @@ public class RetrofitUtil {
     }
 
     public static OkHttpClient genericClient() {
-        LogUtil.w("StringUtil.getVersionCode()"+StringUtil.getVersionCode());
         OkHttpClient httpClient = new OkHttpClient.Builder()
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .addInterceptor(new Interceptor() {
@@ -64,12 +64,12 @@ public class RetrofitUtil {
                         Request request = chain.request()
                                 .newBuilder()
                                 .addHeader("platform", "2")
-                                .addHeader("phoneModel", "iphone6p")
-                                .addHeader("systemVersion", "MEIUI7")
+                                .addHeader("phoneModel", Build.MODEL)
+                                .addHeader("systemVersion", Build.VERSION.SDK)
                                 .addHeader("appVersion", StringUtil.getVersionCode())
-                                .addHeader("operator", "china mobile")
+                                .addHeader("operator", "")
                                 .addHeader("networkType", "wifi")
-                                .addHeader("deviceId", "12acd229822")
+                                .addHeader("deviceId", "")
                                 .build();
                         return chain.proceed(request);
                     }
