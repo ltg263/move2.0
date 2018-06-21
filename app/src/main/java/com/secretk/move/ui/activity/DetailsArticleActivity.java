@@ -91,7 +91,7 @@ public class DetailsArticleActivity extends BaseActivity {
     private int projectId;
     private int praiseNum;
     String postShortDesc="";
-
+    String imgUrl="";
     @Override
     protected int setOnCreate() {
         return R.layout.activity_details_article;
@@ -108,7 +108,7 @@ public class DetailsArticleActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        ShareView.showShare(Constants.ARTICLE_SHARE+Integer.valueOf(postId),tvPostTitle.getText().toString(),postShortDesc);
+        ShareView.showShare(Constants.ARTICLE_SHARE+Integer.valueOf(postId),tvPostTitle.getText().toString(),postShortDesc,imgUrl);
     }
 
     @Override
@@ -196,7 +196,11 @@ public class DetailsArticleActivity extends BaseActivity {
         wvPostShortDesc.loadData(StringUtil.getNewContent(initData.getArticleContents()), "text/html; charset=UTF-8", null);//这种写法可以正确解码
         tvProjectCode.setText(StringUtil.getBeanString(initData.getProjectCode()));
         tvCreateTime.setText("发布于 "+StringUtil.getTimeToM(initData.getCreateTime()));
-        tvDonateNum.setText(initData.getDonateNum() + getString(R.string.sponsor_num));
+        if(initData.getDonateNum()>0){
+            pileLayout.setVisibility(View.VISIBLE);
+            tvDonateNum.setVisibility(View.VISIBLE);
+            tvDonateNum.setText(initData.getDonateNum() + getString(R.string.sponsor_num));
+        }
         praiseNum = initData.getPraiseNum();
         tvPraiseStatus.setText(getString(R.string.like) + String.valueOf(praiseNum));
         ///0-未点赞，1-已点赞，数字
@@ -224,6 +228,9 @@ public class DetailsArticleActivity extends BaseActivity {
                     info.setName(strObj.getString("fileName"));
                     info.setTitle(strObj.getString("extension"));
                     lists.add(info);
+                }
+                if(lists.size()>0){
+                    imgUrl=lists.get(0).getUrl();
                 }
             }
         } catch (JSONException e) {

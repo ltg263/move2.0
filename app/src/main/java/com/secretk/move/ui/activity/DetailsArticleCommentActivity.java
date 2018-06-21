@@ -72,7 +72,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
     private String postId;
     private int pageIndex = 1;
     private String url;
-
+    private String imgUrl="";
     @Override
     protected int setOnCreate() {
         return R.layout.activity_details_article_comment;
@@ -94,7 +94,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
         String shareUrl = getIntent().getStringExtra("share_url");
         String shareTitle = getIntent().getStringExtra("share_title");
         String shareContent = getIntent().getStringExtra("share_content");
-        ShareView.showShare(shareUrl,shareTitle,shareContent);
+        ShareView.showShare(shareUrl,shareTitle,shareContent,imgUrl);
     }
 
     @Override
@@ -167,7 +167,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
             @Override
             public void onCompleted(DetailsArticleCommentBean bean) {
                 DetailsArticleCommentBean.DataBean data = bean.getData();
-                if (data == null) {
+                if (data == null ) {
                     return;
                 }
                 rlNotData.setVisibility(View.VISIBLE);
@@ -240,9 +240,10 @@ public class DetailsArticleCommentActivity extends BaseActivity {
         loadingDialog.show();
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.SAVE_COMMENT)
-                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
-                .addQuery("sign", MD5.Md5(node.toString()))
+                .addPart("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addPart("sign", MD5.Md5(node.toString()))
                 .build();
+        params.setMethod(RxHttpParams.HttpMethod.POST);
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {

@@ -77,6 +77,8 @@ public class ProjectActivity extends BaseActivity {
     TextView tvCreateTime;
     @BindView(R.id.tv_total_score)
     TextView tvTotalScore;
+    @BindView(R.id.tv_bu_zu)
+    TextView tvBuZu;
     @BindView(R.id.rl_grade)
     RelativeLayout rlGrade;
     @BindView(R.id.tv_rater_num)
@@ -178,7 +180,11 @@ public class ProjectActivity extends BaseActivity {
                     tvProjectChineseName.setText("/" + projectInfo.getProjectChineseName());
                     tvCreateTime.setText("发布时间：" + StringUtil.getTimeToM(projectInfo.getCreateTime()));
                     tvFollowerNum.setText(String.valueOf(projectInfo.getFollowerNum()));
-                    tvTotalScore.setText(String.valueOf(projectInfo.getTotalScore()));
+                    if(projectInfo.getTotalScore()!=0){
+                        tvBuZu.setVisibility(View.GONE);
+                        tvTotalScore.setVisibility(View.VISIBLE);
+                        tvTotalScore.setText(String.valueOf(projectInfo.getTotalScore()));
+                    }
                     tvRaterNum.setText(String.valueOf(projectInfo.getRaterNum()));
                     tvProjectSignature.setText(projectInfo.getProjectSignature());
                     // 0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮

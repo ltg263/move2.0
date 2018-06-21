@@ -226,7 +226,6 @@
             android:id="@+id/tv_crack_down"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/garden_crack"
             android:paddingHorizontal="@dimen/dp_10"
             android:paddingVertical="@dimen/dp_2"
             android:visibility="gone"

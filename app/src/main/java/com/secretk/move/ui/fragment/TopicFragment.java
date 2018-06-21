@@ -253,7 +253,7 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
 
     private void sortFollow() {
         fab.setVisibility(View.VISIBLE);
-        qbar.setVisibility(View.VISIBLE);
+        qbar.setVisibility(View.GONE);
         tv_count.setText("共" + 0 + "个币种");
         tv_sort_name.setTextColor(Color.parseColor("#dddddd"));
         tv_sort_follow.setTextColor(Color.parseColor("#3b88f6"));

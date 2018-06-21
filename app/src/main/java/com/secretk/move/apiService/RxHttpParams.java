@@ -17,7 +17,7 @@ public final class RxHttpParams {
 
     private String url;
     private Object paramsBody;
-    private HttpMethod method = HttpMethod.POST;
+    private HttpMethod method = HttpMethod.GET;
     private Map<String, String> queryParams = new HashMap<>();
     private Map<String, RequestBody> partParams = new HashMap<>();
     private MultipartBody.Part mPart;

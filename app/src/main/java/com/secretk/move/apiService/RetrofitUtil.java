@@ -134,6 +134,7 @@ public class RetrofitUtil {
                                      JSONObject jsonObject = new JSONObject(jsonStr);
                                      int code = jsonObject.getInt("code");
                                      String msg = jsonObject.getString("msg");
+//                                     String data = jsonObject.getJSONObject("data").toString();
                                      if ((code != 0 && !msg.equals("Success"))) {
                                          Toast.makeText(MoveApplication.getContext(), msg, Toast.LENGTH_SHORT).show();
                                          callBack.onError(msg);
@@ -165,6 +166,7 @@ public class RetrofitUtil {
                                  }
 
                              } else {
+                                 ToastUtils.getInstance().show(response.raw().toString());
                                  if (callBack != null) {
                                      callBack.onFinish();
                                  }

@@ -101,8 +101,20 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
             }
         });
     }
-
-    private void showZsWind(String token) {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(!SharedUtils.singleton().get("isShowJlWind",false)){
+            if(SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken())){
+                showJlWind(SharedUtils.getToken());
+            }
+        }
+    }
+    /**
+     * 每日奖励
+     * @param token
+     */
+    private void showJlWind(String token) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -117,35 +129,29 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
-                SharedUtils.singleton().put("aaa",true);
                 String find = "";
+                int pop = 1;//1不弹  0弹出
                 try {
                     JSONObject data = new JSONObject(str).getJSONObject("data");
                     if(data!=null){
                         double tokenTodaySum = data.getDouble("tokenTodaySum");
+                        pop = data.getInt("pop");
                         find = String.valueOf(tokenTodaySum);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                if(pop==1 && StringUtil.isBlank(find)){
+                    return;
+                }
+                SharedUtils.singleton().put("isShowJlWind",true);
                 DialogUtils.showDialogHint(MainActivity.this, "今日领取 "+find+" FIND",true, new DialogUtils.ErrorDialogInterface() {
                     @Override
                     public void btnConfirm() {
-
                     }
                 });
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(!SharedUtils.singleton().get("aaa",false)){
-            if(SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken())){
-//                showZsWind(SharedUtils.getToken());
-            }
-        }
     }
 
     @Override

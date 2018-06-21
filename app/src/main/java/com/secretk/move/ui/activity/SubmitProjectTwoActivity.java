@@ -118,46 +118,17 @@ public class SubmitProjectTwoActivity extends BaseActivity {
             ToastUtils.getInstance().show("请完善信息");
             return;
         }
-        JSONObject node = new JSONObject();
-        try {
-            node.put("token", token);
-            node.put("projectIcon", data.getStringExtra("projectIcon"));
-            node.put("projectCode", data.getStringExtra("projectCode"));
-            node.put("projectEnglishName", data.getStringExtra("projectEnglishName"));
-            node.put("projectChineseName", data.getStringExtra("projectChineseName"));
-            node.put("websiteUrl", data.getStringExtra("websiteUrl"));
-            node.put("issueNum", Integer.valueOf(data.getStringExtra("issueNum")));
-            node.put("issueDateStr", data.getStringExtra("issueDateStr"));
-            node.put("listed", Integer.valueOf(data.getStringExtra("listed")));
-            node.put("whitepaperUrl", etInput01.getText().toString().trim());
-            node.put("projectTypeId", projectTypes.get(postion).getProjectTypeId());//项目分类ID
-            node.put("projectTypeName", projectTypes.get(postion).getProjectTypeName());//项目分类名称
-            node.put("projectDesc", etContact.getText().toString().trim());
-            node.put("submitUserType", sharedUtils.get(Constants.USER_TYPE, 1));//1-普通用户；2-项目方；3-评测机构；4-机构用户
-            node.put("submitUserContactInfo", sharedUtils.get(Constants.MOBILE,""));//提交人联系信息   手机号
-            node.put("projectSignature", etInput02.getText().toString().trim());//项目简介
-            node.put("submitReason", "无");//推荐理由
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.SUBMIT_PROJECT)//PROJECT_TYPE_LIST
-                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
-                .addQuery("sign", MD5.Md5(node.toString()))
-                .build();
-        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
-            @Override
-            public void onCompleted(String str) {
-                IntentUtil.startPublishSucceedActivity(String.valueOf(0),
-                        getString(R.string.submit_project_title), getResources().getString(R.string.submit_project_jg),
-                        getResources().getString(R.string.not_go_look),Constants.PublishSucceed.PUBLISH_PROJECT);
-            }
+        String key[] = {"projectIcon","projectCode","projectEnglishName","projectChineseName","websiteUrl",
+                "issueNum","issueDateStr","listed","whitepaperUrl","projectTypeId","projectTypeName","projectDesc","projectSignature"};
 
-            @Override
-            public void onFinish() {
-                loadingDialog.dismiss();
-            }
-        });
+        String values[] = {data.getStringExtra("projectIcon"),data.getStringExtra("projectCode") ,
+                data.getStringExtra("projectEnglishName"),data.getStringExtra("projectChineseName"),
+                data.getStringExtra("websiteUrl"),data.getStringExtra("issueNum"),
+                data.getStringExtra("issueDateStr"),data.getStringExtra("listed"),
+                etInput01.getText().toString().trim(),String.valueOf(projectTypes.get(postion).getProjectTypeId()),
+                projectTypes.get(postion).getProjectTypeName(),etContact.getText().toString().trim(),
+                etInput02.getText().toString().trim()};
+        IntentUtil.startActivity(SubmitProjectThreeActivity.class,key,values);
     }
     int postion=-1;
     @OnClick({R.id.ll_sort_name})

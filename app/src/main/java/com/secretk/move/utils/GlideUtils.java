@@ -16,12 +16,16 @@ import com.secretk.move.customview.GlideCircleTransform;
  *  http://pic.qufen.top/4481528959156_.pic.jpg
  http://pic.qufen.top/4481528959156_.pic.jpg?imageView2/1/w/187
  http://pic.qufen.top/4481528959156_.pic.jpg?imageView2/1/w/342/h/187
-
-
  */
 public class GlideUtils {
     static String ImgUrlMix = "?imageView2/1/w/187";
     static String ImgUrlMax = "?imageView2/1/w/342/h/187";
+    /**
+     * 加载本地图片
+     */
+    public static void loadUrl(Context context,ImageView img, String url) {
+        Glide.with(context).load(url).into(img);
+    }
     /**
      * 加载本地图片
      */

@@ -89,7 +89,6 @@ public class NetUtil {
     public static void addSaveFollow(TextView tvSaveFollow , int followType, int followedId, final SaveFollowImp follow){
         String statusStr = tvSaveFollow.getText().toString().trim();
         String token = SharedUtils.singleton().get(Constants.TOKEN_KEY,"");
-
         tvSaveFollow.setSelected(!statusStr.equals(BaseManager.app.getString(R.string.follow_status_1)));
         int statusCode=0;
         if(statusStr.equals(BaseManager.app.getString(R.string.follow_status_1))){
@@ -123,11 +122,15 @@ public class NetUtil {
             public void onCompleted(String str) {
                 try {
                     JSONObject obj = new JSONObject(str);
-                    int followStatus = obj.getJSONObject("data").getInt("followStatus");
-                    if(followStatus==1){
-                        follow.finishFollow(BaseManager.app.getString(R.string.follow_status_1));
+                    if (obj.getJSONObject("data")!=null) {
+                        int followStatus = obj.getJSONObject("data").getInt("followStatus");
+                        if(followStatus==1){
+                            follow.finishFollow(BaseManager.app.getString(R.string.follow_status_1));
+                        }else{
+                            follow.finishFollow(BaseManager.app.getString(R.string.follow_status_0));
+                        }
                     }else{
-                        follow.finishFollow(BaseManager.app.getString(R.string.follow_status_0));
+                        follow.finishFollow(Constants.FOLLOW_ERROR);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -180,8 +183,12 @@ public class NetUtil {
             public void onCompleted(String str) {
                 try {
                     JSONObject obj = new JSONObject(str);
-                    int praiseNum = obj.getJSONObject("data").getInt("praiseNum");
-                    follow.finishFollow(String.valueOf(praiseNum),!isPraise);
+                    if(obj.getJSONObject("data")!=null){
+                        int praiseNum = obj.getJSONObject("data").getInt("praiseNum");
+                        follow.finishFollow(String.valueOf(praiseNum),!isPraise);
+                    }else{
+                        follow.finishFollow(Constants.PRAISE_ERROR,isPraise);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -226,15 +233,18 @@ public class NetUtil {
             public void onCompleted(String str) {
                 try {
                     JSONObject obj = new JSONObject(str);
-                    int praiseNum = obj.getJSONObject("data").getInt("praiseNum");
-                    follow.finishFollow(String.valueOf(praiseNum),!isLove);
+                    if( obj.getJSONObject("data")!=null){
+                        int praiseNum = obj.getJSONObject("data").getInt("praiseNum");
+                        follow.finishFollow(String.valueOf(praiseNum),!isLove);
+                    }else{
+                        follow.finishFollow(Constants.PRAISE_ERROR,isLove);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
             @Override
             public void onError(String message) {
-                LogUtil.w("message:"+message);
                 follow.finishFollow(Constants.PRAISE_ERROR,isLove);
             }
         });
@@ -280,8 +290,12 @@ public class NetUtil {
                 try {
                     JSONObject obj = new JSONObject(str);
                     //0-未收藏，1-已收藏，数字
-                    int followStatus = obj.getJSONObject("data").getInt("collectStatus");
-                    collect.finishCollect("",followStatus==0?true:false);
+                    if(obj.getJSONObject("data")!=null){
+                        int followStatus = obj.getJSONObject("data").getInt("collectStatus");
+                        collect.finishCollect("",followStatus==0?true:false);
+                    }else {
+                        collect.finishCollect(Constants.COLLECT_ERROR,true);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -323,9 +337,13 @@ public class NetUtil {
             public void onCompleted(String str) {
                 try {
                     JSONObject obj = new JSONObject(str);
-                    double commendationNum = obj.getJSONObject("data").getDouble("commendationNum");
-                    int donateNum = obj.getJSONObject("data").getInt("donateNum");
-                    collect.finishCommendation(String.valueOf(Math.round(commendationNum)),String.valueOf(donateNum),true);
+                    if(obj.getJSONObject("data")!=null){
+                        double commendationNum = obj.getJSONObject("data").getDouble("commendationNum");
+                        int donateNum = obj.getJSONObject("data").getInt("donateNum");
+                        collect.finishCommendation(String.valueOf(Math.round(commendationNum)),String.valueOf(donateNum),true);
+                    }else{
+                        collect.finishCommendation("","",false);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

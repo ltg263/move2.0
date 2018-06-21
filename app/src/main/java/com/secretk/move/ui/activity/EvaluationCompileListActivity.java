@@ -88,17 +88,18 @@ public class EvaluationCompileListActivity extends BaseActivity {
         for(int i=0;i<sysEvaluationModel.size();i++){
             JSONObject node = new JSONObject();
             float score = sysEvaluationModel.get(i).getTotalScore();
-            String strValue;
-            if(score==(int)score){
-                strValue=String.valueOf((int)score);
-            }else{
-                strValue=String.valueOf(score);
-            }
+//            String strValue;
+//            if(score==(int)score){
+//                strValue=String.valueOf((int)score);
+//            }else{
+//                strValue=String.valueOf(score);
+//            }
             try {
                 node.put("modelId", sysEvaluationModel.get(i).getModelId());
                 node.put("modelName", sysEvaluationModel.get(i).getDetailName());
                 node.put("modelWeight", sysEvaluationModel.get(i).getDetailWeight());
-                node.put("score", strValue);
+//                node.put("score", strValue);
+                node.put("score", score);
                 professionalEvaDetail.put(node);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -122,9 +123,9 @@ public class EvaluationCompileListActivity extends BaseActivity {
             float weight = sysEvaluationModel.get(i).getDetailWeight()/100f;
             comprehensiveGrade += grade * weight;
         }
-        if (comprehensiveGrade == (int) comprehensiveGrade) {
-            return (int) comprehensiveGrade;
-        }
+//        if (comprehensiveGrade == (int) comprehensiveGrade) {
+//            return (int) comprehensiveGrade;
+//        }
         return Double.valueOf(String.format("%.1f", comprehensiveGrade));
     }
 
@@ -132,7 +133,7 @@ public class EvaluationCompileListActivity extends BaseActivity {
         for (int i = 0; i < sysEvaluationModel.size(); i++) {
             SysEvaluationModelBean.DataBean.ModeDetailListBean bean = sysEvaluationModel.get(i);
             if (tvEvaluationName.contains(bean.getDetailName())) {
-                bean.setTotalScore(value);
+                bean.setTotalScore(Float.valueOf(String.format("%.1f", value)));
             }
         }
         pbComprehensiveEvaluation.setTvThree(getComprehensiveGrade(), 16, R.color.app_background);

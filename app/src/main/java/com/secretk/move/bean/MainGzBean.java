@@ -159,7 +159,7 @@ public class MainGzBean extends BaseRes{
                 private String projectEnglishName;
                 private String projectChineseName;
                 private String projectSignature;
-                private int totalScore;
+                private float totalScore;
                 private String postTitle;
                 private int postType;
                 private String postShortDesc;
@@ -255,11 +255,11 @@ public class MainGzBean extends BaseRes{
                     this.projectSignature = projectSignature;
                 }
 
-                public int getTotalScore() {
+                public float getTotalScore() {
                     return totalScore;
                 }
 
-                public void setTotalScore(int totalScore) {
+                public void setTotalScore(float totalScore) {
                     this.totalScore = totalScore;
                 }
 

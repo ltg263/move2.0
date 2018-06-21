@@ -104,6 +104,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
     private ProgressAdapter adapterProgress;
     private String postShortDesc;
     private String shareUrl;
+    private String imgUrl="";
 
     @Override
     protected int setOnCreate() {
@@ -123,7 +124,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
     protected void OnToolbarRightListener() {
 //        String str =  postShortDesc.substring(0, 10);
 //        1对应为值为“简单评测", 2 为 "ALL-专业评测" 3 为 "PART-专业评测" 4 为 "ALL-专业评测
-        ShareView.showShare(shareUrl,tvPostTitle.getText().toString(),postShortDesc);
+        ShareView.showShare(shareUrl,tvPostTitle.getText().toString(),postShortDesc,imgUrl);
     }
 
     @Override
@@ -219,6 +220,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
         wvPostShortDesc.loadData(StringUtil.getNewContent(evaluationDetail.getEvauationContent()), "text/html; charset=UTF-8", null);//这种写法可以正确解码
         tvCreateTime.setText("发布于 "+StringUtil.getTimeToM(evaluationDetail.getCreateTime()));
         if(evaluationDetail.getDonateNum()>0){
+            pileLayout.setVisibility(View.VISIBLE);
+            tvDonateNum.setVisibility(View.VISIBLE);
             tvDonateNum.setText(evaluationDetail.getDonateNum() + getString(R.string.sponsor_num));
         }
         praiseNum = evaluationDetail.getPraiseNum();
@@ -240,7 +243,6 @@ public class DetailsReviewAllActivity extends BaseActivity {
 
 //        modelType = 1-简单评测；2-全面系统专业评测;3-部分系统专业评测；4-专业评测-自定义类型
         //进度名称
-
         try {
             String modelType = getResources().getString(R.string.comprehensive_evaluation);
             if(evaluationDetail.getModelType()==Constants.ModelType.MODEL_TYPE_PART){
@@ -292,6 +294,9 @@ public class DetailsReviewAllActivity extends BaseActivity {
                     lists.add(info);
                 }
 //                rvImg.setVisibility(View.VISIBLE);
+            }
+            if(lists.size()>0){
+                imgUrl = lists.get(0).getUrl();
             }
             adapter.setData(lists);
         } catch (JSONException e) {
@@ -417,7 +422,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
                 window.showAtLocation(findViewById(R.id.head_app_server), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); // 设置layout在PopupWindow中显示的位置
                 break;
             case R.id.tv_comments_num:
-                IntentUtil.startCommentActivity(String.valueOf(postId),Constants.ARTICLE_COMMENT_LIST,
+                IntentUtil.startCommentActivity(String.valueOf(postId),Constants.EVLUATION_COMMENT_LIST,
                         shareUrl,tvPostTitle.getText().toString(),postShortDesc);
                 break;
         }

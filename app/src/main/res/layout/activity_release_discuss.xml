@@ -65,6 +65,7 @@
                     android:background="@null"
                     android:maxLength="30"
                     android:padding="@dimen/dp_10"
+                    android:singleLine="true"
                     android:textColorHint="@color/title_gray_aa"
                     android:textCursorDrawable="@drawable/shape_edit_cursor"
                     android:textSize="@dimen/sp_18" />
@@ -81,8 +82,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_5"
                     android:background="@null"
-                    android:hint="请发表可靠信息，不造谣，不传谣。字数小于2000字。"
-                    android:maxLength="2000"
+                    android:hint="请发表可靠信息，不造谣，不传谣。字数小于1000字。"
+                    android:maxLength="1000"
                     android:padding="@dimen/dp_10"
                     android:textColorHint="@color/title_gray_aa"
                     android:textCursorDrawable="@drawable/shape_edit_cursor"

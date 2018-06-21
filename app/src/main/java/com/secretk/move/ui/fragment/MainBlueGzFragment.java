@@ -21,7 +21,6 @@ import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.MainGzFragmentRecyclerAdapter;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -93,7 +92,6 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LogUtil.w("--------------------------------");
                 if(isLoginZt){
                     pageIndex=1;
                     onFirstUserVisible();

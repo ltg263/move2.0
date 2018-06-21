@@ -237,6 +237,13 @@
     <string name="submit_project_two_33">0/3000</string>
     <string name="submit_project_jg">项目已提交，请耐心等待审核结果！</string>
     <string name="submit_project_back">回首页</string>
+    <string name="submit_project_three_1">利益相关</string>
+    <string name="submit_project_three_12">普通用户</string>
+    <string name="submit_project_three_13">项目方</string>
+    <string name="submit_project_three_14">投资者</string>
+    <string name="submit_project_three_2">联系方式</string>
+    <string name="submit_project_three_22">请填写联系方式</string>
+    <string name="submit_project_three_3">请在此填写推荐理由...</string>
     <!--空-->
     <string name="not_message">什么消息都木有～</string>
     <string name="not_collect">什么都木有收藏～</string>

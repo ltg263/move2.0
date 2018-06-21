@@ -82,6 +82,8 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
             int detailWeight = object.getInt("modelWeight");
 //            int raterNum = object.getInt("raterNum");
             double totalScor = object.getDouble("score");
+            totalScor= Double.valueOf(String.format("%.1f", totalScor));
+
 //            String two = "/ " + String.valueOf(detailWeight) + "% (" + raterNum + "人)";
             String two = "/ " + String.valueOf(detailWeight) + "%";
             pbProject.setAllTv(projectName, two, totalScor);

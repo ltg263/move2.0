@@ -54,7 +54,7 @@ public class InvitePosterActivity extends BaseActivity {
         imgUrl = getIntent().getStringExtra("imgUrl");
         ImageView iv = findViewById(R.id.iv);
         if (imgName.equals("邀请海报")) {
-            GlideUtils.loadSideMaxImage(this, iv, imgUrl);
+            GlideUtils.loadUrl(this, iv, imgUrl);
         }
         tvBnt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +81,7 @@ public class InvitePosterActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
 //            ImageUtils.galleryAddPic(InvitePosterActivity.this,path);
+            loadingDialog.dismiss();
             ToastUtils.getInstance().show("保存成功");
         }
     };
@@ -91,6 +92,7 @@ public class InvitePosterActivity extends BaseActivity {
             if (!new File(Constants.LOCAL_PATH).exists()) {
                 new File(Constants.LOCAL_PATH).mkdirs();
             }
+            loadingDialog.show();
             ImageUtils.downloadPicture(imgUrl, handler, path);
         }
     }

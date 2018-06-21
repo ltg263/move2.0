@@ -125,7 +125,7 @@ public class ProjectHomeBean extends BaseRes{
             private int listed;
             private long issueDate;
             private String issueDateStr;
-            private int issueNum;
+            private long issueNum;
             private String whitepaperUrl;
             private String projectTypeName;
             private int projectTypeId;
@@ -252,11 +252,11 @@ public class ProjectHomeBean extends BaseRes{
                 this.issueDateStr = issueDateStr;
             }
 
-            public int getIssueNum() {
+            public long getIssueNum() {
                 return issueNum;
             }
 
-            public void setIssueNum(int issueNum) {
+            public void setIssueNum(long issueNum) {
                 this.issueNum = issueNum;
             }
 

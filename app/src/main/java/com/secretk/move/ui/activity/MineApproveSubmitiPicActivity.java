@@ -112,9 +112,10 @@ public class MineApproveSubmitiPicActivity extends BaseActivity {
         }
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.ID_CARD)
-                .addPart("upfile ", StringUtil.getMimeType(file.getName()) ,file)
+                .addPart("upfile", StringUtil.getMimeType(file.getName()) ,file)
                 .build();
         loadingDialog.show();
+        params.setMethod(RxHttpParams.HttpMethod.POST);
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
@@ -152,9 +153,10 @@ public class MineApproveSubmitiPicActivity extends BaseActivity {
         }
         RxHttpParams params = new RxHttpParams.Build()
                 .url(url)
-                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
-                .addQuery("sign", MD5.Md5(node.toString()))
+                .addPart("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addPart("sign", MD5.Md5(node.toString()))
                 .build();
+        params.setMethod(RxHttpParams.HttpMethod.POST);
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {

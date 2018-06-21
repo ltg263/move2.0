@@ -21,6 +21,8 @@
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/dp_4"
         android:paddingLeft="@dimen/dp_10"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/title_gray"
         android:paddingTop="@dimen/dp_10"
         android:text="意见描述" />
 
@@ -49,6 +51,8 @@
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/dp_4"
         android:paddingLeft="@dimen/dp_10"
+        android:textColor="@color/title_gray"
+        android:textSize="@dimen/sp_14"
         android:paddingTop="@dimen/dp_10"
         android:text="联系方式" />
 

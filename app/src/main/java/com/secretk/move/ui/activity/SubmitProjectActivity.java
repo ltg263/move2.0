@@ -171,10 +171,11 @@ public class SubmitProjectActivity extends BaseActivity {
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.UPLOAD_USER_ICON_FILE)
                 .addPart("token", token)
-                .addPart("imgtype",Constants.UPLOADIMG_TYPE.PROJECT_ICON)
+                .addPart(Constants.UPLOADIMG_TYPE.IMG_TYPE_KEY,Constants.UPLOADIMG_TYPE.PROJECT_ICON)
                 .addPart("uploadfile", StringUtil.getMimeType(file.getName()) ,file)
                 .build();
         loadingDialog.show();
+        params.setMethod(RxHttpParams.HttpMethod.POST);
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {

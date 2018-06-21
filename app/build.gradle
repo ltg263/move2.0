@@ -20,7 +20,7 @@ MobSDK {
 
                 sortId 1
             }
-            QQ {
+            /*QQ {
                 appId ""
                 appKey ""
                 shareByAppClient true
@@ -31,7 +31,7 @@ MobSDK {
                 appKey ""
                 shareByAppClient true
                 sortId 3
-            }
+            }*/
         }
     }
 
@@ -61,8 +61,8 @@ android {
         applicationId "com.secretk.move"
         minSdkVersion 19
         targetSdkVersion 21
-        versionCode 1
-        versionName "0.7"
+        versionCode 4
+        versionName "0.8.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

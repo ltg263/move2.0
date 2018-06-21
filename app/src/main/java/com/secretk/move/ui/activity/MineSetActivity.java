@@ -3,9 +3,7 @@ package com.secretk.move.ui.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -251,20 +249,6 @@ public class MineSetActivity extends BaseActivity {
 
     }
 
-    public String getMimeType(String fileName) {
-        String result = "";
-        int extPos = fileName.lastIndexOf(".");
-        if (extPos != -1) {
-            String ext = fileName.substring(extPos + 1);
-            result = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext);
-        }
-        if (TextUtils.isEmpty(result)) {
-            result = "application/octet-stream";
-        }
-
-        return result;
-    }
-
     @Override
     protected void OnToolbarRightListener() {
         if (PicUtil.uritempFile == null) {
@@ -282,10 +266,11 @@ public class MineSetActivity extends BaseActivity {
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.UPLOAD_USER_ICON_FILE)
                 .addPart("token", token)
-                .addPart("uploadfile", getMimeType(file.getName()), file)
-                .addPart("imgtype", Constants.UPLOADIMG_TYPE.USER_ICON)
+                .addPart("uploadfile", StringUtil.getMimeType(file.getName()), file)
+                .addPart(Constants.UPLOADIMG_TYPE.IMG_TYPE_KEY, Constants.UPLOADIMG_TYPE.USER_ICON)
                 .build();
         loadingDialog.show();
+        params.setMethod(RxHttpParams.HttpMethod.POST);
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {

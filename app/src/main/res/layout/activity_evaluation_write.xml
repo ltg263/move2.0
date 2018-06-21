@@ -27,11 +27,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/rv_evaluation_tags"
-            android:layout_alignParentTop="true">
+            android:layout_alignParentTop="true"
+            android:fillViewport="true"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <com.secretk.move.view.ProgressBarStyleView
@@ -52,6 +54,7 @@
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/dp_10"
                     android:textColor="@color/title_gray"
+                    android:maxLength="10000"
                     android:textColorHint="@color/title_gray_88"
                     android:textSize="@dimen/sp_14" />
 

@@ -205,7 +205,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
 
     @Override
     public void onItemClick(View view, int postion) {
-//        releasePicAdapter.removeIndex(postion);
+        releasePicAdapter.removeIndex(postion);
     }
 
     @Override
@@ -263,9 +263,10 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         }
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.RELEASE_DISCUSS)
-                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
-                .addQuery("sign", MD5.Md5(node.toString()))
+                .addPart("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addPart("sign", MD5.Md5(node.toString()))
                 .build();
+        params.setMethod(RxHttpParams.HttpMethod.POST);
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
@@ -296,11 +297,12 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
             return;
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.UPLOAD_IMG_FILE)
+                .url(Constants.UPLOAD_USER_ICON_FILE)
                 .addPart("token", token)
                 .addPart("uploadfile", StringUtil.getMimeType(file.getName()), file)
-                .addPart("imgtype", Constants.UPLOADIMG_TYPE.POST_ICON)
+                .addPart(Constants.UPLOADIMG_TYPE.IMG_TYPE_KEY, Constants.UPLOADIMG_TYPE.POST_ICON)
                 .build();
+        params.setMethod(RxHttpParams.HttpMethod.POST);
         RetrofitUtil.request(params, UpImgBean.class, new HttpCallBackImpl<UpImgBean>() {
             @Override
             public void onCompleted(UpImgBean data) {

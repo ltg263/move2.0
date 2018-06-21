@@ -247,6 +247,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:visibility="gone"
                         android:padding="@dimen/dp_10"
                         app:PileLayout_pileWidth="@dimen/dp_25" />
 
@@ -254,6 +255,7 @@
                         android:id="@+id/tv_donate_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_gravity="center_horizontal"
                         android:textColor="@color/title_gray_66" />
                 </LinearLayout>

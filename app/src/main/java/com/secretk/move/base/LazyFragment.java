@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.view.LoadingDialog;
 
@@ -69,7 +68,6 @@ public abstract class LazyFragment extends Fragment {
     public void onResume() {
         super.onResume();
         isLoginZt = sharedUtils.get(Constants.IS_LOGIN_KEY,false);
-        LogUtil.w("isLoginZt:"+isLoginZt);
         if(isLoginZt){
             token = sharedUtils.get(Constants.TOKEN_KEY,"");
         }else{

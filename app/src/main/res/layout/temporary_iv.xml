@@ -37,8 +37,7 @@
                 android:id="@+id/iv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/activity_splash_backgroud" />
+                android:scaleType="fitCenter" />
 
         </LinearLayout>
 
@@ -62,7 +61,7 @@
         android:id="@+id/iv_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:src="@drawable/activity_splash_backgroud"
         android:visibility="gone" />
 

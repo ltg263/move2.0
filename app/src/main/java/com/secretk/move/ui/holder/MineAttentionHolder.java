@@ -80,7 +80,7 @@ public class MineAttentionHolder extends RecyclerViewBaseHolder {
     private void showProject(MineAttentionBean.DataBean.MyFollowsBean.RowsBean rowsBean, Context context) {
         llProject.setVisibility(View.VISIBLE);
         llUser.setVisibility(View.GONE);
-        GlideUtils.loadCircleProjectUrl(context,imgP,Constants.UPLOAD_IMG_FILE+StringUtil.getBeanString(rowsBean.getProjectIcon()));
+        GlideUtils.loadCircleProjectUrl(context,imgP,Constants.BASE_IMG_URL+StringUtil.getBeanString(rowsBean.getProjectIcon()));
         tvNameP.setText(StringUtil.getBeanString(rowsBean.getProjectCode()));
         tvNamePf.setText("/"+StringUtil.getBeanString(rowsBean.getProjectChineseName()));
         tvNamePfs.setText(String.valueOf(rowsBean.getTotalScore())+"分");
@@ -90,7 +90,7 @@ public class MineAttentionHolder extends RecyclerViewBaseHolder {
         llProject.setVisibility(View.GONE);
         llUser.setVisibility(View.VISIBLE);
         tvSaveFollow.setText(BaseManager.app.getResources().getString(R.string.follow_status_1));
-        GlideUtils.loadCircleUserUrl(context,img,Constants.UPLOAD_IMG_FILE+StringUtil.getBeanString(rowsBean.getFollowedUserIcon()));
+        GlideUtils.loadCircleUserUrl(context,img,Constants.BASE_IMG_URL+StringUtil.getBeanString(rowsBean.getFollowedUserIcon()));
         tvName.setText(StringUtil.getBeanString(rowsBean.getFollowedUserName()));
         tvLastContent.setText(StringUtil.getBeanString(rowsBean.getFollowedUserSignature()));
     }

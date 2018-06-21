@@ -110,7 +110,7 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 if (array.length() > 0) {
                     tagName = array.getJSONObject(0).getString("tagName");
                 }
-                tvDrackDown.setText(tagName);
+                tvDrackDown.setText("#"+tagName+"#");
                 tvDrackDown.setVisibility(View.VISIBLE);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -226,7 +226,7 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         return tvIsFollw.getText().toString();
     }
     //头部
-    public void showFollow(int postType,int totalScore){
+    public void showFollow(int postType,float totalScore){
         switch (postType){
             case 0:
                 tvScore.setVisibility(View.INVISIBLE);

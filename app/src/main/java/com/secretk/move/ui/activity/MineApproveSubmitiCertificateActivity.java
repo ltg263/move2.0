@@ -154,10 +154,11 @@ public class MineApproveSubmitiCertificateActivity extends BaseActivity {
         }
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.CARD_TI_FORM_AGAIN)
-                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
-                .addQuery("sign", MD5.Md5(node.toString()))
+                .addPart("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addPart("sign", MD5.Md5(node.toString()))
                 .build();
         loadingDialog.show();
+        params.setMethod(RxHttpParams.HttpMethod.POST);
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {

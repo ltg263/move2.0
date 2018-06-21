@@ -48,12 +48,12 @@ public class TemporaryIV extends BaseActivity {
         String imgName = getIntent().getStringExtra("imgName");
         ImageView iv = findViewById(R.id.iv);
         if (imgName.equals("邀请海报")) {
-            GlideUtils.loadSideMaxImage(this, iv, getIntent().getStringExtra("imgUrl"));
+//            GlideUtils.loadSideMaxImage(this, iv, getIntent().getStringExtra("imgUrl"));
+            Glide.with(this).load(getIntent().getStringExtra("imgUrl")).into(iv);
         } else {
             rl.setVisibility(View.GONE);
             ivImg.setVisibility(View.VISIBLE);
-            Glide.with(this).load(Constants.BASE_IMG_URL + getIntent().getStringExtra("imgUrl")).into(ivImg);
-//            GlideUtils.loadSideMaxImage(this, ivImg, Constants.BASE_IMG_URL + getIntent().getStringExtra("imgUrl"));
+            GlideUtils.loadUrl(this, ivImg, Constants.BASE_IMG_URL + getIntent().getStringExtra("imgUrl"));
         }
     }
 

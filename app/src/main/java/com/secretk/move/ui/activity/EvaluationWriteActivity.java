@@ -160,7 +160,7 @@ public class EvaluationWriteActivity extends BaseActivity  implements ItemClickL
         switch (view.getId()) {
             case R.id.localphoto:
                 intent = new Intent(this, SelectedPicActivity.class);
-                intent.putExtra("max_pic", 9);
+                intent.putExtra("max_pic", 99);
                 intent.putExtra("current_pic", 0);
                 startActivity(intent);
                 break;
@@ -262,9 +262,10 @@ public class EvaluationWriteActivity extends BaseActivity  implements ItemClickL
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.UPLOAD_USER_ICON_FILE)
                 .addPart("token", token)
-                .addPart("uploadfile ", StringUtil.getMimeType(file.getName()), file)
+                .addPart("uploadfile", StringUtil.getMimeType(file.getName()), file)
                 .addPart(Constants.UPLOADIMG_TYPE.IMG_TYPE_KEY, Constants.UPLOADIMG_TYPE.POST_ICON)
                 .build();
+        params.setMethod(RxHttpParams.HttpMethod.POST);
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
@@ -323,9 +324,10 @@ public class EvaluationWriteActivity extends BaseActivity  implements ItemClickL
         loadingDialog.show();
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.SAVE_EVALUATION)
-                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
-                .addQuery("sign", MD5.Md5(node.toString()))
+                .addPart("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addPart("sign", MD5.Md5(node.toString()))
                 .build();
+        params.setMethod(RxHttpParams.HttpMethod.POST);
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {

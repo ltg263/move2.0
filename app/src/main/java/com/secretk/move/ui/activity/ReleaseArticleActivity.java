@@ -145,7 +145,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.UPLOAD_USER_ICON_FILE)
                 .addPart("token", token)
-                .addPart("uploadfile ", StringUtil.getMimeType(file.getName()), file)
+                .addPart("uploadfile", StringUtil.getMimeType(file.getName()), file)
                 .addPart(Constants.UPLOADIMG_TYPE.IMG_TYPE_KEY, Constants.UPLOADIMG_TYPE.POST_ICON)
                 .build();
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
@@ -193,9 +193,10 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         loadingDialog.show();
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.RELEASE_ARTICLE)
-                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
-                .addQuery("sign", MD5.Md5(node.toString()))
+                .addPart("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addPart("sign", MD5.Md5(node.toString()))
                 .build();
+        params.setMethod(RxHttpParams.HttpMethod.POST);
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
@@ -220,7 +221,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
     @OnClick(R.id.localphoto)
     public void localphoto(View view) {
         Intent intent = new Intent(this, SelectedPicActivity.class);
-        intent.putExtra("max_pic", 3);
+        intent.putExtra("max_pic", 99);
 //        intent.putExtra("current_pic", releasePicAdapter.getItemCount());
         intent.putExtra("current_pic", 0);
         startActivity(intent);
@@ -232,7 +233,6 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
     @RequiresApi(api = Build.VERSION_CODES.FROYO)
     @OnClick(R.id.takephoto)
     public void takephoto(View view) {
-
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         picPath = getExternalFilesDir(null).getAbsolutePath() + "/" + System.currentTimeMillis() + ".png";
         Uri uri = Uri.fromFile(new File(picPath));
