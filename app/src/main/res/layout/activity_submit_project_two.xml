@@ -127,6 +127,7 @@
                 android:background="@null"
                 android:hint="@string/submit_project_two_44"
                 android:textColor="@color/title_gray"
+                android:maxLength="30"
                 android:textColorHint="@color/title_gray_88"
                 android:textCursorDrawable="@drawable/shape_edit_cursor"
                 android:textSize="@dimen/sp_14" />

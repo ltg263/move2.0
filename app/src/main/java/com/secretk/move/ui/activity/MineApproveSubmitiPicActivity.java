@@ -15,6 +15,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PicUtil;
@@ -106,16 +107,17 @@ public class MineApproveSubmitiPicActivity extends BaseActivity {
             return;
         }
         File file = new File(PicUtil.uritempFile.getPath());
+        LogUtil.w("当前文件大小："+PicUtil.getPrintSize(file.length()));
         if(!file.exists()){
             ToastUtils.getInstance().show("照片上传失败，请重新上传");
             return;
         }
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.ID_CARD)
+                .method(RxHttpParams.HttpMethod.POST)
                 .addPart("upfile", StringUtil.getMimeType(file.getName()) ,file)
                 .build();
         loadingDialog.show();
-        params.setMethod(RxHttpParams.HttpMethod.POST);
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
@@ -132,6 +134,7 @@ public class MineApproveSubmitiPicActivity extends BaseActivity {
 
             @Override
             public void onError(String message) {
+                ToastUtils.getInstance().show("证件上传失败，请重新上传");
                 loadingDialog.dismiss();
             }
         });

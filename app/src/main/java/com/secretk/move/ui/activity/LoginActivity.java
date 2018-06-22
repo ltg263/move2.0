@@ -97,12 +97,14 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick({R.id.tv_verification_code_login, R.id.tv_forget_password, R.id.but_login,R.id.iv_visible})
     public void onViewClicked(View view) {
+        String key[] = {"phone"};
+        String values[] = {edPhone.getText().toString()};
         switch (view.getId()) {
             case R.id.tv_verification_code_login:
-                IntentUtil.startActivity(VerificationLoginActivity.class);
+                IntentUtil.startActivity(VerificationLoginActivity.class,key,values);
                 break;
             case R.id.tv_forget_password:
-                IntentUtil.startActivity(ForgetPasswordActivity.class);
+                IntentUtil.startActivity(ForgetPasswordActivity.class,key,values);
                 break;
             case R.id.but_login:
                 login();

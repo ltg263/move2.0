@@ -182,8 +182,7 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
                 if(postion==1){
                     pbTechnicalFramework.setVisibility(View.VISIBLE);
                     pbTechnicalFramework.setProgressDrawable(R.drawable.pb_view_jskj,R.color.jskj);
-                    pbTechnicalFramework.setAllTv(detailName,
-                            "/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
+                    pbTechnicalFramework.setAllTv(detailName,"/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
                 }
 //            if(getString(R.string.team_strength).equals(detailName)){
                 if(postion==2){
@@ -195,7 +194,7 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
                 if(postion==3){
                     pbProjectSchedule.setVisibility(View.VISIBLE);
                     pbProjectSchedule.setProgressDrawable(R.drawable.pb_view_xmjd,R.color.xmjd);
-                    pbProjectSchedule.setAllTv(getResources().getString(R.string.project_schedule),"/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
+                    pbProjectSchedule.setAllTv(detailName,"/ "+bean.getDetailWeight()+"% ("+bean.getRaterNum()+"人)",bean.getTotalScore());
                 }
 //            if(getString(R.string.speculative_risk).equals(detailName)){
                 if(postion==4){

@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -86,6 +87,8 @@ public class HomeActivity extends BaseActivity {
     public static final int HOME_DISCUSS_FRAGMENT = 1;
     public static final int HOME_ARTICLE_FRAGMENT = 2;
     String userId;
+    @BindView(R.id.ll_fans)
+    LinearLayout llFans;
     private String homePageTitle;
     private String currentType;
 
@@ -120,9 +123,9 @@ public class HomeActivity extends BaseActivity {
         adapter.addFragment(articleFragment, getString(R.string.article));
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
-        if(StringUtil.isNotBlank(currentType)){
+        if (StringUtil.isNotBlank(currentType)) {
             viewPager.setCurrentItem(Integer.valueOf(currentType));
-        }else{
+        } else {
             viewPager.setCurrentItem(1);
         }
         viewPager.setOffscreenPageLimit(3);
@@ -141,7 +144,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        if(!NetUtil.isNetworkAvailable()){
+        if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
         }
@@ -149,7 +152,7 @@ public class HomeActivity extends BaseActivity {
         try {
             node.put("token", token);
             //查看自己不用传userId只用token就可以，查看他人需要传入他人userID
-            if(StringUtil.isNotBlank(userId)){
+            if (StringUtil.isNotBlank(userId)) {
                 node.put("userId", Integer.valueOf(userId));
             }
         } catch (JSONException e) {
@@ -166,31 +169,31 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onCompleted(HomeUserIndexBean userInfo) {
                 HomeUserIndexBean.DataBean.UserBean userData = userInfo.getData().getUser();
-                String iconUrl = Constants.BASE_IMG_URL+userData.getIcon();
-                GlideUtils.loadCircleUserUrl(HomeActivity.this,ivHead, iconUrl);
-                GlideUtils.loadCircleUserUrl(HomeActivity.this,mHeadView.getImageView(), iconUrl);
+                String iconUrl = Constants.BASE_IMG_URL + userData.getIcon();
+                GlideUtils.loadCircleUserUrl(HomeActivity.this, ivHead, iconUrl);
+                GlideUtils.loadCircleUserUrl(HomeActivity.this, mHeadView.getImageView(), iconUrl);
                 mHeadView.setTitle(userData.getHomePageTitle());
                 tvUserName.setText(userData.getUserName());
                 tvIndividualResume.setText(userData.getUserSignature());
                 //"userType": 1,// 用户类型:1-普通用户；2-项目方；3-评测机构；4-机构用户
-                if(userData.getUserType()!=1){
+                if (userData.getUserType() != 1) {
                     tvEvaluatingSign.setVisibility(View.VISIBLE);
                     ivModelType.setVisibility(View.VISIBLE);
-                    tvEvaluatingSign.setText(StringUtil.getUserType(userData.getUserType(),ivModelType));
+                    tvEvaluatingSign.setText(StringUtil.getUserType(userData.getUserType(), ivModelType));
                 }
                 //“showFollow”: 0 , //是否显示 关注按钮 0- 不显示；1-显示关注  2-显示取消关注
-                if(userData.getShowFollow()==1){
+                if (userData.getShowFollow() == 1) {
                     tvSaveFollow.setSelected(false);
                     tvSaveFollow.setText(getResources().getString(R.string.follow_status_0));
-                }else{
+                } else {
                     tvSaveFollow.setSelected(true);
                     tvSaveFollow.setText(getResources().getString(R.string.follow_status_1));
                 }
 
-                if(baseUserId==userData.getUserId()){
+                if (baseUserId == userData.getUserId()) {
                     tvSaveFollow.setVisibility(View.GONE);
                 }
-                homePageTitle =  userData.getHomePageTitle();
+                homePageTitle = userData.getHomePageTitle();
                 mHeadView.setTitle(homePageTitle);
                 tvAnswer.setText(String.valueOf(userData.getTotalPostNum()));
                 tvPraise.setText(String.valueOf(userData.getPraiseNum()));
@@ -199,13 +202,13 @@ public class HomeActivity extends BaseActivity {
         });
     }
 
-    public LoadingDialog getLoadingDialog(){
+    public LoadingDialog getLoadingDialog() {
         return loadingDialog;
     }
 
-    @OnClick(R.id.tv_save_follow)
+    @OnClick({R.id.tv_save_follow, R.id.ll_fans})
     public void onViewClicked(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tv_save_follow:
                 tvSaveFollow.setEnabled(false);
                 NetUtil.addSaveFollow(tvSaveFollow,
@@ -213,13 +216,16 @@ public class HomeActivity extends BaseActivity {
                             @Override
                             public void finishFollow(String str) {
                                 tvSaveFollow.setEnabled(true);
-                                if(!str.equals(Constants.FOLLOW_ERROR)){
+                                if (!str.equals(Constants.FOLLOW_ERROR)) {
                                     tvSaveFollow.setText(str);
                                     tvSaveFollow.setSelected(tvSaveFollow.getText().toString().trim()
                                             .equals(getResources().getString(R.string.follow_status_1)));
                                 }
                             }
                         });
+                break;
+            case R.id.ll_fans:
+//                IntentUtil.startActivity(HomeFansActivity.class);
                 break;
         }
     }

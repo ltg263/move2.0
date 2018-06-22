@@ -96,8 +96,8 @@ public class EvaluationNewActivity extends BaseActivity {
     @OnClick(R.id.tv_add_dimensionality)
     public void onViewClicked() {
 
-        if(list.size()>10){
-            ToastUtils.getInstance().show("自建评测模型最多10个");
+        if(list.size()>8){
+            ToastUtils.getInstance().show("自建评测模型最多8个");
             return;
         }
 

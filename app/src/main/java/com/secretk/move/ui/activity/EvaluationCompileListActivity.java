@@ -87,19 +87,11 @@ public class EvaluationCompileListActivity extends BaseActivity {
         JSONArray professionalEvaDetail = new JSONArray();
         for(int i=0;i<sysEvaluationModel.size();i++){
             JSONObject node = new JSONObject();
-            float score = sysEvaluationModel.get(i).getTotalScore();
-//            String strValue;
-//            if(score==(int)score){
-//                strValue=String.valueOf((int)score);
-//            }else{
-//                strValue=String.valueOf(score);
-//            }
             try {
                 node.put("modelId", sysEvaluationModel.get(i).getModelId());
                 node.put("modelName", sysEvaluationModel.get(i).getDetailName());
                 node.put("modelWeight", sysEvaluationModel.get(i).getDetailWeight());
-//                node.put("score", strValue);
-                node.put("score", score);
+                node.put("score", Float.valueOf(String.format("%.1f", sysEvaluationModel.get(i).getTotalScore())));
                 professionalEvaDetail.put(node);
             } catch (JSONException e) {
                 e.printStackTrace();

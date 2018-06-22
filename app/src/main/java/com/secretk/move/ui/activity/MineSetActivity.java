@@ -261,16 +261,17 @@ public class MineSetActivity extends BaseActivity {
             saveData();
             return;
         }
+        LogUtil.w("当前文件大小："+ PicUtil.getPrintSize(file.length()));
         String[] split = file.getPath().split("\\.");
         String suffix = split[split.length - 1];
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.UPLOAD_USER_ICON_FILE)
+                .method(RxHttpParams.HttpMethod.POST)
                 .addPart("token", token)
                 .addPart("uploadfile", StringUtil.getMimeType(file.getName()), file)
                 .addPart(Constants.UPLOADIMG_TYPE.IMG_TYPE_KEY, Constants.UPLOADIMG_TYPE.USER_ICON)
                 .build();
         loadingDialog.show();
-        params.setMethod(RxHttpParams.HttpMethod.POST);
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {

@@ -29,7 +29,9 @@ import com.secretk.move.bean.PicBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.ReleaseArticleLabelAdapter;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
+import com.secretk.move.utils.PicUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
@@ -142,8 +144,10 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
             uploadImgFile(index + 1, size);
             return;
         }
+        LogUtil.w("当前文件大小："+ PicUtil.getPrintSize(file.length()));
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.UPLOAD_USER_ICON_FILE)
+                .method(RxHttpParams.HttpMethod.POST)
                 .addPart("token", token)
                 .addPart("uploadfile", StringUtil.getMimeType(file.getName()), file)
                 .addPart(Constants.UPLOADIMG_TYPE.IMG_TYPE_KEY, Constants.UPLOADIMG_TYPE.POST_ICON)

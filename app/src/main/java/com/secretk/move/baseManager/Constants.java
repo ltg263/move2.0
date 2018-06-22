@@ -161,9 +161,9 @@ public interface Constants {
     String DISCUSS_SHARE= BASE_IMG_HTML5+"project/discuss?id=";
 
     //发送验证码通用接口
-    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/send";
+//    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/send";
     ////发送验证码通用接口 阿里云 modue ：login   register    forgetPassword
-//    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/sendAliyun";
+    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/sendAliyun";
 
     String TOKEN_POP = BASE_URL + "/kff/user/tokenPOP";
     //校验验证码接口。
@@ -211,6 +211,8 @@ public interface Constants {
     String UPDATE_USER_INFO = BASE_URL + "kff/user/updateUserInfo";
     //	我的收藏列表
     String MYC_OLLECT_LIST = BASE_URL + "kff/user/myCollectList";
+    //	我的粉丝列表
+    String GET_MY_FAN_LIST = BASE_URL + "/kff/user/getMyFanList";
     //	我的收藏列表
     String MY_FOLLOW_LIST = BASE_URL + "kff/user/myFollowList";
     //点击生成邀请奖励

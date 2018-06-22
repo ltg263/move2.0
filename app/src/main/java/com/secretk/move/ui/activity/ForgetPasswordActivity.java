@@ -75,6 +75,7 @@ public class ForgetPasswordActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        edPhone.setText(getIntent().getStringExtra("phone"));
         StringUtil.etSearchChangedListener(edPhone,butLogin,etChangListener);
         StringUtil.etSearchChangedListener(edVerification,butLogin, etChangListener);
         StringUtil.etSearchChangedListener(edPassword,butLogin, etChangListener);

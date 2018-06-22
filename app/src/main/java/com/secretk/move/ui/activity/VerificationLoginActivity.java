@@ -66,6 +66,7 @@ public class VerificationLoginActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        edPhone.setText(getIntent().getStringExtra("phone"));
         StringUtil.etSearchChangedListener(edPhone,butLogin,etChangListener);
         StringUtil.etSearchChangedListener(edVerification,butLogin, etChangListener);
     }

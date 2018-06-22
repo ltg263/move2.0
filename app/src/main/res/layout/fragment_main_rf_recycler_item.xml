@@ -96,7 +96,7 @@
             android:id="@+id/tvDesc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvScore"
+            android:layout_below="@+id/tvTitle"
             android:layout_marginTop="@dimen/dp_5"
             android:lineSpacingExtra="@dimen/item_line_spacing"
             android:maxLines="3"

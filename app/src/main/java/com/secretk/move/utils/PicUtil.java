@@ -143,8 +143,9 @@ public class PicUtil {
            intent.putExtra("aspectX", 1);
            intent.putExtra("aspectY", 1);
            // outputX outputY 是裁剪图片宽高
-           intent.putExtra("outputX", 96);
-           intent.putExtra("outputY", 96);
+           intent.putExtra("outputX", 100);
+           intent.putExtra("outputY", 100);
+       }else{
        }
        // 设置裁剪
 //        intent.putExtra("return-data", true);
@@ -152,6 +153,7 @@ public class PicUtil {
         * 此方法返回的图片只能是小图片（sumsang测试为高宽160px的图片）
         * 故只保存图片Uri，调用时将Uri转换为Bitmap，此方法还可解决miui系统不能return data的问题
         */
+
        //裁剪后的图片Uri路径，uritempFile为Uri类变量
        uritempFile =Uri.parse("file://" + "/" +  Constants.LOCAL_PATH + "/" + System.currentTimeMillis()+"move.png");
        intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
@@ -222,6 +224,34 @@ public class PicUtil {
             return false;
         } else {
             return true;
+        }
+    }
+    public static String getPrintSize(long size) {
+        //如果字节数少于1024，则直接以B为单位，否则先除于1024，后3位因太少无意义
+        if (size < 1024) {
+            return String.valueOf(size) + "B";
+        } else {
+            size = size / 1024;
+        }
+        //如果原字节数除于1024之后，少于1024，则可以直接以KB作为单位
+        //因为还没有到达要使用另一个单位的时候
+        //接下去以此类推
+        if (size < 1024) {
+            return String.valueOf(size) + "KB";
+        } else {
+            size = size / 1024;
+        }
+        if (size < 1024) {
+            //因为如果以MB为单位的话，要保留最后1位小数，
+            //因此，把此数乘以100之后再取余
+            size = size * 100;
+            return String.valueOf((size / 100)) + "."
+                    + String.valueOf((size % 100)) + "MB";
+        } else {
+            //否则如果要以GB为单位的，先除于1024再作同样的处理
+            size = size * 100 / 1024;
+            return String.valueOf((size / 100)) + "."
+                    + String.valueOf((size % 100)) + "GB";
         }
     }
 

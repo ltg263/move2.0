@@ -89,4 +89,5 @@
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">@dimen/sp_17</item>
     </style>
+
 </resources>

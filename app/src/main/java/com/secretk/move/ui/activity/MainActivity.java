@@ -129,23 +129,22 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
-                String find = "";
+                double tokenTodaySum=0;
                 int pop = 1;//1不弹  0弹出
                 try {
                     JSONObject data = new JSONObject(str).getJSONObject("data");
                     if(data!=null){
-                        double tokenTodaySum = data.getDouble("tokenTodaySum");
+                        tokenTodaySum = data.getDouble("tokenTodaySum");
                         pop = data.getInt("pop");
-                        find = String.valueOf(tokenTodaySum);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                if(pop==1 && StringUtil.isBlank(find)){
+                if(pop==1 || tokenTodaySum==0){
                     return;
                 }
                 SharedUtils.singleton().put("isShowJlWind",true);
-                DialogUtils.showDialogHint(MainActivity.this, "今日领取 "+find+" FIND",true, new DialogUtils.ErrorDialogInterface() {
+                DialogUtils.showDialogHint(MainActivity.this, "今日领取 "+tokenTodaySum+" FIND",true, new DialogUtils.ErrorDialogInterface() {
                     @Override
                     public void btnConfirm() {
                     }
