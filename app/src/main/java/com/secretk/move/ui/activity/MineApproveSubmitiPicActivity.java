@@ -156,10 +156,10 @@ public class MineApproveSubmitiPicActivity extends BaseActivity {
         }
         RxHttpParams params = new RxHttpParams.Build()
                 .url(url)
+                .method(RxHttpParams.HttpMethod.POST)
                 .addPart("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addPart("sign", MD5.Md5(node.toString()))
                 .build();
-        params.setMethod(RxHttpParams.HttpMethod.POST);
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {

@@ -234,6 +234,9 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 break;
             case 1:
                 tvScore.setText(totalScore+"分");
+                if(totalScore==0){
+                    tvScore.setVisibility(View.INVISIBLE);
+                }
                 tvUserDynamic.setText("发表了评测");
                 break;
             case 2:

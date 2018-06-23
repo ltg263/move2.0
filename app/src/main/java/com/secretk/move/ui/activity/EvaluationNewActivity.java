@@ -23,6 +23,7 @@ import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AddDimensionalityPopupWindow;
 import com.secretk.move.view.AppBarHeadView;
+import com.secretk.move.view.EvaluationSliderView;
 import com.secretk.move.view.ProgressBarStyleView;
 
 import org.json.JSONException;
@@ -48,6 +49,8 @@ public class EvaluationNewActivity extends BaseActivity {
     ProgressBarStyleView pbsComprehensive;
     @BindView(R.id.tv_evaluation_object)
     TextView tvEvaluationObject;
+    @BindView(R.id.zh_esv)
+    EvaluationSliderView zhEsv;
     private EvaluationNewAdapter adapter;
     int projectId;
 
@@ -69,17 +72,22 @@ public class EvaluationNewActivity extends BaseActivity {
     @Override
     protected void initUI(Bundle savedInstanceState) {
         MoveApplication.getContext().addActivity(this);
-        projectId = getIntent().getIntExtra("projectId",0);
+        projectId = getIntent().getIntExtra("projectId", 0);
         pbsComprehensive.setPbProgressMaxVisible();
-        pbsComprehensive.setTvOne(getResources().getString(R.string.comprehensive_evaluation),0,
+        pbsComprehensive.setTvOne(getResources().getString(R.string.comprehensive_evaluation), 0,
                 getResources().getColor(R.color.title_gray));
-        pbsComprehensive.setTvThree(0,16,R.color.app_background);
+        pbsComprehensive.setTvThree(0, 16, R.color.app_background);
+
+
+        zhEsv.setScore(8);
+        zhEsv.setTvDimensionalityName(getResources().getString(R.string.comprehensive_evaluation));
+        zhEsv.setEsvBackground(R.color.app_background);
 
         String projectName = getIntent().getStringExtra("projectName");
         String projectPay = getIntent().getStringExtra("projectPay");
-        tvEvaluationObject.setText(projectPay+"/"+projectName);
+        tvEvaluationObject.setText(projectPay + "/" + projectName);
 
-        mHeadView.setTitle(projectPay+"-完整版自建模型评测");
+        mHeadView.setTitle(projectPay + "-完整版自建模型评测");
         setVerticalManager(mRecyclerView);
         adapter = new EvaluationNewAdapter(this);
         mRecyclerView.setAdapter(adapter);
@@ -96,7 +104,7 @@ public class EvaluationNewActivity extends BaseActivity {
     @OnClick(R.id.tv_add_dimensionality)
     public void onViewClicked() {
 
-        if(list.size()>8){
+        if (list.size() > 8) {
             ToastUtils.getInstance().show("自建评测模型最多8个");
             return;
         }
@@ -112,35 +120,44 @@ public class EvaluationNewActivity extends BaseActivity {
     public void setDeleteOnClick(int position) {
         list.remove(position);
         adapter.notifyDataSetChanged();
-        double zGrade=getComprehensiveGrade();
-        pbsComprehensive.setTvThree(zGrade,16,R.color.app_background);
+        String zGrade = getComprehensiveGrade();
+        zhEsv.setScore(Float.valueOf(zGrade));
+        pbsComprehensive.setTvThree(Double.valueOf(zGrade), 16, R.color.app_background);
+        if(list.size()==0){
+            zhEsv.setScore(8);
+            zhEsv.setSetSlide(true);
+        }
     }
 
     private void showPopupWindow(final int position) {
-        AddDimensionalityPopupWindow window = new AddDimensionalityPopupWindow(this, list,position,new AddDimensionalityPopupWindow.PopupOnClickListener() {
+        AddDimensionalityPopupWindow window = new AddDimensionalityPopupWindow(this, list, position, new AddDimensionalityPopupWindow.PopupOnClickListener() {
             @Override
             public void popupOnClick(View view, String name, float weight, float grade) {
                 if (position != -1) {
                     EvaluationNewBean newBean = list.get(position);
                     newBean.setModelName(name);
                     newBean.setScore(grade);
-                    newBean.setModelWeight((int) (weight*100));
+                    newBean.setModelWeight((int) (weight * 100));
                     adapter.notifyDataSetChanged();
-                }else {
+                } else {
                     EvaluationNewBean bean = new EvaluationNewBean();
                     bean.setScore(grade);
                     bean.setModelName(name);
-                    bean.setModelWeight((int) (weight*100));
+                    bean.setModelWeight((int) (weight * 100));
                     list.add(bean);
                     adapter.setData(list);
                 }
-                double zGrade=getComprehensiveGrade();
-                pbsComprehensive.setTvThree(zGrade,16,R.color.app_background);
+                if(list.size()>0){
+                    zhEsv.setSetSlide(false);
+                }
+                String zGrade = getComprehensiveGrade();
+                zhEsv.setScore(Float.valueOf(zGrade));
+                pbsComprehensive.setTvThree(Double.valueOf(zGrade), 16, R.color.app_background);
             }
         });
         if (position != -1) {
             EvaluationNewBean newBean = list.get(position);
-            window.setEtValue(newBean.getModelName(), newBean.getScore(), newBean.getModelWeight()/100f);
+            window.setEtValue(newBean.getModelName(), newBean.getScore(), newBean.getModelWeight() / 100f);
         }
 //        window.setSoftInputMode(1);
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -151,17 +168,19 @@ public class EvaluationNewActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        if(list.size()<3){
-            ToastUtils.getInstance().show("评测维度最少3个");
-            return;
-        }
-        int weight=0;
-        for(int i=0;i<list.size();i++){
-            weight+=list.get(i).getModelWeight();
-        }
-        if(weight!=100){
-            ToastUtils.getInstance().show("权重占比和必须为1");
-            return;
+//        if (list.size() < 3) {
+//            ToastUtils.getInstance().show("评测维度最少3个");
+//            return;
+//        }
+        if(list.size()>0){
+            int weight = 0;
+            for (int i = 0; i < list.size(); i++) {
+                weight += list.get(i).getModelWeight();
+            }
+            if (weight != 100) {
+                ToastUtils.getInstance().show("权重占比和必须为1");
+                return;
+            }
         }
 
         JSONObject node = new JSONObject();
@@ -174,17 +193,18 @@ public class EvaluationNewActivity extends BaseActivity {
         }
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.SAVE_EVALUATION_MODEL)
+                .method(RxHttpParams.HttpMethod.POST)
                 .addPart("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addPart("sign", MD5.Md5(node.toString()))
                 .build();
         loadingDialog.show();
-        params.setMethod(RxHttpParams.HttpMethod.POST);
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String bean) {
+//                pbsComprehensive.getTotalScore()
                 IntentUtil.startProjectCompileActivity(String.valueOf(Constants.ModelType.MODEL_TYPE_ALL_NEW),
-                        String.valueOf(projectId),getIntent().getStringExtra("projectPay"),
-                        list.toString(),pbsComprehensive.getTotalScore(),"");
+                        String.valueOf(projectId), getIntent().getStringExtra("projectPay"),
+                        list.toString(), zhEsv.getTvEvaluationMun(), "");
             }
 
             @Override
@@ -195,13 +215,13 @@ public class EvaluationNewActivity extends BaseActivity {
     }
 
     //综合分数
-    private double getComprehensiveGrade(){
+    private String getComprehensiveGrade() {
         float comprehensiveGrade = 0;
-        for(int i=0;i<list.size();i++){
-            float grade =  list.get(i).getScore();
-            float weight =  list.get(i).getModelWeight()/100f;
-            comprehensiveGrade+= grade*weight;
+        for (int i = 0; i < list.size(); i++) {
+            float grade = list.get(i).getScore();
+            float weight = list.get(i).getModelWeight() / 100f;
+            comprehensiveGrade += grade * weight;
         }
-        return Double.valueOf(String.format("%.1f", comprehensiveGrade));
+        return String.format("%.1f", comprehensiveGrade);
     }
 }

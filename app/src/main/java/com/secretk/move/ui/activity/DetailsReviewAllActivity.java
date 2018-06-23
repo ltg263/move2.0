@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -136,7 +137,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
         rvReview.setAdapter(adapterProgress);
         adapter = new ImagesAdapter(this);
         rvImg.setAdapter(adapter);
-        wvPostShortDesc.getSettings().setDefaultTextEncodingName("UTF-8");//设置默认为utf-8
+        WebSettings webSettings = wvPostShortDesc.getSettings();
+        webSettings.setDefaultTextEncodingName("UTF-8");//设置默认为utf-8
         loadingDialog.show();
     }
 
@@ -343,8 +345,10 @@ public class DetailsReviewAllActivity extends BaseActivity {
         for (int i = 0; i < object.length(); i++) {
             listPd.add(object.getJSONObject(i).toString());
         }
-        rvReview.setVisibility(View.VISIBLE);
-        adapterProgress.setData(listPd);
+        if(listPd.size()>0){
+            rvReview.setVisibility(View.VISIBLE);
+            adapterProgress.setData(listPd);
+        }
     }
 
 

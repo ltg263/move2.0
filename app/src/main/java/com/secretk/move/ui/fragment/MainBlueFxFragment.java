@@ -18,6 +18,7 @@ import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.MainRfFragmentRecyclerAdapter;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -64,6 +65,7 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                refreshLayout.setLoadmoreFinished(false);
                 pageIndex=1;
                 onFirstUserVisible();
             }
@@ -101,6 +103,8 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
             @Override
             public void onCompleted(MainGzBean bean) {
                 MainGzBean.DataBean.FollowsBean detailsBean = bean.getData().getRecommends();
+                LogUtil.w("detailsBean.getCurPageNum():"+detailsBean.getCurPageNum());
+                LogUtil.w("detailsBean.getPageSize():"+detailsBean.getPageSize());
                 if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
                     refreshLayout.setLoadmoreFinished(true);
                 }

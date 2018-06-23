@@ -112,7 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/white"
+            android:background="@color/title_gray_ee"
             android:text="@string/evaluation_btn_new"
             android:textColor="@color/app_background"
             android:textSize="@dimen/sp_16" />

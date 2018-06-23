@@ -172,10 +172,10 @@ public class SubmitProjectThreeActivity extends BaseActivity {
         }
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.SUBMIT_PROJECT)//PROJECT_TYPE_LIST
+                .method(RxHttpParams.HttpMethod.POST)
                 .addPart("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addPart("sign", MD5.Md5(node.toString()))
                 .build();
-        params.setMethod(RxHttpParams.HttpMethod.POST);
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {

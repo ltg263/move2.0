@@ -32,7 +32,13 @@
             <com.secretk.move.view.ProgressBarStyleView
                 android:id="@+id/pbs_comprehensive"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+            <com.secretk.move.view.EvaluationSliderView
+                android:id="@+id/zh_esv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10" />
 
             <View
                 android:layout_width="match_parent"
@@ -67,8 +73,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:visibility="gone"
-                    android:background="@drawable/right_boult" />
+                    android:background="@drawable/right_boult"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <View
@@ -104,7 +110,7 @@
                 android:id="@+id/rv_msg_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"/>
+                android:background="@color/white" />
 
             <View
                 android:layout_width="match_parent"

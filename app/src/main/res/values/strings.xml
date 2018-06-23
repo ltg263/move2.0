@@ -188,7 +188,7 @@
     <string name="evaluation">评测</string>
     <string name="evaluation_dimensionality">评测维度</string>
     <string name="evaluation_add_dimensionality">添加纬度</string>
-    <string name="evaluation_num">*最少3个</string>
+    <string name="evaluation_num">可新增评测纬度，比例之和为1</string>
     <string name="evaluation_object">评测对象</string>
     <string name="evaluation_next">下一步</string>
     <string name="evaluation_issue">发布</string>

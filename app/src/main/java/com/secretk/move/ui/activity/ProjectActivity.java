@@ -132,7 +132,7 @@ public class ProjectActivity extends BaseActivity {
         adapter.addFragment(articleFragment, getString(R.string.article));
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
-        viewPager.setCurrentItem(0);
+        viewPager.setCurrentItem(1);
         viewPager.setOffscreenPageLimit(4);
         tabs.post(new Runnable() {
             @Override

@@ -79,6 +79,7 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                refreshLayout.setLoadmoreFinished(false);
                 pageIndex = 1;
                 onFirstUserVisible();
             }

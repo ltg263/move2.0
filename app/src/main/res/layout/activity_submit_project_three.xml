@@ -149,8 +149,10 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="top"
-                    android:hint="@string/submit_project_two_3"
+                    android:hint="@string/submit_project_three_3"
                     android:minLines="7"
+                    android:maxLength="3000"
+                    android:textColorHint="@color/title_gray_88"
                     android:textColor="@color/title_gray"
                     android:textCursorDrawable="@drawable/shape_edit_cursor"
                     android:textSize="@dimen/sp_14" />

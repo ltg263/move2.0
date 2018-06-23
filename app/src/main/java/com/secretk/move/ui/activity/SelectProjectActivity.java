@@ -160,17 +160,20 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
             return;
         }
         SearchedBean.Projects bean = list.get(postion);
+        if(listSearch!=null && listSearch.size()!=0){
+            bean = listSearch.get(postion);
+        }
         if (publicationType == 1) {
             IntentUtil.startProjectSimplenessActivity(bean.getProjectId(), bean.getProjectIcon(),
                     bean.getProjectChineseName(), bean.getProjectCode());
         } else if (publicationType == 2) {
             Intent intent = new Intent(this, ReleaseArticleActivity.class);
-            intent.putExtra("projectId", list.get(postion).getProjectId());
+            intent.putExtra("projectId", bean.getProjectId());
             intent.putExtra("projectPay", bean.getProjectCode());
             startActivity(intent);
         } else {
             Intent intent = new Intent(this, ReleaseDiscussActivity.class);
-            intent.putExtra("projectId", list.get(postion).getProjectId());
+            intent.putExtra("projectId", bean.getProjectId());
             intent.putExtra("projectPay", bean.getProjectCode());
             startActivity(intent);
         }
@@ -193,7 +196,7 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
                 break;
         }
     }
-
+    List<SearchedBean.Projects> listSearch;
     private void searchProject() {
         String searchContent = edSearch.getText().toString().trim();
         if(StringUtil.isBlank(searchContent)){
@@ -204,7 +207,7 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
         if(list==null){
             return;
         }
-        List<SearchedBean.Projects> listSearch = new ArrayList<>();
+        listSearch = new ArrayList<>();
         for(int i = 0;i<list.size();i++){
             if(list.get(i).getProjectCode().contains(searchContent)
                     || list.get(i).getProjectCode().contains(searchContent.toUpperCase())){
