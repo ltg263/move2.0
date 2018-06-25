@@ -75,16 +75,15 @@ public class EvaluationProfessionalItemActivity extends BaseActivity {
     @Override
     protected void OnToolbarRightListener() {
         JSONObject node = new JSONObject();
+        JSONArray array = new JSONArray();
         try {
             node.put("modelId", sysEvaluationModel.getModelId());
             node.put("modelName", sysEvaluationModel.getDetailName());
-            node.put("score", sysEvaluationModel.getTotalScore());
+            node.put("score", esViewa.getTvEvaluationMun());
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        JSONArray array = new JSONArray();
         array.put(node);
-
         IntentUtil.startProjectCompileActivity(String.valueOf(Constants.ModelType.MODEL_TYPE_PART),
                 String.valueOf(projectId),getIntent().getStringExtra("projectPay"),
                 array.toString(),esViewa.getTvEvaluationMun(),sysEvaluationModel.getDetailName());

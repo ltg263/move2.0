@@ -11,8 +11,10 @@ import android.widget.TextView;
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.DetailsUserGradeBean;
+import com.secretk.move.bean.RowsBean;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.NetUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ import butterknife.ButterKnife;
 public class ProjectHotDiscussAdapter extends RecyclerView.Adapter<ProjectHotDiscussAdapter.ImagesHolder> {
 
 
-    private List<DetailsUserGradeBean.DataBean.HotDiscussBean> lists = new ArrayList<>();
+    private List<RowsBean> lists = new ArrayList<>();
     Context context;
 
     public ProjectHotDiscussAdapter(Context context) {
@@ -55,12 +57,12 @@ public class ProjectHotDiscussAdapter extends RecyclerView.Adapter<ProjectHotDis
         return lists.size();
     }
 
-    public void setData(List<DetailsUserGradeBean.DataBean.HotDiscussBean> list) {
+    public void setData(List<RowsBean> list) {
         this.lists = list;
         notifyDataSetChanged();
     }
 
-    public List<DetailsUserGradeBean.DataBean.HotDiscussBean> getData() {
+    public List<RowsBean> getData() {
         return lists;
     }
 
@@ -80,22 +82,65 @@ public class ProjectHotDiscussAdapter extends RecyclerView.Adapter<ProjectHotDis
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-
+        RowsBean hotDiscussBean;
         public void refresh(int position) {
-            DetailsUserGradeBean.DataBean.HotDiscussBean hotDiscussBean = lists.get(position);
+             hotDiscussBean = lists.get(position);
             GlideUtils.loadCircleUserUrl(context,ivCommentedUserIcon, Constants.BASE_IMG_URL+ StringUtil.getBeanString(hotDiscussBean.getCreateUserIcon()));
             tvCommentedUserName.setText(StringUtil.getBeanString(hotDiscussBean.getCreateUserName()));
             tvCreateTime.setText(StringUtil.getBeanString(String.valueOf(hotDiscussBean.getTotalScore())));
             tvPraiseNum.setText(String.valueOf(hotDiscussBean.getPraiseNum()));
             //"praiseStatus":0,//点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
-            if(hotDiscussBean.getFollowStatus()==1){
+            if(hotDiscussBean.getPraiseStatus()==1){
                 tvPraiseNum.setSelected(false);
-            }else if(hotDiscussBean.getFollowStatus()==0){
+            }else if(hotDiscussBean.getPraiseStatus()==0){
                 tvPraiseNum.setSelected(true);
-            }else if(hotDiscussBean.getFollowStatus()==3){
-                tvPraiseNum.setVisibility(View.GONE);
+            }else if(hotDiscussBean.getPraiseStatus()==2){
+                tvPraiseNum.setSelected(false);
             }
-            tvCommentContent.setText(StringUtil.getBeanString(hotDiscussBean.getDisscussContents()));
+            tvPraiseNum.setText(String.valueOf(hotDiscussBean.getPraiseNum()));
+            tvCommentContent.setText(StringUtil.getBeanString(hotDiscussBean.getEvauationContent()));
+            tvPraiseNum.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(!tvPraiseNum.isSelected()){
+                        return;
+                    }
+                    if (!NetUtil.isPraise(hotDiscussBean.getCreateUserId(), SharedUtils.getUserId())){
+                        return;
+                    }
+                    tvPraiseNum.setEnabled(false);
+                    setPraise(tvPraiseNum,hotDiscussBean.getPostId());
+                }
+            });
+        }
+        private void setPraise(TextView finalIsLove, int commentsId) {
+            final int praiseNumA = hotDiscussBean.getPraiseNum();
+            final String strNum;
+            if(tvPraiseNum.isSelected()){
+                strNum = String.valueOf(praiseNumA +1);
+            }else{
+                strNum = String.valueOf(praiseNumA -1);
+            }
+            tvPraiseNum.setText(strNum);
+            tvPraiseNum.setSelected(!tvPraiseNum.isSelected());
+            NetUtil.addCommentsPraise(!finalIsLove.isSelected(), commentsId, new NetUtil.SaveFollowImpl() {
+                @Override
+                public void finishFollow(String praiseNum,boolean status) {
+                    tvPraiseNum.setEnabled(true);
+                    if(!praiseNum.equals(Constants.PRAISE_ERROR)){
+                        hotDiscussBean.setPraiseNum(Integer.valueOf(praiseNum));
+                        tvPraiseNum.setText(praiseNum);
+//                    praiseNumA = commentsBean.getPraiseNum();
+                        tvPraiseNum.setSelected(status);
+                        ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
+                        hotDiscussBean.setPraiseStatus(status?0:1);
+                    }else{
+//                    tvPraiseNum.setSelected(false);
+//                    tvPraiseNum.setText(String.valueOf(Integer.valueOf(strNum)-1));
+                    }
+                }
+            });
         }
     }
+
 }

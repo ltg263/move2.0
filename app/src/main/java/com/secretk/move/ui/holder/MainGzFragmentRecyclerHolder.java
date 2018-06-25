@@ -103,7 +103,8 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvName.setText(StringUtil.getBeanString(bean.getProjectCode()));
         tvEnglishName.setText("/"+StringUtil.getBeanString(bean.getProjectChineseName()));
         tvTime.setText(TimeToolUtils.convertTimeToFormat(bean.getCreateTime()));
-        if (StringUtil.isNotBlank(bean.getTagInfos())) {
+        if (StringUtil.isNotBlank(bean.getTagInfos())
+                && bean.getTagInfos().contains("tagName")) {
             String tagName = "";
             try {
                 JSONArray array = new JSONArray(bean.getTagInfos());

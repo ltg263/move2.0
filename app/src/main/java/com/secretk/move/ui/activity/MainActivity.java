@@ -2,6 +2,7 @@ package com.secretk.move.ui.activity;
 
 
 import android.support.v4.view.ViewPager;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.secretk.move.R;
@@ -36,10 +37,20 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
     RadioGroup rg_main_parent;
     MainActivityPagerAdapter adapter;
     ActivityMainContract.Presenter presenter;
+    @BindView(R.id.rb_main)
+    RadioButton rbMain;
+    @BindView(R.id.rb_topic)
+    RadioButton rbTopic;
+    @BindView(R.id.rb_message)
+    RadioButton rbMessage;
+    @BindView(R.id.rb_mine)
+    RadioButton rbMine;
+
     @Override
     protected int setLayout() {
-         return R.layout.activity_main;
+        return R.layout.activity_main;
     }
+
     @Override
     protected MainPresenterImpl initPresenter() {
         return new MainPresenterImpl(this);
@@ -48,7 +59,8 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
     @Override
     protected void initView() {
         StatusBarUtil.setLightMode(this);
-        StatusBarUtil.setColor(this,  UiUtils.getColor(R.color.main_background), 0);
+        StatusBarUtil.setColor(this, UiUtils.getColor(R.color.main_background), 0);
+        SharedUtils.singleton().put("isFollower", true);
         adapter = new MainActivityPagerAdapter(getSupportFragmentManager());
         vp_main.setAdapter(adapter);
         vp_main.setOffscreenPageLimit(4);
@@ -62,12 +74,12 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
 
             @Override
             public void onPageSelected(int position) {
-                if (position==3){
+                if (position == 3) {
                     StatusBarUtil.setDarkMode(MainActivity.this);
-                    StatusBarUtil.setColor(MainActivity.this,  UiUtils.getColor(R.color.app_background), 0);
-                }else {
+                    StatusBarUtil.setColor(MainActivity.this, UiUtils.getColor(R.color.app_background), 0);
+                } else {
                     StatusBarUtil.setLightMode(MainActivity.this);
-                    StatusBarUtil.setColor(MainActivity.this,  UiUtils.getColor(R.color.main_background), 0);
+                    StatusBarUtil.setColor(MainActivity.this, UiUtils.getColor(R.color.main_background), 0);
                 }
             }
 
@@ -82,8 +94,6 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_main:
-                        if(vp_main.getCurrentItem()==0){
-                        }
                         vp_main.setCurrentItem(0);
                         break;
                     case R.id.rb_topic:
@@ -101,24 +111,27 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
             }
         });
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-        if(!SharedUtils.singleton().get("isShowJlWind",false)){
-            if(SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken())){
+        if (!SharedUtils.singleton().get("isShowJlWind", false)) {
+            if (SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken())) {
                 showJlWind(SharedUtils.getToken());
             }
         }
     }
+
     /**
      * 每日奖励
+     *
      * @param token
      */
     private void showJlWind(String token) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         final RxHttpParams params = new RxHttpParams.Build()
@@ -129,22 +142,22 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
-                double tokenTodaySum=0;
+                double tokenTodaySum = 0;
                 int pop = 1;//1不弹  0弹出
                 try {
                     JSONObject data = new JSONObject(str).getJSONObject("data");
-                    if(data!=null){
+                    if (data != null) {
                         tokenTodaySum = data.getDouble("tokenTodaySum");
                         pop = data.getInt("pop");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                if(pop==1 || tokenTodaySum==0){
+                if (pop == 1 || tokenTodaySum == 0) {
                     return;
                 }
-                SharedUtils.singleton().put("isShowJlWind",true);
-                DialogUtils.showDialogHint(MainActivity.this, "今日领取 "+tokenTodaySum+" FIND",true, new DialogUtils.ErrorDialogInterface() {
+                SharedUtils.singleton().put("isShowJlWind", true);
+                DialogUtils.showDialogHint(MainActivity.this, "今日领取 " + tokenTodaySum + " FIND", true, new DialogUtils.ErrorDialogInterface() {
                     @Override
                     public void btnConfirm() {
                     }
@@ -170,5 +183,23 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
 //        });
     }
 
-
+//    private long exitTime = 0;
+//    private int index = 0;
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+//            if (index != vp_main.getCurrentItem()) {
+//                rbMain.setChecked(true);
+//            } else {
+//                if ((System.currentTimeMillis() - exitTime) > 2000) {
+//                    Toast.makeText(this, "再按一次退出" + getString(R.string.app_name), Toast.LENGTH_SHORT).show();
+//                    exitTime = System.currentTimeMillis();
+//                } else {
+//                    finish();
+//                }
+//            }
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 }

@@ -33,6 +33,7 @@ public class MainGzBean extends BaseRes{
 
         private FollowsBean follows;
         private FollowsBean recommends;
+        private FollowsBean counterfeits;
 
         public FollowsBean getRecommends() {
             return recommends;
@@ -49,6 +50,15 @@ public class MainGzBean extends BaseRes{
         public void setFollows(FollowsBean follows) {
             this.follows = follows;
         }
+
+        public FollowsBean getCounterfeits() {
+            return counterfeits;
+        }
+
+        public void setCounterfeits(FollowsBean counterfeits) {
+            this.counterfeits = counterfeits;
+        }
+
 
         public static class FollowsBean {
             /**

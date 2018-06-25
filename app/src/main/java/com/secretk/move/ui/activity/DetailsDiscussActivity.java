@@ -453,7 +453,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                     }
                 }
                 try {
-                    if (discussDetail.getTagInfos() != null) {
+                    if (StringUtil.isNotBlank(discussDetail.getTagInfos())&& discussDetail.getTagInfos().contains("tagName")) {
                         JSONArray object = new JSONArray(discussDetail.getTagInfos());
                         //[{"tagId":1,"tagName":"进度讨论"},{"tagId":3,"tagName":"项目前景讨论"},{"tagId":4,"tagName":"打假"}]
                         String tagAll = "";

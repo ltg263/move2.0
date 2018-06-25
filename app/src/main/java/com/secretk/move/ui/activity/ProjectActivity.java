@@ -119,7 +119,7 @@ public class ProjectActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-        tvReview.setSelected(true);
+//        tvReview.setSelected(true);
         projectId = getIntent().getStringExtra("projectId");
         introFragment = new ProjectIntroFragment();
         reviewFragment = new ProjectReviewFragment();
@@ -221,7 +221,7 @@ public class ProjectActivity extends BaseActivity {
 
 
     private void initListener() {
-        fab.setVisibility(View.GONE);
+//        fab.setVisibility(View.GONE);
         refreshLayout.setEnableRefresh(false);//禁止下拉刷新
         refreshLayout.setEnableLoadmore(false);
         /**

@@ -59,8 +59,11 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
         ButterKnife.bind(this, itemView);
         tvIsFollw.setOnClickListener(this);
     }
-
+    String follow0;
+    String follow1;
     public void setData(final BlueSkyBean.RankList bean, int position, Context context) {
+        follow0 = context.getString(R.string.follow_status_0);
+        follow1 = context.getString(R.string.follow_status_1);
         GlideUtils.loadCircleUserUrl(context,img_head, Constants.BASE_IMG_URL + bean.getProjectIcon());
         tv_code.setText(bean.getProjectCode());
         tv_name.setText(" /" + bean.getProjectChineseName());
@@ -71,19 +74,19 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
         bean.setPosition(position + 1 + "");
         tv_order.setText(bean.getPosition());
         if (!SharedUtils.getLoginZt()) {
-            tvIsFollw.setText("+ 关注");
+            tvIsFollw.setText(follow0);
             tvIsFollw.setSelected(false);
             tvIsFollw.setPressed(false);
             tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
             tvIsFollw.setVisibility(View.VISIBLE);
         } else {
             if (0 == bean.getFollowStatus()) {
-                tvIsFollw.setText("+ 关注");
+                tvIsFollw.setText(follow0);
                 tvIsFollw.setSelected(false);
                 tvIsFollw.setPressed(false);
                 tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
             } else if (1 == bean.getFollowStatus()) {
-                tvIsFollw.setText("已关注");
+                tvIsFollw.setText(follow1);
                 tvIsFollw.setSelected(true);
                 tvIsFollw.setPressed(true);
                 tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
@@ -97,7 +100,7 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
                 if (!SharedUtils.getLoginZt()) {
                     IntentUtil.startActivity(LoginHomeActivity.class);
                 } else {
-                    if (getString().equals("已关注")) {
+                    if (getString().equals(follow1)) {
                         http(Constants.CANCEL_FOLLOW, bean.getProjectId(),SharedUtils.getToken());
                     } else {
                         http(Constants.SAVE_FOLLOW, bean.getProjectId(),SharedUtils.getToken());
@@ -145,14 +148,16 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
         RetrofitUtil.request(params, BaseRes.class, new HttpCallBackImpl<BaseRes>() {
             @Override
             public void onCompleted(BaseRes bean) {
+                SharedUtils.singleton().put("isFollowerFx",true);
+//                SharedUtils.singleton().put("isFollowerSky",true);
                 if (bean.getCode() == 0) {
-                    if (getString().equals("已关注")) {
-                        tvIsFollw.setText("+ 关注");
+                    if (getString().equals(follow1)) {
+                        tvIsFollw.setText(follow0);
                         tvIsFollw.setPressed(false);
                         tvIsFollw.setSelected(false);
                         tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
                     } else {
-                        tvIsFollw.setText("已关注");
+                        tvIsFollw.setText(follow1);
                         tvIsFollw.setPressed(true);
                         tvIsFollw.setSelected(true);
                         tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));

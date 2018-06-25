@@ -193,7 +193,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
         projectId = evaluationDetail.getProjectId();
         mHeadView.setToolbarListener(projectId);
         if(evaluationDetail.getModelType()==1){
-            tvPostTitle.setText(evaluationDetail.getProjectCode()+"-"+StringUtil.getBeanString(evaluationDetail.getPostTitle()));
+//            tvPostTitle.setText(evaluationDetail.getProjectCode()+"-"+StringUtil.getBeanString(evaluationDetail.getPostTitle()));
+            tvPostTitle.setText(StringUtil.getBeanString(evaluationDetail.getPostTitle()));
         }else {
             tvPostTitle.setText(StringUtil.getBeanString(evaluationDetail.getPostTitle()));
         }

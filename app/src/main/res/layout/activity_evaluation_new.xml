@@ -116,6 +116,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_line"
                 android:background="@color/cut_off_rule" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/title_gray_aa"
+                android:textSize="@dimen/sp_14"
+                android:padding="@dimen/dp_10"
+                android:text="可不添加纬度，直接打分，然后点击右上角“下一步”发布评测；"/>
 
             <TextView
                 android:id="@+id/tv_add_dimensionality"

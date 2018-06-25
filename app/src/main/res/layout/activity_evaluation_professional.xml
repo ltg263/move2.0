@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dp_10"
             android:lineSpacingExtra="@dimen/dp_5"
-            android:text="经过科学筛选，系统提供以下几个评测纬度，可完整评测，也可部分评测；您也可以自己新建模型进行测评。"
+            android:text="@string/evaluation_state_1"
             android:textColor="@color/title_gray_88"
             android:textSize="@dimen/sp_12" />
 

@@ -22,10 +22,10 @@ import com.secretk.move.ui.activity.SearchActivity;
 import com.secretk.move.ui.activity.SubmitProjectActivity;
 import com.secretk.move.ui.adapter.TopicFragmentRecyclerAdapter;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PatternUtils;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.LoadingDialog;
 
@@ -75,7 +75,6 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
     String lsToken="";
     boolean showFragment = false;
     private int currentType = Constants.TOPIC_SORT_BY_NUM;
-
     @Override
     public int setFragmentView() {
         return R.layout.fragment_topic;
@@ -162,7 +161,6 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
 
 
     public void http(final int type) {
-        currentType = type;
         if(!showFragment){
             loadingDialog.show();
         }
@@ -183,6 +181,7 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
         RetrofitUtil.request(params, SearchedBean.class, new HttpCallBackImpl<SearchedBean>() {
             @Override
             public void onCompleted(SearchedBean bean) {
+                SharedUtils.singleton().put("isFollowerFx",false);
                 if (bean.getCode() == 0) {
                     List<SearchedBean.Projects> list = bean.getData().getProjects();
                     tv_count.setText("共" + list.size() + "个币种");
@@ -195,7 +194,6 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
 //                    }
                     adapter.setData(list, type);
                     if (type == Constants.TOPIC_SORT_BY_NAME) {
-                        LogUtil.w("list:"+list.size());
                         qbar.setDatax(list);
                     }
                 }
@@ -227,43 +225,64 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
                 startActivity(intent);
                 break;
             case R.id.tv_sort_follow:
-                sortFollow();
+                if(currentType==Constants.TOPIC_SORT_BY_NAME){
+                    sortFollow();
+                }
                 break;
             case R.id.tv_sort_name:
-                sortName();
+                if(currentType==Constants.TOPIC_SORT_BY_NUM){
+                    sortName();
+                }
                 break;
         }
     }
 
     private void sortName() {
+        currentType=Constants.TOPIC_SORT_BY_NAME;
         fab.setVisibility(View.VISIBLE);
         qbar.setVisibility(View.VISIBLE);
-        tv_count.setText("共" + 0 + "个币种");
+//        tv_count.setText("共" + 0 + "个币种");
         tv_sort_name.setTextColor(Color.parseColor("#3b88f6"));
         tv_sort_follow.setTextColor(Color.parseColor("#dddddd"));
-        List<SearchedBean.Projects> list = adapter.getDataByType(Constants.TOPIC_SORT_BY_NAME);
-        if (list == null || list.size() == 0) {
-            http(Constants.TOPIC_SORT_BY_NAME);
+        List<SearchedBean.Projects> list = adapter.getDataByType(currentType);
+        boolean isFollower = SharedUtils.singleton().get("isFollower",true);
+        if (list == null || list.size() == 0 || true) {
+            http(currentType);
             return;
         }
-        adapter.swithData(Constants.TOPIC_SORT_BY_NAME);
-        int count = adapter.getDataByType(Constants.TOPIC_SORT_BY_NAME).size();
+        adapter.swithData(currentType);
+        int count = adapter.getDataByType(currentType).size();
         tv_count.setText("共" + count + "个币种");
     }
 
     private void sortFollow() {
+        currentType=Constants.TOPIC_SORT_BY_NUM;
         fab.setVisibility(View.VISIBLE);
         qbar.setVisibility(View.GONE);
-        tv_count.setText("共" + 0 + "个币种");
+//        tv_count.setText("共" + 0 + "个币种");
         tv_sort_name.setTextColor(Color.parseColor("#dddddd"));
         tv_sort_follow.setTextColor(Color.parseColor("#3b88f6"));
-        List<SearchedBean.Projects> list = adapter.getDataByType(Constants.TOPIC_SORT_BY_NUM);
-        if (list == null || list.size() == 0) {
-            http(Constants.TOPIC_SORT_BY_NUM);
+        List<SearchedBean.Projects> list = adapter.getDataByType(currentType);
+        boolean isFollower = SharedUtils.singleton().get("isFollower",true);
+        if (list == null || list.size() == 0 || true) {
+            http(currentType);
             return;
         }
-        adapter.swithData(Constants.TOPIC_SORT_BY_NUM);
-        int count = adapter.getDataByType(Constants.TOPIC_SORT_BY_NUM).size();
+        adapter.swithData(currentType);
+        int count = adapter.getDataByType(currentType).size();
         tv_count.setText("共" + count + "个币种");
+    }
+
+    @Override
+    public void onUserVisible() {
+        boolean isFollower = SharedUtils.singleton().get("isFollowerFx",false);
+        if (isFollower){
+            if(currentType==Constants.TOPIC_SORT_BY_NAME){
+                sortName();
+            }else{
+                sortFollow();
+            }
+        }
+        super.onUserVisible();
     }
 }

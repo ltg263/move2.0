@@ -81,6 +81,8 @@ public class EvaluationSliderView extends FrameLayout {
             ((EvaluationCompileListActivity) activity).setComprehensiveGrade(getTvDimensionalityName(),value);
         }else if(activity instanceof EvaluationSimplenessActivity){
             ((EvaluationSimplenessActivity) activity).setTvEvaluationState(StringUtil.getStateValueStr(value));
+        }else{
+
         }
     }
 

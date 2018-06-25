@@ -118,6 +118,7 @@ public interface Constants {
 //    String BASE_IMG_URL = "";
     /**
      * 王晗
+     * 0405
      */
 //    String BASE_URL = "http://192.168.10.123:8082/";
 //   String BASE_IMG_URL = "http://192.168.10.123/";
@@ -191,6 +192,8 @@ public interface Constants {
     String MAIN_RECOMMEND = BASE_URL + "kff/home/recommendList";
     //首页关注
     String MAIN_FOLLOW = BASE_URL + "kff/home/followList";
+    //首页打假
+    String MAIN_DISCUSS = BASE_URL + "/kff/home/counterfeitList";
     //青天榜
     String MAIN_BLUE_SKY = BASE_URL + "kff/home/projectRankList";
 
@@ -233,6 +236,8 @@ public interface Constants {
     String USERHOME_DISCUSS_LIST = BASE_URL + "kff/userhome/discussList";
     //  文章列表
     String USERHOME_ARTICLE_LIST = BASE_URL + "kff/userhome/articleList";
+    //  简单评测  项目统计
+    String SIMPLE_EVALUATION_LIST = BASE_URL + "kff/project/simpleEvaluationList";
 
     //项目主页 ，显示项目基本信息
     String PROJECT_INDEX = BASE_URL + "kff/project/index";

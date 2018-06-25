@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@color/background_gray"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -31,7 +31,7 @@
         android:id="@+id/rl_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
+        android:background="@color/white"
         android:paddingBottom="5dp"
         android:paddingTop="5dp">
 
@@ -83,26 +83,27 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:background="@color/white" />
 
         <com.secretk.move.customview.QuickIndexBar
             android:id="@+id/qbar"
-            android:visibility="gone"
             android:layout_width="20dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginBottom="@dimen/dp_40"
-            android:layout_marginTop="@dimen/dp_40" />
+            android:layout_marginTop="@dimen/dp_40"
+            android:visibility="gone" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:src="@drawable/main_menu_publish"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_margin="20dp"
+            android:src="@drawable/main_menu_publish"
             app:backgroundTint="#fff"
             app:borderWidth="0.0dip"
             app:elevation="5.0dip"

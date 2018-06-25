@@ -52,44 +52,46 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.tv_total_score)
     public TextView tvTotalScore;
     String token = SharedUtils.singleton().get("token", "");
+
     public TopicFragmentRecyclerHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
+
     //1-按关注数量倒序；2-按名称排序
-    public void setData(List<SearchedBean.Projects> list, int position, int type, Context context){
-        final SearchedBean.Projects currenBean= list.get(position);
-        GlideUtils.loadCircleProjectUrl(context,img, Constants.BASE_IMG_URL + StringUtil.getBeanString(currenBean.getProjectIcon()));
-        tvCode.setText(StringUtil.getBeanString(currenBean.getProjectCode())+"/");
+    public void setData(List<SearchedBean.Projects> list, int position, int type, final Context context) {
+        final SearchedBean.Projects currenBean = list.get(position);
+        GlideUtils.loadCircleProjectUrl(context, img, Constants.BASE_IMG_URL + StringUtil.getBeanString(currenBean.getProjectIcon()));
+        tvCode.setText(StringUtil.getBeanString(currenBean.getProjectCode()) + "/");
         tvName.setText(StringUtil.getBeanString(currenBean.getProjectChineseName()));
-        if(currenBean.getTotalScore()!=0){
+        if (currenBean.getTotalScore() != 0) {
             tvTotalScore.setVisibility(View.VISIBLE);
             tvTotalScore.setText(String.valueOf(currenBean.getTotalScore()));
-        }else{
+        } else {
             tvTotalScore.setVisibility(View.GONE);
         }
-        switch (type){
+        switch (type) {
             case Constants.TOPIC_SORT_BY_NUM:
                 sortByNum();
                 break;
             case Constants.TOPIC_SORT_BY_NAME:
-                sortByName(currenBean,list,position);
+                sortByName(currenBean, list, position);
                 break;
         }
-        tvFollws.setText(currenBean.getFollowerNum()+"关注");
+        tvFollws.setText(currenBean.getFollowerNum() + "关注");
         if (0 == currenBean.getFollowStatus()) {
-            tvIsFollw.setText("+ 关注");
+            tvIsFollw.setText(context.getString(R.string.follow_status_0));
             tvIsFollw.setSelected(false);
             tvIsFollw.setPressed(false);
             tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
         } else if (1 == currenBean.getFollowStatus()) {
-            tvIsFollw.setText("已关注");
+            tvIsFollw.setText(context.getString(R.string.follow_status_1));
             tvIsFollw.setSelected(true);
             tvIsFollw.setPressed(true);
             tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
         } else {
 //            tvIsFollw.setVisibility(View.GONE);
-            tvIsFollw.setText("+ 关注");
+            tvIsFollw.setText(context.getString(R.string.follow_status_0));
             tvIsFollw.setSelected(false);
             tvIsFollw.setPressed(false);
             tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
@@ -97,32 +99,35 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvIsFollw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean isLogin = SharedUtils.singleton().get(Constants.IS_LOGIN_KEY,false);
-                if(isLogin){
-                    if (getString().equals("已关注")) {
-                        http(Constants.CANCEL_FOLLOW,currenBean.getProjectId());
+                SharedUtils.singleton().put("isFollowerSky",true);
+                SharedUtils.singleton().put("isFollowerFx",true);
+                boolean isLogin = SharedUtils.singleton().get(Constants.IS_LOGIN_KEY, false);
+                if (isLogin) {
+                    if (getString().equals(context.getString(R.string.follow_status_1))) {
+                        http(Constants.CANCEL_FOLLOW, currenBean.getProjectId(),context,currenBean);
                     } else {
-                        http(Constants.SAVE_FOLLOW,currenBean.getProjectId());
+                        http(Constants.SAVE_FOLLOW, currenBean.getProjectId(),context,currenBean);
                     }
-                }else{
+                } else {
                     IntentUtil.startActivity(LoginHomeActivity.class);
                 }
             }
         });
     }
-    public void sortByName(SearchedBean.Projects  currenBean,List<SearchedBean.Projects> list, int position){
+
+    public void sortByName(SearchedBean.Projects currenBean, List<SearchedBean.Projects> list, int position) {
         if (position == 0) {
             if (PatternUtils.isLetter(currenBean.getProjectCode()
                     .subSequence(0, 1).toString())) {
-                tvSpell.setText( currenBean.getProjectCode()
+                tvSpell.setText(currenBean.getProjectCode()
                         .subSequence(0, 1).toString().toUpperCase());
             } else {
-                tvSpell.setText( "#");
+                tvSpell.setText("#");
             }
             tvSpell.setVisibility(View.VISIBLE);
         } else {
-            SearchedBean.Projects  lastBean=list.get(position-1);
-            boolean b =lastBean.getProjectCode().subSequence(0, 1)
+            SearchedBean.Projects lastBean = list.get(position - 1);
+            boolean b = lastBean.getProjectCode().subSequence(0, 1)
                     .equals(currenBean.getProjectCode().subSequence(0, 1));
             if (b) {
                 tvSpell.setVisibility(View.GONE);
@@ -130,7 +135,7 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                     .subSequence(0, 1).toString())
                     && b == false) {
                 tvSpell.setVisibility(View.VISIBLE);
-                tvSpell.setText( currenBean.getProjectCode()
+                tvSpell.setText(currenBean.getProjectCode()
                         .subSequence(0, 1).toString().toUpperCase());
             } else if (PatternUtils.isLetter(currenBean.getProjectCode()
                     .subSequence(0, 1).toString()) == false
@@ -139,11 +144,12 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             }
         }
     }
-    public void sortByNum(){
+
+    public void sortByNum() {
         tvSpell.setVisibility(View.GONE);
     }
 
-    public void http(String url,int id) {
+    public void http(String url, int id, final Context context, final SearchedBean.Projects currenBean) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -160,17 +166,19 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         RetrofitUtil.request(params, BaseRes.class, new HttpCallBackImpl<BaseRes>() {
             @Override
             public void onCompleted(BaseRes bean) {
-                if (bean.getCode()==0){
-                    if (getString().equals("已关注")) {
-                        tvIsFollw.setText("+ 关注");
+                if (bean.getCode() == 0) {
+                    if (getString().equals(context.getString(R.string.follow_status_1))) {
+                        tvIsFollw.setText(context.getString(R.string.follow_status_0));
                         tvIsFollw.setSelected(false);
                         tvIsFollw.setPressed(false);
                         tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
+                        currenBean.setFollowStatus(0);
                     } else {
-                        tvIsFollw.setText("已关注");
+                        tvIsFollw.setText(context.getString(R.string.follow_status_1));
                         tvIsFollw.setSelected(true);
                         tvIsFollw.setPressed(true);
                         tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
+                        currenBean.setFollowStatus(1);
                     }
                 }
             }
@@ -182,7 +190,7 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         });
     }
 
-    public String getString(){
+    public String getString() {
         return tvIsFollw.getText().toString();
     }
 }

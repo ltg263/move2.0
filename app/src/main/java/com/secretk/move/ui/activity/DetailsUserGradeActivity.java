@@ -15,6 +15,7 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.bean.CommonListBase;
 import com.secretk.move.bean.DetailsUserGradeBean;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.listener.ItemClickListener;
@@ -143,6 +144,52 @@ public class DetailsUserGradeActivity extends BaseActivity implements ItemClickL
             @Override
             public void onCompleted(DetailsUserGradeBean bean) {
                 initUiData(bean);
+                simpleEvaluationList();
+            }
+
+            @Override
+            public void onError(String message) {
+                loadingDialog.dismiss();
+            }
+        });
+    }
+    int pageIndex = 1;
+    private void simpleEvaluationList() {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+            node.put("projectId", id);
+            node.put("pageIndex", pageIndex++);
+            node.put("pageSize", 50);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.SIMPLE_EVALUATION_LIST)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
+            @Override
+            public void onCompleted(CommonListBase bean) {
+                CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getEvaluations();
+//                if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
+//                    isHaveData=false;
+//                }
+                if(detailsBean==null){
+                    return;
+                }
+                if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
+                    return;
+                }
+
+                llHotDiscuss.setVisibility(View.VISIBLE);
+                tvNotDiscuss.setText("热们评论("+detailsBean.getRows().size()+")");
+                hotDiscussAdapter.setData(detailsBean.getRows());
+                if(pageIndex>2){
+                }else {
+
+                }
             }
 
             @Override
@@ -162,12 +209,6 @@ public class DetailsUserGradeActivity extends BaseActivity implements ItemClickL
         tvTotalScore.setText(StringUtil.getBeanString(String.valueOf(bean.getData().getTotalScore())));
 
         List<DetailsUserGradeBean.DataBean.EvaGradeStatBean> statBeans = bean.getData().getEvaGradeStat();
-        List<DetailsUserGradeBean.DataBean.HotDiscussBean> hotDiscuss = bean.getData().getHotDiscuss();
-        if(hotDiscuss!=null && hotDiscuss.size()!=0){
-            llHotDiscuss.setVisibility(View.VISIBLE);
-            tvNotDiscuss.setText("热们评论("+hotDiscuss.size()+")");
-            hotDiscussAdapter.setData(hotDiscuss);
-        }
         if(statBeans!=null){
             for(int i=0;i<statBeans.size();i++){
                 switch (i){

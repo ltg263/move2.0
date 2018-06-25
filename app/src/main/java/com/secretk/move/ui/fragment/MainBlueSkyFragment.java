@@ -30,7 +30,6 @@ import org.json.JSONObject;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
 
 /**
  * 作者： litongge
@@ -45,7 +44,6 @@ public class MainBlueSkyFragment extends LazyFragment implements ItemClickListen
     RelativeLayout rl_title;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-    Unbinder unbinder;
     private LinearLayoutManager layoutManager;
     private MainBlueSkyFragmentRecyclerAdapter adapter;
     protected LoadingDialog loadingDialog;
@@ -81,6 +79,14 @@ public class MainBlueSkyFragment extends LazyFragment implements ItemClickListen
             }
         });
     }
+    @Override
+    public void onUserVisible() {
+        boolean isFollowerSky = SharedUtils.singleton().get("isFollowerSky",false);
+        if(isFollowerSky){
+            onFirstUserVisible();
+        }
+        super.onUserVisible();
+    }
 
     @Override
     public void onFirstUserVisible() {
@@ -104,6 +110,7 @@ public class MainBlueSkyFragment extends LazyFragment implements ItemClickListen
         RetrofitUtil.request(params, BlueSkyBean.class, new HttpCallBackImpl<BlueSkyBean>() {
             @Override
             public void onCompleted(BlueSkyBean bean) {
+                SharedUtils.singleton().put("isFollowerSky",false);
                 List<BlueSkyBean.RankList> list = bean.getData().getRankList();
                 rl_title.setVisibility(View.VISIBLE);
                 adapter.setData(list);

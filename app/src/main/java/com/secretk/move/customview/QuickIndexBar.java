@@ -13,7 +13,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.secretk.move.bean.SearchedBean;
-import com.secretk.move.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -86,7 +85,6 @@ public class QuickIndexBar extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        LogUtil.w("---------------------------------------------------");
         if (list==null)
             return;
         for (int i = 0; i < list.size(); i++) {

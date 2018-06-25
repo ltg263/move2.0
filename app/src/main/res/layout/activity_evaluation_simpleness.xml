@@ -72,7 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="left|top"
-                    android:hint="请在此填写您的评价..."
+                    android:hint="请在此对项目进行简短评价"
                     android:maxEms="300"
                     android:maxLength="1000"
                     android:minLines="8"
@@ -104,6 +104,18 @@
                 android:text="* 1000字以内"
                 android:textColor="@color/title_gray_aa"
                 android:textSize="@dimen/dp_12" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_project_code"
+                android:maxLength="1000"
+                android:padding="@dimen/dp_10"
+                android:gravity="right"
+                android:text="可点击右上方按钮进行专业评测"
+                android:textColor="@color/app_background"
+                android:textSize="@dimen/dp_12" />
+
         </RelativeLayout>
     </ScrollView>
 

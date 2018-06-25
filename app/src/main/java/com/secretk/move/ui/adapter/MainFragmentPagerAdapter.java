@@ -27,9 +27,9 @@ public class MainFragmentPagerAdapter extends FragmentStatePagerAdapter {
             return new MainBlueGzFragment();
         }
 //        if (position==2){
-            return new MainBlueSkyFragment();
+//            return new MainBlueDjFragment();
 //        }
-//        return new MainBlueSkyFragment();
+        return new MainBlueSkyFragment();
 
     }
 

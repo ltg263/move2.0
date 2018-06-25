@@ -12,6 +12,8 @@ import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -29,6 +31,7 @@ import com.secretk.move.ui.adapter.MainFragmentPagerAdapter;
 import com.secretk.move.utils.UiUtils;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -100,7 +103,6 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         return false;
     }
 
-
     private void initDailog() {
         dialog = new Dialog(getContext(), R.style.Dialog_Fullscreen);
         LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -145,6 +147,22 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         });
         dialog.setContentView(view);
         dialog.show();
+    }
+
+    @Override
+    public void onUserVisible() {
+        super.onUserVisible();
+        if(this.isVisible()){
+            FragmentManager fragmentManager = this.getChildFragmentManager();
+            if (fragmentManager==null) {
+                return;
+            }
+            List<Fragment> fragments = fragmentManager.getFragments();
+            for(Fragment fragment : fragments){
+                if(fragment instanceof MainBlueSkyFragment)
+                    ((MainBlueSkyFragment)fragment).onUserVisible();
+            }
+        }
     }
 
     public void TabLayoutLenth() {

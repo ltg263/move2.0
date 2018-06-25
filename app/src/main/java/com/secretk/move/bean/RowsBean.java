@@ -53,6 +53,7 @@ public class RowsBean extends CommonListBase {
     private int modelType;
     private String postShortDesc;
     private int commentsNum;
+    private int praiseStatus;
     private int praiseNum;
     private int pageviewNum;
     private int donateNum;
@@ -86,6 +87,14 @@ public class RowsBean extends CommonListBase {
     private String evaluationTags;
     private String evauationContent;
     private String tagInfos;
+
+    public int getPraiseStatus() {
+        return praiseStatus;
+    }
+
+    public void setPraiseStatus(int praiseStatus) {
+        this.praiseStatus = praiseStatus;
+    }
 
     public void setModelType(int modelType) {
         this.modelType = modelType;

@@ -87,7 +87,7 @@ public class EvaluationNewActivity extends BaseActivity {
         String projectPay = getIntent().getStringExtra("projectPay");
         tvEvaluationObject.setText(projectPay + "/" + projectName);
 
-        mHeadView.setTitle(projectPay + "-完整版自建模型评测");
+        mHeadView.setTitle(projectPay + "-自定义化评测");
         setVerticalManager(mRecyclerView);
         adapter = new EvaluationNewAdapter(this);
         mRecyclerView.setAdapter(adapter);

@@ -70,7 +70,8 @@ public class EvaluationCompileListActivity extends BaseActivity {
                 getIntent().getParcelableArrayListExtra("sys_evaluation_model");
         String projectName = getIntent().getStringExtra("projectName");
         String projectPay = getIntent().getStringExtra("projectPay");
-        mHeadView.setTitle(projectPay+"-完整版"+getString(R.string.evaluation_professional));
+//        mHeadView.setTitle(projectPay+"-FIND模型评测"+getString(R.string.evaluation_professional));
+        mHeadView.setTitle(projectPay+"-FIND模型评测");
         tvProjectName.setText(projectPay+"/"+projectName);
 
         pbComprehensiveEvaluation.setTvOne(getResources().getString(R.string.comprehensive_evaluation), 0,

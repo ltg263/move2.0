@@ -23,6 +23,7 @@
     <string name="main_tab_mine">我的</string>
     <string name="main_fragment_recommend">推荐</string>
     <string name="main_fragment_follow">关注</string>
+    <string name="main_fragment_discuss">打假</string>
     <string name="main_fragment_bluesky">新榜</string>
     <string name="main_publish">发表</string>
     <!-- 注册界面-->
@@ -115,7 +116,8 @@
     <string name="mine_last_step">上一步</string>
     <string name="mine_submit">提交</string>
     <string name="mine_help">帮助中心</string>
-    <string name="mine_submit_require">上传要求：\n1、照片需免冠，手持证件人的五官清晰可见，完整露出双手手臂\n2、照片内容真实有效，不得做任何修改\n3、支持jpg/jepg/png格式，最大不超过5M\n4、手写文案：我确认在“区分”上所有行为为本人操作\n&#160;&#160;&#160;&#160;（附上自己签名以及当天日期）</string>
+    <string name="mine_submit_require_1">上传要求：\n1、照片需免冠，手持证件人的五官清晰可见，完整露出双手手臂\n2、照片内容真实有效，不得做任何修改\n3、支持jpg/jepg/png格式，最大不超过5M\n4、手写文案：我确认在“区分”上所有行为为本人操作\n&#160;&#160;&#160;&#160;（附上自己签名以及当天日期）</string>
+    <string name="mine_submit_require">上传要求：\n1、照片需免冠，手持证件人的五官清晰可见，完整露出双手手臂\n2、照片内容真实有效，不得做任何修改\n3、支持jpg/jepg/png格式，最大不超过5M</string>
 
     <!--我的资金-->
     <string name="asset_details">资产明细</string>
@@ -181,11 +183,11 @@
     <string name="bound_to">一定要</string>
     <string name="find">区分</string>
     <!--写测评-->
-    <string name="evaluation_simpleness">简单评测</string>
+    <string name="evaluation_simpleness">短评</string>
     <string name="evaluation_professional">专业评测</string>
-    <string name="evaluation_btn_new">新建评测模型</string>
-    <string name="evaluation_btn_compile">编写完整评测</string>
-    <string name="evaluation">评测</string>
+    <string name="evaluation_btn_new">自定义化评测</string>
+    <string name="evaluation_btn_compile">FIND模型评测</string>
+    <string name="evaluation">单项测评</string>
     <string name="evaluation_dimensionality">评测维度</string>
     <string name="evaluation_add_dimensionality">添加纬度</string>
     <string name="evaluation_num">可新增评测纬度，比例之和为1</string>
@@ -202,6 +204,7 @@
     <string name="evaluation_hint_weight">填写权重(0-1)，最多2位小数</string>
     <string name="evaluation_hint_grade">填写分数(1-10)，最多1位小数</string>
     <string name="evaluation_hint">请安规则输入</string>
+    <string name="evaluation_state_1">点击每个板块对应的“单项评测”，可进行单项评测，可任选模块评测，也可全评；\n\n点击左下方“自定义化评测”，可直接发布评测文章，也可自建模型再评测；\n\n点击右下方“FIND模型评测”，按照区分模型进行评测。</string>
 
     <!---->
     <string name="selector_photo_1">从手机相册中选择</string>
