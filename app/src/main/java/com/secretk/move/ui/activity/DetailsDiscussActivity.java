@@ -439,8 +439,8 @@ public class DetailsDiscussActivity extends BaseActivity {
                         }
                         if (imageLists.size() != 0) {
                             imgName = imageLists.get(0).getName();
+                            imgUrl = imageLists.get(0).getUrl();
                             if (imageLists.size() == 1) {
-                                imgUrl = imageLists.get(0).getUrl();
                                 ivPostSmallImages.setVisibility(View.VISIBLE);
                                 GlideUtils.loadSideMaxImage(DetailsDiscussActivity.this, ivPostSmallImages, Constants.BASE_IMG_URL + imgUrl);
                             } else {

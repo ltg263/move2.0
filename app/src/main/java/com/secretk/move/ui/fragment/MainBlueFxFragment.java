@@ -1,7 +1,10 @@
 package com.secretk.move.ui.fragment;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ScrollView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -18,9 +21,11 @@ import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.MainRfFragmentRecyclerAdapter;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.view.RecycleScrollView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,9 +43,11 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
     RecyclerView recycler;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.rcv)
+    RecycleScrollView rcv;
     private MainRfFragmentRecyclerAdapter adapter;
-    int pageIndex=1;
-    String tokenLs="";
+    int pageIndex = 1;
+    String tokenLs = "";
     boolean showFragment = false;//需要弹框
 
 
@@ -57,6 +64,7 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
         recycler.setAdapter(adapter);
         adapter.setItemListener(this);
     }
+
     private void initRefresh() {
         /**
          * 下拉刷新
@@ -65,7 +73,7 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 refreshLayout.setLoadmoreFinished(false);
-                pageIndex=1;
+                pageIndex = 1;
                 onFirstUserVisible();
             }
         });
@@ -75,15 +83,66 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
                 onFirstUserVisible();
             }
         });
+
+        recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                LogUtil.w("newState:"+newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LogUtil.w("dx::"+dx);
+                LogUtil.w("dy::"+dy);
+            }
+        });
+    }
+
+
+    private Handler mHandler = new android.os.Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    refreshLayout.setLoadmoreFinished(false);
+                    pageIndex = 1;
+                    onFirstUserVisible();
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+
+    public void dblclickRefresh() {
+        if (getUserVisibleHint()) {
+            recycler.setFocusable(false);
+            rcv.fullScroll(ScrollView.FOCUS_UP);
+//            refreshLayout.autoRefresh();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(1000);
+                        Message message = new Message();
+                        message.what = 1;
+                        mHandler.sendMessage(message);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }).start();
+        }
     }
 
     @Override
     public void onFirstUserVisible() {
-        tokenLs=token;
-        if(!refreshLayout.isRefreshing() && !refreshLayout.isLoading() && !showFragment){
+        tokenLs = token;
+        if (!refreshLayout.isRefreshing() && !refreshLayout.isLoading() && !showFragment) {
             loadingDialog.show();
         }
-        showFragment=true;
+        showFragment = true;
         final String token = SharedUtils.singleton().get("token", "");
         JSONObject node = new JSONObject();
         try {
@@ -129,8 +188,8 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
     @Override
     public void onResume() {
         super.onResume();
-        if(showFragment && !tokenLs.equals(token)){
-            pageIndex=1;
+        if (showFragment && !tokenLs.equals(token)) {
+            pageIndex = 1;
             onFirstUserVisible();
         }
     }
@@ -140,7 +199,7 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
         if (isLoginZt) {
             int postId = adapter.getDataIndex(postion).getPostId();
             int postType = adapter.getDataIndex(postion).getPostType();
-            IntentUtil.go2DetailsByType(postType,String.valueOf(postId));
+            IntentUtil.go2DetailsByType(postType, String.valueOf(postId));
         } else {
             IntentUtil.startActivity(LoginHomeActivity.class);
         }

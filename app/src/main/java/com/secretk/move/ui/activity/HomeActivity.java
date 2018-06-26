@@ -225,7 +225,9 @@ public class HomeActivity extends BaseActivity {
                         });
                 break;
             case R.id.ll_fans:
-//                IntentUtil.startActivity(HomeFansActivity.class);
+//                String key[] = {"userId"};
+//                String values[] = {String.valueOf(userId)};
+//                IntentUtil.startActivity(HomeFansActivity.class, key, values);
                 break;
         }
     }

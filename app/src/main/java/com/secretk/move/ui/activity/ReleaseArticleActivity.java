@@ -90,7 +90,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         recycler_horizontal.setLayoutManager(layoutManager);
         recycler_horizontal.setAdapter(releaseArticleLabelAdapter);
         releaseArticleLabelAdapter.setItemListener(this);
-        ed_title.setHint(Html.fromHtml("请输入标题 <small>(6-30字之间)</small>"));
+        ed_title.setHint(Html.fromHtml("请输入标题 <small>(6-60字之间)</small>"));
         loadingDialog = new LoadingDialog(this);
         projectId = getIntent().getIntExtra("projectId", 0);
     }

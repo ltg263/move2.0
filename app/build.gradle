@@ -20,18 +20,18 @@ MobSDK {
 
                 sortId 1
             }
-            /*QQ {
-                appId ""
-                appKey ""
+            QQ {
+                appId "1106995226"
+                appKey "K2XaByyVBpYmwzIE"
                 shareByAppClient true
                 sortId 2
             }
-            SinaWeibo {
-                appId ""
-                appKey ""
-                shareByAppClient true
-                sortId 3
-            }*/
+//            SinaWeibo {
+//                appId ""
+//                appKey ""
+//                shareByAppClient true
+//                sortId 3
+//            }
         }
     }
 

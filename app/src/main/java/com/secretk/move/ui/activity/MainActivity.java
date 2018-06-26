@@ -1,7 +1,10 @@
 package com.secretk.move.ui.activity;
 
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -16,6 +19,8 @@ import com.secretk.move.contract.ActivityMainContract;
 import com.secretk.move.customview.TabViewpager;
 import com.secretk.move.presenter.impl.MainPresenterImpl;
 import com.secretk.move.ui.adapter.MainActivityPagerAdapter;
+import com.secretk.move.ui.fragment.MainBlueFxFragment;
+import com.secretk.move.ui.fragment.MainBlueGzFragment;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -26,6 +31,8 @@ import com.secretk.move.view.DialogUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -56,6 +63,7 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
         return new MainPresenterImpl(this);
     }
 
+    long shuangji = 0;
     @Override
     protected void initView() {
         StatusBarUtil.setLightMode(this);
@@ -86,6 +94,32 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+        rbMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if ((System.currentTimeMillis() - shuangji) > 2000) {
+                    shuangji = System.currentTimeMillis();
+                } else {
+                    shuangji=0;
+                    FragmentManager fragmentManager = adapter.getItem(vp_main.getCurrentItem()).getChildFragmentManager();
+                    if (fragmentManager==null) {
+                        return;
+                    }
+                    List<Fragment> fragments = fragmentManager.getFragments();
+                    for(Fragment fragment : fragments){
+                        if(fragment instanceof MainBlueFxFragment) {
+                            if (fragment.isAdded()) {
+                                ((MainBlueFxFragment)fragment).dblclickRefresh();
+                            }
+                        }else if(fragment instanceof MainBlueGzFragment){
+                            if (fragment.isAdded()) {
+                                ((MainBlueGzFragment)fragment).dblclickRefresh();
+                            }
+                        }
+                    }
+                }
             }
         });
 

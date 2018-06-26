@@ -36,6 +36,7 @@ public class ProjectHomeBean extends BaseRes{
          */
 
         private ProjectBean project;
+        private int totalProEvaRaterNum;
         private List<RowsBean> hotDiscuss;
         private List<RowsBean> hotEva;
         private List<ProjectEvaStatBean> projectEvaStat;
@@ -67,6 +68,14 @@ public class ProjectHomeBean extends BaseRes{
 
         public List<ProjectEvaStatBean> getProjectEvaStat() {
             return projectEvaStat;
+        }
+
+        public int getTotalProEvaRaterNum() {
+            return totalProEvaRaterNum;
+        }
+
+        public void setTotalProEvaRaterNum(int totalProEvaRaterNum) {
+            this.totalProEvaRaterNum = totalProEvaRaterNum;
         }
 
         public void setProjectEvaStat(List<ProjectEvaStatBean> projectEvaStat) {

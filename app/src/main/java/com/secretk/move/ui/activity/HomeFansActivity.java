@@ -120,6 +120,7 @@ public class HomeFansActivity extends BaseActivity {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
+            node.put("userId", getIntent().getStringExtra("userId"));
             node.put("followType", 3);//关注类型：3-关注用户
             node.put("pageIndex", pageIndex++);//帖子ID
             node.put("pageSize", Constants.PAGE_SIZE);//帖子ID

@@ -1,9 +1,12 @@
 package com.secretk.move.ui.fragment;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -24,6 +27,7 @@ import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.view.RecycleScrollView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,6 +57,8 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
     int pageIndex = 1;
     boolean showFragment = false;
     String tokenLs = "";
+    @BindView(R.id.rcv)
+    RecycleScrollView rcv;
 
     @Override
     public int setFragmentView() {
@@ -103,6 +109,40 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
         });
     }
 
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    refreshLayout.setLoadmoreFinished(false);
+                    pageIndex = 1;
+                    onFirstUserVisible();
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+
+    public void dblclickRefresh() {
+        if (getUserVisibleHint()) {
+            recycler.setFocusable(false);
+            rcv.fullScroll(ScrollView.FOCUS_UP);
+//            refreshLayout.autoRefresh();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(1000);
+                        Message message = new Message();
+                        message.what = 1;
+                        mHandler.sendMessage(message);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }).start();
+        }
+    }
     @Override
     public void onFirstUserVisible() {
         tokenLs = token;

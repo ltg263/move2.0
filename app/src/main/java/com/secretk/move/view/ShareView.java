@@ -2,6 +2,7 @@ package com.secretk.move.view;
 
 import android.content.Context;
 
+import com.secretk.move.R;
 import com.secretk.move.baseManager.BaseManager;
 import com.secretk.move.sharesdk.OnekeyShare;
 import com.secretk.move.sharesdk.ShareContentCustomizeCallback;
@@ -25,26 +26,36 @@ public class ShareView {
         oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
             @Override
             public void onShare(Platform platform, Platform.ShareParams paramsToShare) {
-                paramsToShare.setShareType(Platform.SHARE_WEBPAGE);
-                paramsToShare.setTitle(title);
-                paramsToShare.setText(content);
+                String url = "http://download.sdk.mob.com/web/images/2018/05/25/10/1527215980143/108_108_7.07.png";
+                String imgWechat = "";
                 if(StringUtil.isNotBlank(imgUrl) && imgUrl.contains("http")){
-                    paramsToShare.setImageUrl(imgUrl);
-                }else{
-                    paramsToShare.setImageUrl("http://download.sdk.mob.com/web/images/2018/05/25/10/1527215980143/108_108_7.07.png");
+                    imgWechat = imgUrl+"?imageView2/1/w/108";
                 }
-                paramsToShare.setUrl(skipRrl);
-
                 if("WechatMoments".equals(platform.getName())){
-
+                    paramsToShare.setShareType(Platform.SHARE_WEBPAGE);
+                    paramsToShare.setTitle(title);
+                    paramsToShare.setText(content);
+                    paramsToShare.setImageUrl(url);
+                    paramsToShare.setUrl(skipRrl);
                 }else if("SinaWeibo".equals(platform.getName())){
-
+                    paramsToShare.setShareType(Platform.SHARE_WEBPAGE);
+                    paramsToShare.setTitle(mContext.getString(R.string.app_name));
                     paramsToShare.setText("微博标头i"+skipRrl);
-
                 }else if("Wechat".equals(platform.getName())){
-
+                    paramsToShare.setShareType(Platform.SHARE_WEBPAGE);
+                    paramsToShare.setTitle(title);
+                    paramsToShare.setText(content);
+                    paramsToShare.setUrl(skipRrl);
+                    paramsToShare.setImageUrl(url);
                 }else if("QQ".equals(platform.getName())){
-
+                    paramsToShare.setTitle(title);
+                    paramsToShare.setText(content);
+                    paramsToShare.setTitleUrl(skipRrl);
+                    if(StringUtil.isNotBlank(imgWechat)){
+                        paramsToShare.setImageUrl(imgWechat);
+                    }else{
+                        paramsToShare.setImageUrl(url);
+                    }
                 }else{
 
                 }

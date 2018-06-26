@@ -119,11 +119,27 @@ public class DetailsArticleActivity extends BaseActivity {
         rvImg.setAdapter(adapter);
         WebSettings webSettings = wvPostShortDesc.getSettings();//获取webview设置属性
         webSettings.setDefaultTextEncodingName("UTF-8");//设置默认为utf-8
-        webSettings.setJavaScriptEnabled(true); // 启用js
         webSettings.setBlockNetworkImage(false); // 解决图片不显示
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
             webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
+        //webview 适应屏幕大小
+//        webSettings.setUseWideViewPort(true);
+//        webSettings.setLoadWithOverviewMode(true);
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//        int mDensity = metrics.densityDpi;
+//        if (mDensity == 240) {
+//            webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+//        } else if (mDensity == 160) {
+//            webSettings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
+//        } else if(mDensity == 120) {
+//            webSettings.setDefaultZoom(WebSettings.ZoomDensity.CLOSE);
+//        }else if(mDensity == DisplayMetrics.DENSITY_XHIGH){
+//            webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+//        }else if (mDensity == DisplayMetrics.DENSITY_TV){
+//            webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
+//        }
         loadingDialog.show();
     }
 
@@ -264,7 +280,7 @@ public class DetailsArticleActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.tv_follow_status, R.id.tv_praise_status, R.id.tv_collect_status, R.id.tv_commendation_Num, R.id.tv_comments_num})
+    @OnClick({R.id.rl_ge_ren,R.id.tv_follow_status, R.id.tv_praise_status, R.id.tv_collect_status, R.id.tv_commendation_Num, R.id.tv_comments_num})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_ge_ren:
