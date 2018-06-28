@@ -14,7 +14,6 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.MineRecommendBase;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -160,7 +159,6 @@ public class MineCheckDetailsActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        LogUtil.w("------------------------------");
         initData();
     }
 }

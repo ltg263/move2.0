@@ -112,7 +112,10 @@ public class MineApproveSubmitiCertificateActivity extends BaseActivity {
                                 tvUserName.setText(data.getString("uesrRealName"));
                             }
                             if(StringUtil.isNotBlank(data.getString("uesrcardNum"))){
-                                tvUserNumber.setText(data.getString("uesrcardNum"));
+                                String num = data.getString("uesrcardNum");
+                                int numLength = num.length();
+                                String text = num.substring(0, 4) + "************" + num.substring(numLength-3, numLength);
+                                tvUserNumber.setText(text);
                             }
                             llYesPass.setVisibility(View.VISIBLE);
                             break;

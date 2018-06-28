@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_gray"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <LinearLayout
@@ -118,16 +120,17 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_centerHorizontal="true"
                                                 android:textColor="@color/app_background"
-                                                android:visibility="invisible"
                                                 android:textSize="@dimen/sp_18"
-                                                android:textStyle="bold" />
+                                                android:textStyle="bold"
+                                                android:visibility="invisible" />
+
                                             <TextView
                                                 android:id="@+id/tv_bu_zu"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
+                                                android:layout_alignBottom="@id/tv_total_score"
                                                 android:layout_centerHorizontal="true"
                                                 android:paddingBottom="@dimen/dp_3"
-                                                android:layout_alignBottom="@id/tv_total_score"
                                                 android:text="评测人数不足"
                                                 android:textColor="@color/title_gray_aa"
                                                 android:textSize="@dimen/sp_12" />
@@ -274,25 +277,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_line"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:visibility="gone"
-                        android:background="@color/cut_off_rule" />
+                        android:background="@color/cut_off_rule"
+                        android:visibility="gone" />
 
                     <android.support.v4.view.ViewPager
                         android:id="@+id/view_pager"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="match_parent" />
                 </LinearLayout>
 
             </android.support.design.widget.CoordinatorLayout>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </LinearLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
         android:src="@drawable/ic_publish"
-        android:layout_gravity="bottom|end"
         app:backgroundTint="#fff"
         app:borderWidth="0.0dip"
         app:elevation="5.0dip"

@@ -223,7 +223,7 @@ public class ProjectActivity extends BaseActivity {
     private void initListener() {
 //        fab.setVisibility(View.GONE);
         refreshLayout.setEnableRefresh(false);//禁止下拉刷新
-        refreshLayout.setEnableLoadmore(false);
+//        refreshLayout.setEnableLoadmore(false);
         /**
          * 设置Toolbar的变化
          */

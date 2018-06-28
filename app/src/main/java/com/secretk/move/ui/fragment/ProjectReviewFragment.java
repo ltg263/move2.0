@@ -162,7 +162,7 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
         if(project!=null){
             pbComprehensiveEvaluation.setTvOne(getResources().getString(R.string.comprehensive_evaluation),0,
                     getResources().getColor(R.color.title_gray));
-            pbComprehensiveEvaluation.setTvTwo("("+data.getData().getTotalProEvaRaterNum()+"人)",0,0);
+            pbComprehensiveEvaluation.setTvTwo("("+project.getTotalRaterNum()+"人)",0,0);
             pbComprehensiveEvaluation.setTvThree(project.getTotalScore(),16,R.color.app_background);
             pbComprehensiveEvaluation.setPbProgressMaxVisible();
         }

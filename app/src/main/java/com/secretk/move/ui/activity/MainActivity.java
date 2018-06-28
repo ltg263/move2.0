@@ -4,6 +4,7 @@ package com.secretk.move.ui.activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -26,6 +27,7 @@ import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
 import com.secretk.move.view.DialogUtils;
 
@@ -217,23 +219,23 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
 //        });
     }
 
-//    private long exitTime = 0;
-//    private int index = 0;
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-//            if (index != vp_main.getCurrentItem()) {
-//                rbMain.setChecked(true);
-//            } else {
-//                if ((System.currentTimeMillis() - exitTime) > 2000) {
-//                    Toast.makeText(this, "再按一次退出" + getString(R.string.app_name), Toast.LENGTH_SHORT).show();
-//                    exitTime = System.currentTimeMillis();
-//                } else {
-//                    finish();
-//                }
-//            }
-//            return true;
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
+    private long exitTime = 0;
+    private int index = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (index != vp_main.getCurrentItem()) {
+                rbMain.setChecked(true);
+            } else {
+                if ((System.currentTimeMillis() - exitTime) > 2000) {
+                    ToastUtils.getInstance().show("再按一次退出" + getString(R.string.app_name));
+                    exitTime = System.currentTimeMillis();
+                } else {
+                    finish();
+                }
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

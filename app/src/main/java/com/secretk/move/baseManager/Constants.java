@@ -89,7 +89,8 @@ public interface Constants {
     String REQUEST_CODE = "requestCode";
 
 
-    String BASE_IMG_HTML5 = "http://app.qufen.top/";
+    String BASE_IMG_HTML5 = "https://m.qufen.top/";
+//    String BASE_IMG_HTML5 = "http://app.qufen.top/";
 
     /**
      * 正式

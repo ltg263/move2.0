@@ -123,6 +123,7 @@ public class ProjectHomeBean extends BaseRes{
 
             private OwnerBean owner;
             private int followStatus;
+            private int totalRaterNum;
             private int projectId;
             private String projectIcon;
             private int state;
@@ -156,6 +157,14 @@ public class ProjectHomeBean extends BaseRes{
             private int commentsNum;
             private int collectNum;
             private List<ActiveUsersBean> activeUsers;
+
+            public int getTotalRaterNum() {
+                return totalRaterNum;
+            }
+
+            public void setTotalRaterNum(int totalRaterNum) {
+                this.totalRaterNum = totalRaterNum;
+            }
 
             public OwnerBean getOwner() {
                 return owner;

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -107,6 +108,44 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
                 }
             }
         });
+//        aaaa();
+    }
+
+    private void aaaa() {
+        //1监听recyclView是否滑动到底部
+        recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            //判断是不是往上拖动
+            public boolean isLastReflash;
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                /*
+                 * 滑动停止之后检测是否滑动到底部
+                 **/
+                if(newState == RecyclerView.SCROLL_STATE_IDLE &&isLastReflash){
+                    if(recycler.computeVerticalScrollExtent()+recyclerView.computeVerticalScrollOffset()>=recyclerView.computeVerticalScrollRange()){
+                         Toast.makeText(getContext(),"滑动到底部",Toast.LENGTH_SHORT).show();
+                        //滑动到底部的时候一般要做加载更多的数据的操作...
+                        /*
+                         * 提示适配器
+                         * */
+//                        recycleViewAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+            //根据dy，dx可以判断是往哪个方向滑动
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(dy>0){
+                    isLastReflash = true;
+                }else{
+                    isLastReflash = false;
+                }
+            }
+        });
+
+
     }
 
     private Handler mHandler = new Handler() {

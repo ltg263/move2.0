@@ -101,11 +101,13 @@
                     android:id="@+id/rv_review_top"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/cut_off_rule" />
             </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
-                android:background="@color/cut_off_rule" />
+
             <LinearLayout
                 android:id="@+id/ll_zxpc"
                 android:layout_width="match_parent"
@@ -133,6 +135,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_review"
                     android:layout_width="match_parent"
+                    android:nestedScrollingEnabled="false"
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <!--站長結束-->
