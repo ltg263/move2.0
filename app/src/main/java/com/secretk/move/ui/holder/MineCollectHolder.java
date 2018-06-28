@@ -103,7 +103,7 @@ public class MineCollectHolder extends RecyclerViewBaseHolder {
                 postType = "发表了评测";
                 break;
             case 2:
-                postType = "发表了打假";
+                postType = "发表了爆料";
                 break;
             case 3:
                 postType = "发表了文章";

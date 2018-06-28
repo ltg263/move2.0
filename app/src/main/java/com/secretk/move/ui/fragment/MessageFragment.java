@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -93,7 +93,7 @@ public class MessageFragment extends LazyFragment {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setLoadmoreFinished(false);
+                refreshLayout.setNoMoreData(false);
                 pageIndex = 1;
                 loadData();
 
@@ -102,9 +102,9 @@ public class MessageFragment extends LazyFragment {
         /**
          * 上啦加载
          */
-        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
+            public void onLoadMore(RefreshLayout refreshLayout) {
                 loadData();
             }
         });
@@ -179,7 +179,7 @@ public class MessageFragment extends LazyFragment {
                     return;
                 }
                 if (str.getData().getMessages().getCurPageNum() == str.getData().getMessages().getPageSize()) {
-                    refreshLayout.setLoadmoreFinished(true);
+                    refreshLayout.setNoMoreData(true);
                 }
                 list = str.getData().getMessages().getRows();
                 if (pageIndex > 2) {

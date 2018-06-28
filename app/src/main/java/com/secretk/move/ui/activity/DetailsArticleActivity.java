@@ -195,10 +195,10 @@ public class DetailsArticleActivity extends BaseActivity {
         }
         createUserId = initData.getCreateUserId();
         //,//"0 未关注；1-已关注；2-不显示关注按钮"\
-        if(initData.getFollowStatus()==1){
+        if(initData.getFollowStatus()==0){
             tvFollowStatus.setSelected(false);
             tvFollowStatus.setText(getResources().getString(R.string.follow_status_0));
-        }else if(initData.getFollowStatus() == 0){
+        }else if(initData.getFollowStatus() == 1){
             tvFollowStatus.setSelected(true);
             tvFollowStatus.setText(getResources().getString(R.string.follow_status_1));
         }else{

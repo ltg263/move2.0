@@ -33,7 +33,7 @@
         android:paddingVertical="@dimen/dp_3"
         android:text="@string/evaluation"
         android:textColor="@color/app_background"
-        android:textSize="@dimen/sp_14"
+        android:textSize="@dimen/sp_10"
         android:visibility="visible" />
 
 </LinearLayout>

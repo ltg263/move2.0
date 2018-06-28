@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -96,7 +96,7 @@ public class MineCollectActivity extends BaseActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setLoadmoreFinished(false);
+                refreshLayout.setNoMoreData(false);
                 pageIndex = 1;
                 initData();
             }
@@ -104,9 +104,9 @@ public class MineCollectActivity extends BaseActivity {
         /**
          * 上啦加载
          */
-        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
+            public void onLoadMore(RefreshLayout refreshlayout) {
                 initData();
             }
         });
@@ -140,7 +140,7 @@ public class MineCollectActivity extends BaseActivity {
                     return;
                 }
                 if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
-                    refreshLayout.setLoadmoreFinished(true);
+                    refreshLayout.setNoMoreData(true);
                 }
                 if (pageIndex > 2) {
                     adapter.setAddData(detailsBean.getRows());
@@ -155,7 +155,7 @@ public class MineCollectActivity extends BaseActivity {
                     refreshLayout.finishRefresh();
                 }
                 if (refreshLayout.isLoading()) {
-                    refreshLayout.finishLoadmore(true);
+                    refreshLayout.finishLoadMore(true);
                 }
                 if (loadingDialog.isShowing()) {
                     loadingDialog.dismiss();

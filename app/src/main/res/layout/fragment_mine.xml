@@ -227,7 +227,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
-                        android:text="打假"
+                        android:text="@string/crack_down"
                         android:textColor="@color/title_gray_aa"
                         android:textSize="@dimen/sp_12" />
                 </RelativeLayout>

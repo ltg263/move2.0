@@ -242,7 +242,7 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 break;
             case 2:
                 tvScore.setVisibility(View.INVISIBLE);
-                tvUserDynamic.setText("发表了打假");
+                tvUserDynamic.setText("发表了爆料");
                 break;
             case 3:
                 tvScore.setVisibility(View.INVISIBLE);

@@ -100,7 +100,7 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
         loadingDialog.show();
     }
     private void initRefresh() {
-        refreshLayout.setEnableLoadmore(false);
+        refreshLayout.setEnableLoadMore(false);
         refreshLayout.setEnableRefresh(false);
         /**
          * 下拉刷新
@@ -108,7 +108,7 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setLoadmoreFinished(false);
+                refreshLayout.setNoMoreData(false);
                 initData();
             }
         });
@@ -210,7 +210,9 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
         listSearch = new ArrayList<>();
         for(int i = 0;i<list.size();i++){
             if(list.get(i).getProjectCode().contains(searchContent)
-                    || list.get(i).getProjectCode().contains(searchContent.toUpperCase())){
+                    || list.get(i).getProjectCode().contains(searchContent.toUpperCase())
+                    || list.get(i).getProjectChineseName().contains(searchContent)
+                    || list.get(i).getProjectChineseName().contains(searchContent.toUpperCase())){
                 listSearch.add(list.get(i));
             }
         }

@@ -83,7 +83,8 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
 
     }
     private void initRefresh() {
-        refreshLayout.setEnableLoadmore(false);
+//        refreshLayout.setEnableLoadmore(false);
+        refreshLayout.setEnableLoadMore(false);
         refreshLayout.setEnableRefresh(false);
         /**
          * 下拉刷新
@@ -91,7 +92,7 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setLoadmoreFinished(false);
+                refreshLayout.setNoMoreData(false);
 
             }
         });

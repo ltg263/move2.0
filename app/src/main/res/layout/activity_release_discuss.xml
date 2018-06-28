@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="发布打假"
+                android:text="发布爆料"
                 android:textColor="#333333"
                 android:textSize="@dimen/sp_18" />
 

@@ -302,7 +302,6 @@ public interface Constants {
     //发表评测 用户 自建评测模型
     String SAVE_EVALUATION_MODEL = BASE_URL + "kff/evaluation/saveEvaluationModel";
 
-    //=======
     //讨论详情 页
     String HOME_DISCUSS_DETAIL = BASE_URL + "kff/home/discussDetail";
     //讨论，评测，文章 中 某个评论的评论列表

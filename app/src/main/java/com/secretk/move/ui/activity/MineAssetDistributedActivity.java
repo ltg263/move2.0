@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -70,7 +70,7 @@ public class MineAssetDistributedActivity extends BaseActivity {
         initRefresh();
         //暂不支持上拉下拉
         refreshLayout.setEnableRefresh(false);
-        refreshLayout.setEnableLoadmore(false);
+        refreshLayout.setEnableLoadMore(false);
         loadingDialog.show();
     }
 
@@ -126,7 +126,7 @@ public class MineAssetDistributedActivity extends BaseActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setLoadmoreFinished(false);
+                refreshLayout.setNoMoreData(false);
                 pageIndex = 1;
                 initData();
             }
@@ -134,9 +134,9 @@ public class MineAssetDistributedActivity extends BaseActivity {
         /**
          * 上啦加载
          */
-        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
+            public void onLoadMore(RefreshLayout refreshLayout) {
                 initData();
             }
         });

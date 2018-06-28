@@ -149,7 +149,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
             @Override
             public void onFinish() {
                 if (refreshlayout != null) {
-                    refreshlayout.finishLoadmore();
+                    refreshlayout.finishLoadMore();
                 }
                 loadingDialog.dismiss();
             }

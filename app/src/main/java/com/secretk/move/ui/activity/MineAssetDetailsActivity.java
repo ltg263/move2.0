@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -100,7 +100,7 @@ public class MineAssetDetailsActivity extends BaseActivity {
                 }
                 tvTotalAssets.setText(StringUtil.getBeanString(String.valueOf(rsn.getData().getSum())));
                 if (data.getCurPageNum() == data.getPageSize()) {
-                    refreshLayout.setLoadmoreFinished(true);
+                    refreshLayout.setNoMoreData(true);
                 }
                 if(pageIndex>2){
                     adapter.setAddData(data.getRows());
@@ -128,7 +128,7 @@ public class MineAssetDetailsActivity extends BaseActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setLoadmoreFinished(false);
+                refreshLayout.setNoMoreData(false);
                 pageIndex = 1;
                 initData();
             }
@@ -136,9 +136,9 @@ public class MineAssetDetailsActivity extends BaseActivity {
         /**
          * 上啦加载
          */
-        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
+            public void onLoadMore(RefreshLayout refreshlayout) {
                 initData();
             }
         });

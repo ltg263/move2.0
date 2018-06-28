@@ -67,7 +67,7 @@ public class MainBlueSkyFragment extends LazyFragment implements ItemClickListen
         loadingDialog = new LoadingDialog(getActivity());
     }
     private void initRefresh() {
-        refreshLayout.setEnableLoadmore(false);
+        refreshLayout.setEnableLoadMore(false);
         refreshLayout.setEnableRefresh(false);
         /**
          * 下拉刷新

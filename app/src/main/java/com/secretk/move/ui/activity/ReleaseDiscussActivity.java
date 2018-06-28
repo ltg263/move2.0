@@ -276,7 +276,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
                     JSONObject object = new JSONObject(str);
                     int postId = object.getJSONObject("data").getInt("postId");
                     IntentUtil.startPublishSucceedActivity(String.valueOf(postId),
-                            "发表打假", getResources().getString(R.string.discuss_succeed),getResources().getString(R.string.not_go_look), Constants.PublishSucceed.DISCUSS);
+                            "发表爆料", getResources().getString(R.string.discuss_succeed),getResources().getString(R.string.not_go_look), Constants.PublishSucceed.DISCUSS);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

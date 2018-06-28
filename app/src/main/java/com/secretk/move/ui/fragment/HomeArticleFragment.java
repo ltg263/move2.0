@@ -101,7 +101,7 @@ public class HomeArticleFragment extends LazyFragment{
             @Override
             public void onFinish() {
                 if(refreshlayout!=null){
-                    refreshlayout.finishLoadmore();
+                    refreshlayout.finishLoadMore();
                 }
                 if(loadingDialog.isShowing()){
                     loadingDialog.dismiss();

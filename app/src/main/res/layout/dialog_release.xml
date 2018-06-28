@@ -77,7 +77,7 @@
                 android:layout_gravity="center_horizontal"
                 android:textColor="#333333"
                 android:textSize="@dimen/sp_15"
-                android:text="打假"/>
+                android:text="@string/crack_down"/>
         </LinearLayout>
     </LinearLayout>
 

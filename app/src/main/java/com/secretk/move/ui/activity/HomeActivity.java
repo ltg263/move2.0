@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -261,38 +261,38 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 //设置可上啦
-                refreshlayout.setLoadmoreFinished(false);
+                refreshlayout.setNoMoreData(false);
             }
         });
         /**
          * 上啦加载
          */
-        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
+            public void onLoadMore(RefreshLayout refreshlayout) {
                 switch (viewPager.getCurrentItem()) {
                     case HOME_REVIEW_FRAGMENT:
                         if (reviewFragment.isHaveData) {
-                            refreshlayout.setLoadmoreFinished(false);
+                            refreshlayout.setNoMoreData(false);
                             reviewFragment.getLoadData(refreshlayout);
                         } else {
-                            refreshlayout.setLoadmoreFinished(true);
+                            refreshlayout.setNoMoreData(true);
                         }
                         break;
                     case HOME_DISCUSS_FRAGMENT:
                         if (discussFragment.isHaveData) {
-                            refreshlayout.setLoadmoreFinished(false);
+                            refreshlayout.setNoMoreData(false);
                             discussFragment.getLoadData(refreshlayout);
                         } else {
-                            refreshlayout.setLoadmoreFinished(true);
+                            refreshlayout.setNoMoreData(true);
                         }
                         break;
                     case HOME_ARTICLE_FRAGMENT:
                         if (articleFragment.isHaveData) {
                             articleFragment.getLoadData(refreshlayout);
-                            refreshlayout.setLoadmoreFinished(false);
+                            refreshlayout.setNoMoreData(false);
                         } else {
-                            refreshlayout.setLoadmoreFinished(true);
+                            refreshlayout.setNoMoreData(true);
                         }
                         break;
                 }
@@ -304,23 +304,23 @@ public class HomeActivity extends BaseActivity {
                 switch (position) {
                     case HOME_REVIEW_FRAGMENT:
                         if (reviewFragment.isHaveData) {
-                            refreshLayout.setLoadmoreFinished(false);
+                            refreshLayout.setNoMoreData(false);
                         } else {
-                            refreshLayout.setLoadmoreFinished(true);
+                            refreshLayout.setNoMoreData(true);
                         }
                         break;
                     case HOME_DISCUSS_FRAGMENT:
                         if (discussFragment.isHaveData) {
-                            refreshLayout.setLoadmoreFinished(false);
+                            refreshLayout.setNoMoreData(false);
                         } else {
-                            refreshLayout.setLoadmoreFinished(true);
+                            refreshLayout.setNoMoreData(true);
                         }
                         break;
                     case HOME_ARTICLE_FRAGMENT:
                         if (articleFragment.isHaveData) {
-                            refreshLayout.setLoadmoreFinished(false);
+                            refreshLayout.setNoMoreData(false);
                         } else {
-                            refreshLayout.setLoadmoreFinished(true);
+                            refreshLayout.setNoMoreData(true);
                         }
                         break;
                 }
