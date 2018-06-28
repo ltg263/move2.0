@@ -12,6 +12,7 @@ import com.secretk.move.ui.activity.DetailsDiscussActivity;
 import com.secretk.move.ui.activity.DetailsReviewAllActivity;
 import com.secretk.move.ui.activity.EvaluationSimplenessActivity;
 import com.secretk.move.ui.activity.EvaluationWriteActivity;
+import com.secretk.move.ui.activity.EvaluationWriteNewSimpActivity;
 import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.activity.PublishSucceedActivity;
@@ -175,6 +176,16 @@ public class IntentUtil {
         String key[] = {Constants.ModelType.MODEL_TYPE,"projectId","projectPay","professionalEvaDetail","totalScore","modelName"};
         String values[] = {modelType,projectId,projectName,professionalEvaDetail,totalScore,modelName};
         IntentUtil.startActivity(EvaluationWriteActivity.class, key, values);
+    }
+    /**
+     * 跳转到项目的专业评测Activity
+     * 单项评测和自定义化
+     * @param projectId
+     */
+    public static void startProjectCompileDxZjyActivity(String modelType, String projectId,String projectName,String professionalEvaDetail,String totalScore,String modelName) {
+        String key[] = {Constants.ModelType.MODEL_TYPE,"projectId","projectPay","professionalEvaDetail","totalScore","modelName"};
+        String values[] = {modelType,projectId,projectName,professionalEvaDetail,totalScore,modelName};
+        IntentUtil.startActivity(EvaluationWriteNewSimpActivity.class, key, values);
     }
 
     /**

@@ -140,7 +140,7 @@ public class EvaluationWriteActivity extends BaseActivity  implements ItemClickL
         }
         if (modelType == Constants.ModelType.MODEL_TYPE_PART) {
             modelPbTitle = getIntent().getStringExtra("modelName");
-            postTitle = "PART-" + modelPbTitle;
+            postTitle = "PART -" + modelPbTitle;
         }
         if (modelType == Constants.ModelType.MODEL_TYPE_ALL_NEW) {
             postTitle = "ALL-专业评测";
@@ -308,7 +308,7 @@ public class EvaluationWriteActivity extends BaseActivity  implements ItemClickL
             //精确到小数点1位。简单评测 和部分评测 需要给出此值；ALL-专业评测 可以不用给。
 //            if(modelType!=Constants.ModelType.MODEL_TYPE_ALL_NEW
 //                    || modelType!=Constants.ModelType.MODEL_TYPE_ALL){
-            node.put("totalScore", totalScore);
+            node.put("totalScore", Float.valueOf(totalScore));
 //            }
             //包含 fileName,fileUrl,size,extension 信息的json数组,最多3个
             node.put("postSmallImages", postSmallImages.toString());

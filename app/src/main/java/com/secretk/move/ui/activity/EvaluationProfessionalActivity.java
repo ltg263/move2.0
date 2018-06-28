@@ -153,11 +153,15 @@ public class EvaluationProfessionalActivity extends BaseActivity {
                 IntentUtil.startWebViewActivity(Constants.MODEL,"评测模型说明");
                 break;
             case R.id.btn_new:
-                Intent intents = new Intent(this,EvaluationNewActivity.class);
-                intents.putExtra("projectName",projectName);
-                intents.putExtra("projectPay",projectPay);
-                intents.putExtra("projectId",projectId);
-                startActivity(intents);
+//                Intent intents = new Intent(this,EvaluationNewActivity.class);
+//                intents.putExtra("projectName",projectName);
+//                intents.putExtra("projectPay",projectPay);
+//                intents.putExtra("projectId",projectId);
+//                startActivity(intents);
+
+                IntentUtil.startProjectCompileDxZjyActivity(String.valueOf(Constants.ModelType.MODEL_TYPE_ALL_NEW),
+                        String.valueOf(projectId),getprojectPay(),
+                        "","8.0","综合评分");
                 break;
             case R.id.btn_compile:
                 if(listBeans==null || listBeans.size()==0){

@@ -110,7 +110,7 @@ public class RichTextEditor extends ScrollView {
         LinearLayout.LayoutParams firstEditParam = new LinearLayout.LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         //editNormalPadding = dip2px(EDIT_PADDING);
-        firstEdit = createEditText("请发表您对当前项目的看法，字数少于10000，若有相应评测模型最佳", dip2px(context, EDIT_PADDING));
+        firstEdit = createEditText("请发表您对当前项目的看法，字数少于10000。", dip2px(context, EDIT_PADDING));
         allLayout.addView(firstEdit, firstEditParam);
         lastFocusEdit = firstEdit;
     }
@@ -200,7 +200,7 @@ public class RichTextEditor extends ScrollView {
         imgCount--;
         if (imgCount == 0) //当没有图片的时候，显示写得好，有打赏
         {
-            firstEdit.setHint("请发表您对当前项目的看法，字数少于10000，若有相应评测模型最佳");
+            firstEdit.setHint("请发表您对当前项目的看法，字数少于10000。");
         }
     }
 
@@ -362,6 +362,10 @@ public class RichTextEditor extends ScrollView {
         }
 
         return dataList;
+    }
+
+    public void setHintText(String str) {
+        firstEdit.setHint(str);
     }
 
     public class EditData {

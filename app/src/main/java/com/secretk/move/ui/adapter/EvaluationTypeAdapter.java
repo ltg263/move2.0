@@ -1,7 +1,6 @@
 package com.secretk.move.ui.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +9,14 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.SysEvaluationModelBean;
 import com.secretk.move.ui.activity.EvaluationProfessionalActivity;
-import com.secretk.move.ui.activity.EvaluationProfessionalItemActivity;
+import com.secretk.move.utils.IntentUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +80,7 @@ public class EvaluationTypeAdapter extends RecyclerView.Adapter<EvaluationTypeAd
         }
 
         public void refresh(final int position, final List<SysEvaluationModelBean.DataBean.ModeDetailListBean> lists) {
+            final SysEvaluationModelBean.DataBean.ModeDetailListBean listBean = lists.get(position);
             int colorUrl=R.color.app_background;
             switch (position) {
                 case 0:
@@ -98,17 +103,34 @@ public class EvaluationTypeAdapter extends RecyclerView.Adapter<EvaluationTypeAd
                     break;
             }
             tvName.setTextColor(context.getResources().getColor(colorUrl));
-            tvName.setText(lists.get(position).getDetailName());
-            tvWeight.setText(" / "+lists.get(position).getDetailWeight()+"%");
+            tvName.setText(listBean.getDetailName());
+            tvWeight.setText(" / "+listBean.getDetailWeight()+"%");
             tvDimensionality_compile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context,EvaluationProfessionalItemActivity.class);
-                    intent.putExtra("sys_evaluation_model",lists.get(position));
-                    intent.putExtra("projectName",((EvaluationProfessionalActivity)context).getProjectName());
-                    intent.putExtra("projectPay",((EvaluationProfessionalActivity)context).getprojectPay());
-                    intent.putExtra("projectId",((EvaluationProfessionalActivity)context).getProjectId());
-                    context.startActivity(intent);
+//                    老版本
+//                    Intent intent = new Intent(context,EvaluationProfessionalItemActivity.class);
+//                    intent.putExtra("sys_evaluation_model",listBean);
+//                    intent.putExtra("projectName",((EvaluationProfessionalActivity)context).getProjectName());
+//                    intent.putExtra("projectPay",((EvaluationProfessionalActivity)context).getprojectPay());
+//                    intent.putExtra("projectId",((EvaluationProfessionalActivity)context).getProjectId());
+//                    context.startActivity(intent);
+
+                    JSONObject node = new JSONObject();
+                    JSONArray array = new JSONArray();
+                    try {
+                        node.put("modelId", listBean.getModelId());
+                        node.put("modelName", listBean.getDetailName());
+                        node.put("score", listBean.getTotalScore());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    array.put(node);
+
+                    int projectId = ((EvaluationProfessionalActivity)context).getProjectId();
+                    IntentUtil.startProjectCompileDxZjyActivity(String.valueOf(Constants.ModelType.MODEL_TYPE_PART),
+                            String.valueOf(projectId),((EvaluationProfessionalActivity)context).getprojectPay(),
+                            node.toString(),String.valueOf(listBean.getTotalScore()),listBean.getDetailName());
                 }
             });
         }
