@@ -187,7 +187,10 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         if(childLists!=null && childLists.size()>0){
             for(int i=0;i<childLists.size();i++){
                 final String userName = childLists.get(i).getCommentUserName();
-                String userNameB = ": @"+childLists.get(i).getBecommentedUserName()+"  ";
+                String userNameB = ": ";
+                if(childLists.get(i).getCommentUserId()!=childLists.get(i).getBecommentedUserId()){
+                    userNameB = ": @"+childLists.get(i).getBecommentedUserName()+"  ";
+                }
                 String content = childLists.get(i).getCommentContent();
                 String all = userName+userNameB+content;
                 String name[] = {userName,userNameB};

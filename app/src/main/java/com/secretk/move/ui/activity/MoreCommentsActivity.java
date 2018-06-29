@@ -230,7 +230,6 @@ public class MoreCommentsActivity extends BaseActivity{
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         Intent intent = new Intent();
         intent.putExtra(Constants.REQUEST_CODE,isBianHua);
         setResult(RESULT_OK, intent);

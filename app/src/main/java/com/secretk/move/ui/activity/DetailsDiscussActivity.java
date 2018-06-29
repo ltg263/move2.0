@@ -529,7 +529,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                     refreshLayout.finishRefresh();
                 }
                 if (refreshLayout.isLoading()) {
-                    refreshLayout.finishLoadmore(true);
+                    refreshLayout.finishLoadMore(true);
                 }
                 if (isFinish && loadingDialog.isShowing()) {
                     haveData.setVisibility(View.VISIBLE);
@@ -540,13 +540,6 @@ public class DetailsDiscussActivity extends BaseActivity {
             }
 
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        pageIndex = 1;
-        initData();
     }
 
     @Override
