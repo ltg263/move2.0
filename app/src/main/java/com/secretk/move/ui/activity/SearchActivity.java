@@ -83,7 +83,6 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
 
     }
     private void initRefresh() {
-//        refreshLayout.setEnableLoadmore(false);
         refreshLayout.setEnableLoadMore(false);
         refreshLayout.setEnableRefresh(false);
         /**

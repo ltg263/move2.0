@@ -116,6 +116,9 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
     @Override
     public void initViews() {
+
+//        StatusBarUtil_1.immersive(getActivity());
+//        StatusBarUtil_1.setPaddingSmart(getActivity(), ivMySet);
     }
 
     @Override

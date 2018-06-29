@@ -37,7 +37,7 @@
             android:id="@+id/et_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="请输入不少于10个字的意见描述..."
+            android:hint="请输入不少于10个字的意见描述...（您的意见一旦被采纳，社区将进行FIND奖励。）"
             android:background="@null"
             android:gravity="top"
             android:minLines="5"

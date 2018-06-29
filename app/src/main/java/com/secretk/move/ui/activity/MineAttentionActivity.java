@@ -3,7 +3,6 @@ package com.secretk.move.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -15,6 +14,7 @@ import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.ui.adapter.MineAttentionPagerAdapter;
 import com.secretk.move.utils.UiUtils;
 import com.secretk.move.view.AppBarHeadView;
+import com.secretk.move.view.ViewPagerFixed;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -29,7 +29,7 @@ import butterknife.BindView;
  */
 public class MineAttentionActivity extends BaseActivity{
     @BindView(R.id.vp_main_children)
-    ViewPager vp_main_children;
+    ViewPagerFixed vp_main_children;
     @BindView(R.id.tool_bar)
     Toolbar tool_bar;
     @BindView(R.id.tab_layout)

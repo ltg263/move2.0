@@ -41,7 +41,7 @@ public class MineOpinionBackActivity extends BaseActivity {
         mHeadView = findViewById(R.id.head_app_server);
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitleColor(R.color.title_gray);
-        mHeadView.setTitle("意见反馈");
+        mHeadView.setTitle("有奖反馈");
         mMenuInfos.add(0,new MenuInfo(R.string.mine_submit, getString(R.string.mine_submit), 0));
         return mHeadView;
     }

@@ -15,7 +15,6 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.secretk.move.baseManager.AppConfig;
-import com.secretk.move.utils.CrashHandler;
 
 import java.util.Stack;
 
@@ -35,7 +34,7 @@ public class MoveApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = this;
-        CrashHandler.getInstance().init(mContext);
+//        CrashHandler.getInstance().init(mContext);
 //        BlockCanary.install(mContext, new AppBlockCanaryContext()).start();
         AppConfig.initAppConfig(this);
         initDao();

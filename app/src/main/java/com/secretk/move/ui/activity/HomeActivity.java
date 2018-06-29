@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,6 +34,7 @@ import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.LoadingDialog;
+import com.secretk.move.view.ViewPagerFixed;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -80,7 +80,7 @@ public class HomeActivity extends BaseActivity {
     @BindView(R.id.tabs)
     TabLayout tabs;
     @BindView(R.id.view_pager)
-    ViewPager viewPager;
+    ViewPagerFixed viewPager;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     public static final int HOME_REVIEW_FRAGMENT = 0;
@@ -272,24 +272,24 @@ public class HomeActivity extends BaseActivity {
             public void onLoadMore(RefreshLayout refreshlayout) {
                 switch (viewPager.getCurrentItem()) {
                     case HOME_REVIEW_FRAGMENT:
+                        reviewFragment.getLoadData(refreshlayout);
                         if (reviewFragment.isHaveData) {
                             refreshlayout.setNoMoreData(false);
-                            reviewFragment.getLoadData(refreshlayout);
                         } else {
                             refreshlayout.setNoMoreData(true);
                         }
                         break;
                     case HOME_DISCUSS_FRAGMENT:
+                        discussFragment.getLoadData(refreshlayout);
                         if (discussFragment.isHaveData) {
                             refreshlayout.setNoMoreData(false);
-                            discussFragment.getLoadData(refreshlayout);
                         } else {
                             refreshlayout.setNoMoreData(true);
                         }
                         break;
                     case HOME_ARTICLE_FRAGMENT:
+                        articleFragment.getLoadData(refreshlayout);
                         if (articleFragment.isHaveData) {
-                            articleFragment.getLoadData(refreshlayout);
                             refreshlayout.setNoMoreData(false);
                         } else {
                             refreshlayout.setNoMoreData(true);

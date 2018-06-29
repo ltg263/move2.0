@@ -14,7 +14,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -28,6 +27,7 @@ import com.secretk.move.ui.activity.SelectProjectActivity;
 import com.secretk.move.ui.adapter.MainFragmentPagerAdapter;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.UiUtils;
+import com.secretk.move.view.ViewPagerFixed;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ import butterknife.BindView;
 
 public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuItemClickListener {
     @BindView(R.id.vp_main_children)
-    ViewPager vp_main_children;
+    ViewPagerFixed vp_main_children;
     @BindView(R.id.tool_bar)
     Toolbar tool_bar;
     @BindView(R.id.tab_layout)

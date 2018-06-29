@@ -233,7 +233,7 @@
                     android:layout_height="1dp"
                     android:background="@color/cut_off_rule" />
 
-                <android.support.v4.view.ViewPager
+                <com.secretk.move.view.ViewPagerFixed
                     android:id="@+id/view_pager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
