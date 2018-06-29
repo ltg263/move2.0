@@ -144,11 +144,13 @@ public class MineAttentionFragment extends LazyFragment {
 
             @Override
             public void onFinish() {
-                if (refreshLayout.isRefreshing()) {
+//                if (refreshLayout.isRefreshing()) {
+                if (refreshLayout.isEnableRefresh()) {
                     refreshLayout.finishRefresh();
                 }
-                if (refreshLayout.isLoading()) {
-                    refreshLayout.finishLoadmore(true);
+//                if (refreshLayout.isLoading()) {
+                if (refreshLayout.isEnableLoadMore()) {
+                    refreshLayout.finishLoadMore(true);
                 }
                 loadingDialog.dismiss();
             }

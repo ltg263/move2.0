@@ -30,7 +30,9 @@ import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
+import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.FragmentMineView;
 
 import org.json.JSONException;
@@ -293,6 +295,14 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
             @Override
             public void onError(String message) {
+                DialogUtils.showDialogHint(getActivity(), "帐号或密码错误请重新登陆",
+                        true, new DialogUtils.ErrorDialogInterface() {
+                            @Override
+                            public void btnConfirm() {
+                                SharedUtils.singleton().clear();
+                                IntentUtil.startActivity(LoginHomeActivity.class);
+                            }
+                        });
             }
         });
     }

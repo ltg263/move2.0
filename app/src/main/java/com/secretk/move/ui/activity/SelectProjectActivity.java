@@ -140,7 +140,7 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
             @Override
             public void onFinish() {
                 super.onFinish();
-                if (refreshLayout.isRefreshing()) {
+                if (refreshLayout.isEnableRefresh()) {
                     refreshLayout.finishRefresh();
                 }
                 loadingDialog.dismiss();

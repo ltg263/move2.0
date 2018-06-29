@@ -525,10 +525,12 @@ public class DetailsDiscussActivity extends BaseActivity {
 
             @Override
             public void onFinish() {
-                if (refreshLayout.isRefreshing()) {
+//                if (refreshLayout.isRefreshing()) {
+                if (refreshLayout.isEnableRefresh()) {
                     refreshLayout.finishRefresh();
                 }
-                if (refreshLayout.isLoading()) {
+//                if (refreshLayout.isLoading()) {
+                if (refreshLayout.isEnableLoadMore()) {
                     refreshLayout.finishLoadMore(true);
                 }
                 if (isFinish && loadingDialog.isShowing()) {

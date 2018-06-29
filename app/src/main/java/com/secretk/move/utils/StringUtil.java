@@ -73,14 +73,17 @@ public class StringUtil {
         return "";
     }
 
+
     /**
-     * @describe: 验证手机号是否合法
+     * 判断是否是手机号
+     *
+     * @param mobile
+     * @return
      */
-    public static boolean isMobileNO(String mobiles) {
-//        Pattern p = Pattern.compile("^13[0-9]{9}|14[57][0-9]{8}|17[0678][0-9]{8}|18[0-9]{9}|15[012356789][0-9]{8}$");
-//        ^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$
-        Pattern p = Pattern.compile("^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$");
-        Matcher m = p.matcher(mobiles);
+    public static boolean isMobileNO(String mobile) {
+        String regex = "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\\d{8}$";
+        Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(mobile);
         return m.matches();
     }
 

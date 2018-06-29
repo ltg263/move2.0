@@ -184,6 +184,10 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
      * @param context
      */
     private void setChildLists(final List<CommonCommentsBean.ChildCommentsListBean> childLists, final Context context) {
+        tvChildContent1.setVisibility(View.GONE);
+        viewChildContent1.setVisibility(View.GONE);
+        tvChildContent2.setVisibility(View.GONE);
+        viewChildContent2.setVisibility(View.GONE);
         if(childLists!=null && childLists.size()>0){
             for(int i=0;i<childLists.size();i++){
                 final String userName = childLists.get(i).getCommentUserName();

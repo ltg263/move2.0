@@ -139,7 +139,7 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
     @Override
     public void onFirstUserVisible() {
         tokenLs = token;
-        if (!refreshLayout.isRefreshing() && !refreshLayout.isLoading() && !showFragment) {
+        if (!refreshLayout.isEnableRefresh() && !refreshLayout.isEnableLoadMore() && !showFragment) {
             loadingDialog.show();
         }
         showFragment = true;
@@ -174,11 +174,13 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
             @Override
             public void onFinish() {
                 super.onFinish();
-                if (refreshLayout.isRefreshing()) {
+//                if (refreshLayout.isRefreshing()) {
+                if (refreshLayout.isEnableRefresh()) {
                     refreshLayout.finishRefresh();
                 }
-                if (refreshLayout.isLoading()) {
-                    refreshLayout.finishLoadmore(true);
+//                if (refreshLayout.isLoading()) {
+                if (refreshLayout.isEnableLoadMore()) {
+                    refreshLayout.finishLoadMore(true);
                 }
                 loadingDialog.dismiss();
             }

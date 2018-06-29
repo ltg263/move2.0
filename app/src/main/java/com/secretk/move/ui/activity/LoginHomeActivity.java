@@ -68,6 +68,7 @@ public class LoginHomeActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        sharedUtils.clear();
         StringUtil.etSearchChangedListener(etPhone, butLogin, new StringUtil.EtChange() {
             @Override
             public void etYes() {

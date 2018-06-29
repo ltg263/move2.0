@@ -116,7 +116,7 @@ public class MainBlueDjFragment extends LazyFragment implements ItemClickListene
             tvName.setText("您尚未登陆,无法预览已关注内容");
             return;
         }
-        if (!refreshLayout.isRefreshing() && !refreshLayout.isLoading() && !showFragment) {
+        if (!refreshLayout.isEnableRefresh() && !refreshLayout.isEnableLoadMore() && !showFragment) {
             loadingDialog.show();
         }
         showFragment = true;
@@ -161,11 +161,13 @@ public class MainBlueDjFragment extends LazyFragment implements ItemClickListene
             @Override
             public void onFinish() {
                 super.onFinish();
-                if (refreshLayout.isRefreshing()) {
+//                if (refreshLayout.isRefreshing()) {
+                if (refreshLayout.isEnableRefresh()) {
                     refreshLayout.finishRefresh();
                 }
-                if (refreshLayout.isLoading()) {
-                    refreshLayout.finishLoadmore(true);
+//                if (refreshLayout.isLoading()) {
+                if (refreshLayout.isEnableLoadMore()) {
+                    refreshLayout.finishLoadMore(true);
                 }
                 loadingDialog.dismiss();
             }

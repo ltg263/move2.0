@@ -259,27 +259,18 @@ public class ProjectActivity extends BaseActivity {
             public void onLoadMore(RefreshLayout refreshlayout) {
                 switch (viewPager.getCurrentItem()) {
                     case 1:
-                        reviewFragment.getLoadData(refreshlayout);
                         if (reviewFragment.isHaveData) {
-                            refreshlayout.setNoMoreData(false);
-                        } else {
-                            refreshlayout.setNoMoreData(true);
+                            reviewFragment.getLoadData(refreshLayout);
                         }
                         break;
                     case 2:
-                        discussFragment.getLoadData(refreshlayout);
                         if (discussFragment.isHaveData) {
-                            refreshlayout.setNoMoreData(false);
-                        } else {
-                            refreshlayout.setNoMoreData(true);
+                            discussFragment.getLoadData(refreshLayout);
                         }
                         break;
                     case 3:
-                        articleFragment.getLoadData(refreshlayout, "");
                         if (articleFragment.isHaveData) {
-                            refreshlayout.setNoMoreData(false);
-                        } else {
-                            refreshlayout.setNoMoreData(true);
+                            articleFragment.getLoadData(refreshLayout, "");
                         }
                         break;
                 }

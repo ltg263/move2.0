@@ -2,7 +2,6 @@ package com.secretk.move.ui.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.view.View;
 import android.widget.ImageView;
@@ -73,8 +72,6 @@ public class HomeActivity extends BaseActivity {
     TextView tvFans;
     @BindView(R.id.tv_individual_resume)
     TextView tvIndividualResume;
-    @BindView(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.appbar)
     AppBarLayout appbar;
     @BindView(R.id.tabs)
@@ -272,27 +269,18 @@ public class HomeActivity extends BaseActivity {
             public void onLoadMore(RefreshLayout refreshlayout) {
                 switch (viewPager.getCurrentItem()) {
                     case HOME_REVIEW_FRAGMENT:
-                        reviewFragment.getLoadData(refreshlayout);
                         if (reviewFragment.isHaveData) {
-                            refreshlayout.setNoMoreData(false);
-                        } else {
-                            refreshlayout.setNoMoreData(true);
+                            reviewFragment.getLoadData(refreshLayout);
                         }
                         break;
                     case HOME_DISCUSS_FRAGMENT:
-                        discussFragment.getLoadData(refreshlayout);
                         if (discussFragment.isHaveData) {
-                            refreshlayout.setNoMoreData(false);
-                        } else {
-                            refreshlayout.setNoMoreData(true);
+                            discussFragment.getLoadData(refreshLayout);
                         }
                         break;
                     case HOME_ARTICLE_FRAGMENT:
-                        articleFragment.getLoadData(refreshlayout);
                         if (articleFragment.isHaveData) {
-                            refreshlayout.setNoMoreData(false);
-                        } else {
-                            refreshlayout.setNoMoreData(true);
+                            articleFragment.getLoadData(refreshLayout);
                         }
                         break;
                 }

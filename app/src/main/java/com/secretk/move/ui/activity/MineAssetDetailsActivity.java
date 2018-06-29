@@ -112,11 +112,13 @@ public class MineAssetDetailsActivity extends BaseActivity {
             @Override
             public void onFinish() {
                 loadingDialog.dismiss();
-                if (refreshLayout.isRefreshing()) {
+//                if (refreshLayout.isRefreshing()) {
+                if (refreshLayout.isEnableRefresh()) {
                     refreshLayout.finishRefresh();
                 }
-                if (refreshLayout.isLoading()) {
-                    refreshLayout.finishLoadmore(true);
+//                if (refreshLayout.isLoading()) {
+                if (refreshLayout.isEnableLoadMore()) {
+                    refreshLayout.finishLoadMore(true);
                 }
             }
         });

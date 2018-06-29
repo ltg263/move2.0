@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -105,10 +105,10 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     }
 
     /**
-     * @param refreshlayout
+     * @param refreshLayout
      * @param sort:排毒方式     空时间   否则赞
      */
-    public void getLoadData(final RefreshLayout refreshlayout, String sort) {
+    public void getLoadData(final SmartRefreshLayout refreshLayout, String sort) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -131,6 +131,9 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
             public void onCompleted(CommonListBase bean) {
                 CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getArticles();
                 if (detailsBean.getPageSize() == detailsBean.getCurPageNum()) {
+                    if(refreshLayout!=null){
+                        refreshLayout.setNoMoreData(true);
+                    }
                     isHaveData = false;
                 }
                 if (detailsBean.getRows() == null || detailsBean.getRows().size() == 0) {
@@ -148,8 +151,8 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
 
             @Override
             public void onFinish() {
-                if (refreshlayout != null) {
-                    refreshlayout.finishLoadMore();
+                if (refreshLayout != null) {
+                    refreshLayout.finishLoadMore();
                 }
                 loadingDialog.dismiss();
             }

@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -68,7 +68,7 @@ public class HomeDiscussFragment extends LazyFragment{
         getLoadData(null);
 
     }
-    public void getLoadData(final RefreshLayout refreshlayout){
+    public void getLoadData(final SmartRefreshLayout refreshLayout){
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -85,12 +85,17 @@ public class HomeDiscussFragment extends LazyFragment{
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        loadingDialog.show();
+        if(refreshLayout==null){
+            loadingDialog.show();
+        }
         RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
             @Override
             public void onCompleted(CommonListBase bean) {
                 CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getDiscusses();
                 if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
+                    if(refreshLayout!=null){
+                        refreshLayout.setNoMoreData(true);
+                    }
                     isHaveData=false;
                 }
                 if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
@@ -107,8 +112,8 @@ public class HomeDiscussFragment extends LazyFragment{
 
             @Override
             public void onFinish() {
-                if(refreshlayout!=null){
-                    refreshlayout.finishLoadMore();
+                if(refreshLayout!=null){
+                    refreshLayout.finishLoadMore();
                 }
                 if(loadingDialog.isShowing()){
                     loadingDialog.dismiss();
