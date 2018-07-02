@@ -18,7 +18,7 @@ public class MainFragmentsFactory {
                     fragments.put(position,new MainPagerFragment());
                     break;
                 case 1:
-                    fragments.put(position,new TopicFragment());
+                    fragments.put(position,new FindFragment());
                     break;
                 case 2:
                     fragments.put(position,new MessageFragment());

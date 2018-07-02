@@ -20,7 +20,7 @@ import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.activity.SearchActivity;
 import com.secretk.move.ui.activity.SubmitProjectActivity;
-import com.secretk.move.ui.adapter.TopicFragmentRecyclerAdapter;
+import com.secretk.move.ui.adapter.FindFragmentRecyclerAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PatternUtils;
@@ -43,7 +43,7 @@ import butterknife.OnClick;
  * 邮箱；ltg263@126.com
  * 描述：主页话题
  */
-public class TopicFragment extends LazyFragment implements ItemClickListener, QuickIndexBar.OnLetterChangeListener {
+public class FindFragment extends LazyFragment implements ItemClickListener, QuickIndexBar.OnLetterChangeListener {
 
     @BindView(R.id.qbar)
     QuickIndexBar qbar;
@@ -70,7 +70,7 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
 //    RelativeLayout rlTopTheme;
 //    @BindView(R.id.ll_have_data)
 //    LinearLayout llHaveData;
-    private TopicFragmentRecyclerAdapter adapter;
+    private FindFragmentRecyclerAdapter adapter;
     private LoadingDialog loadingDialog;
     String lsToken="";
     boolean showFragment = false;
@@ -84,7 +84,7 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
     public void initViews() {
 //        initRefresh();
         setVerticalManager(recycler);
-        adapter = new TopicFragmentRecyclerAdapter(getContext());
+        adapter = new FindFragmentRecyclerAdapter(getContext());
         recycler.setAdapter(adapter);
         adapter.setItemListener(this);
         qbar.setOnLetterChangeListener(this);

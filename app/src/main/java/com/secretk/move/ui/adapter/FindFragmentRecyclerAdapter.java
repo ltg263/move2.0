@@ -10,7 +10,7 @@ import com.secretk.move.R;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.SearchedBean;
 import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.holder.TopicFragmentRecyclerHolder;
+import com.secretk.move.ui.holder.FindFragmentRecyclerHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +19,13 @@ import java.util.List;
  * Created by zc on 2018/4/14.
  */
 
-public class TopicFragmentRecyclerAdapter extends RecyclerView.Adapter<TopicFragmentRecyclerHolder> {
+public class FindFragmentRecyclerAdapter extends RecyclerView.Adapter<FindFragmentRecyclerHolder> {
     private ItemClickListener mListener;
     private List<SearchedBean.Projects> listNum = new ArrayList<>();
     private List<SearchedBean.Projects> listName = new ArrayList<>();
 
     private final Context context;
-    public TopicFragmentRecyclerAdapter(Context context) {
+    public FindFragmentRecyclerAdapter(Context context) {
         this.context= context;
     }
 
@@ -34,14 +34,14 @@ public class TopicFragmentRecyclerAdapter extends RecyclerView.Adapter<TopicFrag
     }
 
     @Override
-    public TopicFragmentRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FindFragmentRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_topic_recycler_item, parent, false);
-        TopicFragmentRecyclerHolder holder = new TopicFragmentRecyclerHolder(view);
+        FindFragmentRecyclerHolder holder = new FindFragmentRecyclerHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(TopicFragmentRecyclerHolder holder, int position) {
+    public void onBindViewHolder(FindFragmentRecyclerHolder holder, int position) {
         holder.setItemListener(mListener);
         switch (type) {
             case Constants.TOPIC_SORT_BY_NUM:

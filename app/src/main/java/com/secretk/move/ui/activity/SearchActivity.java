@@ -17,7 +17,7 @@ import com.secretk.move.contract.ActivitySearchContract;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.presenter.ActivitySearchPresenterImpl;
 import com.secretk.move.ui.adapter.SearchHistoryAdapter;
-import com.secretk.move.ui.adapter.TopicFragmentRecyclerAdapter;
+import com.secretk.move.ui.adapter.FindFragmentRecyclerAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
@@ -44,7 +44,7 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
 
     private LinearLayoutManager layoutManager;
     private SearchHistoryAdapter historyAdapter;
-    private TopicFragmentRecyclerAdapter adapter;
+    private FindFragmentRecyclerAdapter adapter;
     @Override
     protected int setLayout() {
         return R.layout.activity_search;
@@ -61,7 +61,7 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
         recycler.setLayoutManager(layoutManager);
         loadingDialog=new LoadingDialog(this);
         historyAdapter = new SearchHistoryAdapter();
-        adapter = new TopicFragmentRecyclerAdapter(this);
+        adapter = new FindFragmentRecyclerAdapter(this);
         historyAdapter.setItemListener(this);
         adapter.setItemListener(new ItemClickListener() {
             @Override

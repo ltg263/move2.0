@@ -37,7 +37,10 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * Created by zc on 2018/4/5.
+ * 作者： litongge
+ * 时间： 2018/7/2 18:34
+ * 邮箱；ltg263@126.com
+ * 描述：我的消息
  */
 
 public class MessageFragment extends LazyFragment {

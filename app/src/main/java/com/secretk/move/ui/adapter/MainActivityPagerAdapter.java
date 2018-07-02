@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.secretk.move.ui.fragment.MainFragmentsFactory;
-import com.secretk.move.ui.fragment.TopicFragment;
 
 /**
  * Created by zc on 2018/4/6.

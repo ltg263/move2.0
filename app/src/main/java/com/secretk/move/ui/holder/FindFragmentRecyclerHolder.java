@@ -35,7 +35,7 @@ import butterknife.ButterKnife;
  * Created by zc on 2018/4/14.
  */
 
-public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
+public class FindFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.img)
     public ImageView img;
     @BindView(R.id.tvSpell)
@@ -53,7 +53,7 @@ public class TopicFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     public TextView tvTotalScore;
     String token = SharedUtils.singleton().get("token", "");
 
-    public TopicFragmentRecyclerHolder(View itemView) {
+    public FindFragmentRecyclerHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
