@@ -72,6 +72,9 @@ public class ProjectDiscussFragment extends LazyFragment {
         rvReviewHot.setAdapter(adapterNot);
         adapterNew = new ProjectRecommendAdapter(getActivity());
         rvReviewNewest.setAdapter(adapterNew);
+        if(loadingDialog == null){
+            loadingDialog=new LoadingDialog(getActivity());
+        }
     }
 
     @Override

@@ -35,7 +35,7 @@ public class FindFragmentRecyclerAdapter extends RecyclerView.Adapter<FindFragme
 
     @Override
     public FindFragmentRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_topic_recycler_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_find_recycler_item, parent, false);
         FindFragmentRecyclerHolder holder = new FindFragmentRecyclerHolder(view);
         return holder;
     }

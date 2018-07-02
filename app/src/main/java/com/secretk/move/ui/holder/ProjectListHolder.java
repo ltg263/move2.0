@@ -111,7 +111,7 @@ public class ProjectListHolder extends RecyclerViewBaseHolder {
         //打假标签
         String tagInfos = rowsBean.getTagInfos();
         String tagName = "";
-        if (StringUtil.isNotBlank(tagInfos)) {
+        if (StringUtil.isNotBlank(tagInfos) && tagInfos.contains("tagName")) {
             try {
                 JSONArray array = new JSONArray(tagInfos);
                 if (array.length() > 0) {

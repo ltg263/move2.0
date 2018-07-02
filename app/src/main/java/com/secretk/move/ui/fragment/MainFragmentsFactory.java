@@ -21,7 +21,8 @@ public class MainFragmentsFactory {
                     fragments.put(position,new FindFragment());
                     break;
                 case 2:
-                    fragments.put(position,new MessageFragment());
+//                    fragments.put(position,new MessageFragment());
+                    fragments.put(position,new TopicFragment());
                     break;
                 case 3:
                     fragments.put(position,new MineFragment());

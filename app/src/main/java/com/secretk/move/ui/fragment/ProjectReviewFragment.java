@@ -86,6 +86,9 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
         rvReview.setAdapter(adapter);
         adapterTop = new ProjectRecommendAdapter(getActivity());
         rvReviewTop.setAdapter(adapterTop);
+        if(loadingDialog == null){
+            loadingDialog=new LoadingDialog(getActivity());
+        }
     }
 
     @Override

@@ -100,49 +100,22 @@ public class ImageViewVpAcivity extends BaseActivity {
             fragments.add(mf);
             if(i==0){
                 rb1.setVisibility(View.VISIBLE);
-//                if(position==i){
-//                    rb1.setChecked(true);
-//                }
             }else if(i==1){
                 rb2.setVisibility(View.VISIBLE);
-//                if(position==i){
-//                    rb2.setChecked(true);
-//                }
             }else if(i==2){
                 rb3.setVisibility(View.VISIBLE);
-//                if(position==i){
-//                    rb3.setChecked(true);
-//                }
             }else if(i==3){
                 rb4.setVisibility(View.VISIBLE);
-//                if(position==i){
-//                    rb4.setChecked(true);
-//                }
             }else if(i==4){
                 rb5.setVisibility(View.VISIBLE);
-//                if(position==i){
-//                    rb5.setChecked(true);
-//                }
             }else if(i==5){
                 rb6.setVisibility(View.VISIBLE);
-//                if(position==i){
-//                    rb6.setChecked(true);
-//                }
             }else if(i==6){
                 rb7.setVisibility(View.VISIBLE);
-//                if(position==i){
-//                    rb7.setChecked(true);
-//                }
             }else if(i==7){
                 rb8.setVisibility(View.VISIBLE);
-//                if(position==i){
-//                    rb8.setChecked(true);
-//                }
             }else if(i==8){
                 rb9.setVisibility(View.VISIBLE);
-//                if(position==i){
-//                    rb9.setChecked(true);
-//                }
             }
         }
 

@@ -66,6 +66,9 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
 
     @Override
     public void initViews() {
+        if(loadingDialog == null){
+            loadingDialog=new LoadingDialog(getActivity());
+        }
         setVerticalManager(rvReview);
         adapter = new ProjectRecommendAdapter(getActivity());
         rvReview.setAdapter(adapter);

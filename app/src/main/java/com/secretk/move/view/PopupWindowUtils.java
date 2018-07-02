@@ -202,6 +202,10 @@ public class PopupWindowUtils extends PopupWindow {
                         break;
                     case R.id.tv_log_confirm:
                         String season = etLogContent.getText().toString().trim();
+                        if(StringUtil.isBlank(season)){
+                            ToastUtils.getInstance().show("赞助金额不能为空");
+                            return;
+                        }
                         if(Integer.valueOf(season)<10 || Integer.valueOf(season)>2000){
                             ToastUtils.getInstance().show("请输入10-2000整数");
                             return;

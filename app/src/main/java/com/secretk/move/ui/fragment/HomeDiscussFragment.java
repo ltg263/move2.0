@@ -54,6 +54,9 @@ public class HomeDiscussFragment extends LazyFragment{
         setVerticalManager(rvReview);
         adapter = new HomeListAdapter(getActivity());
         rvReview.setAdapter(adapter);
+        if(loadingDialog==null){
+            loadingDialog=new LoadingDialog(getActivity());
+        }
     }
 
     @Override
