@@ -86,7 +86,6 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setNoMoreData(false);
                 pageIndex = 1;
                 onFirstUserVisible();
             }
@@ -152,7 +151,6 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    refreshLayout.setNoMoreData(false);
                     pageIndex = 1;
                     onFirstUserVisible();
                     break;
@@ -165,6 +163,7 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
         if (getUserVisibleHint()) {
             recycler.setFocusable(false);
             rcv.fullScroll(ScrollView.FOCUS_UP);
+            refreshLayout.setNoMoreData(false);
 //            refreshLayout.autoRefresh();
             new Thread(new Runnable() {
                 @Override
@@ -218,7 +217,7 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
             public void onCompleted(MainGzBean bean) {
                 MainGzBean.DataBean.FollowsBean detailsBean = bean.getData().getFollows();
                 if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
-                    refreshLayout.setNoMoreData(true);
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                 }
                 if (bean.getData().getFollows().getRows() == null && pageIndex == 2) {
                     convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);

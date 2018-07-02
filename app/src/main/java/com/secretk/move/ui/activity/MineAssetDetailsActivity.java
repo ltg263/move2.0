@@ -100,7 +100,7 @@ public class MineAssetDetailsActivity extends BaseActivity {
                 }
                 tvTotalAssets.setText(StringUtil.getBeanString(String.valueOf(rsn.getData().getSum())));
                 if (data.getCurPageNum() == data.getPageSize()) {
-                    refreshLayout.setNoMoreData(true);
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                 }
                 if(pageIndex>2){
                     adapter.setAddData(data.getRows());
@@ -130,7 +130,6 @@ public class MineAssetDetailsActivity extends BaseActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setNoMoreData(false);
                 pageIndex = 1;
                 initData();
             }

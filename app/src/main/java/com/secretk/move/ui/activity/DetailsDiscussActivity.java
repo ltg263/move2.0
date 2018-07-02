@@ -272,7 +272,6 @@ public class DetailsDiscussActivity extends BaseActivity {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 pageIndex = 1;
-                refreshLayout.setNoMoreData(false);
                 if (!NetUtil.isNetworkAvailable()) {
                     ToastUtils.getInstance().show(getString(R.string.network_error));
                     return;
@@ -516,10 +515,10 @@ public class DetailsDiscussActivity extends BaseActivity {
                         }
                     }
                     if (commentsBean.getCurPageNum() == commentsBean.getPageSize()) {
-                        refreshLayout.setNoMoreData(true);
+                        refreshLayout.finishLoadMoreWithNoMoreData();
                     }
                 } else {
-                    refreshLayout.setNoMoreData(true);
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                 }
             }
 

@@ -96,7 +96,6 @@ public class HomeFansActivity extends BaseActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setNoMoreData(false);
                 pageIndex = 1;
                 initData();
             }
@@ -142,7 +141,7 @@ public class HomeFansActivity extends BaseActivity {
                     return;
                 }
                 if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
-                    refreshLayout.setNoMoreData(true);
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                 }
                 if (pageIndex > 2) {
                     adapter.setAddData(detailsBean.getRows());

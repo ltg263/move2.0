@@ -114,6 +114,9 @@ public class HomeActivity extends BaseActivity {
         reviewFragment = new HomeReviewFragment();
         discussFragment = new HomeDiscussFragment();
         articleFragment = new HomeArticleFragment();
+        reviewFragment.setSmartRefreshLayout(refreshLayout);
+        discussFragment.setSmartRefreshLayout(refreshLayout);
+        articleFragment.setSmartRefreshLayout(refreshLayout);
         HomePageAdapter adapter = new HomePageAdapter(getSupportFragmentManager());
         adapter.addFragment(reviewFragment, getString(R.string.review));
         adapter.addFragment(discussFragment, getString(R.string.discuss));
@@ -257,8 +260,6 @@ public class HomeActivity extends BaseActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                //设置可上啦
-                refreshlayout.setNoMoreData(false);
             }
         });
         /**
@@ -270,17 +271,17 @@ public class HomeActivity extends BaseActivity {
                 switch (viewPager.getCurrentItem()) {
                     case HOME_REVIEW_FRAGMENT:
                         if (reviewFragment.isHaveData) {
-                            reviewFragment.getLoadData(refreshLayout);
+                            reviewFragment.getLoadData();
                         }
                         break;
                     case HOME_DISCUSS_FRAGMENT:
                         if (discussFragment.isHaveData) {
-                            discussFragment.getLoadData(refreshLayout);
+                            discussFragment.getLoadData();
                         }
                         break;
                     case HOME_ARTICLE_FRAGMENT:
                         if (articleFragment.isHaveData) {
-                            articleFragment.getLoadData(refreshLayout);
+                            articleFragment.getLoadData();
                         }
                         break;
                 }
@@ -294,21 +295,21 @@ public class HomeActivity extends BaseActivity {
                         if (reviewFragment.isHaveData) {
                             refreshLayout.setNoMoreData(false);
                         } else {
-                            refreshLayout.setNoMoreData(true);
+                            refreshLayout.finishLoadMoreWithNoMoreData();
                         }
                         break;
                     case HOME_DISCUSS_FRAGMENT:
                         if (discussFragment.isHaveData) {
                             refreshLayout.setNoMoreData(false);
                         } else {
-                            refreshLayout.setNoMoreData(true);
+                            refreshLayout.finishLoadMoreWithNoMoreData();
                         }
                         break;
                     case HOME_ARTICLE_FRAGMENT:
                         if (articleFragment.isHaveData) {
                             refreshLayout.setNoMoreData(false);
                         } else {
-                            refreshLayout.setNoMoreData(true);
+                            refreshLayout.finishLoadMoreWithNoMoreData();
                         }
                         break;
                 }

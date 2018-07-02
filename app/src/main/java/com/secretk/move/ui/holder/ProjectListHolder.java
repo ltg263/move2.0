@@ -107,7 +107,7 @@ public class ProjectListHolder extends RecyclerViewBaseHolder {
         tvTotalScore.setText(String.valueOf(rowsBean.getTotalScore())+"分");
         tvPostShortDesc.setText(rowsBean.getPostShortDesc());
         tvPraiseNum.setText(String.valueOf(rowsBean.getPraiseNum()));
-        tvCommentsNum.setText(String.valueOf(rowsBean.getCollectNum()));
+        tvCommentsNum.setText(String.valueOf(rowsBean.getCommentsNum()));
         //打假标签
         String tagInfos = rowsBean.getTagInfos();
         String tagName = "";

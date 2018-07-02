@@ -79,7 +79,6 @@ public class MainBlueDjFragment extends LazyFragment implements ItemClickListene
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setNoMoreData(false);
                 pageIndex = 1;
                 onFirstUserVisible();
             }
@@ -139,7 +138,7 @@ public class MainBlueDjFragment extends LazyFragment implements ItemClickListene
             public void onCompleted(MainGzBean bean) {
                 MainGzBean.DataBean.FollowsBean detailsBean = bean.getData().getCounterfeits();
                 if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
-                    refreshLayout.setNoMoreData(true);
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                 }
                 if (detailsBean.getRows() == null && pageIndex == 2) {
                     convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);

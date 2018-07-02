@@ -95,8 +95,7 @@ public class MineCollectActivity extends BaseActivity {
          */
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setNoMoreData(false);
+            public void onRefresh(RefreshLayout refreshLayout) {
                 pageIndex = 1;
                 initData();
             }
@@ -106,7 +105,7 @@ public class MineCollectActivity extends BaseActivity {
          */
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
+            public void onLoadMore(RefreshLayout refreshLayout) {
                 initData();
             }
         });
@@ -134,13 +133,13 @@ public class MineCollectActivity extends BaseActivity {
             @Override
             public void onCompleted(MyCollectList bean) {
                 MyCollectList.DataBean.MyTokenRecordsBean detailsBean = bean.getData().getMyTokenRecords();
+                if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                }
                 if (detailsBean.getRows() == null || detailsBean.getRows().size() == 0) {
                     findViewById(R.id.no_data).setVisibility(View.VISIBLE);
                     refreshLayout.setVisibility(View.GONE);
                     return;
-                }
-                if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
-                    refreshLayout.setNoMoreData(true);
                 }
                 if (pageIndex > 2) {
                     adapter.setAddData(detailsBean.getRows());
@@ -151,13 +150,11 @@ public class MineCollectActivity extends BaseActivity {
 
             @Override
             public void onFinish() {
-//                if (refreshLayout.isRefreshing()) {
                 if (refreshLayout.isEnableRefresh()) {
                     refreshLayout.finishRefresh();
                 }
-//                if (refreshLayout.isLoading()) {
                 if (refreshLayout.isEnableLoadMore()) {
-                    refreshLayout.finishLoadMore(true);
+                    refreshLayout.finishLoadMore();
                 }
                 if (loadingDialog.isShowing()) {
                     loadingDialog.dismiss();

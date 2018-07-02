@@ -65,10 +65,11 @@ public class HomeDiscussFragment extends LazyFragment{
 
     @Override
     public void onFirstUserVisible() {
-        getLoadData(null);
+        loadingDialog.show();
+        getLoadData();
 
     }
-    public void getLoadData(final SmartRefreshLayout refreshLayout){
+    public void getLoadData(){
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -85,16 +86,13 @@ public class HomeDiscussFragment extends LazyFragment{
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        if(refreshLayout==null){
-            loadingDialog.show();
-        }
         RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
             @Override
             public void onCompleted(CommonListBase bean) {
                 CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getDiscusses();
                 if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
-                    if(refreshLayout!=null){
-                        refreshLayout.setNoMoreData(true);
+                    if(refreshLayouF!=null){
+                        refreshLayouF.finishLoadMoreWithNoMoreData();
                     }
                     isHaveData=false;
                 }
@@ -112,13 +110,18 @@ public class HomeDiscussFragment extends LazyFragment{
 
             @Override
             public void onFinish() {
-                if(refreshLayout!=null){
-                    refreshLayout.finishLoadMore();
+                if(refreshLayouF!=null){
+                    refreshLayouF.finishLoadMore();
                 }
                 if(loadingDialog.isShowing()){
                     loadingDialog.dismiss();
                 }
             }
         });
+    }
+
+    SmartRefreshLayout refreshLayouF;
+    public void setSmartRefreshLayout(SmartRefreshLayout smartRefreshLayout) {
+        this.refreshLayouF = smartRefreshLayout;
     }
 }

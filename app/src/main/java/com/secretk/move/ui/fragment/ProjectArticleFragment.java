@@ -54,6 +54,11 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     private String projectId;
     private LoadingDialog loadingDialog;
 
+    SmartRefreshLayout refreshLayout;
+    public void setRefreshLayout(SmartRefreshLayout refreshLayout) {
+        this.refreshLayout = refreshLayout;
+    }
+
     @Override
     public int setFragmentView() {
         return R.layout.fragment_project_article;
@@ -75,7 +80,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
                 } else {
                     tvSort.setText(getString(R.string.sort_love));
                 }
-                getLoadData(null, tvSort.getText().toString().trim());
+                getLoadData(tvSort.getText().toString().trim());
             }
         });
     }
@@ -83,7 +88,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     @Override
     public void onFirstUserVisible() {
         loadingDialog.show();
-        getLoadData(null, "");
+        getLoadData("");
     }
 
 
@@ -105,10 +110,9 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     }
 
     /**
-     * @param refreshLayout
      * @param sort:排毒方式     空时间   否则赞
      */
-    public void getLoadData(final SmartRefreshLayout refreshLayout, String sort) {
+    public void getLoadData(String sort) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -131,8 +135,8 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
             public void onCompleted(CommonListBase bean) {
                 CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getArticles();
                 if (detailsBean.getPageSize() == detailsBean.getCurPageNum()) {
-                    if(refreshLayout!=null){
-                        refreshLayout.setNoMoreData(true);
+                    if(refreshLayoutF!=null){
+                        refreshLayoutF.finishLoadMoreWithNoMoreData();
                     }
                     isHaveData = false;
                 }
@@ -151,11 +155,15 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
 
             @Override
             public void onFinish() {
-                if (refreshLayout != null) {
-                    refreshLayout.finishLoadMore();
+                if (refreshLayoutF != null) {
+                    refreshLayoutF.finishLoadMore();
                 }
                 loadingDialog.dismiss();
             }
         });
+    }
+    SmartRefreshLayout refreshLayoutF;
+    public void setSmartRefreshLayout(SmartRefreshLayout smartRefreshLayout) {
+        this.refreshLayoutF = smartRefreshLayout;
     }
 }

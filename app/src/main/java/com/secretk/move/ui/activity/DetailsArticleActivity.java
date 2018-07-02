@@ -232,7 +232,7 @@ public class DetailsArticleActivity extends BaseActivity {
             tvCollectStatus.setSelected(false);
         }
         tvCommendationNum.setText("赞助" + String.valueOf(new Double(initData.getCommendationNum()).intValue()));
-        tvCommentsNum.setText("评论" + String.valueOf(initData.getCollectNum()));
+        tvCommentsNum.setText("评论" + String.valueOf(initData.getCommentsNum()));
         List<PostDataInfo> lists = new ArrayList<>();
         try {
             if(StringUtil.isNotBlank(initData.getPostSmallImages())){

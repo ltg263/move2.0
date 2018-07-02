@@ -93,7 +93,6 @@ public class MessageFragment extends LazyFragment {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setNoMoreData(false);
                 pageIndex = 1;
                 loadData();
 
@@ -179,7 +178,7 @@ public class MessageFragment extends LazyFragment {
                     return;
                 }
                 if (str.getData().getMessages().getCurPageNum() == str.getData().getMessages().getPageSize()) {
-                    refreshLayout.setNoMoreData(true);
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                 }
                 list = str.getData().getMessages().getRows();
                 if (pageIndex > 2) {

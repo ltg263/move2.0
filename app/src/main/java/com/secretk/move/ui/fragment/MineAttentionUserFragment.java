@@ -82,7 +82,6 @@ public class MineAttentionUserFragment extends LazyFragment {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setNoMoreData(false);
                 pageIndexUser=1;
                 loadReCommendPageIndex();
             }
@@ -128,7 +127,7 @@ public class MineAttentionUserFragment extends LazyFragment {
                     return;
                 }
                 if (follows.getCurPageNum() == follows.getPageSize()) {
-                    refreshLayout.setNoMoreData(true);
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                 }
                 if(pageIndexUser>2){
                     adapter.addData(follows.getRows());

@@ -96,7 +96,7 @@ public class MineCollectHolder extends RecyclerViewBaseHolder {
         tvTotalScore.setText(String.valueOf(rowsBean.getTotalScore())+"分");
         tvPostShortDesc.setText(rowsBean.getPostShortDesc());
         tvPraiseNum.setText(String.valueOf(rowsBean.getPraiseNum()));
-        tvCommentsNum.setText(String.valueOf(rowsBean.getCollectNum()));
+        tvCommentsNum.setText(String.valueOf(rowsBean.getCommentsNum()));
         String postType="";
         switch (rowsBean.getPostType()) {//帖子类型，数字，帖子类型：1-评测；2-讨论；3-文章
             case 1:

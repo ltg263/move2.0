@@ -130,6 +130,14 @@ public class ProjectActivity extends BaseActivity {
         adapter.addFragment(reviewFragment, getString(R.string.review));
         adapter.addFragment(discussFragment, getString(R.string.discuss));
         adapter.addFragment(articleFragment, getString(R.string.article));
+        reviewFragment.setRefreshLayout(refreshLayout);
+        discussFragment.setRefreshLayout(refreshLayout);
+        articleFragment.setRefreshLayout(refreshLayout);
+
+        reviewFragment.setSmartRefreshLayout(refreshLayout);
+        discussFragment.setSmartRefreshLayout(refreshLayout);
+        articleFragment.setSmartRefreshLayout(refreshLayout);
+
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(1);
@@ -247,8 +255,6 @@ public class ProjectActivity extends BaseActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                //设置可上啦
-                refreshlayout.setNoMoreData(false);
             }
         });
         /**
@@ -260,17 +266,17 @@ public class ProjectActivity extends BaseActivity {
                 switch (viewPager.getCurrentItem()) {
                     case 1:
                         if (reviewFragment.isHaveData) {
-                            reviewFragment.getLoadData(refreshLayout);
+                            reviewFragment.getLoadData();
                         }
                         break;
                     case 2:
                         if (discussFragment.isHaveData) {
-                            discussFragment.getLoadData(refreshLayout);
+                            discussFragment.getLoadData();
                         }
                         break;
                     case 3:
                         if (articleFragment.isHaveData) {
-                            articleFragment.getLoadData(refreshLayout, "");
+                            articleFragment.getLoadData("");
                         }
                         break;
                 }
@@ -288,24 +294,24 @@ public class ProjectActivity extends BaseActivity {
                 }
                 switch (viewPager.getCurrentItem()) {
                     case 1:
-                        if (discussFragment.isHaveData) {
+                        if (reviewFragment.isHaveData) {
                             refreshLayout.setNoMoreData(false);
                         } else {
-                            refreshLayout.setNoMoreData(true);
+                            refreshLayout.finishLoadMoreWithNoMoreData();
                         }
                         break;
                     case 2:
-                        if (articleFragment.isHaveData) {
+                        if (discussFragment.isHaveData) {
                             refreshLayout.setNoMoreData(false);
                         } else {
-                            refreshLayout.setNoMoreData(true);
+                            refreshLayout.finishLoadMoreWithNoMoreData();
                         }
                         break;
                     case 3:
                         if (articleFragment.isHaveData) {
                             refreshLayout.setNoMoreData(false);
                         } else {
-                            refreshLayout.setNoMoreData(true);
+                            refreshLayout.finishLoadMoreWithNoMoreData();
                         }
                         break;
                 }

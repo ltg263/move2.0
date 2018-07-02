@@ -108,7 +108,6 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setNoMoreData(false);
                 initData();
             }
         });

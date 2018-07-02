@@ -91,7 +91,6 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setNoMoreData(false);
 
             }
         });

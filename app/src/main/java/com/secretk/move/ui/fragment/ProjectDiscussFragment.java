@@ -55,6 +55,10 @@ public class ProjectDiscussFragment extends LazyFragment {
     private List<RowsBean> newData;
     private LoadingDialog loadingDialog;
 
+    SmartRefreshLayout refreshLayout;
+    public void setRefreshLayout(SmartRefreshLayout refreshLayout) {
+        this.refreshLayout = refreshLayout;
+    }
     @Override
     public int setFragmentView() {
         return R.layout.fragment_project_discuss;
@@ -78,10 +82,10 @@ public class ProjectDiscussFragment extends LazyFragment {
             adapterNot.setData(newData);
         }
         loadingDialog.show();
-        getLoadData(null);
+        getLoadData();
     }
 
-    public void getLoadData(final SmartRefreshLayout refreshLayout) {
+    public void getLoadData() {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -101,8 +105,8 @@ public class ProjectDiscussFragment extends LazyFragment {
             public void onCompleted(CommonListBase bean) {
                 CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getDiscusses();
                 if (detailsBean.getPageSize() == detailsBean.getCurPageNum()) {
-                    if(refreshLayout!=null){
-                        refreshLayout.setNoMoreData(true);
+                    if(refreshLayoutF!=null){
+                        refreshLayoutF.finishLoadMoreWithNoMoreData();
                     }
                     isHaveData = false;
                 }
@@ -120,8 +124,8 @@ public class ProjectDiscussFragment extends LazyFragment {
 
             @Override
             public void onFinish() {
-                if (refreshLayout != null) {
-                    refreshLayout.finishLoadMore();
+                if (refreshLayoutF != null) {
+                    refreshLayoutF.finishLoadMore();
                 }
                 loadingDialog.dismiss();
             }
@@ -137,6 +141,11 @@ public class ProjectDiscussFragment extends LazyFragment {
 
     public void initUiData(List<RowsBean> rows) {
         this.newData = rows;
+    }
+    SmartRefreshLayout refreshLayoutF;
+    public void setSmartRefreshLayout(SmartRefreshLayout smartRefreshLayout) {
+
+        this.refreshLayoutF = smartRefreshLayout;
     }
 
 }

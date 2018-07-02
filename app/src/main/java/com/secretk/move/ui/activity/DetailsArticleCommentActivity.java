@@ -180,7 +180,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
                     }
                 }
                 if (data.getNewestComments().getCurPageNum() == data.getNewestComments().getPageSize()) {
-                    refreshLayout.setNoMoreData(true);
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                 }
                 if (bean.getData().getNewestComments().getRows() != null
                         && bean.getData().getNewestComments().getRows().size() > 0) {
@@ -193,11 +193,9 @@ public class DetailsArticleCommentActivity extends BaseActivity {
 
             @Override
             public void onFinish() {
-//                if (refreshLayout.isRefreshing()) {
                 if (refreshLayout.isEnableRefresh()) {
                     refreshLayout.finishRefresh();
                 }
-//                if (refreshLayout.isLoading()) {
                 if (refreshLayout.isEnableLoadMore()) {
                     refreshLayout.finishLoadMore(true);
                 }

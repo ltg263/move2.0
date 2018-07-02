@@ -101,6 +101,7 @@ public class MineAssetDistributedActivity extends BaseActivity {
                 tvB.setText(String.valueOf(bean.getData().getSum().getRewardToken()));
                 List<DistributedList.DataBean.InDistributionBean> detailsBean = bean.getData().getInDistribution();
                 if (detailsBean == null || detailsBean.size() == 0) {
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                     return;
                 }
                 adapter.setData(detailsBean);
@@ -108,11 +109,9 @@ public class MineAssetDistributedActivity extends BaseActivity {
 
             @Override
             public void onFinish() {
-//                if (refreshLayout.isRefreshing()) {
                 if (refreshLayout.isEnableRefresh()) {
                     refreshLayout.finishRefresh();
                 }
-//                if (refreshLayout.isLoading()) {
                 if (refreshLayout.isEnableLoadMore()) {
                     refreshLayout.finishLoadMore(true);
                 }
@@ -128,7 +127,6 @@ public class MineAssetDistributedActivity extends BaseActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setNoMoreData(false);
                 pageIndex = 1;
                 initData();
             }

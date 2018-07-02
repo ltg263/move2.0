@@ -59,9 +59,10 @@ public class HomeArticleFragment extends LazyFragment{
 
     @Override
     public void onFirstUserVisible() {
-        getLoadData(null);
+        loadingDialog.show();
+        getLoadData();
     }
-    public void getLoadData(final SmartRefreshLayout refreshLayout){
+    public void getLoadData(){
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -78,16 +79,13 @@ public class HomeArticleFragment extends LazyFragment{
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        if(refreshLayout==null){
-            loadingDialog.show();
-        }
         RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
             @Override
             public void onCompleted(CommonListBase bean) {
                 CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getArticles();
                 if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
-                    if(refreshLayout!=null){
-                        refreshLayout.setNoMoreData(true);
+                    if(refreshLayouF!=null){
+                        refreshLayouF.finishLoadMoreWithNoMoreData();
                     }
                     isHaveData=false;
                 }
@@ -105,8 +103,8 @@ public class HomeArticleFragment extends LazyFragment{
 
             @Override
             public void onFinish() {
-                if(refreshLayout!=null){
-                    refreshLayout.finishLoadMore();
+                if(refreshLayouF!=null){
+                    refreshLayouF.finishLoadMore();
                 }
                 if(loadingDialog.isShowing()){
                     loadingDialog.dismiss();
@@ -119,5 +117,9 @@ public class HomeArticleFragment extends LazyFragment{
         super.onAttach(context);
         userId = ((HomeActivity)context).getUserId();
         loadingDialog = ((HomeActivity)context).getLoadingDialog();
+    }
+    SmartRefreshLayout refreshLayouF;
+    public void setSmartRefreshLayout(SmartRefreshLayout smartRefreshLayout) {
+        this.refreshLayouF = smartRefreshLayout;
     }
 }

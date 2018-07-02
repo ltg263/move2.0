@@ -34,7 +34,7 @@
 
         <com.secretk.move.view.RecycleScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/white"
             android:fillViewport="true"
             android:scrollbars="none">
@@ -42,7 +42,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_collect"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
         </com.secretk.move.view.RecycleScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

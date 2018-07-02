@@ -18,9 +18,7 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MineAttentionBean;
-import com.secretk.move.ui.activity.MainActivity;
 import com.secretk.move.ui.adapter.MineAttentionAdapter;
-import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.view.LoadingDialog;
@@ -29,7 +27,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -85,7 +82,6 @@ public class MineAttentionFragment extends LazyFragment {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setNoMoreData(false);
                 pageIndex = 1;
                 loadReCommendPageIndex();
             }
@@ -132,7 +128,7 @@ public class MineAttentionFragment extends LazyFragment {
                     return;
                 }
                 if (follows.getCurPageNum() == follows.getPageSize()) {
-                    refreshLayout.setNoMoreData(true);
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                 }
                 if (pageIndex > 2) {
                     adapter.addData(follows.getRows());
@@ -144,22 +140,14 @@ public class MineAttentionFragment extends LazyFragment {
 
             @Override
             public void onFinish() {
-//                if (refreshLayout.isRefreshing()) {
                 if (refreshLayout.isEnableRefresh()) {
                     refreshLayout.finishRefresh();
                 }
-//                if (refreshLayout.isLoading()) {
                 if (refreshLayout.isEnableLoadMore()) {
                     refreshLayout.finishLoadMore(true);
                 }
                 loadingDialog.dismiss();
             }
         });
-    }
-
-    @OnClick(R.id.tv_submit)
-    public void onViewClicked() {
-        IntentUtil.startActivity(MainActivity.class);
-        getActivity().finish();
     }
 }

@@ -72,7 +72,6 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshLayout.setNoMoreData(false);
                 pageIndex = 1;
                 onFirstUserVisible();
             }
@@ -105,8 +104,8 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    refreshLayout.setNoMoreData(false);
                     pageIndex = 1;
+                    refreshLayout.setNoMoreData(false);
                     onFirstUserVisible();
                     break;
             }
@@ -162,7 +161,7 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
             public void onCompleted(MainGzBean bean) {
                 MainGzBean.DataBean.FollowsBean detailsBean = bean.getData().getRecommends();
                 if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
-                    refreshLayout.setNoMoreData(true);
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                 }
                 if (pageIndex > 2) {
                     adapter.setAddData(detailsBean.getRows());
@@ -174,11 +173,9 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
             @Override
             public void onFinish() {
                 super.onFinish();
-//                if (refreshLayout.isRefreshing()) {
                 if (refreshLayout.isEnableRefresh()) {
                     refreshLayout.finishRefresh();
                 }
-//                if (refreshLayout.isLoading()) {
                 if (refreshLayout.isEnableLoadMore()) {
                     refreshLayout.finishLoadMore(true);
                 }

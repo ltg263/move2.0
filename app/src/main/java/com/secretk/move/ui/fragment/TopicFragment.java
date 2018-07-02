@@ -103,7 +103,6 @@ public class TopicFragment extends LazyFragment implements ItemClickListener, Qu
 //        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
 //            @Override
 //            public void onRefresh(RefreshLayout refreshlayout) {
-//                refreshLayout.setNoMoreData(false);
 //                http(currentType);
 //            }
 //        });

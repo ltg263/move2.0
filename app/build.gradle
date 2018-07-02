@@ -17,7 +17,6 @@ MobSDK {
             WechatMoments {
                 appId "wx10b942072a71089d"
                 appSecret "02bcd92a7a4c82fd6a48bb46121f6d03"
-
                 sortId 1
             }
             QQ {

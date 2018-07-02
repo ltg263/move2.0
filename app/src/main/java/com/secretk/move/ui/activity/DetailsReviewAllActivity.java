@@ -242,7 +242,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
             tvCollectStatus.setSelected(false);
         }
         tvCommendationNum.setText(getString(R.string.sponsor) + String.valueOf(Math.round(evaluationDetail.getCommendationNum())));
-        tvCommentsNum.setText(getString(R.string.comment) + String.valueOf(evaluationDetail.getCollectNum()));
+        tvCommentsNum.setText(getString(R.string.comment) + String.valueOf(evaluationDetail.getCommentsNum()));
 
 //        modelType = 1-简单评测；2-全面系统专业评测;3-部分系统专业评测；4-专业评测-自定义类型
         //进度名称

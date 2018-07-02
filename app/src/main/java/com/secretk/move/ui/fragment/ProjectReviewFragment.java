@@ -67,6 +67,12 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
     private ProjectRecommendAdapter adapterTop;
     private List<RowsBean> newData;
 
+    SmartRefreshLayout refreshLayout;
+    private SmartRefreshLayout smartRefreshLayout;
+
+    public void setRefreshLayout(SmartRefreshLayout refreshLayout) {
+        this.refreshLayout = refreshLayout;
+    }
     @Override
     public int setFragmentView() {
         return R.layout.fragment_project_review;
@@ -89,9 +95,9 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
             adapterTop.setData(newData);
         }
         loadingDialog.show();
-        getLoadData(null);
+        getLoadData();
     }
-    public void getLoadData(final SmartRefreshLayout refreshLayout) {
+    public void getLoadData() {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -111,8 +117,8 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
             public void onCompleted(CommonListBase bean) {
                 CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getEvaluations();
                 if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
-                    if(refreshLayout!=null){
-                        refreshLayout.setNoMoreData(true);
+                    if(refreshLayoutF!=null){
+                          refreshLayoutF.finishLoadMoreWithNoMoreData();
                     }
                     isHaveData=false;
                 }
@@ -129,8 +135,8 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
 
             @Override
             public void onFinish() {
-                if(refreshLayout!=null){
-                    refreshLayout.finishLoadMore();
+                if(refreshLayoutF!=null){
+                    refreshLayoutF.finishLoadMore();
                 }
                 if(loadingDialog.isShowing()){
                     loadingDialog.dismiss();
@@ -207,5 +213,9 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
                 }
             }
         }
+    }
+    SmartRefreshLayout refreshLayoutF;
+    public void setSmartRefreshLayout(SmartRefreshLayout smartRefreshLayout) {
+        this.refreshLayoutF = smartRefreshLayout;
     }
 }
