@@ -22,6 +22,7 @@ import com.secretk.move.ui.activity.MineApproveSubmitiCertificateActivity;
 import com.secretk.move.ui.activity.MineAttentionActivity;
 import com.secretk.move.ui.activity.MineCheckDetailsActivity;
 import com.secretk.move.ui.activity.MineCollectActivity;
+import com.secretk.move.ui.activity.MineMessageActivity;
 import com.secretk.move.ui.activity.MineOpinionBackActivity;
 import com.secretk.move.ui.activity.MineRecommendActivity;
 import com.secretk.move.ui.activity.MineSetActivity;
@@ -176,7 +177,9 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
         }
     }
 
-    @OnClick({R.id.iv_my_set,R.id.ll_my_approve, R.id.tv_go_login, R.id.tv_go_register, R.id.rl_user_info, R.id.rl_appraisal, R.id.rl_discuss, R.id.rl_essay, R.id.ll_check_details, R.id.ll_my_attention, R.id.ll_my_collect, R.id.ll_my_recommend, R.id.ll_my_about, R.id.ll_my_feedback})
+    @OnClick({R.id.iv_my_set,R.id.ll_my_approve, R.id.tv_go_login, R.id.tv_go_register, R.id.rl_user_info,
+            R.id.rl_appraisal, R.id.rl_discuss, R.id.rl_essay, R.id.ll_check_details, R.id.ll_my_attention,
+            R.id.ll_my_collect, R.id.ll_my_message,R.id.ll_my_recommend, R.id.ll_my_about, R.id.ll_my_feedback})
     public void onViewClicked(View view) {
         if(!isLoginZt){
             IntentUtil.startActivity(LoginHomeActivity.class);
@@ -222,6 +225,9 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 break;
             case R.id.ll_my_collect://收藏
                 IntentUtil.startActivity(MineCollectActivity.class);
+                break;
+            case R.id.ll_my_message://消息
+                IntentUtil.startActivity(MineMessageActivity.class);
                 break;
             case R.id.ll_my_recommend://推荐好友
                 IntentUtil.startActivity(MineRecommendActivity.class);

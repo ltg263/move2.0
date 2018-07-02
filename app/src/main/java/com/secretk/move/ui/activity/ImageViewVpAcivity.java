@@ -5,33 +5,67 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.ui.fragment.ImageViewVpFragments;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.AppBarHeadView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
- * 文件名：com.juanct.iwork99.activity
- * 描    述：引导页
- * 作    者：yujian
- * 时    间：2016/8/18 11:18
+ * 作者： litongge
+ * 时间： 2018/7/2 16:32
+ * 邮箱；ltg263@126.com
+ * 描述：轮播图
  */
 public class ImageViewVpAcivity extends BaseActivity {
 
 
-    private ViewPager vp1;
+    @BindView(R.id.vp_1)
+    ViewPager vp1;
+    @BindView(R.id.rb_1)
+    RadioButton rb1;
+    @BindView(R.id.rb_2)
+    RadioButton rb2;
+    @BindView(R.id.rb_3)
+    RadioButton rb3;
+    @BindView(R.id.rb_4)
+    RadioButton rb4;
+    @BindView(R.id.rb_5)
+    RadioButton rb5;
+    @BindView(R.id.rb_6)
+    RadioButton rb6;
+    @BindView(R.id.rb_7)
+    RadioButton rb7;
+    @BindView(R.id.rb_8)
+    RadioButton rb8;
+    @BindView(R.id.rb_9)
+    RadioButton rb9;
+    @BindView(R.id.rg_1)
+    RadioGroup rg1;
     private ArrayList<Fragment> fragments = new ArrayList<>();
-    private RadioGroup rg1;
+    private List<PostDataInfo> lists;
+    private int position;
 
     @Override
     protected int setOnCreate() {
+        //去除title
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //去掉Activity上面的状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         return R.layout.activity_guide;
     }
 
@@ -43,25 +77,75 @@ public class ImageViewVpAcivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        lists = getIntent().getParcelableArrayListExtra("lists");
+        position = getIntent().getIntExtra("position", 0);
+
         initFrament();
-        vp1 =  findViewById(R.id.vp_1);
-        rg1 = findViewById(R.id.rg_1);
         MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
         vp1.setAdapter(adapter);
-        rg1.setOnCheckedChangeListener(myOnCheckedChangeListener);//为RadioGroup添加选择监听
-        vp1.setOnPageChangeListener(myOnPageChangeListener);//为viewPager添加滑动监听
+
+//        rg1.setOnCheckedChangeListener(myOnCheckedChangeListener);//为RadioGroup添加选择监听
+        vp1.addOnPageChangeListener(myOnPageChangeListener);//为viewPager添加滑动监听
+        vp1.setCurrentItem(position);
     }
-//"[{"fileUrl":"/upload/posts/201805/1.jpg","fileName":"进度讨论","extension":"jpg"},
-// {"fileUrl":"/upload/posts/201805/2.jpg","fileName":"进度讨论","extension":"jpg"},
-// {"fileUrl":"/upload/posts/201805/3.jpg","fileName":"进度讨论","extension":"jpg"}]"
+
     //初始化Frament
     private void initFrament() {
-        ImageViewVpFragments mf1 = ImageViewVpFragments.getInstance(0);
-        ImageViewVpFragments mf2 = ImageViewVpFragments.getInstance(1);
-        ImageViewVpFragments mf3 = ImageViewVpFragments.getInstance(2);
-        fragments.add(mf1);
-        fragments.add(mf2);
-        fragments.add(mf3);
+        if(lists.size()>1){
+            rg1.setVisibility(View.VISIBLE);
+        }
+        for (int i = 0; i < lists.size(); i++) {
+            String url = lists.get(i).getUrl();
+            ImageViewVpFragments mf = ImageViewVpFragments.getInstance(StringUtil.getBeanString(url));
+            fragments.add(mf);
+            if(i==0){
+                rb1.setVisibility(View.VISIBLE);
+//                if(position==i){
+//                    rb1.setChecked(true);
+//                }
+            }else if(i==1){
+                rb2.setVisibility(View.VISIBLE);
+//                if(position==i){
+//                    rb2.setChecked(true);
+//                }
+            }else if(i==2){
+                rb3.setVisibility(View.VISIBLE);
+//                if(position==i){
+//                    rb3.setChecked(true);
+//                }
+            }else if(i==3){
+                rb4.setVisibility(View.VISIBLE);
+//                if(position==i){
+//                    rb4.setChecked(true);
+//                }
+            }else if(i==4){
+                rb5.setVisibility(View.VISIBLE);
+//                if(position==i){
+//                    rb5.setChecked(true);
+//                }
+            }else if(i==5){
+                rb6.setVisibility(View.VISIBLE);
+//                if(position==i){
+//                    rb6.setChecked(true);
+//                }
+            }else if(i==6){
+                rb7.setVisibility(View.VISIBLE);
+//                if(position==i){
+//                    rb7.setChecked(true);
+//                }
+            }else if(i==7){
+                rb8.setVisibility(View.VISIBLE);
+//                if(position==i){
+//                    rb8.setChecked(true);
+//                }
+            }else if(i==8){
+                rb9.setVisibility(View.VISIBLE);
+//                if(position==i){
+//                    rb9.setChecked(true);
+//                }
+            }
+        }
+
     }
 
     /**
@@ -70,13 +154,13 @@ public class ImageViewVpAcivity extends BaseActivity {
     RadioGroup.OnCheckedChangeListener myOnCheckedChangeListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
-            if (checkedId == R.id.rb_1) {
-                vp1.setCurrentItem(0);
-            } else if (checkedId == R.id.rb_2) {
-                vp1.setCurrentItem(1);
-            } else if (checkedId == R.id.rb_3) {
-                vp1.setCurrentItem(3);
-            }
+//            if (checkedId == R.id.rb_1) {
+//                vp1.setCurrentItem(0);
+//            } else if (checkedId == R.id.rb_2) {
+//                vp1.setCurrentItem(1);
+//            } else if (checkedId == R.id.rb_3) {
+//                vp1.setCurrentItem(3);
+//            }
         }
     };
     /**
@@ -112,18 +196,15 @@ public class ImageViewVpAcivity extends BaseActivity {
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
-            // TODO Auto-generated constructor stub
         }
 
         @Override
         public Fragment getItem(int arg0) {
-            // TODO Auto-generated method stub
             return fragments.get(arg0);
         }
 
         @Override
         public int getCount() {
-            // TODO Auto-generated method stub
             return fragments.size();
         }
 

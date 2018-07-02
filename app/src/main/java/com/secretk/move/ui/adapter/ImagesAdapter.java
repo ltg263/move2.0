@@ -1,6 +1,8 @@
 package com.secretk.move.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +13,8 @@ import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.PostDataInfo;
-import com.secretk.move.ui.activity.TemporaryIV;
+import com.secretk.move.ui.activity.ImageViewVpAcivity;
 import com.secretk.move.utils.GlideUtils;
-import com.secretk.move.utils.IntentUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,10 +50,14 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesHold
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String key[]={"imgUrl","imgName"};
+//                String key[]={"imgUrl","imgName"};
 //                String values[]={lists.get(position).getUrl(),lists.get(position).getName()};
-                String values[]={lists.get(position).getUrl(),"大图"};
-                IntentUtil.startActivity(TemporaryIV.class,key,values);
+//                IntentUtil.startActivity(ImageViewVpAcivity.class,key,values);
+                Intent intent = new Intent(context,ImageViewVpAcivity.class);
+                intent.putParcelableArrayListExtra("lists", (ArrayList<? extends Parcelable>) lists);
+                intent.putExtra("position",position);
+                context.startActivity(intent);
+
             }
         });
     }

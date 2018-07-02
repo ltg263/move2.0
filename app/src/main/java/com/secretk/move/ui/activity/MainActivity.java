@@ -151,7 +151,8 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
     @Override
     protected void onResume() {
         super.onResume();
-        if (!SharedUtils.singleton().get("isShowJlWind", false)) {
+        String current = StringUtil.getTimeToM(System.currentTimeMillis());
+        if (!current.equals(SharedUtils.singleton().get("isShowJlWind", ""))) {
             if (SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken())) {
                 showJlWind(SharedUtils.getToken());
             }
@@ -192,7 +193,7 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
                 if (pop == 1 || tokenTodaySum == 0) {
                     return;
                 }
-                SharedUtils.singleton().put("isShowJlWind", true);
+                SharedUtils.singleton().put("isShowJlWind", StringUtil.getTimeToM(System.currentTimeMillis()));
                 DialogUtils.showDialogHint(MainActivity.this, "今日领取 " + tokenTodaySum + " FIND", true, new DialogUtils.ErrorDialogInterface() {
                     @Override
                     public void btnConfirm() {

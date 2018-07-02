@@ -116,6 +116,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.ImageViewVpAcivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.MineMessageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.EvaluationWriteNewSimpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppEditTextStyle" />

@@ -1,5 +1,6 @@
-package com.secretk.move.ui.fragment;
+package com.secretk.move.ui.activity;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,10 +15,10 @@ import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
-import com.secretk.move.base.LazyFragment;
+import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.MessageBean;
-import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.MessageFragmentRecyclerAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
@@ -25,8 +26,7 @@ import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.ToastUtils;
-import com.secretk.move.view.LoadingDialog;
-import com.secretk.move.view.RecycleScrollView;
+import com.secretk.move.view.AppBarHeadView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,16 +37,15 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * Created by zc on 2018/4/5.
+ * 作者： litongge
+ * 时间： 2018/7/2 15:43
+ * 邮箱；ltg263@126.com
+ * 描述：我的消息
  */
 
-public class MessageFragment extends LazyFragment {
-    @BindView(R.id.recycler)
+public class MineMessageActivity extends BaseActivity {
+    @BindView(R.id.rv_collect)
     RecyclerView recycler;
-    @BindView(R.id.tv_status)
-    TextView tvStatus;
-    @BindView(R.id.rcv)
-    RecycleScrollView rcv;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.tv_icon)
@@ -58,35 +57,28 @@ public class MessageFragment extends LazyFragment {
     @BindView(R.id.rl_top_theme)
     RelativeLayout rlTopTheme;
     private MessageFragmentRecyclerAdapter adapter;
-    int pageIndex = 0 ;
-    private List<MessageBean.DataBean.MessagesBean.RowsBean> list;
+    int pageIndex = 1 ;
 
     @Override
-    public int setFragmentView() {
-        return R.layout.fragment_message;
+    protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
+        mHeadView = findViewById(R.id.head_app_server);
+        mHeadView.setHeadBackShow(true);
+        mHeadView.setTitleColor(R.color.title_gray);
+        mHeadView.setTitle("消息");
+        mMenuInfos.add(0, new MenuInfo(R.string.mine_message_sate, getString(R.string.mine_message_sate), 0));
+        return mHeadView;
+    }
+    @Override
+    protected int setOnCreate() {
+        return R.layout.activity_mine_collect;
     }
 
     @Override
-    public void initViews() {
-        initRefresh();
-        setVerticalManager(recycler);
-        adapter = new MessageFragmentRecyclerAdapter(getActivity());
-        recycler.setAdapter(adapter);
-        rlTopTheme.setVisibility(View.VISIBLE);
-        tvStatus.setVisibility(View.GONE);
-        tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_go_login));
-        tvName.setText(getActivity().getResources().getString(R.string.not_message));
-        tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
-        loadingDialog = new LoadingDialog(getActivity());
-//        loadingDialog.show();
-    }
-
-    @Override
-    public void onFirstUserVisible() {
+    protected void OnToolbarRightListener() {
+        detaliMessage(0);
     }
 
     private void initRefresh() {
-//        loadingDialog = new LoadingDialog(getActivity());
         /**
          * 下拉刷新
          */
@@ -108,14 +100,14 @@ public class MessageFragment extends LazyFragment {
             }
         });
     }
+    @Override
+    protected void initData() {
+        loadData();
+    }
 
-
-    @OnClick({R.id.tv_status, R.id.tv_submit})
+    @OnClick({R.id.tv_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tv_status:
-                detaliMessage(0);
-                break;
             case R.id.tv_submit:
                 if(tvSubmit.getText().toString().equals(getString(R.string.not_refresh))){
                     pageIndex = 1;
@@ -126,28 +118,9 @@ public class MessageFragment extends LazyFragment {
                 break;
         }
     }
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(list==null || !isLoginZt) {
-            pageIndex = 1;
-            loadData();
-        }
-    }
+
 
     private void loadData() {
-        if(!isLoginZt){
-            refreshLayout.setVisibility(View.GONE);
-            convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
-            rlTopTheme.setVisibility(View.VISIBLE);
-            tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_go_login));
-            tvName.setText("您尚未登陆,无法预览消息内容");
-            tvSubmit.setText(getString(R.string.go_login));
-            tvSubmit.setVisibility(View.VISIBLE);
-            tvStatus.setVisibility(View.GONE);
-            list=null;
-            return;
-        }
         if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
@@ -168,39 +141,26 @@ public class MessageFragment extends LazyFragment {
                 .build();
         RetrofitUtil.request(params, MessageBean.class, new HttpCallBackImpl<MessageBean>() {
             @Override
-            public void onCompleted(MessageBean str) {
-                if (str.getData().getMessages() == null && pageIndex == 2) {
-                    convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
-                    tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_not_message));
-                    tvStatus.setVisibility(View.GONE);
-                    tvName.setText(getActivity().getResources().getString(R.string.not_message));
-                    tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
-                    return;
-                }
-                if (str.getData().getMessages().getCurPageNum() == str.getData().getMessages().getPageSize()) {
+            public void onCompleted(MessageBean bean) {
+                MessageBean.DataBean.MessagesBean detailsBean = bean.getData().getMessages();
+                if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
-                list = str.getData().getMessages().getRows();
+                if (detailsBean.getRows() == null || detailsBean.getRows().size() == 0) {
+                    findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+                    refreshLayout.setVisibility(View.GONE);
+                    return;
+                }
                 if (pageIndex > 2) {
-                    convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
-                    refreshLayout.setVisibility(View.VISIBLE);
-                    tvStatus.setVisibility(View.VISIBLE);
-                    adapter.addData(list);
+                    adapter.addData(detailsBean.getRows());
                 } else {
-                    adapter.setData(list);
-                    if(list.size()>0){
-                        convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
-                        refreshLayout.setVisibility(View.VISIBLE);
-                        tvStatus.setVisibility(View.VISIBLE);
-                    }else{
-                        list=null;
-                        convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
-                    }
+                    adapter.setData(detailsBean.getRows());
                 }
             }
 
             @Override
             public void onFinish() {
+                loadingDialog.dismiss();
                 if (refreshLayout.isEnableRefresh()) {
                     refreshLayout.finishRefresh();
                 }
@@ -249,4 +209,20 @@ public class MessageFragment extends LazyFragment {
             }
         });
     }
+
+
+
+    @Override
+    protected void initUI(Bundle savedInstanceState) {
+        initRefresh();
+        setVerticalManager(recycler);
+        adapter = new MessageFragmentRecyclerAdapter(this);
+        recycler.setAdapter(adapter);
+        loadingDialog.show();
+        rlTopTheme.setVisibility(View.VISIBLE);
+        tvIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_not_message));
+        tvName.setText(getResources().getString(R.string.not_message));
+        tvSubmit.setText(getResources().getString(R.string.not_refresh));
+    }
 }
+

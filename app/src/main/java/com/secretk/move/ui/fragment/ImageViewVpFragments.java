@@ -1,19 +1,21 @@
 package com.secretk.move.ui.fragment;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.LazyFragment;
+import com.secretk.move.utils.GlideUtils;
 
 /**
  * 引导页
  */
 public class ImageViewVpFragments extends LazyFragment {
-    public static ImageViewVpFragments getInstance(int k) {
+    public static ImageViewVpFragments getInstance(String url) {
         ImageViewVpFragments mf1 = new ImageViewVpFragments();
         Bundle bd = new Bundle();
-        bd.putInt("k", k);
+        bd.putString("url", url);
         mf1.setArguments(bd);
         return mf1;
     }
@@ -26,14 +28,14 @@ public class ImageViewVpFragments extends LazyFragment {
     @Override
     public void initViews() {
         ImageView iv1 = convertView.findViewById(R.id.iv_viewpager);
-        int k = getArguments().getInt("k");
-        if (k == 0) {
-//            iv1.setImageResource(R.drawable.yindao1);
-//        } else if (k == 1) {
-//            iv1.setImageResource(R.drawable.yindao2);
-//        } else if (k == 2) {
-//            iv1.setImageResource(R.drawable.yindao3);
-        }
+        String url = getArguments().getString("url");
+        GlideUtils.loadUrl(getActivity(),iv1,url);
+        iv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
     }
 
     @Override

@@ -99,6 +99,7 @@
     <string name="set_my_signature">设置个人简介</string>
     <string name="mine_topic">项目</string>
     <string name="mine_user">用户</string>
+    <string name="mine_message_sate">全部已读</string>
     <!--实名认证-->
     <string name="mine_title">实名认证</string>
     <string name="mine_name">姓名</string>

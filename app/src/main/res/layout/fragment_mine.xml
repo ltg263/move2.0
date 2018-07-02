@@ -368,6 +368,42 @@
                     android:layout_weight="1"
                     android:background="@drawable/right_boult" />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_line"
+                android:background="@color/cut_off_rule" />
+
+            <LinearLayout
+                android:id="@+id/ll_my_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:visibility="gone"
+                android:orientation="horizontal"
+                android:padding="@dimen/unify_interval_padding">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_collect_mine" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_weight="10"
+                    android:text="我的消息"
+                    android:textColor="@color/title_gray"
+                    android:textSize="@dimen/sp_14" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/right_boult" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_my_recommend"

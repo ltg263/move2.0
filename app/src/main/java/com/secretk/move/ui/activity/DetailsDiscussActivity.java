@@ -2,6 +2,7 @@ package com.secretk.move.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
@@ -189,9 +190,14 @@ public class DetailsDiscussActivity extends BaseActivity {
                         });
                 break;
             case R.id.iv_post_small_images:
-                String key[] = {"imgUrl", "imgName"};
-                String values[] = {imgUrl, imgName};
-                IntentUtil.startActivity(TemporaryIV.class, key, values);
+
+                Intent intent = new Intent(this,ImageViewVpAcivity.class);
+                intent.putParcelableArrayListExtra("lists", (ArrayList<? extends Parcelable>) imageLists);
+                intent.putExtra("position",0);
+                startActivity(intent);
+//                String key[] = {"imgUrl", "imgName"};
+//                String values[] = {imgUrl, imgName};
+//                IntentUtil.startActivity(TemporaryIV.class, key, values);
                 break;
             case R.id.rl_ge_ren:
                 IntentUtil.startHomeActivity(createUserId);
