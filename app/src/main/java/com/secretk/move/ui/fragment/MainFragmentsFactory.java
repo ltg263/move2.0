@@ -22,7 +22,7 @@ public class MainFragmentsFactory {
                     break;
                 case 2:
 //                    fragments.put(position,new MessageFragment());
-                    fragments.put(position,new TopicFragment());
+                    fragments.put(position,new InfoFragment());
                     break;
                 case 3:
                     fragments.put(position,new MineFragment());

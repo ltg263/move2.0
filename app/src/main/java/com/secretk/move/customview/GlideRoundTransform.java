@@ -13,7 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import java.security.MessageDigest;
 
 public class GlideRoundTransform extends BitmapTransformation {
-    private static float radius = 0f;
+    private static float radius =20f;
     @Override
     protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
         return roundCrop(pool,toTransform);

@@ -311,6 +311,7 @@ public class DetailsDiscussActivity extends BaseActivity {
             node.put("postId", Integer.valueOf(postId));
             if(parentCommentsId!=0){
                 node.put("parentCommentsId", parentCommentsId);//parentCommentsId 未null
+                node.put("becommentedId", parentCommentsId);//becommentedId 未null
             }
 
         } catch (JSONException e) {

@@ -118,7 +118,7 @@ public class MoveApplication extends Application {
                 layout.setEnableOverScrollDrag(false);//禁止越界拖动（1.0.4以上版本）
                 layout.setEnableOverScrollBounce(false);//关闭越界回弹功能
                 layout.setEnableLoadMoreWhenContentNotFull(false);
-                layout.setEnableAutoLoadMore(false);
+                layout.setEnableAutoLoadMore(true);
                 layout.setPrimaryColorsId(R.color.background_gray, R.color.title_gray_66);//全局设置主题颜色
                 return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.FixedBehind);//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
             }

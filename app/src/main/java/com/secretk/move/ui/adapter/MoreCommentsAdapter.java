@@ -33,6 +33,7 @@ public class MoreCommentsAdapter extends RecyclerView.Adapter<MoreCommentsAdapte
 
     private List<MoreCommentsBean.DataBean.CommentsBean.RowsBean> lists = new ArrayList<>();
     Context context;
+    int parentUserId;
     public MoreCommentsAdapter(Context context) {
         this.context=context;
     }
@@ -63,6 +64,10 @@ public class MoreCommentsAdapter extends RecyclerView.Adapter<MoreCommentsAdapte
         return lists;
     }
 
+    public void setParentUserId(int userId) {
+        this.parentUserId = userId;
+    }
+
     class MoreCommentsHolder extends RecyclerViewBaseHolder {
         @BindView(R.id.tv_eave_content)
         TextView tvEaveContent;
@@ -75,7 +80,8 @@ public class MoreCommentsAdapter extends RecyclerView.Adapter<MoreCommentsAdapte
             final MoreCommentsBean.DataBean.CommentsBean.RowsBean bean = lists.get(position);
             final String userName = StringUtil.getBeanString(bean.getCommentUserName());
             String userNameB = ": ";
-            if(bean.getCommentUserId() != bean.getBecommentedUserId()){
+            if(bean.getCommentUserId() != bean.getBecommentedUserId()
+                    && bean.getBecommentedUserId()!=parentUserId){
                 userNameB = ": @"+StringUtil.getBeanString(bean.getBecommentedUserName())+"  ";
             }
             final String content = StringUtil.getBeanString(bean.getCommentContent());

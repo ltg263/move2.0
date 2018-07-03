@@ -105,6 +105,7 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
                 IntentUtil.startHomeActivity(commentsBean.getCommentUserId());
             }
         });
+        tvChildCommentsNum.setVisibility(View.GONE);
         if(commentsBean.getChildCommentsNum()>2){
             tvChildCommentsNum.setVisibility(View.VISIBLE);
             tvChildCommentsNum.setText("更多"+commentsBean.getChildCommentsNum()+"条评论");
@@ -192,7 +193,8 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
             for(int i=0;i<childLists.size();i++){
                 final String userName = childLists.get(i).getCommentUserName();
                 String userNameB = ": ";
-                if(childLists.get(i).getCommentUserId()!=childLists.get(i).getBecommentedUserId()){
+                if(childLists.get(i).getCommentUserId()!=childLists.get(i).getBecommentedUserId() &&
+                commentsBean.getCommentUserId() != childLists.get(i).getBecommentedUserId() ){
                     userNameB = ": @"+childLists.get(i).getBecommentedUserName()+"  ";
                 }
                 String content = childLists.get(i).getCommentContent();

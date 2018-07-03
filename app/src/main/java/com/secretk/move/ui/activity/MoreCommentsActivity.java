@@ -9,6 +9,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -46,7 +50,8 @@ import butterknife.OnClick;
  */
 public class MoreCommentsActivity extends BaseActivity{
 
-
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     @BindView(R.id.iv_commented_user_icon)
     ImageView ivCommentedUserIcon;
     @BindView(R.id.tv_commented_user_name)
@@ -72,6 +77,7 @@ public class MoreCommentsActivity extends BaseActivity{
     private int userId;
     private int postId;
     private int parentCommentsId;
+    private int becommentedId;
     boolean isBianHua = false;
     private int praiseNum;
     private int pageIndex=1;
@@ -96,6 +102,7 @@ public class MoreCommentsActivity extends BaseActivity{
         setVerticalManager(rvReview);
         adapter = new MoreCommentsAdapter(this);
         rvReview.setAdapter(adapter);
+        initRefresh();
         StringUtil.etSearchChangedListener(etMessage, null, new StringUtil.EtChange() {
             @Override
             public void etYes() {
@@ -108,6 +115,27 @@ public class MoreCommentsActivity extends BaseActivity{
         });
         etMessage.setHint("请下你的留言...");
     }
+    private void initRefresh() {
+        /**
+         * 下拉刷新
+         */
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                pageIndex = 1;
+                getWlData();
+            }
+        });
+        /**
+         * 上啦加载
+         */
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshLayout) {
+                getWlData();
+            }
+        });
+    }
     CommonCommentsBean commentsBean;
     protected void initData() {
         commentsBean = getIntent().getParcelableExtra("commentsBean");
@@ -116,6 +144,7 @@ public class MoreCommentsActivity extends BaseActivity{
         parentCommentsId = commentsBean.getCommentsId();
         commentsId = commentsBean.getCommentsId();
         userId= commentsBean.getCommentUserId();
+        adapter.setParentUserId(userId);
         tvCommentedUserName.setText(commentsBean.getCommentUserName());
         tvCreateTime.setText(commentsBean.getFloor() + "楼    " + TimeToolUtils.convertTimeToFormat(commentsBean.getCreateTime()));
         tvCommentContent.setText(commentsBean.getCommentContent());
@@ -186,7 +215,8 @@ public class MoreCommentsActivity extends BaseActivity{
         strLs="@"+user+":";
         etMessage.setText(strLs);
         if(id!=0){
-            this.parentCommentsId=id;
+//            this.parentCommentsId=id;
+            this.becommentedId=id;
         }
         StringUtil.showSoftInputFromWindow(this,etMessage);
     }
@@ -200,9 +230,11 @@ public class MoreCommentsActivity extends BaseActivity{
             node.put("token", token);
             node.put("commentContent", content);//帖子ID
             node.put("postId", Integer.valueOf(postId));
-            if(parentCommentsId==0){
+            if(parentCommentsId==0 || becommentedId==0){
                 parentCommentsId=commentsBean.getCommentsId();
+                becommentedId=commentsBean.getCommentsId();
             }
+            node.put("becommentedId", becommentedId);//parentCommentsId 未null
             node.put("parentCommentsId", parentCommentsId);//parentCommentsId 未null
         } catch (JSONException e) {
             e.printStackTrace();
@@ -218,6 +250,7 @@ public class MoreCommentsActivity extends BaseActivity{
             public void onCompleted(String str) {
                 isBianHua=true;
                 etMessage.setText("");
+                pageIndex=1;
                 getWlData();
             }
 
@@ -242,8 +275,8 @@ public class MoreCommentsActivity extends BaseActivity{
             node.put("token", token);
             node.put("commentsId", commentsId);
             node.put("postId", postId);
-            node.put("pageIndex", pageIndex);
-            node.put("pageSize", 100);
+            node.put("pageIndex", pageIndex++);
+            node.put("pageSize", 30);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -258,6 +291,9 @@ public class MoreCommentsActivity extends BaseActivity{
                 MoreCommentsBean.DataBean.CommentsBean commentsBean = bean.getData().getComments();
                 if(commentsBean!=null){
                     List<MoreCommentsBean.DataBean.CommentsBean.RowsBean> commentsList = commentsBean.getRows();
+                    if (commentsBean.getCurPageNum() == commentsBean.getPageSize()) {
+                        refreshLayout.finishLoadMoreWithNoMoreData();
+                    }
                     if (commentsList != null && commentsList.size() > 0) {
                         adapter.setData(commentsList);
                     }
@@ -266,6 +302,12 @@ public class MoreCommentsActivity extends BaseActivity{
 
             @Override
             public void onFinish() {
+                if (refreshLayout.isEnableRefresh()) {
+                    refreshLayout.finishRefresh();
+                }
+                if (refreshLayout.isEnableLoadMore()) {
+                    refreshLayout.finishLoadMore(true);
+                }
                 loadingDialog.dismiss();
             }
         });

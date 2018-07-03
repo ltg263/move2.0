@@ -18,19 +18,23 @@ import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MessageBean;
 import com.secretk.move.ui.activity.LoginHomeActivity;
-import com.secretk.move.ui.adapter.MessageFragmentRecyclerAdapter;
+import com.secretk.move.ui.adapter.InfoFragmentAdapter;
+import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.ToastUtils;
+import com.secretk.move.view.CustomViewPager;
 import com.secretk.move.view.LoadingDialog;
 import com.secretk.move.view.RecycleScrollView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,14 +44,14 @@ import butterknife.OnClick;
  * 作者： litongge
  * 时间： 2018/7/2 18:34
  * 邮箱；ltg263@126.com
- * 描述：我的话题
+ * 描述：我的消息
  */
 
-public class TopicFragment extends LazyFragment {
+public class InfoFragment extends LazyFragment {
     @BindView(R.id.recycler)
     RecyclerView recycler;
-    @BindView(R.id.tv_status)
-    TextView tvStatus;
+    @BindView(R.id.iv_status)
+    ImageView tvStatus;
     @BindView(R.id.rcv)
     RecycleScrollView rcv;
     @BindView(R.id.refreshLayout)
@@ -60,20 +64,24 @@ public class TopicFragment extends LazyFragment {
     TextView tvSubmit;
     @BindView(R.id.rl_top_theme)
     RelativeLayout rlTopTheme;
-    private MessageFragmentRecyclerAdapter adapter;
+
+    @BindView(R.id.viewpager)
+    CustomViewPager viewpager;
+    private InfoFragmentAdapter adapter;
     int pageIndex = 0 ;
     private List<MessageBean.DataBean.MessagesBean.RowsBean> list;
 
     @Override
     public int setFragmentView() {
-        return R.layout.fragment_message;
+        return R.layout.fragment_info;
     }
 
+    private ArrayList<String> ImageAdList = new ArrayList<>();
     @Override
     public void initViews() {
         initRefresh();
         setVerticalManager(recycler);
-        adapter = new MessageFragmentRecyclerAdapter(getActivity());
+        adapter = new InfoFragmentAdapter(getActivity());
         recycler.setAdapter(adapter);
         rlTopTheme.setVisibility(View.VISIBLE);
         tvStatus.setVisibility(View.GONE);
@@ -82,7 +90,31 @@ public class TopicFragment extends LazyFragment {
         tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
         loadingDialog = new LoadingDialog(getActivity());
 //        loadingDialog.show();
+        ImageAdList.add("https://pic.qufen.top/20180629212800717.jpg");
+        ImageAdList.add("https://pic.qufen.top/20180628162058703554");
+        ImageAdList.add("https://pic.qufen.top/20180628162058545552");
+        ImageAdList.add("https://pic.qufen.top/20180628162058375550");
+        viewpager.setImageResources(ImageAdList, mAdCycleViewListener);
     }
+    private CustomViewPager.ImageCycleViewListener mAdCycleViewListener = new CustomViewPager.ImageCycleViewListener() {
+        @Override
+        public void onImageClick(int position, View imageView) {
+            LogUtil.w("-----------------------------------");
+            // TODO 单击图片处理事件
+//            int curPos = viewpager.getCurPos();
+//            Intent intent = new Intent(getActivity(), WebViewActivity.class);
+//            intent.putExtra("url", listvp.get(curPos).getAccessURL());
+//            startActivity(intent);
+        }
+
+        @Override
+        public void displayImage(String imageURL, ImageView imageView) {
+            // TODO 加载显示图片
+            imageView.setTag(null);
+            GlideUtils.loadSideMaxImage(getActivity(),imageView,imageURL);
+        }
+    };
+
 
     @Override
     public void onFirstUserVisible() {
@@ -113,10 +145,10 @@ public class TopicFragment extends LazyFragment {
     }
 
 
-    @OnClick({R.id.tv_status, R.id.tv_submit})
+    @OnClick({R.id.iv_status, R.id.tv_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tv_status:
+            case R.id.iv_status:
                 detaliMessage(0);
                 break;
             case R.id.tv_submit:

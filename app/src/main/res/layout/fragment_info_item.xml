@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/title_gray_ee"
+        android:padding="@dimen/dp_10"
+        android:text="2018.04.16    星期一"
+        android:textColor="@color/title_gray_66" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_alignTop="@id/tv_time"
+            android:layout_marginTop="@dimen/dp_5"
+            android:src="@drawable/bule_dot" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginVertical="@dimen/dp_10"
+            android:layout_toRightOf="@id/iv_dot"
+            android:text="12:59"
+            android:textColor="@color/title_gray_66" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_below="@id/iv_dot"
+            android:layout_marginTop="-2dp"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:background="@color/cut_off_rule" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:background="@drawable/ic_shade_grey_zx"
+            android:layout_below="@id/tv_time"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/dp_5"
+                android:paddingHorizontal="@dimen/dp_5"
+                android:text="真的跑路了，完全联系不上你啊！！！！"
+                android:textColor="@color/title_gray"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/dp_5"
+                android:enabled="true"
+                android:lineSpacingExtra="@dimen/item_line_spacing"
+                android:maxLines="3"
+                android:text="真的跑路了，完全联系不上你啊！！！！真的跑路了，完全联系不上你啊！！！！真的跑路了，完全联系不上你啊！！！！真的跑路了，完全联系不上你啊！！！！真的跑路了，完全联系不上你啊！！！！"
+                android:textColor="@color/title_gray_88"
+                android:textSize="@dimen/dp_12" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp_5"
+                android:paddingHorizontal="@dimen/dp_5"
+                android:drawableRight="@drawable/right_boult"
+                android:paddingVertical="@dimen/dp_10"
+                android:text="查看详情"
+                android:textColor="@color/title_gray_88"
+                android:textSize="@dimen/sp_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_line"
+                android:background="@color/cut_off_rule" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/dp_5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/selector_assist_img"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:gravity="bottom"
+                    android:padding="@dimen/dp_8"
+                    android:text="看涨234"
+                    android:textColor="@drawable/selector_assist_text"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:drawableLeft="@drawable/selector_assist_img"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:gravity="bottom"
+                    android:padding="@dimen/dp_8"
+                    android:text="看跌234"
+                    android:textColor="@drawable/selector_assist_text"
+                    android:textSize="@dimen/sp_12" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_line"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:drawableLeft="@drawable/selector_assist_img"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:gravity="bottom"
+                    android:padding="@dimen/dp_8"
+                    android:text="分享"
+                    android:textColor="@drawable/selector_assist_text"
+                    android:textSize="@dimen/sp_12" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

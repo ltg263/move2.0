@@ -6,8 +6,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.secretk.move.MoveApplication;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.ui.activity.LoginHomeActivity;
-import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
@@ -139,10 +137,10 @@ public class RetrofitUtil {
                                      String msg = jsonObject.getString("msg");
 //                                     String data = jsonObject.getJSONObject("data").toString();
                                      if ((code != 0 && !msg.equals("Success"))) {
-                                         if(code==11004){
-                                             msg = "帐号或密码错误请重新登陆";
-                                             IntentUtil.startActivity(LoginHomeActivity.class);
-                                         }
+//                                         if(code==11004){
+//                                             msg = "帐号或密码错误请重新登陆";
+//                                             IntentUtil.startActivity(LoginHomeActivity.class);
+//                                         }
                                          Toast.makeText(MoveApplication.getContext(), msg, Toast.LENGTH_SHORT).show();
                                          callBack.onError(msg);
                                          callBack.onFinish();

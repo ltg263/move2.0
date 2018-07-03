@@ -42,7 +42,7 @@ public class GlideUtils {
                 url=url+ImgUrlMix;
         }
         Glide.with(MoveApplication.getContext()).applyDefaultRequestOptions(new RequestOptions().transform(new GlideCircleTransform()).placeholder(R.drawable.ic_head_silent).error(R.drawable.ic_head_silent)).
-                load(url).into(img).clearOnDetach();
+                load(url).into(img);
     }
     /**
      * 圆ImageView

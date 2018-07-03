@@ -7,8 +7,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +26,7 @@ import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -90,8 +93,9 @@ public class DetailsArticleActivity extends BaseActivity {
     private int createUserId;
     private int projectId;
     private int praiseNum;
-    String postShortDesc="";
-    String imgUrl="";
+    String postShortDesc = "";
+    String imgUrl = "";
+
     @Override
     protected int setOnCreate() {
         return R.layout.activity_details_article;
@@ -108,7 +112,7 @@ public class DetailsArticleActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        ShareView.showShare(Constants.ARTICLE_SHARE+Integer.valueOf(postId),tvPostTitle.getText().toString(),postShortDesc,imgUrl);
+        ShareView.showShare(Constants.ARTICLE_SHARE + Integer.valueOf(postId), tvPostTitle.getText().toString(), postShortDesc, imgUrl);
     }
 
     @Override
@@ -120,31 +124,58 @@ public class DetailsArticleActivity extends BaseActivity {
         WebSettings webSettings = wvPostShortDesc.getSettings();//获取webview设置属性
         webSettings.setDefaultTextEncodingName("UTF-8");//设置默认为utf-8
         webSettings.setBlockNetworkImage(false); // 解决图片不显示
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ){
+
+        //支持javascript
+        webSettings.setJavaScriptEnabled(true);
+//        // 设置可以支持缩放
+//        webSettings.setSupportZoom(true);
+//        // 设置出现缩放工具
+//        webSettings.setBuiltInZoomControls(true);
+//        //扩大比例的缩放
+//        webSettings.setUseWideViewPort(true);
+//        //自适应屏幕
+//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//        webSettings.setLoadWithOverviewMode(true);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
-        //webview 适应屏幕大小
-//        webSettings.setUseWideViewPort(true);
-//        webSettings.setLoadWithOverviewMode(true);
-//        DisplayMetrics metrics = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-//        int mDensity = metrics.densityDpi;
-//        if (mDensity == 240) {
-//            webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
-//        } else if (mDensity == 160) {
-//            webSettings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
-//        } else if(mDensity == 120) {
-//            webSettings.setDefaultZoom(WebSettings.ZoomDensity.CLOSE);
-//        }else if(mDensity == DisplayMetrics.DENSITY_XHIGH){
-//            webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
-//        }else if (mDensity == DisplayMetrics.DENSITY_TV){
-//            webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);
-//        }
+        //如果不设置WebViewClient，请求会跳转系统浏览器
+        wvPostShortDesc.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //该方法在Build.VERSION_CODES.LOLLIPOP以前有效，从Build.VERSION_CODES.LOLLIPOP起，建议使用shouldOverrideUrlLoading(WebView, WebResourceRequest)} instead
+                //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
+                //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
+                LogUtil.w("11:" + url);
+                if (StringUtil.isNotBlank(url)) {
+                    IntentUtil.startWebViewActivity(url.toString(),getString(R.string.app_name));
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
+                //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    LogUtil.w("request.getUrl().toString():"+request.getUrl().toString());
+                    if (request.getUrl().toString().contains("sina.cn")) {
+//                        view.loadUrl("http://ask.csdn.net/questions/178242");
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+        });
         loadingDialog.show();
     }
 
     protected void initData() {
-        if(!NetUtil.isNetworkAvailable()){
+        if (!NetUtil.isNetworkAvailable()) {
             loadingDialog.dismiss();
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
@@ -186,33 +217,33 @@ public class DetailsArticleActivity extends BaseActivity {
         projectId = initData.getProjectId();
         tvPostTitle.setText(StringUtil.getBeanString(initData.getPostTitle()));
         postShortDesc = initData.getPostShortDesc();
-        GlideUtils.loadCircleUserUrl(this,ivCreateUserIcon, Constants.BASE_IMG_URL + initData.getCreateUserIcon());
+        GlideUtils.loadCircleUserUrl(this, ivCreateUserIcon, Constants.BASE_IMG_URL + initData.getCreateUserIcon());
         tvCreateUserName.setText(StringUtil.getBeanString(initData.getCreateUserName()));
         tvCreateUserSignature.setText(StringUtil.getBeanString(initData.getCreateUserSignature()));
-        if(initData.getUserType()!=1){
+        if (initData.getUserType() != 1) {
             ivModelIcon.setVisibility(View.VISIBLE);
-            StringUtil.getUserType(initData.getUserType(),ivModelIcon);
+            StringUtil.getUserType(initData.getUserType(), ivModelIcon);
         }
         createUserId = initData.getCreateUserId();
         //,//"0 未关注；1-已关注；2-不显示关注按钮"\
-        if(initData.getFollowStatus()==0){
+        if (initData.getFollowStatus() == 0) {
             tvFollowStatus.setSelected(false);
             tvFollowStatus.setText(getResources().getString(R.string.follow_status_0));
-        }else if(initData.getFollowStatus() == 1){
+        } else if (initData.getFollowStatus() == 1) {
             tvFollowStatus.setSelected(true);
             tvFollowStatus.setText(getResources().getString(R.string.follow_status_1));
-        }else{
+        } else {
             tvFollowStatus.setVisibility(View.GONE);
         }
-        if(baseUserId==initData.getCreateUserId()){
+        if (baseUserId == initData.getCreateUserId()) {
             tvFollowStatus.setVisibility(View.GONE);
         }
 //        tvPostShortDesc.setText(StringUtil.getBeanString(initData.getArticleContents()));
 //        wvPostShortDesc.loadData(StringUtil.getNewContent(StringUtil.getBeanString(initData.getArticleContents())), "text/html; charset=UTF-8", null);//这种写法可以正确解码
         wvPostShortDesc.loadData(StringUtil.getNewContent(initData.getArticleContents()), "text/html; charset=UTF-8", null);//这种写法可以正确解码
         tvProjectCode.setText(StringUtil.getBeanString(initData.getProjectCode()));
-        tvCreateTime.setText("发布于 "+StringUtil.getTimeToM(initData.getCreateTime()));
-        if(initData.getDonateNum()>0){
+        tvCreateTime.setText("发布于 " + StringUtil.getTimeToM(initData.getCreateTime()));
+        if (initData.getDonateNum() > 0) {
             pileLayout.setVisibility(View.VISIBLE);
             tvDonateNum.setVisibility(View.VISIBLE);
             tvDonateNum.setText(initData.getDonateNum() + getString(R.string.sponsor_num));
@@ -235,7 +266,7 @@ public class DetailsArticleActivity extends BaseActivity {
         tvCommentsNum.setText("评论" + String.valueOf(initData.getCommentsNum()));
         List<PostDataInfo> lists = new ArrayList<>();
         try {
-            if(StringUtil.isNotBlank(initData.getPostSmallImages())){
+            if (StringUtil.isNotBlank(initData.getPostSmallImages())) {
                 JSONArray images = new JSONArray(initData.getPostSmallImages());
                 for (int i = 0; i < images.length(); i++) {
                     JSONObject strObj = images.getJSONObject(i);
@@ -245,8 +276,8 @@ public class DetailsArticleActivity extends BaseActivity {
                     info.setTitle(strObj.getString("extension"));
                     lists.add(info);
                 }
-                if(lists.size()>0){
-                    imgUrl=lists.get(0).getUrl();
+                if (lists.size() > 0) {
+                    imgUrl = lists.get(0).getUrl();
                 }
             }
         } catch (JSONException e) {
@@ -266,21 +297,21 @@ public class DetailsArticleActivity extends BaseActivity {
      */
     public void initPraises(List<DetailsArticleBean.DataBean.ArticleDetailBean.CommendationListBean> pileLists) {
         LayoutInflater nflater = LayoutInflater.from(this);
-        if(pileLayout!=null){
+        if (pileLayout != null) {
             pileLayout.removeAllViews();
         }
         List<String> lists = new ArrayList<>();
-        for (int i = 0; i < pileLists.size() && i<7; i++) {
-            if(!lists.contains(String.valueOf(pileLists.get(i).getReceiveUserId()))){
+        for (int i = 0; i < pileLists.size() && i < 7; i++) {
+            if (!lists.contains(String.valueOf(pileLists.get(i).getReceiveUserId()))) {
                 ImageView imageView = (ImageView) nflater.inflate(R.layout.item_praise, pileLayout, false);
-                GlideUtils.loadCircleUserUrl(this,imageView, Constants.BASE_IMG_URL + pileLists.get(i).getSendUserIcon());
+                GlideUtils.loadCircleUserUrl(this, imageView, Constants.BASE_IMG_URL + pileLists.get(i).getSendUserIcon());
                 pileLayout.addView(imageView);
             }
             lists.add(String.valueOf(pileLists.get(i).getReceiveUserId()));
         }
     }
 
-    @OnClick({R.id.rl_ge_ren,R.id.tv_follow_status, R.id.tv_praise_status, R.id.tv_collect_status, R.id.tv_commendation_Num, R.id.tv_comments_num})
+    @OnClick({R.id.rl_ge_ren, R.id.tv_follow_status, R.id.tv_praise_status, R.id.tv_collect_status, R.id.tv_commendation_Num, R.id.tv_comments_num})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_ge_ren:
@@ -289,34 +320,34 @@ public class DetailsArticleActivity extends BaseActivity {
             case R.id.tv_follow_status:
                 tvFollowStatus.setEnabled(false);
                 NetUtil.addSaveFollow(tvFollowStatus,
-                        Constants.SaveFollow.USER,Integer.valueOf(createUserId), new NetUtil.SaveFollowImp() {
+                        Constants.SaveFollow.USER, Integer.valueOf(createUserId), new NetUtil.SaveFollowImp() {
                             @Override
                             public void finishFollow(String str) {
                                 tvFollowStatus.setEnabled(true);
-                                if(!str.equals(Constants.FOLLOW_ERROR)){
+                                if (!str.equals(Constants.FOLLOW_ERROR)) {
                                     tvFollowStatus.setText(str);
                                 }
                             }
                         });
                 break;
             case R.id.tv_praise_status:
-                if(!tvPraiseStatus.isSelected()){
+                if (!tvPraiseStatus.isSelected()) {
                     return;
                 }
 
-                if(!NetUtil.isPraise(createUserId,baseUserId)){
+                if (!NetUtil.isPraise(createUserId, baseUserId)) {
                     return;
                 }
                 tvPraiseStatus.setEnabled(false);
                 String str;
-                if(tvPraiseStatus.isSelected()){
-                    str = getString(R.string.like) + String.valueOf(praiseNum+1);
-                }else{
-                    str = getString(R.string.like) + String.valueOf(praiseNum-1);
+                if (tvPraiseStatus.isSelected()) {
+                    str = getString(R.string.like) + String.valueOf(praiseNum + 1);
+                } else {
+                    str = getString(R.string.like) + String.valueOf(praiseNum - 1);
                 }
                 tvPraiseStatus.setText(str);
                 tvPraiseStatus.setSelected(!tvPraiseStatus.isSelected());
-                setPraise(!tvPraiseStatus.isSelected(),Integer.valueOf(postId));
+                setPraise(!tvPraiseStatus.isSelected(), Integer.valueOf(postId));
                 break;
             case R.id.tv_collect_status:
                 tvCollectStatus.setEnabled(false);
@@ -324,9 +355,9 @@ public class DetailsArticleActivity extends BaseActivity {
                 NetUtil.saveCollect(tvCollectStatus.isSelected(),
                         Integer.valueOf(postId), new NetUtil.SaveCollectImp() {
                             @Override
-                            public void finishCollect(String str,boolean status) {
+                            public void finishCollect(String str, boolean status) {
                                 tvCollectStatus.setEnabled(true);
-                                if(!str.equals(Constants.COLLECT_ERROR)){
+                                if (!str.equals(Constants.COLLECT_ERROR)) {
                                     tvCollectStatus.setSelected(status);
                                 }
                             }
@@ -334,7 +365,7 @@ public class DetailsArticleActivity extends BaseActivity {
 
                 break;
             case R.id.tv_commendation_Num:
-                if(!NetUtil.isSponsor(createUserId,baseUserId)){
+                if (!NetUtil.isSponsor(createUserId, baseUserId)) {
                     return;
                 }
                 PopupWindowUtils window = new PopupWindowUtils(this, new PopupWindowUtils.GiveDialogInterface() {
@@ -356,21 +387,22 @@ public class DetailsArticleActivity extends BaseActivity {
                 window.showAtLocation(findViewById(R.id.head_app_server), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); // 设置layout在PopupWindow中显示的位置
                 break;
             case R.id.tv_comments_num:
-                IntentUtil.startCommentActivity(String.valueOf(postId),Constants.ARTICLE_COMMENT_LIST,
-                        Constants.ARTICLE_SHARE+Integer.valueOf(postId),tvPostTitle.getText().toString(),postShortDesc);
+                IntentUtil.startCommentActivity(String.valueOf(postId), Constants.ARTICLE_COMMENT_LIST,
+                        Constants.ARTICLE_SHARE + Integer.valueOf(postId), tvPostTitle.getText().toString(), postShortDesc);
                 break;
         }
     }
+
     private void setPraise(boolean isPraise, int postId) {
         NetUtil.setPraise(isPraise, postId, new NetUtil.SaveFollowImpl() {
             @Override
-            public void finishFollow(String praiseNum,boolean status) {
+            public void finishFollow(String praiseNum, boolean status) {
                 tvPraiseStatus.setEnabled(true);
                 ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
-                if(!praiseNum.equals(Constants.PRAISE_ERROR)){
+                if (!praiseNum.equals(Constants.PRAISE_ERROR)) {
                     tvPraiseStatus.setSelected(status);
-                    DetailsArticleActivity.this.praiseNum=Integer.valueOf(praiseNum);
-                    tvPraiseStatus.setText(getString(R.string.like)+praiseNum);
+                    DetailsArticleActivity.this.praiseNum = Integer.valueOf(praiseNum);
+                    tvPraiseStatus.setText(getString(R.string.like) + praiseNum);
                 }
 
             }

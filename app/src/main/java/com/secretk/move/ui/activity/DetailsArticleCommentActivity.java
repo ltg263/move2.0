@@ -233,6 +233,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
             node.put("postId", Integer.valueOf(postId));
             if(parentCommentsId!=0){
                 node.put("parentCommentsId", parentCommentsId);//parentCommentsId 未null
+                node.put("becommentedId", parentCommentsId);//becommentedId 未null
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -281,7 +282,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
     public void setIntput(String str,int parentCommentsId){
         strLs="@"+str+":";
         etContent.setText(strLs);
-        this.parentCommentsId=parentCommentsId;
+        this. parentCommentsId=parentCommentsId;
         StringUtil.showSoftInputFromWindow(this,etContent);
     }
 }

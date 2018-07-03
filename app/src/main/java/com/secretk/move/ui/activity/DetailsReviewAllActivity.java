@@ -7,8 +7,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,6 +48,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static android.os.Build.VERSION;
+import static android.os.Build.VERSION_CODES;
 
 /**
  * 作者： litongge
@@ -139,6 +144,54 @@ public class DetailsReviewAllActivity extends BaseActivity {
         rvImg.setAdapter(adapter);
         WebSettings webSettings = wvPostShortDesc.getSettings();
         webSettings.setDefaultTextEncodingName("UTF-8");//设置默认为utf-8
+
+
+        //支持javascript
+        webSettings.setJavaScriptEnabled(true);
+//        // 设置可以支持缩放
+//        webSettings.setSupportZoom(true);
+//        // 设置出现缩放工具
+//        webSettings.setBuiltInZoomControls(true);
+//        //扩大比例的缩放
+//        webSettings.setUseWideViewPort(true);
+//        //自适应屏幕
+//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//        webSettings.setLoadWithOverviewMode(true);
+
+        if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+        //如果不设置WebViewClient，请求会跳转系统浏览器
+        wvPostShortDesc.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //该方法在Build.VERSION_CODES.LOLLIPOP以前有效，从Build.VERSION_CODES.LOLLIPOP起，建议使用shouldOverrideUrlLoading(WebView, WebResourceRequest)} instead
+                //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
+                //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
+                if (url.toString().contains("http")) {
+//                    view.loadUrl("http://ask.csdn.net/questions/178242");
+                    IntentUtil.startWebViewActivity(url.toString(),getString(R.string.app_name));
+                    return true;
+                }
+
+                return false;
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
+                //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
+                if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
+                    if (request.getUrl().toString().contains("sina.cn")) {
+//                        view.loadUrl("http://ask.csdn.net/questions/178242");
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+        });
         loadingDialog.show();
     }
 
