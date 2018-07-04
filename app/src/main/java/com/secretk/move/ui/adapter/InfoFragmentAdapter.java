@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.secretk.move.R;
 import com.secretk.move.bean.MessageBean;
-import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.holder.InfoFragmentHolder;
 
 import java.util.ArrayList;
@@ -20,15 +19,12 @@ import java.util.List;
 
 public class InfoFragmentAdapter extends RecyclerView.Adapter<InfoFragmentHolder> {
     private List<MessageBean.DataBean.MessagesBean.RowsBean> list = new ArrayList<>();
-    private ItemClickListener mListener;
     private Context context;
+
     public InfoFragmentAdapter(Context context) {
-        this.context=context;
+        this.context = context;
     }
 
-    public void setItemListener(ItemClickListener mListener) {
-        this.mListener = mListener;
-    }
     @Override
     public InfoFragmentHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_info_item, parent, false);
@@ -38,8 +34,7 @@ public class InfoFragmentAdapter extends RecyclerView.Adapter<InfoFragmentHolder
 
     @Override
     public void onBindViewHolder(InfoFragmentHolder holder, int position) {
-        holder.refresh(context,position,list,this);
-        holder.setItemListener(mListener);
+        holder.refresh(context, position, list);
     }
 
     @Override
@@ -54,7 +49,8 @@ public class InfoFragmentAdapter extends RecyclerView.Adapter<InfoFragmentHolder
         this.list = list;
         notifyDataSetChanged();
     }
-    public List<MessageBean.DataBean.MessagesBean.RowsBean> getData(){
+
+    public List<MessageBean.DataBean.MessagesBean.RowsBean> getData() {
         return list;
     }
 

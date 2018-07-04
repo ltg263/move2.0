@@ -39,9 +39,9 @@
         <RadioButton
             android:id="@+id/rb_message"
             style="@style/main_tab_bottom"
-            android:drawableTop="@drawable/main_tab_message_selector"
+            android:drawableTop="@drawable/main_tab_info_selector"
 
-            android:text="@string/main_tab_message" />
+            android:text="@string/main_tab_info" />
 
         <RadioButton
             android:id="@+id/rb_mine"

@@ -19,6 +19,7 @@
     <string name="search">搜索</string>
     <string name="main_tab_home_page">主页</string>
     <string name="main_tab_topic">发现</string>
+    <string name="main_tab_info">咨询</string>
     <string name="main_tab_message">消息</string>
     <string name="main_tab_mine">我的</string>
     <string name="main_fragment_recommend">推荐</string>
