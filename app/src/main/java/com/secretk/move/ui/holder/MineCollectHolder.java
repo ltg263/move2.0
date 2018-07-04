@@ -93,19 +93,22 @@ public class MineCollectHolder extends RecyclerViewBaseHolder {
         tvEnglishName.setText("/" + StringUtil.getBeanString(rowsBean.getProjectChineseName()));
         tvCreateTime.setText(TimeToolUtils.convertTimeToFormat(rowsBean.getCreateTime()));
         tvPostTitle.setText(rowsBean.getPostTitle());
-        tvTotalScore.setText(String.valueOf(rowsBean.getTotalScore())+"分");
         tvPostShortDesc.setText(rowsBean.getPostShortDesc());
         tvPraiseNum.setText(String.valueOf(rowsBean.getPraiseNum()));
         tvCommentsNum.setText(String.valueOf(rowsBean.getCommentsNum()));
         String postType="";
         switch (rowsBean.getPostType()) {//帖子类型，数字，帖子类型：1-评测；2-讨论；3-文章
             case 1:
+                tvTotalScore.setVisibility(View.VISIBLE);
+                tvTotalScore.setText(String.valueOf(rowsBean.getEvaTotalScore())+"分");
                 postType = "发表了评测";
                 break;
             case 2:
+                tvTotalScore.setVisibility(View.GONE);
                 postType = "发表了爆料";
                 break;
             case 3:
+                tvTotalScore.setVisibility(View.GONE);
                 postType = "发表了文章";
                 break;
         }

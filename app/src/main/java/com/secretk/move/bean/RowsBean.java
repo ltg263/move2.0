@@ -48,6 +48,7 @@ public class RowsBean extends CommonListBase {
     private String projectChineseName;
     private String projectSignature;
     private double totalScore;
+    private double evaTotalScore;
     private String postTitle;
     private int postType;
     private int modelType;
@@ -87,6 +88,14 @@ public class RowsBean extends CommonListBase {
     private String evaluationTags;
     private String evauationContent;
     private String tagInfos;
+
+    public void setEvaTotalScore(double evaTotalScore) {
+        this.evaTotalScore = evaTotalScore;
+    }
+
+    public double getEvaTotalScore() {
+        return evaTotalScore;
+    }
 
     public int getPraiseStatus() {
         return praiseStatus;

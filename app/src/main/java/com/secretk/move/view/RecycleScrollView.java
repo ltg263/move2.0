@@ -33,6 +33,21 @@ public class RecycleScrollView extends ScrollView {
                     return true;
                 }
         }
-        return super.onInterceptTouchEvent(e);
+        try {
+            return super.onInterceptTouchEvent(e);
+        } catch (IllegalArgumentException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        try {
+            return super.onTouchEvent(ev);
+        } catch (IllegalArgumentException ex) {
+            ex.printStackTrace();
+        }
+        return false;
     }
 }

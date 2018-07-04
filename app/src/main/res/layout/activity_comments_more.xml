@@ -22,11 +22,11 @@
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
-        app:srlEnablePreviewInEditMode="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/ll"
-        android:layout_below="@id/view">
+        android:layout_below="@id/view"
+        app:srlEnablePreviewInEditMode="false">
 
         <com.secretk.move.view.RecycleScrollView
             android:layout_width="match_parent"
@@ -150,6 +150,7 @@
                 android:padding="@dimen/dp_10"
                 android:textColor="@color/title_gray"
                 android:textColorHint="@color/title_gray_aa"
+                android:textCursorDrawable="@drawable/shape_edit_cursor"
                 android:textSize="@dimen/sp_16" />
 
             <TextView

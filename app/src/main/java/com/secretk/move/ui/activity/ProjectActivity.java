@@ -37,6 +37,7 @@ import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
+import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.LoadingDialog;
 import com.secretk.move.view.ViewPagerFixed;
 
@@ -208,6 +209,16 @@ public class ProjectActivity extends BaseActivity {
 
                 }
 
+            }
+
+            @Override
+            public void onError(String message) {
+                DialogUtils.showDialogHint(ProjectActivity.this, message, true, new DialogUtils.ErrorDialogInterface() {
+                    @Override
+                    public void btnConfirm() {
+                        finish();
+                    }
+                });
             }
 
             @Override

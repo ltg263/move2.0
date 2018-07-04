@@ -194,11 +194,7 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
                     return;
                 }
                 SharedUtils.singleton().put("isShowJlWind", StringUtil.getTimeToM(System.currentTimeMillis()));
-                DialogUtils.showDialogHint(MainActivity.this, "今日领取 " + tokenTodaySum + " FIND", true, new DialogUtils.ErrorDialogInterface() {
-                    @Override
-                    public void btnConfirm() {
-                    }
-                });
+                DialogUtils.showDialogAwardFind(MainActivity.this, "今日领取"+tokenTodaySum+"FIND");
             }
         });
     }

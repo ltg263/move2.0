@@ -426,6 +426,32 @@ public class DialogUtils {
         dialog5.setContentView(view);
         dialog5.show();
     }
+
+    /**
+     *
+     * @param context
+     * @param title
+     */
+    public static void showDialogAwardFind(Context context, String title) {
+            final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
+            final View view = LayoutInflater.from(context).inflate(R.layout.dialog_award_find, null);
+            TextView tv_find = view.findViewById(R.id.tv_find);
+            tv_find.setText(title);
+            dialog5.setCancelable(false);
+            dialog5.setContentView(view);
+            dialog5.show();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(2000);
+                        dialog5.dismiss();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
     /**
      * 单个按钮，提示框；
      *

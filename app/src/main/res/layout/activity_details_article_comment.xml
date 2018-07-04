@@ -171,6 +171,7 @@
                 android:drawableLeft="@drawable/ic_leave"
                 android:drawablePadding="@dimen/dp_5"
                 android:hint="留下你的评论..."
+                android:textCursorDrawable="@drawable/shape_edit_cursor"
                 android:padding="@dimen/dp_10"
                 android:textColor="@color/title_gray"
                 android:textColorHint="@color/title_gray_aa"

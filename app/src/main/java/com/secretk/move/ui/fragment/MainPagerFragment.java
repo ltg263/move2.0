@@ -115,8 +115,8 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
             public void onClick(View view) {
                 intent = new Intent(getContext(), SelectProjectActivity.class);
                 intent.putExtra("publication_type",1);
-                startActivity(intent);
                 dialog.dismiss();
+                startActivity(intent);
             }
         });
         view.findViewById(R.id.ll_article).setOnClickListener(new View.OnClickListener() {
@@ -124,8 +124,8 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
             public void onClick(View view) {
                 intent = new Intent(getContext(), SelectProjectActivity.class);
                 intent.putExtra("publication_type",2);
-                startActivity(intent);
                 dialog.dismiss();
+                startActivity(intent);
             }
         });
         view.findViewById(R.id.ll_discuss).setOnClickListener(new View.OnClickListener() {
@@ -133,8 +133,8 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
             public void onClick(View view) {
                 intent = new Intent(getContext(), SelectProjectActivity.class);
                 intent.putExtra("publication_type",3);
-                startActivity(intent);
                 dialog.dismiss();
+                startActivity(intent);
             }
         });
         view.findViewById(R.id.img_close).setOnClickListener(new View.OnClickListener() {
