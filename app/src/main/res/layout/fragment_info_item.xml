@@ -21,8 +21,8 @@
             android:id="@+id/iv_dot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_10"
             android:layout_alignTop="@id/tv_time"
+            android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_5"
             android:src="@drawable/bule_dot" />
 
@@ -36,27 +36,19 @@
             android:text="12:59"
             android:textColor="@color/title_gray_66" />
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_below="@id/iv_dot"
-            android:layout_marginTop="-2dp"
-            android:layout_marginLeft="@dimen/dp_4"
-            android:background="@color/cut_off_rule" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/tv_time"
             android:layout_marginLeft="@dimen/dp_10"
             android:background="@drawable/ic_shade_grey_zx"
-            android:layout_below="@id/tv_time"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/dp_5"
-                android:paddingHorizontal="@dimen/dp_5"
+                android:padding="@dimen/dp_10"
                 android:text="真的跑路了，完全联系不上你啊！！！！"
                 android:textColor="@color/title_gray"
                 android:textSize="@dimen/sp_16"
@@ -65,10 +57,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/dp_5"
                 android:enabled="true"
                 android:lineSpacingExtra="@dimen/item_line_spacing"
                 android:maxLines="3"
+                android:paddingHorizontal="@dimen/dp_10"
                 android:text="真的跑路了，完全联系不上你啊！！！！真的跑路了，完全联系不上你啊！！！！真的跑路了，完全联系不上你啊！！！！真的跑路了，完全联系不上你啊！！！！真的跑路了，完全联系不上你啊！！！！"
                 android:textColor="@color/title_gray_88"
                 android:textSize="@dimen/dp_12" />
@@ -77,8 +69,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/dp_5"
-                android:paddingHorizontal="@dimen/dp_5"
                 android:drawableRight="@drawable/right_boult"
+                android:paddingHorizontal="@dimen/dp_5"
                 android:paddingVertical="@dimen/dp_10"
                 android:text="查看详情"
                 android:textColor="@color/title_gray_88"
@@ -92,8 +84,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/dp_5"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_10">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -102,6 +94,7 @@
                     android:drawablePadding="@dimen/dp_10"
                     android:gravity="bottom"
                     android:padding="@dimen/dp_8"
+                    android:paddingHorizontal="@dimen/dp_10"
                     android:text="看涨234"
                     android:textColor="@drawable/selector_assist_text"
                     android:textSize="@dimen/sp_12" />
@@ -137,6 +130,15 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_alignRight="@id/iv_dot"
+            android:layout_below="@id/iv_dot"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="-2dp"
+            android:background="@color/app_background" />
     </RelativeLayout>
 
 </LinearLayout>
