@@ -186,7 +186,7 @@
     <string name="find">区分</string>
     <!--写测评-->
     <string name="evaluation_simpleness">短评</string>
-    <string name="evaluation_professional">专业评测</string>
+    <string name="evaluation_professional">精评</string>
     <string name="evaluation_btn_new">自定义化评测</string>
     <string name="evaluation_btn_compile">FIND模型评测</string>
     <string name="evaluation">单项测评</string>

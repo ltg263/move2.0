@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.LongSparseArray;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
@@ -65,6 +67,8 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
     LinearLayoutManager layoutManager;
     @BindView(R.id.richtext_editor)
     RichTextEditor etNewContent;
+    @BindView(R.id.ed_title)
+    EditText edTitle;
 
     String modelPbTitle;
 
@@ -99,6 +103,7 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
         modelPbTitle = getResources().getString(R.string.comprehensive_evaluation);
         imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
         picList = new ArrayList<>();
+        edTitle.setHint(Html.fromHtml("请输入标题 <small>(6-60字之间)</small>"));
         etNewContent.setHintText("请发表您对当前项目的看法，字数少于10000");
 //        releasePicAdapter = new ReleasePicAdapter();
 //        rvPostSmallImages.setLayoutManager(new GridLayoutManager(this, 3));
@@ -116,6 +121,14 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
     @Override
     protected void OnToolbarRightListener() {
         list = etNewContent.buildEditData();
+        if (StringUtil.isBlank(getEdTitle())) {
+            ToastUtils.getInstance().show("请输入标题");
+            return;
+        }
+        if (getEdTitle().length() < 6) {
+            ToastUtils.getInstance().show("标题不能少于6个汉字");
+            return;
+        }
         if (etNewContent.isBlankEd(list)) {
             ToastUtils.getInstance().show("评测内容不能为空");
             return;
@@ -148,11 +161,15 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
             modelPbTitle = getIntent().getStringExtra("modelName");
             postTitle = projectPay+" - " + modelPbTitle;
         }
+//        if (modelType == Constants.ModelType.MODEL_TYPE_ALL_NEW) {
+//            etNewContent.setHintText("请发表您对当前项目的看法，字数少于10000，若有相应评测模型最佳。");
+//            postTitle = projectPay+" - 自定义化";
+//        }
         if (modelType == Constants.ModelType.MODEL_TYPE_ALL_NEW) {
-            etNewContent.setHintText("请发表您对当前项目的看法，字数少于10000，若有相应评测模型最佳。");
-            postTitle = projectPay+" - 自定义化";
+            postTitle = projectPay+" - 精评";
         }
-        mHeadView.setTitle(postTitle+"评测");
+//        mHeadView.setTitle(postTitle+"评测");
+        mHeadView.setTitle(postTitle);
         pbProjectLocation.setTvOne(modelPbTitle, 0, getResources().getColor(R.color.title_gray));
         pbProjectLocation.setTvThree(Double.valueOf(totalScore), 16, R.color.app_background);
         pbProjectLocation.setPbProgressMaxVisible();
@@ -329,7 +346,8 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
             //1-简单评测；2-全面系统专业评测;3-部分系统专业评测；4-专业评测-自定义类型
             node.put("modelType", modelType);
             //	 modelType=1对应为值为“简单评测", 2 为 "ALL-专业评测" 3 为 "PART—项目立项、核心团队" 4 为 "ALL-专业评测"
-            node.put("postTitle", postTitle);
+//            node.put("postTitle", postTitle);
+            node.put("postTitle", getEdTitle());
             //精确到小数点1位。简单评测 和部分评测 需要给出此值；ALL-专业评测 可以不用给。
 //            if(modelType!=Constants.ModelType.MODEL_TYPE_ALL_NEW
 //                    || modelType!=Constants.ModelType.MODEL_TYPE_ALL){
@@ -353,6 +371,7 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
                 .addPart("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addPart("sign", MD5.Md5(node.toString()))
                 .build();
+
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
@@ -388,5 +407,8 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
     @Override
     public void onItemLongClick(View view, int postion) {
 
+    }
+    public String getEdTitle() {
+        return edTitle.getText().toString().trim();
     }
 }

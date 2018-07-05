@@ -40,8 +40,8 @@
                     android:id="@+id/pb_project_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:paddingHorizontal="@dimen/dp_10" />
+                    android:paddingHorizontal="@dimen/dp_10"
+                    android:visibility="gone" />
 
 
                 <LinearLayout
@@ -65,6 +65,23 @@
                     android:layout_height="@dimen/dp_10"
                     android:background="@color/background_gray" />
 
+                <EditText
+                    android:id="@+id/ed_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:maxLength="60"
+                    android:maxLines="3"
+                    android:padding="@dimen/dp_10"
+                    android:textColorHint="@color/title_gray_aa"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor"
+                    android:textSize="@dimen/sp_18" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:background="#dddddd" />
 
                 <com.secretk.move.view.RichTextEditor
                     android:id="@+id/richtext_editor"
@@ -73,7 +90,7 @@
                     android:layout_margin="@dimen/dp_10"
                     android:maxLength="10000"
                     android:textColor="@color/title_gray"
-                    android:textColorHint="@color/title_gray_88"
+                    android:textColorHint="@color/title_gray_aa"
                     android:textSize="@dimen/sp_14" />
 
             </LinearLayout>

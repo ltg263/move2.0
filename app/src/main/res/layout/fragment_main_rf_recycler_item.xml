@@ -80,16 +80,21 @@
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#333333"
+            android:layout_toLeftOf="@id/tvScore"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/title_gray"
             android:textSize="@dimen/sp_16" />
 
         <TextView
             android:id="@+id/tvScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tvTitle"
             android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/dp_5"
             android:textColor="@color/app_background"
-            android:textSize="@dimen/sp_16"
+            android:textSize="@dimen/sp_14"
             android:textStyle="bold" />
 
         <TextView

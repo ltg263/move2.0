@@ -102,17 +102,17 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
 
     @OnClick(R.id.tv_release)
     public void tv_release() {
-        if (TextUtils.isEmpty(getEdTitle())) {
-            ToastUtils.getInstance().show("请输入标题");
-            return;
-        }
         list = richtext_editor.buildEditData();
-        if (richtext_editor.isBlankEd(list)) {
-            ToastUtils.getInstance().show("文章内容不能为空");
+        if (StringUtil.isBlank(getEdTitle())) {
+            ToastUtils.getInstance().show("请输入标题");
             return;
         }
         if (getEdTitle().length() < 6) {
             ToastUtils.getInstance().show("标题不能少于6个汉字");
+            return;
+        }
+        if (richtext_editor.isBlankEd(list)) {
+            ToastUtils.getInstance().show("文章内容不能为空");
             return;
         }
 

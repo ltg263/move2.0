@@ -1,6 +1,5 @@
 package com.secretk.move.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -83,12 +82,16 @@ public class EvaluationSimplenessActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        Intent intent = new Intent(this, EvaluationProfessionalActivity.class);
-        intent.putExtra("projectId", Integer.valueOf(projectId));
-        intent.putExtra("projectIcon", getIntent().getStringExtra("projectIcon"));
-        intent.putExtra("projectName", getIntent().getStringExtra("projectName"));
-        intent.putExtra("projectPay", getIntent().getStringExtra("projectPay"));
-        startActivity(intent);
+//        Intent intent = new Intent(this, EvaluationProfessionalActivity.class);
+//        intent.putExtra("projectId", Integer.valueOf(projectId));
+//        intent.putExtra("projectIcon", getIntent().getStringExtra("projectIcon"));
+//        intent.putExtra("projectName", getIntent().getStringExtra("projectName"));
+//        intent.putExtra("projectPay", getIntent().getStringExtra("projectPay"));
+//        startActivity(intent);
+
+        IntentUtil.startProjectCompileDxZjyActivity(String.valueOf(Constants.ModelType.MODEL_TYPE_ALL_NEW),
+                String.valueOf(projectId),getIntent().getStringExtra("projectPay"),
+                "","8.0",getString(R.string.comprehensive_evaluation));
     }
 
     @OnClick(R.id.rl_submit)
