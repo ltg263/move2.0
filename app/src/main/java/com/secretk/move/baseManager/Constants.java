@@ -88,46 +88,18 @@ public interface Constants {
      */
     String REQUEST_CODE = "requestCode";
 
-
-    String BASE_IMG_HTML5 = "https://m.qufen.top/";
-//    String BASE_IMG_HTML5 = "http://app.qufen.top/";
-
-    /**
-     * 正式
-     * 外网图片
-     */
-    String BASE_URL = "http://app.qufen.top/rest/";
     String BASE_IMG_URL = "";
-    /**
-     * song外网
-     * 外网图片
-     */
-//    String BASE_URL = "http://47.98.197.101/rest/";
-//    String BASE_IMG_URL = "http://47.98.197.101/";
-    /**
-     * 外网
-     * 外网图片
-     */
-//    String BASE_URL = "http://192.168.10.203:80/rest/";
-//    String BASE_IMG_URL = "http://192.168.10.203:80/rest/";
+    String BASE_IMG_HTML5 = "https://m.qufen.top/";
 
-    /**
-     * 张栋栋
-     * 张栋栋 图片
-     */
-//    String BASE_URL = "http://192.168.10.151:809/";
-//    String BASE_IMG_URL = "";
-    /**
-     * 王晗
-     * 0405
-     */
-//    String BASE_URL = "http://192.168.10.123:8082/";
-//   String BASE_IMG_URL = "http://192.168.10.123/";
-    /**
-     * 金背
-     */
-//    String BASE_URL = "http://192.168.10.133:8083/rest/";
-//    String BASE_IMG_URL = "";
+
+    String BASE_URL = "http://app.qufen.top/rest/";//线上
+
+//     String BASE_URL = "http://192.168.10.151:809/";//栋栋
+
+//      String BASE_URL = "http://repay.free.ngrok.cc/rest/";//林俊
+
+//    String BASE_URL = "http://47.98.197.101/rest/";//宋
+
     /**
      * 关于我们
       */
@@ -286,9 +258,14 @@ public interface Constants {
     String SAVE_COLLECT = "kff/collect/saveCollect";
     //取消对帖子的收藏  包括 讨论 文章 评测
     String CANCEL_COLLECT = "kff/collect/cancelCollect";
-    //取消对帖子的收藏  包括 讨论 文章 评测
-    String NEWS_FLASHLIST = BASE_URL + "kff/newsFlash/newsFlashList";
-    //http://192.168.10.133:8083/rest/kff/newsFlash/newsFlashList?policy=CFyBMqMkTxsGEFPSt2VDREi8rHGDbZI4xMQw7Es0J5c%253D%250A&sign=c15e8079047e3ea30eeb3d2694721480
+
+    //获取首页资讯的列表
+    String GET_NEWS_FLASH_PAGE_LIST = BASE_URL + "kff/newsFlash/getNewsFlashPageList";
+
+    //获取首页资讯的头部轮播图
+    String GET_NEWS_FLASH_IMG_LIST = BASE_URL + "kff/newsFlashImg/getNewsFlashImgList";
+    //快讯看涨和看跌
+    String UPDATE_NEWS_FLASH_RISE_AND_FALL = BASE_URL + "kff/newsFlashImg/updateNewsFlashRiseAndFall";
 
 
     //评测详情 页

@@ -15,6 +15,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.ProjectTypeListBean;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
@@ -111,9 +112,10 @@ public class SubmitProjectTwoActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
+        LogUtil.w("tvSortName.getText().toString():"+tvSortName.getText().toString());
         if (StringUtil.isBlank(etInput01.getText().toString().trim())
                 || StringUtil.isBlank(etContact.getText().toString().trim())
-                || getString(R.string.submit_project_66).equals(tvSortName.getText().toString())
+                || StringUtil.isBlank(tvSortName.getText().toString())
                 || StringUtil.isBlank(etInput02.getText().toString().trim())) {
             ToastUtils.getInstance().show("请完善信息");
             return;

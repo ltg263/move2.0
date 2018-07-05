@@ -14,14 +14,13 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.MessageBean;
+import com.secretk.move.bean.InfoBean;
 import com.secretk.move.ui.adapter.InfoFragmentAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
-import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.CustomViewPager;
 import com.secretk.move.view.LoadingDialog;
@@ -56,15 +55,15 @@ public class InfoFragment extends LazyFragment {
     @BindView(R.id.viewpager)
     CustomViewPager viewpager;
     private InfoFragmentAdapter adapter;
-    int pageIndex = 0 ;
-    private List<MessageBean.DataBean.MessagesBean.RowsBean> list;
+    int pageIndex = 1 ;
 
     @Override
     public int setFragmentView() {
         return R.layout.fragment_info;
     }
 
-    private ArrayList<String> ImageAdList = new ArrayList<>();
+    private ArrayList<String> imageAdList;
+    private ArrayList<Integer> idAdList;
     @Override
     public void initViews() {
         initRefresh();
@@ -72,16 +71,12 @@ public class InfoFragment extends LazyFragment {
         adapter = new InfoFragmentAdapter(getActivity());
         recycler.setAdapter(adapter);
         loadingDialog = new LoadingDialog(getActivity());
-        ImageAdList.add("https://pic.qufen.top/20180629212800717.jpg");
-        ImageAdList.add("https://pic.qufen.top/20180628162058703554");
-        ImageAdList.add("https://pic.qufen.top/20180628162058545552");
-        ImageAdList.add("https://pic.qufen.top/20180628162058375550");
-        viewpager.setImageResources(ImageAdList, mAdCycleViewListener);
     }
+
     private CustomViewPager.ImageCycleViewListener mAdCycleViewListener = new CustomViewPager.ImageCycleViewListener() {
         @Override
         public void onImageClick(int position, View imageView) {
-            LogUtil.w("-----------------------------------");
+            LogUtil.w("-----------------------------------"+idAdList.get(position));
             // TODO 单击图片处理事件
 //            int curPos = viewpager.getCurPos();
 //            Intent intent = new Intent(getActivity(), WebViewActivity.class);
@@ -105,6 +100,7 @@ public class InfoFragment extends LazyFragment {
     }
 
     private void initRefresh() {
+        refreshLayout.setEnableRefresh(false);
         /**
          * 下拉刷新
          */
@@ -122,7 +118,7 @@ public class InfoFragment extends LazyFragment {
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
-                loadData();
+                getNewsFlashPageList();
             }
         });
     }
@@ -142,31 +138,66 @@ public class InfoFragment extends LazyFragment {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
         }
-        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY, "");
+        //轮播图
+        getNewsFlashImgList();
+        getNewsFlashPageList();
+    }
+
+    private void getNewsFlashImgList() {
         JSONObject node = new JSONObject();
         try {
-            node.put("token", token);
+            node.put("pageIndex", 1);
+            node.put("pageSize", Constants.PAGE_SIZE);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.GET_NEWS_FLASH_IMG_LIST)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, InfoBean.class, new HttpCallBackImpl<InfoBean>() {
+            @Override
+            public void onCompleted(InfoBean bean) {
+                List<InfoBean.DataBeanX.DataBean.RowsBean> rows = bean.getData().getData().getRows();
+                if(rows!=null && rows.size()>0){
+                    imageAdList = new ArrayList<>();
+                    idAdList = new ArrayList<>();
+                    for(int i = 0;i<rows.size();i++){
+                        imageAdList.add(rows.get(i).getImgPath());
+                        idAdList.add(rows.get(i).getId());
+                    }
+                    viewpager.setImageResources(imageAdList, mAdCycleViewListener);
+                }
+            }
+        });
+    }
+    private void getNewsFlashPageList() {
+        JSONObject node = new JSONObject();
+        try {
             node.put("pageIndex", pageIndex++);
             node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         final RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.MESSAGE_LIST)
+                .url(Constants.GET_NEWS_FLASH_PAGE_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, MessageBean.class, new HttpCallBackImpl<MessageBean>() {
+        RetrofitUtil.request(params, InfoBean.class, new HttpCallBackImpl<InfoBean>() {
             @Override
-            public void onCompleted(MessageBean str) {
-                if (str.getData().getMessages().getCurPageNum() == str.getData().getMessages().getPageSize()) {
+            public void onCompleted(InfoBean str) {
+                if (str.getData().getData().getCurPageNum() == str.getData().getData().getPageSize()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
-                list = str.getData().getMessages().getRows();
-                if (pageIndex > 2) {
-                    adapter.addData(list);
-                } else {
-                    adapter.setData(list);
+                List<InfoBean.DataBeanX.DataBean.RowsBean> list = str.getData().getData().getRows();
+                if(list!=null && list.size()>0){
+                    if (pageIndex > 2) {
+                        adapter.addData(list);
+                    } else {
+                        adapter.setData(list);
+                    }
                 }
             }
 
@@ -183,7 +214,7 @@ public class InfoFragment extends LazyFragment {
 
             @Override
             public void onError(String message) {
-
+                loadingDialog.dismiss();
             }
         });
     }

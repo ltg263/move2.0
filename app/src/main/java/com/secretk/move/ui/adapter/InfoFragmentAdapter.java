@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
-import com.secretk.move.bean.MessageBean;
+import com.secretk.move.bean.InfoBean;
 import com.secretk.move.ui.holder.InfoFragmentHolder;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 public class InfoFragmentAdapter extends RecyclerView.Adapter<InfoFragmentHolder> {
-    private List<MessageBean.DataBean.MessagesBean.RowsBean> list = new ArrayList<>();
+    private List<InfoBean.DataBeanX.DataBean.RowsBean> list = new ArrayList<>();
     private Context context;
 
     public InfoFragmentAdapter(Context context) {
@@ -34,7 +34,7 @@ public class InfoFragmentAdapter extends RecyclerView.Adapter<InfoFragmentHolder
 
     @Override
     public void onBindViewHolder(InfoFragmentHolder holder, int position) {
-        holder.refresh(context, position, list);
+        holder.refresh(context, position, list,this);
     }
 
     @Override
@@ -45,16 +45,16 @@ public class InfoFragmentAdapter extends RecyclerView.Adapter<InfoFragmentHolder
         return list.size();
     }
 
-    public void setData(List<MessageBean.DataBean.MessagesBean.RowsBean> list) {
+    public void setData(List<InfoBean.DataBeanX.DataBean.RowsBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
 
-    public List<MessageBean.DataBean.MessagesBean.RowsBean> getData() {
+    public List<InfoBean.DataBeanX.DataBean.RowsBean> getData() {
         return list;
     }
 
-    public void addData(List<MessageBean.DataBean.MessagesBean.RowsBean> list) {
+    public void addData(List<InfoBean.DataBeanX.DataBean.RowsBean> list) {
         this.list.addAll(list);
         notifyDataSetChanged();
     }

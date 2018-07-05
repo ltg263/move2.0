@@ -145,7 +145,11 @@ public class VerificationLoginActivity extends BaseActivity {
                 //登录的状态
                 sharedUtils.put(Constants.IS_LOGIN_KEY,true);
                 ////用户信息
-                UserLoginInfo.DataBean dataBean = userInfo.getData();
+//                UserLoginInfo.DataBean dataBean = userInfo.getData();
+                sharedUtils.put(Constants.USER_INFOS,userInfo.getData().getUser().toString());
+                sharedUtils.put(Constants.USER_TYPE,userInfo.getData().getUser().getUserType());
+                sharedUtils.put(Constants.MOBILE,userInfo.getData().getUser().getMobile());
+                sharedUtils.put(Constants.USER_ID,userInfo.getData().getUser().getUserId());
                 IntentUtil.startActivity(MainActivity.class);
             }
 

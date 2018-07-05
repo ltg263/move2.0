@@ -54,6 +54,12 @@ android {
             // but continue the build even when errors are found:
             abortOnError false
         }
+        dexOptions {
+
+            incremental true
+            javaMaxHeapSize "4g"
+
+        }
     }
     compileSdkVersion 27
     defaultConfig {

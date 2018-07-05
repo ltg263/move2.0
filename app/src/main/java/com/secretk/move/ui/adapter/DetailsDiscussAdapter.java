@@ -38,7 +38,7 @@ public class DetailsDiscussAdapter extends RecyclerView.Adapter<DetailsDiscussHo
 
     @Override
     public void onBindViewHolder(DetailsDiscussHolder holder, int position) {
-        holder.refresh(position, lists,context);
+        holder.refresh(position, lists,context,this);
     }
 
     @Override

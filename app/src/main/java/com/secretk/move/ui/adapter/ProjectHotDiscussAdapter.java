@@ -113,7 +113,7 @@ public class ProjectHotDiscussAdapter extends RecyclerView.Adapter<ProjectHotDis
                 }
             });
         }
-        private void setPraise(TextView finalIsLove, int commentsId) {
+        private void setPraise(TextView finalIsLove, int psotId) {
             final int praiseNumA = hotDiscussBean.getPraiseNum();
             final String strNum;
             if(tvPraiseNum.isSelected()){
@@ -123,7 +123,7 @@ public class ProjectHotDiscussAdapter extends RecyclerView.Adapter<ProjectHotDis
             }
             tvPraiseNum.setText(strNum);
             tvPraiseNum.setSelected(!tvPraiseNum.isSelected());
-            NetUtil.addCommentsPraise(!finalIsLove.isSelected(), commentsId, new NetUtil.SaveFollowImpl() {
+            NetUtil.setPraise(!finalIsLove.isSelected(), psotId, new NetUtil.SaveFollowImpl() {
                 @Override
                 public void finishFollow(String praiseNum,boolean status) {
                     tvPraiseNum.setEnabled(true);

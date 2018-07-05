@@ -232,6 +232,11 @@ public class StringUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(d).toString();
     }
+    public static String getTimeToHm(long seconds) {
+        Date d = new Date(seconds);
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        return sdf.format(d).toString();
+    }
 
     /**
      * 毫秒数转日期
@@ -250,8 +255,20 @@ public class StringUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(d).toString();
     }
+    /**
+     * 毫秒数转日期
+     */
+    public static String getTimeToE(long seconds) {
+        Date d = new Date(seconds);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd  EEEE");
+        return sdf.format(d).toString();
+    }
 
-    public static String format(String format, Object value) {
+
+
+
+
+        public static String format(String format, Object value) {
         return String.format(format, value);
     }
 

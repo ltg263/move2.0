@@ -15,6 +15,7 @@ import com.secretk.move.bean.CommonCommentsBean;
 import com.secretk.move.ui.activity.DetailsArticleCommentActivity;
 import com.secretk.move.ui.activity.DetailsDiscussActivity;
 import com.secretk.move.ui.activity.MoreCommentsActivity;
+import com.secretk.move.ui.adapter.DetailsDiscussAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.NetUtil;
@@ -68,7 +69,7 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         loginUserId = SharedUtils.singleton().get(Constants.USER_ID,0);
     }
 
-    public void refresh(int position, List<CommonCommentsBean> lists, final Context context) {
+    public void refresh(int position, List<CommonCommentsBean> lists, final Context context, final DetailsDiscussAdapter adapter) {
         if(position==0){
             view.setVisibility(View.GONE);
         }
@@ -97,7 +98,7 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
                     return;
                 }
                 tvPraiseNum.setEnabled(false);
-                setPraise(tvPraiseNum,commentsBean.getCommentsId());
+                setPraise(context,tvPraiseNum,commentsBean.getCommentsId(),adapter);
             }
         });
         //跳转到用户
@@ -154,7 +155,7 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         });
     }
 
-    private void setPraise(TextView finalIsLove, int commentsId) {
+    private void setPraise(final Context context, TextView finalIsLove, final int commentsId, final DetailsDiscussAdapter adapter) {
         final int praiseNumA = commentsBean.getPraiseNum();
         final String strNum;
         if(tvPraiseNum.isSelected()){
@@ -175,6 +176,12 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
                     tvPraiseNum.setSelected(status);
                     ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
                     commentsBean.setPraiseStatus(status?0:1);
+
+                    if(context instanceof DetailsDiscussActivity){
+                        ((DetailsDiscussActivity)context).setCommentsIdPraise(adapter,commentsId,Integer.valueOf(praiseNum),status?0:1);
+                    }else if(context instanceof DetailsArticleCommentActivity){
+                        ((DetailsArticleCommentActivity)context).setCommentsIdPraise(adapter,commentsId,Integer.valueOf(praiseNum),status?0:1);
+                    }
                 }else{
 //                    tvPraiseNum.setSelected(false);
 //                    tvPraiseNum.setText(String.valueOf(Integer.valueOf(strNum)-1));

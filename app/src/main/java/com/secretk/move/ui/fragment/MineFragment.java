@@ -286,14 +286,16 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
         RetrofitUtil.request(params, UserLoginInfo.class, new HttpCallBackImpl<UserLoginInfo>() {
             @Override
             public void onCompleted(UserLoginInfo userInfo) {
-                //将token存入Shared中
-//                sharedUtils.put(Constants.TOKEN_KEY,userInfo.getData().getToken());
+                ////用户信息
                 //登录的状态
                 sharedUtils.put(Constants.IS_LOGIN_KEY,true);
                 ////用户信息
+//                UserLoginInfo.DataBean dataBean = userInfo.getData();
                 sharedUtils.put(Constants.USER_INFOS,userInfo.getData().getUser().toString());
                 sharedUtils.put(Constants.USER_TYPE,userInfo.getData().getUser().getUserType());
                 sharedUtils.put(Constants.MOBILE,userInfo.getData().getUser().getMobile());
+                sharedUtils.put(Constants.USER_ID,userInfo.getData().getUser().getUserId());
+
                 sharedUtils.put("userCardStatus",userInfo.getData().getUserCardStatus());
                 sharedUtils.put("statusHierarchyType",userInfo.getData().getStatusHierarchyType());
                 onFirstUserVisible();

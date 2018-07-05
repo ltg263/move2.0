@@ -23,6 +23,7 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.bean.CommonCommentsBean;
 import com.secretk.move.bean.DetailsDiscussBase;
 import com.secretk.move.bean.DiscussNewInfoBean;
 import com.secretk.move.bean.MenuInfo;
@@ -587,5 +588,28 @@ public class DetailsDiscussActivity extends BaseActivity {
         etContent.setText(strLs);
         this.parentCommentsId=commentsId;
         StringUtil.showSoftInputFromWindow(this,etContent);
+    }
+
+    public void setCommentsIdPraise(DetailsDiscussAdapter mAdapter, int commentsId, int praiseNum, int praiseStatus){
+        List<CommonCommentsBean> commonCommentsBeans;
+        if(adapter==mAdapter){
+            commonCommentsBeans=adapterNew.getData();
+        }else{
+            commonCommentsBeans=adapter.getData();
+        }
+        if(commonCommentsBeans!=null && commonCommentsBeans.size()>0){
+            for(int i = 0;i<commonCommentsBeans.size();i++){
+                if(commentsId == commonCommentsBeans.get(i).getCommentsId()){
+                    commonCommentsBeans.get(i).setPraiseNum(praiseNum);
+                    commonCommentsBeans.get(i).setPraiseStatus(praiseStatus);
+                    if(adapter==mAdapter){
+                        adapterNew.notifyDataSetChanged();
+                    }else{
+                        adapter.notifyDataSetChanged();
+                    }
+                    break;
+                }
+            }
+        }
     }
 }

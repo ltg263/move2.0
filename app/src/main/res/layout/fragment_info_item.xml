@@ -30,10 +30,10 @@
             android:id="@+id/iv_dot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/view_top"
             android:layout_alignTop="@id/tv_time"
-            android:layout_marginTop="@dimen/dp_5"
+            android:layout_below="@id/view_top"
             android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5"
             android:src="@drawable/bule_dot" />
 
         <TextView
@@ -41,10 +41,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginVertical="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
             android:layout_toRightOf="@id/iv_dot"
             android:text="12:59"
-            android:textColor="@color/title_gray_66" />
+            android:textColor="@color/title_gray_8c" />
 
 
         <LinearLayout
@@ -74,19 +74,21 @@
                 android:lineSpacingExtra="@dimen/item_line_spacing"
                 android:maxLines="3"
                 android:paddingHorizontal="@dimen/dp_10"
-                android:text="真的跑路了，完全联系不上你啊！！！！真的跑路了，完全联系不上你啊！！！！真的跑路了，完全联系不上你啊！！！！真的跑路了，完全联系不上你啊！！！！真的跑路了，完全联系不上你啊！！！！"
-                android:textColor="@color/title_gray_88"
+                android:text="不上你啊！！！！真的跑路了，完全联系不上你啊！！！！"
+                android:textColor="@color/title_gray_7e"
                 android:textSize="@dimen/dp_12" />
 
             <TextView
+                android:id="@+id/tv_detail_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/dp_5"
                 android:drawableRight="@drawable/ic_info_right"
-                android:paddingHorizontal="@dimen/dp_5"
-                android:paddingVertical="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingHorizontal="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_2"
                 android:text="查看详情"
-                android:textColor="@color/title_gray_88"
+                android:textColor="@color/title_gray_7e"
                 android:textSize="@dimen/sp_14" />
 
             <View
@@ -98,7 +100,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="@dimen/dp_10">
+                android:paddingHorizontal="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_10">
 
                 <TextView
                     android:id="@+id/tv_info_z"
@@ -106,9 +109,9 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/selector_info_z"
                     android:drawablePadding="@dimen/dp_10"
+                    android:gravity="bottom"
                     android:padding="@dimen/dp_8"
                     android:paddingHorizontal="@dimen/dp_10"
-                    android:gravity="bottom"
                     android:text="看涨234"
                     android:textColor="@drawable/selector_info_z_text"
                     android:textSize="@dimen/sp_12" />
