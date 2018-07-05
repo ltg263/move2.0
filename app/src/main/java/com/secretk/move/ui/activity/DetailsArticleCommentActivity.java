@@ -306,7 +306,11 @@ public class DetailsArticleCommentActivity extends BaseActivity {
                 if(commentsId == commonCommentsBeans.get(i).getCommentsId()){
                     commonCommentsBeans.get(i).setPraiseNum(praiseNum);
                     commonCommentsBeans.get(i).setPraiseStatus(praiseStatus);
-                    mAdapter.notifyDataSetChanged();
+                    if(adapter==mAdapter){
+                        adapterNew.notifyDataSetChanged();
+                    }else{
+                        adapter.notifyDataSetChanged();
+                    }
                     break;
                 }
             }
