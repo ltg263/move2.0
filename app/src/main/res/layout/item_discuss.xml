@@ -107,8 +107,10 @@
             android:visibility="gone" />
 
         <View
+            android:id="@+id/view_child_comments_num"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:visibility="gone"
             android:background="@drawable/dash_line"
             android:layerType="software" />
 
@@ -117,7 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:visibility="gone"
+            android:visibility="visible"
             android:padding="@dimen/dp_10"
             android:textColor="@color/app_background"
             android:textSize="@dimen/sp_14" />

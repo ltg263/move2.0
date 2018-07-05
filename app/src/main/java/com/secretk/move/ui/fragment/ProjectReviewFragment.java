@@ -178,7 +178,8 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
             pbComprehensiveEvaluation.setTvThree(project.getTotalScore(),16,R.color.app_background);
             pbComprehensiveEvaluation.setPbProgressMaxVisible();
         }
-        if(beans!=null && beans.size()>0){
+//        if(beans!=null && beans.size()>0){
+        if(false){
             getActivity().findViewById(R.id.ll_not).setVisibility(View.VISIBLE);
             //设置评分样式
             for(int postion=0;postion<beans.size();postion++){

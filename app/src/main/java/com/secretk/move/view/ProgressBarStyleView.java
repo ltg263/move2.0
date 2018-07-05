@@ -46,7 +46,7 @@ public class ProgressBarStyleView extends FrameLayout {
     public void setTvTwo(String strTwoTitle,float strTwoSize,int strTwoColor) {
         if(StringUtil.isNotBlank(strTwoTitle)){
             tvTwoTitle.setText(strTwoTitle);
-            ivRightIcon.setVisibility(View.VISIBLE);
+//            ivRightIcon.setVisibility(View.VISIBLE);
         }
         if(strTwoSize!=0){
             tvTwoTitle.setTextSize(strTwoSize);
@@ -67,7 +67,7 @@ public class ProgressBarStyleView extends FrameLayout {
     }
     public void setAllTv(String ont,String two,double three) {
         if(StringUtil.isNotBlank(two) && two.contains("人")){
-            ivRightIcon.setVisibility(View.VISIBLE);
+//            ivRightIcon.setVisibility(View.VISIBLE);
         }
         tvOneTitle.setText(ont);
         tvTwoTitle.setText(two);

@@ -124,11 +124,10 @@ public interface Constants {
 //    String BASE_URL = "http://192.168.10.123:8082/";
 //   String BASE_IMG_URL = "http://192.168.10.123/";
     /**
-     * 罗艳清
+     * 金背
      */
-//    String BASE_URL = "http://192.168.10.199:8080/rest/";
+//    String BASE_URL = "http://192.168.10.133:8083/rest/";
 //    String BASE_IMG_URL = "";
-//    String BASE_IMG_URL = "http://192.168.10.199:8080/";
     /**
      * 关于我们
       */
@@ -287,6 +286,9 @@ public interface Constants {
     String SAVE_COLLECT = "kff/collect/saveCollect";
     //取消对帖子的收藏  包括 讨论 文章 评测
     String CANCEL_COLLECT = "kff/collect/cancelCollect";
+    //取消对帖子的收藏  包括 讨论 文章 评测
+    String NEWS_FLASHLIST = BASE_URL + "kff/newsFlash/newsFlashList";
+    //http://192.168.10.133:8083/rest/kff/newsFlash/newsFlashList?policy=CFyBMqMkTxsGEFPSt2VDREi8rHGDbZI4xMQw7Es0J5c%253D%250A&sign=c15e8079047e3ea30eeb3d2694721480
 
 
     //评测详情 页

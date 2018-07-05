@@ -154,7 +154,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
             node.put("token", token);
             node.put("postId", Integer.valueOf(postId));//帖子ID
             node.put("pageIndex", pageIndex++);//帖子ID
-            node.put("pageSize", 20);//帖子ID
+            node.put("pageSize", Constants.PAGE_SIZE);//帖子ID
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -179,15 +179,23 @@ public class DetailsArticleCommentActivity extends BaseActivity {
                         adapter.setData(data.getHotComments());
                     }
                 }
-                if (data.getNewestComments().getCurPageNum() == data.getNewestComments().getPageSize()) {
+                DetailsArticleCommentBean.DataBean.NewestCommentsBean commentsBean = data.getNewestComments();
+                if (commentsBean != null) {
+                    if (commentsBean.getRows() != null && commentsBean.getRows().size() > 0) {
+                        refreshLayout.setVisibility(View.VISIBLE);
+                        llNew.setVisibility(View.VISIBLE);
+                        rlNotData.setVisibility(View.GONE);
+                        if (pageIndex > 2) {
+                            adapterNew.addData(commentsBean.getRows());
+                        } else {
+                            adapterNew.setData(commentsBean.getRows());
+                        }
+                    }
+                    if (commentsBean.getCurPageNum() == commentsBean.getPageSize()) {
+                        refreshLayout.finishLoadMoreWithNoMoreData();
+                    }
+                } else {
                     refreshLayout.finishLoadMoreWithNoMoreData();
-                }
-                if (bean.getData().getNewestComments().getRows() != null
-                        && bean.getData().getNewestComments().getRows().size() > 0) {
-                    refreshLayout.setVisibility(View.VISIBLE);
-                    llNew.setVisibility(View.VISIBLE);
-                    rlNotData.setVisibility(View.GONE);
-                    adapterNew.setData(bean.getData().getNewestComments().getRows());
                 }
             }
 
@@ -197,7 +205,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
                     refreshLayout.finishRefresh();
                 }
                 if (refreshLayout.isEnableLoadMore()) {
-                    refreshLayout.finishLoadMore(true);
+                    refreshLayout.finishLoadMore();
                 }
                 loadingDialog.dismiss();
             }

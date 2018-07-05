@@ -54,6 +54,8 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
     View viewChildContent1;
     @BindView(R.id.view_child_content2)
     View viewChildContent2;
+    @BindView(R.id.view_child_comments_num)
+    View viewChildCommentsNum;
     @BindView(R.id.tv_child_comments_num)
     TextView tvChildCommentsNum;
     @BindView(R.id.rl_ge_ren)
@@ -106,8 +108,10 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
             }
         });
         tvChildCommentsNum.setVisibility(View.GONE);
+        viewChildCommentsNum.setVisibility(View.GONE);
         if(commentsBean.getChildCommentsNum()>2){
             tvChildCommentsNum.setVisibility(View.VISIBLE);
+            viewChildCommentsNum.setVisibility(View.VISIBLE);
             tvChildCommentsNum.setText("更多"+commentsBean.getChildCommentsNum()+"条评论");
         }
         final List<CommonCommentsBean.ChildCommentsListBean> childLists = commentsBean.getChildCommentsList();
