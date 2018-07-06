@@ -174,6 +174,10 @@ public class InfoFragment extends LazyFragment {
         RetrofitUtil.request(params, InfoBean.class, new HttpCallBackImpl<InfoBean>() {
             @Override
             public void onCompleted(InfoBean bean) {
+                InfoBean.DataBeanX.DataBean data = bean.getData().getData();
+                if(data==null){
+                    return;
+                }
                 rows = bean.getData().getData().getRows();
                 if(rows!=null && rows.size()>0){
                     imageAdList = new ArrayList<>();
@@ -201,10 +205,15 @@ public class InfoFragment extends LazyFragment {
         RetrofitUtil.request(params, InfoBean.class, new HttpCallBackImpl<InfoBean>() {
             @Override
             public void onCompleted(InfoBean str) {
-                if (str.getData().getData().getCurPageNum() == str.getData().getData().getPageSize()) {
+                InfoBean.DataBeanX.DataBean data = str.getData().getData();
+                if(data==null){
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                    return;
+                }
+                if (data.getCurPageNum() == data.getPageSize()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
-                List<InfoBean.DataBeanX.DataBean.RowsBean> list = str.getData().getData().getRows();
+                List<InfoBean.DataBeanX.DataBean.RowsBean> list = data.getRows();
                 if(list!=null && list.size()>0){
                     if (pageIndex > 2) {
                         adapter.addData(list);

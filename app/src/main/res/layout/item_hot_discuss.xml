@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_commented_user_name"
             android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_2"
             android:layout_toRightOf="@+id/iv_commented_user_icon"
             android:textColor="@color/app_background"
             android:textSize="@dimen/sp_12" />
@@ -56,10 +57,32 @@
         android:id="@+id/tv_comment_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="3"
         android:paddingHorizontal="@dimen/dp_10"
         android:paddingVertical="@dimen/dp_5"
         android:textColor="@color/title_gray"
-        android:textSize="@dimen/sp_15" />
+        android:textSize="@dimen/sp_14" />
+
+
+    <View
+        android:id="@+id/view_dash"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/dash_line"
+        android:visibility="gone"
+        android:layerType="software" />
+
+    <TextView
+        android:id="@+id/tv_bnt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:padding="@dimen/dp_10"
+        android:text="查看更多"
+        android:textColor="@color/app_background"
+        android:textSize="@dimen/sp_12"
+        android:visibility="gone" />
 
     <View
         android:id="@+id/view"

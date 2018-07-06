@@ -1,7 +1,9 @@
 package com.secretk.move.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.RowsBean;
+import com.secretk.move.ui.activity.DetailsReviewAllActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -77,6 +80,10 @@ public class ProjectHotDiscussAdapter extends RecyclerView.Adapter<ProjectHotDis
         TextView tvPraiseNum;
         @BindView(R.id.tv_comment_content)
         TextView tvCommentContent;
+        @BindView(R.id.view_dash)
+        View viewDash;
+        @BindView(R.id.tv_bnt)
+        TextView tvBnt;
 
         public ImagesHolder(View itemView) {
             super(itemView);
@@ -112,8 +119,45 @@ public class ProjectHotDiscussAdapter extends RecyclerView.Adapter<ProjectHotDis
                     setPraise(tvPraiseNum,hotDiscussBean.getPostId());
                 }
             });
+            tvBnt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, DetailsReviewAllActivity.class);
+                    intent.putExtra("postId",String.valueOf(hotDiscussBean.getPostId()));
+                    context.startActivity(intent);
+                }
+            });
+
+            tvCommentContent.post(new Runnable() {
+                @Override
+                public void run() {
+                    showCheckAll(tvCommentContent);
+                }
+            });
         }
-        private void setPraise(TextView finalIsLove, int psotId) {
+
+
+        /**
+         * 如果TextView没有显示完全就显示查看全部按钮，点击查看全部按钮后TextView会显示全部内容，同时隐藏查看全部按钮
+         * @param tv_content
+         */
+        private void showCheckAll(final TextView tv_content) {
+            Layout layout = tv_content.getLayout();
+            if (layout != null) {
+                int lines = layout.getLineCount();
+                if (lines > 0) {
+                    if (layout.getEllipsisCount(lines - 1) > 0) {
+                        tvBnt.setVisibility(View.VISIBLE);
+                        viewDash.setVisibility(View.VISIBLE);
+                    } else {
+                        tvBnt.setVisibility(View.GONE);
+                        viewDash.setVisibility(View.GONE);
+                    }
+                }
+            }
+        }
+
+            private void setPraise(TextView finalIsLove, int psotId) {
             final int praiseNumA = hotDiscussBean.getPraiseNum();
             final String strNum;
             if(tvPraiseNum.isSelected()){

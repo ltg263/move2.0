@@ -19,7 +19,6 @@ import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
-import com.secretk.move.view.ShareView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -123,7 +122,7 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
                     ToastUtils.getInstance().show("类型出错");
                     return;
                 }
-                ShareView.showShare(shareUrl,rowsBean.getTitle(),rowsBean.getContent(),"");
+//                ShareView.showShare(shareUrl,rowsBean.getTitle(),rowsBean.getContent(),"");
             }
         });
     }
