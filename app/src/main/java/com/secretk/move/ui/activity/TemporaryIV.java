@@ -29,6 +29,7 @@ public class TemporaryIV extends BaseActivity {
     @BindView(R.id.iv_img)
     ImageView ivImg;
 
+
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
         mHeadView = findViewById(R.id.head_app_server);
