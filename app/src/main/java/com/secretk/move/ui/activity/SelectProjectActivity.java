@@ -208,10 +208,8 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
         }
         listSearch = new ArrayList<>();
         for(int i = 0;i<list.size();i++){
-            if(list.get(i).getProjectCode().contains(searchContent)
-                    || list.get(i).getProjectCode().contains(searchContent.toUpperCase())
-                    || list.get(i).getProjectChineseName().contains(searchContent)
-                    || list.get(i).getProjectChineseName().contains(searchContent.toUpperCase())){
+            if(list.get(i).getProjectCode().toUpperCase().contains(searchContent.toUpperCase()) ||
+                    list.get(i).getProjectChineseName().toUpperCase().contains(searchContent.toUpperCase())){
                 listSearch.add(list.get(i));
             }
         }

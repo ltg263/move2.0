@@ -138,6 +138,7 @@ public class InfoBean extends BaseRes{
                 private int state;
                 private String author;
                 private int isCheckDetails;
+                //-类型：0-完整版专业评测，1-自定义评测，2-文章，3-打假，4-单项评测
                 private int type;
                 private int articleId;
                 private int isProminent;

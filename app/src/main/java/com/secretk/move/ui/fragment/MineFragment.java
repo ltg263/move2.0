@@ -133,6 +133,10 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
             presenter = new MineFragmentPresenterImpl(this);
             presenter.initialized();
         }else{
+            tvEvaluationMun.setText("0");
+            tvDiscussMun.setText("0");
+            tvArticleMun.setText("0");
+            tvBalance.setText("0");
             rlNoLogin.setVisibility(View.VISIBLE);
             rlUserInfo.setVisibility(View.GONE);
         }
@@ -237,6 +241,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 break;
             case R.id.ll_my_feedback://意见反馈
                 IntentUtil.startActivity(MineOpinionBackActivity.class);
+//                IntentUtil.startActivity(ImagesSelectorActivity.class);
                 break;
         }
     }
@@ -299,6 +304,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 sharedUtils.put("userCardStatus",userInfo.getData().getUserCardStatus());
                 sharedUtils.put("statusHierarchyType",userInfo.getData().getStatusHierarchyType());
                 onFirstUserVisible();
+
             }
 
             @Override

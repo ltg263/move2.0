@@ -92,11 +92,11 @@ public interface Constants {
     String BASE_IMG_HTML5 = "https://m.qufen.top/";
 
 
-    String BASE_URL = "http://app.qufen.top/rest/";//线上
+//    String BASE_URL = "http://app.qufen.top/rest/";//线上
 
 //     String BASE_URL = "http://192.168.10.151:809/";//栋栋
 
-//      String BASE_URL = "http://repay.free.ngrok.cc/rest/";//林俊
+      String BASE_URL = "http://repay.free.ngrok.cc/rest/";//林俊
 
 //    String BASE_URL = "http://47.98.197.101/rest/";//宋
 
@@ -265,7 +265,7 @@ public interface Constants {
     //获取首页资讯的头部轮播图
     String GET_NEWS_FLASH_IMG_LIST = BASE_URL + "kff/newsFlashImg/getNewsFlashImgList";
     //快讯看涨和看跌
-    String UPDATE_NEWS_FLASH_RISE_AND_FALL = BASE_URL + "kff/newsFlashImg/updateNewsFlashRiseAndFall";
+    String UPDATE_NEWS_FLASH_RISE_AND_FALL = BASE_URL + "kff/newsFlash/updateNewsFlashRiseAndFall";
 
 
     //评测详情 页

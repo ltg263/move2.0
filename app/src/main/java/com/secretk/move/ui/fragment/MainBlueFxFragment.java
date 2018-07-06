@@ -21,7 +21,6 @@ import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.MainRfFragmentRecyclerAdapter;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -80,21 +79,6 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
                 onFirstUserVisible();
-            }
-        });
-
-        recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                LogUtil.w("newState:"+newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                LogUtil.w("dx::"+dx);
-                LogUtil.w("dy::"+dy);
             }
         });
     }

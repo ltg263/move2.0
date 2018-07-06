@@ -292,7 +292,7 @@ public class CustomViewPager extends LinearLayout {
         public Object instantiateItem(ViewGroup container, int position) {
             curPos = position % mAdList.size();
             String imageUrl = mAdList.get(curPos);
-//            LogUtil.e("position:"+position+" curPos:"+curPos);
+//            LogUtil.w("position:"+position+" curPos:"+curPos);
             RoundImageView imageView = null;
             if (mImageViewCacheList.isEmpty()) {
                 imageView = new RoundImageView(mContext);

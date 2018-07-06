@@ -39,7 +39,7 @@
                     android:paddingLeft="@dimen/dp_25"
                     android:paddingTop="@dimen/dp_5"
                     android:textColor="@color/black"
-                    android:textColorHint="#aaaaaa"
+                    android:textColorHint="@color/title_gray_aa"
                     android:textSize="@dimen/sp_12" />
 
                 <TextView

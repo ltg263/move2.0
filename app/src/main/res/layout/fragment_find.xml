@@ -24,7 +24,7 @@
             android:paddingLeft="@dimen/dp_25"
             android:paddingTop="@dimen/dp_5"
             android:text="  搜索相关币种"
-            android:textColor="#aaaaaa" />
+            android:textColor="@color/title_gray_aa" />
     </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
@@ -103,12 +103,12 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_margin="20dp"
-            android:src="@drawable/main_menu_publish"
-            app:backgroundTint="#fff"
+            android:src="@drawable/ic_add_project"
+            app:backgroundTint="@color/login_bnt"
             app:borderWidth="0.0dip"
             app:elevation="5.0dip"
             app:fabSize="normal"
             app:pressedTranslationZ="10.0dip"
-            app:rippleColor="#a6a6a6" />
+            app:rippleColor="@color/app_background" />
     </RelativeLayout>
 </LinearLayout>
