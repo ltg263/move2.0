@@ -32,6 +32,7 @@ import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.TimeToolUtils;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
+import com.secretk.move.view.DialogUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -186,6 +187,7 @@ public class MoreCommentsActivity extends BaseActivity{
                     public void finishFollow(String praiseNum,boolean status) {
                         tvPraiseNum.setEnabled(true);
                         if(!praiseNum.equals(Constants.PRAISE_ERROR)){
+                            DialogUtils.showDialogPraise(MoreCommentsActivity.this,1,true);
                             MoreCommentsActivity.this.praiseNum=Integer.valueOf(praiseNum);
                             tvPraiseNum.setText(praiseNum);
                             tvPraiseNum.setSelected(status);

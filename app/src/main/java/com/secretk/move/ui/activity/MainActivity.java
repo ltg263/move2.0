@@ -22,6 +22,7 @@ import com.secretk.move.presenter.impl.MainPresenterImpl;
 import com.secretk.move.ui.adapter.MainActivityPagerAdapter;
 import com.secretk.move.ui.fragment.MainBlueFxFragment;
 import com.secretk.move.ui.fragment.MainBlueGzFragment;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -152,11 +153,27 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
     protected void onResume() {
         super.onResume();
         String current = StringUtil.getTimeToM(System.currentTimeMillis());
-        if (!current.equals(SharedUtils.singleton().get("isShowJlWind", ""))) {
-            if (SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken())) {
+        if (SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken())) {
+            if (!current.equals(SharedUtils.singleton().get("isShowJlWind", ""))) {
                 showJlWind(SharedUtils.getToken());
             }
         }
+        if (SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken())) {
+            int userCardStatus = SharedUtils.singleton().get("userCardStatus", 0);
+            if (!current.equals(SharedUtils.singleton().get("isShowSmWind", "")) && userCardStatus==4) {
+                SharedUtils.singleton().put("isShowSmWind", StringUtil.getTimeToM(System.currentTimeMillis()));
+                showSmWind();
+            }
+        }
+    }
+
+    private void showSmWind() {
+        DialogUtils.showDialogAuthentication(this, new DialogUtils.ErrorDialogInterface() {
+            @Override
+            public void btnConfirm() {
+                IntentUtil.startActivity(MineApproveSubmitiCertificateActivity.class);
+            }
+        });
     }
 
     /**
@@ -229,6 +246,7 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
                     exitTime = System.currentTimeMillis();
                 } else {
                     finish();
+                    System.exit(0);
                 }
             }
             return true;

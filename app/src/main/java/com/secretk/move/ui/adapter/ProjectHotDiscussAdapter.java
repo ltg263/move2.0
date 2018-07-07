@@ -19,6 +19,7 @@ import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
+import com.secretk.move.view.DialogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,6 +173,7 @@ public class ProjectHotDiscussAdapter extends RecyclerView.Adapter<ProjectHotDis
                 public void finishFollow(String praiseNum,boolean status) {
                     tvPraiseNum.setEnabled(true);
                     if(!praiseNum.equals(Constants.PRAISE_ERROR)){
+                        DialogUtils.showDialogPraise(context,1,true);
                         hotDiscussBean.setPraiseNum(Integer.valueOf(praiseNum));
                         tvPraiseNum.setText(praiseNum);
 //                    praiseNumA = commentsBean.getPraiseNum();

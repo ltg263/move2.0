@@ -22,6 +22,7 @@ import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.TimeToolUtils;
 import com.secretk.move.view.Clickable;
+import com.secretk.move.view.DialogUtils;
 
 import java.util.List;
 
@@ -170,6 +171,7 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
             public void finishFollow(String praiseNum,boolean status) {
                 tvPraiseNum.setEnabled(true);
                 if(!praiseNum.equals(Constants.PRAISE_ERROR)){
+                    DialogUtils.showDialogPraise(context,1,true);
                     commentsBean.setPraiseNum(Integer.valueOf(praiseNum));
                     tvPraiseNum.setText(praiseNum);
 //                    praiseNumA = commentsBean.getPraiseNum();

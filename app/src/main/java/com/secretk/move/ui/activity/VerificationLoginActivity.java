@@ -139,7 +139,6 @@ public class VerificationLoginActivity extends BaseActivity {
         RetrofitUtil.request(params, UserLoginInfo.class, new HttpCallBackImpl<UserLoginInfo>() {
             @Override
             public void onCompleted(UserLoginInfo userInfo) {
-                LogUtil.w("contactsBean:"+userInfo.getData().getToken());
                 //将token存入Shared中
                 sharedUtils.put(Constants.TOKEN_KEY,userInfo.getData().getToken());
                 //登录的状态

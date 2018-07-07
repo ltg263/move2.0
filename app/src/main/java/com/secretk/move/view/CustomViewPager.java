@@ -202,7 +202,7 @@ public class CustomViewPager extends LinearLayout {
             if (mImageViews != null) {
                 mAdvPager.setCurrentItem(mAdvPager.getCurrentItem() + 1);
                 if (!isStop) {  //if  isStop=true   //当你退出后 要把这个给停下来 不然 这个一直存在 就一直在后台循环
-                    mHandler.postDelayed(mImageTimerTask, 3000);
+                    mHandler.postDelayed(mImageTimerTask, 2000);
                 }
 
             }

@@ -123,6 +123,36 @@ public class DialogUtils {
         dialog5.setContentView(view);
         dialog5.show();
     }
+    /**
+     * 单个按钮，设置监听；
+     *  实名认证弹框
+     * @param context
+     * @param
+     */
+    public static void showDialogAuthentication(Context context, final ErrorDialogInterface anInterface) {
+
+        final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
+        final View view = LayoutInflater.from(context).inflate(R.layout.dialog_layout_smrz, null);
+        Button bt_ok = view.findViewById(R.id.but_confirm);
+        ImageView iv_cloes = view.findViewById(R.id.iv_cloes);
+        iv_cloes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog5.dismiss();
+            }
+        });
+        bt_ok.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                anInterface.btnConfirm();
+                dialog5.dismiss();
+            }
+        });
+
+        dialog5.setContentView(view);
+        dialog5.show();
+    }
 
     /**
      * 单个按钮，设置监听；
@@ -428,9 +458,8 @@ public class DialogUtils {
     }
 
     /**
-     *
      * @param context
-     * @param title
+     * @param title 奖励框
      */
     public static void showDialogAwardFind(Context context, String title) {
             final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
@@ -452,6 +481,47 @@ public class DialogUtils {
                 }
             }).start();
         }
+    /**
+    /**
+     * @param context
+     * @param type:1 点赞  2 收藏
+     * 点赞框
+     */
+    public static void showDialogPraise(Context context,int type,boolean isCollect) {
+        final Dialog dialog5 = new Dialog(context, R.style.selectorDialog_bj);
+
+        final View view = LayoutInflater.from(context).inflate(R.layout.dialog_praise_find, null);
+        TextView tv_praise = view.findViewById(R.id.tv_praise);
+        TextView tv_collect = view.findViewById(R.id.tv_collect);
+        if (type==1){
+            tv_praise.setVisibility(View.VISIBLE);
+            tv_collect.setVisibility(View.GONE);
+        }else{
+            tv_praise.setVisibility(View.GONE);
+            tv_collect.setVisibility(View.VISIBLE);
+            if(!isCollect){
+                tv_collect.setText("收藏成功");
+                tv_collect.setSelected(false);
+            }else{
+                tv_collect.setText("取消收藏");
+                tv_collect.setSelected(true);
+            }
+        }
+        dialog5.setCancelable(false);
+        dialog5.setContentView(view);
+        dialog5.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                    dialog5.dismiss();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
     /**
      * 单个按钮，提示框；
      *

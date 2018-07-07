@@ -33,6 +33,7 @@ import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
+import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.PileLayout;
 import com.secretk.move.view.PopupWindowUtils;
 import com.secretk.move.view.ShareView;
@@ -358,6 +359,7 @@ public class DetailsArticleActivity extends BaseActivity {
                             public void finishCollect(String str, boolean status) {
                                 tvCollectStatus.setEnabled(true);
                                 if (!str.equals(Constants.COLLECT_ERROR)) {
+                                    DialogUtils.showDialogPraise(DetailsArticleActivity.this,2,status);
                                     tvCollectStatus.setSelected(status);
                                 }
                             }
@@ -400,6 +402,7 @@ public class DetailsArticleActivity extends BaseActivity {
                 tvPraiseStatus.setEnabled(true);
                 ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
                 if (!praiseNum.equals(Constants.PRAISE_ERROR)) {
+                    DialogUtils.showDialogPraise(DetailsArticleActivity.this,1,true);
                     tvPraiseStatus.setSelected(status);
                     DetailsArticleActivity.this.praiseNum = Integer.valueOf(praiseNum);
                     tvPraiseStatus.setText(getString(R.string.like) + praiseNum);

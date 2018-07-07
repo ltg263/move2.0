@@ -77,6 +77,7 @@
     <string name="assessment_new">最新评测</string>
     <string name="crack_down">爆料</string>
     <string name="project_was_assessed">评测了项目</string>
+    <string name="name_authentication">实名认证后获取更多权益\n注册奖励领取、内容奖励、评分加权</string>
 
 
     <string name="network_error">请检查您的网络</string>
