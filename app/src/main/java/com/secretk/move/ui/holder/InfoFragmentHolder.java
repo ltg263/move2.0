@@ -66,6 +66,10 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
             public void onClick(View view) {
 //               ：0-完整版专业评测，1-自定义评测，2-文章，3-打假，4-单项评测
                 int type = rowsBean.getType();
+                if(type==5 && StringUtil.isNotBlank(rowsBean.getOutUrl())){
+                    IntentUtil.startWebViewActivity(rowsBean.getOutUrl(),"区分");
+                    return;
+                }
                 if(type==0 || type ==1 || type==4){
                     type=1;
                 }else if(type==3){

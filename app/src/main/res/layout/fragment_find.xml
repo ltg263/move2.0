@@ -104,11 +104,11 @@
             android:layout_alignParentRight="true"
             android:layout_margin="20dp"
             android:src="@drawable/ic_add_project"
-            app:backgroundTint="@color/login_bnt"
+            app:backgroundTint="@color/white"
             app:borderWidth="0.0dip"
             app:elevation="5.0dip"
             app:fabSize="normal"
             app:pressedTranslationZ="10.0dip"
-            app:rippleColor="@color/app_background" />
+            app:rippleColor="@color/title_gray_aa" />
     </RelativeLayout>
 </LinearLayout>

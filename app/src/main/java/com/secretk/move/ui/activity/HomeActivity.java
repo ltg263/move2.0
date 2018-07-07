@@ -126,7 +126,7 @@ public class HomeActivity extends BaseActivity {
         if (StringUtil.isNotBlank(currentType)) {
             viewPager.setCurrentItem(Integer.valueOf(currentType));
         } else {
-            viewPager.setCurrentItem(1);
+            viewPager.setCurrentItem(0);
         }
         viewPager.setOffscreenPageLimit(3);
         tabs.post(new Runnable() {

@@ -70,8 +70,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_1"
                 android:layout_marginTop="@dimen/dp_10"
-                android:visibility="gone"
-                android:background="@color/cut_off_rule" />
+                android:background="@color/cut_off_rule"
+                android:visibility="gone" />
             <!--站長開始-->
             <LinearLayout
                 android:id="@+id/ll_zxpc_top"
@@ -92,10 +92,10 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_14" />
 
-              <!--  <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_line"
-                    android:background="@color/cut_off_rule" />-->
+                <!--  <View
+                      android:layout_width="match_parent"
+                      android:layout_height="@dimen/dp_line"
+                      android:background="@color/cut_off_rule" />-->
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_review_top"
@@ -127,22 +127,35 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_14" />
 
-               <!-- <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_line"
-                    android:background="@color/cut_off_rule" />-->
+                <!-- <View
+                     android:layout_width="match_parent"
+                     android:layout_height="@dimen/dp_line"
+                     android:background="@color/cut_off_rule" />-->
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_review"
                     android:layout_width="match_parent"
-                    android:nestedScrollingEnabled="false"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
             </LinearLayout>
             <!--站長結束-->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_1"
                 android:background="@color/cut_off_rule" />
+
+            <RelativeLayout
+                android:id="@+id/rl_not_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_130"
+                    android:src="@drawable/ic_not_content" />
+            </RelativeLayout>
         </LinearLayout>
     </com.secretk.move.view.RecycleNestedScrollView>
 </LinearLayout>

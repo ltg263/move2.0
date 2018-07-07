@@ -143,6 +143,11 @@ public class MineMessageActivity extends BaseActivity {
             @Override
             public void onCompleted(MessageBean bean) {
                 MessageBean.DataBean.MessagesBean detailsBean = bean.getData().getMessages();
+                if(bean.getData().getMessages()==null){
+                    findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+                    refreshLayout.setVisibility(View.GONE);
+                    return;
+                }
                 if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }

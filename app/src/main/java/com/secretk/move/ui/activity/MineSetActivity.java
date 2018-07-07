@@ -190,8 +190,8 @@ public class MineSetActivity extends BaseActivity {
                 });
                 break;
             case R.id.tv_current_version:
-                ToastUtils.getInstance().show("没有最新版本");
-//                updataVersion();
+//                ToastUtils.getInstance().show("没有最新版本");
+                updataVersion();
                 break;
         }
     }

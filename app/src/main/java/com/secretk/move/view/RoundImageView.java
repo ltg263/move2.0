@@ -51,14 +51,13 @@ public class RoundImageView extends android.support.v7.widget.AppCompatImageView
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (getDrawable() == null){
+        if (getDrawable() == null) {
             return;
         }
         Bitmap bitmap = drawableToBitamp(getDrawable());
         mBitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         float scale = 1.0f;
-        if (!(bitmap.getWidth() == getWidth() && bitmap.getHeight() == getHeight()))
-        {
+        if (!(bitmap.getWidth() == getWidth() && bitmap.getHeight() == getHeight())) {
             // 如果图片的宽或者高与view的宽高不匹配，计算出需要缩放的比例；缩放后的图片的宽高，一定要大于我们view的宽高；所以我们这里取大值；
             scale = Math.max(getWidth() * 1.0f / bitmap.getWidth(),
                     getHeight() * 1.0f / bitmap.getHeight());
@@ -69,15 +68,13 @@ public class RoundImageView extends android.support.v7.widget.AppCompatImageView
         mBitmapShader.setLocalMatrix(mMatrix);
         // 设置shader
         mPaint.setShader(mBitmapShader);
-        canvas.drawRoundRect(new RectF(0,0,getWidth(),getHeight()), mBorderRadius, mBorderRadius,
+        canvas.drawRoundRect(new RectF(0, 0, getWidth(), getHeight()), mBorderRadius, mBorderRadius,
                 mPaint);
     }
 
 
-    private Bitmap drawableToBitamp(Drawable drawable)
-    {
-        if (drawable instanceof BitmapDrawable)
-        {
+    private Bitmap drawableToBitamp(Drawable drawable) {
+        if (drawable instanceof BitmapDrawable) {
             BitmapDrawable bd = (BitmapDrawable) drawable;
             return bd.getBitmap();
         }

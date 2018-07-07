@@ -133,15 +133,25 @@ public class InfoBean extends BaseRes{
                 private String imgPath;
                 private int rise;
                 private int fall;
+                private String outUrl;
                 private boolean isRise=false;
                 private boolean isFall=false;
                 private int state;
                 private String author;
                 private int isCheckDetails;
-                //-类型：0-完整版专业评测，1-自定义评测，2-文章，3-打假，4-单项评测
+                //-类型：0-完整版专业评测，1-自定义评测，2-文章，3-打假，4-单项评测 5-外链URL
                 private int type;
                 private int articleId;
                 private int isProminent;
+
+                public void setOutUrl(String outUrl) {
+                    this.outUrl = outUrl;
+                }
+
+                public String getOutUrl() {
+                    return outUrl;
+                }
+
 
                 public String getImgPath() {
                     return imgPath;

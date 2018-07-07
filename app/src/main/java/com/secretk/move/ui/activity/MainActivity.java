@@ -153,13 +153,13 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
     protected void onResume() {
         super.onResume();
         String current = StringUtil.getTimeToM(System.currentTimeMillis());
-        if (SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken())) {
+        int userCardStatus = SharedUtils.singleton().get("userCardStatus", 0);
+        if (SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken()) && userCardStatus==2) {
             if (!current.equals(SharedUtils.singleton().get("isShowJlWind", ""))) {
                 showJlWind(SharedUtils.getToken());
             }
         }
         if (SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken())) {
-            int userCardStatus = SharedUtils.singleton().get("userCardStatus", 0);
             if (!current.equals(SharedUtils.singleton().get("isShowSmWind", "")) && userCardStatus==4) {
                 SharedUtils.singleton().put("isShowSmWind", StringUtil.getTimeToM(System.currentTimeMillis()));
                 showSmWind();

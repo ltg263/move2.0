@@ -131,7 +131,7 @@ public class CustomViewPager extends LinearLayout {
             int imageParams = (int) (mScale * 8 + 0.5f);// XP与DP转换，适应应不同分辨率
             int imagePadding = (int) (mScale * 5 + 0.5f);
             LayoutParams params = new LayoutParams(imageParams, imageParams);
-            params.leftMargin = 30;
+            params.leftMargin  =30;
 //            mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             mImageView.setLayoutParams(params);
             mImageView.setPadding(imagePadding, imagePadding, imagePadding, imagePadding);
@@ -297,8 +297,8 @@ public class CustomViewPager extends LinearLayout {
             RoundImageView imageView = null;
             if (mImageViewCacheList.isEmpty()) {
                 imageView = new RoundImageView(mContext);
-                imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                imageView.setScaleType(ImageView.ScaleType.CENTER);
+                imageView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 // 设置图片点击监听
                 imageView.setOnClickListener(new OnClickListener() {
                     @Override

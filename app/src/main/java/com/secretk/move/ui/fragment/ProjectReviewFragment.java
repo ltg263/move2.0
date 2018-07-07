@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.secretk.move.R;
@@ -41,6 +41,8 @@ import butterknife.BindView;
 public class ProjectReviewFragment extends LazyFragment implements ItemClickListener {
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
+    @BindView(R.id.rl_not_content)
+    RelativeLayout rlNotContent;
     @BindView(R.id.rv_review_top)
     RecyclerView rvReviewTop;
     @BindView(R.id.pb_comprehensive_evaluation)
@@ -95,6 +97,7 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
     public void onFirstUserVisible() {
         if(newData!=null && newData.size()>0){
             llZxpcTop.setVisibility(View.VISIBLE);
+            rlNotContent.setVisibility(View.GONE);
             adapterTop.setData(newData);
         }
         loadingDialog.show();
@@ -129,6 +132,7 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
                     return;
                 }
                 llZxpc.setVisibility(View.VISIBLE);
+                rlNotContent.setVisibility(View.GONE);
                 if(pageIndex>2){
                     adapter.setAddData(detailsBean.getRows());
                 }else {
@@ -159,7 +163,6 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
 
     @Override
     public void onItemClick(View view, int postion) {
-        Toast.makeText(getActivity(), "评测揭秘那  我是第：" + postion, Toast.LENGTH_SHORT).show();
     }
 
     @Override

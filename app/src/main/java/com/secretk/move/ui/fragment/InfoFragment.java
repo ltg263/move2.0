@@ -21,6 +21,7 @@ import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.CustomViewPager;
 import com.secretk.move.view.LoadingDialog;
@@ -82,6 +83,11 @@ public class InfoFragment extends LazyFragment {
             }
             InfoBean.DataBeanX.DataBean.RowsBean row = rows.get(viewpager.getCurPos());
             int type = row.getType();
+
+            if(type==5 && StringUtil.isNotBlank(row.getOutUrl())){
+                IntentUtil.startWebViewActivity(row.getOutUrl(),"区分");
+                return;
+            }
             int postId = row.getArticleId();
             if(row.getIsCheckDetails()==1 || row.getArticleId()==0){
                 return;
@@ -115,7 +121,7 @@ public class InfoFragment extends LazyFragment {
     }
 
     private void initRefresh() {
-        refreshLayout.setEnableRefresh(false);
+//        refreshLayout.setEnableRefresh(false);
         /**
          * 下拉刷新
          */
