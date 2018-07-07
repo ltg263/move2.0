@@ -8,7 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_above="@id/img_close"
+        android:layout_marginBottom="@dimen/dp_60"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -77,7 +78,7 @@
                 android:layout_gravity="center_horizontal"
                 android:textColor="#333333"
                 android:textSize="@dimen/sp_15"
-                android:text="@string/crack_down"/>
+                android:text="发爆料"/>
         </LinearLayout>
     </LinearLayout>
 

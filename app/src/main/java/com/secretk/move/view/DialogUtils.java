@@ -167,7 +167,7 @@ public class DialogUtils {
         dialog.setContentView(view);
         dialog.show();
         TextView tvLogPrompt = view.findViewById(R.id.tv_log_prompt);
-        final EditText etLogContent = view.findViewById(R.id.et_log_content);
+        final ContainsEmojiEditText etLogContent = view.findViewById(R.id.et_log_content);
         if(textLength!=0){
             //设置可以输入任意字符
             etLogContent.setInputType(InputType.TYPE_CLASS_TEXT);

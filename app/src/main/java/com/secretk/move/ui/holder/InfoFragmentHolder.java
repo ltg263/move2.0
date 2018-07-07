@@ -172,7 +172,7 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
         if(rowsBean.getIsCheckDetails()==0){
             tvDetailBtn.setVisibility(View.VISIBLE);
         }else{
-            tvDetailBtn.setVisibility(View.INVISIBLE);
+            tvDetailBtn.setVisibility(View.GONE);
         }
     }
     private void updateNewsFlashRiseAndFall(String type,int id){

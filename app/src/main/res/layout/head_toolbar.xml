@@ -10,7 +10,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/head_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
         android:fitsSystemWindows="true"
         android:paddingRight="@dimen/dp_15"
         android:theme="@style/AppTheme.ActionBar"
@@ -36,6 +36,7 @@
                     android:id="@+id/tv_head_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/crack_down"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/sp_16" />
 

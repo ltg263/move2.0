@@ -67,6 +67,7 @@
                     android:background="@color/white"
                     android:padding="@dimen/dp_10"
                     android:src="@drawable/ic_info_banner"
+                    android:scaleType="center"
                     android:visibility="gone" />
                 <com.secretk.move.view.CustomViewPager
                     android:id="@+id/viewpager"

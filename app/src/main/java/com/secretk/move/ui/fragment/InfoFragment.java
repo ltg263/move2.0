@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -16,7 +17,6 @@ import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.InfoBean;
 import com.secretk.move.ui.adapter.InfoFragmentAdapter;
-import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
@@ -103,7 +103,7 @@ public class InfoFragment extends LazyFragment {
         public void displayImage(String imageURL, ImageView imageView) {
             // TODO 加载显示图片
             imageView.setTag(null);
-            GlideUtils.loadSideMaxImage(getActivity(),imageView,imageURL);
+            Glide.with(getActivity()).load(imageURL).into(imageView);
         }
     };
 

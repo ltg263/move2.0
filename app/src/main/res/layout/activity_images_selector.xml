@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f4f4f4"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f9f9f9">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img_return"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/toobar_back_blue" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="选择标签"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_18" />
+            <TextView
+                android:id="@+id/tv_finish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp_20"
+                android:text="完成"
+                android:textColor="@color/app_background"
+                android:textSize="@dimen/sp_15" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <Button
+        android:id="@+id/bnt_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="单选"/>
+    <Button
+        android:id="@+id/bnt_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="限数量的多选(比喻最多9张)"/>
+    <Button
+        android:id="@+id/bnt_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="不限数量的多选"/>
+    <Button
+        android:id="@+id/bnt_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="单选并剪裁"/>
+
+
+</LinearLayout>

@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.utils.LogUtil;
 
 import java.util.ArrayList;
 
@@ -292,12 +293,12 @@ public class CustomViewPager extends LinearLayout {
         public Object instantiateItem(ViewGroup container, int position) {
             curPos = position % mAdList.size();
             String imageUrl = mAdList.get(curPos);
-//            LogUtil.w("position:"+position+" curPos:"+curPos);
+            LogUtil.w("position:"+position+" curPos:"+curPos);
             RoundImageView imageView = null;
             if (mImageViewCacheList.isEmpty()) {
                 imageView = new RoundImageView(mContext);
-                imageView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                imageView.setScaleType(ImageView.ScaleType.CENTER);
                 // 设置图片点击监听
                 imageView.setOnClickListener(new OnClickListener() {
                     @Override

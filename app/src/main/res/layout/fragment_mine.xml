@@ -379,14 +379,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:visibility="gone"
                 android:orientation="horizontal"
                 android:padding="@dimen/unify_interval_padding">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_collect_mine" />
+                    android:background="@drawable/ic_message_mine" />
 
                 <TextView
                     android:layout_width="match_parent"
