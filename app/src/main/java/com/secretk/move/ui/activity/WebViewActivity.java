@@ -14,6 +14,8 @@ import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.StatusBarUtil;
+import com.secretk.move.utils.UiUtils;
 import com.secretk.move.view.AppBarHeadView;
 
 import java.util.List;
@@ -48,6 +50,8 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        StatusBarUtil.setLightMode(this);
+        StatusBarUtil.setColor(this, UiUtils.getColor(R.color.app_bar_background), 0);
         url = getIntent().getStringExtra("url");
         String name = getIntent().getStringExtra("name");
         if(name.equals("关于我们")){

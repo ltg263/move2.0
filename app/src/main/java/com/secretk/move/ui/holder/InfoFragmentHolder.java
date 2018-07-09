@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -19,6 +20,8 @@ import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
+import com.secretk.move.view.DialogUtils;
+import com.secretk.move.view.ShareView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -111,29 +114,18 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
         tvInfoShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //0-完整版专业评测，1-自定义评测，2-文章，3-打假，4-单项评测
-                String shareUrl = "";
-                int type = rowsBean.getType();
-                if(type==0 || type ==1){
-                    shareUrl=Constants.EVALUATION_SHARE+rowsBean.getArticleId();
-                }else if(type==3){
-                    shareUrl=Constants.DISCUSS_SHARE+rowsBean.getArticleId();
-                }else if(type==2){
-                    shareUrl=Constants.ARTICLE_SHARE+rowsBean.getArticleId();
-                }else if(type==4){
-                    shareUrl=Constants.EVALUATION_PART_SHARE+rowsBean.getArticleId();
-                }else{
-                    ToastUtils.getInstance().show("类型出错");
-                    return;
-                }
-//                ShareView.showShare(shareUrl,rowsBean.getTitle(),rowsBean.getContent(),"");
+                RelativeLayout relativeLayout = DialogUtils.showDialogImage(mContext, rowsBean.getUpdatedAt(), rowsBean.getTitle(), rowsBean.getContent());
+                ShareView.showShare1(relativeLayout,"");
             }
         });
     }
     InfoBean.DataBeanX.DataBean.RowsBean rowsBean;
     InfoFragmentAdapter adapter;
+    Context mContext;
     public void refresh(Context context, int position, List<InfoBean.DataBeanX.DataBean.RowsBean> list, InfoFragmentAdapter infoFragmentAdapter) {
+//        tvInfoShare.setVisibility(View.GONE);
         this.position = position;
+        this.mContext=context;
         adapter = infoFragmentAdapter;
         rowsBean = list.get(position);
         String topTime = StringUtil.getTimeToE(rowsBean.getCreatedAt());

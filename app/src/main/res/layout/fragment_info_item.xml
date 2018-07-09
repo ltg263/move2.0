@@ -152,8 +152,7 @@
                     android:padding="@dimen/dp_8"
                     android:text="分享"
                     android:textColor="@color/title_gray_aa"
-                    android:textSize="@dimen/sp_14"
-                    android:visibility="gone" />
+                    android:textSize="@dimen/sp_14" />
             </LinearLayout>
 
         </LinearLayout>

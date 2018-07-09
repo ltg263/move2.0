@@ -149,6 +149,9 @@ public class LoginActivity extends BaseActivity {
                 sharedUtils.put(Constants.USER_TYPE,userInfo.getData().getUser().getUserType());
                 sharedUtils.put(Constants.MOBILE,userInfo.getData().getUser().getMobile());
                 sharedUtils.put(Constants.USER_ID,userInfo.getData().getUser().getUserId());
+
+                sharedUtils.put("userCardStatus",userInfo.getData().getUserCardStatus());
+                sharedUtils.put("statusHierarchyType",userInfo.getData().getStatusHierarchyType());
                 IntentUtil.startActivity(MainActivity.class);
             }
 

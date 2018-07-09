@@ -1,6 +1,7 @@
 package com.secretk.move.ui.activity;
 
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -22,6 +23,7 @@ import com.secretk.move.presenter.impl.MainPresenterImpl;
 import com.secretk.move.ui.adapter.MainActivityPagerAdapter;
 import com.secretk.move.ui.fragment.MainBlueFxFragment;
 import com.secretk.move.ui.fragment.MainBlueGzFragment;
+import com.secretk.move.utils.DownloadService;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
@@ -218,19 +220,19 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
 
     @Override
     public void showDialog(final VersionBean.DataBean str, final boolean force) {
-//        DialogUtils.showDialogAppUpdate(this, force, str.getUpExplain(), new DialogUtils.ErrorDialogInterface() {
-//            @Override
-//            public void btnConfirm() {
-////                presenter.downLoadApk();
-//                Intent service = new Intent(MainActivity.this, DownloadService.class);
-//                if(force){
-//                    service.putExtra("Url",str.getGuideUrl());
-//                }else{
-//                    service.putExtra("Url",str.getUpgradeUrl());
-//                }
-//                startService(service);
-//            }
-//        });
+        DialogUtils.showDialogAppUpdate(this, force, str.getUpExplain(), new DialogUtils.ErrorDialogInterface() {
+            @Override
+            public void btnConfirm() {
+//                presenter.downLoadApk();
+                Intent service = new Intent(MainActivity.this, DownloadService.class);
+                if(force){
+                    service.putExtra("Url",str.getGuideUrl());
+                }else{
+                    service.putExtra("Url",str.getUpgradeUrl());
+                }
+                startService(service);
+            }
+        });
     }
 
     private long exitTime = 0;

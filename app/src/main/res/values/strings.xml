@@ -145,7 +145,7 @@
     <string name="extract_find">提取&#160;&#160;FIND</string>
     <string name="recharge_find">充值&#160;&#160;FIND</string>
     <string name="extract_find_title">提取FIND</string>
-    <string name="extract_find_jl"><![CDATA[邀请总收益<font color="#FFD87C"><b>%1$s</b></font> FINd]]></string>
+    <string name="extract_find_jl"><![CDATA[邀请总收益<font color="#FFD87C"><b>%1$s</b></font> FIND]]></string>
     <!--我的资金  锁定-->
     <string name="lock_find_num">锁定数量 (FIND)</string>
     <string name="clear_find">解锁FIND</string>

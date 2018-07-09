@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/background_gray"
     android:orientation="vertical">
 
     <com.secretk.move.view.AppBarHeadView
         android:id="@+id/head_app_server"
         android:layout_width="match_parent"
+        android:background="@color/app_bar_background"
         android:layout_height="wrap_content" />
 
     <View

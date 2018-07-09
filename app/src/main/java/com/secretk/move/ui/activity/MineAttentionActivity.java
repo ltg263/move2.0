@@ -12,6 +12,7 @@ import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.ui.adapter.MineAttentionPagerAdapter;
+import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.UiUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.ViewPagerFixed;
@@ -48,6 +49,8 @@ public class MineAttentionActivity extends BaseActivity{
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        StatusBarUtil.setLightMode(this);
+        StatusBarUtil.setColor(this, UiUtils.getColor(R.color.app_bar_background), 0);
         tool_bar.inflateMenu(R.menu.activity_main_menu1);
         tool_bar.setNavigationIcon(R.drawable.toobar_back_blue);
         adapter = new MineAttentionPagerAdapter(getSupportFragmentManager());

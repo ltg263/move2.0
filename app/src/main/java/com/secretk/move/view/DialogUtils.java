@@ -3,6 +3,7 @@ package com.secretk.move.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputFilter;
@@ -20,7 +21,6 @@ import com.secretk.move.bean.ProjectTypeListBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.MainActivity;
 import com.secretk.move.ui.adapter.DiaLogListAdapter;
-import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.StringUtil;
 
 import java.util.List;
@@ -154,29 +154,35 @@ public class DialogUtils {
         dialog5.show();
     }
 
-    /**
-     * 单个按钮，设置监听；
-     *
-     * @param context
-     * @param
-     */
-    public static void showDialogImage(final Context context, String url, final ErrorDialogInterface anInterface) {
+    public static Bitmap getViewBitmap(RelativeLayout rlShare) {
+        rlShare.setDrawingCacheEnabled(true);
+        rlShare.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        rlShare.layout(0, 0, rlShare.getMeasuredWidth(),rlShare.getMeasuredHeight());
+        rlShare.buildDrawingCache();
+
+        Bitmap bitmap = rlShare.getDrawingCache(); // 获取图片
+
+
+        return bitmap;
+    }
+
+        /**
+         * 单个按钮，设置监听；
+         *
+         * @param
+         * @param context
+         */
+    public static RelativeLayout showDialogImage(final Context context,long time,String title,String content) {
         final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
-        final View view = LayoutInflater.from(context).inflate(R.layout.dialog_image, null);
-        ImageView ivIcon = view.findViewById(R.id.iv_icon);
-        GlideUtils.loadSideMaxImage(context,ivIcon,url);
-        ivIcon.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                new PopupWindowUtils(context, new PopupWindowUtils.ErrorDialogInterface() {
-                    @Override
-                    public void btnConfirm() {
-                        anInterface.btnConfirm();
-                    }
-                });
-                return false;
-            }
-        });
+        final View view = LayoutInflater.from(context).inflate(R.layout.dialog_share_img, null);
+        RelativeLayout ivIcon = view.findViewById(R.id.rl_share);
+        TextView tvTitle = view.findViewById(R.id.tv_title);
+        TextView tvTime = view.findViewById(R.id.tv_time);
+        TextView tvContent = view.findViewById(R.id.tv_content);
+        tvTitle.setText(title);
+        tvTime.setText(StringUtil.getTimeToEhm(time));
+        tvContent.setText(content);
         ivIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -185,6 +191,7 @@ public class DialogUtils {
         });
         dialog5.setContentView(view);
         dialog5.show();
+        return ivIcon;
     }
 
     /**

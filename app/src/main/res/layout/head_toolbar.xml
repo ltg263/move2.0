@@ -10,7 +10,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/head_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="@dimen/title_height"
         android:fitsSystemWindows="true"
         android:paddingRight="@dimen/dp_15"
         android:theme="@style/AppTheme.ActionBar"

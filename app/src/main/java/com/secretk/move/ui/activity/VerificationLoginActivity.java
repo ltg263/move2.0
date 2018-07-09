@@ -19,7 +19,6 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.UserLoginInfo;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
@@ -149,6 +148,9 @@ public class VerificationLoginActivity extends BaseActivity {
                 sharedUtils.put(Constants.USER_TYPE,userInfo.getData().getUser().getUserType());
                 sharedUtils.put(Constants.MOBILE,userInfo.getData().getUser().getMobile());
                 sharedUtils.put(Constants.USER_ID,userInfo.getData().getUser().getUserId());
+
+                sharedUtils.put("userCardStatus",userInfo.getData().getUserCardStatus());
+                sharedUtils.put("statusHierarchyType",userInfo.getData().getStatusHierarchyType());
                 IntentUtil.startActivity(MainActivity.class);
             }
 
