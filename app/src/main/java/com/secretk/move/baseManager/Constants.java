@@ -90,6 +90,7 @@ public interface Constants {
 
     String BASE_IMG_URL = "";
     String BASE_IMG_HTML5 = "https://m.qufen.top/";
+    String QUNIU_IMG_RUL = "https://pic.qufen.top/";
 
 
     String BASE_URL = "http://app.qufen.top/rest/";//线上
@@ -138,7 +139,9 @@ public interface Constants {
     ////发送验证码通用接口 阿里云 modue ：login   register    forgetPassword
     String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/sendAliyun";
 
-    String TOKEN_POP = BASE_URL + "/kff/user/tokenPOP";
+    String TOKEN_POP = BASE_URL + "kff/user/tokenPOP";
+    //获取七牛token
+    String SEND_TOKEN = BASE_URL + "kff/qiNiuUpload/sendToken";
     //校验验证码接口。
     String DYNAMIC_VALIDATE_CODE_VERIFY = BASE_URL + "kff/dynamicValidateCode/verify";
     //验证手机号是否已经存在
@@ -163,9 +166,10 @@ public interface Constants {
     //首页推荐
     String MAIN_RECOMMEND = BASE_URL + "kff/home/recommendList";
     //首页关注
+//    String MAIN_FOLLOW = BASE_URL + "kff/home/getBurstList";
     String MAIN_FOLLOW = BASE_URL + "kff/home/followList";
     //首页打假
-    String MAIN_DISCUSS = BASE_URL + "/kff/home/counterfeitList";
+    String MAIN_DISCUSS = BASE_URL + "kff/home/getBurstList";
     //青天榜
     String MAIN_BLUE_SKY = BASE_URL + "kff/home/projectRankList";
 

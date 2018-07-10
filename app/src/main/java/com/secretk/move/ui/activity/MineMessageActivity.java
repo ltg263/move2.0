@@ -150,6 +150,8 @@ public class MineMessageActivity extends BaseActivity {
                 }
                 if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
+                }else{
+                    refreshLayout.setEnableLoadMoreWhenContentNotFull(true);
                 }
                 if (detailsBean.getRows() == null || detailsBean.getRows().size() == 0) {
                     findViewById(R.id.no_data).setVisibility(View.VISIBLE);

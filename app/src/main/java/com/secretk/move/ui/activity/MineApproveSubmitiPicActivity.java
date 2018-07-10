@@ -117,36 +117,32 @@ public class MineApproveSubmitiPicActivity extends BaseActivity {
             ToastUtils.getInstance().show("请上传照片");
             return;
         }
-        File file = new File(PicUtil.uritempFile.getPath());
+        final File file = new File(PicUtil.uritempFile.getPath());
         LogUtil.w("当前文件大小："+PicUtil.getPrintSize(file.length()));
         if(!file.exists()){
             ToastUtils.getInstance().show("照片上传失败，请重新上传");
             return;
         }
-        RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.ID_CARD)
-                .method(RxHttpParams.HttpMethod.POST)
-                .addPart("upfile", StringUtil.getMimeType(file.getName()) ,file)
-                .build();
         loadingDialog.show();
-        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+        NetUtil.getQiniuToken(new NetUtil.SaveCommendationImp() {
             @Override
-            public void onCompleted(String str) {
-                try {
-                    JSONObject obj = new JSONObject(str);
-                    String picPath = obj.getJSONObject("data").getString("picPath");
-                    if(StringUtil.isNotBlank(picPath)){
-                        saveData(picPath);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            public void finishCommendation(String userId,String QiToken, boolean status) {
+                if(!status){
+                    ToastUtils.getInstance().show("服务器出错了");
+                    loadingDialog.dismiss();
+                    return;
                 }
-            }
-
-            @Override
-            public void onError(String message) {
-                ToastUtils.getInstance().show("证件上传失败，请重新上传");
-                loadingDialog.dismiss();
+                NetUtil.sendQiniuImgUrl(file, QiToken, NetUtil.getQiniuImgName("idcard",userId,0), new NetUtil.QiniuImgUpload() {
+                    @Override
+                    public void uploadStatus(String str, boolean status) {
+                        if(status){
+                            saveData(str);
+                        }else{
+                            ToastUtils.getInstance().show("证件上传失败，请重新上传");
+                            loadingDialog.dismiss();
+                        }
+                    }
+                });
             }
         });
     }

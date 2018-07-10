@@ -129,6 +129,8 @@ public class MineAttentionFragment extends LazyFragment {
                 }
                 if (follows.getCurPageNum() == follows.getPageSize()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
+                }else{
+                    refreshLayout.setEnableLoadMoreWhenContentNotFull(true);
                 }
                 if (pageIndex > 2) {
                     adapter.addData(follows.getRows());

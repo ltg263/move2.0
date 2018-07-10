@@ -76,6 +76,7 @@ public class LoadingDialog {
 	}
 
 	public void setMsg(String msg) {
+		loadingMsg.setVisibility(View.VISIBLE);
 		loadingMsg.setText(msg);
 	}
 

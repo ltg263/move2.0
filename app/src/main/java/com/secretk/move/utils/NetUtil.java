@@ -5,6 +5,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.TextView;
 
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.Configuration;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UpProgressHandler;
+import com.qiniu.android.storage.UploadManager;
+import com.qiniu.android.storage.UploadOptions;
 import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -15,6 +21,10 @@ import com.secretk.move.baseManager.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class NetUtil {
     public static boolean isNetworkConnected() {
@@ -380,5 +390,114 @@ public class NetUtil {
             return false;
         }
         return true;
+    }
+
+
+    /**
+     * 获取七牛Token
+     */
+    public static void getQiniuToken(final SaveCommendationImp collect){
+        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY,"");
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.SEND_TOKEN)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onCompleted(String str) {
+                try {
+                    JSONObject obj = new JSONObject(str);
+                    if(obj.getJSONObject("data")!=null){
+                        String upToken = obj.getJSONObject("data").getString("upToken");
+                        String userId = obj.getJSONObject("data").getString("uid");
+                        collect.finishCommendation(userId,upToken,true);
+                    }else{
+                        collect.finishCommendation("","",false);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String message) {
+                collect.finishCommendation("","",false);
+            }
+        });
+    }
+
+    //当前时间()精确毫秒)+用户id+图片位数+图片后缀
+//     * 身份证图片idcard  帖子图片 posts   用户头像avatars
+
+    public static String getQiniuImgName(String type,String userId,int index){
+        long time = System.currentTimeMillis();
+        return type+getTime(time)+userId+index+".png";
+    }
+    /**
+     * 毫秒数转日期
+     */
+    public static String getTime(long seconds) {
+        Date d = new Date(seconds);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+        return sdf.format(d).toString();
+    }
+
+    public static void sendQiniuImgUrl(File imgFile, String qiToken, String imgPath, final QiniuImgUpload upload) {
+        Configuration config = new Configuration.Builder()
+                .chunkSize(512 * 1024)        // 分片上传时，每片的大小。 默认256K
+                .putThreshhold(1024 * 1024)   // 启用分片上传阀值。默认512K
+                .connectTimeout(10)           // 链接超时。默认10秒
+                .useHttps(true)               // 是否使用https上传域名
+                .responseTimeout(60)          // 服务器响应超时。默认60秒
+                //.recorder(recorder)           // recorder分片上传时，已上传片记录器。默认null
+                //.recorder(recorder, keyGen)   // keyGen 分片上传时，生成标识符，用于片记录器区分是那个文件的上传记录
+                //.zone(FixedZone.zone0)        // 设置区域，指定不同区域的上传域名、备用域名、备用IP。
+                .build();
+        // 重用uploadManager一般地，只需要创建一个uploadManager对象
+        UploadManager uploadManager = new UploadManager(config);
+        //data = <File对象、或 文件路径、或 字节数组>
+        //String key = <指定七牛服务上的文件名，或 null>;
+        //String token = <从服务端获取>;
+        uploadManager.put(imgFile,imgPath, qiToken,
+                new UpCompletionHandler() {
+                    @Override
+                    public void complete(String key, ResponseInfo info, JSONObject res) {
+                        //res包含hash、key等信息，具体字段取决于上传策略的设置
+                        LogUtil.w("key:"+key);
+                        LogUtil.w("info:"+info);
+                        LogUtil.w("res:"+res);
+                        if (info.isOK()) {
+                            upload.uploadStatus(Constants.QUNIU_IMG_RUL+key,true);
+                        } else {
+                            //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
+                            upload.uploadStatus("",false);
+                        }
+                    }
+                }, new UploadOptions(null, null, false,
+                        new UpProgressHandler(){
+                            public void progress(String name, double percent){
+                                upload.uploadLoading(name,percent);
+                            }
+                        }, null));
+    }
+
+    public static abstract class QiniuImgUpload{
+        /**
+         * status :true 未赞
+         *      false：已赞
+         */
+        public abstract void uploadStatus(String str,boolean status);
+        /**
+         * status :true 未赞
+         *      false：已赞
+         */
+        public void uploadLoading(String name,double status){};
     }
 }

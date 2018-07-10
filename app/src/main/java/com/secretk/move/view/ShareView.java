@@ -79,7 +79,7 @@ public class ShareView {
                     Bitmap b = DialogUtils.getViewBitmap(relativeLayout);
 //                String pathDj = Environment.getExternalStorageDirectory()+ File.separator +"区分";
                     String pathDj = Constants.LOCAL_PATH;
-                    str = ImageUtils.saveBitmap(b, pathDj, "share.png");
+                    str = ImageUtils.saveBitmap(b, pathDj, "share_"+System.currentTimeMillis()+".png");
                 }
             }).start();
         }
@@ -90,7 +90,6 @@ public class ShareView {
         oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
             @Override
             public void onShare(Platform platform, Platform.ShareParams paramsToShare) {
-
                 if ("WechatMoments".equals(platform.getName())) {
                     paramsToShare.setShareType(Platform.SHARE_IMAGE);
 //                    paramsToShare.setImagePath(str);

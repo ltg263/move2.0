@@ -303,12 +303,12 @@ public class DetailsArticleActivity extends BaseActivity {
         }
         List<String> lists = new ArrayList<>();
         for (int i = 0; i < pileLists.size() && i < 7; i++) {
-            if (!lists.contains(String.valueOf(pileLists.get(i).getReceiveUserId()))) {
+            if (!lists.contains(String.valueOf(pileLists.get(i).getSendUserId()))) {
                 ImageView imageView = (ImageView) nflater.inflate(R.layout.item_praise, pileLayout, false);
                 GlideUtils.loadCircleUserUrl(this, imageView, Constants.BASE_IMG_URL + pileLists.get(i).getSendUserIcon());
                 pileLayout.addView(imageView);
             }
-            lists.add(String.valueOf(pileLists.get(i).getReceiveUserId()));
+            lists.add(String.valueOf(pileLists.get(i).getSendUserId()));
         }
     }
 

@@ -20,7 +20,6 @@ import com.secretk.move.bean.VersionBean;
 import com.secretk.move.utils.DownloadService;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PicUtil;
@@ -253,42 +252,44 @@ public class MineSetActivity extends BaseActivity {
     @Override
     protected void OnToolbarRightListener() {
         if (PicUtil.uritempFile == null) {
-            saveData();
+            saveData("");
             return;
         }
-        File file = new File(PicUtil.uritempFile.getPath());
-        LogUtil.w("file.exists(:" + file.exists());
+        final File file = new File(PicUtil.uritempFile.getPath());
         if (!file.exists()) {
-            saveData();
+            saveData("");
             return;
         }
-        LogUtil.w("当前文件大小："+ PicUtil.getPrintSize(file.length()));
-        String[] split = file.getPath().split("\\.");
-        String suffix = split[split.length - 1];
-        RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.UPLOAD_USER_ICON_FILE)
-                .method(RxHttpParams.HttpMethod.POST)
-                .addPart("token", token)
-                .addPart("uploadfile", StringUtil.getMimeType(file.getName()), file)
-                .addPart(Constants.UPLOADIMG_TYPE.IMG_TYPE_KEY, Constants.UPLOADIMG_TYPE.USER_ICON)
-                .build();
         loadingDialog.show();
-        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+        NetUtil.getQiniuToken(new NetUtil.SaveCommendationImp() {
             @Override
-            public void onCompleted(String str) {
-                saveData();
-            }
-
-            @Override
-            public void onError(String message) {
-                if (loadingDialog.isShowing()) {
+            public void finishCommendation(String userId,String QiToken, boolean status) {
+                if(!status){
+                    ToastUtils.getInstance().show("服务器出错了");
                     loadingDialog.dismiss();
+                    return;
                 }
+                NetUtil.sendQiniuImgUrl(file, QiToken, NetUtil.getQiniuImgName("idcard",userId,0), new NetUtil.QiniuImgUpload() {
+                    @Override
+                    public void uploadStatus(String str, boolean status) {
+                        if(status){
+                            saveData(str);
+                        }else{
+                            ToastUtils.getInstance().show("证件上传失败，请重新上传");
+                            loadingDialog.dismiss();
+                        }
+                    }
+
+//                    @Override
+//                    public void uploadLoading(String name, double status) {
+//                        loadingDialog.setMsg("上传："+name);
+//                    }
+                });
             }
         });
     }
 
-    protected void saveData() {
+    protected void saveData(String userIcon) {
         if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
@@ -301,6 +302,7 @@ public class MineSetActivity extends BaseActivity {
             node.put("sex", sex == "男" ? 1 : 2);
             node.put("userSignature", tvUserSignature.getText().toString().trim());
             node.put("areaName", tvAreaName.getText().toString().trim());
+            node.put("userIcon", userIcon);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -128,6 +128,8 @@ public class MineAttentionUserFragment extends LazyFragment {
                 }
                 if (follows.getCurPageNum() == follows.getPageSize()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
+                }else{
+                    refreshLayout.setEnableLoadMoreWhenContentNotFull(true);
                 }
                 if(pageIndexUser>2){
                     adapter.addData(follows.getRows());
