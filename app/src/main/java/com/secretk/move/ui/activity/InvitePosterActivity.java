@@ -13,7 +13,6 @@ import com.secretk.move.base.BaseActivity;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.ImageUtils;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
@@ -52,7 +51,6 @@ public class InvitePosterActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        LogUtil.w("-------------------------------------");
         ShareView.showShare1(null,imgUrl);
     }
 

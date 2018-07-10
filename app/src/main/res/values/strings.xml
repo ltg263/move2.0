@@ -121,7 +121,8 @@
     <string name="mine_help">帮助中心</string>
     <string name="mine_submit_require_1">上传要求：\n1、照片需免冠，手持证件人的五官清晰可见，完整露出双手手臂\n2、照片内容真实有效，不得做任何修改\n3、支持jpg/jepg/png格式，最大不超过5M\n4、手写文案：我确认在“区分”上所有行为为本人操作\n&#160;&#160;&#160;&#160;（附上自己签名以及当天日期）</string>
     <string name="mine_submit_require">上传要求：\n1、照片需免冠，手持证件人的五官清晰可见，完整露出双手手臂\n2、照片内容真实有效，不得做任何修改\n3、支持jpg/jepg/png格式，最大不超过5M</string>
-
+    <string name="mine_submit_require_0">4、手写文案：</string>
+    <string name="mine_submit_require_00"><u>仅用于区分注册（附上当天日期，示例）。</u></string>
     <!--我的资金-->
     <string name="asset_details">资产明细</string>
     <string name="bill">账单</string>

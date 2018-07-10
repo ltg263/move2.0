@@ -3,8 +3,10 @@ package com.secretk.move.ui.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -44,6 +46,8 @@ public class MineApproveSubmitiPicActivity extends BaseActivity {
 
     @BindView(R.id.iv_icon)
     ImageView ivIcon;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private String number;
     private String name;
 
@@ -65,6 +69,13 @@ public class MineApproveSubmitiPicActivity extends BaseActivity {
     protected void initUI(Bundle savedInstanceState) {
         number = getIntent().getStringExtra("number");
         name = getIntent().getStringExtra("name");
+        tvTitle.setText(Html.fromHtml("<u>"+getString(R.string.mine_submit_require_00)+"</u>"));
+        tvTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IntentUtil.startWebViewActivity("https://pic.qufen.top/543245675432.jpeg","手写文案");
+            }
+        });
     }
 
     @Override

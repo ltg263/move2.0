@@ -66,8 +66,8 @@ android {
         applicationId "com.secretk.move"
         minSdkVersion 19
         targetSdkVersion 21
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -121,4 +121,5 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-7'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-7'//没有使用特殊Header，可以不加这行
     implementation 'com.youth.banner:banner:1.4.9'  //最新版本
+    implementation 'com.qiniu:qiniu-android-sdk:7.3.+'  //最新版本
 }

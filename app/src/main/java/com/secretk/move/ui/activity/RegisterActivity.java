@@ -171,7 +171,6 @@ public class RegisterActivity extends BaseActivity {
             node.put("phoneNumber", getIntent().getStringExtra("phone"));
             node.put("password", strPsw);
             node.put("dynamicVerifyCode", strYzm);
-            LogUtil.w("node:" + node.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
