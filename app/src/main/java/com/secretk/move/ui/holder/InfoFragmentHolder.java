@@ -118,6 +118,12 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
                 ShareView.showShare1(relativeLayout,"");
             }
         });
+        tvDetailDesc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                tvDetailDesc.setMaxLines(50);
+            }
+        });
     }
     InfoBean.DataBeanX.DataBean.RowsBean rowsBean;
     InfoFragmentAdapter adapter;
@@ -129,7 +135,6 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
         adapter = infoFragmentAdapter;
         rowsBean = list.get(position);
         String topTime = StringUtil.getTimeToE(rowsBean.getCreatedAt());
-        viewTop.setVisibility(View.GONE);
         if(position > 0){
             if(topTime.equals(StringUtil.getTimeToE(list.get(position-1).getCreatedAt()))){
                 tvTopTime.setVisibility(View.GONE);
@@ -138,6 +143,9 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
                 tvTopTime.setVisibility(View.VISIBLE);
                 viewTop.setVisibility(View.GONE);
             }
+        }else{
+            viewTop.setVisibility(View.GONE);
+            tvTopTime.setVisibility(View.VISIBLE);
         }
         tvTopTime.setText(topTime);
         tvTime.setText(StringUtil.getTimeToHm(rowsBean.getUpdatedAt()));

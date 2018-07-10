@@ -251,6 +251,7 @@ public class MineSetActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
+        loadingDialog.show();
         if (PicUtil.uritempFile == null) {
             saveData("");
             return;
@@ -260,7 +261,6 @@ public class MineSetActivity extends BaseActivity {
             saveData("");
             return;
         }
-        loadingDialog.show();
         NetUtil.getQiniuToken(new NetUtil.SaveCommendationImp() {
             @Override
             public void finishCommendation(String userId,String QiToken, boolean status) {
@@ -269,7 +269,7 @@ public class MineSetActivity extends BaseActivity {
                     loadingDialog.dismiss();
                     return;
                 }
-                NetUtil.sendQiniuImgUrl(file, QiToken, NetUtil.getQiniuImgName("idcard",userId,0), new NetUtil.QiniuImgUpload() {
+                NetUtil.sendQiniuImgUrl(file, QiToken, NetUtil.getQiniuImgName("avatars",userId,0), new NetUtil.QiniuImgUpload() {
                     @Override
                     public void uploadStatus(String str, boolean status) {
                         if(status){

@@ -61,6 +61,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/dp_5"
                         android:layout_weight="1"
+                        android:lineSpacingExtra="@dimen/item_line_spacing"
                         android:textColor="@color/title_gray"
                         android:textSize="@dimen/sp_12" />
                 </LinearLayout>
