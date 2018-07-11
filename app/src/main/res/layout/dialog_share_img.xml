@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/iv_rwm"
-            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/dp_10"
             android:layout_toRightOf="@id/iv_rwm"
             android:text="长按二维码下载区分APP"
             android:textColor="#1c1c1c"
@@ -100,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/dp_10"
             android:layout_toRightOf="@id/iv_rwm"
             android:orientation="horizontal">
 
@@ -131,7 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/iv_rwm"
-            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/dp_10"
             android:layout_toRightOf="@id/iv_rwm"
             android:text="全球首家以分布式评测为核心的区块链投资平台"
             android:textColor="#1c1c1c"
