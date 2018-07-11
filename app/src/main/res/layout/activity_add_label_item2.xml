@@ -12,7 +12,7 @@
         android:id="@+id/tvlabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_verification_code_blue"
+        android:background="@drawable/garden_crack"
         android:gravity="center"
         android:paddingVertical="@dimen/dp_5"
         android:paddingHorizontal="@dimen/dp_10"

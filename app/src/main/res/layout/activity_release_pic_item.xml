@@ -15,10 +15,14 @@
         android:layout_alignParentTop="true"
         android:focusable="true"
         android:scaleType="centerCrop" />
+
     <ImageView
         android:id="@+id/img_delect"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="@dimen/dp_5"
         android:layout_alignParentRight="true"
-        android:background="@drawable/ic_delect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_margin="@dimen/dp_5"
+        android:scaleType="fitXY"
+        android:src="@drawable/icon_close" />
 </RelativeLayout>

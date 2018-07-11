@@ -461,8 +461,8 @@ public class DetailsDiscussActivity extends BaseActivity {
                         e.printStackTrace();
                     }
                 }
-                try {
-                    if (StringUtil.isNotBlank(discussDetail.getTagInfos())&& discussDetail.getTagInfos().contains("tagName")) {
+                if (StringUtil.isNotBlank(discussDetail.getTagInfos())&& discussDetail.getTagInfos().contains("tagName")) {
+                    try {
                         JSONArray object = new JSONArray(discussDetail.getTagInfos());
                         //[{"tagId":1,"tagName":"进度讨论"},{"tagId":3,"tagName":"项目前景讨论"},{"tagId":4,"tagName":"打假"}]
                         String tagAll = "";
@@ -478,9 +478,9 @@ public class DetailsDiscussActivity extends BaseActivity {
                                 //ToastUtils.getInstance().show(name);
                             }
                         });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
                 if (discussDetail.getHotComments() != null && discussDetail.getHotComments().size() > 0) {
                     llRm.setVisibility(View.VISIBLE);

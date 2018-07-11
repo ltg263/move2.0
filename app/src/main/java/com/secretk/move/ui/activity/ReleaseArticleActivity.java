@@ -66,6 +66,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
 
     LoadingDialog loadingDialog;
     int projectId;
+    private JSONArray sonArray;
     String token = SharedUtils.singleton().get("token", "");
 
     @BindView(R.id.richtext_editor)
@@ -93,6 +94,11 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         ed_title.setHint(Html.fromHtml("请输入标题 <small>(6-60字之间)</small>"));
         loadingDialog = new LoadingDialog(this);
         projectId = getIntent().getIntExtra("projectId", 0);
+
+        beans = new DiscussLabelListbean.TagList();
+        beans.setTagId(String.valueOf(projectId));
+        beans.setTagName(getIntent().getStringExtra("projectPay"));
+        arrayTags.put(-1,beans);
     }
 
     @OnClick(R.id.img_return)
@@ -124,6 +130,28 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
 
     public void setPostSmallImages() {
         postSmallImages = new JSONArray();
+
+        // tagId,tagName
+        sonArray = new JSONArray();
+        if(arrayTags!=null){
+            for(int i=0;i<arrayTags.size();i++){
+                JSONObject object = new JSONObject();
+                DiscussLabelListbean.TagList aa = arrayTags.get(arrayTags.keyAt(i));
+                try {
+                    object.put("tagId",aa.getTagId());
+                    object.put("tagName",aa.getTagName());
+                    if(i!=0){
+                        sonArray.put(object);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+//        if(sonArray.length()==0){
+//            ToastUtils.getInstance().show("请选择#标签#");
+//            return;
+//        }
 
         loadingDialog.show();
         uploadImgFile(0, list.size());
@@ -188,6 +216,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
             node.put("projectId", projectId);
             node.put("postTitle", getEdTitle());
             node.put("articleContents", richtext_editor.getEditData(list));
+            node.put("tagInfos", sonArray.toString());
             if (!TextUtils.isEmpty(postSmallImages.toString())) {
                 node.put("discussImages", postSmallImages.toString());
             }
@@ -283,18 +312,19 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
 
     }
 
-    SparseArray<DiscussLabelListbean.TagList> arrayTags;//默认标签
+    SparseArray<DiscussLabelListbean.TagList> arrayTags = new SparseArray<>();//默认标签;//默认标签
     DiscussLabelListbean.TagList beans;//
     @Override
     protected void onResume() {
         super.onResume();
-        arrayTags = new SparseArray<>();
-        beans = new DiscussLabelListbean.TagList();
-        beans.setTagId(String.valueOf(projectId));
-        beans.setTagName(getIntent().getStringExtra("projectPay"));
-        arrayTags.put(-1,beans);
-
         if (AddLabelActivity.array != null) {
+            if(arrayTags!=null){
+                arrayTags.clear();
+            }
+            beans = new DiscussLabelListbean.TagList();
+            beans.setTagId(String.valueOf(projectId));
+            beans.setTagName(getIntent().getStringExtra("projectPay"));
+            arrayTags.put(-1,beans);
             for (int i = 0; i < AddLabelActivity.array.size(); i++) {
                 DiscussLabelListbean.TagList bean = AddLabelActivity.array.get(AddLabelActivity.array.keyAt(i));
                 arrayTags.put(AddLabelActivity.array.keyAt(i),bean);

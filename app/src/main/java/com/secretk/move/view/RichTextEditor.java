@@ -401,9 +401,9 @@ public class RichTextEditor extends ScrollView {
                 if (StringUtil.isNotBlank(replaceBlank(itemData.inputStr))) {
                     return false;
                 }
-                if (StringUtil.isNotBlank(itemData.imagePath)) {
-                    return false;
-                }
+//                if (StringUtil.isNotBlank(itemData.imagePath)) {
+//                    return false;
+//                }
             }
         }
         return true;

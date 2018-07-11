@@ -33,6 +33,7 @@ import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
+import com.secretk.move.view.Clickable;
 import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.PileLayout;
 import com.secretk.move.view.PopupWindowUtils;
@@ -73,6 +74,8 @@ public class DetailsArticleActivity extends BaseActivity {
     TextView tvProjectCode;
     @BindView(R.id.tv_create_time)
     TextView tvCreateTime;
+    @BindView(R.id.tv_crack_down)
+    TextView tvCrackDown;
     @BindView(R.id.pile_layout)
     PileLayout pileLayout;
     @BindView(R.id.iv_model_icon)
@@ -264,7 +267,29 @@ public class DetailsArticleActivity extends BaseActivity {
             tvCollectStatus.setSelected(false);
         }
         tvCommendationNum.setText("赞助" + String.valueOf(new Double(initData.getCommendationNum()).intValue()));
+
         tvCommentsNum.setText("评论" + String.valueOf(initData.getCommentsNum()));
+        if (StringUtil.isNotBlank(initData.getTagInfos())&& initData.getTagInfos().contains("tagName")) {
+            try {
+                JSONArray object = new JSONArray(initData.getTagInfos());
+                //[{"tagId":1,"tagName":"进度讨论"},{"tagId":3,"tagName":"项目前景讨论"},{"tagId":4,"tagName":"打假"}]
+                String tagAll = "";
+                String tagOnly[] = new String[object.length()];
+                for (int i = 0; i < object.length(); i++) {
+                    JSONObject strObj = object.getJSONObject(i);
+                    tagOnly[i] = "#" + strObj.getString("tagName") + "#";
+                    tagAll += "#" + strObj.getString("tagName") + "#   ";
+                }
+                Clickable.getSpannableString(tagAll, tagOnly, tvCrackDown, new Clickable.ClickListener() {
+                    @Override
+                    public void setOnClick(String name) {
+                        //ToastUtils.getInstance().show(name);
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
         List<PostDataInfo> lists = new ArrayList<>();
         try {
             if (StringUtil.isNotBlank(initData.getPostSmallImages())) {

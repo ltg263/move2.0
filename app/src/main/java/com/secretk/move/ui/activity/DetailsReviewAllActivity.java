@@ -14,7 +14,6 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nex3z.flowlayout.FlowLayout;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -34,6 +33,7 @@ import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
+import com.secretk.move.view.Clickable;
 import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.PileLayout;
 import com.secretk.move.view.PopupWindowUtils;
@@ -82,8 +82,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
     TextView tvPostShortDesc;
     @BindView(R.id.tv_project_code)
     TextView tvProjectCode;
-    @BindView(R.id.fl_evaluation_tags)
-    FlowLayout flEvaluationTags;
+    @BindView(R.id.tv_crack_down)
+    TextView tvCrackDown;
     @BindView(R.id.tv_create_time)
     TextView tvCreateTime;
     @BindView(R.id.pile_layout)
@@ -324,18 +324,26 @@ public class DetailsReviewAllActivity extends BaseActivity {
             }
         }
         //标签
-        try {
-            String evaluationTags = evaluationDetail.getEvaluationTags();
-            if (StringUtil.isNotBlank(evaluationTags)) {
-                JSONArray array = new JSONArray(evaluationTags);
-                for (int i = 0; i < array.length(); i++) {
-                    String tagName = array.getJSONObject(i).getString("tagName");
-                    TextView tv = buildLabel(tagName);
-                    flEvaluationTags.addView(tv);
+        if (StringUtil.isNotBlank(evaluationDetail.getEvaluationTags())&& evaluationDetail.getEvaluationTags().contains("tagName")) {
+            try {
+                JSONArray object = new JSONArray(evaluationDetail.getEvaluationTags());
+                //[{"tagId":1,"tagName":"进度讨论"},{"tagId":3,"tagName":"项目前景讨论"},{"tagId":4,"tagName":"打假"}]
+                String tagAll = "";
+                String tagOnly[] = new String[object.length()];
+                for (int i = 0; i < object.length(); i++) {
+                    JSONObject strObj = object.getJSONObject(i);
+                    tagOnly[i] = "#" + strObj.getString("tagName") + "#";
+                    tagAll += "#" + strObj.getString("tagName") + "#   ";
                 }
+                Clickable.getSpannableString(tagAll, tagOnly, tvCrackDown, new Clickable.ClickListener() {
+                    @Override
+                    public void setOnClick(String name) {
+                        //ToastUtils.getInstance().show(name);
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
         //图片
         try {

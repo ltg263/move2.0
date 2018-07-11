@@ -43,7 +43,7 @@ public class ReleaseArticleLabelAdapter extends RecyclerView.Adapter<ReleaseArti
         if(position==0){
             holder.tvlabel.setText(bean.getTagName());
         }else{
-            holder.tvlabel.setBackground(MoveApplication.getContext().getResources().getDrawable(R.drawable.garden_crack));
+            holder.tvlabel.setBackground(MoveApplication.getContext().getResources().getDrawable(R.color.white));
             holder.tvlabel.setText("#"+bean.getTagName()+"#");
         }
 

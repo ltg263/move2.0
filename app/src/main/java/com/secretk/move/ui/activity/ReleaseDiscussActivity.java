@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.SparseArray;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -104,6 +103,11 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         ed_title.setHint(Html.fromHtml("请输入标题 <small>(6-60字之间)</small>"));
         loadingDialog = new LoadingDialog(this);
         projectId = getIntent().getIntExtra("projectId", 0);
+
+        beans = new DiscussLabelListbean.TagList();
+        beans.setTagId(String.valueOf(projectId));
+        beans.setTagName(getIntent().getStringExtra("projectPay"));
+        arrayTags.put(-1,beans);
     }
 
     @OnClick(R.id.img_return)
@@ -215,18 +219,19 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
 
     }
 
-    SparseArray<DiscussLabelListbean.TagList> arrayTags;//默认标签
+    SparseArray<DiscussLabelListbean.TagList> arrayTags = new SparseArray<>();//默认标签
     DiscussLabelListbean.TagList beans;//
     @Override
     protected void onResume() {
         super.onResume();
-        arrayTags = new SparseArray<>();
-        beans = new DiscussLabelListbean.TagList();
-        beans.setTagId(String.valueOf(projectId));
-        beans.setTagName(getIntent().getStringExtra("projectPay"));
-        arrayTags.put(-1,beans);
-
         if (AddLabelActivity.array != null) {
+            if(arrayTags!=null){
+                arrayTags.clear();
+            }
+            beans = new DiscussLabelListbean.TagList();
+            beans.setTagId(String.valueOf(projectId));
+            beans.setTagName(getIntent().getStringExtra("projectPay"));
+            arrayTags.put(-1,beans);
             for (int i = 0; i < AddLabelActivity.array.size(); i++) {
                 DiscussLabelListbean.TagList bean = AddLabelActivity.array.get(AddLabelActivity.array.keyAt(i));
                 arrayTags.put(AddLabelActivity.array.keyAt(i),bean);
@@ -239,11 +244,6 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
             releasePicAdapter.addSparseData(SelectedPicActivity.picArray);
             SelectedPicActivity.picArray=null;
         }
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return super.onKeyDown(keyCode, event);
     }
 
     String discussImages = "";

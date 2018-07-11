@@ -100,6 +100,7 @@ public class DetailsArticleBean extends BaseRes{
             private int postType;
             private String postShortDesc;
             private String postSmallImages;
+            private String tagInfos;
             private int commentsNum;
             private int praiseStatus;
             private int praiseNum;
@@ -117,6 +118,14 @@ public class DetailsArticleBean extends BaseRes{
             private long updateTime;
             private String updateTimeStr;
             private List<CommendationListBean> commendationList;
+
+            public String getTagInfos() {
+                return tagInfos;
+            }
+
+            public void setTagInfos(String tagInfos) {
+                this.tagInfos = tagInfos;
+            }
 
             public int getUserType() {
                 return userType;

@@ -177,6 +177,11 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
         esViewa.setScore(Float.valueOf(totalScore));
         esViewa.setTvDimensionalityName(modelPbTitle);
         esViewa.setEsvBackground(R.color.app_background);
+
+        beans = new DiscussLabelListbean.TagList();
+        beans.setTagId(String.valueOf(projectId));
+        beans.setTagName(getIntent().getStringExtra("projectPay"));
+        arrayTags.put(-1, beans);
     }
 
     String picPath;
@@ -225,19 +230,20 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
         }
     }
 
-    SparseArray<DiscussLabelListbean.TagList> arrayTags;//默认标签
+    SparseArray<DiscussLabelListbean.TagList> arrayTags  = new SparseArray<>();//默认标签
     DiscussLabelListbean.TagList beans;//
 
     @Override
     protected void onResume() {
         super.onResume();
-        arrayTags = new SparseArray<>();
-        beans = new DiscussLabelListbean.TagList();
-        beans.setTagId(String.valueOf(projectId));
-        beans.setTagName(getIntent().getStringExtra("projectPay"));
-        arrayTags.put(-1, beans);
 
         if (SelectedPicActivity.picArray != null) {
+            arrayTags.clear();
+            beans = new DiscussLabelListbean.TagList();
+            beans.setTagId(String.valueOf(projectId));
+            beans.setTagName(getIntent().getStringExtra("projectPay"));
+            arrayTags.put(-1, beans);
+
             LongSparseArray<PicBean> picArray = SelectedPicActivity.picArray;
             for (int i = 0; i < picArray.size(); i++) {
                 etNewContent.insertImage(null, picArray.get(picArray.keyAt(i)).getPath());

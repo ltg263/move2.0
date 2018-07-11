@@ -230,8 +230,8 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 e.printStackTrace();
             }
         }
-        try {
-            if (StringUtil.isNotBlank(bean.getTagInfos())&& bean.getTagInfos().contains("tagName")) {
+        if (StringUtil.isNotBlank(bean.getTagInfos())&& bean.getTagInfos().contains("tagName")) {
+            try {
                 JSONArray object = new JSONArray(bean.getTagInfos());
                 //[{"tagId":1,"tagName":"进度讨论"},{"tagId":3,"tagName":"项目前景讨论"},{"tagId":4,"tagName":"打假"}]
                 String tagAll = "";
@@ -247,9 +247,9 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                         //ToastUtils.getInstance().show(name);
                     }
                 });
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
 }
