@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 public class SelectProjectAdapter extends RecyclerView.Adapter<SelectProjectHolder> {
-    private List<SearchedBean.Projects> listNum = new ArrayList<>();
+    private List<SearchedBean.DataBean.ProjectsBean.RowsBean> listNum = new ArrayList<>();
     private int projectId;
     private Context context;
 
@@ -50,13 +50,13 @@ public class SelectProjectAdapter extends RecyclerView.Adapter<SelectProjectHold
         return listNum.size();
     }
 
-    public void setData(List<SearchedBean.Projects> list,int projectId) {
+    public void setData(List<SearchedBean.DataBean.ProjectsBean.RowsBean> list,int projectId) {
         this.listNum = list;
         this.projectId = projectId;
         notifyDataSetChanged();
     }
 
-    public List<SearchedBean.Projects> getData() {
+    public List<SearchedBean.DataBean.ProjectsBean.RowsBean> getData() {
         return listNum;
     }
 }

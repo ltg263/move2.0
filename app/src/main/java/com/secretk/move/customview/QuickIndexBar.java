@@ -188,7 +188,7 @@ public class QuickIndexBar extends View {
         postInvalidate();
     }
     Pattern p = Pattern.compile("[a-zA-z]");
-    public void setDatax( List<SearchedBean.Projects> xlist) {
+    public void setDatax( List<SearchedBean.DataBean.ProjectsBean.RowsBean> xlist) {
         for (int i=0;i<xlist.size();i++){
             String str=xlist.get(i).getProjectCode().charAt(0)+"";
             if (list==null){

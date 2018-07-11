@@ -40,8 +40,8 @@ public class SelectProjectHolder extends RecyclerViewBaseHolder {
     }
 
 
-    public void refresh(int position, List<SearchedBean.Projects> listNum , int projectId, Context context) {
-        final SearchedBean.Projects currenBean= listNum.get(position);
+    public void refresh(int position, List<SearchedBean.DataBean.ProjectsBean.RowsBean> listNum , int projectId, Context context) {
+        final SearchedBean.DataBean.ProjectsBean.RowsBean currenBean= listNum.get(position);
         GlideUtils.loadCircleProjectUrl(context,img, Constants.BASE_IMG_URL + currenBean.getProjectIcon());
         tvCode.setText(currenBean.getProjectCode()+"/");
         tvName.setText(currenBean.getProjectChineseName());

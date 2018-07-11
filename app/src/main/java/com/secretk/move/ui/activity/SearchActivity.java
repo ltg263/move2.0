@@ -141,7 +141,7 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
     }
 
     @Override
-    public void loadSearchSuccess(List<SearchedBean.Projects> list) {
+    public void loadSearchSuccess(List<SearchedBean.DataBean.ProjectsBean.RowsBean> list) {
         recycler.setAdapter(adapter);
         adapter.setData(list, Constants.TOPIC_SORT_BY_NUM);
     }

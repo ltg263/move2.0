@@ -6,7 +6,6 @@ import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.SearchBean;
 import com.secretk.move.bean.SearchedBean;
 import com.secretk.move.contract.ActivitySearchContract;
 import com.secretk.move.utils.MD5;
@@ -16,7 +15,6 @@ import com.secretk.move.utils.SharedUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,7 +60,7 @@ public class ActivitySearchInteractorImpl  implements ActivitySearchContract.Int
             public void onCompleted(SearchedBean bean) {
 
                 if (bean.getCode() == 0) {
-                    List<SearchedBean.Projects> list = bean.getData().getProjects();
+                    List<SearchedBean.DataBean.ProjectsBean.RowsBean> list = bean.getData().getProjects().getRows();
                     callBack.searchSuccess(list,str);
                 }
             }

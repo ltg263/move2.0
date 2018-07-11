@@ -76,7 +76,7 @@ public class ActivitySearchPresenterImpl implements ActivitySearchContract.Prese
 
 
     @Override
-    public void searchSuccess(List<SearchedBean.Projects> list, String searchTxt) {
+    public void searchSuccess(List<SearchedBean.DataBean.ProjectsBean.RowsBean> list, String searchTxt) {
         if (list==null||list.size()==0){
             view.showMsg("未找到数据");
         }

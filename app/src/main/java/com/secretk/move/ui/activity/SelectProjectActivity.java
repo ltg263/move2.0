@@ -66,7 +66,7 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
     SmartRefreshLayout refreshLayout;
     private SelectProjectAdapter adapter;
 
-    private List<SearchedBean.Projects> list;
+    private List<SearchedBean.DataBean.ProjectsBean.RowsBean> list;
     private int publicationType;
     private int projectId;
 
@@ -119,6 +119,8 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
             node.put("token", token);
             node.put("projectCode", "");
             node.put("sortType", 2);
+            node.put("pageIndex", 1);
+            node.put("pageSize", 500);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -130,7 +132,7 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
         RetrofitUtil.request(params, SearchedBean.class, new HttpCallBackImpl<SearchedBean>() {
             @Override
             public void onCompleted(SearchedBean bean) {
-                list = bean.getData().getProjects();
+                list = bean.getData().getProjects().getRows();
                 tvCount.setText("共" + list.size() + "个币种");
                 adapter.setData(list,projectId);
             }
@@ -158,7 +160,7 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
             IntentUtil.startActivity(LoginHomeActivity.class);
             return;
         }
-        SearchedBean.Projects bean = list.get(postion);
+        SearchedBean.DataBean.ProjectsBean.RowsBean bean = list.get(postion);
         if(listSearch!=null && listSearch.size()!=0){
             bean = listSearch.get(postion);
         }
@@ -195,7 +197,7 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
                 break;
         }
     }
-    List<SearchedBean.Projects> listSearch;
+    List<SearchedBean.DataBean.ProjectsBean.RowsBean> listSearch;
     private void searchProject() {
         String searchContent = edSearch.getText().toString().trim();
         if(StringUtil.isBlank(searchContent)){

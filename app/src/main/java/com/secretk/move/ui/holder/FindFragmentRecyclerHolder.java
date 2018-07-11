@@ -59,8 +59,8 @@ public class FindFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     }
 
     //1-按关注数量倒序；2-按名称排序
-    public void setData(List<SearchedBean.Projects> list, int position, int type, final Context context) {
-        final SearchedBean.Projects currenBean = list.get(position);
+    public void setData(List<SearchedBean.DataBean.ProjectsBean.RowsBean> list, int position, int type, final Context context) {
+        final SearchedBean.DataBean.ProjectsBean.RowsBean currenBean = list.get(position);
         GlideUtils.loadCircleProjectUrl(context, img, Constants.BASE_IMG_URL + StringUtil.getBeanString(currenBean.getProjectIcon()));
         tvCode.setText(StringUtil.getBeanString(currenBean.getProjectCode()) + "/");
         tvName.setText(StringUtil.getBeanString(currenBean.getProjectChineseName()));
@@ -115,7 +115,7 @@ public class FindFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         });
     }
 
-    public void sortByName(SearchedBean.Projects currenBean, List<SearchedBean.Projects> list, int position) {
+    public void sortByName(SearchedBean.DataBean.ProjectsBean.RowsBean currenBean, List<SearchedBean.DataBean.ProjectsBean.RowsBean> list, int position) {
         if (position == 0) {
             if (PatternUtils.isLetter(currenBean.getProjectCode()
                     .subSequence(0, 1).toString())) {
@@ -126,7 +126,7 @@ public class FindFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             }
             tvSpell.setVisibility(View.VISIBLE);
         } else {
-            SearchedBean.Projects lastBean = list.get(position - 1);
+            SearchedBean.DataBean.ProjectsBean.RowsBean lastBean = list.get(position - 1);
             boolean b = lastBean.getProjectCode().subSequence(0, 1)
                     .equals(currenBean.getProjectCode().subSequence(0, 1));
             if (b) {
@@ -149,7 +149,7 @@ public class FindFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvSpell.setVisibility(View.GONE);
     }
 
-    public void http(String url, int id, final Context context, final SearchedBean.Projects currenBean) {
+    public void http(String url, int id, final Context context, final SearchedBean.DataBean.ProjectsBean.RowsBean currenBean) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);

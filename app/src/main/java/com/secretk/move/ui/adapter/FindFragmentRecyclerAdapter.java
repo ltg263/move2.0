@@ -21,8 +21,8 @@ import java.util.List;
 
 public class FindFragmentRecyclerAdapter extends RecyclerView.Adapter<FindFragmentRecyclerHolder> {
     private ItemClickListener mListener;
-    private List<SearchedBean.Projects> listNum = new ArrayList<>();
-    private List<SearchedBean.Projects> listName = new ArrayList<>();
+    private List<SearchedBean.DataBean.ProjectsBean.RowsBean> listNum = new ArrayList<>();
+    private List<SearchedBean.DataBean.ProjectsBean.RowsBean> listName = new ArrayList<>();
 
     private final Context context;
     public FindFragmentRecyclerAdapter(Context context) {
@@ -75,7 +75,7 @@ public class FindFragmentRecyclerAdapter extends RecyclerView.Adapter<FindFragme
     }
 
     //1-按关注数量倒序；2-按名称排序
-    public void setData(List<SearchedBean.Projects> list, int type) {
+    public void setData(List<SearchedBean.DataBean.ProjectsBean.RowsBean> list, int type) {
         this.type=type;
         if (type == Constants.TOPIC_SORT_BY_NUM) {
             this.listNum = list;
@@ -85,13 +85,13 @@ public class FindFragmentRecyclerAdapter extends RecyclerView.Adapter<FindFragme
         notifyDataSetChanged();
     }
 
-    public List<SearchedBean.Projects> getData() {
+    public List<SearchedBean.DataBean.ProjectsBean.RowsBean> getData() {
         if (type == Constants.TOPIC_SORT_BY_NUM) {
             return listNum;
         }
         return listName;
     }
-    public List<SearchedBean.Projects> getDataByType(int dataType) {
+    public List<SearchedBean.DataBean.ProjectsBean.RowsBean> getDataByType(int dataType) {
         if (dataType == Constants.TOPIC_SORT_BY_NUM) {
             return listNum;
         }

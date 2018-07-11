@@ -144,7 +144,7 @@ public class FindFragment extends LazyFragment implements ItemClickListener, Qui
 
     @Override
     public void onLetterChange(String letter) {
-        List<SearchedBean.Projects> list = adapter.getData();
+        List<SearchedBean.DataBean.ProjectsBean.RowsBean> list = adapter.getData();
         for (int i = 0; i < list.size(); i++) {
             String str = list.get(i).getProjectCode().charAt(0) + "";
             if (letter.equals(str.trim().toUpperCase())) {
@@ -158,7 +158,7 @@ public class FindFragment extends LazyFragment implements ItemClickListener, Qui
         }
     }
 
-
+    int pageIndex = 1;
     public void http(final int type) {
         if(!showFragment){
             loadingDialog.show();
@@ -169,6 +169,8 @@ public class FindFragment extends LazyFragment implements ItemClickListener, Qui
             node.put("token", token);
             node.put("projectCode", "");
             node.put("sortType", type);
+            node.put("pageIndex", pageIndex);
+            node.put("pageSize", 500);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -181,16 +183,16 @@ public class FindFragment extends LazyFragment implements ItemClickListener, Qui
             @Override
             public void onCompleted(SearchedBean bean) {
                 SharedUtils.singleton().put("isFollowerFx",false);
-                if (bean.getCode() == 0) {
-                    List<SearchedBean.Projects> list = bean.getData().getProjects();
+                List<SearchedBean.DataBean.ProjectsBean.RowsBean> list = bean.getData().getProjects().getRows();
+                if(list!=null){
                     tv_count.setText("共" + list.size() + "个币种");
-//                    if (list.size() > 0) {
-//                        convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
-//                        llHaveData.setVisibility(View.VISIBLE);
-//                    } else {
-//                        llHaveData.setVisibility(View.GONE);
-//                        convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
-//                    }
+    //                    if (list.size() > 0) {
+    //                        convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
+    //                        llHaveData.setVisibility(View.VISIBLE);
+    //                    } else {
+    //                        llHaveData.setVisibility(View.GONE);
+    //                        convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+    //                    }
                     adapter.setData(list, type);
                     if (type == Constants.TOPIC_SORT_BY_NAME) {
                         qbar.setDatax(list);
@@ -243,7 +245,7 @@ public class FindFragment extends LazyFragment implements ItemClickListener, Qui
 //        tv_count.setText("共" + 0 + "个币种");
         tv_sort_name.setTextColor(Color.parseColor("#3b88f6"));
         tv_sort_follow.setTextColor(Color.parseColor("#dddddd"));
-        List<SearchedBean.Projects> list = adapter.getDataByType(currentType);
+        List<SearchedBean.DataBean.ProjectsBean.RowsBean> list = adapter.getDataByType(currentType);
         boolean isFollower = SharedUtils.singleton().get("isFollower",true);
         if (list == null || list.size() == 0 || true) {
             http(currentType);
@@ -261,7 +263,7 @@ public class FindFragment extends LazyFragment implements ItemClickListener, Qui
 //        tv_count.setText("共" + 0 + "个币种");
         tv_sort_name.setTextColor(Color.parseColor("#dddddd"));
         tv_sort_follow.setTextColor(Color.parseColor("#3b88f6"));
-        List<SearchedBean.Projects> list = adapter.getDataByType(currentType);
+        List<SearchedBean.DataBean.ProjectsBean.RowsBean> list = adapter.getDataByType(currentType);
         boolean isFollower = SharedUtils.singleton().get("isFollower",true);
         if (list == null || list.size() == 0 || true) {
             http(currentType);

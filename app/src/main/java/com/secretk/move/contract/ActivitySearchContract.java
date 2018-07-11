@@ -26,13 +26,13 @@ public interface ActivitySearchContract {
     interface View extends BaseView {
         void loadHistorySuccess(List<SearchBean> list);
 
-        void loadSearchSuccess(List<SearchedBean.Projects> list);
+        void loadSearchSuccess(List<SearchedBean.DataBean.ProjectsBean.RowsBean> list);
 
         String getSearchTxt();
     }
 
     interface CallBack {
-        void searchSuccess(List<SearchedBean.Projects> list, String searchTxt);
+        void searchSuccess(List<SearchedBean.DataBean.ProjectsBean.RowsBean> list, String searchTxt);
 
         void onError(String str);
     }
