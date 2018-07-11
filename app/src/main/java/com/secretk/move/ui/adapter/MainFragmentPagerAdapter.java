@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.secretk.move.ui.fragment.MainBlueBlFragment;
 import com.secretk.move.ui.fragment.MainBlueFxFragment;
 import com.secretk.move.ui.fragment.MainBlueGzFragment;
 import com.secretk.move.ui.fragment.MainBlueSkyFragment;
@@ -26,9 +27,9 @@ public class MainFragmentPagerAdapter extends FragmentStatePagerAdapter {
         if(position==1){
             return new MainBlueGzFragment();
         }
-//        if (position==2){
-//            return new MainBlueDjFragment();
-//        }
+        if (position==2){
+            return new MainBlueBlFragment();
+        }
         return new MainBlueSkyFragment();
 
     }

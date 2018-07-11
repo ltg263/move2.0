@@ -19,7 +19,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MainGzBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.LoginHomeActivity;
-import com.secretk.move.ui.adapter.MainGzFragmentRecyclerAdapter;
+import com.secretk.move.ui.adapter.MainBlFragmentRecyclerAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
@@ -36,7 +36,7 @@ import butterknife.BindView;
  * 邮箱；ltg263@126.com
  * 描述：主页 --打假
  */
-public class MainBlueDjFragment extends LazyFragment implements ItemClickListener {
+public class MainBlueBlFragment extends LazyFragment implements ItemClickListener {
     @BindView(R.id.recycler)
     RecyclerView recycler;
     @BindView(R.id.refreshLayout)
@@ -49,7 +49,7 @@ public class MainBlueDjFragment extends LazyFragment implements ItemClickListene
     TextView tvSubmit;
     @BindView(R.id.rl_top_theme)
     RelativeLayout rlTopTheme;
-    private MainGzFragmentRecyclerAdapter adapter;
+    private MainBlFragmentRecyclerAdapter adapter;
     int pageIndex = 1;
     boolean showFragment = false;
     String tokenLs = "";
@@ -63,7 +63,7 @@ public class MainBlueDjFragment extends LazyFragment implements ItemClickListene
     public void initViews() {
         setVerticalManager(recycler);
         initRefresh();
-        adapter = new MainGzFragmentRecyclerAdapter(getActivity());
+        adapter = new MainBlFragmentRecyclerAdapter(getActivity());
         recycler.setAdapter(adapter);
         adapter.setItemListener(this);
         rlTopTheme.setVisibility(View.VISIBLE);
@@ -104,6 +104,7 @@ public class MainBlueDjFragment extends LazyFragment implements ItemClickListene
 
     @Override
     public void onFirstUserVisible() {
+        isLoginZt=true;
         tokenLs = token;
         if (!isLoginZt) {
             showFragment = true;
@@ -136,7 +137,7 @@ public class MainBlueDjFragment extends LazyFragment implements ItemClickListene
         RetrofitUtil.request(params, MainGzBean.class, new HttpCallBackImpl<MainGzBean>() {
             @Override
             public void onCompleted(MainGzBean bean) {
-                MainGzBean.DataBean.FollowsBean detailsBean = bean.getData().getCounterfeits();
+                MainGzBean.DataBean.FollowsBean detailsBean = bean.getData().getRecommends();
                 if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
@@ -184,13 +185,13 @@ public class MainBlueDjFragment extends LazyFragment implements ItemClickListene
 
     @Override
     public void onItemClick(View view, int postion) {
-        if (isLoginZt) {
-            int postId = adapter.getDataIndex(postion).getPostId();
-            int postType = adapter.getDataIndex(postion).getPostType();
-            IntentUtil.go2DetailsByType(postType, String.valueOf(postId));
-        } else {
-            IntentUtil.startActivity(LoginHomeActivity.class);
-        }
+//        if (isLoginZt) {
+//            int postId = adapter.getDataIndex(postion).getPostId();
+//            int postType = adapter.getDataIndex(postion).getPostType();
+//            IntentUtil.go2DetailsByType(postType, String.valueOf(postId));
+//        } else {
+//            IntentUtil.startActivity(LoginHomeActivity.class);
+//        }
     }
 
     @Override
