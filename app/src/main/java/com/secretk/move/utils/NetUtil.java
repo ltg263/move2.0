@@ -470,9 +470,7 @@ public class NetUtil {
                     @Override
                     public void complete(String key, ResponseInfo info, JSONObject res) {
                         //res包含hash、key等信息，具体字段取决于上传策略的设置
-                        LogUtil.w("key:"+key);
-                        LogUtil.w("info:"+info);
-                        LogUtil.w("res:"+res);
+                        LogUtil.w("七牛上传图片结果：key："+key+";/n info"+info+"/n res:"+res);
                         if (info.isOK()) {
                             upload.uploadStatus(Constants.QUNIU_IMG_RUL+key,true);
                         } else {

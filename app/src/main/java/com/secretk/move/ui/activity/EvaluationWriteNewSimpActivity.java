@@ -26,8 +26,10 @@ import com.secretk.move.bean.PicBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.ReleaseArticleLabelAdapter;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
+import com.secretk.move.utils.PicUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
@@ -138,6 +140,7 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
         }
+        qiToken="";
         setPostSmallImages();
     }
 
@@ -279,6 +282,8 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
         uploadImgFile(0, list.size());
     }
 
+    String qiToken = "";
+    String userId = "";
     private void uploadImgFile(final int index, final int size) {
         if (index >= size) {
             saveEvaluation();
@@ -289,45 +294,73 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
             uploadImgFile(index + 1, size);
             return;
         }
-        File file = new File(path);
+        final File file = new File(path);
         if (!file.exists()) {
             uploadImgFile(index + 1, size);
             return;
         }
-        RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.UPLOAD_USER_ICON_FILE)
-                .method(RxHttpParams.HttpMethod.POST)
-                .addPart("token", token)
-                .addPart("uploadfile", StringUtil.getMimeType(file.getName()), file)
-                .addPart(Constants.UPLOADIMG_TYPE.IMG_TYPE_KEY, Constants.UPLOADIMG_TYPE.POST_ICON)
-                .build();
-        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
-            @Override
-            public void onCompleted(String str) {
-                try {
-                    JSONObject postObject = new JSONObject();
-                    String imgUrl = new JSONObject(str).getJSONObject("data").getString("imgUrl");
-                    if (StringUtil.isNotBlank(imgUrl)) {
-                        postObject.put("fileUrl", imgUrl);
-                        postObject.put("fileName", "");
-                        postObject.put("extension", StringUtil.getFileSuffix(imgUrl));
+        LogUtil.w("当前文件大小："+ PicUtil.getPrintSize(file.length()));
+        if(StringUtil.isNotBlank(qiToken) && StringUtil.isNotBlank(userId)){
+            NetUtil.sendQiniuImgUrl(file, qiToken, NetUtil.getQiniuImgName("posts",userId,0), new NetUtil.QiniuImgUpload() {
+                @Override
+                public void uploadStatus(String imgUrl, boolean status) {
+                    if(status){
+                        try {
+                            JSONObject postObject = new JSONObject();
+                            if (StringUtil.isNotBlank(imgUrl)) {
+                                postObject.put("fileUrl", imgUrl);
+                                postObject.put("fileName", "");
+                                postObject.put("extension", StringUtil.getFileSuffix(imgUrl));
+                            }
+                            list.get(index).imagePath = Constants.BASE_IMG_URL + imgUrl;
+                            postSmallImages.put(postObject);
+                            uploadImgFile(index + 1, size);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        ToastUtils.getInstance().show("照片上传失败，请重新上传");
+                        loadingDialog.dismiss();
                     }
-                    list.get(index).imagePath = Constants.BASE_IMG_URL + imgUrl;
-                    postSmallImages.put(postObject);
-                    uploadImgFile(index + 1, size);
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-
-            @Override
-            public void onError(String message) {
-                super.onError(message);
-                if (loadingDialog.isShowing()) {
-                    loadingDialog.dismiss();
+            });
+        }else{
+            NetUtil.getQiniuToken(new NetUtil.SaveCommendationImp() {
+                @Override
+                public void finishCommendation(String mUserId,String mQiToken, boolean status) {
+                    qiToken=mQiToken;
+                    userId=mUserId;
+                    if(!status){
+                        ToastUtils.getInstance().show("服务器出错了");
+                        loadingDialog.dismiss();
+                        return;
+                    }
+                    NetUtil.sendQiniuImgUrl(file, mQiToken, NetUtil.getQiniuImgName("avatars",mUserId,index), new NetUtil.QiniuImgUpload() {
+                        @Override
+                        public void uploadStatus(String imgUrl, boolean status) {
+                            if(status){
+                                try {
+                                    JSONObject postObject = new JSONObject();
+                                    if (StringUtil.isNotBlank(imgUrl)) {
+                                        postObject.put("fileUrl", imgUrl);
+                                        postObject.put("fileName", "");
+                                        postObject.put("extension", StringUtil.getFileSuffix(imgUrl));
+                                    }
+                                    list.get(index).imagePath = Constants.BASE_IMG_URL + imgUrl;
+                                    postSmallImages.put(postObject);
+                                    uploadImgFile(index + 1, size);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }else{
+                                ToastUtils.getInstance().show("照片上传失败，请重新上传");
+                                loadingDialog.dismiss();
+                            }
+                        }
+                    });
                 }
-            }
-        });
+            });
+        }
     }
 
     private void saveEvaluation() {

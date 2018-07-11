@@ -23,13 +23,13 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.DiscussLabelListbean;
-import com.secretk.move.bean.UpImgBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.ReleaseArticleLabelAdapter;
 import com.secretk.move.ui.adapter.ReleasePicAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
+import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PicUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -154,6 +154,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         discussImages="";
         adapterImgList= releasePicAdapter.getData();
         if (adapterImgList!=null&&adapterImgList.size()!=0){
+            qiToken = "";
             upImgHttp(adapterImgList.get(0),0);
         }else{
             httpRelease();
@@ -288,9 +289,10 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
             }
         });
     }
-
+    String qiToken = "";
+    String userId = "";
     public void upImgHttp(String path, final int position) {
-        File file = new File(path);
+        final File file = new File(path);
         if (!file.exists()) {
             return;
         }
@@ -299,35 +301,61 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
             return;
         }
         LogUtil.w("当前文件大小："+ PicUtil.getPrintSize(file.length()));
-        RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.UPLOAD_USER_ICON_FILE)
-                .method(RxHttpParams.HttpMethod.POST)
-                .addPart("token", token)
-                .addPart("uploadfile", StringUtil.getMimeType(file.getName()), file)
-                .addPart(Constants.UPLOADIMG_TYPE.IMG_TYPE_KEY, Constants.UPLOADIMG_TYPE.POST_ICON)
-                .build();
-        RetrofitUtil.request(params, UpImgBean.class, new HttpCallBackImpl<UpImgBean>() {
-            @Override
-            public void onCompleted(UpImgBean data) {
-                String srt = data.getData().getImgUrl();
-                serverImgList.add(srt);
-                if (serverImgList.size() == releasePicAdapter.getItemCount()) {
-                    try {
-                        generatePostSmallImages(serverImgList);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+        if(StringUtil.isNotBlank(qiToken) && StringUtil.isNotBlank(userId)){
+            NetUtil.sendQiniuImgUrl(file, qiToken, NetUtil.getQiniuImgName("posts",userId,position), new NetUtil.QiniuImgUpload() {
+                @Override
+                public void uploadStatus(String str, boolean status) {
+                    if(status){
+                        serverImgList.add(str);
+                        if (serverImgList.size() == releasePicAdapter.getItemCount()) {
+                            try {
+                                generatePostSmallImages(serverImgList);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }else {
+                            upImgHttp(adapterImgList.get(position+1),position+1);
+                        }
+                    }else{
+                        ToastUtils.getInstance().show("照片上传失败，请重新上传");
+                        loadingDialog.dismiss();
                     }
-                }else {
-                    upImgHttp(adapterImgList.get(position+1),position+1);
                 }
-            }
-
-            @Override
-            public void onError(String message) {
-                super.onError(message);
-                loadingDialog.dismiss();
-            }
-        });
+            });
+        }else{
+            NetUtil.getQiniuToken(new NetUtil.SaveCommendationImp() {
+                @Override
+                public void finishCommendation(String mUserId,String mQiToken, boolean status) {
+                    qiToken=mQiToken;
+                    userId=mUserId;
+                    if(!status){
+                        ToastUtils.getInstance().show("服务器出错了");
+                        loadingDialog.dismiss();
+                        return;
+                    }
+                    NetUtil.sendQiniuImgUrl(file, mQiToken, NetUtil.getQiniuImgName("avatars",mUserId,0), new NetUtil.QiniuImgUpload() {
+                        @Override
+                        public void uploadStatus(String str, boolean status) {
+                            if(status){
+                                serverImgList.add(str);
+                                if (serverImgList.size() == releasePicAdapter.getItemCount()) {
+                                    try {
+                                        generatePostSmallImages(serverImgList);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }else {
+                                    upImgHttp(adapterImgList.get(position+1),position+1);
+                                }
+                            }else{
+                                ToastUtils.getInstance().show("照片上传失败，请重新上传");
+                                loadingDialog.dismiss();
+                            }
+                        }
+                    });
+                }
+            });
+        }
     }
 
     JSONArray array = new JSONArray();

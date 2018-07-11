@@ -12,11 +12,7 @@ import android.widget.TextView;
 import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
 import com.secretk.move.R;
-import com.secretk.move.apiService.HttpCallBackImpl;
-import com.secretk.move.apiService.RetrofitUtil;
-import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
-import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
@@ -27,9 +23,6 @@ import com.secretk.move.utils.TimeToolUtils;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.DialogUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.text.ParseException;
@@ -163,36 +156,30 @@ public class SubmitProjectActivity extends BaseActivity {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
         }
-        File file = new File(PicUtil.uritempFile.getPath());
+        final File file = new File(PicUtil.uritempFile.getPath());
         if(!file.exists()){
             ToastUtils.getInstance().show("照片上传失败，请重新上传");
             return;
         }
-        RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.UPLOAD_USER_ICON_FILE)
-                .method(RxHttpParams.HttpMethod.POST)
-                .addPart("token", token)
-                .addPart(Constants.UPLOADIMG_TYPE.IMG_TYPE_KEY,Constants.UPLOADIMG_TYPE.PROJECT_ICON)
-                .addPart("uploadfile", StringUtil.getMimeType(file.getName()) ,file)
-                .build();
-        loadingDialog.show();
-        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+        NetUtil.getQiniuToken(new NetUtil.SaveCommendationImp() {
             @Override
-            public void onCompleted(String str) {
-                try {
-                    JSONObject obj = new JSONObject(str);
-                    String picPath = obj.getJSONObject("data").getString("imgUrl");
-                    if(StringUtil.isNotBlank(picPath)){
-                        saveData(picPath);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            public void finishCommendation(String userId,String QiToken, boolean status) {
+                if(!status){
+                    ToastUtils.getInstance().show("服务器出错了");
+                    loadingDialog.dismiss();
+                    return;
                 }
-            }
-
-            @Override
-            public void onFinish() {
-                loadingDialog.dismiss();
+                NetUtil.sendQiniuImgUrl(file, QiToken, NetUtil.getQiniuImgName("avatars",userId,0), new NetUtil.QiniuImgUpload() {
+                    @Override
+                    public void uploadStatus(String str, boolean status) {
+                        if(status){
+                            saveData(str);
+                        }else{
+                            ToastUtils.getInstance().show("证件上传失败，请重新上传");
+                            loadingDialog.dismiss();
+                        }
+                    }
+                });
             }
         });
     }
