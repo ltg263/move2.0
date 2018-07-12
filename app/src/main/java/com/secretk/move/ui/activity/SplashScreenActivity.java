@@ -7,7 +7,10 @@ import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.igexin.sdk.PushManager;
 import com.secretk.move.R;
+import com.secretk.move.apiService.MoveIntentService;
+import com.secretk.move.apiService.MovePushService;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.utils.SharedUtils;
 
@@ -24,6 +27,10 @@ public class SplashScreenActivity extends Activity {
         //去掉Activity上面的状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        if(Constants.IS_PUSH_SERVICE){
+            PushManager.getInstance().initialize(this.getApplicationContext(), MovePushService.class);
+            PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), MoveIntentService.class);
+        }
         setContentView(R.layout.splashscreen);
 //		getWindow().setFormat(PixelFormat.RGBA_8888);
 

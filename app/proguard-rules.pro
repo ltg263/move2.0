@@ -22,3 +22,7 @@
 -keep class com.qiniu.**{*;}
 -keep class com.qiniu.**{public <init>();}
 -ignorewarnings
+
+-dontwarn com.igexin.**
+-keep class com.igexin.** { *; }
+-keep class org.json.** { *; }

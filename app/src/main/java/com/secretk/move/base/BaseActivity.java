@@ -12,7 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.igexin.sdk.PushManager;
 import com.secretk.move.R;
+import com.secretk.move.apiService.MoveIntentService;
+import com.secretk.move.apiService.MovePushService;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.utils.NetUtil;
@@ -48,6 +51,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(Constants.IS_PUSH_SERVICE){
+            PushManager.getInstance().initialize(this.getApplicationContext(), MovePushService.class);
+            PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), MoveIntentService.class);
+        }
         setContentView(setOnCreate());
         ButterKnife.bind(this);
         sharedUtils = SharedUtils.singleton();

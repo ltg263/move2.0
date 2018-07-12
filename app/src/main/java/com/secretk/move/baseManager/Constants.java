@@ -49,6 +49,10 @@ public interface Constants {
      * 分页单次请求数量
      */
     int PAGE_SIZE = 10;
+    /**
+     * 是否开始推送服务
+     */
+    boolean IS_PUSH_SERVICE = false;
 
     /**
      * 文件存储的名称
@@ -98,7 +102,7 @@ public interface Constants {
 //     String BASE_URL = "http://192.168.10.151:809/";//栋栋
 
 //      String BASE_URL = "http://repay.free.ngrok.cc/rest/";//林俊
-
+//:15537894586   abc12310
 //    String BASE_URL = "http://47.98.197.101/rest/";//宋
 
     /**
@@ -166,7 +170,6 @@ public interface Constants {
     //首页推荐
     String MAIN_RECOMMEND = BASE_URL + "kff/home/recommendList";
     //首页关注
-//    String MAIN_FOLLOW = BASE_URL + "kff/home/getBurstList";
     String MAIN_FOLLOW = BASE_URL + "kff/home/followList";
     //首页打假
     String MAIN_DISCUSS = BASE_URL + "kff/home/getBurstList";
