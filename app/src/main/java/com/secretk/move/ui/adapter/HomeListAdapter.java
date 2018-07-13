@@ -32,7 +32,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListHolder> {
 
     @Override
     public HomeListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_home_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_list_unify, parent, false);
         HomeListHolder holder = new HomeListHolder(view);
         return holder;
     }

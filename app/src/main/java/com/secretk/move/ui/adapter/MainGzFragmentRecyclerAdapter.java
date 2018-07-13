@@ -21,7 +21,6 @@ import java.util.List;
 
 public class MainGzFragmentRecyclerAdapter extends RecyclerView.Adapter<MainGzFragmentRecyclerHolder> {
 
-
     private List<MainGzBean.DataBean.FollowsBean.RowsBean> list = new ArrayList<>();
     private ItemClickListener mListener;
     Context context;
@@ -36,7 +35,7 @@ public class MainGzFragmentRecyclerAdapter extends RecyclerView.Adapter<MainGzFr
 
     @Override
     public MainGzFragmentRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_main_gz_recycler_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_list_unify, parent, false);
         MainGzFragmentRecyclerHolder holder = new MainGzFragmentRecyclerHolder(view);
         return holder;
     }

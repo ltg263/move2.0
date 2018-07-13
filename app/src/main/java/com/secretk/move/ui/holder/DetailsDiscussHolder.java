@@ -168,10 +168,10 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         tvPraiseNum.setSelected(!tvPraiseNum.isSelected());
         NetUtil.addCommentsPraise(!finalIsLove.isSelected(), commentsId, new NetUtil.SaveFollowImpl() {
             @Override
-            public void finishFollow(String praiseNum,boolean status) {
+            public void finishFollow(String praiseNum,boolean status,double find) {
                 tvPraiseNum.setEnabled(true);
                 if(!praiseNum.equals(Constants.PRAISE_ERROR)){
-                    DialogUtils.showDialogPraise(context,1,true);
+                    DialogUtils.showDialogPraise(context,1,true,0);
                     commentsBean.setPraiseNum(Integer.valueOf(praiseNum));
                     tvPraiseNum.setText(praiseNum);
 //                    praiseNumA = commentsBean.getPraiseNum();

@@ -184,10 +184,10 @@ public class MoreCommentsActivity extends BaseActivity{
                 tvPraiseNum.setSelected(!tvPraiseNum.isSelected());
                 NetUtil.addCommentsPraise(!tvPraiseNum.isSelected(), commentsId, new NetUtil.SaveFollowImpl() {
                     @Override
-                    public void finishFollow(String praiseNum,boolean status) {
+                    public void finishFollow(String praiseNum,boolean status,double find) {
                         tvPraiseNum.setEnabled(true);
                         if(!praiseNum.equals(Constants.PRAISE_ERROR)){
-                            DialogUtils.showDialogPraise(MoreCommentsActivity.this,1,true);
+                            DialogUtils.showDialogPraise(MoreCommentsActivity.this,1,true,find);
                             MoreCommentsActivity.this.praiseNum=Integer.valueOf(praiseNum);
                             tvPraiseNum.setText(praiseNum);
                             tvPraiseNum.setSelected(status);

@@ -20,9 +20,11 @@ import java.util.List;
  */
 
 public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFragmentRecyclerHolder> {
+
     private List<MainGzBean.DataBean.FollowsBean.RowsBean> list = new ArrayList<>();
     private ItemClickListener mListener;
     Context context;
+
     public MainRfFragmentRecyclerAdapter(Context context) {
         this.context = context;
     }
@@ -33,7 +35,7 @@ public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFr
 
     @Override
     public MainRfFragmentRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_main_rf_recycler_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_list_unify, parent, false);
         MainRfFragmentRecyclerHolder holder = new MainRfFragmentRecyclerHolder(view);
         return holder;
     }
@@ -42,7 +44,7 @@ public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFr
     public void onBindViewHolder(MainRfFragmentRecyclerHolder holder, int position) {
         holder.setItemListener(mListener);
         MainGzBean.DataBean.FollowsBean.RowsBean bean = list.get(position);
-        holder.setData(bean,context);
+        holder.setData(bean, context);
 
     }
 
@@ -53,10 +55,12 @@ public class MainRfFragmentRecyclerAdapter extends RecyclerView.Adapter<MainRfFr
         }
         return list.size();
     }
+
     public void setData(List<MainGzBean.DataBean.FollowsBean.RowsBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
+
     public void setAddData(List<MainGzBean.DataBean.FollowsBean.RowsBean> list) {
         this.list.addAll(list);
         notifyDataSetChanged();

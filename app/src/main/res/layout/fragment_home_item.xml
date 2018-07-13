@@ -237,7 +237,7 @@
                 android:paddingRight="@dimen/dp_10"
                 android:textColor="@color/app_background"
                 android:textSize="@dimen/sp_14"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/tv_crack_down"

@@ -25,6 +25,7 @@ import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.TimeToolUtils;
+import com.secretk.move.view.Clickable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,32 +44,34 @@ import butterknife.ButterKnife;
 public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.img_user_head)
     ImageView imgUserHead;
-    @BindView(R.id.tvUser)
+    @BindView(R.id.tv_user)
     TextView tvUser;
-    @BindView(R.id.tvUserDynamic)
+    @BindView(R.id.tv_user_dynamic)
     TextView tvUserDynamic;
+    @BindView(R.id.ll_user)
+    LinearLayout llUser;
     @BindView(R.id.view_center)
     View viewCenter;
-    @BindView(R.id.img_organization)
-    ImageView imgOrganization;
-    @BindView(R.id.tvName)
-    TextView tvName;
-    @BindView(R.id.tv_english_name)
-    TextView tvEnglishName;
-    @BindView(R.id.tvTime)
+    @BindView(R.id.iv_project_icon)
+    ImageView ivProjectIcon;
+    @BindView(R.id.tv_project_code)
+    TextView tvProjectCode;
+    @BindView(R.id.tv_project_name)
+    TextView tvProjectName;
+    @BindView(R.id.tv_time)
     TextView tvTime;
-    @BindView(R.id.tvIsFollw)
-    TextView tvIsFollw;
+    @BindView(R.id.tv_project_folly)
+    TextView tvProjectFolly;
     @BindView(R.id.rl_project)
     RelativeLayout rlProject;
-    @BindView(R.id.tvTitle)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.tvScore)
-    TextView tvScore;
-    @BindView(R.id.tvDesc)
+    @BindView(R.id.tv_sore)
+    TextView tvSore;
+    @BindView(R.id.tv_desc)
     TextView tvDesc;
-    @BindView(R.id.iv_file_name)
-    ImageView ivFileName;
+    @BindView(R.id.iv_img_max)
+    ImageView ivImgMax;
     @BindView(R.id.iv_ont)
     ImageView ivOnt;
     @BindView(R.id.iv_two)
@@ -77,20 +80,18 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     ImageView ivThree;
     @BindView(R.id.ll_multi_img)
     LinearLayout llMultiImg;
-    @BindView(R.id.tvPraise)
+    @BindView(R.id.rl_context)
+    RelativeLayout rlContext;
+    @BindView(R.id.tv_crack_down)
+    TextView tvCrackDown;
+    @BindView(R.id.tv_praise)
     TextView tvPraise;
     @BindView(R.id.img_comment)
     ImageView imgComment;
-    @BindView(R.id.tvComments)
+    @BindView(R.id.tv_comments)
     TextView tvComments;
-    @BindView(R.id.tv_crack_down)
-    TextView tvDrackDown;
     @BindView(R.id.ll_below)
     LinearLayout llBelow;
-    @BindView(R.id.rl_context)
-    RelativeLayout rlContext;
-    @BindView(R.id.ll_user)
-    LinearLayout llUser;
     public MainGzFragmentRecyclerHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -99,55 +100,39 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         //actionType  //1 关注的用户 点赞帖子  2关注的用户 发表帖子  3关注的用户 关注项目 4关注的项目下发表的帖子
         GlideUtils.loadCircleUserUrl(context,imgUserHead, Constants.BASE_IMG_URL + StringUtil.getBeanString(bean.getCreateUserIcon()));
         tvUser.setText(bean.getCreateUserName());
-        GlideUtils.loadCircleProjectUrl(context, imgOrganization,Constants.BASE_IMG_URL + StringUtil.getBeanString(bean.getProjectIcon()));
-        tvName.setText(StringUtil.getBeanString(bean.getProjectCode()));
-        tvEnglishName.setText("/"+StringUtil.getBeanString(bean.getProjectChineseName()));
+        GlideUtils.loadCircleProjectUrl(context, ivProjectIcon,Constants.BASE_IMG_URL + StringUtil.getBeanString(bean.getProjectIcon()));
+        tvProjectCode.setText(StringUtil.getBeanString(bean.getProjectCode()));
+        tvProjectName.setText("/"+StringUtil.getBeanString(bean.getProjectChineseName()));
         tvTime.setText(TimeToolUtils.convertTimeToFormat(bean.getCreateTime()));
-        if (StringUtil.isNotBlank(bean.getTagInfos())
-                && bean.getTagInfos().contains("tagName")) {
-            String tagName = "";
-            try {
-                JSONArray array = new JSONArray(bean.getTagInfos());
-                if (array.length() > 0) {
-                    tagName = array.getJSONObject(0).getString("tagName");
-                }
-                tvDrackDown.setText("#"+tagName+"#");
-                tvDrackDown.setVisibility(View.VISIBLE);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }else{
-            tvDrackDown.setVisibility(View.GONE);
-        }
-        tvIsFollw.setVisibility(View.VISIBLE);
+        tvProjectFolly.setVisibility(View.VISIBLE);
         if (0 == bean.getFollowStatus()) {
-            tvIsFollw.setText(context.getString(R.string.follow_status_0));
-            tvIsFollw.setSelected(false);
-            tvIsFollw.setPressed(false);
-            tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
+            tvProjectFolly.setText(context.getString(R.string.follow_status_0));
+            tvProjectFolly.setSelected(false);
+            tvProjectFolly.setPressed(false);
+            tvProjectFolly.setTextColor(Color.parseColor("#ffffff"));
         } else if (1 == bean.getFollowStatus()) {
-            tvIsFollw.setText(context.getString(R.string.follow_status_1));
-            tvIsFollw.setSelected(true);
-            tvIsFollw.setPressed(true);
-            tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
+            tvProjectFolly.setText(context.getString(R.string.follow_status_1));
+            tvProjectFolly.setSelected(true);
+            tvProjectFolly.setPressed(true);
+            tvProjectFolly.setTextColor(Color.parseColor("#3b88f6"));
         } else {
-            tvIsFollw.setText(context.getString(R.string.follow_status_0));
-            tvIsFollw.setSelected(false);
-            tvIsFollw.setPressed(false);
-            tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
+            tvProjectFolly.setText(context.getString(R.string.follow_status_0));
+            tvProjectFolly.setSelected(false);
+            tvProjectFolly.setPressed(false);
+            tvProjectFolly.setTextColor(Color.parseColor("#ffffff"));
         }
         if(bean.getActionType()==3){//项目
             llBelow.setVisibility(View.GONE);
             rlContext.setVisibility(View.GONE);
-            showFollow(0,0);
+            showFollow(0,0,bean);
         }else{//帖子
-            showFollow(bean.getPostType(),bean.getTotalScore());
+            showFollow(bean.getPostType(),bean.getTotalScore(),bean);
             llBelow.setVisibility(View.VISIBLE);
             rlContext.setVisibility(View.VISIBLE);
             showPostDesc(bean,context);
         }
         //关注
-        tvIsFollw.setOnClickListener(new View.OnClickListener() {
+        tvProjectFolly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!SharedUtils.getLoginZt()){
@@ -185,6 +170,7 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         });
 
     }
+
     public void http(final Context context, String url, int id) {
         JSONObject node = new JSONObject();
         try {
@@ -204,15 +190,15 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             public void onCompleted(BaseRes bean) {
                 if (bean.getCode()==0){
                     if (getString().equals(context.getString(R.string.follow_status_1))) {
-                        tvIsFollw.setText(context.getString(R.string.follow_status_0));
-                        tvIsFollw.setSelected(false);
-                        tvIsFollw.setPressed(false);
-                        tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
+                        tvProjectFolly.setText(context.getString(R.string.follow_status_0));
+                        tvProjectFolly.setSelected(false);
+                        tvProjectFolly.setPressed(false);
+                        tvProjectFolly.setTextColor(Color.parseColor("#ffffff"));
                     } else {
-                        tvIsFollw.setText(context.getString(R.string.follow_status_1));
-                        tvIsFollw.setSelected(true);
-                        tvIsFollw.setPressed(true);
-                        tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
+                        tvProjectFolly.setText(context.getString(R.string.follow_status_1));
+                        tvProjectFolly.setSelected(true);
+                        tvProjectFolly.setPressed(true);
+                        tvProjectFolly.setTextColor(Color.parseColor("#3b88f6"));
                     }
                 }
             }
@@ -224,29 +210,33 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         });
     }
     public String getString(){
-        return tvIsFollw.getText().toString();
+        return tvProjectFolly.getText().toString();
     }
     //头部
-    public void showFollow(int postType,float totalScore){
+    public void showFollow(int postType, float totalScore, MainGzBean.DataBean.FollowsBean.RowsBean bean){
         switch (postType){
             case 0:
-                tvScore.setVisibility(View.INVISIBLE);
+                tvSore.setVisibility(View.INVISIBLE);
                 tvUserDynamic.setText("关注了项目");
+                setCrackTag(bean,0);
                 break;
             case 1:
-                tvScore.setText(totalScore+"分");
+                tvSore.setText(totalScore+"分");
                 if(totalScore==0){
-                    tvScore.setVisibility(View.INVISIBLE);
+                    tvSore.setVisibility(View.INVISIBLE);
                 }
+                setCrackTag(bean,1);
                 tvUserDynamic.setText("发表了评测");
                 break;
             case 2:
-                tvScore.setVisibility(View.INVISIBLE);
+                tvSore.setVisibility(View.INVISIBLE);
                 tvUserDynamic.setText("发表了爆料");
+                setCrackTag(bean,2);
                 break;
             case 3:
-                tvScore.setVisibility(View.INVISIBLE);
+                tvSore.setVisibility(View.INVISIBLE);
                 tvUserDynamic.setText("发表了文章");
+                setCrackTag(bean,3);
                 break;
         }
     }
@@ -272,19 +262,46 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 if (lists != null && lists.size()>0) {
                     if (lists.size() > 2) {
                         llMultiImg.setVisibility(View.VISIBLE);
-                        ivFileName.setVisibility(View.GONE);
+                        ivImgMax.setVisibility(View.GONE);
                         GlideUtils.loadSideMinImage(context, ivOnt, Constants.BASE_IMG_URL + lists.get(0).getUrl());
                         GlideUtils.loadSideMinImage(context, ivTwo, Constants.BASE_IMG_URL + lists.get(1).getUrl());
                         GlideUtils.loadSideMinImage(context, ivThree, Constants.BASE_IMG_URL + lists.get(2).getUrl());
                     } else {
                         llMultiImg.setVisibility(View.GONE);
-                        ivFileName.setVisibility(View.VISIBLE);
-                        GlideUtils.loadSideMaxImage(context, ivFileName, Constants.BASE_IMG_URL + lists.get(0).getUrl());
+                        ivImgMax.setVisibility(View.VISIBLE);
+                        GlideUtils.loadSideMaxImage(context, ivImgMax, Constants.BASE_IMG_URL + lists.get(0).getUrl());
                     }
                 }else{
                     llMultiImg.setVisibility(View.GONE);
-                    ivFileName.setVisibility(View.GONE);
+                    ivImgMax.setVisibility(View.GONE);
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    private void setCrackTag(MainGzBean.DataBean.FollowsBean.RowsBean discussDetail, int type){
+        String tagVal = discussDetail.getTagInfos();
+        if(type==1){
+            tagVal=discussDetail.getEvaluationTags();
+        }
+        if (StringUtil.isNotBlank(tagVal)&& tagVal.contains("tagName")) {
+            try {
+                JSONArray object = new JSONArray(tagVal);
+                //[{"tagId":1,"tagName":"进度讨论"},{"tagId":3,"tagName":"项目前景讨论"},{"tagId":4,"tagName":"打假"}]
+                String tagAll = "";
+                String tagOnly[] = new String[object.length()];
+                for (int i = 0; i < object.length(); i++) {
+                    JSONObject strObj = object.getJSONObject(i);
+                    tagOnly[i] = "#" + strObj.getString("tagName") + "#";
+                    tagAll += "#" + strObj.getString("tagName") + "#   ";
+                }
+                Clickable.getSpannableString(tagAll, tagOnly, tvCrackDown, new Clickable.ClickListener() {
+                    @Override
+                    public void setOnClick(String name) {
+                        //ToastUtils.getInstance().show(name);
+                    }
+                });
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -195,9 +195,14 @@ public class NetUtil {
                     JSONObject obj = new JSONObject(str);
                     if(obj.getJSONObject("data")!=null){
                         int praiseNum = obj.getJSONObject("data").getInt("praiseNum");
-                        follow.finishFollow(String.valueOf(praiseNum),!isPraise);
+                        boolean isSendPraiseToken = obj.getJSONObject("data").getBoolean("isSendPraiseToken");
+                        double retrueDzan=0;
+                        if(isSendPraiseToken){
+                            retrueDzan = obj.getJSONObject("data").getDouble("retrueDzan");
+                        }
+                        follow.finishFollow(String.valueOf(praiseNum),!isPraise,retrueDzan);
                     }else{
-                        follow.finishFollow(Constants.PRAISE_ERROR,isPraise);
+                        follow.finishFollow(Constants.PRAISE_ERROR,isPraise,0);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -206,7 +211,7 @@ public class NetUtil {
 
             @Override
             public void onError(String message) {
-                follow.finishFollow(Constants.PRAISE_ERROR,isPraise);
+                follow.finishFollow(Constants.PRAISE_ERROR,isPraise,0);
             }
         });
     }
@@ -245,9 +250,9 @@ public class NetUtil {
                     JSONObject obj = new JSONObject(str);
                     if( obj.getJSONObject("data")!=null){
                         int praiseNum = obj.getJSONObject("data").getInt("praiseNum");
-                        follow.finishFollow(String.valueOf(praiseNum),!isLove);
+                        follow.finishFollow(String.valueOf(praiseNum),!isLove,0);
                     }else{
-                        follow.finishFollow(Constants.PRAISE_ERROR,isLove);
+                        follow.finishFollow(Constants.PRAISE_ERROR,isLove,0);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -255,7 +260,7 @@ public class NetUtil {
             }
             @Override
             public void onError(String message) {
-                follow.finishFollow(Constants.PRAISE_ERROR,isLove);
+                follow.finishFollow(Constants.PRAISE_ERROR,isLove,0);
             }
         });
 
@@ -264,8 +269,9 @@ public class NetUtil {
         /**
          * status :true 未赞
          *      false：已赞
+         *
          */
-        public abstract void finishFollow(String str,boolean status);
+        public abstract void finishFollow(String str,boolean status,double find);
     }
 
     /**

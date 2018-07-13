@@ -32,7 +32,7 @@ public class ProjectRecommendAdapter extends RecyclerView.Adapter<ProjectListHol
 
     @Override
     public ProjectListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_home_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_list_unify, parent, false);
         ProjectListHolder holder = new ProjectListHolder(view);
         return holder;
     }

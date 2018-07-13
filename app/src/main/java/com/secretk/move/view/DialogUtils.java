@@ -494,17 +494,26 @@ public class DialogUtils {
      * @param type:1 点赞  2 收藏
      * 点赞框
      */
-    public static void showDialogPraise(Context context,int type,boolean isCollect) {
+    public static void showDialogPraise(Context context,int type,boolean isCollect,double find) {
         final Dialog dialog5 = new Dialog(context, R.style.selectorDialog_bj);
 
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_praise_find, null);
         TextView tv_praise = view.findViewById(R.id.tv_praise);
+        TextView tv_find = view.findViewById(R.id.tv_find);
         TextView tv_collect = view.findViewById(R.id.tv_collect);
         if (type==1){
             tv_praise.setVisibility(View.VISIBLE);
             tv_collect.setVisibility(View.GONE);
+            if(find!=0){
+                tv_find.setVisibility(View.VISIBLE);
+                if(find == (int)find){
+                    find= (int)find;
+                }
+                tv_find.setText("+"+find+"FIND");
+            }
         }else{
             tv_praise.setVisibility(View.GONE);
+            tv_find.setVisibility(View.GONE);
             tv_collect.setVisibility(View.VISIBLE);
             if(!isCollect){
                 tv_collect.setText("收藏成功");

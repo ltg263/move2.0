@@ -88,7 +88,7 @@
                 android:maxLines="3"
                 android:paddingHorizontal="@dimen/dp_10"
                 android:textColor="#7e7d7e"
-                android:textSize="@dimen/sp_12" />
+                android:textSize="@dimen/sp_14" />
 
             <ImageView
                 android:id="@+id/iv_file_name"

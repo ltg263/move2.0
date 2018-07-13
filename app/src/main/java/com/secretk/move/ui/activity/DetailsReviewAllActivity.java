@@ -461,7 +461,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
                             public void finishCollect(String str, boolean status) {
                                 tvCollectStatus.setEnabled(true);
                                 if (!str.equals(Constants.COLLECT_ERROR)) {
-                                    DialogUtils.showDialogPraise(DetailsReviewAllActivity.this,2,status);
+                                    DialogUtils.showDialogPraise(DetailsReviewAllActivity.this,2,status,0);
                                     tvCollectStatus.setSelected(status);
                                 }
                             }
@@ -499,11 +499,11 @@ public class DetailsReviewAllActivity extends BaseActivity {
     private void setPraise(boolean isPraise, int postId) {
         NetUtil.setPraise(isPraise, postId, new NetUtil.SaveFollowImpl() {
             @Override
-            public void finishFollow(String praiseNum, boolean status) {
+            public void finishFollow(String praiseNum, boolean status,double find) {
                 tvPraiseStatus.setEnabled(true);
                 ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
                 if (!praiseNum.equals(Constants.PRAISE_ERROR)) {
-                    DialogUtils.showDialogPraise(DetailsReviewAllActivity.this,1,true);
+                    DialogUtils.showDialogPraise(DetailsReviewAllActivity.this,1,true,find);
                     DetailsReviewAllActivity.this.praiseNum = Integer.valueOf(praiseNum);
                     tvPraiseStatus.setSelected(status);
                     tvPraiseStatus.setText("赞" + praiseNum);

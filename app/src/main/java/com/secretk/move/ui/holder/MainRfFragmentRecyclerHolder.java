@@ -25,6 +25,7 @@ import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.TimeToolUtils;
+import com.secretk.move.view.Clickable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,40 +42,36 @@ import butterknife.ButterKnife;
  */
 
 public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
-    @BindView(R.id.img_organization)
-    ImageView img_organization;
-    @BindView(R.id.tvName)
-    TextView tvName;
-    @BindView(R.id.tv_english_name)
-    TextView tv_english_name;
-    @BindView(R.id.tvIsFollw)
-    TextView tvIsFollw;
-    @BindView(R.id.tvTime)
-    TextView tvTime;
-    @BindView(R.id.tvTitle)
-    TextView tvTitle;
-    @BindView(R.id.tvScore)
-    TextView tvScore;
-    @BindView(R.id.tvDesc)
-    TextView tvDesc;
     @BindView(R.id.img_user_head)
-    ImageView img_user_head;
-    @BindView(R.id.tvUser)
+    ImageView imgUserHead;
+    @BindView(R.id.tv_user)
     TextView tvUser;
-    @BindView(R.id.tvPraise)
-    TextView tvPraise;
-    @BindView(R.id.tvComments)
-    TextView tvComments;
-    @BindView(R.id.rl_project)
-    RelativeLayout rl_project;
-    @BindView(R.id.ll_user)
-    LinearLayout ll_user;
-    @BindView(R.id.tvUserDynamic)
+    @BindView(R.id.tv_user_dynamic)
     TextView tvUserDynamic;
-    @BindView(R.id.img_comment)
-    ImageView img_comment;
-    @BindView(R.id.iv_file_name)
-    ImageView ivFileName;
+    @BindView(R.id.ll_user)
+    LinearLayout llUser;
+    @BindView(R.id.view_center)
+    View viewCenter;
+    @BindView(R.id.iv_project_icon)
+    ImageView ivProjectIcon;
+    @BindView(R.id.tv_project_code)
+    TextView tvProjectCode;
+    @BindView(R.id.tv_project_name)
+    TextView tvProjectName;
+    @BindView(R.id.tv_time)
+    TextView tvTime;
+    @BindView(R.id.tv_project_folly)
+    TextView tvProjectFolly;
+    @BindView(R.id.rl_project)
+    RelativeLayout rlProject;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.tv_sore)
+    TextView tvSore;
+    @BindView(R.id.tv_desc)
+    TextView tvDesc;
+    @BindView(R.id.iv_img_max)
+    ImageView ivImgMax;
     @BindView(R.id.iv_ont)
     ImageView ivOnt;
     @BindView(R.id.iv_two)
@@ -83,33 +80,46 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     ImageView ivThree;
     @BindView(R.id.ll_multi_img)
     LinearLayout llMultiImg;
+    @BindView(R.id.rl_context)
+    RelativeLayout rlContext;
+    @BindView(R.id.tv_crack_down)
+    TextView tvCrackDown;
+    @BindView(R.id.tv_praise)
+    TextView tvPraise;
+    @BindView(R.id.img_comment)
+    ImageView imgComment;
+    @BindView(R.id.tv_comments)
+    TextView tvComments;
+    @BindView(R.id.ll_below)
+    LinearLayout llBelow;
     public MainRfFragmentRecyclerHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
     public  void  setData(final MainGzBean.DataBean.FollowsBean.RowsBean bean, Context context){
-        GlideUtils.loadCircleProjectUrl(context, img_organization,Constants.BASE_IMG_URL + bean.getProjectIcon());
+        GlideUtils.loadCircleProjectUrl(context, ivProjectIcon,Constants.BASE_IMG_URL + bean.getProjectIcon());
         showRecommend(context,bean);
-        tvName.setText(bean.getProjectCode());
-        tv_english_name.setText("/"+bean.getProjectChineseName());
+        tvProjectCode.setText(bean.getProjectCode());
+        tvProjectName.setText("/"+bean.getProjectChineseName());
         String time= TimeToolUtils.convertTimeToFormat(bean.getCreateTime());
        tvTime.setText(time);
-        tvIsFollw.setVisibility(View.VISIBLE);
+        setCrackTag(bean,bean.getPostType());
+        tvProjectFolly.setVisibility(View.VISIBLE);
         if (0 == bean.getFollowStatus()) {
-            tvIsFollw.setText("+ 关注");
-            tvIsFollw.setSelected(false);
-            tvIsFollw.setPressed(false);
-            tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
+            tvProjectFolly.setText("+ 关注");
+            tvProjectFolly.setSelected(false);
+            tvProjectFolly.setPressed(false);
+            tvProjectFolly.setTextColor(Color.parseColor("#ffffff"));
         } else if (1 == bean.getFollowStatus()) {
-            tvIsFollw.setText("已关注");
-            tvIsFollw.setSelected(true);
-            tvIsFollw.setPressed(true);
-            tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
+            tvProjectFolly.setText("已关注");
+            tvProjectFolly.setSelected(true);
+            tvProjectFolly.setPressed(true);
+            tvProjectFolly.setTextColor(Color.parseColor("#3b88f6"));
         } else {
-            tvIsFollw.setText("+ 关注");
-            tvIsFollw.setSelected(false);
-            tvIsFollw.setPressed(false);
-            tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
+            tvProjectFolly.setText("+ 关注");
+            tvProjectFolly.setSelected(false);
+            tvProjectFolly.setPressed(false);
+            tvProjectFolly.setTextColor(Color.parseColor("#ffffff"));
         }
         tvTitle.setText(bean.getPostTitle());
         tvDesc.setText(bean.getPostShortDesc());
@@ -130,25 +140,25 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 if (lists != null && lists.size()>0) {
                     if (lists.size() > 2) {
                         llMultiImg.setVisibility(View.VISIBLE);
-                        ivFileName.setVisibility(View.GONE);
+                        ivImgMax.setVisibility(View.GONE);
                         GlideUtils.loadSideMinImage(context, ivOnt, Constants.BASE_IMG_URL + lists.get(0).getUrl());
                         GlideUtils.loadSideMinImage(context, ivTwo, Constants.BASE_IMG_URL + lists.get(1).getUrl());
                         GlideUtils.loadSideMinImage(context, ivThree, Constants.BASE_IMG_URL + lists.get(2).getUrl());
                     } else {
                         llMultiImg.setVisibility(View.GONE);
-                        ivFileName.setVisibility(View.VISIBLE);
-                        GlideUtils.loadSideMaxImage(context, ivFileName, Constants.BASE_IMG_URL + lists.get(0).getUrl());
+                        ivImgMax.setVisibility(View.VISIBLE);
+                        GlideUtils.loadSideMaxImage(context, ivImgMax, Constants.BASE_IMG_URL + lists.get(0).getUrl());
                     }
                 }else{
                     llMultiImg.setVisibility(View.GONE);
-                    ivFileName.setVisibility(View.GONE);
+                    ivImgMax.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
         //关注
-        tvIsFollw.setOnClickListener(new View.OnClickListener() {
+        tvProjectFolly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!SharedUtils.getLoginZt()){
@@ -163,7 +173,7 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             }
         });
         //项目
-        rl_project.setOnClickListener(new View.OnClickListener() {
+        rlProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!SharedUtils.getLoginZt()){
@@ -174,7 +184,7 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             }
         });
         //用户
-        ll_user.setOnClickListener(new View.OnClickListener() {
+        llUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!SharedUtils.getLoginZt()){
@@ -206,15 +216,15 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             public void onCompleted(BaseRes bean) {
                 if (bean.getCode()==0){
                     if (getString().equals("已关注")) {
-                        tvIsFollw.setText("+ 关注");
-                        tvIsFollw.setSelected(false);
-                        tvIsFollw.setPressed(false);
-                        tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
+                        tvProjectFolly.setText("+ 关注");
+                        tvProjectFolly.setSelected(false);
+                        tvProjectFolly.setPressed(false);
+                        tvProjectFolly.setTextColor(Color.parseColor("#ffffff"));
                     } else {
-                        tvIsFollw.setText("已关注");
-                        tvIsFollw.setSelected(true);
-                        tvIsFollw.setPressed(true);
-                        tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
+                        tvProjectFolly.setText("已关注");
+                        tvProjectFolly.setSelected(true);
+                        tvProjectFolly.setPressed(true);
+                        tvProjectFolly.setTextColor(Color.parseColor("#3b88f6"));
                     }
                 }
             }
@@ -225,28 +235,57 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             }
         });
     }
+
     public String getString(){
-        return tvIsFollw.getText().toString();
+        return tvProjectFolly.getText().toString();
     }
 
     public void showRecommend(Context context, MainGzBean.DataBean.FollowsBean.RowsBean bean){
-        ll_user.setVisibility(View.VISIBLE);
-        GlideUtils.loadCircleUserUrl(context,img_user_head, Constants.BASE_IMG_URL + bean.getCreateUserIcon());
+        llUser.setVisibility(View.VISIBLE);
+        GlideUtils.loadCircleUserUrl(context,imgUserHead, Constants.BASE_IMG_URL + bean.getCreateUserIcon());
         tvUser.setText(bean.getCreateUserName());
         switch (bean.getPostType()){
             case 1:
                 tvUserDynamic.setText("发表了评测");
-                tvScore.setVisibility(View.VISIBLE);
-                tvScore.setText(bean.getTotalScore()+"分");
+                tvSore.setVisibility(View.VISIBLE);
+                tvSore.setText(bean.getTotalScore()+"分");
                 break;
             case 2:
-                tvScore.setVisibility(View.INVISIBLE);
+                tvSore.setVisibility(View.INVISIBLE);
                 tvUserDynamic.setText("发表了爆料");
                 break;
             case 3:
-                tvScore.setVisibility(View.INVISIBLE);
+                tvSore.setVisibility(View.INVISIBLE);
                 tvUserDynamic.setText("发表了文章");
                 break;
+        }
+    }
+
+    private void setCrackTag(MainGzBean.DataBean.FollowsBean.RowsBean discussDetail, int type){
+        String tagVal = discussDetail.getTagInfos();
+        if(type==1){
+            tagVal=discussDetail.getEvaluationTags();
+        }
+        if (StringUtil.isNotBlank(tagVal)&& tagVal.contains("tagName")) {
+            try {
+                JSONArray object = new JSONArray(tagVal);
+                //[{"tagId":1,"tagName":"进度讨论"},{"tagId":3,"tagName":"项目前景讨论"},{"tagId":4,"tagName":"打假"}]
+                String tagAll = "";
+                String tagOnly[] = new String[object.length()];
+                for (int i = 0; i < object.length(); i++) {
+                    JSONObject strObj = object.getJSONObject(i);
+                    tagOnly[i] = "#" + strObj.getString("tagName") + "#";
+                    tagAll += "#" + strObj.getString("tagName") + "#   ";
+                }
+                Clickable.getSpannableString(tagAll, tagOnly, tvCrackDown, new Clickable.ClickListener() {
+                    @Override
+                    public void setOnClick(String name) {
+                        //ToastUtils.getInstance().show(name);
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

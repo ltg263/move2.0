@@ -191,6 +191,7 @@ public class MainGzBean extends BaseRes{
                 private Object discussId;
                 private Object disscussContents;
                 private String tagInfos;
+                private String evaluationTags;
                 private List<PostSmallImagesListBean> postSmallImagesList;
 
                 public int getActionType() {
@@ -431,6 +432,14 @@ public class MainGzBean extends BaseRes{
 
                 public void setDisscussContents(Object disscussContents) {
                     this.disscussContents = disscussContents;
+                }
+
+                public String getEvaluationTags() {
+                    return evaluationTags;
+                }
+
+                public void setEvaluationTags(String evaluationTags) {
+                    this.evaluationTags = evaluationTags;
                 }
 
                 public String getTagInfos() {

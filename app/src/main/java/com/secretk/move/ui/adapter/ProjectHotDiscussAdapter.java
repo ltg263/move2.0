@@ -170,10 +170,10 @@ public class ProjectHotDiscussAdapter extends RecyclerView.Adapter<ProjectHotDis
             tvPraiseNum.setSelected(!tvPraiseNum.isSelected());
             NetUtil.setPraise(!finalIsLove.isSelected(), psotId, new NetUtil.SaveFollowImpl() {
                 @Override
-                public void finishFollow(String praiseNum,boolean status) {
+                public void finishFollow(String praiseNum,boolean status,double find) {
                     tvPraiseNum.setEnabled(true);
                     if(!praiseNum.equals(Constants.PRAISE_ERROR)){
-                        DialogUtils.showDialogPraise(context,1,true);
+                        DialogUtils.showDialogPraise(context,1,true,0);
                         hotDiscussBean.setPraiseNum(Integer.valueOf(praiseNum));
                         tvPraiseNum.setText(praiseNum);
 //                    praiseNumA = commentsBean.getPraiseNum();

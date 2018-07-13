@@ -56,4 +56,23 @@
     <dimen name="item_line_spacing">8dp</dimen>
     <dimen name="item_img_max">187dp</dimen>
     <dimen name="item_img_mix">107dp</dimen>
+
+    <!-- 列表页的 item样式开始 -->
+    <dimen name="list_item_head_img">25dp</dimen><!--顶部小头像-->
+    <dimen name="list_item_head_text">14sp</dimen><!--顶部用户名-->
+    <dimen name="list_item_head_text_f">12sp</dimen><!--顶部类型-->
+
+    <dimen name="list_item_portrait">40dp</dimen><!--头像-->
+    <dimen name="list_item_user">14sp</dimen><!--CODE-->
+    <dimen name="list_item_user_f">12sp</dimen><!--付名称-->
+    <dimen name="list_item_time">10sp</dimen><!--时间-->
+    <dimen name="list_item_follow">14sp</dimen><!--关注-->
+    <dimen name="list_item_title">16sp</dimen><!--标题-->
+    <dimen name="list_item_score">14sp</dimen><!--分数-->
+    <dimen name="list_item_details">14sp</dimen><!--详情-->
+    <dimen name="list_item_tag">12sp</dimen><!--标签-->
+    <dimen name="list_item_msg">12sp</dimen><!--赞和喜欢-->
+    <dimen name="list_item_img_max">187dp</dimen>
+    <dimen name="list_item_img_mix">107dp</dimen>
+    <!-- 列表页的 item样式结束 -->
 </resources>
