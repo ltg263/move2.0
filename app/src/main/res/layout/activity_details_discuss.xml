@@ -137,6 +137,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
+                            android:lineSpacingExtra="@dimen/item_line_spacing"
                             android:layout_margin="@dimen/dp_2"
                             android:textColor="@color/title_gray"
                             android:textSize="@dimen/sp_16" />

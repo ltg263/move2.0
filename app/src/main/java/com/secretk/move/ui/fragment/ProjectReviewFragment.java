@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.secretk.move.R;
@@ -61,6 +62,8 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
     LinearLayout llZxpcTop;
     @BindView(R.id.ll_zxpc)
     LinearLayout llZxpc;
+    @BindView(R.id.tv_sort)
+    TextView tvSort;
     private ProjectRecommendAdapter adapter;
     int pageIndex = 1;
     public boolean isHaveData = true;
@@ -70,7 +73,6 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
     private List<RowsBean> newData;
 
     SmartRefreshLayout refreshLayout;
-    private SmartRefreshLayout smartRefreshLayout;
 
     public void setRefreshLayout(SmartRefreshLayout refreshLayout) {
         this.refreshLayout = refreshLayout;
@@ -88,6 +90,21 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
         rvReview.setAdapter(adapter);
         adapterTop = new ProjectRecommendAdapter(getActivity());
         rvReviewTop.setAdapter(adapterTop);
+        tvSort.setVisibility(View.GONE);
+        tvSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String sort = tvSort.getText().toString();
+                pageIndex = 1;
+                loadingDialog.show();
+                if (sort.equals(getString(R.string.sort_love))) {
+                    tvSort.setText(getString(R.string.sort_time));
+                } else {
+                    tvSort.setText(getString(R.string.sort_love));
+                }
+                getLoadData(tvSort.getText().toString().trim());
+            }
+        });
         if(loadingDialog == null){
             loadingDialog=new LoadingDialog(getActivity());
         }
@@ -101,15 +118,22 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
             adapterTop.setData(newData);
         }
         loadingDialog.show();
-        getLoadData();
+        getLoadData("");
     }
-    public void getLoadData() {
+    /**
+     * @param sort:排毒方式     空时间   否则赞
+     */
+    public void getLoadData(String sort) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
             node.put("projectId", Integer.valueOf(projectId));
             node.put("pageIndex", pageIndex++);
             node.put("pageSize", Constants.PAGE_SIZE);
+
+            if (sort.equals(getString(R.string.sort_love))) {
+                node.put("sortField", "praise_num");//需要按点赞数倒序排序的话 增加传入参数ortField 值为字符串“praise_num”
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

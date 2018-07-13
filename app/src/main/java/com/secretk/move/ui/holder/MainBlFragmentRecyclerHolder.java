@@ -1,6 +1,7 @@
 package com.secretk.move.ui.holder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MainGzBean;
 import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.bean.base.BaseRes;
+import com.secretk.move.ui.activity.ImageViewVpAcivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
@@ -111,6 +113,9 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             tvIsFollw.setPressed(false);
             tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
         }
+        if (SharedUtils.getUserId()==bean.getCreateUserId()){
+            tvIsFollw.setVisibility(View.GONE);
+        }
         //关注
         tvIsFollw.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,9 +125,9 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                     return;
                 }
                 if (getString().equals("已关注")) {
-                    http(context,Constants.CANCEL_FOLLOW,bean.getProjectId());
+                    http(context,Constants.CANCEL_FOLLOW,bean.getCreateUserId());
                 } else {
-                    http(context,Constants.SAVE_FOLLOW,bean.getProjectId());
+                    http(context,Constants.SAVE_FOLLOW,bean.getCreateUserId());
                 }
             }
         });
@@ -149,13 +154,23 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 }
             }
         });
+        ivFileName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(context,ImageViewVpAcivity.class);
+                intent.putParcelableArrayListExtra("lists", imageLists);
+                intent.putExtra("position",0);
+                context.startActivity(intent);
+            }
+        });
 
     }
     public void http(final Context context, String url, int id) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", SharedUtils.getToken());
-            node.put("followType", 1);
+            node.put("followType", 3);
             node.put("followedId", id);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -193,7 +208,7 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         return tvIsFollw.getText().toString();
     }
 
-
+    ArrayList<PostDataInfo> imageLists;
     public void showPostDesc(MainGzBean.DataBean.FollowsBean.RowsBean bean) {
         tvTitle.setText(StringUtil.getBeanString(bean.getPostTitle()));
         tvDesc.setText(StringUtil.getBeanString(bean.getPostShortDesc()));
@@ -208,7 +223,7 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             try {
                 //{"fileUrl":"/upload/posts/201805/1.jpg","fileName":"进度讨论","extension":"jpg"},
                 JSONArray images = new JSONArray(bean.getPostSmallImages());
-                ArrayList<PostDataInfo> imageLists = new ArrayList<>();
+                imageLists = new ArrayList<>();
                 for (int i = 0; i < images.length(); i++) {
                     JSONObject strObj = images.getJSONObject(i);
                     PostDataInfo info = new PostDataInfo();
@@ -220,8 +235,10 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 if (imageLists.size() != 0) {
                     if (imageLists.size() == 1) {
                         ivFileName.setVisibility(View.VISIBLE);
+                        rvImg.setVisibility(View.GONE);
                         GlideUtils.loadSideMaxImage(mContext, ivFileName, Constants.BASE_IMG_URL + imageLists.get(0).getUrl());
                     } else {
+                        ivFileName.setVisibility(View.GONE);
                         rvImg.setVisibility(View.VISIBLE);
                         imagesadapter.setData(imageLists);
                     }
@@ -230,6 +247,7 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 e.printStackTrace();
             }
         }
+
         if (StringUtil.isNotBlank(bean.getTagInfos())&& bean.getTagInfos().contains("tagName")) {
             try {
                 JSONArray object = new JSONArray(bean.getTagInfos());

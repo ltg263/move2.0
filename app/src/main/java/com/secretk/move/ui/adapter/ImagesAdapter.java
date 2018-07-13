@@ -50,9 +50,6 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesHold
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String key[]={"imgUrl","imgName"};
-//                String values[]={lists.get(position).getUrl(),lists.get(position).getName()};
-//                IntentUtil.startActivity(ImageViewVpAcivity.class,key,values);
                 Intent intent = new Intent(context,ImageViewVpAcivity.class);
                 intent.putParcelableArrayListExtra("lists", (ArrayList<? extends Parcelable>) lists);
                 intent.putExtra("position",position);

@@ -162,7 +162,8 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
             }
         }
         if (SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken())) {
-            if (!current.equals(SharedUtils.singleton().get("isShowSmWind", "")) && userCardStatus==4) {
+            if (!current.equals(SharedUtils.singleton().get("isShowSmWind", ""))
+                    && (userCardStatus==4 || userCardStatus==3)) {
                 SharedUtils.singleton().put("isShowSmWind", StringUtil.getTimeToM(System.currentTimeMillis()));
                 showSmWind();
             }

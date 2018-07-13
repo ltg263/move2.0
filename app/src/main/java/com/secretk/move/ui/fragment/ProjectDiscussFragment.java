@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.secretk.move.R;
@@ -46,6 +47,8 @@ public class ProjectDiscussFragment extends LazyFragment {
     LinearLayout llNew;
     @BindView(R.id.iv_not_content)
     ImageView ivNotContent;
+    @BindView(R.id.tv_sort)
+    TextView tvSort;
 
     private ProjectRecommendAdapter adapterNot;
     private ProjectRecommendAdapter adapterNew;
@@ -72,6 +75,21 @@ public class ProjectDiscussFragment extends LazyFragment {
         rvReviewHot.setAdapter(adapterNot);
         adapterNew = new ProjectRecommendAdapter(getActivity());
         rvReviewNewest.setAdapter(adapterNew);
+        tvSort.setVisibility(View.GONE);
+        tvSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String sort = tvSort.getText().toString();
+                pageIndex = 1;
+                loadingDialog.show();
+                if (sort.equals(getString(R.string.sort_love))) {
+                    tvSort.setText(getString(R.string.sort_time));
+                } else {
+                    tvSort.setText(getString(R.string.sort_love));
+                }
+                getLoadData(tvSort.getText().toString().trim());
+            }
+        });
         if(loadingDialog == null){
             loadingDialog=new LoadingDialog(getActivity());
         }
@@ -85,16 +103,20 @@ public class ProjectDiscussFragment extends LazyFragment {
             adapterNot.setData(newData);
         }
         loadingDialog.show();
-        getLoadData();
+        getLoadData("");
     }
 
-    public void getLoadData() {
+    public void getLoadData(String sort) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
             node.put("projectId", Integer.valueOf(projectId));
             node.put("pageIndex", pageIndex++);
             node.put("pageSize", Constants.PAGE_SIZE);
+
+            if (sort.equals(getString(R.string.sort_love))) {
+                node.put("sortField", "praise_num");//需要按点赞数倒序排序的话 增加传入参数ortField 值为字符串“praise_num”
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

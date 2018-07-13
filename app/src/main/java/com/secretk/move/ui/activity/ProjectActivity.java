@@ -277,12 +277,12 @@ public class ProjectActivity extends BaseActivity {
                 switch (viewPager.getCurrentItem()) {
                     case 1:
                         if (reviewFragment.isHaveData) {
-                            reviewFragment.getLoadData();
+                            reviewFragment.getLoadData("");
                         }
                         break;
                     case 2:
                         if (discussFragment.isHaveData) {
-                            discussFragment.getLoadData();
+                            discussFragment.getLoadData("");
                         }
                         break;
                     case 3:
