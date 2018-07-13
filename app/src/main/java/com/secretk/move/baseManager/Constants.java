@@ -102,7 +102,7 @@ public interface Constants {
 //     String BASE_URL = "http://192.168.10.151:809/";//栋栋
 
 //      String BASE_URL = "http://repay.free.ngrok.cc/rest/";//林俊
-//:15537894586   abc12310
+    //:15537894586   abc12310
 //    String BASE_URL = "http://47.98.197.101/rest/";//宋
 
     /**
@@ -140,7 +140,7 @@ public interface Constants {
 
     //发送验证码通用接口
 //    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/send";
-    ////发送验证码通用接口 阿里云 modue ：login   register    forgetPassword
+    ////发送验证码通用接口 阿里云 module ：login   register    forgetPassword
     String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/sendAliyun";
 
     String TOKEN_POP = BASE_URL + "kff/user/tokenPOP";
@@ -297,7 +297,8 @@ public interface Constants {
     String RELEASE_DISCUSS_LIST = BASE_URL + "kff/discuss/tagList";
     String RELEASE_ARTICLE = BASE_URL + "kff/article/saveArticle";
     String RELEASE_DISCUSS = BASE_URL + "kff/discuss/saveDiscuss";
-    String SEARCH_PROJECTS = BASE_URL + "kff/project/searchProjects";
+//    String SEARCH_PROJECTS = BASE_URL + "kff/project/searchProjects";
+    String SEARCH_PROJECTS = BASE_URL + "kff/project/getProjectPage";
 
     /**
      * 1-关注项目;2-关注帖子；3-关注用户

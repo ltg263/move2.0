@@ -98,7 +98,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recycler_horizontal.setLayoutManager(layoutManager);
         recycler_horizontal.setAdapter(releaseArticleLabelAdapter);
-        releaseArticleLabelAdapter.setItemListener(this);
+//       releaseArticleLabelAdapter.setItemListener(this);
 
         ed_title.setHint(Html.fromHtml("请输入标题 <small>(6-60字之间)</small>"));
         loadingDialog = new LoadingDialog(this);

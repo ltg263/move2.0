@@ -69,7 +69,7 @@ android {
         versionCode 4
         versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        /* 个推 */
         manifestPlaceholders = [
                 GETUI_APP_ID : "rle2SitgpE93gTHd9Ow317",
                 GETUI_APP_KEY : "ZYsO97l4KP7adbQJDUqXt5",
@@ -78,8 +78,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+//            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.move
         }
@@ -121,7 +121,7 @@ dependencies {
     implementation 'com.nex3z:flow-layout:1.0.0'
     implementation 'com.jzxiang.pickerview:TimePickerDialog:1.0.1'
     implementation 'org.jsoup:jsoup:1.10.2'
-    implementation 'com.android.support:appcompat-v7:27.0.2'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
 //    //下拉刷新框架
 //    https://github.com/scwang90/SmartRefreshLayout
@@ -132,6 +132,10 @@ dependencies {
     implementation 'com.qiniu:qiniu-android-sdk:7.3.+'  //最新版本
     //个推
     implementation files('libs/GetuiSDK2.12.4.0.jar')
-    implementation 'com.android.support:support-v4'
+//    implementation 'com.android.support:support-v4'
 
+//    implementation files('libs/umeng-common-1.5.3.jar')
+//    注意：统计SDK必须依赖基础组件库。所以需要加入对应依赖:
+    implementation 'com.umeng.sdk:common:latest.integration'
+    implementation 'com.umeng.sdk:analytics:latest.integration'
 }

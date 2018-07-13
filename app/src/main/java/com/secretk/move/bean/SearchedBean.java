@@ -140,7 +140,7 @@ public class SearchedBean  extends BaseRes {
                 private int listed;
                 private long issueDate;
                 private String issueDateStr;
-                private int issueNum;
+                private double issueNum;
                 private String whitepaperUrl;
                 private String projectTypeName;
                 private int projectTypeId;
@@ -275,11 +275,11 @@ public class SearchedBean  extends BaseRes {
                     this.issueDateStr = issueDateStr;
                 }
 
-                public int getIssueNum() {
+                public double getIssueNum() {
                     return issueNum;
                 }
 
-                public void setIssueNum(int issueNum) {
+                public void setIssueNum(double issueNum) {
                     this.issueNum = issueNum;
                 }
 

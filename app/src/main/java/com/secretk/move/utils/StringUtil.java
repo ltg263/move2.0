@@ -454,11 +454,9 @@ public class StringUtil {
         try {
             Document doc= Jsoup.parse(htmltext);
             Elements elements=doc.getElementsByTag("img");
-            LogUtil.w("elements.toString():"+elements.toString());
             for (Element element : elements) {
                 element.attr("width","100%").attr("height","auto");
             }
-            LogUtil.w("doc.toString():"+doc.toString());
             return doc.toString();
         } catch (Exception e) {
             return htmltext;
