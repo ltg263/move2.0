@@ -39,6 +39,8 @@ import butterknife.ButterKnife;
 public class MineCollectHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.img_user_head)
     ImageView imgUserHead;
+    @BindView(R.id.iv_model_icon)
+    ImageView ivModelIcon;
     @BindView(R.id.tv_user)
     TextView tvUser;
     @BindView(R.id.tv_user_dynamic)
@@ -101,6 +103,7 @@ public class MineCollectHolder extends RecyclerViewBaseHolder {
         tvTime.setText(TimeToolUtils.convertTimeToFormat(rowsBean.getCreateTime()));
         tvTitle.setText(rowsBean.getPostTitle());
         tvDesc.setText(rowsBean.getPostShortDesc());
+        StringUtil.getUserType(rowsBean.getCreateUserType(),ivModelIcon);
         tvPraise.setText(String.valueOf(rowsBean.getPraiseNum()));
         tvComments.setText(String.valueOf(rowsBean.getCommentsNum()));
         String postType="";

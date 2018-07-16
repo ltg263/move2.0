@@ -41,6 +41,8 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
     RelativeLayout rlHead;
     @BindView(R.id.img_user_head)
     ImageView imgUserHead;
+    @BindView(R.id.iv_model_icon_d)
+    ImageView ivModelIconD;
     @BindView(R.id.tv_user)
     TextView tvUser;
     @BindView(R.id.tv_user_dynamic)
@@ -106,6 +108,7 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
         tvDesc.setText(rowsBean.getPostShortDesc());
         tvPraise.setText(String.valueOf(rowsBean.getPraiseNum()));
         tvComments.setText(String.valueOf(rowsBean.getCommentsNum()));
+        StringUtil.getUserType(rowsBean.getCreateUserType(),ivModelIconD);
         String professionalEvaDetail = rowsBean.getProfessionalEvaDetail();
         String professional = "";
         if (StringUtil.isNotBlank(professionalEvaDetail)) {

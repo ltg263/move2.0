@@ -80,8 +80,8 @@ public class DetailsArticleActivity extends BaseActivity {
     PileLayout pileLayout;
     @BindView(R.id.iv_model_icon)
     ImageView ivModelIcon;
-    @BindView(R.id.iv_model_icon_1)
-    ImageView ivModelIcon1;
+    @BindView(R.id.iv_model_icon_d)
+    ImageView ivModelIconD;
     @BindView(R.id.tv_donate_num)
     TextView tvDonateNum;
     @BindView(R.id.tv_praise_status)
@@ -229,8 +229,8 @@ public class DetailsArticleActivity extends BaseActivity {
         if (initData.getUserType() != 1) {
             ivModelIcon.setVisibility(View.VISIBLE);
             StringUtil.getUserType(initData.getUserType(), ivModelIcon);
-//            ivModelIcon1.setVisibility(View.VISIBLE);
-            StringUtil.getUserType(initData.getUserType(), ivModelIcon1);
+//            ivModelIconD.setVisibility(View.VISIBLE);
+            StringUtil.getUserType(initData.getUserType(), ivModelIconD);
         }
         createUserId = initData.getCreateUserId();
         //,//"0 未关注；1-已关注；2-不显示关注按钮"\

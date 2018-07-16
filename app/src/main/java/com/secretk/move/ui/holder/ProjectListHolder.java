@@ -40,6 +40,8 @@ public class ProjectListHolder extends RecyclerViewBaseHolder {
     RelativeLayout rlHead;
     @BindView(R.id.img_user_head)
     ImageView imgUserHead;
+    @BindView(R.id.iv_model_icon_d)
+    ImageView ivModelIconD;
     @BindView(R.id.tv_user)
     TextView tvUser;
     @BindView(R.id.tv_user_dynamic)
@@ -106,6 +108,7 @@ public class ProjectListHolder extends RecyclerViewBaseHolder {
         tvComments.setText(String.valueOf(rowsBean.getCommentsNum()));
         rlHead.setVisibility(View.GONE);
         tvProjectFolly.setVisibility(View.GONE);
+        StringUtil.getUserType(rowsBean.getCreateUserType(),ivModelIconD);
         switch (rowsBean.getPostType()) {//帖子类型，数字，帖子类型：1-评测；2-讨论；3-文章
             case 1:
                 tvSore.setText(String.valueOf(rowsBean.getTotalScore())+"分");

@@ -44,6 +44,8 @@ import butterknife.ButterKnife;
 public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.img_user_head)
     ImageView imgUserHead;
+    @BindView(R.id.iv_model_icon)
+    ImageView ivModelIcon;
     @BindView(R.id.tv_user)
     TextView tvUser;
     @BindView(R.id.tv_user_dynamic)
@@ -104,6 +106,7 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvProjectCode.setText(StringUtil.getBeanString(bean.getProjectCode()));
         tvProjectName.setText("/"+StringUtil.getBeanString(bean.getProjectChineseName()));
         tvTime.setText(TimeToolUtils.convertTimeToFormat(bean.getCreateTime()));
+        StringUtil.getUserType(bean.getCreateUserType(),ivModelIcon);
         tvProjectFolly.setVisibility(View.VISIBLE);
         if (0 == bean.getFollowStatus()) {
             tvProjectFolly.setText(context.getString(R.string.follow_status_0));
