@@ -58,6 +58,8 @@ public class HomeActivity extends BaseActivity {
     ImageView ivHead;
     @BindView(R.id.tv_user_name)
     TextView tvUserName;
+    @BindView(R.id.iv_model_icon)
+    ImageView ivModelIcon;
     @BindView(R.id.iv_model_type)
     ImageView ivModelType;
     @BindView(R.id.tv_evaluating_sign)
@@ -179,6 +181,8 @@ public class HomeActivity extends BaseActivity {
                 if (userData.getUserType() != 1) {
                     tvEvaluatingSign.setVisibility(View.VISIBLE);
                     ivModelType.setVisibility(View.VISIBLE);
+//                    ivModelIcon.setVisibility(View.VISIBLE);
+                    StringUtil.getUserType(userData.getUserType(), ivModelIcon);
                     tvEvaluatingSign.setText(StringUtil.getUserType(userData.getUserType(), ivModelType));
                 }
                 //“showFollow”: 0 , //是否显示 关注按钮 0- 不显示；1-显示关注  2-显示取消关注

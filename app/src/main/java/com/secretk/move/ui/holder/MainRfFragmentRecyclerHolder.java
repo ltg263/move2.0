@@ -44,6 +44,8 @@ import butterknife.ButterKnife;
 public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.img_user_head)
     ImageView imgUserHead;
+    @BindView(R.id.iv_model_icon)
+    ImageView ivModelIcon;
     @BindView(R.id.tv_user)
     TextView tvUser;
     @BindView(R.id.tv_user_dynamic)
@@ -241,6 +243,7 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     public void showRecommend(Context context, MainGzBean.DataBean.FollowsBean.RowsBean bean){
         llUser.setVisibility(View.VISIBLE);
         GlideUtils.loadCircleUserUrl(context,imgUserHead, Constants.BASE_IMG_URL + bean.getCreateUserIcon());
+        StringUtil.getUserType(bean.getCreateUserType(),ivModelIcon);
         tvUser.setText(bean.getCreateUserName());
         switch (bean.getPostType()){
             case 1:

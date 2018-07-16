@@ -220,6 +220,8 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
                 break;
             case R.id.tv_search_1:
                 intent = new Intent(this, SearchActivity.class);
+                intent.putExtra("publication_type",publicationType);
+                intent.putExtra("search_type",-1);
                 startActivity(intent);
                 break;
             case R.id.tv_search:

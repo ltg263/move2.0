@@ -175,6 +175,7 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         JSONObject node = new JSONObject();
         try {
             node.put("token", SharedUtils.getToken());
+//            1-关注项目;2-关注帖子；3-关注用户
             node.put("followType", 1);
             node.put("followedId", id);
         } catch (JSONException e) {

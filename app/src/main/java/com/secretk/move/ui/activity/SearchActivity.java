@@ -1,5 +1,6 @@
 package com.secretk.move.ui.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,8 +17,8 @@ import com.secretk.move.bean.SearchedBean;
 import com.secretk.move.contract.ActivitySearchContract;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.presenter.ActivitySearchPresenterImpl;
-import com.secretk.move.ui.adapter.SearchHistoryAdapter;
 import com.secretk.move.ui.adapter.FindFragmentRecyclerAdapter;
+import com.secretk.move.ui.adapter.SearchHistoryAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
@@ -45,6 +46,8 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
     private LinearLayoutManager layoutManager;
     private SearchHistoryAdapter historyAdapter;
     private FindFragmentRecyclerAdapter adapter;
+    private int publicationType;
+
     @Override
     protected int setLayout() {
         return R.layout.activity_search;
@@ -63,9 +66,34 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
         historyAdapter = new SearchHistoryAdapter();
         adapter = new FindFragmentRecyclerAdapter(this);
         historyAdapter.setItemListener(this);
+        final int searchType = getIntent().getIntExtra("search_type", 0);
+        if(searchType==-1){
+            publicationType = getIntent().getIntExtra("publication_type", 0);
+
+        }
         adapter.setItemListener(new ItemClickListener() {
             @Override
             public void onItemClick(View view, int postion) {
+                if(searchType==-1){
+                    SearchedBean.DataBean.ProjectsBean.RowsBean bean = adapter.getData().get(postion);
+                    if (publicationType == 1) {
+                        IntentUtil.startProjectSimplenessActivity(bean.getProjectId(), bean.getProjectIcon(),
+                                bean.getProjectChineseName(), bean.getProjectCode());
+                    } else if (publicationType == 2) {
+                        Intent intent = new Intent(SearchActivity.this, ReleaseArticleActivity.class);
+                        intent.putExtra("projectId", bean.getProjectId());
+                        intent.putExtra("projectPay", bean.getProjectCode());
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(SearchActivity.this, ReleaseDiscussActivity.class);
+                        intent.putExtra("projectId", bean.getProjectId());
+                        intent.putExtra("projectPay", bean.getProjectCode());
+                        startActivity(intent);
+                    }
+                    return;
+                }
+
+
                 boolean isLoginZt = SharedUtils.singleton().get(Constants.IS_LOGIN_KEY,false);
                 if(isLoginZt){
                     int id = adapter.getData().get(postion).getProjectId();
@@ -73,6 +101,11 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
                 }else{
                     IntentUtil.startActivity(LoginHomeActivity.class);
                 }
+                if(!isLoginZt){
+                    IntentUtil.startActivity(LoginHomeActivity.class);
+                    return;
+                }
+
             }
 
             @Override

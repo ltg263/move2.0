@@ -100,6 +100,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
     TextView tvCommentsNum;
     @BindView(R.id.iv_model_icon)
     ImageView ivModelIcon;
+    @BindView(R.id.iv_model_icon_1)
+    ImageView ivModelIcon1;
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
     @BindView(R.id.wv_post_short_desc)
@@ -259,6 +261,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
         if(evaluationDetail.getUserType()!=1){
             ivModelIcon.setVisibility(View.VISIBLE);
             StringUtil.getUserType(evaluationDetail.getUserType(),ivModelIcon);
+//           ivModelIcon1.setVisibility(View.VISIBLE);
+            StringUtil.getUserType(evaluationDetail.getUserType(), ivModelIcon1);
         }
         tvCreateUserSignature.setText(StringUtil.getBeanString(evaluationDetail.getCreateUserSignature()));
         //,//"0 未关注；1-已关注；2-不显示关注按钮"\

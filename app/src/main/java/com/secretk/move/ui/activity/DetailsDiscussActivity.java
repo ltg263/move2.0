@@ -89,6 +89,8 @@ public class DetailsDiscussActivity extends BaseActivity {
     TextView tvCreateUserName;
     @BindView(R.id.iv_model_icon)
     ImageView ivModelIcon;
+    @BindView(R.id.iv_model_icon_1)
+    ImageView ivModelIcon1;
     @BindView(R.id.tv_create_user_signature)
     TextView tvCreateUserSignature;
     @BindView(R.id.iv_post_small_images)
@@ -401,6 +403,8 @@ public class DetailsDiscussActivity extends BaseActivity {
                 if(discussDetail.getUserType()!=1){
                     ivModelIcon.setVisibility(View.VISIBLE);
                     StringUtil.getUserType(discussDetail.getUserType(),ivModelIcon);
+//                    ivModelIcon1.setVisibility(View.VISIBLE);
+                    StringUtil.getUserType(discussDetail.getUserType(), ivModelIcon1);
                 }
                 tvCreateUserName.setText(discussDetail.getCreateUserName());
                 userId = discussDetail.getCreateUserId();

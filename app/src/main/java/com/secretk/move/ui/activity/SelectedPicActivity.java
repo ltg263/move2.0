@@ -152,11 +152,11 @@ public class SelectedPicActivity extends AppCompatActivity {
             holder.img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (picArray.size() + lastActivityPicNum >= maxPicNum) {
-                        ToastUtils.getInstance().show("最多选择" + maxPicNum + "张照片");
-                        return;
-                    }
                     if (picArray.get(bean.getId()) == null) {
+                        if (picArray.size() + lastActivityPicNum >= maxPicNum) {
+                            ToastUtils.getInstance().show("最多选择" + maxPicNum + "张照片");
+                            return;
+                        }
                         picArray.put(bean.getId(), bean);
                     } else {
                         picArray.delete(bean.getId());

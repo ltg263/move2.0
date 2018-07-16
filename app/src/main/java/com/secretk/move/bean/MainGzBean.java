@@ -183,6 +183,7 @@ public class MainGzBean extends BaseRes{
                 private String createUserIcon;
                 private String createUserSignature;
                 private String createUserName;
+                private int createUserType;
                 private long createTime;
                 private String createTimeStr;
                 private Object updateTime;
@@ -193,6 +194,14 @@ public class MainGzBean extends BaseRes{
                 private String tagInfos;
                 private String evaluationTags;
                 private List<PostSmallImagesListBean> postSmallImagesList;
+
+                public int getCreateUserType() {
+                    return createUserType;
+                }
+
+                public void setCreateUserType(int createUserType) {
+                    this.createUserType = createUserType;
+                }
 
                 public int getActionType() {
                     return actionType;

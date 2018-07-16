@@ -134,6 +134,17 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             }
         });
         //用户
+        imgOrganization.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!SharedUtils.getLoginZt()){
+                    IntentUtil.startActivity(LoginHomeActivity.class);
+                    return;
+                }
+                IntentUtil.startHomeActivity(bean.getCreateUserId());
+            }
+        });
+        //用户
         rlProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

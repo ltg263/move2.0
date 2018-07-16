@@ -131,7 +131,7 @@ public class MineRecommendActivity extends BaseActivity {
         } else {
             ToastUtils.getInstance().show("复制失败，请重新复制");
         }
-        String contant = "注册区分领取10wFIND，注册即送50,000FIND≈¥2500,邀请好友再送2500FIND。深度了解区块链项目，听听其他投资者的声音，速戳：";
+        String contant = "注册区分领取6wFIND，注册即送30,000FIND≈¥1500,邀请好友再送30,000FIND。深度了解区块链项目，听听其他投资者的声音，速戳：";
         cmb.setPrimaryClip(ClipData.newPlainText(null,contant+tvLink.getText().toString()));
     }
 
