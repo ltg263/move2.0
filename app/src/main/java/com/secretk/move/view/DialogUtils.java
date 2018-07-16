@@ -507,9 +507,10 @@ public class DialogUtils {
             if(find!=0){
                 tv_find.setVisibility(View.VISIBLE);
                 if(find == (int)find){
-                    find= (int)find;
+                    tv_find.setText("+"+(int)find+"FIND");
+                }else{
+                    tv_find.setText("+"+find+"FIND");
                 }
-                tv_find.setText("+"+find+"FIND");
             }
         }else{
             tv_praise.setVisibility(View.GONE);

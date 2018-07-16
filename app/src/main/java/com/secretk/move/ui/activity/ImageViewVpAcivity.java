@@ -6,8 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -16,7 +14,9 @@ import com.secretk.move.base.BaseActivity;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.ui.fragment.ImageViewVpFragments;
+import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.UiUtils;
 import com.secretk.move.view.AppBarHeadView;
 
 import java.util.ArrayList;
@@ -62,10 +62,10 @@ public class ImageViewVpAcivity extends BaseActivity {
     @Override
     protected int setOnCreate() {
         //去除title
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //去掉Activity上面的状态栏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+////        //去掉Activity上面的状态栏
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         return R.layout.activity_guide;
     }
 
@@ -77,6 +77,8 @@ public class ImageViewVpAcivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        StatusBarUtil.setLightMode(this);
+        StatusBarUtil.setColor(this, UiUtils.getColor(R.color.black), 0);
         lists = getIntent().getParcelableArrayListExtra("lists");
         position = getIntent().getIntExtra("position", 0);
 

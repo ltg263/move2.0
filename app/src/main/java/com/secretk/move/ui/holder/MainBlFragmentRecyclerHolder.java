@@ -56,6 +56,8 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     TextView tvIsFollw;
     @BindView(R.id.rl_project)
     RelativeLayout rlProject;
+    @BindView(R.id.rl)
+    RelativeLayout rl;
     @BindView(R.id.tvTitle)
     TextView tvTitle;
     @BindView(R.id.tvDesc)
@@ -142,7 +144,7 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 IntentUtil.startHomeActivity(bean.getCreateUserId());
             }
         });
-        rlContext.setOnClickListener(new View.OnClickListener() {
+        rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (SharedUtils.getLoginZt()) {
@@ -217,7 +219,8 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
 
         imagesadapter = new ImagesAdapter(mContext);
         rvImg.setAdapter(imagesadapter);
-
+        ivFileName.setVisibility(View.GONE);
+        rvImg.setVisibility(View.GONE);
 
         if(StringUtil.isNotBlank(bean.getPostSmallImages())){
             try {

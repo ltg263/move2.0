@@ -15,6 +15,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
         android:layout_marginHorizontal="100dp"
+        android:gravity="center"
         android:orientation="horizontal"
         android:visibility="gone">
 
@@ -22,16 +23,16 @@
             android:id="@+id/rb_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/dp_5"
             android:button="@drawable/selector_dot"
             android:enabled="false"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <RadioButton
             android:id="@+id/rb_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/dp_5"
             android:button="@drawable/selector_dot"
             android:enabled="false"
             android:visibility="gone" />
@@ -40,16 +41,16 @@
             android:id="@+id/rb_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/dp_5"
             android:button="@drawable/selector_dot"
-            android:visibility="gone"
-            android:enabled="false" />
+            android:enabled="false"
+            android:visibility="gone" />
 
         <RadioButton
             android:id="@+id/rb_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/dp_5"
             android:button="@drawable/selector_dot"
             android:enabled="false"
             android:visibility="gone" />
@@ -58,7 +59,7 @@
             android:id="@+id/rb_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/dp_5"
             android:button="@drawable/selector_dot"
             android:enabled="false"
             android:visibility="gone" />
@@ -67,16 +68,16 @@
             android:id="@+id/rb_6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/dp_5"
             android:button="@drawable/selector_dot"
-            android:visibility="gone"
-            android:enabled="false" />
+            android:enabled="false"
+            android:visibility="gone" />
 
         <RadioButton
             android:id="@+id/rb_7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/dp_5"
             android:button="@drawable/selector_dot"
             android:enabled="false"
             android:visibility="gone" />
@@ -85,16 +86,16 @@
             android:id="@+id/rb_8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/dp_5"
             android:button="@drawable/selector_dot"
-            android:visibility="gone"
-            android:enabled="false" />
+            android:enabled="false"
+            android:visibility="gone" />
 
         <RadioButton
             android:id="@+id/rb_9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/dp_5"
             android:button="@drawable/selector_dot"
             android:enabled="false"
             android:visibility="gone" />
