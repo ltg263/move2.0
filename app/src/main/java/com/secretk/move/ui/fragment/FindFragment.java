@@ -161,8 +161,9 @@ public class FindFragment extends LazyFragment implements ItemClickListener, Qui
     int pageIndex = 1;
     public void http(final int type) {
         if(!showFragment){
-            loadingDialog.show();
+//            loadingDialog.show();
         }
+        loadingDialog.show();
         showFragment=true;
         JSONObject node = new JSONObject();
         try {

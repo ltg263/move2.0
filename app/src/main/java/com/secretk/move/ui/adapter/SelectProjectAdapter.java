@@ -55,6 +55,10 @@ public class SelectProjectAdapter extends RecyclerView.Adapter<SelectProjectHold
         this.projectId = projectId;
         notifyDataSetChanged();
     }
+    public void addData(List<SearchedBean.DataBean.ProjectsBean.RowsBean> list) {
+        this.listNum.addAll(list);
+        notifyDataSetChanged();
+    }
 
     public List<SearchedBean.DataBean.ProjectsBean.RowsBean> getData() {
         return listNum;

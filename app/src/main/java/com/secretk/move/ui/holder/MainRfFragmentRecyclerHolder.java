@@ -90,8 +90,6 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     ImageView imgComment;
     @BindView(R.id.tv_comments)
     TextView tvComments;
-    @BindView(R.id.ll_below)
-    LinearLayout llBelow;
     public MainRfFragmentRecyclerHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -266,6 +264,7 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         if(type==1){
             tagVal=discussDetail.getEvaluationTags();
         }
+        tvCrackDown.setVisibility(View.GONE);
         if (StringUtil.isNotBlank(tagVal)&& tagVal.contains("tagName")) {
             try {
                 JSONArray object = new JSONArray(tagVal);
@@ -277,6 +276,7 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                     tagOnly[i] = "#" + strObj.getString("tagName") + "#";
                     tagAll += "#" + strObj.getString("tagName") + "#   ";
                 }
+                tvCrackDown.setVisibility(View.VISIBLE);
                 Clickable.getSpannableString(tagAll, tagOnly, tvCrackDown, new Clickable.ClickListener() {
                     @Override
                     public void setOnClick(String name) {

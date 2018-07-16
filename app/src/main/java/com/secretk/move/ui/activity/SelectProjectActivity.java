@@ -2,6 +2,7 @@ package com.secretk.move.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
@@ -100,18 +102,26 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
         loadingDialog.show();
     }
     private void initRefresh() {
-        refreshLayout.setEnableLoadMore(false);
-        refreshLayout.setEnableRefresh(false);
+//        refreshLayout.setEnableLoadMore(false);
+//        refreshLayout.setEnableRefresh(false);
         /**
          * 下拉刷新
          */
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                pageIndex=1;
+                initData();
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 initData();
             }
         });
     }
+    int pageIndex=1;
     @Override
     protected void initData() {
         JSONObject node = new JSONObject();
@@ -119,8 +129,8 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
             node.put("token", token);
             node.put("projectCode", "");
             node.put("sortType", 2);
-            node.put("pageIndex", 1);
-            node.put("pageSize", 500);
+            node.put("pageIndex", pageIndex++);
+            node.put("pageSize", 20);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -131,20 +141,35 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
                 .build();
         RetrofitUtil.request(params, SearchedBean.class, new HttpCallBackImpl<SearchedBean>() {
             @Override
-            public void onCompleted(SearchedBean bean) {
-                list = bean.getData().getProjects().getRows();
-                tvCount.setText("共" + list.size() + "个币种");
-                adapter.setData(list,projectId);
+            public void onCompleted(SearchedBean detailsBean) {
+                if (detailsBean.getData().getProjects() == null || detailsBean.getData().getProjects().getRows().size() == 0) {
+                    findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+                    refreshLayout.setVisibility(View.GONE);
+                    return;
+                }
+                if (detailsBean.getData().getProjects().getCurPageNum() == detailsBean.getData().getProjects().getPageSize()) {
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                }
+                list =  detailsBean.getData().getProjects().getRows();
+                tvCount.setText("共" + detailsBean.getData().getProjects().getRowCount() + "个币种");
+                if (pageIndex > 2) {
+                    adapter.addData(list);
+                } else {
+                    adapter.setData(list,projectId);
+                }
             }
 
 
             @Override
             public void onFinish() {
                 super.onFinish();
+                loadingDialog.dismiss();
                 if (refreshLayout.isEnableRefresh()) {
                     refreshLayout.finishRefresh();
                 }
-                loadingDialog.dismiss();
+                if (refreshLayout.isEnableLoadMore()) {
+                    refreshLayout.finishLoadMore();
+                }
             }
         });
     }
@@ -186,14 +211,21 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
 
     }
 
-    @OnClick({R.id.img_return, R.id.tv_search})
+    @OnClick({R.id.img_return, R.id.tv_search_1,R.id.tv_search})
     public void onViewClicked(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.img_return:
                 finish();
                 break;
+            case R.id.tv_search_1:
+                intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
+                break;
             case R.id.tv_search:
-                searchProject();
+//                searchProject();
+                intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
                 break;
         }
     }

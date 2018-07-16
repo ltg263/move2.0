@@ -75,7 +75,6 @@ public class ProjectDiscussFragment extends LazyFragment {
         rvReviewHot.setAdapter(adapterNot);
         adapterNew = new ProjectRecommendAdapter(getActivity());
         rvReviewNewest.setAdapter(adapterNew);
-        tvSort.setVisibility(View.GONE);
         tvSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
