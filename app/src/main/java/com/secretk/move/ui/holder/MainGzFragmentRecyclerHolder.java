@@ -132,6 +132,7 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             showFollow(bean.getPostType(),bean.getTotalScore(),bean);
             llBelow.setVisibility(View.VISIBLE);
             rlContext.setVisibility(View.VISIBLE);
+
             showPostDesc(bean,context);
         }
         //关注
@@ -250,6 +251,8 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvDesc.setText(StringUtil.getBeanString(bean.getPostShortDesc()));
         tvPraise.setText(bean.getPraiseNum() + "");
         tvComments.setText(bean.getCommentsNum() + "");
+        llMultiImg.setVisibility(View.GONE);
+        ivImgMax.setVisibility(View.GONE);
 
         if(StringUtil.isNotBlank(bean.getPostSmallImages())){
             try {

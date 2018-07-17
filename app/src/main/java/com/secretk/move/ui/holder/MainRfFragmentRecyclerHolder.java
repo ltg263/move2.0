@@ -125,6 +125,8 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvDesc.setText(bean.getPostShortDesc());
         tvPraise.setText(bean.getPraiseNum() + "");
         tvComments.setText(bean.getCommentsNum() + "");
+        llMultiImg.setVisibility(View.GONE);
+        ivImgMax.setVisibility(View.GONE);
         if(StringUtil.isNotBlank(bean.getPostSmallImages())){
             try {
                 JSONArray images = new JSONArray(bean.getPostSmallImages());
