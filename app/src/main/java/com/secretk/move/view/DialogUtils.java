@@ -428,15 +428,15 @@ public class DialogUtils {
      * @param context
      * @param
      */
-    public static void showDialogAppUpdate(final Context context, boolean force,String contact, final ErrorDialogInterface anInterface) {
+    public static void showDialogAppUpdate(final Context context, final boolean force, String contact, final ErrorDialogInterface anInterface) {
         final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_app_update, null);
         TextView tv_update_name = view.findViewById(R.id.tv_update_name);
         TextView tv_bnt = view.findViewById(R.id.tv_bnt);
         ImageView iv_cloes = view.findViewById(R.id.iv_cloes);
-//        if(force){
-//            iv_cloes.setVisibility(View.GONE);
-//        }
+        if(force){
+            iv_cloes.setVisibility(View.GONE);
+        }
         tv_update_name.setText(contact);
         tv_bnt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -455,7 +455,9 @@ public class DialogUtils {
             @Override
             public void onCancel(DialogInterface dialog) {
                 if(context instanceof MainActivity){
-                    ((MainActivity)context).finish();
+                    if(force){
+                        ((MainActivity)context).finish();
+                    }
                 }
             }
         });
