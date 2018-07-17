@@ -97,12 +97,12 @@ public interface Constants {
     String QUNIU_IMG_RUL = "https://pic.qufen.top/";
 
 
-    String BASE_URL = "http://app.qufen.top/rest/";//线上
-
-//     String BASE_URL = "http://192.168.10.151:809/";//栋栋
-
+//    String BASE_URL = "http://app.qufen.top/rest/";//线上
+//
+     String BASE_URL = "http://192.168.10.151:809/";//栋栋
+//
 //      String BASE_URL = "http://repay.free.ngrok.cc/rest/";//林俊
-    //:15537894586   abc12310
+    //:15537894586   abc12310  志远手机密码：0405
 //    String BASE_URL = "http://47.98.197.101/rest/";//宋
 
     /**
@@ -297,7 +297,7 @@ public interface Constants {
     String RELEASE_DISCUSS_LIST = BASE_URL + "kff/discuss/tagList";
     String RELEASE_ARTICLE = BASE_URL + "kff/article/saveArticle";
     String RELEASE_DISCUSS = BASE_URL + "kff/discuss/saveDiscuss";
-//    String SEARCH_PROJECTS = BASE_URL + "kff/project/searchProjects";
+    String SEARCH_PROJECTS_1 = BASE_URL + "kff/project/searchProjects";
     String SEARCH_PROJECTS = BASE_URL + "kff/project/getProjectPage";
 
     /**
