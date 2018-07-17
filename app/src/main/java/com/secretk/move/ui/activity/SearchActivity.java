@@ -22,6 +22,7 @@ import com.secretk.move.ui.adapter.SearchHistoryAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
 import com.secretk.move.view.LoadingDialog;
@@ -139,6 +140,9 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
         presenter.initHistoryInfo();
     }
      public void search(View view){
+        if(StringUtil.isBlank(ed_search.getText().toString().trim())){
+            ToastUtils.getInstance().show("搜索内容不能为空");
+        }
          presenter.search();
      }
 

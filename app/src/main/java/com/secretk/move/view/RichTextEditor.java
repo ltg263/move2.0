@@ -382,7 +382,7 @@ public class RichTextEditor extends ScrollView {
             for (RichTextEditor.EditData itemData : editList) {
                 if (itemData.inputStr != null) {
                     //将EditText中的换行符、空格符转换成html
-                    String inputStr = itemData.inputStr.replace("\n", "</p><p>").replace(" ", "&nbsp");
+                    String inputStr = itemData.inputStr.replace("\n", "</p><p>").replace(" ", "&nbsp;");
                     content.append("<p>").append(inputStr).append("</p>");
                 } else if (itemData.imagePath != null) {
                     content.append("<p style=\"text-align:center\"><img width=\"100%\" src=\"").append(itemData.imagePath).append("\"/></p>");

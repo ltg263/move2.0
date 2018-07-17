@@ -452,6 +452,9 @@ public class StringUtil {
      **/
     public static String getNewContent(String htmltext){
         try {
+            if(!htmltext.contains("&nbsp;") && htmltext.contains("&nbsp")) {
+                htmltext = htmltext.replaceAll("&nbsp", "&nbsp;");
+            }
             Document doc= Jsoup.parse(htmltext);
             Elements elements=doc.getElementsByTag("img");
             for (Element element : elements) {

@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -24,6 +26,7 @@ import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.SearchedBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.SelectProjectAdapter;
+import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
@@ -66,11 +69,23 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
     RecyclerView recycler;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.ll_not)
+    LinearLayout llNot;
     private SelectProjectAdapter adapter;
-
+    @BindView(R.id.img)
+    ImageView img;
+    @BindView(R.id.tvCode)
+    TextView tvCode;
+    @BindView(R.id.tvName)
+    TextView tvName;
+    @BindView(R.id.tvFollws)
+    TextView tvFollws;
+    @BindView(R.id.iv_selected)
+    ImageView ivSlected;
     private List<SearchedBean.DataBean.ProjectsBean.RowsBean> list;
     private int publicationType;
     private int projectId;
+    private SearchedBean.DataBean.ProjectsBean.RowsBean beanTop;
 
     @Override
     protected void onResume() {
@@ -92,6 +107,7 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
         MoveApplication.getContext().addActivity(this);
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.background_gray), 0);
+        setTopData();
         initRefresh();
         publicationType = getIntent().getIntExtra("publication_type", 0);
         projectId = getIntent().getIntExtra("projectId", -1);
@@ -100,7 +116,48 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
         recycler.setAdapter(adapter);
         adapter.setItemListener(this);
         loadingDialog.show();
+        findViewById(R.id.include_data).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClick(null,-1);
+            }
+        });
     }
+
+    private void setTopData() {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("projectCode", "FREE");
+            node.put("sortType", Constants.TOPIC_SORT_BY_NUM);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.SEARCH_PROJECTS)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, SearchedBean.class, new HttpCallBackImpl<SearchedBean>() {
+            @Override
+            public void onCompleted(SearchedBean detailsBean) {
+                List<SearchedBean.DataBean.ProjectsBean.RowsBean> listSearch = detailsBean.getData().getProjects().getRows();
+                if(listSearch!=null){
+                    llNot.setVisibility(View.VISIBLE);
+                    for(int i=0;i<listSearch.size();i++){
+                        beanTop = listSearch.get(i);
+                        if(beanTop.getProjectId()==276){
+                            GlideUtils.loadCircleProjectUrl(SelectProjectActivity.this,img, Constants.BASE_IMG_URL + beanTop.getProjectIcon());
+                            tvCode.setText(beanTop.getProjectCode()+"/");
+                            tvName.setText(beanTop.getProjectChineseName());
+                            tvFollws.setText(beanTop.getFollowerNum()+"关注");
+                            ivSlected.setSelected(true);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
     private void initRefresh() {
 //        refreshLayout.setEnableLoadMore(false);
 //        refreshLayout.setEnableRefresh(false);
@@ -185,7 +242,12 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
             IntentUtil.startActivity(LoginHomeActivity.class);
             return;
         }
-        SearchedBean.DataBean.ProjectsBean.RowsBean bean = list.get(postion);
+        SearchedBean.DataBean.ProjectsBean.RowsBean bean ;
+        if(postion==-1){
+            bean=beanTop;
+        }else{
+            bean = adapter.getData().get(postion);
+        }
         if(listSearch!=null && listSearch.size()!=0){
             bean = listSearch.get(postion);
         }

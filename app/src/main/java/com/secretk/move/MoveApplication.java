@@ -114,7 +114,7 @@ public class MoveApplication extends Application {
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-                layout.setEnableAutoLoadMore(false);//使上拉加载具有弹性效果
+//                layout.setEnableAutoLoadMore(false);//使上拉加载具有弹性效果
                 layout.setEnableOverScrollDrag(false);//禁止越界拖动（1.0.4以上版本）
                 layout.setEnableOverScrollBounce(false);//关闭越界回弹功能
                 layout.setEnableLoadMoreWhenContentNotFull(false);
