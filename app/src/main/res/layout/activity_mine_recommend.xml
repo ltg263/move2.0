@@ -102,7 +102,6 @@
                         android:gravity="center_vertical"
                         android:padding="@dimen/dp_10"
                         android:singleLine="true"
-                        android:text="http://192.168.10.196:5000/user/registerSmp?invaUIH=5add9aa"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_16" />
                 </ScrollView>

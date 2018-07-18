@@ -119,7 +119,9 @@ public class MineRecommendActivity extends BaseActivity {
                 createPoste();
                 break;
             case R.id.tv_fz:
-                cmdFz();
+                if(StringUtil.isNotBlank(tvLink.getText().toString().trim())){
+                    cmdFz();
+                }
                 break;
         }
     }
