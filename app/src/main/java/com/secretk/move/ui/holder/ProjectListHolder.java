@@ -108,7 +108,7 @@ public class ProjectListHolder extends RecyclerViewBaseHolder {
         tvComments.setText(String.valueOf(rowsBean.getCommentsNum()));
         rlHead.setVisibility(View.GONE);
         tvProjectFolly.setVisibility(View.GONE);
-        StringUtil.getUserType(rowsBean.getCreateUserType(),ivModelIconD);
+        StringUtil.getUserType(rowsBean.getUserType(),ivModelIconD);
         switch (rowsBean.getPostType()) {//帖子类型，数字，帖子类型：1-评测；2-讨论；3-文章
             case 1:
                 tvSore.setText(String.valueOf(rowsBean.getTotalScore())+"分");

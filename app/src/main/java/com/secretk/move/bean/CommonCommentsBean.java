@@ -43,6 +43,7 @@ public class CommonCommentsBean implements Parcelable {
     private int childCommentsNum;
     private int commentsId;
     private int commentUserId;
+    private int userType;
     private String commentUserIcon;
     private String commentUserName;
     private String commentContent;
@@ -60,6 +61,15 @@ public class CommonCommentsBean implements Parcelable {
     private String updateTimeStr;
     private int status;
     private List<ChildCommentsListBean> childCommentsList;
+
+    public int getUserType() {
+        return userType;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
+    }
+
 
     public void setFloor(int floor) {
         this.floor = floor;
@@ -532,6 +542,7 @@ public class CommonCommentsBean implements Parcelable {
         dest.writeInt(this.childCommentsNum);
         dest.writeInt(this.commentsId);
         dest.writeInt(this.commentUserId);
+        dest.writeInt(this.userType);
         dest.writeString(this.commentUserIcon);
         dest.writeString(this.commentUserName);
         dest.writeString(this.commentContent);
@@ -560,6 +571,7 @@ public class CommonCommentsBean implements Parcelable {
         this.childCommentsNum = in.readInt();
         this.commentsId = in.readInt();
         this.commentUserId = in.readInt();
+        this.userType = in.readInt();
         this.commentUserIcon = in.readString();
         this.commentUserName = in.readString();
         this.commentContent = in.readString();

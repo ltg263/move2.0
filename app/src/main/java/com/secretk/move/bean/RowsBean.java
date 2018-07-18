@@ -60,10 +60,10 @@ public class RowsBean extends CommonListBase {
     private int donateNum;
     private int collectNum;
     private int createUserId;
+    private int userType;
     private String createUserIcon;
     private String createUserSignature;
     private String createUserName;
-    private int createUserType;
     private long createTime;
     private String createTimeStr;
     private long updateTime;
@@ -90,12 +90,12 @@ public class RowsBean extends CommonListBase {
     private String evauationContent;
     private String tagInfos;
 
-    public int getCreateUserType() {
-        return createUserType;
+    public int getUserType() {
+        return userType;
     }
 
-    public void setCreateUserType(int createUserType) {
-        this.createUserType = createUserType;
+    public void setUserType(int userType) {
+        this.userType = userType;
     }
 
     public void setEvaTotalScore(double evaTotalScore) {

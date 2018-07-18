@@ -252,6 +252,9 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 tvUserDynamic.setText("发表了评测");
                 tvSore.setVisibility(View.VISIBLE);
                 tvSore.setText(bean.getTotalScore()+"分");
+                if(bean.getTotalScore()==0){
+                    tvSore.setVisibility(View.INVISIBLE);
+                }
                 break;
             case 2:
                 tvSore.setVisibility(View.INVISIBLE);

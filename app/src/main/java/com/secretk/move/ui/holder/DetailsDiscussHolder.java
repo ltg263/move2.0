@@ -20,6 +20,7 @@ import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.TimeToolUtils;
 import com.secretk.move.view.Clickable;
 import com.secretk.move.view.DialogUtils;
@@ -40,6 +41,8 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
     View view;
     @BindView(R.id.iv_commented_user_icon)
     ImageView ivCommentedUserIcon;
+    @BindView(R.id.iv_model_icon)
+    ImageView ivModelIcon;
     @BindView(R.id.tv_commented_user_name)
     TextView tvCommentedUserName;
     @BindView(R.id.tv_create_time)
@@ -76,6 +79,7 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         }
         commentsBean = lists.get(position);
         GlideUtils.loadCircleUserUrl(context,ivCommentedUserIcon, Constants.BASE_IMG_URL+commentsBean.getCommentUserIcon());
+        StringUtil.getUserType(commentsBean.getUserType(),ivModelIcon);
         tvCommentedUserName.setText(commentsBean.getCommentUserName());
         tvPraiseNum.setText(String.valueOf(commentsBean.getPraiseNum()));
         tvCreateTime.setText(commentsBean.getFloor() +"楼    "+ TimeToolUtils.convertTimeToFormat(commentsBean.getCreateTime()));

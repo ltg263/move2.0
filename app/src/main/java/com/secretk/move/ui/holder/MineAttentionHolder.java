@@ -26,6 +26,9 @@ public class MineAttentionHolder extends RecyclerViewBaseHolder {
 
     @BindView(R.id.img)
     ImageView img;
+
+    @BindView(R.id.iv_model_icon)
+    ImageView ivModelIcon;
     @BindView(R.id.tvName)
     TextView tvName;
     @BindView(R.id.tvLastContent)
@@ -81,6 +84,7 @@ public class MineAttentionHolder extends RecyclerViewBaseHolder {
         llProject.setVisibility(View.VISIBLE);
         llUser.setVisibility(View.GONE);
         GlideUtils.loadCircleProjectUrl(context,imgP,Constants.BASE_IMG_URL+StringUtil.getBeanString(rowsBean.getProjectIcon()));
+        StringUtil.getUserType(rowsBean.getUserType(),ivModelIcon);
         tvNameP.setText(StringUtil.getBeanString(rowsBean.getProjectCode()));
         tvNamePf.setText("/"+StringUtil.getBeanString(rowsBean.getProjectChineseName()));
         tvNamePfs.setText(String.valueOf(rowsBean.getTotalScore())+"分");

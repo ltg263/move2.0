@@ -73,6 +73,8 @@ public class ProjectHotDiscussAdapter extends RecyclerView.Adapter<ProjectHotDis
     class ImagesHolder extends RecyclerViewBaseHolder {
         @BindView(R.id.iv_commented_user_icon)
         ImageView ivCommentedUserIcon;
+        @BindView(R.id.iv_model_icon)
+        ImageView ivModelIcon;
         @BindView(R.id.tv_commented_user_name)
         TextView tvCommentedUserName;
         @BindView(R.id.tv_create_time)
@@ -97,6 +99,7 @@ public class ProjectHotDiscussAdapter extends RecyclerView.Adapter<ProjectHotDis
             tvCommentedUserName.setText(StringUtil.getBeanString(hotDiscussBean.getCreateUserName()));
             tvCreateTime.setText(StringUtil.getBeanString(String.valueOf(hotDiscussBean.getTotalScore())));
             tvPraiseNum.setText(String.valueOf(hotDiscussBean.getPraiseNum()));
+            StringUtil.getUserType(hotDiscussBean.getUserType(),ivModelIcon);
             //"praiseStatus":0,//点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
             if(hotDiscussBean.getPraiseStatus()==1){
                 tvPraiseNum.setSelected(false);

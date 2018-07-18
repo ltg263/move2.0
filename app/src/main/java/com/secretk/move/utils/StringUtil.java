@@ -514,18 +514,21 @@ public class StringUtil {
                 break;
             case 2:
                 if(ivModelType!=null){
+                    ivModelType.setVisibility(View.VISIBLE);
                     GlideUtils.loadUrlDd(MoveApplication.getContext(),ivModelType, R.drawable.ic_model_type_xm);
                 }
                 ut="项目方";
                 break;
             case 3:
                 if(ivModelType!=null){
+                    ivModelType.setVisibility(View.VISIBLE);
                     GlideUtils.loadUrlDd(MoveApplication.getContext(),ivModelType, R.drawable.ic_model_type_mt);
                 }
                 ut="评测媒体";
                 break;
             case 4:
                 if(ivModelType!=null){
+                    ivModelType.setVisibility(View.VISIBLE);
                     GlideUtils.loadUrlDd(MoveApplication.getContext(),ivModelType, R.drawable.ic_model_type_jg);
                 }
                 ut="机构用户";

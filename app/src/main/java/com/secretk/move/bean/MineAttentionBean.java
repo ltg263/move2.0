@@ -151,6 +151,7 @@ public class MineAttentionBean extends BaseRes {
                 private int followedProjectId;
                 private Object followedPostId;
                 private int status;
+                private int userType;
                 private long createTime;
                 private String createTimeStr;
                 private long updateTime;
@@ -172,6 +173,14 @@ public class MineAttentionBean extends BaseRes {
                 private String projectEnglishName;
                 private String projectChineseName;
                 private String projectSignature;
+
+                public int getUserType() {
+                    return userType;
+                }
+
+                public void setUserType(int userType) {
+                    this.userType = userType;
+                }
 
                 public int getFollowId() {
                     return followId;

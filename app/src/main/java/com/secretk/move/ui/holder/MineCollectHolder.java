@@ -103,7 +103,7 @@ public class MineCollectHolder extends RecyclerViewBaseHolder {
         tvTime.setText(TimeToolUtils.convertTimeToFormat(rowsBean.getCreateTime()));
         tvTitle.setText(rowsBean.getPostTitle());
         tvDesc.setText(rowsBean.getPostShortDesc());
-        StringUtil.getUserType(rowsBean.getCreateUserType(),ivModelIcon);
+        StringUtil.getUserType(rowsBean.getUserType(),ivModelIcon);
         tvPraise.setText(String.valueOf(rowsBean.getPraiseNum()));
         tvComments.setText(String.valueOf(rowsBean.getCommentsNum()));
         String postType="";

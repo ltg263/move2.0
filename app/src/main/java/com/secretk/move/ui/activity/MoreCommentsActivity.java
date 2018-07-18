@@ -55,6 +55,8 @@ public class MoreCommentsActivity extends BaseActivity{
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.iv_commented_user_icon)
     ImageView ivCommentedUserIcon;
+    @BindView(R.id.iv_model_type)
+    ImageView iv_model_type;
     @BindView(R.id.tv_commented_user_name)
     TextView tvCommentedUserName;
     @BindView(R.id.tv_create_time)
@@ -141,6 +143,7 @@ public class MoreCommentsActivity extends BaseActivity{
     protected void initData() {
         commentsBean = getIntent().getParcelableExtra("commentsBean");
         GlideUtils.loadCircleUserUrl(this,ivCommentedUserIcon, Constants.BASE_IMG_URL + commentsBean.getCommentUserIcon());
+        StringUtil.getUserType(commentsBean.getUserType(),iv_model_type);
         postId = commentsBean.getPostId();
         parentCommentsId = commentsBean.getCommentsId();
         commentsId = commentsBean.getCommentsId();
