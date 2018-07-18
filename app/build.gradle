@@ -66,14 +66,14 @@ android {
         applicationId "com.secretk.move"
         minSdkVersion 19
         targetSdkVersion 21
-        versionCode 4
-        versionName "1.0.3"
+        versionCode 6
+        versionName "1.1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         /* 个推 */
         manifestPlaceholders = [
-                GETUI_APP_ID : "rle2SitgpE93gTHd9Ow317",
-                GETUI_APP_KEY : "ZYsO97l4KP7adbQJDUqXt5",
-                GETUI_APP_SECRET : "q6CweWUXE09cHpzrPBLfE"
+                GETUI_APP_ID : "bbhc5OhXzz7HtrqZ2coeN1",
+                GETUI_APP_KEY : "FTfDlpO5ea5WaRk2LldqW5",
+                GETUI_APP_SECRET : "8KE66t6hE16j6SCRdoxh5"
         ]
     }
     buildTypes {
@@ -132,10 +132,13 @@ dependencies {
     implementation 'com.qiniu:qiniu-android-sdk:7.3.+'  //最新版本
     //个推
     implementation files('libs/GetuiSDK2.12.4.0.jar')
-//    implementation 'com.android.support:support-v4'
+    implementation 'com.android.support:support-v4'
 
 //    implementation files('libs/umeng-common-1.5.3.jar')
+    implementation files('libs/umeng-analytics-7.5.3.jar')
+    implementation files('libs/utdid4all-1.1.5.3_proguard.jar')
+    implementation files('libs/SecurityEnvSDK-release-1.1.0.jar')
 //    注意：统计SDK必须依赖基础组件库。所以需要加入对应依赖:
     implementation 'com.umeng.sdk:common:latest.integration'
-    implementation 'com.umeng.sdk:analytics:latest.integration'
+//    implementation 'com.umeng.sdk:analytics:latest.integration'
 }

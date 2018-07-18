@@ -15,6 +15,7 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.secretk.move.baseManager.AppConfig;
+import com.umeng.commonsdk.UMConfigure;
 
 import java.util.Stack;
 
@@ -37,11 +38,21 @@ public class MoveApplication extends Application {
 //        CrashHandler.getInstance().init(mContext);
 //        BlockCanary.install(mContext, new AppBlockCanaryContext()).start();
         AppConfig.initAppConfig(this);
-        initDao();
-        MobSDK.init(this,"25fecb277347b","32ee70fd96c34aeb83b639f7a06ae04");
+        initSDK();
     }
 
-    private void initDao() {
+    private void initSDK() {
+        //分享
+        MobSDK.init(this,getString(R.string.mob_sdk_key),getString(R.string.mob_sdk_var));
+        /**
+         * 初始化common库
+         * 参数1:上下文，不能为空
+         * 参数2:【友盟+】 AppKey
+         * 参数3:【友盟+】 Channel
+         * 参数4:设备类型，UMConfigure.DEVICE_TYPE_PHONE为手机、UMConfigure.DEVICE_TYPE_BOX为盒子，默认为手机
+         * 参数5:Push推送业务的secret
+         */
+        UMConfigure.init(this, "5b4716e08f4a9d5392000089", "FIND", UMConfigure.DEVICE_TYPE_PHONE, "");
 
     }
 

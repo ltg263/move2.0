@@ -1,7 +1,10 @@
 package com.secretk.move.utils;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -81,7 +84,19 @@ public class StringUtil {
      * @return
      */
     public static boolean isMobileNO(String mobile) {
-        String regex = "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\\d{8}$";
+        if(mobile.length()==11){
+            return true;
+        }
+        return false;
+    }
+    /**
+     * 判断是否是手机号
+     *
+     * @param mobile
+     * @return
+     */
+    public static boolean isMobileNO_(String mobile) {
+        String regex = "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,1,3,5-8])|(18[0-9])|166|198|199|(147))\\\\d{8}$";
         Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(mobile);
         return m.matches();
@@ -579,5 +594,22 @@ public class StringUtil {
         }else{
           return "D";
         }
+    }
+    //判断某一个类是否存在任务栈里面
+    public static boolean isExistMainActivity(Context mContext ,Class<?> activity){
+        Intent intent = new Intent(mContext, activity);
+        ComponentName cmpName = intent.resolveActivity(mContext.getPackageManager());
+        boolean flag = false;
+        if (cmpName != null) { // 说明系统中存在这个activity
+            ActivityManager am = (ActivityManager) mContext.getSystemService(mContext.ACTIVITY_SERVICE);
+            List<ActivityManager.RunningTaskInfo> taskInfoList = am.getRunningTasks(10);  //获取从栈顶开始往下查找的10个activity
+            for (ActivityManager.RunningTaskInfo taskInfo : taskInfoList) {
+                if (taskInfo.baseActivity.equals(cmpName)) { // 说明它已经启动了
+                    flag = true;
+                    break;  //跳出循环，优化效率
+                }
+            }
+        }
+        return flag;
     }
 }

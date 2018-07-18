@@ -52,7 +52,7 @@ public interface Constants {
     /**
      * 是否开始推送服务
      */
-    boolean IS_PUSH_SERVICE = false;
+    boolean IS_PUSH_SERVICE = true;
 
     /**
      * 文件存储的名称
@@ -99,7 +99,7 @@ public interface Constants {
 
 //    String BASE_URL = "http://app.qufen.top/rest/";//线上
 //
-     String BASE_URL = "http://192.168.10.151:809/";//栋栋
+     String BASE_URL = "http://192.168.10.153:809/";//栋栋
 //
 //      String BASE_URL = "http://repay.free.ngrok.cc/rest/";//林俊
     //:15537894586   abc12310  志远手机密码：0405

@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">区分</string>
 
+    <!-- 与项目有关的第三方 Key -->
+    <!-- ShareSDK 分享 -->
+    <string name="mob_sdk_key">25fecb277347b</string>
+    <string name="mob_sdk_var">32ee70fd96c34aeb83b639f7a06ae04</string>
+
     <!--关于密码-->
     <string name="text_password">0123456789abcdefgjhigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <!-- 登录界面-->

@@ -12,13 +12,17 @@ import com.secretk.move.R;
 import com.secretk.move.apiService.MoveIntentService;
 import com.secretk.move.apiService.MovePushService;
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.utils.StringUtil;
 
 
 public class SplashScreenActivity extends Activity {
 
     private boolean isFirst = false;
     private Boolean isLogin=false;
+    private String postId;
+    private String type;
 
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -36,6 +40,8 @@ public class SplashScreenActivity extends Activity {
 
         isFirst = SharedUtils.singleton().get("isFirst",false);
         isLogin = SharedUtils.singleton().get(Constants.IS_LOGIN_KEY,false);
+        postId = getIntent().getStringExtra("postId");
+        type = getIntent().getStringExtra("type");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -45,6 +51,17 @@ public class SplashScreenActivity extends Activity {
     }
 
     private void startUi() {
+        String key[] = {"type","postId"};
+        if(StringUtil.isNotBlank(type) && StringUtil.isNotBlank(postId)){
+            String values[] = {type,postId};
+            IntentUtil.startActivity(MainActivity.class, key, values);
+        }else{
+            String values[] = {"",""};
+            IntentUtil.startActivity(MainActivity.class, key, values);
+        }
+        finish();
+    }
+    private void startUi1() {
         Intent intent = new Intent();
         if (false) {
 //            intent.setClass(SplashScreenActivity.this, ViewPagerActivity.class);

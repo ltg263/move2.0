@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.igexin.sdk.PushManager;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -20,9 +21,9 @@ import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
@@ -139,11 +140,19 @@ public class RegisterActivity extends BaseActivity {
      * 发送验证码
      */
     private void sendVerification() {
+        String clientId = SharedUtils.singleton().get("clientId", "");
+        if(StringUtil.isBlank(clientId)){
+            clientId = PushManager.getInstance().getClientid(this);
+        }
+        if(StringUtil.isBlank(clientId)){
+            clientId = "";
+        }
         JSONObject node = new JSONObject();
         try {
             //modue：login   register    forgetPassword
             node.put("phone", getIntent().getStringExtra("phone"));
             node.put("module", "register");
+            node.put("clientId", clientId);
         } catch (JSONException e) {
             e.printStackTrace();
         }

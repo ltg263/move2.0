@@ -15,6 +15,13 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-sdk android:minSdkVersion="8"/>
+    <!-- 添加如下权限，以便使用更多的第三方SDK和更精准的统计数据 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- iBeancon功能所需权限 -->;
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
     <application
         android:name=".MoveApplication"
@@ -28,13 +35,6 @@
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />
-        <!-- 友盟開始 -->
-        <meta-data android:value="5b4716e08f4a9d5392000089"
-            android:name="UMENG_APPKEY"/>
-
-        <meta-data android:value="ZiDingYi_QuDao"
-            android:name="UMENG_CHANNEL"/>
-        <!-- 友盟結束 -->
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->
         <meta-data

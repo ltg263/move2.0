@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.igexin.sdk.PushManager;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -20,6 +21,7 @@ import com.secretk.move.bean.UserLoginInfo;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.AppBarHeadView;
 
@@ -122,10 +124,18 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void login() {
+        String clientId = SharedUtils.singleton().get("clientId", "");
+        if(StringUtil.isBlank(clientId)){
+            clientId = PushManager.getInstance().getClientid(this);
+        }
+        if(StringUtil.isBlank(clientId)){
+            clientId = "";
+        }
         JSONObject node = new JSONObject();
         try {
             node.put("loginName", edPhone.getText().toString());
             node.put("password", edPassword.getText().toString());
+            node.put("clientId", clientId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
