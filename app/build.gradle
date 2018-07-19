@@ -75,11 +75,14 @@ android {
                 GETUI_APP_KEY : "FTfDlpO5ea5WaRk2LldqW5",
                 GETUI_APP_SECRET : "8KE66t6hE16j6SCRdoxh5"
         ]
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86_64"
+        }
     }
     buildTypes {
         release {
-            minifyEnabled false
-//            shrinkResources true
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.move
         }

@@ -130,11 +130,20 @@ public class MessageBean extends BaseRes{
                 private String updateTimeStr;
                 private int userId;
                 private int postId;
+                private int postType;
                 private int senderUserId;
                 private String title;
                 private String content;
                 private String jumpInfo;
                 private String senderUserIcon;
+
+                public int getPostType() {
+                    return postType;
+                }
+
+                public void setPostType(int postType) {
+                    this.postType = postType;
+                }
 
                 public int getPostId() {
                     return postId;

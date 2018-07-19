@@ -474,6 +474,10 @@ public class StringUtil {
             Elements elements=doc.getElementsByTag("img");
             for (Element element : elements) {
                 element.attr("width","100%").attr("height","auto");
+               String str =  element.attr("src");
+               if(str.contains("image/png;base64")){
+                   element.attr("src","");
+               }
             }
             return doc.toString();
         } catch (Exception e) {

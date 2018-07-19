@@ -13,6 +13,7 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MessageBean;
+import com.secretk.move.ui.activity.MineAssetDetailsActivity;
 import com.secretk.move.ui.adapter.MessageFragmentRecyclerAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
@@ -76,7 +77,22 @@ public class MessageFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         llDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                detaliMessage(lists.get(position), context);
+                MessageBean.DataBean.MessagesBean.RowsBean message = lists.get(position);
+                if(ivState.getVisibility()== View.VISIBLE){
+                    detaliMessage(lists.get(position), context);
+                }
+                //`type 消息类型：1-关注；2-点赞；3-评论；4-赞赏；5-评论被回复；6-上榜单；7-奖励token'
+                int type = message.getType();
+                if(type==1){
+                    IntentUtil.startHomeActivity(message.getSenderUserId());
+                }else if(type==2 || type==3 || type==4 || type==5){
+                    int postType = message.getPostType();
+                    IntentUtil.go2DetailsByType(postType,String.valueOf(message.getPostId()));
+                }else if(type==6){
+//                    IntentUtil.startHomeActivity(message.getSenderUserId());
+                }else if(type==7){
+                    IntentUtil.startActivity(MineAssetDetailsActivity.class);
+                }
             }
         });
     }
@@ -103,18 +119,6 @@ public class MessageFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             @Override
             public void onCompleted(String str) {
                 ivState.setVisibility(View.GONE);
-//                `type 消息类型：1-关注；2-点赞；3-评论；4-赞赏；5-评论被回复；6-上榜单；7-奖励token',
-                int type = message.getType();
-                if(type==1){
-                    IntentUtil.startHomeActivity(message.getSenderUserId());
-                }else if(type==2 || type==3 || type==4 || type==5){
-                    int postType = 0;
-                    IntentUtil.go2DetailsByType(postType,String.valueOf(message.getPostId()));
-                }else if(type==6){
-//                    IntentUtil.startHomeActivity(message.getSenderUserId());
-                }else if(type==7){
-//                    IntentUtil.startHomeActivity(message.getSenderUserId());
-                }
             }
 
             @Override

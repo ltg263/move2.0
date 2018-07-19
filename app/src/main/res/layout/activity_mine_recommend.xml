@@ -102,6 +102,7 @@
                         android:gravity="center_vertical"
                         android:padding="@dimen/dp_10"
                         android:singleLine="true"
+                        android:text="https://m.qufen.top/user/registerSmp"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_16" />
                 </ScrollView>
