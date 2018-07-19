@@ -79,11 +79,12 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.main_background), 0);
         SharedUtils.singleton().put("isFollower", true);
-
+        //友盟统计
         UMConfigure.setLogEnabled(true);
         UMConfigure.setEncryptEnabled(true);
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_DUM_NORMAL);
         MobclickAgent.setSessionContinueMillis(1000);
+
         //当用户使用自有账号登录时，可以这样统计：
         MobclickAgent.onProfileSignIn("1");
         adapter = new MainActivityPagerAdapter(getSupportFragmentManager());
@@ -292,8 +293,6 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
                         ToastUtils.getInstance().show("再按一次退出" + getString(R.string.app_name));
                         exitTime = System.currentTimeMillis();
                     } else {
-                        //登出
-                        MobclickAgent.onProfileSignOff();
                         MobclickAgent.onKillProcess(this);
                         finish();
                         System.exit(0);

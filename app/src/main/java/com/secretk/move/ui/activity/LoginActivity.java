@@ -24,6 +24,7 @@ import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.AppBarHeadView;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -162,6 +163,7 @@ public class LoginActivity extends BaseActivity {
 
                 sharedUtils.put("userCardStatus",userInfo.getData().getUserCardStatus());
                 sharedUtils.put("statusHierarchyType",userInfo.getData().getStatusHierarchyType());
+                MobclickAgent.onProfileSignIn(userInfo.getData().getUser().getUserId()+"");
                 IntentUtil.startActivity(MainActivity.class);
             }
 

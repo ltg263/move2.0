@@ -30,6 +30,7 @@ import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.PicPopupWindow;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -183,6 +184,7 @@ public class MineSetActivity extends BaseActivity {
                     @Override
                     public void btnConfirm() {
                         sharedUtils.clear();
+                        MobclickAgent.onProfileSignOff();
                         IntentUtil.startActivity(LoginHomeActivity.class);
                         finish();
                     }

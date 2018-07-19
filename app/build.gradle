@@ -75,9 +75,9 @@ android {
                 GETUI_APP_KEY : "FTfDlpO5ea5WaRk2LldqW5",
                 GETUI_APP_SECRET : "8KE66t6hE16j6SCRdoxh5"
         ]
-        ndk {
-            abiFilters "armeabi", "armeabi-v7a", "x86_64"
-        }
+//        ndk {
+//            abiFilters "armeabi", "armeabi-v7a", "x86_64"
+//        }
     }
     buildTypes {
         release {
