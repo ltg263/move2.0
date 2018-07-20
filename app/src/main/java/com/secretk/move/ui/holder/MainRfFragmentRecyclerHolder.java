@@ -245,7 +245,7 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     public void showRecommend(Context context, MainGzBean.DataBean.FollowsBean.RowsBean bean){
         llUser.setVisibility(View.VISIBLE);
         GlideUtils.loadCircleUserUrl(context,imgUserHead, Constants.BASE_IMG_URL + bean.getCreateUserIcon());
-        StringUtil.getUserType(bean.getCreateUserType(),ivModelIcon);
+        StringUtil.getUserType(bean.getUserType(),ivModelIcon);
         tvUser.setText(bean.getCreateUserName());
         switch (bean.getPostType()){
             case 1:

@@ -46,6 +46,8 @@ public class ActivitySearchInteractorImpl  implements ActivitySearchContract.Int
         try {
             node.put("token", token);
             node.put("projectCode", str);
+            node.put("pageIndex", 1);
+            node.put("pageSize", 500);
             node.put("sortType",Constants.TOPIC_SORT_BY_NUM);
         } catch (JSONException e) {
             e.printStackTrace();
