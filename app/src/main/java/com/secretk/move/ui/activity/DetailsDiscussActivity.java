@@ -401,8 +401,8 @@ public class DetailsDiscussActivity extends BaseActivity {
                 tvPostTitle.setText(discussDetail.getPostTitle());
                 GlideUtils.loadCircleUserUrl(DetailsDiscussActivity.this, ivCreateUserIcon, Constants.BASE_IMG_URL + discussDetail.getCreateUserIcon());
                 if(discussDetail.getUserType()!=1){
-                    ivModelIcon.setVisibility(View.VISIBLE);
-                    StringUtil.getUserType(discussDetail.getUserType(),ivModelIcon);
+//                    ivModelIcon.setVisibility(View.VISIBLE);
+//                    StringUtil.getUserType(discussDetail.getUserType(),ivModelIcon);
 //                    ivModelIconD.setVisibility(View.VISIBLE);
                     StringUtil.getUserType(discussDetail.getUserType(), ivModelIconD);
                 }

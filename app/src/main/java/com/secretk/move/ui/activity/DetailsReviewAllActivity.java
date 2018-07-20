@@ -259,8 +259,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
                 Constants.BASE_IMG_URL + StringUtil.getBeanString(evaluationDetail.getCreateUserIcon()));
         tvCreateUserName.setText(StringUtil.getBeanString(evaluationDetail.getCreateUserName()));
         if(evaluationDetail.getUserType()!=1){
-            ivModelIcon.setVisibility(View.VISIBLE);
-            StringUtil.getUserType(evaluationDetail.getUserType(),ivModelIcon);
+//            ivModelIcon.setVisibility(View.VISIBLE);
+//            StringUtil.getUserType(evaluationDetail.getUserType(),ivModelIcon);
 //           ivModelIcon1.setVisibility(View.VISIBLE);
             StringUtil.getUserType(evaluationDetail.getUserType(), ivModelIconD);
         }

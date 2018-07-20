@@ -11,20 +11,34 @@
         android:layout_height="wrap_content"
         android:background="@color/white">
 
-        <ImageView
-            android:id="@+id/img_organization"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+        <RelativeLayout
+            android:id="@+id/rl_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginVertical="@dimen/dp_10"
-            android:scaleType="centerCrop" />
+            android:layout_marginVertical="@dimen/dp_10">
 
+            <ImageView
+                android:id="@+id/img_organization"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:id="@+id/iv_model_type"
+                android:layout_width="@dimen/list_v_dp"
+                android:layout_height="@dimen/list_v_dp"
+                android:layout_alignBottom="@id/img_organization"
+                android:layout_alignRight="@id/img_organization"
+                android:layout_gravity="bottom"
+                android:visibility="gone" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl_project"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/img_organization"
+            android:layout_toRightOf="@id/rl_head"
             android:padding="@dimen/dp_10">
 
 
@@ -64,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/rl_project"
-            android:layout_toRightOf="@id/img_organization"
+            android:layout_toRightOf="@id/rl_head"
             android:visibility="visible">
 
             <TextView
@@ -119,7 +133,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/rl_context"
-            android:layout_toRightOf="@id/img_organization"
+            android:layout_toRightOf="@id/rl_head"
             android:padding="@dimen/dp_10">
 
             <TextView

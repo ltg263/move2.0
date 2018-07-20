@@ -227,8 +227,8 @@ public class DetailsArticleActivity extends BaseActivity {
         tvCreateUserName.setText(StringUtil.getBeanString(initData.getCreateUserName()));
         tvCreateUserSignature.setText(StringUtil.getBeanString(initData.getCreateUserSignature()));
         if (initData.getUserType() != 1) {
-            ivModelIcon.setVisibility(View.VISIBLE);
-            StringUtil.getUserType(initData.getUserType(), ivModelIcon);
+//            ivModelIcon.setVisibility(View.VISIBLE);
+//            StringUtil.getUserType(initData.getUserType(), ivModelIcon);
 //            ivModelIconD.setVisibility(View.VISIBLE);
             StringUtil.getUserType(initData.getUserType(), ivModelIconD);
         }

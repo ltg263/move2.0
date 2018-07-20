@@ -48,6 +48,8 @@ import butterknife.ButterKnife;
 public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.img_organization)
     ImageView imgOrganization;
+    @BindView(R.id.iv_model_type)
+    ImageView ivModelType;
     @BindView(R.id.tvName)
     TextView tvName;
     @BindView(R.id.tvTime)
@@ -96,6 +98,7 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvName.setText(bean.getCreateUserName());
         tvTime.setText(TimeToolUtils.convertTimeToFormat(bean.getCreateTime()));
         tvProjectCode.setText(bean.getProjectCode());
+        StringUtil.getUserType(bean.getUserType(),ivModelType);
         showPostDesc(bean);
 
         tvIsFollw.setVisibility(View.VISIBLE);

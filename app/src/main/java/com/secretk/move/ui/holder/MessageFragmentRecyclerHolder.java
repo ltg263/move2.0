@@ -21,6 +21,7 @@ import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 
 import org.json.JSONException;
@@ -38,6 +39,8 @@ import butterknife.ButterKnife;
 public class MessageFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.img)
     public ImageView img;
+    @BindView(R.id.iv_model_type)
+    public ImageView ivModelType;
     @BindView(R.id.iv_state)
     public ImageView ivState;
     @BindView(R.id.tvName)
@@ -58,6 +61,7 @@ public class MessageFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                         final MessageFragmentRecyclerAdapter adapter) {
         MessageBean.DataBean.MessagesBean.RowsBean currenBean = lists.get(position);
         GlideUtils.loadCircleUserUrl(context, img, Constants.BASE_IMG_URL + currenBean.getSenderUserIcon());
+        StringUtil.getUserType(currenBean.getUserType(),ivModelType);
         // 阅读状态 ，数字，状态：1-未读；2-已读
         if (currenBean.getState() == 1) {
             ivState.setVisibility(View.VISIBLE);

@@ -28,8 +28,8 @@
 
             <ImageView
                 android:id="@+id/iv_model_icon"
-                android:layout_width="@dimen/dp_10"
-                android:layout_height="@dimen/dp_10"
+                android:layout_width="@dimen/dp_15"
+                android:layout_height="@dimen/dp_15"
                 android:layout_alignRight="@id/img"
                 android:layout_alignBottom="@id/img"
                 android:layout_gravity="bottom"

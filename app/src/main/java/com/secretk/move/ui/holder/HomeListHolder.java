@@ -108,7 +108,7 @@ public class HomeListHolder extends RecyclerViewBaseHolder {
         tvDesc.setText(rowsBean.getPostShortDesc());
         tvPraise.setText(String.valueOf(rowsBean.getPraiseNum()));
         tvComments.setText(String.valueOf(rowsBean.getCommentsNum()));
-        StringUtil.getUserType(rowsBean.getUserType(),ivModelIconD);
+//        StringUtil.getUserType(rowsBean.getUserType(),ivModelIconD);
         String professionalEvaDetail = rowsBean.getProfessionalEvaDetail();
         String professional = "";
         if (StringUtil.isNotBlank(professionalEvaDetail)) {

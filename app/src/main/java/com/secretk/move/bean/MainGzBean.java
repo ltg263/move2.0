@@ -184,6 +184,7 @@ public class MainGzBean extends BaseRes{
                 private String createUserSignature;
                 private String createUserName;
                 private int createUserType;
+                private int userType;
                 private long createTime;
                 private String createTimeStr;
                 private Object updateTime;
@@ -201,6 +202,14 @@ public class MainGzBean extends BaseRes{
 
                 public void setCreateUserType(int createUserType) {
                     this.createUserType = createUserType;
+                }
+
+                public int getUserType() {
+                    return userType;
+                }
+
+                public void setUserType(int userType) {
+                    this.userType = userType;
                 }
 
                 public int getActionType() {
