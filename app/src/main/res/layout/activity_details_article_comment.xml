@@ -173,6 +173,8 @@
                 android:hint="留下你的评论..."
                 android:textCursorDrawable="@drawable/shape_edit_cursor"
                 android:padding="@dimen/dp_10"
+                android:maxLength="300"
+                android:maxLines="3"
                 android:textColor="@color/title_gray"
                 android:textColorHint="@color/title_gray_aa"
                 android:textSize="@dimen/sp_16" />
@@ -184,6 +186,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dp_10"
+                android:layout_alignBottom="@id/et_content"
                 android:background="@drawable/btn_max_selected_radius"
                 android:paddingHorizontal="@dimen/dp_16"
                 android:paddingVertical="@dimen/dp_10"

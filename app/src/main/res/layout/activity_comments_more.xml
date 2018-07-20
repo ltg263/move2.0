@@ -163,6 +163,8 @@
                 android:drawablePadding="@dimen/dp_5"
                 android:hint="留下你的评论..."
                 android:padding="@dimen/dp_10"
+                android:maxLength="300"
+                android:maxLines="3"
                 android:textColor="@color/title_gray"
                 android:textColorHint="@color/title_gray_aa"
                 android:textCursorDrawable="@drawable/shape_edit_cursor"
@@ -178,6 +180,7 @@
                 android:background="@drawable/btn_max_selected_radius"
                 android:paddingHorizontal="@dimen/dp_16"
                 android:paddingVertical="@dimen/dp_10"
+                android:layout_alignBottom="@id/et_message"
                 android:text="发送"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_16" />

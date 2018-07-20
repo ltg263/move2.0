@@ -77,23 +77,23 @@
                         <RelativeLayout
                             android:id="@+id/rl_head"
                             android:layout_width="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true">
 
                             <ImageView
                                 android:id="@+id/iv_create_user_icon"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:scaleType="centerCrop"/>
+                                android:scaleType="centerCrop" />
 
                             <ImageView
                                 android:id="@+id/iv_model_icon_d"
                                 android:layout_width="@dimen/list_v_dp"
                                 android:layout_height="@dimen/list_v_dp"
-                                android:layout_alignRight="@id/iv_create_user_icon"
                                 android:layout_alignBottom="@id/iv_create_user_icon"
+                                android:layout_alignRight="@id/iv_create_user_icon"
                                 android:layout_gravity="bottom"
-                                android:visibility="gone"/>
+                                android:visibility="gone" />
                         </RelativeLayout>
 
 
@@ -112,8 +112,8 @@
                             android:layout_width="@dimen/dp_16"
                             android:layout_height="@dimen/dp_16"
                             android:layout_alignBottom="@id/tv_create_user_name"
-                            android:layout_marginLeft="@dimen/dp_10"
                             android:layout_marginBottom="@dimen/dp_3"
+                            android:layout_marginLeft="@dimen/dp_10"
                             android:layout_toRightOf="@+id/tv_create_user_name"
                             android:visibility="gone" />
 
@@ -153,8 +153,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:lineSpacingExtra="@dimen/item_line_spacing"
                             android:layout_margin="@dimen/dp_2"
+                            android:lineSpacingExtra="@dimen/item_line_spacing"
                             android:textColor="@color/title_gray"
                             android:textSize="@dimen/sp_16" />
 
@@ -211,9 +211,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="@dimen/dp_10"
+                            android:ellipsize="end"
                             android:lineSpacingMultiplier="1.2"
                             android:maxLines="1"
-                            android:ellipsize="end"
                             android:textColor="@color/app_background" />
 
                     </LinearLayout>
@@ -378,6 +378,8 @@
                     android:drawableLeft="@drawable/ic_leave"
                     android:drawablePadding="@dimen/dp_5"
                     android:hint="留下你的评论..."
+                    android:maxLength="300"
+                    android:maxLines="3"
                     android:padding="@dimen/dp_10"
                     android:textColor="@color/title_gray"
                     android:textColorHint="@color/title_gray_aa"
@@ -388,6 +390,7 @@
                     android:id="@+id/tv_send"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/et_message"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_10"
