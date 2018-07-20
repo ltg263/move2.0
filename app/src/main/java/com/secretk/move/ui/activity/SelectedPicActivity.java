@@ -24,9 +24,12 @@ import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.bean.PicBean;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.StatusBarUtil;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -186,5 +189,19 @@ public class SelectedPicActivity extends AppCompatActivity {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogUtil.w("当前的Class名称:"+ StringUtil.getCurrentClassName(this));
+        MobclickAgent.onPageStart(StringUtil.getCurrentClassName(this));
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

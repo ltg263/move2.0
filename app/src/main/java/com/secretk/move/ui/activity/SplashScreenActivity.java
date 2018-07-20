@@ -13,8 +13,10 @@ import com.secretk.move.apiService.MoveIntentService;
 import com.secretk.move.apiService.MovePushService;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
+import com.umeng.analytics.MobclickAgent;
 
 
 public class SplashScreenActivity extends Activity {
@@ -36,6 +38,7 @@ public class SplashScreenActivity extends Activity {
             PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), MoveIntentService.class);
         }
         setContentView(R.layout.splashscreen);
+        MobclickAgent.openActivityDurationTrack(false);
 //		getWindow().setFormat(PixelFormat.RGBA_8888);
 
         isFirst = SharedUtils.singleton().get("isFirst",false);
@@ -77,6 +80,20 @@ public class SplashScreenActivity extends Activity {
         }
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogUtil.w("当前的Class名称:"+ StringUtil.getCurrentClassName(this));
+        MobclickAgent.onPageStart(StringUtil.getCurrentClassName(this));
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
 }

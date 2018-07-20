@@ -18,13 +18,16 @@ import com.secretk.move.apiService.MoveIntentService;
 import com.secretk.move.apiService.MovePushService;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.UiUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.LoadingDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -196,6 +199,19 @@ public abstract class BaseActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+        protected void onResume() {
+        super.onResume();
+        LogUtil.w("当前的Class名称:"+ StringUtil.getCurrentClassName(this));
+        MobclickAgent.onPageStart(StringUtil.getCurrentClassName(this));
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();

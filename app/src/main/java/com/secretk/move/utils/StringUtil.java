@@ -501,6 +501,9 @@ public class StringUtil {
             editText.setSelection(editText.getText().toString().length());
         }
     }
+    public static String getCurrentClassName(Activity activity){
+        return activity.getComponentName().getClassName();
+    }
 
     /**
      * 加V

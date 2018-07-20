@@ -41,6 +41,7 @@ import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
 import com.secretk.move.view.LoadingDialog;
 import com.secretk.move.view.RichTextEditor;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -347,6 +348,9 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
     @Override
     protected void onResume() {
         super.onResume();
+        LogUtil.w("当前的Class名称:"+StringUtil.getCurrentClassName(this));
+        MobclickAgent.onPageStart(StringUtil.getCurrentClassName(this));
+        MobclickAgent.onResume(this);
         if (AddLabelActivity.array != null) {
             if(arrayTags!=null){
                 arrayTags.clear();
@@ -373,7 +377,12 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
     }
 
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(StringUtil.getCurrentClassName(this));
+        MobclickAgent.onPause(this);
+    }
     public String getEdTitle() {
         return ed_title.getText().toString().trim();
     }

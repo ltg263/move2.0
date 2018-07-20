@@ -8,7 +8,10 @@ import com.igexin.sdk.PushManager;
 import com.secretk.move.apiService.MoveIntentService;
 import com.secretk.move.apiService.MovePushService;
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.utils.LogUtil;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -34,6 +37,20 @@ public abstract class MvpBaseActivity<P extends BasePresenter> extends AppCompat
         presenter = initPresenter();
         initView();
         initData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogUtil.w("当前的Class名称:"+ StringUtil.getCurrentClassName(this));
+        MobclickAgent.onPageStart(StringUtil.getCurrentClassName(this));
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     // 布局资源ID

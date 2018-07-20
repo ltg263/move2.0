@@ -51,6 +51,8 @@ public class MoveApplication extends Application {
          * 参数3:【友盟+】 Channel
          * 参数4:设备类型，UMConfigure.DEVICE_TYPE_PHONE为手机、UMConfigure.DEVICE_TYPE_BOX为盒子，默认为手机
          * 参数5:Push推送业务的secret
+         * 5b4716e08f4a9d5392000089  个人
+         *  5afcf0628f4a9d04a7000015
          */
         UMConfigure.init(this, "5b4716e08f4a9d5392000089", "FIND", UMConfigure.DEVICE_TYPE_PHONE, "");
 
@@ -99,29 +101,9 @@ public class MoveApplication extends Application {
         activityStack.clear();
     }
 
-    /*static {
-        //设置全局的Header构建器
-        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
-            @NonNull
-            @Override
-            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-                //指定为经典Header，默认是 贝塞尔雷达Header
-                return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);
-            }
-        });
-        //设置全局的Footer构建器
-        SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {
-            @NonNull
-            @Override
-            public RefreshFooter createRefreshFooter(@NonNull Context context, @NonNull RefreshLayout layout) {
-                //指定为经典Footer，默认是 BallPulseFooter
-                return new ClassicsFooter(context).setSpinnerStyle(SpinnerStyle.Translate);
-            }
-        });
-    }*/
     //static 代码段可以防止内存泄露
     static {
-        //设置全局的Header构建器
+        //设置全局的Header构建器]
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
