@@ -29,6 +29,8 @@ import butterknife.ButterKnife;
 public class ProjectIntroHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.iv_icon)
     ImageView ivIcon;
+    @BindView(R.id.iv_model_type)
+    ImageView ivModelType;
     @BindView(R.id.tv_follow_status)
     TextView tvFollowStatus;
     @BindView(R.id.tv_user_uame)
@@ -45,6 +47,8 @@ public class ProjectIntroHolder extends RecyclerViewBaseHolder {
 
         GlideUtils.loadCircleUserUrl(context,ivIcon, Constants.BASE_IMG_URL+ StringUtil.getBeanString(usersBean.getIcon()));
         tvUserUame.setText(StringUtil.getBeanString(usersBean.getUserName()));
+
+        StringUtil.getUserType(usersBean.getUserType(),ivModelType);
         tvUserSignature.setText(StringUtil.getBeanString(usersBean.getUserSignature()));
         //0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
         if(usersBean.getFollowStatus()==0){

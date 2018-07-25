@@ -66,8 +66,8 @@ android {
         applicationId "com.secretk.move"
         minSdkVersion 19
         targetSdkVersion 21
-        versionCode 6
-        versionName "1.1.1"
+        versionCode 8
+        versionName "1.1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         /* 个推 */
         manifestPlaceholders = [
@@ -81,8 +81,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false//控制是否运行混淆
+//            shrinkResources false // 优化代码
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.move
         }

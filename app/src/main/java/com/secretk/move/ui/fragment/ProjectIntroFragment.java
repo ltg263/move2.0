@@ -50,6 +50,8 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
     TextView tvWhitepaperUrl;
     @BindView(R.id.iv_icon)
     ImageView ivIcon;
+    @BindView(R.id.iv_model_type)
+    ImageView ivModelType;
     @BindView(R.id.rl_station_agent)
     RelativeLayout rlStationAgent;
     @BindView(R.id.tv_follow_status)
@@ -102,6 +104,7 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
             ProjectHomeBean.DataBean.ProjectBean.OwnerBean owner = projectIntro.getOwner();
             if (owner != null) {
                 GlideUtils.loadCircleUserUrl(getActivity(),ivIcon, Constants.BASE_IMG_URL + owner.getIcon());
+                StringUtil.getUserType(owner.getUserType(),ivModelType);
                 tvUserName.setText(owner.getUserName());
                 tvUserSignature.setText(owner.getUserSignature());
                 //0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮

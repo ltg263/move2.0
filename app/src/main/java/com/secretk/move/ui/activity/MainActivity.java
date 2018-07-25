@@ -148,15 +148,19 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_main:
+                        MobclickAgent.onEvent(MainActivity.this,"home_id");
                         vp_main.setCurrentItem(0);
                         break;
                     case R.id.rb_topic:
+                        MobclickAgent.onEvent(MainActivity.this,"find_id");
                         vp_main.setCurrentItem(1);
                         break;
                     case R.id.rb_message:
+                        MobclickAgent.onEvent(MainActivity.this,"info_id");
                         vp_main.setCurrentItem(2);
                         break;
                     case R.id.rb_mine:
+                        MobclickAgent.onEvent(MainActivity.this,"mine_id");
                         vp_main.setCurrentItem(3);
                         break;
                     default:
