@@ -33,10 +33,14 @@
             android:text="@string/main_tab_home_page" />
 
         <RadioButton
+            android:id="@+id/rb_project"
+            style="@style/main_tab_bottom"
+            android:drawableTop="@drawable/main_tab_project_selector"
+            android:text="@string/main_tab_project" />
+        <RadioButton
             android:id="@+id/rb_topic"
             style="@style/main_tab_bottom"
             android:drawableTop="@drawable/main_tab_topic_selector"
-
             android:text="@string/main_tab_topic" />
 
         <RadioButton

@@ -18,13 +18,16 @@ public class MainFragmentsFactory {
                     fragments.put(position,new MainPagerFragment());
                     break;
                 case 1:
-                    fragments.put(position,new FindFragment());
+                    fragments.put(position,new ProjectFragment());
                     break;
                 case 2:
+                    fragments.put(position,new FindFragment());
+                    break;
+                case 3:
 //                    fragments.put(position,new MessageFragment());
                     fragments.put(position,new InfoFragment());
                     break;
-                case 3:
+                case 4:
                     fragments.put(position,new MineFragment());
                     break;
                 default:

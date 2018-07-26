@@ -54,7 +54,7 @@ public class MoveApplication extends Application {
          * 5b4716e08f4a9d5392000089  个人
          *  5afcf0628f4a9d04a7000015
          */
-        UMConfigure.init(this, "5b4716e08f4a9d5392000089", "FIND", UMConfigure.DEVICE_TYPE_PHONE, "");
+        UMConfigure.init(this, "5afcf0628f4a9d04a7000015", "FIND", UMConfigure.DEVICE_TYPE_PHONE, "");
 
     }
 
@@ -121,6 +121,7 @@ public class MoveApplication extends Application {
             @Override
             public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
                 //指定为经典Footer，默认是 BallPulseFooter
+
                 return new ClassicsFooter(context).setSpinnerStyle(SpinnerStyle.FixedBehind);
 //                return new ClassicsFooter(context).setDrawableSize(20);
             }

@@ -439,6 +439,41 @@ public class NetUtil {
         });
     }
 
+    /**
+     * 实时行情价格
+     * @param collect
+     * https://api.coinmarketcap.com/v2/ticker/1/?convert=CNY
+     */
+    public static void getCoinmarketcapTicker(String id,String name,final SaveCommendationImp collect){
+        RxHttpParams params = new RxHttpParams.Build()
+//                .url(Constants.SEND_TOKEN)
+                .url("https://api.coinmarketcap.com/v2/ticker/"+id+"/?convert="+name+"")
+                .build();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onCompleted(String str) {
+                try {
+                    JSONObject obj = new JSONObject(str);
+                    if(obj.getJSONObject("data")!=null){
+                        JSONObject cny = obj.getJSONObject("data").getJSONObject("quotes").getJSONObject("CNY");
+                        double price = cny.getDouble("price");
+                        double percent_change_1h = cny.getDouble("percent_change_1h");
+                        collect.finishCommendation("￥"+String.format("%.2f", price),String.format("%.2f", percent_change_1h),true);
+                    }else{
+                        collect.finishCommendation("","",false);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String message) {
+                collect.finishCommendation("","",false);
+            }
+        });
+    }
+
     //当前时间()精确毫秒)+用户id+图片位数+图片后缀
 //     * 身份证图片idcard  帖子图片 posts   用户头像avatars
 

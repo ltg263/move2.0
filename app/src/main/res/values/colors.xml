@@ -3,6 +3,7 @@
     <color name="app_background">#3b88f6</color>
     <color name="colorPrimary">#3b88f6</color>
     <color name="colorPrimaryDark">#3b88f6</color>
+    <color name="app_toolbar">#393d46</color>
     <!--FF4081-->
     <color name="colorAccent">#3b88f6</color>
     <!--登陆按钮-->

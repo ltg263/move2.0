@@ -54,6 +54,8 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
     ActivityMainContract.Presenter presenter;
     @BindView(R.id.rb_main)
     RadioButton rbMain;
+    @BindView(R.id.rb_project)
+    RadioButton rbProject;
     @BindView(R.id.rb_topic)
     RadioButton rbTopic;
     @BindView(R.id.rb_message)
@@ -89,7 +91,7 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
         MobclickAgent.onProfileSignIn("1");
         adapter = new MainActivityPagerAdapter(getSupportFragmentManager());
         vp_main.setAdapter(adapter);
-        vp_main.setOffscreenPageLimit(4);
+        vp_main.setOffscreenPageLimit(5);
         presenter = new MainPresenterImpl(this);
         presenter.initialized();
         postId = getIntent().getStringExtra("postId");
@@ -151,17 +153,21 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
                         MobclickAgent.onEvent(MainActivity.this,"home_id");
                         vp_main.setCurrentItem(0);
                         break;
+                    case R.id.rb_project:
+//                        MobclickAgent.onEvent(MainActivity.this,"project_id");
+                        vp_main.setCurrentItem(1);
+                        break;
                     case R.id.rb_topic:
                         MobclickAgent.onEvent(MainActivity.this,"find_id");
-                        vp_main.setCurrentItem(1);
+                        vp_main.setCurrentItem(2);
                         break;
                     case R.id.rb_message:
                         MobclickAgent.onEvent(MainActivity.this,"info_id");
-                        vp_main.setCurrentItem(2);
+                        vp_main.setCurrentItem(3);
                         break;
                     case R.id.rb_mine:
                         MobclickAgent.onEvent(MainActivity.this,"mine_id");
-                        vp_main.setCurrentItem(3);
+                        vp_main.setCurrentItem(4);
                         break;
                     default:
                         break;

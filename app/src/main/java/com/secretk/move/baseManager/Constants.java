@@ -97,9 +97,9 @@ public interface Constants {
     String QUNIU_IMG_RUL = "https://pic.qufen.top/";
 
 
-//    String BASE_URL = "http://app.qufen.top/rest/";//线上
+    String BASE_URL = "http://app.qufen.top/rest/";//线上
 //
-     String BASE_URL = "http://192.168.10.153:809/";//栋栋
+//     String BASE_URL = "http://192.168.10.153:809/";//栋栋
 //
 //      String BASE_URL = "http://repay.free.ngrok.cc/rest/";//林俊
     //:15537894586   abc12310  志远手机密码：0405
@@ -175,6 +175,8 @@ public interface Constants {
     String MAIN_DISCUSS = BASE_URL + "kff/home/getBurstList";
     //青天榜
     String MAIN_BLUE_SKY = BASE_URL + "kff/home/projectRankList";
+    //项目Tab
+    String GET_PROJECT_TAB = BASE_URL + "kff/project/getProjectTab";
 
     //上传用户头像 1用户头像；2帖子中内容图片；3项目图标
     String UPLOAD_USER_ICON_FILE = BASE_URL + "kff/home/uploadImgFile";

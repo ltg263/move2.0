@@ -131,23 +131,25 @@ public class RetrofitUtil {
                              if (body != null) {
                                  String jsonStr = new String(read(body.byteStream()), Charset.forName("UTF-8"));
                                  LogUtil.w("jsonStr:" + jsonStr);
-                                 try {
-                                     JSONObject jsonObject = new JSONObject(jsonStr);
-                                     int code = jsonObject.getInt("code");
-                                     String msg = jsonObject.getString("msg");
+                                 if(!response.raw().toString().contains("api.coinmarketcap.com")){
+                                     try {
+                                         JSONObject jsonObject = new JSONObject(jsonStr);
+                                         int code = jsonObject.getInt("code");
+                                         String msg = jsonObject.getString("msg");
 //                                     String data = jsonObject.getJSONObject("data").toString();
-                                     if ((code != 0 && !msg.equals("Success"))) {
+                                         if ((code != 0 && !msg.equals("Success"))) {
 //                                         if(code==11004){
 //                                             msg = "帐号或密码错误请重新登陆";
 //                                             IntentUtil.startActivity(LoginHomeActivity.class);
 //                                         }
-                                         Toast.makeText(MoveApplication.getContext(), msg, Toast.LENGTH_SHORT).show();
-                                         callBack.onError(msg);
-                                         callBack.onFinish();
-                                         return;
+                                             Toast.makeText(MoveApplication.getContext(), msg, Toast.LENGTH_SHORT).show();
+                                             callBack.onError(msg);
+                                             callBack.onFinish();
+                                             return;
+                                         }
+                                     } catch (JSONException e) {
+                                         e.printStackTrace();
                                      }
-                                 } catch (JSONException e) {
-                                     e.printStackTrace();
                                  }
                                  if (clz == null) {
                                      callBack.onFinish();
