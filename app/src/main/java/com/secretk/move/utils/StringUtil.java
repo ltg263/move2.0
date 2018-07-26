@@ -514,7 +514,9 @@ public class StringUtil {
      * @return
      */
     public static String getUserType(int userType, ImageView ivModelType){
-        ivModelType.setVisibility(View.GONE);
+        if(ivModelType!=null){
+            ivModelType.setVisibility(View.GONE);
+        }
         String ut="";
         switch (userType){
             case 1:

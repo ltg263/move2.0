@@ -104,7 +104,7 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 3) {
+                if (position == 4) {
                     StatusBarUtil.setDarkMode(MainActivity.this);
                     StatusBarUtil.setColor(MainActivity.this, UiUtils.getColor(R.color.app_background), 0);
                 } else {
