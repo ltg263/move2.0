@@ -40,7 +40,7 @@ import butterknife.OnClick;
  * 作者： litongge
  * 时间： 2018/7/2 18:34
  * 邮箱；ltg263@126.com
- * 描述：我的消息
+ * 描述：我的资讯
  */
 
 public class InfoFragment extends LazyFragment {

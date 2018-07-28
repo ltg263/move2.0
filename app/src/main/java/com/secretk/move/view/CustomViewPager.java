@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
-import com.secretk.move.utils.LogUtil;
 
 import java.util.ArrayList;
 
@@ -89,9 +88,23 @@ public class CustomViewPager extends LinearLayout {
         mContext = context;
         mScale = context.getResources().getDisplayMetrics().density;
         LayoutInflater.from(context).inflate(R.layout.custom_viewpager, this);
-        mAdvPager = (ViewPager) findViewById(R.id.adv_pager);
-//        mAdvPager.setOnPageChangeListener(new GuidePageChangeListener());
+        mAdvPager =  findViewById(R.id.adv_pager);
+
+//        mAdvPager.setOffscreenPageLimit(3);
+//        int pagerWidth = (int) (getResources().getDisplayMetrics().widthPixels * 5.0f / 5.0f);
+//        ViewGroup.LayoutParams lp = mAdvPager.getLayoutParams();
+//        if (lp == null) {
+//            lp = new ViewGroup.LayoutParams(pagerWidth, ViewGroup.LayoutParams.MATCH_PARENT);
+//        } else {
+//            lp.width = pagerWidth;
+//        }
+//        mAdvPager.setLayoutParams(lp);
+//        mAdvPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.dp_10));
+//        mAdvPager.setPageTransformer(true,new MyGallyPageTransformer());
+
         mAdvPager.addOnPageChangeListener(new GuidePageChangeListener());
+        mAdvPager.setCurrentItem(2000);
+
         mAdvPager.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -293,7 +306,6 @@ public class CustomViewPager extends LinearLayout {
         public Object instantiateItem(ViewGroup container, int position) {
             curPos = position % mAdList.size();
             String imageUrl = mAdList.get(curPos);
-            LogUtil.w("position:"+position+" curPos:"+curPos);
             RoundImageView imageView = null;
             if (mImageViewCacheList.isEmpty()) {
                 imageView = new RoundImageView(mContext);
@@ -348,5 +360,26 @@ public class CustomViewPager extends LinearLayout {
         public void onImageClick(int position, View imageView);
     }
 
+    class MyGallyPageTransformer implements ViewPager.PageTransformer {
+        private static final float min_scale = 0.85f;
+
+        @Override
+        public void transformPage(View page, float position) {
+            float scaleFactor = Math.max(min_scale, 1 - Math.abs(position));
+            if (position < -1) {
+                page.setScaleX(scaleFactor);
+                page.setScaleY(scaleFactor);
+            } else if (position < 0) {
+                page.setScaleX(scaleFactor);
+                page.setScaleY(scaleFactor);
+            } else if (position >= 0 && position < 1) {
+                page.setScaleX(scaleFactor);
+                page.setScaleY(scaleFactor);
+            } else if (position >= 1) {
+                page.setScaleX(scaleFactor);
+                page.setScaleY(scaleFactor);
+            }
+        }
+    }
 
 }

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.BlueSkyBean;
+import com.secretk.move.bean.ProjectByTabBean;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.StringUtil;
@@ -49,12 +49,12 @@ public class MainProjectOneFragmentHolder extends RecyclerViewBaseHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
-    public void setData(final BlueSkyBean.RankList bean, int position, final Context context) {
+    public void setData(final ProjectByTabBean.DataBean.ProjectResponsePageBean.RowsBean bean, int position, final Context context) {
         GlideUtils.loadCircleProjectUrl(context,ivHeadImg, Constants.BASE_IMG_URL+bean.getProjectIcon());
         tvProjectCode.setText(StringUtil.getBeanString(bean.getProjectCode()));
         tvProjectName.setText("/"+StringUtil.getBeanString(bean.getProjectChineseName()));
         tvFollowNum.setText(bean.getFollowerNum()+"关注");
-        tvTotalScore.setText(bean.getTotalScore());
+        tvTotalScore.setText(String.valueOf(bean.getTotalScore()));
         //0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
         if(bean.getFollowStatus() == 1){
             tvFollowStatus.setSelected(true);

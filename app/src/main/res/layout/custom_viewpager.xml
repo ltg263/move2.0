@@ -5,9 +5,10 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/adv_pager"
-        android:layout_margin="@dimen/dp_10"
         android:layout_width="match_parent"
-        android:layout_height="115dp" />
+        android:layout_height="115dp"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/dp_10" />
 
     <LinearLayout
         android:id="@+id/viewGroup"

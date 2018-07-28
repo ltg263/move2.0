@@ -1,37 +1,38 @@
 package com.secretk.move.ui.fragment;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.SearchedBean;
-import com.secretk.move.customview.QuickIndexBar;
-import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.activity.LoginHomeActivity;
-import com.secretk.move.ui.activity.SearchActivity;
-import com.secretk.move.ui.activity.SubmitProjectActivity;
-import com.secretk.move.ui.adapter.FindFragmentRecyclerAdapter;
+import com.secretk.move.bean.InfoBean;
+import com.secretk.move.ui.adapter.FindFragmentAdapter;
+import com.secretk.move.ui.adapter.FindNewAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
-import com.secretk.move.utils.PatternUtils;
+import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
-import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
+import com.secretk.move.view.CustomViewPager;
 import com.secretk.move.view.LoadingDialog;
+import com.secretk.move.view.RecycleScrollView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,252 +40,252 @@ import butterknife.OnClick;
 
 /**
  * 作者： litongge
- * 时间： 2018/6/7 16:03
+ * 时间： 2018/7/2 18:34
  * 邮箱；ltg263@126.com
  * 描述：主页话题
  */
-public class FindFragment extends LazyFragment implements ItemClickListener, QuickIndexBar.OnLetterChangeListener {
 
-    @BindView(R.id.qbar)
-    QuickIndexBar qbar;
+public class FindFragment extends LazyFragment {
     @BindView(R.id.recycler)
     RecyclerView recycler;
-//    @BindView(R.id.refreshLayout)
-//    SmartRefreshLayout refreshLayout;
+    @BindView(R.id.iv_status)
+    ImageView ivStatus;
+    @BindView(R.id.rcv)
+    RecycleScrollView rcv;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
 
-    @BindView(R.id.tv_count)
-    TextView tv_count;
-    @BindView(R.id.tv_sort_name)
-    TextView tv_sort_name;
-    @BindView(R.id.tv_sort_follow)
-    TextView tv_sort_follow;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
-//    @BindView(R.id.tv_icon)
-//    ImageView tvIcon;
-//    @BindView(R.id.tv_name)
-//    TextView tvName;
-//    @BindView(R.id.tv_submit)
-//    TextView tvSubmit;
-//    @BindView(R.id.rl_top_theme)
-//    RelativeLayout rlTopTheme;
-//    @BindView(R.id.ll_have_data)
-//    LinearLayout llHaveData;
-    private FindFragmentRecyclerAdapter adapter;
-    private LoadingDialog loadingDialog;
-    String lsToken="";
-    boolean showFragment = false;
-    private int currentType = Constants.TOPIC_SORT_BY_NUM;
+    @BindView(R.id.viewpager)
+    CustomViewPager viewpager;
+    @BindView(R.id.home_find_1)
+    LinearLayout homeFind1;
+    @BindView(R.id.home_find_2)
+    LinearLayout homeFind2;
+    @BindView(R.id.home_find_3)
+    LinearLayout homeFind3;
+    @BindView(R.id.rv_new_pro)
+    RecyclerView rvNewPro;
+    @BindView(R.id.rv_new_user)
+    RecyclerView rvNewUser;
+    private FindFragmentAdapter adapter;
+    int pageIndex = 1;
+    private List<InfoBean.DataBeanX.DataBean.RowsBean> rows;
+    private FindNewAdapter adapterP;
+    private FindNewAdapter adapterU;
+    List<String> list;
+
     @Override
     public int setFragmentView() {
         return R.layout.fragment_find;
     }
 
+    private ArrayList<String> imageAdList;
+
     @Override
     public void initViews() {
-//        initRefresh();
+        initRefresh();
         setVerticalManager(recycler);
-        adapter = new FindFragmentRecyclerAdapter(getContext());
+        setHorizontalManager(rvNewUser);
+        setHorizontalManager(rvNewPro);
+        adapterP = new FindNewAdapter(getActivity(),1);
+        rvNewPro.setAdapter(adapterP);
+        adapterU = new FindNewAdapter(getActivity(),2);
+        rvNewUser.setAdapter(adapterU);
+        adapter = new FindFragmentAdapter(getActivity());
         recycler.setAdapter(adapter);
-        adapter.setItemListener(this);
-        qbar.setOnLetterChangeListener(this);
         loadingDialog = new LoadingDialog(getActivity());
-//        rlTopTheme.setVisibility(View.VISIBLE);
-//        tvName.setText(getActivity().getResources().getString(R.string.not_currency));
-//        tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
+        list = new ArrayList<>();
+        list.add("100010001000");
+        list.add("200010001000");
+        list.add("30001000");
+        list.add("60001000");
+        list.add("990001000");
+        list.add("100010001000");
+        list.add("200010001000");
+        list.add("30001000");
+        list.add("60001000");
+        list.add("990001000");
+        list.add("100010001000");
+        adapterP.setData(list);
+        adapterU.setData(list);
     }
-//    private void initRefresh() {
-////        loadingDialog = new LoadingDialog(getActivity());
-//        refreshLayout.setEnableLoadmore(false);
-//        refreshLayout.setEnableRefresh(false);
-//        /**
-//         * 下拉刷新
-//         */
-//        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-//            @Override
-//            public void onRefresh(RefreshLayout refreshlayout) {
-//                http(currentType);
-//            }
-//        });
-//    }
-    //1-按关注数量倒序；2-按名称排序
+
+    private CustomViewPager.ImageCycleViewListener mAdCycleViewListener = new CustomViewPager.ImageCycleViewListener() {
+        @Override
+        public void onImageClick(int position, View imageView) {
+            //  ：0-完整版专业评测，1-自定义评测，2-文章，3-打假，4-单项评测
+            if (rows == null || rows.size() == 0) {
+                return;
+            }
+            InfoBean.DataBeanX.DataBean.RowsBean row = rows.get(viewpager.getCurPos());
+            int type = row.getType();
+
+            if (type == 5 && StringUtil.isNotBlank(row.getOutUrl())) {
+                IntentUtil.startWebViewActivity(row.getOutUrl(), "区分");
+                return;
+            }
+            int postId = row.getArticleId();
+            if (row.getIsCheckDetails() == 1 || row.getArticleId() == 0) {
+                return;
+            }
+            if (type == 0 || type == 1 || type == 4) {
+                type = 1;
+            } else if (type == 3) {
+                type = 2;
+            } else if (type == 2) {
+                type = 3;
+            } else {
+                ToastUtils.getInstance().show("类型出错");
+                return;
+            }
+            IntentUtil.go2DetailsByType(type, String.valueOf(postId));
+        }
+
+        @Override
+        public void displayImage(String imageURL, ImageView imageView) {
+            // TODO 加载显示图片
+            imageView.setTag(null);
+            Glide.with(getActivity()).load(imageURL).into(imageView);
+        }
+    };
+
+
     @Override
     public void onFirstUserVisible() {
-        if (true) {
-//        if (isLoginZt){
-            http(Constants.TOPIC_SORT_BY_NUM);
-        } else {
-            ToastUtils.getInstance().show("账号未登录,请先登录账号");
-        }
-    }
-
-    @Override
-    public void onItemClick(View view, int postion) {
-        if(isLoginZt){
-            int id = adapter.getData().get(postion).getProjectId();
-            IntentUtil.startProjectActivity(id);
-        }else{
-            IntentUtil.startActivity(LoginHomeActivity.class);
-        }
-    }
-
-    @Override
-    public void onItemLongClick(View view, int postion) {
-//        ToastUtils.getInstance().show("onItemLongClick postion=" + postion);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(!lsToken.equals(token) && showFragment){
-            lsToken = token;
-            http(currentType);
-        }
-    }
-
-    @Override
-    public void onLetterChange(String letter) {
-        List<SearchedBean.DataBean.ProjectsBean.RowsBean> list = adapter.getData();
-        for (int i = 0; i < list.size(); i++) {
-            String str = list.get(i).getProjectCode().charAt(0) + "";
-            if (letter.equals(str.trim().toUpperCase())) {
-                recycler.scrollToPosition(i);
-                LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
-                manager.scrollToPositionWithOffset(i, 0);
-                break;
-            } else if (letter.equals("#") && PatternUtils.isLetter(str) == false) {
-                recycler.scrollToPosition(0);
-            }
-        }
-    }
-
-    int pageIndex = 1;
-    public void http(final int type) {
-        if(!showFragment){
-//            loadingDialog.show();
-        }
         loadingDialog.show();
-        showFragment=true;
+        loadData();
+    }
+
+    private void initRefresh() {
+//        refreshLayout.setEnableRefresh(false);
+//        refreshLayout.setEnableLoadMore(false);
+        /**
+         * 下拉刷新
+         */
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                pageIndex = 1;
+                loadData();
+
+            }
+        });
+        /**
+         * 上啦加载
+         */
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshLayout) {
+                getNewsFlashPageList();
+            }
+        });
+    }
+
+
+    private void loadData() {
+        if (!NetUtil.isNetworkAvailable()) {
+            ToastUtils.getInstance().show(getString(R.string.network_error));
+            return;
+        }
+        //轮播图
+        getNewsFlashImgList();
+        getNewsFlashPageList();
+    }
+
+    private void getNewsFlashImgList() {
         JSONObject node = new JSONObject();
         try {
-            node.put("token", token);
-            node.put("projectCode", "");
-            node.put("sortType", type);
-            node.put("pageIndex", pageIndex);
-            node.put("pageSize", 500);
+            node.put("pageIndex", 1);
+            node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.SEARCH_PROJECTS)
+        final RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.GET_NEWS_FLASH_IMG_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, SearchedBean.class, new HttpCallBackImpl<SearchedBean>() {
+        RetrofitUtil.request(params, InfoBean.class, new HttpCallBackImpl<InfoBean>() {
             @Override
-            public void onCompleted(SearchedBean bean) {
-                SharedUtils.singleton().put("isFollowerFx",false);
-                List<SearchedBean.DataBean.ProjectsBean.RowsBean> list = bean.getData().getProjects().getRows();
-                if(list!=null){
-                    tv_count.setText("共" + list.size() + "个币种");
-    //                    if (list.size() > 0) {
-    //                        convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
-    //                        llHaveData.setVisibility(View.VISIBLE);
-    //                    } else {
-    //                        llHaveData.setVisibility(View.GONE);
-    //                        convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
-    //                    }
-                    adapter.setData(list, type);
-                    if (type == Constants.TOPIC_SORT_BY_NAME) {
-                        qbar.setDatax(list);
+            public void onCompleted(InfoBean bean) {
+                InfoBean.DataBeanX.DataBean data = bean.getData().getData();
+                if (data == null) {
+                    return;
+                }
+                rows = bean.getData().getData().getRows();
+                if (rows != null && rows.size() > 0) {
+                    imageAdList = new ArrayList<>();
+                    for (int i = 0; i < rows.size(); i++) {
+                        imageAdList.add(rows.get(i).getImgPath());
+                    }
+                    viewpager.setImageResources(imageAdList, mAdCycleViewListener);
+                }
+            }
+        });
+    }
+
+    private void getNewsFlashPageList() {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("pageIndex", pageIndex++);
+            node.put("pageSize", Constants.PAGE_SIZE);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.GET_NEWS_FLASH_PAGE_LIST)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, InfoBean.class, new HttpCallBackImpl<InfoBean>() {
+            @Override
+            public void onCompleted(InfoBean str) {
+                InfoBean.DataBeanX.DataBean data = str.getData().getData();
+                if (data == null) {
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                    return;
+                }
+//                if (data.getCurPageNum() == data.getPageSize()) {
+                if (true) {
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                }
+//                List<String> list = data.getRows();
+                if (list != null && list.size() > 0) {
+                    if (pageIndex > 2) {
+                        adapter.addData(list);
+                    } else {
+                        adapter.setData(list);
                     }
                 }
             }
 
             @Override
             public void onFinish() {
-                super.onFinish();
-//                if (refreshLayout.isRefreshing()) {
-//                    refreshLayout.finishRefresh();
-//                }
+                if (refreshLayout.isEnableRefresh()) {
+                    refreshLayout.finishRefresh();
+                }
+                if (refreshLayout.isEnableLoadMore()) {
+                    refreshLayout.finishLoadMore();
+                }
+                loadingDialog.dismiss();
+            }
+
+            @Override
+            public void onError(String message) {
                 loadingDialog.dismiss();
             }
         });
     }
 
-    @OnClick({R.id.fab,R.id.toolbar,R.id.tv_sort_follow,R.id.tv_sort_name})
+    @OnClick({R.id.home_find_1, R.id.home_find_2, R.id.home_find_3})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.fab:
-                if(isLoginZt){
-                    IntentUtil.startActivity(SubmitProjectActivity.class);
-                    return;
-                }
-                IntentUtil.startActivity(LoginHomeActivity.class);
+            case R.id.home_find_1:
                 break;
-            case R.id.toolbar:
-                Intent intent = new Intent(getContext(), SearchActivity.class);
-                startActivity(intent);
+            case R.id.home_find_2:
                 break;
-            case R.id.tv_sort_follow:
-                if(currentType==Constants.TOPIC_SORT_BY_NAME){
-                    sortFollow();
-                }
-                break;
-            case R.id.tv_sort_name:
-                if(currentType==Constants.TOPIC_SORT_BY_NUM){
-                    sortName();
-                }
+            case R.id.home_find_3:
                 break;
         }
-    }
-
-    private void sortName() {
-        currentType=Constants.TOPIC_SORT_BY_NAME;
-        fab.setVisibility(View.VISIBLE);
-        qbar.setVisibility(View.VISIBLE);
-//        tv_count.setText("共" + 0 + "个币种");
-        tv_sort_name.setTextColor(Color.parseColor("#3b88f6"));
-        tv_sort_follow.setTextColor(Color.parseColor("#dddddd"));
-        List<SearchedBean.DataBean.ProjectsBean.RowsBean> list = adapter.getDataByType(currentType);
-        boolean isFollower = SharedUtils.singleton().get("isFollower",true);
-        if (list == null || list.size() == 0 || true) {
-            http(currentType);
-            return;
-        }
-        adapter.swithData(currentType);
-        int count = adapter.getDataByType(currentType).size();
-        tv_count.setText("共" + count + "个币种");
-    }
-
-    private void sortFollow() {
-        currentType=Constants.TOPIC_SORT_BY_NUM;
-        fab.setVisibility(View.VISIBLE);
-        qbar.setVisibility(View.GONE);
-//        tv_count.setText("共" + 0 + "个币种");
-        tv_sort_name.setTextColor(Color.parseColor("#dddddd"));
-        tv_sort_follow.setTextColor(Color.parseColor("#3b88f6"));
-        List<SearchedBean.DataBean.ProjectsBean.RowsBean> list = adapter.getDataByType(currentType);
-        boolean isFollower = SharedUtils.singleton().get("isFollower",true);
-        if (list == null || list.size() == 0 || true) {
-            http(currentType);
-            return;
-        }
-        adapter.swithData(currentType);
-        int count = adapter.getDataByType(currentType).size();
-        tv_count.setText("共" + count + "个币种");
-    }
-
-    @Override
-    public void onUserVisible() {
-        boolean isFollower = SharedUtils.singleton().get("isFollowerFx",false);
-        if (isFollower){
-            if(currentType==Constants.TOPIC_SORT_BY_NAME){
-                sortName();
-            }else{
-                sortFollow();
-            }
-        }
-        super.onUserVisible();
     }
 }

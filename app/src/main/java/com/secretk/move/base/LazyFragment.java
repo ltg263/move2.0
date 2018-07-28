@@ -48,6 +48,11 @@ public abstract class LazyFragment extends Fragment {
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rcv.setLayoutManager(manager);
     }
+    public void setHorizontalManager(RecyclerView rcv) {
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rcv.setLayoutManager(manager);
+    }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

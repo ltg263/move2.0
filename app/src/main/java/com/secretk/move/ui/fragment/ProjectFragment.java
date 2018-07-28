@@ -33,7 +33,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,9 +53,8 @@ public class ProjectFragment extends LazyFragment {
 
     @BindView(R.id.magic_indicator_title)
     MagicIndicator magicIndicatorTitle;
+    private List<ProjectTabBean.DataBean.TabsBean> tabs;
 
-    private String[] mTitles = new String[]{"关注", "热门", "全部","区分大赛","创新区"};
-    private List<String> mDataList;
     @Override
     public int setFragmentView() {
         return R.layout.fragment_project;
@@ -86,13 +84,13 @@ public class ProjectFragment extends LazyFragment {
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
-                return mDataList == null ? 0 : mDataList.size();
+                return tabs == null ? 0 : tabs.size();
             }
 
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
                 SimplePagerTitleView simplePagerTitleView = new ColorFlipPagerTitleView(context);
-                simplePagerTitleView.setText(mDataList.get(index));
+                simplePagerTitleView.setText(tabs.get(index).getTabTitle());
                 simplePagerTitleView.setNormalColor(ContextCompat.getColor(getContext(), R.color.app_toolbar));
                 simplePagerTitleView.setSelectedColor(ContextCompat.getColor(getContext(), R.color.app_background));
                 simplePagerTitleView.setTextSize(16);
@@ -132,17 +130,17 @@ public class ProjectFragment extends LazyFragment {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-//                .url(Constants.GET_PROJECT_TAB)
-                .url(Constants.TOKEN_POP)
+                .url(Constants.GET_PROJECT_TAB)
+//                .url(Constants.TOKEN_POP)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
         RetrofitUtil.request(params, ProjectTabBean.class, new HttpCallBackImpl<ProjectTabBean>() {
             @Override
             public void onCompleted(ProjectTabBean bean) {
-                mDataList = Arrays.asList(mTitles);
-                vp_main_children.setOffscreenPageLimit(mDataList.size());
-                adapter.setData(mDataList);
+                tabs = bean.getData().getTabs();
+                vp_main_children.setOffscreenPageLimit(tabs.size());
+                adapter.setData(tabs);
                 initMagicIndicatorTitle();
             }
         });

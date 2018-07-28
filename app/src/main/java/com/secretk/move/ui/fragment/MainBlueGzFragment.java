@@ -239,11 +239,9 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
             @Override
             public void onFinish() {
                 super.onFinish();
-//                if (refreshLayout.isRefreshing()) {
                 if (refreshLayout.isEnableRefresh()) {
                     refreshLayout.finishRefresh();
                 }
-//                if (refreshLayout.isLoading()) {
                 if (refreshLayout.isEnableLoadMore()) {
                     refreshLayout.finishLoadMore(true);
                 }

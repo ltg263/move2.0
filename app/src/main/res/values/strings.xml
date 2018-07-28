@@ -269,4 +269,13 @@
     <string name="evaluation_succeed">评测发布成功！</string>
     <string name="article_succeed">文章发布成功！</string>
     <string name="discuss_succeed">爆料发布成功！</string>
+
+    <!--项目页-->
+    <string name="home_find_1">点评挖矿</string>
+    <string name="home_find_2">排行榜</string>
+    <string name="home_find_3">币圈必读</string>
+    <string name="home_find_4">热门项目</string>
+    <string name="home_find_5">活跃用户</string>
+    <string name="home_find_6">点击挖矿</string>
+
 </resources>

@@ -111,5 +111,13 @@
     <color name="tzfx">#ff2851 </color>
     <color name="zdmx">#ff7b59</color>
 
+    <color name="theme_title">#545d71</color>
+
+    <color name="theme_title_code">#393d46</color>
+    <color name="theme_title_name">#8590a6</color>
+
+    <color name="theme_title_red">#ff4b4b</color>
+
+
 
 </resources>

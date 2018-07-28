@@ -177,6 +177,8 @@ public interface Constants {
     String MAIN_BLUE_SKY = BASE_URL + "kff/home/projectRankList";
     //项目Tab
     String GET_PROJECT_TAB = BASE_URL + "kff/project/getProjectTab";
+    //获取tab栏下相关的项目列
+    String GET_PROJECT_BY_TAB_ID = BASE_URL + "kff/project/getProjectByTabId";
 
     //上传用户头像 1用户头像；2帖子中内容图片；3项目图标
     String UPLOAD_USER_ICON_FILE = BASE_URL + "kff/home/uploadImgFile";

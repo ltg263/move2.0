@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
-import com.secretk.move.bean.BlueSkyBean;
+import com.secretk.move.bean.ProjectByTabBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.holder.MainProjectOneFragmentHolder;
 
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class MainProjectListAdapter extends RecyclerView.Adapter<MainProjectOneFragmentHolder> {
 
-    private List<BlueSkyBean.RankList> list = new ArrayList<>();
+    private List<ProjectByTabBean.DataBean.ProjectResponsePageBean.RowsBean> list = new ArrayList<>();
     private ItemClickListener mListener;
     Context context;
 
@@ -42,7 +42,7 @@ public class MainProjectListAdapter extends RecyclerView.Adapter<MainProjectOneF
     @Override
     public void onBindViewHolder(MainProjectOneFragmentHolder holder, int position) {
         holder.setItemListener(mListener);
-        BlueSkyBean.RankList bean = list.get(position);
+        ProjectByTabBean.DataBean.ProjectResponsePageBean.RowsBean bean = list.get(position);
         holder.setData(bean, position, context);
     }
 
@@ -53,13 +53,16 @@ public class MainProjectListAdapter extends RecyclerView.Adapter<MainProjectOneF
         }
         return list.size();
     }
-
-    public void setData(List<BlueSkyBean.RankList> list) {
+    public void setAddData(List<ProjectByTabBean.DataBean.ProjectResponsePageBean.RowsBean> list) {
+        this.list.addAll(list);
+        notifyDataSetChanged();
+    }
+    public void setData(List<ProjectByTabBean.DataBean.ProjectResponsePageBean.RowsBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
 
-    public BlueSkyBean.RankList getDataIndex(int position) {
+    public ProjectByTabBean.DataBean.ProjectResponsePageBean.RowsBean getDataIndex(int position) {
         return list.get(position);
     }
 }

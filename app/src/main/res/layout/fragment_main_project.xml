@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     android:focusableInTouchMode="true">
 
+    <include
+        android:id="@+id/no_data"
+        layout="@layout/activity_loading_blank"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/view"
+        android:visibility="gone" />
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"

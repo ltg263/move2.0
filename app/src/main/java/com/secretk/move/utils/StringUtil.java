@@ -252,6 +252,11 @@ public class StringUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         return sdf.format(d).toString();
     }
+    public static String getTimeToHms(long seconds) {
+        Date d = new Date(seconds);
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        return sdf.format(d).toString();
+    }
 
     /**
      * 毫秒数转日期

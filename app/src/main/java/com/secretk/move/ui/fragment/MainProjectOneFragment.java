@@ -3,9 +3,13 @@ package com.secretk.move.ui.fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -13,7 +17,7 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.BlueSkyBean;
+import com.secretk.move.bean.ProjectByTabBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.MainProjectListAdapter;
@@ -25,8 +29,6 @@ import com.secretk.move.view.LoadingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -46,6 +48,20 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
     protected LoadingDialog loadingDialog;
     private String tokenLs = "";
     boolean showFragment = false;//需要弹框
+    int pageIndex = 1;
+    int tabId;
+
+    @BindView(R.id.rl_top_theme)
+    RelativeLayout rlTopTheme;
+    @BindView(R.id.tv_icon)
+    ImageView tvIcon;
+    @BindView(R.id.tv_name)
+    TextView tvName;
+    @BindView(R.id.tv_submit)
+    TextView tvSubmit;
+    public void setTabId(int tabId) {
+        this.tabId = tabId;
+    }
 
     @Override
     public int setFragmentView() {
@@ -64,14 +80,31 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
         loadingDialog = new LoadingDialog(getActivity());
     }
     private void initRefresh() {
-        refreshLayout.setEnableLoadMore(false);
         /**
          * 下拉刷新
          */
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                pageIndex=1;
                 onFirstUserVisible();
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshLayout) {
+                onFirstUserVisible();
+            }
+        });
+        tvSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isLoginZt){
+                    pageIndex=1;
+                    onFirstUserVisible();
+                }else {
+                    IntentUtil.startActivity(LoginHomeActivity.class);
+                }
             }
         });
     }
@@ -95,20 +128,54 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
+            node.put("pageIndex", pageIndex++);
+            node.put("pageSize", Constants.PAGE_SIZE);
+            node.put("tabId", tabId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.MAIN_BLUE_SKY)
+//                .url(Constants.MAIN_BLUE_SKY)
+                .url(Constants.GET_PROJECT_BY_TAB_ID)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, BlueSkyBean.class, new HttpCallBackImpl<BlueSkyBean>() {
+        RetrofitUtil.request(params, ProjectByTabBean.class, new HttpCallBackImpl<ProjectByTabBean>() {
             @Override
-            public void onCompleted(BlueSkyBean bean) {
+            public void onCompleted(ProjectByTabBean bean) {
                 SharedUtils.singleton().put("isFollowerSky",false);
-                List<BlueSkyBean.RankList> list = bean.getData().getRankList();
-                adapter.setData(list);
+                ProjectByTabBean.DataBean.ProjectResponsePageBean detailsBean = bean.getData().getProjectResponsePage();
+                if ((detailsBean == null || detailsBean.getRows()==null) && pageIndex == 2) {
+                    convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+                    rlTopTheme.setVisibility(View.VISIBLE);
+                    tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_not_gznr));
+                    tvName.setVisibility(View.INVISIBLE);
+                    tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
+                    refreshLayout.setVisibility(View.GONE);
+                    return;
+                }
+                if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                }
+                refreshLayout.setVisibility(View.VISIBLE);
+                convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
+                if (pageIndex > 2) {
+                    adapter.setAddData(detailsBean.getRows());
+                } else {
+                    adapter.setData(detailsBean.getRows());
+                }
+            }
+
+            @Override
+            public void onError(String message) {
+                if(message.contains("用户未登录,请重新登录")){
+                    convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+                    rlTopTheme.setVisibility(View.VISIBLE);
+                    tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_go_login));
+                    tvName.setVisibility(View.VISIBLE);
+                    tvSubmit.setText(getActivity().getResources().getString(R.string.go_login));
+                    refreshLayout.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -116,6 +183,9 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
                 loadingDialog.dismiss();
                 if(refreshLayout.isEnableRefresh()){
                     refreshLayout.finishRefresh();
+                }
+                if(refreshLayout.isEnableLoadMore()){
+                    refreshLayout.finishLoadMore();
                 }
             }
         });
@@ -125,6 +195,7 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
     public void onResume() {
         super.onResume();
         if (showFragment && !tokenLs.equals(token)) {
+            pageIndex = 1;
             onFirstUserVisible();
         }
     }
@@ -132,7 +203,7 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
     @Override
     public void onItemClick(View view, int postion) {
         if (isLoginZt) {
-            BlueSkyBean.RankList bean = adapter.getDataIndex(postion);
+            ProjectByTabBean.DataBean.ProjectResponsePageBean.RowsBean bean = adapter.getDataIndex(postion);
             IntentUtil.startProjectActivity(bean.getProjectId());
         } else {
             IntentUtil.startActivity(LoginHomeActivity.class);
