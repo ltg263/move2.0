@@ -81,7 +81,7 @@ public class InfoFragment extends LazyFragment {
             if(rows==null || rows.size()==0){
                 return;
             }
-            InfoBean.DataBeanX.DataBean.RowsBean row = rows.get(viewpager.getCurPos());
+            InfoBean.DataBeanX.DataBean.RowsBean row = rows.get(viewpager.getCurPos(1));
             int type = row.getType();
 
             if(type==5 && StringUtil.isNotBlank(row.getOutUrl())){

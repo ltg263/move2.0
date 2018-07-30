@@ -317,6 +317,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.FindWkActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.FindWkDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.InvitePosterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppEditTextStyle" />
@@ -349,6 +357,10 @@
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.SelectedPicActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.HttpDomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppEditTextStyle" />
 

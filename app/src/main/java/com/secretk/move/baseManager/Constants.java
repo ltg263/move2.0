@@ -273,6 +273,9 @@ public interface Constants {
     //获取首页资讯的列表
     String GET_NEWS_FLASH_PAGE_LIST = BASE_URL + "kff/newsFlash/getNewsFlashPageList";
 
+    //点评挖矿列表接口
+    String GET_MINING_ACTIVITY_PAGE_LIST = BASE_URL + "kff/miningActivity/getMiningActivityPageList";
+
     //获取首页资讯的头部轮播图
     String GET_NEWS_FLASH_IMG_LIST = BASE_URL + "kff/newsFlashImg/getNewsFlashImgList";
     //快讯看涨和看跌

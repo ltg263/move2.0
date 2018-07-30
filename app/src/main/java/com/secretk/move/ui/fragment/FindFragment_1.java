@@ -77,7 +77,7 @@ public class FindFragment_1 extends LazyFragment implements ItemClickListener, Q
     private int currentType = Constants.TOPIC_SORT_BY_NUM;
     @Override
     public int setFragmentView() {
-        return R.layout.fragment_find;
+        return R.layout.fragment_find_1;
     }
 
     @Override

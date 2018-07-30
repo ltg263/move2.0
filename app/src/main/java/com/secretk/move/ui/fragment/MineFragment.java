@@ -17,6 +17,7 @@ import com.secretk.move.bean.UserLoginInfo;
 import com.secretk.move.presenter.MineFragmentPresenter;
 import com.secretk.move.presenter.impl.MineFragmentPresenterImpl;
 import com.secretk.move.ui.activity.HomeActivity;
+import com.secretk.move.ui.activity.HttpDomeActivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.activity.MineApproveSubmitiCertificateActivity;
 import com.secretk.move.ui.activity.MineAttentionActivity;
@@ -181,7 +182,8 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
     @OnClick({R.id.iv_my_set,R.id.ll_my_approve, R.id.tv_go_login, R.id.tv_go_register, R.id.rl_user_info,
             R.id.rl_appraisal, R.id.rl_discuss, R.id.rl_essay, R.id.ll_check_details, R.id.ll_my_attention,
-            R.id.ll_my_collect, R.id.ll_my_message,R.id.ll_my_recommend, R.id.ll_my_about, R.id.ll_my_feedback})
+            R.id.ll_my_collect, R.id.ll_my_message,R.id.ll_my_recommend, R.id.ll_my_about, R.id.ll_my_feedback,
+            R.id.btn})
     public void onViewClicked(View view) {
         if(!isLoginZt){
             IntentUtil.startActivity(LoginHomeActivity.class);
@@ -239,6 +241,10 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 break;
             case R.id.ll_my_feedback://意见反馈
                 IntentUtil.startActivity(MineOpinionBackActivity.class);
+//                IntentUtil.startActivity(ImagesSelectorActivity.class);
+                break;
+            case R.id.btn://意见反馈
+                IntentUtil.startActivity(HttpDomeActivity.class);
 //                IntentUtil.startActivity(ImagesSelectorActivity.class);
                 break;
         }

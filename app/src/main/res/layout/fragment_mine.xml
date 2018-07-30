@@ -566,6 +566,19 @@
                 android:layout_height="@dimen/dp_line"
                 android:background="@color/cut_off_rule" />
 
+            <TextView
+                android:id="@+id/btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/dp_20"
+                android:background="@drawable/btn_max_selected_radius"
+                android:gravity="center"
+                android:paddingVertical="@dimen/dp_10"
+                android:text="測試接口"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

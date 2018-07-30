@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_gray">
+
+    <com.secretk.move.view.AppBarHeadView
+        android:id="@+id/head_app_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_bar_background" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_line"
+        android:layout_below="@id/head_app_server"
+        android:background="@color/cut_off_rule" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tv_go_lqjl"
+        android:layout_below="@id/view"
+        android:focusableInTouchMode="true"
+        android:visibility="visible"
+        app:srlEnablePreviewInEditMode="false">
+
+
+        <com.secretk.move.view.RecycleScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_10"
+                    android:background="@drawable/btn_max_selected_radius">
+
+                    <ImageView
+                        android:id="@+id/iv_icon"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:background="@drawable/ic_yu_bj"
+                        android:padding="@dimen/dp_5"
+                        android:src="@drawable/ic_find_1" />
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/iv_icon"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dp_12"
+                        android:text="EOS点评挖矿第一弹"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_title"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dp_12"
+                        android:text="倒计时20:34:23 明天14:00开始"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_time"
+                        android:layout_margin="@dimen/dp_25"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_find_num"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tv_title"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_12"
+                                android:text="500.00FIND"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_14" />
+
+                            <TextView
+                                android:id="@+id/tv_find_yd"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tv_title"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_8"
+                                android:text="≈¥2439"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="@dimen/dp_8"
+                            android:layout_marginVertical="@dimen/dp_20"
+                            android:background="@color/white" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_jl_num"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tv_title"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_12"
+                                android:text="1000份"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_14" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tv_title"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_8"
+                                android:text="奖励"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="@dimen/dp_8"
+                            android:layout_marginVertical="@dimen/dp_20"
+                            android:background="@color/white" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_sy_num"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tv_title"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_12"
+                                android:text="213份"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_14" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tv_title"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_8"
+                                android:text="待领取"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10"
+                        android:text="活动介绍"
+                        android:textColor="@color/theme_title"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10"
+                        android:text="EOS，可以理解为Enterprise Operation System，即为商用分布式应用设计的一款区块链操作系统。EOS是引入的一种新的区块链架构，旨在实现分布式应用的性能扩展。"
+                        android:textColor="@color/theme_title"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10"
+                        android:text="领取步骤"
+                        android:textColor="@color/theme_title"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_35"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:padding="@dimen/dp_10"
+                        android:text="1.关注项目"
+                        android:textColor="@color/theme_title"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_go_follow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginHorizontal="@dimen/dp_35"
+                        android:layout_marginVertical="@dimen/dp_10"
+                        android:background="@drawable/btn_selected_radius"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/dp_10"
+                        android:text="去关注项目"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_16" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_35"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:padding="@dimen/dp_10"
+                        android:text="2.点评项目（精评比短评挖矿算力更高）"
+                        android:textColor="@color/theme_title"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_go_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginHorizontal="@dimen/dp_35"
+                        android:layout_marginVertical="@dimen/dp_10"
+                        android:background="@drawable/btn_selected_radius"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/dp_10"
+                        android:text="去点评项目"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_16" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_35"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:padding="@dimen/dp_10"
+                        android:text="3.分享活动（分享后返回区分）"
+                        android:textColor="@color/theme_title"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_go_share"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginHorizontal="@dimen/dp_35"
+                        android:layout_marginVertical="@dimen/dp_10"
+                        android:background="@drawable/btn_selected_radius"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/dp_10"
+                        android:text="去分享"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_16" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </com.secretk.move.view.RecycleScrollView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <TextView
+        android:id="@+id/tv_go_lqjl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/app_background"
+        android:gravity="center"
+        android:padding="@dimen/dp_15"
+        android:text="领取奖励"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16" />
+</RelativeLayout>

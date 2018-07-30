@@ -16,7 +16,9 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.bean.FindKwBean;
 import com.secretk.move.bean.InfoBean;
+import com.secretk.move.ui.activity.FindWkDetailsActivity;
 import com.secretk.move.ui.adapter.FindFragmentAdapter;
 import com.secretk.move.ui.adapter.FindNewAdapter;
 import com.secretk.move.utils.IntentUtil;
@@ -108,6 +110,7 @@ public class FindFragment extends LazyFragment {
         list.add("100010001000");
         adapterP.setData(list);
         adapterU.setData(list);
+//        viewpager.setZx();
     }
 
     private CustomViewPager.ImageCycleViewListener mAdCycleViewListener = new CustomViewPager.ImageCycleViewListener() {
@@ -117,7 +120,8 @@ public class FindFragment extends LazyFragment {
             if (rows == null || rows.size() == 0) {
                 return;
             }
-            InfoBean.DataBeanX.DataBean.RowsBean row = rows.get(viewpager.getCurPos());
+
+            InfoBean.DataBeanX.DataBean.RowsBean row = rows.get(viewpager.getCurPos(0));
             int type = row.getType();
 
             if (type == 5 && StringUtil.isNotBlank(row.getOutUrl())) {
@@ -227,34 +231,35 @@ public class FindFragment extends LazyFragment {
     private void getNewsFlashPageList() {
         JSONObject node = new JSONObject();
         try {
+            //0-进行中，1-已结束
+            node.put("state", 0);
             node.put("pageIndex", pageIndex++);
             node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         final RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.GET_NEWS_FLASH_PAGE_LIST)
+                .url(Constants.GET_MINING_ACTIVITY_PAGE_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, InfoBean.class, new HttpCallBackImpl<InfoBean>() {
+        RetrofitUtil.request(params, FindKwBean.class, new HttpCallBackImpl<FindKwBean>() {
             @Override
-            public void onCompleted(InfoBean str) {
-                InfoBean.DataBeanX.DataBean data = str.getData().getData();
+            public void onCompleted(FindKwBean str) {
+                FindKwBean.DataBeanX.DataBean data = str.getData().getData();
                 if (data == null) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                     return;
                 }
-//                if (data.getCurPageNum() == data.getPageSize()) {
-                if (true) {
+                if (data.getCurPageNum() == data.getPageSize()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
-//                List<String> list = data.getRows();
-                if (list != null && list.size() > 0) {
+                List<FindKwBean.DataBeanX.DataBean.RowsBean> rowsBeans = data.getRows();
+                if (rowsBeans != null && rowsBeans.size() > 0) {
                     if (pageIndex > 2) {
-                        adapter.addData(list);
+                        adapter.addData(rowsBeans);
                     } else {
-                        adapter.setData(list);
+                        adapter.setData(rowsBeans);
                     }
                 }
             }
@@ -281,6 +286,8 @@ public class FindFragment extends LazyFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.home_find_1:
+                IntentUtil.startActivity(FindWkDetailsActivity.class);
+//                IntentUtil.startActivity(FindWkActivity.class);
                 break;
             case R.id.home_find_2:
                 break;

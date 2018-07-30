@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
+import com.secretk.move.bean.FindKwBean;
 import com.secretk.move.ui.holder.FindFragmentHolder;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class FindFragmentAdapter extends RecyclerView.Adapter<FindFragmentHolder> {
 
-    private List<String> list = new ArrayList<>();
+    private List<FindKwBean.DataBeanX.DataBean.RowsBean> list = new ArrayList<>();
     private Context context;
 
     public FindFragmentAdapter(Context context) {
@@ -34,9 +35,6 @@ public class FindFragmentAdapter extends RecyclerView.Adapter<FindFragmentHolder
 
     @Override
     public void onBindViewHolder(FindFragmentHolder holder, int position) {
-        if(Long.valueOf(list.get(position))>0){
-            list.set(position,Long.valueOf(list.get(position))-1000+"");
-        }
         holder.refresh(context,list,position);
     }
 
@@ -48,16 +46,16 @@ public class FindFragmentAdapter extends RecyclerView.Adapter<FindFragmentHolder
         return list.size();
     }
 
-    public void setData(List<String> list) {
+    public void setData(List<FindKwBean.DataBeanX.DataBean.RowsBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
 
-    public List<String> getData() {
+    public List<FindKwBean.DataBeanX.DataBean.RowsBean> getData() {
         return list;
     }
 
-    public void addData(List<String> list) {
+    public void addData(List<FindKwBean.DataBeanX.DataBean.RowsBean> list) {
         this.list.addAll(list);
         notifyDataSetChanged();
     }

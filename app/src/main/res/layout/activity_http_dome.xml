@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/unify_interval_padding">
+
+                <TextView
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="IP;地址："
+                    android:textColor="@color/title_gray_88"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/ip"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="输入地址"
+                    android:textColor="@color/title_gray"
+                    android:textColorHint="@color/title_gray_88"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_line"
+                android:background="@color/cut_off_rule" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/unify_interval_padding">
+
+                <TextView
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="接口："
+                    android:textColor="@color/title_gray_88"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/j_kou"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="输入地址"
+                    android:textColor="@color/title_gray"
+                    android:textColorHint="@color/title_gray_88"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_line"
+                android:background="@color/cut_off_rule" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/unify_interval_padding">
+
+                <TextView
+                    android:id="@+id/tv_ken"
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/app_background"
+                    android:text="获取token"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/token"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="获取token"
+                    android:textColor="@color/title_gray"
+                    android:textColorHint="@color/title_gray_88"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_line"
+                android:background="@color/cut_off_rule" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/unify_interval_padding">
+
+                <TextView
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="pageIndex"
+                    android:textColor="@color/title_gray_88"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/et_input_03"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="输入当前页数"
+                    android:textColor="@color/title_gray"
+                    android:textColorHint="@color/title_gray_88"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_line"
+                android:background="@color/cut_off_rule" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/unify_interval_padding">
+
+                <EditText
+                    android:id="@+id/key1"
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="key"
+                    android:textColor="@color/title_gray"
+                    android:textColorHint="@color/title_gray_88"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/var1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="var"
+                    android:textColor="@color/title_gray"
+                    android:textColorHint="@color/title_gray_88"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/unify_interval_padding">
+
+                <EditText
+                    android:id="@+id/key2"
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="key"
+                    android:textColor="@color/title_gray"
+                    android:textColorHint="@color/title_gray_88"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/var2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="var"
+                    android:textColor="@color/title_gray"
+                    android:textColorHint="@color/title_gray_88"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/unify_interval_padding">
+
+                <EditText
+                    android:id="@+id/key3"
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="key"
+                    android:textColor="@color/title_gray"
+                    android:textColorHint="@color/title_gray_88"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/var3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="var"
+                    android:textColor="@color/title_gray"
+                    android:textColorHint="@color/title_gray_88"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/unify_interval_padding">
+
+                <EditText
+                    android:id="@+id/key4"
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="key"
+                    android:textColor="@color/title_gray"
+                    android:textColorHint="@color/title_gray_88"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/var4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="var"
+                    android:textColor="@color/title_gray"
+                    android:textColorHint="@color/title_gray_88"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/unify_interval_padding">
+
+                <EditText
+                    android:id="@+id/key5"
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="key"
+                    android:textColor="@color/title_gray"
+                    android:textColorHint="@color/title_gray_88"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/var5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="var"
+                    android:textColor="@color/title_gray"
+                    android:textColorHint="@color/title_gray_88"
+                    android:textCursorDrawable="@drawable/shape_edit_cursor"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/dp_20"
+                android:background="@drawable/btn_max_selected_radius"
+                android:gravity="center"
+                android:paddingVertical="@dimen/dp_10"
+                android:text="測試接口"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/tv_ip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10"
+                android:text="http://app.qufen.top/rest/"
+                android:textColor="@color/theme_title"
+                android:textSize="@dimen/sp_14" />
+            <TextView
+                android:id="@+id/tv_ip_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10"
+                android:text="http://192.168.10.153:809/"
+                android:textColor="@color/theme_title"
+                android:textSize="@dimen/sp_14" />
+            <TextView
+                android:id="@+id/tv_ip_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10"
+                android:text="http://repay.free.ngrok.cc/rest/"
+                android:textColor="@color/theme_title"
+                android:textSize="@dimen/sp_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10"
+                android:background="@color/app_background" />
+
+            <TextView
+                android:id="@+id/tv_con"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/dp_10"
+                android:textColor="@color/title_gray"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

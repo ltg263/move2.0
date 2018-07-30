@@ -3,8 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <LinearLayout
+        android:id="@+id/ll_zx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
+        android:clipChildren="false"
+        android:gravity="center_horizontal"
+        android:layerType="software"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/adv_pager"
+            android:layout_width="match_parent"
+            android:layout_height="122dp"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dp_2"
+            android:clipChildren="false">
+
+        </android.support.v4.view.ViewPager>
+    </LinearLayout>
     <android.support.v4.view.ViewPager
-        android:id="@+id/adv_pager"
+        android:id="@+id/adv_pager_zx"
         android:layout_width="match_parent"
         android:layout_height="115dp"
         android:layout_centerHorizontal="true"

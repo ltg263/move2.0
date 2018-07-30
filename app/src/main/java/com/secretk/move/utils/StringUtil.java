@@ -371,7 +371,21 @@ public class StringUtil {
         return flag;
     }
 
+    public static long getSurplusTime (String begin,String end){
+        try {
+            Calendar calendarBegin = Calendar.getInstance();//2018-08-01 14:59:45
+            calendarBegin.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(begin));
+            calendarBegin.getTimeInMillis();
 
+            Calendar calendarEnd = Calendar.getInstance();//2018-08-01 14:59:45
+            calendarEnd.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(end));
+            calendarEnd.getTimeInMillis();
+            return calendarBegin.getTimeInMillis()-calendarEnd.getTimeInMillis();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)

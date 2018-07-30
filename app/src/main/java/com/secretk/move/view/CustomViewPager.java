@@ -26,6 +26,7 @@ import java.util.ArrayList;
  * 版    权： 南海云
  */
 public class CustomViewPager extends LinearLayout {
+    private LinearLayout llZx;
     /**
      * 上下文
      */
@@ -34,6 +35,10 @@ public class CustomViewPager extends LinearLayout {
      * 图片轮播视图
      */
     private ViewPager mAdvPager = null;
+    /**
+     * 图片轮播视图
+     */
+    private ViewPager mAdvPagerZx = null;
     /**
      * 滚动图片视图适配
      */
@@ -89,23 +94,26 @@ public class CustomViewPager extends LinearLayout {
         mScale = context.getResources().getDisplayMetrics().density;
         LayoutInflater.from(context).inflate(R.layout.custom_viewpager, this);
         mAdvPager =  findViewById(R.id.adv_pager);
-
-//        mAdvPager.setOffscreenPageLimit(3);
-//        int pagerWidth = (int) (getResources().getDisplayMetrics().widthPixels * 5.0f / 5.0f);
-//        ViewGroup.LayoutParams lp = mAdvPager.getLayoutParams();
-//        if (lp == null) {
-//            lp = new ViewGroup.LayoutParams(pagerWidth, ViewGroup.LayoutParams.MATCH_PARENT);
-//        } else {
-//            lp.width = pagerWidth;
-//        }
-//        mAdvPager.setLayoutParams(lp);
-//        mAdvPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.dp_10));
-//        mAdvPager.setPageTransformer(true,new MyGallyPageTransformer());
-
-        mAdvPager.addOnPageChangeListener(new GuidePageChangeListener());
-        mAdvPager.setCurrentItem(2000);
+        mAdvPagerZx =  findViewById(R.id.adv_pager_zx);
+        llZx =  findViewById(R.id.ll_zx);
 
         mAdvPager.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        // 开始图片滚动
+                        startImageTimerTask();
+                        break;
+                    default:
+                        // 停止图片滚动
+                        stopImageTimerTask();
+                        break;
+                }
+                return false;
+            }
+        });
+        mAdvPagerZx.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
@@ -124,6 +132,24 @@ public class CustomViewPager extends LinearLayout {
         // 滚动图片右下指示器视
         mGroup = (ViewGroup) findViewById(R.id.viewGroup);
 
+
+        mAdvPager.addOnPageChangeListener(new GuidePageChangeListener());
+        mAdvPager.setCurrentItem(2000);
+    }
+    public void setZx(){
+        llZx.setVisibility(View.VISIBLE);
+        mAdvPagerZx.setVisibility(View.GONE);
+        mAdvPager.setOffscreenPageLimit(3);
+        int pagerWidth = (int) (getResources().getDisplayMetrics().widthPixels * 4.3f / 5.0f);
+        ViewGroup.LayoutParams lp = mAdvPager.getLayoutParams();
+        if (lp == null) {
+            lp = new ViewGroup.LayoutParams(pagerWidth, ViewGroup.LayoutParams.MATCH_PARENT);
+        } else {
+            lp.width = pagerWidth;
+        }
+        mAdvPager.setLayoutParams(lp);
+        mAdvPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.dp_5));
+//        mAdvPager.setPageTransformer(true,new MyGallyPageTransformer());
     }
 
     /**
@@ -161,6 +187,7 @@ public class CustomViewPager extends LinearLayout {
 
         mAdvAdapter = new ImageCycleAdapter(mContext, imageUrlList, imageNameList, imageCycleViewListener);
         mAdvPager.setAdapter(mAdvAdapter);
+        mAdvPagerZx.setAdapter(mAdvAdapter);
         startImageTimerTask();
     }
 
@@ -214,6 +241,7 @@ public class CustomViewPager extends LinearLayout {
         public void run() {
             if (mImageViews != null) {
                 mAdvPager.setCurrentItem(mAdvPager.getCurrentItem() + 1);
+                mAdvPagerZx.setCurrentItem(mAdvPagerZx.getCurrentItem() + 1);
                 if (!isStop) {  //if  isStop=true   //当你退出后 要把这个给停下来 不然 这个一直存在 就一直在后台循环
                     mHandler.postDelayed(mImageTimerTask, 2000);
                 }
@@ -257,7 +285,10 @@ public class CustomViewPager extends LinearLayout {
         }
     }
 
-    public int getCurPos() {
+    public int getCurPos(int stye) {
+        if(stye==0){
+            return mAdvPagerZx.getCurrentItem() % mImageViews.length;
+        }
         return mAdvPager.getCurrentItem() % mImageViews.length;
     }
 
@@ -331,6 +362,7 @@ public class CustomViewPager extends LinearLayout {
         public void destroyItem(ViewGroup container, int position, Object object) {
             ImageView view = (ImageView) object;
             mAdvPager.removeView(view);
+            mAdvPagerZx.removeView(view);
             mImageViewCacheList.add(view);
 
         }

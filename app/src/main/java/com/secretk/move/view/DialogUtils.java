@@ -153,6 +153,37 @@ public class DialogUtils {
         dialog5.setContentView(view);
         dialog5.show();
     }
+    /**
+     * 单个按钮，设置监听；
+     *  领取FIND
+     * @param context
+     * @param
+     */
+    public static void showDialogGetFind(Context context, String findNum,final ErrorDialogInterface anInterface) {
+
+        final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
+        final View view = LayoutInflater.from(context).inflate(R.layout.dialog_layout_get_find, null);
+        Button bt_ok = view.findViewById(R.id.but_confirm);
+        ImageView iv_cloes = view.findViewById(R.id.iv_cloes);
+        bt_ok.setText(findNum);
+        iv_cloes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog5.dismiss();
+            }
+        });
+        bt_ok.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                anInterface.btnConfirm();
+                dialog5.dismiss();
+            }
+        });
+
+        dialog5.setContentView(view);
+        dialog5.show();
+    }
 
     public static Bitmap getViewBitmap(RelativeLayout rlShare) {
         rlShare.setDrawingCacheEnabled(true);

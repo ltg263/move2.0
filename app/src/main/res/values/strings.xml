@@ -278,4 +278,8 @@
     <string name="home_find_5">活跃用户</string>
     <string name="home_find_6">点击挖矿</string>
 
+    <string name="home_find_wk_1">我的钱包</string>
+    <string name="home_find_wk_2">活动说明</string>
+    <string name="home_find_wk_yes">恭喜你！\n挖矿成功</string>
+
 </resources>

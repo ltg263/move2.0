@@ -1,8 +1,6 @@
 package com.secretk.move.ui.fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -17,22 +15,15 @@ import com.secretk.move.ui.activity.SearchActivity;
 import com.secretk.move.ui.adapter.MainProjectFragmentPagerAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
-import com.secretk.move.view.ColorFlipPagerTitleView;
+import com.secretk.move.view.MagicIndicatorUtils;
 import com.secretk.move.view.ViewPagerFixed;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
-import net.lucode.hackware.magicindicator.ViewPagerHelper;
-import net.lucode.hackware.magicindicator.buildins.UIUtil;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -75,52 +66,6 @@ public class ProjectFragment extends LazyFragment {
         });
     }
 
-    private void initMagicIndicatorTitle() {
-        CommonNavigator commonNavigator = new CommonNavigator(getActivity());
-        commonNavigator.setScrollPivotX(0.25f);
-        commonNavigator.setEnablePivotScroll(true);
-//        commonNavigator.setScrollPivotX(0.65f);
-//        commonNavigator.setAdjustMode(true);
-        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
-            @Override
-            public int getCount() {
-                return tabs == null ? 0 : tabs.size();
-            }
-
-            @Override
-            public IPagerTitleView getTitleView(Context context, final int index) {
-                SimplePagerTitleView simplePagerTitleView = new ColorFlipPagerTitleView(context);
-                simplePagerTitleView.setText(tabs.get(index).getTabTitle());
-                simplePagerTitleView.setNormalColor(ContextCompat.getColor(getContext(), R.color.app_toolbar));
-                simplePagerTitleView.setSelectedColor(ContextCompat.getColor(getContext(), R.color.app_background));
-                simplePagerTitleView.setTextSize(16);
-                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        vp_main_children.setCurrentItem(index, false);
-                    }
-                });
-                return simplePagerTitleView;
-            }
-
-            @Override
-            public IPagerIndicator getIndicator(Context context) {
-                LinePagerIndicator indicator = new LinePagerIndicator(context);
-                indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
-                indicator.setLineHeight(UIUtil.dip2px(context, 2));
-                indicator.setLineWidth(UIUtil.dip2px(context, 20));
-                indicator.setRoundRadius(UIUtil.dip2px(context, 3));
-//                indicator.setStartInterpolator(new AccelerateInterpolator());
-//                indicator.setEndInterpolator(new DecelerateInterpolator(2.0f));
-                indicator.setColors(ContextCompat.getColor(getActivity(), R.color.app_background));
-                return indicator;
-            }
-        });
-        magicIndicatorTitle.setNavigator(commonNavigator);
-        ViewPagerHelper.bind(magicIndicatorTitle, vp_main_children);
-
-    }
-
     @Override
     public void onFirstUserVisible() {
         JSONObject node = new JSONObject();
@@ -141,7 +86,11 @@ public class ProjectFragment extends LazyFragment {
                 tabs = bean.getData().getTabs();
                 vp_main_children.setOffscreenPageLimit(tabs.size());
                 adapter.setData(tabs);
-                initMagicIndicatorTitle();
+                List<String> list = new ArrayList<>();
+                for(int i=0;i<tabs.size();i++){
+                    list.add(tabs.get(i).getTabTitle());
+                }
+                MagicIndicatorUtils.initMagicIndicatorTitle(getActivity(),list,vp_main_children,magicIndicatorTitle);
             }
         });
     }
