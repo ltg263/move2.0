@@ -57,7 +57,7 @@
     <string name="my_home_page">我的主页</string>
     <string name="the_home_page_of">的主页</string>
     <string name="grade">评分</string>
-    <string name="grade_num">评分人数</string>
+    <string name="grade_num">评分</string>
     <string name="attention">关注</string>
 
     <string name="project_intro">项目简介</string>
@@ -280,6 +280,7 @@
 
     <string name="home_find_wk_1">我的钱包</string>
     <string name="home_find_wk_2">活动说明</string>
+    <string name="home_find_wk_3">挖矿收益</string>
     <string name="home_find_wk_yes">恭喜你！\n挖矿成功</string>
 
 </resources>

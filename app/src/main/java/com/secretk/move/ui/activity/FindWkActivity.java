@@ -31,6 +31,7 @@ import com.secretk.move.view.ViewPagerFixed;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,12 +44,14 @@ import butterknife.BindView;
  * 作者： litongge
  * 时间： 2018/7/2 18:34
  * 邮箱；ltg263@126.com
- * 描述：主页话题
+ * 描述：点评挖矿列表
  */
 
 public class FindWkActivity extends BaseActivity {
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.iv_head_state)
+    ImageView ivHeadState;
     @BindView(R.id.viewpager)
     CustomViewPager viewpager;
     @BindView(R.id.magic_indicator_title)
@@ -67,6 +70,11 @@ public class FindWkActivity extends BaseActivity {
         mHeadView.setTitle("点评挖矿");
         mMenuInfos.add(0, new MenuInfo(R.string.home_find_wk_1, getString(R.string.home_find_wk_1), 0));
         return mHeadView;
+    }
+
+    @Override
+    protected void OnToolbarRightListener() {
+        IntentUtil.startActivity(FindWksyActivity.class);
     }
 
     @Override
@@ -104,6 +112,54 @@ public class FindWkActivity extends BaseActivity {
                 loadData();
                 FindKwFragment fragment = adapter.getmCurrentFragment();
                 fragment.setRefresh(refreshLayout);
+            }
+        });
+        ivHeadState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startStatePage();
+            }
+        });
+    }
+
+    private void startStatePage() {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("pageIndex", 1);
+            node.put("pageSize", Constants.PAGE_SIZE);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.GET_EXPLAIN_ACTIVITY)
+//                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+//                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onCompleted(String str) {
+                try {
+                    JSONArray data = new JSONObject(str).getJSONArray("data");
+                    if(data != null ){
+                        JSONObject obj = data.getJSONObject(0);
+                        int type = obj.getInt("type");
+                        int postId = obj.getInt("articleId");
+                        if (type == 0 || type == 1 || type == 4) {
+                            type = 1;
+                        } else if (type == 3) {
+                            type = 2;
+                        } else if (type == 2) {
+                            type = 3;
+                        } else {
+                            ToastUtils.getInstance().show("类型出错");
+                            return;
+                        }
+                        IntentUtil.go2DetailsByType(type, String.valueOf(postId));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
     }

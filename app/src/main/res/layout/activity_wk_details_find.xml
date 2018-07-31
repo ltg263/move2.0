@@ -98,7 +98,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/tv_title"
                                 android:layout_centerHorizontal="true"
-                                android:layout_marginTop="@dimen/dp_12"
                                 android:text="500.00FIND"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/sp_14" />
@@ -119,7 +118,7 @@
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
                             android:layout_marginHorizontal="@dimen/dp_8"
-                            android:layout_marginVertical="@dimen/dp_20"
+                            android:layout_marginVertical="@dimen/dp_12"
                             android:background="@color/white" />
 
                         <LinearLayout
@@ -135,7 +134,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/tv_title"
                                 android:layout_centerHorizontal="true"
-                                android:layout_marginTop="@dimen/dp_12"
                                 android:text="1000份"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/sp_14" />
@@ -155,7 +153,7 @@
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
                             android:layout_marginHorizontal="@dimen/dp_8"
-                            android:layout_marginVertical="@dimen/dp_20"
+                            android:layout_marginVertical="@dimen/dp_12"
                             android:background="@color/white" />
 
                         <LinearLayout
@@ -171,7 +169,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/tv_title"
                                 android:layout_centerHorizontal="true"
-                                android:layout_marginTop="@dimen/dp_12"
                                 android:text="213份"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/sp_14" />
@@ -195,7 +192,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/dp_35"
+                    android:paddingTop="@dimen/dp_20">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -207,6 +206,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_activity_remark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dp_10"
@@ -224,6 +224,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_35"
@@ -248,6 +249,7 @@
                         android:textSize="@dimen/sp_16" />
 
                     <TextView
+                        android:id="@+id/tv_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_35"
@@ -272,6 +274,7 @@
                         android:textSize="@dimen/sp_16" />
 
                     <TextView
+                        android:id="@+id/tv_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_35"

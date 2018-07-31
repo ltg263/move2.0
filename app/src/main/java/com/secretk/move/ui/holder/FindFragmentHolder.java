@@ -10,7 +10,14 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.FindKwBean;
+import com.secretk.move.ui.activity.FindWkDetailsActivity;
+import com.secretk.move.ui.activity.LoginHomeActivity;
+import com.secretk.move.ui.adapter.FindFragmentAdapter;
+import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 
 import java.util.List;
@@ -47,22 +54,27 @@ public class FindFragmentHolder extends RecyclerViewBaseHolder {
         this.countDownCounters = new SparseArray<>();
     }
     Context mContext;
-    public void refresh(Context context, List<FindKwBean.DataBeanX.DataBean.RowsBean> list, int position) {
+    public void refresh(final Context context, List<FindKwBean.DataBeanX.DataBean.RowsBean> list, int position, final FindFragmentAdapter findFragmentAdapter) {
 //         <!--共1000ETH 约 ¥6389.97-->
-        FindKwBean.DataBeanX.DataBean.RowsBean rowsBean = list.get(position);
+        final FindKwBean.DataBeanX.DataBean.RowsBean rowsBean = list.get(position);
+        long surplusTime = 0;
         rowsBean.getBeginDt();//开始时间
         rowsBean.getEndDt();//结束时间
-        long surplusTime = StringUtil.getSurplusTime(rowsBean.getBeginDt(),rowsBean.getEndDt());
+
+        GlideUtils.loadCircleProjectUrl(context,ivIcon, Constants.BASE_IMG_URL+StringUtil.getBeanString(rowsBean.getProjectIcon()));
         tvCode.setText(rowsBean.getProjectCode());
         tvPrice.setText(Html.fromHtml("共<font color=\"#ff4b4b\">"+rowsBean.getTokenCount()+rowsBean.getTokenName()+"</font>约 ¥"+rowsBean.getTokenCash()));
-        tvLimit.setText(StringUtil.getBeanString(String.valueOf(rowsBean.getTokenUnclaimed())));
+        tvName.setText("/"+StringUtil.getBeanString(rowsBean.getProjectChineseName()));
+        tvLimit.setText(StringUtil.getBeanString(String.valueOf(rowsBean.getTokenNum())));
         // status:0,//活动状态：0-未开始，1-进行中，2-已结束，3-已终止,4-已挖完
         if(rowsBean.getStatus()==0){
+            surplusTime = StringUtil.getSurplusTime(rowsBean.getBeginDt(),"0");
             tvGo.setVisibility(View.GONE);
             tvSurplus.setText("距开始");
             tvSurplus.setTextColor(context.getResources().getColor(R.color.theme_title_red));
             tvTime.setText(StringUtil.getTimeToHms(surplusTime));
         }else if(rowsBean.getStatus()==1){
+            surplusTime = StringUtil.getSurplusTime("0",rowsBean.getEndDt());
             tvGo.setSelected(false);
             tvGo.setVisibility(View.VISIBLE);
             tvSurplus.setText("剩余");
@@ -70,19 +82,19 @@ public class FindFragmentHolder extends RecyclerViewBaseHolder {
             tvTime.setText(StringUtil.getTimeToHms(surplusTime));
         }else if(rowsBean.getStatus()==2){
             tvGo.setSelected(true);
-            tvSurplus.setText("已结束");
+            tvGo.setText("已结束");
             tvGo.setVisibility(View.VISIBLE);
             tvSurplus.setVisibility(View.GONE);
             tvTime.setVisibility(View.GONE);
         }else if(rowsBean.getStatus()==3){
             tvGo.setSelected(true);
-            tvSurplus.setText("已终止");
+            tvGo.setText("已终止");
             tvGo.setVisibility(View.VISIBLE);
             tvSurplus.setVisibility(View.GONE);
             tvTime.setVisibility(View.GONE);
         }else if(rowsBean.getStatus()==4){
             tvGo.setSelected(true);
-            tvSurplus.setText("已挖完");
+            tvGo.setText("已挖完");
             tvGo.setVisibility(View.VISIBLE);
             tvSurplus.setVisibility(View.GONE);
             tvTime.setVisibility(View.GONE);
@@ -101,16 +113,30 @@ public class FindFragmentHolder extends RecyclerViewBaseHolder {
                     tvTime.setText(StringUtil.getTimeToHms(millisUntilFinished));
                 }
                 public void onFinish() {
-                    tvTime.setText( "结束1");
+                    // status:0,//活动状态：0-未开始，1-进行中，2-已结束，3-已终止,4-已挖完
+                    if(rowsBean.getStatus()==0){
+                        rowsBean.setStatus(1);
+                    }else if(rowsBean.getStatus()==1){
+                        rowsBean.setStatus(2);
+                    }
+                    findFragmentAdapter.notifyDataSetChanged();
                 }
             }.start();
             //将此 countDownTimer 放入list.
             countDownCounters.put(tvTime.hashCode(), countDownTimer);
-        } else {
-            tvTime.setText("结束");
         }
-
-
+        tvGo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!SharedUtils.getLoginZt() || StringUtil.isBlank(SharedUtils.getToken())){
+                    IntentUtil.startActivity(LoginHomeActivity.class);
+                    return;
+                }
+                String key[] = {"id"};
+                String values[] = {String.valueOf(rowsBean.getId())};
+                IntentUtil.startActivity(FindWkDetailsActivity.class,key,values);
+            }
+        });
     }
 
 }

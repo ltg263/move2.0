@@ -133,10 +133,11 @@ public class LoginActivity extends BaseActivity {
             clientId = "";
         }
         JSONObject node = new JSONObject();
-        try {
+        try {//0-android,1-ios
             node.put("loginName", edPhone.getText().toString());
             node.put("password", edPassword.getText().toString());
             node.put("clientId", clientId);
+            node.put("appType", 0);
         } catch (JSONException e) {
             e.printStackTrace();
         }

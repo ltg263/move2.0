@@ -127,10 +127,10 @@ public class ProjectActivity extends BaseActivity {
         discussFragment = new ProjectDiscussFragment();
         articleFragment = new ProjectArticleFragment();
         HomePageAdapter adapter = new HomePageAdapter(getSupportFragmentManager());
-        adapter.addFragment(introFragment, getString(R.string.intro));
         adapter.addFragment(reviewFragment, getString(R.string.review));
         adapter.addFragment(discussFragment, getString(R.string.discuss));
         adapter.addFragment(articleFragment, getString(R.string.article));
+        adapter.addFragment(introFragment, getString(R.string.intro));
         reviewFragment.setRefreshLayout(refreshLayout);
         discussFragment.setRefreshLayout(refreshLayout);
         articleFragment.setRefreshLayout(refreshLayout);
@@ -141,7 +141,7 @@ public class ProjectActivity extends BaseActivity {
 
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
-        viewPager.setCurrentItem(1);
+        viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(4);
         tabs.post(new Runnable() {
             @Override

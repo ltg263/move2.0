@@ -35,7 +35,7 @@ public class FindFragmentAdapter extends RecyclerView.Adapter<FindFragmentHolder
 
     @Override
     public void onBindViewHolder(FindFragmentHolder holder, int position) {
-        holder.refresh(context,list,position);
+        holder.refresh(context,list,position,this);
     }
 
     @Override

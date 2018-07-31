@@ -96,7 +96,8 @@ public class CustomViewPager extends LinearLayout {
         mAdvPager =  findViewById(R.id.adv_pager);
         mAdvPagerZx =  findViewById(R.id.adv_pager_zx);
         llZx =  findViewById(R.id.ll_zx);
-
+        mAdvPager.addOnPageChangeListener(new GuidePageChangeListener());
+        mAdvPagerZx.addOnPageChangeListener(new GuidePageChangeListener());
         mAdvPager.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -132,9 +133,6 @@ public class CustomViewPager extends LinearLayout {
         // 滚动图片右下指示器视
         mGroup = (ViewGroup) findViewById(R.id.viewGroup);
 
-
-        mAdvPager.addOnPageChangeListener(new GuidePageChangeListener());
-        mAdvPager.setCurrentItem(2000);
     }
     public void setZx(){
         llZx.setVisibility(View.VISIBLE);

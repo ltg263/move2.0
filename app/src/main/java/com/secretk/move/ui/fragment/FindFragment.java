@@ -17,14 +17,17 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.FindKwBean;
+import com.secretk.move.bean.HotProjectAndHotUserBean;
 import com.secretk.move.bean.InfoBean;
-import com.secretk.move.ui.activity.FindWkDetailsActivity;
+import com.secretk.move.ui.activity.FindWkActivity;
+import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.FindFragmentAdapter;
 import com.secretk.move.ui.adapter.FindNewAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.CustomViewPager;
@@ -74,7 +77,6 @@ public class FindFragment extends LazyFragment {
     private List<InfoBean.DataBeanX.DataBean.RowsBean> rows;
     private FindNewAdapter adapterP;
     private FindNewAdapter adapterU;
-    List<String> list;
 
     @Override
     public int setFragmentView() {
@@ -96,20 +98,6 @@ public class FindFragment extends LazyFragment {
         adapter = new FindFragmentAdapter(getActivity());
         recycler.setAdapter(adapter);
         loadingDialog = new LoadingDialog(getActivity());
-        list = new ArrayList<>();
-        list.add("100010001000");
-        list.add("200010001000");
-        list.add("30001000");
-        list.add("60001000");
-        list.add("990001000");
-        list.add("100010001000");
-        list.add("200010001000");
-        list.add("30001000");
-        list.add("60001000");
-        list.add("990001000");
-        list.add("100010001000");
-        adapterP.setData(list);
-        adapterU.setData(list);
 //        viewpager.setZx();
     }
 
@@ -180,10 +168,11 @@ public class FindFragment extends LazyFragment {
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
-                getNewsFlashPageList();
+                getMiningActivityPageList();
             }
         });
     }
+
 
 
     private void loadData() {
@@ -193,7 +182,10 @@ public class FindFragment extends LazyFragment {
         }
         //轮播图
         getNewsFlashImgList();
-        getNewsFlashPageList();
+        //发现页面取热门项目，活跃用户
+        getHotProjectAndHotUser();
+        //挖矿列表页
+        getMiningActivityPageList();
     }
 
     private void getNewsFlashImgList() {
@@ -205,7 +197,7 @@ public class FindFragment extends LazyFragment {
             e.printStackTrace();
         }
         final RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.GET_NEWS_FLASH_IMG_LIST)
+                .url(Constants.GET_NEWS_FLASH_IMG_LIST_FOR_FOUND)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
@@ -228,7 +220,7 @@ public class FindFragment extends LazyFragment {
         });
     }
 
-    private void getNewsFlashPageList() {
+    private void getMiningActivityPageList() {
         JSONObject node = new JSONObject();
         try {
             //0-进行中，1-已结束
@@ -284,15 +276,44 @@ public class FindFragment extends LazyFragment {
 
     @OnClick({R.id.home_find_1, R.id.home_find_2, R.id.home_find_3})
     public void onViewClicked(View view) {
+        if(!SharedUtils.getLoginZt() || StringUtil.isBlank(SharedUtils.getToken())){
+            IntentUtil.startActivity(LoginHomeActivity.class);
+            return;
+        }
         switch (view.getId()) {
             case R.id.home_find_1:
-                IntentUtil.startActivity(FindWkDetailsActivity.class);
-//                IntentUtil.startActivity(FindWkActivity.class);
+                IntentUtil.startActivity(FindWkActivity.class);
                 break;
             case R.id.home_find_2:
+
                 break;
             case R.id.home_find_3:
+
                 break;
         }
+    }
+
+    public void getHotProjectAndHotUser() {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("pageIndex", 1);
+            node.put("pageSize", Constants.PAGE_SIZE);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.GET_HOT_PROJECT_AND_HOT_USER)
+//                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+//                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, HotProjectAndHotUserBean.class, new HttpCallBackImpl<HotProjectAndHotUserBean>() {
+            @Override
+            public void onCompleted(HotProjectAndHotUserBean str) {
+                if(str.getData()!=null){
+                    adapterU.setData(str.getData());
+                    adapterP.setData(str.getData());
+                }
+            }
+        });
     }
 }

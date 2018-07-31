@@ -97,11 +97,12 @@ public interface Constants {
     String QUNIU_IMG_RUL = "https://pic.qufen.top/";
 
 
-    String BASE_URL = "http://app.qufen.top/rest/";//线上
+//    String BASE_URL = "http://app.qufen.top/rest/";//线上
 //
 //     String BASE_URL = "http://192.168.10.153:809/";//栋栋
 //
 //      String BASE_URL = "http://repay.free.ngrok.cc/rest/";//林俊
+      String BASE_URL = "http://192.168.10.133:8044/rest/";//林俊
     //:15537894586   abc12310  志远手机密码：0405
 //    String BASE_URL = "http://47.98.197.101/rest/";//宋
 
@@ -278,6 +279,19 @@ public interface Constants {
 
     //获取首页资讯的头部轮播图
     String GET_NEWS_FLASH_IMG_LIST = BASE_URL + "kff/newsFlashImg/getNewsFlashImgList";
+    //点评挖矿活动说明接口
+    String GET_EXPLAIN_ACTIVITY = BASE_URL + "kff/miningActivity/getExplainActivity";
+
+    //获取点评挖矿的详细信息接口，前端需要自己控制好活动是否开始，活动不是进行中的就不能领取活动
+    String GET_MINING_ACTIVITY_DETAIL = BASE_URL + "kff/miningActivity/getMiningActivityDetail";
+    //领取活动奖励接口
+    String ADD_REWARD_DETAIL = BASE_URL + "kff/rewardDetail/addRewardDetail";
+
+    //获取发现顶部的轮播图
+    String GET_NEWS_FLASH_IMG_LIST_FOR_FOUND = BASE_URL + "kff/newsFlashImg/getNewsFlashImgListForFound";
+
+    //发现页面取热门项目，活跃用户
+    String GET_HOT_PROJECT_AND_HOT_USER = BASE_URL + "kff/miningActivity/getHotProjectAndHotUser";
     //快讯看涨和看跌
     String UPDATE_NEWS_FLASH_RISE_AND_FALL = BASE_URL + "kff/newsFlash/updateNewsFlashRiseAndFall";
 
@@ -297,6 +311,8 @@ public interface Constants {
 
     //讨论详情 页
     String HOME_DISCUSS_DETAIL = BASE_URL + "kff/home/discussDetail";
+    //根据用户查询挖矿的奖励收益列表接口
+    String GET_USER_REWARD_LIST = BASE_URL + "kff/rewardDetail/getUserRewardList";
     //讨论，评测，文章 中 某个评论的评论列表
     String COMMENT_COMMENTS_LIST = BASE_URL + "kff/home/commentCommentsList";
 

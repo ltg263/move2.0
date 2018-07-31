@@ -103,6 +103,7 @@
     <color name="title_gray_7e">#7e7e7e</color>
     <color name="background_gray">#f4f4f4</color>
     <color name="follow_true">#f5f4f4</color>
+    <color name="title_gray_db">#dbdbdb</color>
     <!--评分进度色-->
     <color name="xmdw">#54c7fc</color>
     <color name="jskj">#ff9600 </color>
@@ -117,6 +118,7 @@
     <color name="theme_title_name">#8590a6</color>
 
     <color name="theme_title_red">#ff4b4b</color>
+    <color name="theme_title_lan">#3b88f6</color>
 
 
 

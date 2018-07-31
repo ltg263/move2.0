@@ -42,7 +42,7 @@ public class MoveIntentService extends GTIntentService {
     @Override
     public void onReceiveMessageData(Context context, GTTransmitMessage msg) {
         LogUtil.d("onReceiveMessageData -> ");
-        //链接类型:0-完整版专业评测，1-自定义评测，2-文章，3-打假，4-单项评测，
+        //链接类型:0-完整版专业评测，1-自定义评测，2-文章，3-打假，4-单项评测，5关注
         String payload = new String(msg.getPayload());
         LogUtil.d("onReceiveMessageData -> payload:"+payload);
         if (StringUtil.isNotBlank(payload)) {

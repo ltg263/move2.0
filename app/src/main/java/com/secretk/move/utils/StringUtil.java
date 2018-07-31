@@ -228,15 +228,15 @@ public class StringUtil {
     /**
      * 描述: 将字符串转成毫秒数 格式年月日时分秒
      */
-    public static String getMsToTime(String time) {
+    public static long getMsToTime(String time) {
         try {
             Calendar c = Calendar.getInstance();
             c.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(time));
-            return c.getTimeInMillis() + "";
+            return c.getTimeInMillis();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return "";
+        return 0;
     }
 
     /**
@@ -373,14 +373,20 @@ public class StringUtil {
 
     public static long getSurplusTime (String begin,String end){
         try {
-            Calendar calendarBegin = Calendar.getInstance();//2018-08-01 14:59:45
-            calendarBegin.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(begin));
-            calendarBegin.getTimeInMillis();
+            long startTime = System.currentTimeMillis();
+            if(!"0".equals(begin)){
+                Calendar calendarBegin = Calendar.getInstance();//2018-08-01 14:59:45
+                calendarBegin.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(begin));
+                startTime = calendarBegin.getTimeInMillis();
+            }
 
-            Calendar calendarEnd = Calendar.getInstance();//2018-08-01 14:59:45
-            calendarEnd.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(end));
-            calendarEnd.getTimeInMillis();
-            return calendarBegin.getTimeInMillis()-calendarEnd.getTimeInMillis();
+            long endTime = System.currentTimeMillis();
+            if(!"0".equals(end)){
+                Calendar calendarEnd = Calendar.getInstance();//2018-08-01 14:59:45
+                calendarEnd.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(end));
+                endTime = calendarEnd.getTimeInMillis();
+            }
+            return endTime-startTime;
         } catch (ParseException e) {
             e.printStackTrace();
         }

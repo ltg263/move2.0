@@ -11,10 +11,14 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
-import com.secretk.move.utils.ToastUtils;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.secretk.move.baseManager.Constants;
+import com.secretk.move.bean.HotProjectAndHotUserBean;
+import com.secretk.move.ui.activity.LoginHomeActivity;
+import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
+import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.utils.StringUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +32,7 @@ import butterknife.ButterKnife;
 
 public class FindNewAdapter extends RecyclerView.Adapter<FindNewAdapter.ImagesHolder> {
 
-    private List<String> lists = new ArrayList<>();
+    private HotProjectAndHotUserBean.DataBean lists;
     Context context;
     private int type;
     public FindNewAdapter(Context context,int type) {
@@ -45,36 +49,59 @@ public class FindNewAdapter extends RecyclerView.Adapter<FindNewAdapter.ImagesHo
 
     @Override
     public void onBindViewHolder(ImagesHolder holder, final int position) {
-//        GlideUtils.loadSideMaxImage(context,holder.iv_icon, Constants.BASE_IMG_URL+lists.get(position).getUrl());
-//        holder.tv_name.setText("哈哈");
         if(type==1){
+            GlideUtils.loadCircleProjectUrl(context,holder.iv_icon_p,
+                    Constants.BASE_IMG_URL+lists.getProjects().get(position).getProjectIcon());
+            holder.tv_name.setText(lists.getProjects().get(position).getProjectChineseName());
             holder.iv_icon_p.setVisibility(View.VISIBLE);
             holder.iv_icon_u.setVisibility(View.GONE);
         }else{
+            GlideUtils.loadCircleUserUrl(context,holder.iv_icon_u,
+                    Constants.BASE_IMG_URL+lists.getUsers().get(position).getIcon());
+            holder.tv_name.setText(lists.getUsers().get(position).getUserName());
             holder.iv_icon_p.setVisibility(View.GONE);
             holder.iv_icon_u.setVisibility(View.VISIBLE);
         }
         holder.home_find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.getInstance().show("你惦記了用戶");
+                if(!SharedUtils.getLoginZt() || StringUtil.isBlank(SharedUtils.getToken())){
+                    IntentUtil.startActivity(LoginHomeActivity.class);
+                    return;
+                }
+                if(type==1){
+                    IntentUtil.startProjectActivity(lists.getProjects().get(position).getProjectId());
+                }else{
+                    IntentUtil.startHomeActivity(lists.getUsers().get(position).getUserId());
+                }
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return lists.size();
+        LogUtil.w("lists:"+lists);
+        if(lists ==null){
+            return 0;
+        }
+        if(type==1){
+            return lists.getProjects().size();
+        }
+        return lists.getUsers().size();
     }
 
-    public void setData(List<String> list) {
+    //index 0 用户 1项目
+    public void setData(HotProjectAndHotUserBean.DataBean list) {
         this.lists = list;
         notifyDataSetChanged();
     }
 
-    public List<String> getData() {
+    public HotProjectAndHotUserBean.DataBean getData() {
         return lists;
     }
+
+
+
 
     class ImagesHolder extends RecyclerViewBaseHolder {
         @BindView(R.id.iv_icon_p)
