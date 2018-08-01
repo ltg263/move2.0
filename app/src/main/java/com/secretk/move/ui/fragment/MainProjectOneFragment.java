@@ -129,7 +129,7 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
         try {
             node.put("token", token);
             node.put("pageIndex", pageIndex++);
-            node.put("pageSize", Constants.PAGE_SIZE);
+            node.put("pageSize", 20);
             node.put("tabId", tabId);
         } catch (JSONException e) {
             e.printStackTrace();
