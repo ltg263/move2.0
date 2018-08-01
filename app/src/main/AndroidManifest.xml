@@ -160,6 +160,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.FindRankingListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.HomeFansActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppEditTextStyle" />

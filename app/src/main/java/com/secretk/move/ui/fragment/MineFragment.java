@@ -313,6 +313,9 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
             @Override
             public void onError(String message) {
+                if(true){
+                    return;
+                }
                 DialogUtils.showDialogHint(getActivity(), "帐号或密码错误请重新登陆",
                         true, new DialogUtils.ErrorDialogInterface() {
                             @Override

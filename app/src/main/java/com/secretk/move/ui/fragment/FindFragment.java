@@ -19,6 +19,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.FindKwBean;
 import com.secretk.move.bean.HotProjectAndHotUserBean;
 import com.secretk.move.bean.InfoBean;
+import com.secretk.move.ui.activity.FindRankingListActivity;
 import com.secretk.move.ui.activity.FindWkActivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.FindFragmentAdapter;
@@ -285,7 +286,7 @@ public class FindFragment extends LazyFragment {
                 IntentUtil.startActivity(FindWkActivity.class);
                 break;
             case R.id.home_find_2:
-
+                IntentUtil.startActivity(FindRankingListActivity.class);
                 break;
             case R.id.home_find_3:
 

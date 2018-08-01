@@ -99,10 +99,10 @@ public interface Constants {
 
 //    String BASE_URL = "http://app.qufen.top/rest/";//线上
 //
-//     String BASE_URL = "http://192.168.10.153:809/";//栋栋
+     String BASE_URL = "http://192.168.10.153:809/";//栋栋
 //
 //      String BASE_URL = "http://repay.free.ngrok.cc/rest/";//林俊
-      String BASE_URL = "http://192.168.10.133:8044/rest/";//林俊
+//      String BASE_URL = "http://192.168.10.133:8044/rest/";//林俊
     //:15537894586   abc12310  志远手机密码：0405
 //    String BASE_URL = "http://47.98.197.101/rest/";//宋
 
@@ -315,6 +315,13 @@ public interface Constants {
     String GET_USER_REWARD_LIST = BASE_URL + "kff/rewardDetail/getUserRewardList";
     //讨论，评测，文章 中 某个评论的评论列表
     String COMMENT_COMMENTS_LIST = BASE_URL + "kff/home/commentCommentsList";
+
+    //.KOL榜单
+    String GET_KOL_PROJECT_PAGE = BASE_URL + "kff/rankingList/getKOLProjectPage";
+    //获得最热项目榜
+    String GET_HOT_PROJECT_PAGE = BASE_URL + "kff/rankingList/getHotProjectPage";
+    //项目评分榜(
+    String GET_EVA_PROJECT_PAGE = BASE_URL + "kff/rankingList/getEvaProjectPage";
 
     //发表讨论时 添加标签 获取标签列表
     String RELEASE_DISCUSS_LIST = BASE_URL + "kff/discuss/tagList";
