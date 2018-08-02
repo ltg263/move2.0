@@ -126,7 +126,7 @@ public class FindFragmentHolder extends RecyclerViewBaseHolder {
             //将此 countDownTimer 放入list.
             countDownCounters.put(tvTime.hashCode(), countDownTimer);
         }
-        tvTime.setOnClickListener(new View.OnClickListener() {
+        tvGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!SharedUtils.getLoginZt() || StringUtil.isBlank(SharedUtils.getToken())){
