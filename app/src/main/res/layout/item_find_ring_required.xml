@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_ring"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/btn_circle_5dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/dp_20">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingVertical="@dimen/dp_18">
+
+            <TextView
+                android:id="@+id/tv_num"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/btn_circle_app"
+                android:gravity="center"
+                android:padding="@dimen/dp_3"
+                android:text="01"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="2018-09-12"
+                android:textColor="#686868"
+                android:textSize="@dimen/sp_14" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="今年以来，加密货币跌势难止。数据显示，在截至6月25日的一周内，它是未来......"
+            android:textColor="@color/theme_title_code"
+            android:textSize="@dimen/sp_14" />
+
+
+        <ImageView
+            android:id="@+id/iv_img_max"
+            android:layout_width="match_parent"
+            android:layout_height="135dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_aaa"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/ll_multi_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_ont"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_aaa" />
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="1dp" />
+
+            <ImageView
+                android:id="@+id/iv_two"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_aaa" />
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="1dp" />
+
+            <ImageView
+                android:id="@+id/iv_three"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_aaa" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:gravity="right|bottom"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp_10"
+            android:visibility="visible">
+
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@drawable/upvote_normal" />
+
+            <TextView
+                android:id="@+id/tv_praise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:textColor="@color/title_gray_aa"
+                android:textSize="@dimen/list_item_msg" />
+
+            <ImageView
+                android:id="@+id/img_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:background="@drawable/comment" />
+
+            <TextView
+                android:id="@+id/tv_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:textColor="@color/title_gray_aa"
+                android:textSize="@dimen/list_item_msg" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

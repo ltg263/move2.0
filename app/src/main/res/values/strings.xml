@@ -261,6 +261,7 @@
     <!--空-->
     <string name="not_message">什么消息都木有～</string>
     <string name="not_collect">什么都木有收藏～</string>
+    <string name="not_required">什么都木有～</string>
     <string name="not_topics">什么话题都木有～</string>
     <string name="not_currency">什么币种都木有～</string>
     <string name="not_attention">你还没关注过别人～</string>

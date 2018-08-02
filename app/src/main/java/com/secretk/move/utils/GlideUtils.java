@@ -8,6 +8,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.customview.GlideCircleTransform;
+import com.secretk.move.customview.GlideRoundTransform;
 
 /**
  *  加载图片工具类
@@ -20,6 +21,9 @@ import com.secretk.move.customview.GlideCircleTransform;
 public class GlideUtils {
     static String ImgUrlMix = "?imageView2/1/w/187";
     static String ImgUrlMax = "?imageView2/1/w/342/h/187";
+
+    static String ImgUrlMix_76 = "?imageView2/1/h/76";
+    static String ImgUrlMax_135 = "?imageView2/1/w/316/h/135";
     /**
      * 加载本地图片
      */
@@ -76,6 +80,29 @@ public class GlideUtils {
             url=url+ImgUrlMix;
         }
         Glide.with(context).applyDefaultRequestOptions(new RequestOptions().placeholder(R.drawable.ic_silent_plate_mix).error(R.drawable.ic_silent_plate_mix)).
+                load(url).into(img);
+    }
+    /**
+     *  方 ImageView
+     *  加载矩形  小的默认
+     */
+    public static void loadSideMinImage_76(Context context,ImageView img, String url) {
+        if(url.contains("https:") || url.contains("http:") ){
+            url=url+ImgUrlMix_76;
+        }
+        Glide.with(context).applyDefaultRequestOptions(new RequestOptions().transform(new GlideRoundTransform()).placeholder(R.drawable.ic_silent_plate_mix).error(R.drawable.ic_silent_plate_mix)).
+                load(url).into(img);
+    }
+
+    /**
+     *  方 ImageView
+     *  加载矩形  大的默认
+     */
+    public static void loadSideMaxImage_135(Context context,ImageView img, String url) {
+        if(url.contains("https:") || url.contains("http:") ){
+            url=url+ImgUrlMax_135;
+        }
+        Glide.with(context).applyDefaultRequestOptions(new RequestOptions().transform(new GlideRoundTransform()).placeholder(R.drawable.ic_silent_plate_max).error(R.drawable.ic_silent_plate_max)).
                 load(url).into(img);
     }
 }

@@ -198,6 +198,8 @@ public interface Constants {
     String UPDATE_USER_INFO = BASE_URL + "kff/user/updateUserInfo";
     //	我的收藏列表
     String MYC_OLLECT_LIST = BASE_URL + "kff/user/myCollectList";
+    //	币圈必读相关接口
+    String GET_BG_MUST_READ = BASE_URL + "/kff/post/getBgMustRead";
     //	我的粉丝列表
     String GET_MY_FAN_LIST = BASE_URL + "/kff/user/getMyFanList";
     //	我的收藏列表
