@@ -5,6 +5,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.secretk.move.R;
+import com.secretk.move.ui.activity.ProjectActivity;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -32,7 +33,9 @@ public class MagicIndicatorUtils {
         commonNavigator.setScrollPivotX(0.25f);
         commonNavigator.setEnablePivotScroll(true);
 //        commonNavigator.setScrollPivotX(0.65f);
-//        commonNavigator.setAdjustMode(true);
+        if(mContext instanceof ProjectActivity){
+             commonNavigator.setAdjustMode(true);
+        }
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {

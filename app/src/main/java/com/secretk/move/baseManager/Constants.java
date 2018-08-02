@@ -239,6 +239,8 @@ public interface Constants {
     String PROJECT_DISCUSS_LIST = BASE_URL + "kff/project/discussList";
     //项目  文章列表
     String PROJECT_ARTICLE_LIST = BASE_URL + "kff/project/articleList";
+    //行情数据(获得交易所和交易对)
+    String GET_EXCHANGE_AND_TRAN_PAIR = BASE_URL + "kff/project/getExchangeAndTranPair";
     //讨论详情 页
     String DISCUSS_DETAIL = BASE_URL + "kff/home/discussDetail";
     //项目评分统计

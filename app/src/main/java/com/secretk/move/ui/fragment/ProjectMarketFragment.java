@@ -5,8 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.secretk.move.R;
@@ -15,10 +13,10 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.CommonListBase;
+import com.secretk.move.bean.ProjectMarketBase;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.ProjectActivity;
-import com.secretk.move.ui.adapter.ProjectRecommendAdapter;
+import com.secretk.move.ui.adapter.ProjectMarketAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.view.LoadingDialog;
@@ -26,37 +24,36 @@ import com.secretk.move.view.LoadingDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import butterknife.BindView;
 
 /**
  * 作者： litongge
  * 时间： 2018/4/27 15:04
  * 邮箱；ltg263@126.com
- * 描述：项目主页--文章
+ * 描述：项目主页--行情
  */
 
 
-public class ProjectArticleFragment extends LazyFragment implements ItemClickListener {
+public class ProjectMarketFragment extends LazyFragment implements ItemClickListener {
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
-    @BindView(R.id.tv_row_count)
-    TextView tvRowCount;
-    @BindView(R.id.tv_sort)
-    TextView tvSort;
     @BindView(R.id.ll_have_data)
     LinearLayout llHaveData;
     @BindView(R.id.iv_not_content)
     ImageView ivNotContent;
 
-    private ProjectRecommendAdapter adapter;
+    private ProjectMarketAdapter adapter;
     public boolean isHaveData = true;
     private int pageIndex = 1;
     private String projectId;
     private LoadingDialog loadingDialog;
+    private List<ProjectMarketBase.DataBean.TransactionPairResponseBean.RowsBean> httpData;
 
     @Override
     public int setFragmentView() {
-        return R.layout.fragment_project_article;
+        return R.layout.fragment_project_market;
     }
 
     @Override
@@ -65,22 +62,8 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
             loadingDialog=new LoadingDialog(getActivity());
         }
         setVerticalManager(rvReview);
-        adapter = new ProjectRecommendAdapter(getActivity());
+        adapter = new ProjectMarketAdapter(getActivity());
         rvReview.setAdapter(adapter);
-        tvSort.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String sort = tvSort.getText().toString();
-                pageIndex = 1;
-                loadingDialog.show();
-                if (sort.equals(getString(R.string.sort_love))) {
-                    tvSort.setText(getString(R.string.sort_time));
-                } else {
-                    tvSort.setText(getString(R.string.sort_love));
-                }
-                getLoadData(tvSort.getText().toString().trim());
-            }
-        });
     }
 
     @Override
@@ -92,7 +75,6 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
 
     @Override
     public void onItemClick(View view, int postion) {
-        Toast.makeText(getActivity(), "文章界面：我是第：" + postion, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -113,27 +95,28 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     public void getLoadData(String sort) {
         JSONObject node = new JSONObject();
         try {
-            node.put("token", token);
             node.put("projectId", Integer.valueOf(projectId));
             node.put("pageIndex", pageIndex++);
-            if (sort.equals(getString(R.string.sort_love))) {
-                node.put("sortField", "praise_num");//需要按点赞数倒序排序的话 增加传入参数ortField 值为字符串“praise_num”
-            }
             node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.PROJECT_ARTICLE_LIST)
+                .url(Constants.GET_EXCHANGE_AND_TRAN_PAIR)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
+        RetrofitUtil.request(params, ProjectMarketBase.class, new HttpCallBackImpl<ProjectMarketBase>() {
             @Override
-            public void onCompleted(CommonListBase bean) {
-                CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getArticles();
+            public void onCompleted(ProjectMarketBase bean) {
+                ProjectMarketBase.DataBean.TransactionPairResponseBean detailsBean = bean.getData().getTransactionPairResponse();
+                if (detailsBean == null) {
+                    llHaveData.setVisibility(View.GONE);
+                    ivNotContent.setVisibility(View.VISIBLE);
+                    return;
+                }
                 if (detailsBean.getPageSize() == detailsBean.getCurPageNum()) {
-                    if(refreshLayoutF!=null){
+                    if (refreshLayoutF != null) {
                         refreshLayoutF.finishLoadMoreWithNoMoreData();
                     }
                     isHaveData = false;
@@ -143,7 +126,6 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
                 }
                 llHaveData.setVisibility(View.VISIBLE);
                 ivNotContent.setVisibility(View.GONE);
-                tvRowCount.setText("共" + detailsBean.getRowCount() + "篇文章");
                 if (pageIndex > 2) {
                     adapter.setAddData(detailsBean.getRows());
                 } else {

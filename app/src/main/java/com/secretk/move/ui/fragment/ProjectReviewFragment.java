@@ -72,11 +72,6 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
     private ProjectRecommendAdapter adapterTop;
     private List<RowsBean> newData;
 
-    SmartRefreshLayout refreshLayout;
-
-    public void setRefreshLayout(SmartRefreshLayout refreshLayout) {
-        this.refreshLayout = refreshLayout;
-    }
     @Override
     public int setFragmentView() {
         return R.layout.fragment_project_review;

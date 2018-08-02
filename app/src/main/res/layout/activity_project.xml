@@ -338,27 +338,12 @@
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                    <android.support.design.widget.TabLayout
-                        android:id="@+id/tabs"
+                    <net.lucode.hackware.magicindicator.MagicIndicator
+                        android:id="@+id/magic_indicator_title"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:background="@color/white"
-                        app:tabIndicatorColor="@color/app_background"
-                        app:tabPaddingBottom="@dimen/dp_5"
-                        app:tabSelectedTextColor="@color/app_background"
-                        app:tabTextColor="#aeaeae" />
-                    <!--<android.support.design.widget.TabLayout
-                        android:id="@+id/tabs"
-                        android:layout_centerHorizontal="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/main_background"
-                        android:fillViewport="false"
-                        app:tabSelectedTextColor="@color/app_background"
-                        app:tabTextColor="#aeaeae"
-                        app:tabIndicatorColor="@color/app_background"
-                        app:tabTextAppearance="@style/TabLayoutTextStyle"
-                        app:tabMode="scrollable"/>-->
+                        app:layout_collapseMode="pin" />
 
                     <View
                         android:layout_width="match_parent"

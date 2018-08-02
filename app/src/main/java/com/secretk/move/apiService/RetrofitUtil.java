@@ -130,8 +130,8 @@ public class RetrofitUtil {
                              LogUtil.i("request " + response.raw().toString());
                              if (body != null) {
                                  String jsonStr = new String(read(body.byteStream()), Charset.forName("UTF-8"));
-                                 LogUtil.w("jsonStr:" + jsonStr);
-                                 if(!response.raw().toString().contains("api.coinmarketcap.com")){
+                                 if(!response.raw().toString().contains("api.coinmarketcap.com") && !response.raw().toString().contains("data.block.cc")){
+                                     LogUtil.w("jsonStr:" + jsonStr);
                                      try {
                                          JSONObject jsonObject = new JSONObject(jsonStr);
                                          int code = jsonObject.getInt("code");
@@ -173,9 +173,13 @@ public class RetrofitUtil {
                                  }
 
                              } else {
-                                 ToastUtils.getInstance().show(response.raw().toString());
+                                if(!response.raw().toString().contains("api.coinmarketcap.com")
+                                        && !response.raw().toString().contains("data.block.cc")){
+                                    ToastUtils.getInstance().show(response.raw().toString());
+                                }
                                  if (callBack != null) {
                                      callBack.onFinish();
+                                     callBack.onError(response.raw().toString());
                                  }
                              }
                          }

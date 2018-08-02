@@ -58,10 +58,6 @@ public class ProjectDiscussFragment extends LazyFragment {
     private List<RowsBean> newData;
     private LoadingDialog loadingDialog;
 
-    SmartRefreshLayout refreshLayout;
-    public void setRefreshLayout(SmartRefreshLayout refreshLayout) {
-        this.refreshLayout = refreshLayout;
-    }
     @Override
     public int setFragmentView() {
         return R.layout.fragment_project_discuss;

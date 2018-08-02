@@ -16,7 +16,6 @@ import com.secretk.move.bean.HotProjectAndHotUserBean;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 
@@ -80,7 +79,6 @@ public class FindNewAdapter extends RecyclerView.Adapter<FindNewAdapter.ImagesHo
 
     @Override
     public int getItemCount() {
-        LogUtil.w("lists:"+lists);
         if(lists ==null){
             return 0;
         }

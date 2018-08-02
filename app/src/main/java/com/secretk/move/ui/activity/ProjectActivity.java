@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -23,27 +22,31 @@ import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.ProjectHomeBean;
-import com.secretk.move.ui.adapter.HomePageAdapter;
+import com.secretk.move.ui.adapter.ProjectPageAdapter;
 import com.secretk.move.ui.fragment.ProjectArticleFragment;
 import com.secretk.move.ui.fragment.ProjectDiscussFragment;
 import com.secretk.move.ui.fragment.ProjectIntroFragment;
+import com.secretk.move.ui.fragment.ProjectMarketFragment;
 import com.secretk.move.ui.fragment.ProjectReviewFragment;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
-import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.LoadingDialog;
+import com.secretk.move.view.MagicIndicatorUtils;
 import com.secretk.move.view.ViewPagerFixed;
+
+import net.lucode.hackware.magicindicator.MagicIndicator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -64,8 +67,6 @@ public class ProjectActivity extends BaseActivity {
 
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
-    @BindView(R.id.tabs)
-    TabLayout tabs;
     @BindView(R.id.view_pager)
     ViewPagerFixed viewPager;
     @BindView(R.id.refreshLayout)
@@ -98,10 +99,13 @@ public class ProjectActivity extends BaseActivity {
     AppBarLayout appbar;
     @BindView(R.id.fab)
     FloatingActionButton fab;
+    @BindView(R.id.magic_indicator_title)
+    MagicIndicator magicIndicatorTitle;
     private ProjectIntroFragment introFragment;
     private ProjectReviewFragment reviewFragment;
     private ProjectDiscussFragment discussFragment;
     private ProjectArticleFragment articleFragment;
+    private ProjectMarketFragment marketFragment;
     private String projectId;
     private ProjectHomeBean.DataBean.ProjectBean projectInfo;
 
@@ -122,33 +126,32 @@ public class ProjectActivity extends BaseActivity {
     protected void initUI(Bundle savedInstanceState) {
 //        tvReview.setSelected(true);
         projectId = getIntent().getStringExtra("projectId");
+        List<String> list = new ArrayList<>();
+        list.add(getString(R.string.review));
+        list.add(getString(R.string.discuss));
+        list.add(getString(R.string.article));
+        list.add(getString(R.string.market));
+        list.add(getString(R.string.intro));
+        MagicIndicatorUtils.initMagicIndicatorTitle(this, list, viewPager, magicIndicatorTitle);
         introFragment = new ProjectIntroFragment();
         reviewFragment = new ProjectReviewFragment();
         discussFragment = new ProjectDiscussFragment();
         articleFragment = new ProjectArticleFragment();
-        HomePageAdapter adapter = new HomePageAdapter(getSupportFragmentManager());
-        adapter.addFragment(reviewFragment, getString(R.string.review));
-        adapter.addFragment(discussFragment, getString(R.string.discuss));
-        adapter.addFragment(articleFragment, getString(R.string.article));
-        adapter.addFragment(introFragment, getString(R.string.intro));
-        reviewFragment.setRefreshLayout(refreshLayout);
-        discussFragment.setRefreshLayout(refreshLayout);
-        articleFragment.setRefreshLayout(refreshLayout);
-
+        marketFragment = new ProjectMarketFragment();
+        ProjectPageAdapter adapter = new ProjectPageAdapter(getSupportFragmentManager());
+        adapter.addFragment(reviewFragment);
+        adapter.addFragment(discussFragment);
+        adapter.addFragment(articleFragment);
+        adapter.addFragment(marketFragment);
+        adapter.addFragment(introFragment);
         reviewFragment.setSmartRefreshLayout(refreshLayout);
         discussFragment.setSmartRefreshLayout(refreshLayout);
         articleFragment.setSmartRefreshLayout(refreshLayout);
-
+        marketFragment.setSmartRefreshLayout(refreshLayout);
         viewPager.setAdapter(adapter);
-        tabs.setupWithViewPager(viewPager);
+        adapter.setData(list);
         viewPager.setCurrentItem(0);
-        viewPager.setOffscreenPageLimit(4);
-        tabs.post(new Runnable() {
-            @Override
-            public void run() {
-                StatusBarUtil.setIndicator(tabs, 30, 30);
-            }
-        });
+        viewPager.setOffscreenPageLimit(5);
         initListener();
     }
 
@@ -275,19 +278,23 @@ public class ProjectActivity extends BaseActivity {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
                 switch (viewPager.getCurrentItem()) {
-                    case 1:
+                    case 0:
                         if (reviewFragment.isHaveData) {
                             reviewFragment.getLoadData("");
                         }
                         break;
-                    case 2:
+                    case 1:
                         if (discussFragment.isHaveData) {
                             discussFragment.getLoadData("");
                         }
                         break;
-                    case 3:
+                    case 2:
                         if (articleFragment.isHaveData) {
                             articleFragment.getLoadData("");
+                        }
+                    case 3:
+                        if (marketFragment.isHaveData) {
+                            marketFragment.getLoadData("");
                         }
                         break;
                 }
@@ -296,7 +303,7 @@ public class ProjectActivity extends BaseActivity {
         StringUtil.getVpPosition(viewPager, new StringUtil.VpPageSelected() {
             @Override
             public void getVpPageSelected(int position) {
-                if (viewPager.getCurrentItem() == 0) {
+                if (viewPager.getCurrentItem() == 4) {
                     fab.setVisibility(View.GONE);
                     refreshLayout.setEnableLoadMore(false);
                 } else {
@@ -304,22 +311,28 @@ public class ProjectActivity extends BaseActivity {
                     refreshLayout.setEnableLoadMore(true);
                 }
                 switch (viewPager.getCurrentItem()) {
-                    case 1:
+                    case 0:
                         if (reviewFragment.isHaveData) {
                             refreshLayout.setNoMoreData(false);
                         } else {
                             refreshLayout.finishLoadMoreWithNoMoreData();
                         }
                         break;
-                    case 2:
+                    case 1:
                         if (discussFragment.isHaveData) {
                             refreshLayout.setNoMoreData(false);
                         } else {
                             refreshLayout.finishLoadMoreWithNoMoreData();
                         }
                         break;
-                    case 3:
+                    case 2:
                         if (articleFragment.isHaveData) {
+                            refreshLayout.setNoMoreData(false);
+                        } else {
+                            refreshLayout.finishLoadMoreWithNoMoreData();
+                        }
+                    case 3:
+                        if (marketFragment.isHaveData) {
                             refreshLayout.setNoMoreData(false);
                         } else {
                             refreshLayout.finishLoadMoreWithNoMoreData();
