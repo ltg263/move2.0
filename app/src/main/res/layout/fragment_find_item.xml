@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dp_2"
                 android:background="@drawable/shape_add_label_selected"
-                android:paddingHorizontal="@dimen/dp_10"
+                android:paddingHorizontal="@dimen/dp_8"
                 android:paddingVertical="@dimen/dp_2"
                 android:text="限量3000份"
                 android:textColor="@color/app_background" />

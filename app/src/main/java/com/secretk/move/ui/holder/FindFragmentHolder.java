@@ -63,9 +63,9 @@ public class FindFragmentHolder extends RecyclerViewBaseHolder {
 
         GlideUtils.loadCircleProjectUrl(context,ivIcon, Constants.BASE_IMG_URL+StringUtil.getBeanString(rowsBean.getProjectIcon()));
         tvCode.setText(rowsBean.getProjectCode());
-        tvPrice.setText(Html.fromHtml("共<font color=\"#ff4b4b\">"+rowsBean.getTokenCount()+rowsBean.getTokenName()+"</font>约 ¥"+rowsBean.getTokenCash()));
+        tvPrice.setText(Html.fromHtml("共<font color=\"#ff4b4b\">"+rowsBean.getTokenCount()+rowsBean.getTokenUnclaimed()+"</font>约 ¥"+rowsBean.getTokenCash()));
         tvName.setText("/"+StringUtil.getBeanString(rowsBean.getProjectChineseName()));
-        tvLimit.setText(StringUtil.getBeanString(String.valueOf(rowsBean.getTokenNum())));
+        tvLimit.setText("限量"+StringUtil.getBeanString(String.valueOf(rowsBean.getTokenCount()))+"份");
         // status:0,//活动状态：0-未开始，1-进行中，2-已结束，3-已终止,4-已挖完
         if(rowsBean.getStatus()==0){
             surplusTime = StringUtil.getSurplusTime(rowsBean.getBeginDt(),"0");
@@ -110,7 +110,8 @@ public class FindFragmentHolder extends RecyclerViewBaseHolder {
         if (surplusTime > 0) {
             countDownTimer = new CountDownTimer(surplusTime, 1000) {
                 public void onTick(long millisUntilFinished) {
-                    tvTime.setText(StringUtil.getTimeToHms(millisUntilFinished));
+//                    tvTime.setText(StringUtil.getTimeToHms(millisUntilFinished));
+                    tvTime.setText(StringUtil.getSytime(millisUntilFinished));
                 }
                 public void onFinish() {
                     // status:0,//活动状态：0-未开始，1-进行中，2-已结束，3-已终止,4-已挖完
@@ -125,7 +126,7 @@ public class FindFragmentHolder extends RecyclerViewBaseHolder {
             //将此 countDownTimer 放入list.
             countDownCounters.put(tvTime.hashCode(), countDownTimer);
         }
-        tvGo.setOnClickListener(new View.OnClickListener() {
+        tvTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!SharedUtils.getLoginZt() || StringUtil.isBlank(SharedUtils.getToken())){
@@ -138,5 +139,12 @@ public class FindFragmentHolder extends RecyclerViewBaseHolder {
             }
         });
     }
+//    public String getSytime(long date) {
+//        long day = date / (1000 * 60 * 60 * 24);
+//        long hour = (date / (1000 * 60 * 60) - day * 24);
+//        long min = ((date / (60 * 1000)) - day * 24 * 60 - hour * 60);
+//        long s = (date/1000 - day*24*60*60 - hour*60*60 - min*60);
+//        return day+"天"+hour+"小时"+min+"分"+s+"秒";
+//    }
 
 }

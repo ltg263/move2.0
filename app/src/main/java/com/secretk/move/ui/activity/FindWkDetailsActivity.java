@@ -243,10 +243,10 @@ public class FindWkDetailsActivity extends BaseActivity {
                     surplusTime = StringUtil.getSurplusTime(data.getBeginDt(), "0");
                     tvGoLqjl.setText("未开始");
                     tvGoLqjl.setBackgroundColor(getResources().getColor(R.color.title_gray_db));
-                    tvTime.setText(Html.fromHtml("倒计时<font color=\"#ffe866\">" + StringUtil.getTimeToHms(surplusTime) + "</font>  " + sdf.format(date).toString() + "开始"));
+                    tvTime.setText(Html.fromHtml("倒计时<font color=\"#ffe866\">" + StringUtil.getSytime(surplusTime) + "</font>  " + sdf.format(date).toString() + "开始"));
                 } else if (data.getStatus() == 1) {
                     surplusTime = StringUtil.getSurplusTime("0", data.getEndDt());
-                    tvTime.setText(Html.fromHtml("倒计时<font color=\"#ffe866\">" + StringUtil.getTimeToHms(surplusTime) + "</font>  " + "进行中"));
+                    tvTime.setText(Html.fromHtml("倒计时<font color=\"#ffe866\">" + StringUtil.getSytime(surplusTime) + "</font>  " + "进行中"));
                     if (data.getReceiveType() == 0) {
                         tvGoLqjl.setText("领取奖励");
                         tvGoLqjl.setBackgroundColor(getResources().getColor(R.color.title_gray_db));
@@ -286,7 +286,7 @@ public class FindWkDetailsActivity extends BaseActivity {
                     tvGoLqjl.setBackgroundColor(getResources().getColor(R.color.title_gray_db));
                 } else if (data.getStatus() == 4) {
                     surplusTime = StringUtil.getSurplusTime("0", data.getEndDt());
-                    tvTime.setText(Html.fromHtml("倒计时<font color=\"#ffe866\">" + StringUtil.getTimeToHms(surplusTime) + "</font>  " + "进行中"));
+                    tvTime.setText(Html.fromHtml("倒计时<font color=\"#ffe866\">" + StringUtil.getSytime(surplusTime) + "</font>  " + "进行中"));
                     tvGoLqjl.setText("已挖完");
                     tvGoLqjl.setBackgroundColor(getResources().getColor(R.color.title_gray_db));
                 }
@@ -297,26 +297,26 @@ public class FindWkDetailsActivity extends BaseActivity {
                         //将复用的倒计时清除
                         countDownTimer.cancel();
                     }
-                }
-                if (surplusTime > 0 && countDownTimer != null) {
-                    countDownTimer = new CountDownTimer(surplusTime, 1000) {
-                        public void onTick(long millisUntilFinished) {
-                            if (data.getStatus() == 0) {
-                                tvTime.setText(Html.fromHtml("倒计时<font color=\"#ffe866\">" + StringUtil.getTimeToHms(millisUntilFinished) + "</font>  " + sdf.format(date).toString() + "开始"));
-                            } else if (data.getStatus() == 1) {
-                                tvTime.setText(Html.fromHtml("倒计时<font color=\"#ffe866\">" + StringUtil.getTimeToHms(millisUntilFinished) + "</font>  " + "进行中"));
+                    if (surplusTime > 0) {
+                        countDownTimer = new CountDownTimer(surplusTime, 1000) {
+                            public void onTick(long millisUntilFinished) {
+                                if (data.getStatus() == 0) {
+                                    tvTime.setText(Html.fromHtml("倒计时<font color=\"#ffe866\">" + StringUtil.getSytime(millisUntilFinished) + "</font>  " + sdf.format(date).toString() + "开始"));
+                                } else if (data.getStatus() == 1) {
+                                    tvTime.setText(Html.fromHtml("倒计时<font color=\"#ffe866\">" + StringUtil.getSytime(millisUntilFinished) + "</font>  " + "进行中"));
+                                }
                             }
-                        }
 
-                        public void onFinish() {
-                            // status:0,//活动状态：0-未开始，1-进行中，2-已结束，3-已终止,4-已挖完
-                            if (data.getStatus() == 0 || data.getStatus() == 1 || data.getStatus() == 4) {
-                                initData();
+                            public void onFinish() {
+                                // status:0,//活动状态：0-未开始，1-进行中，2-已结束，3-已终止,4-已挖完
+                                if (data.getStatus() == 0 || data.getStatus() == 1 || data.getStatus() == 4) {
+                                    initData();
+                                }
                             }
-                        }
-                    }.start();
-                    //将此 countDownTimer 放入list.
-                    countDownCounters.put(tvTime.hashCode(), countDownTimer);
+                        }.start();
+                        //将此 countDownTimer 放入list.
+                        countDownCounters.put(tvTime.hashCode(), countDownTimer);
+                    }
                 }
             }
         });

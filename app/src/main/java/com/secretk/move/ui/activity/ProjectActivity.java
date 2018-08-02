@@ -101,6 +101,16 @@ public class ProjectActivity extends BaseActivity {
     FloatingActionButton fab;
     @BindView(R.id.magic_indicator_title)
     MagicIndicator magicIndicatorTitle;
+    @BindView(R.id.tv_price)
+    TextView tvPrice;
+    @BindView(R.id.tv_percent_change_24h)
+    TextView tvPercentChange24h;
+    @BindView(R.id.iv_market_cap)
+    ImageView ivMarketCap;
+    @BindView(R.id.tv_market_cap)
+    TextView tvMarketCap;
+    @BindView(R.id.tv_volume_24h)
+    TextView tvVolume24h;
     private ProjectIntroFragment introFragment;
     private ProjectReviewFragment reviewFragment;
     private ProjectDiscussFragment discussFragment;
@@ -153,11 +163,12 @@ public class ProjectActivity extends BaseActivity {
         viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(5);
         initListener();
+        getLoadData(1, "CNY");
     }
 
     @Override
     protected void initData() {
-        if(!NetUtil.isNetworkAvailable()){
+        if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
         }
@@ -187,12 +198,12 @@ public class ProjectActivity extends BaseActivity {
                     mHeadView.setTitleVice("/" + projectInfo.getProjectChineseName());
                     introFragment.initUiData(projectInfo);
                     //  discussFragment.initUiData(30);
-                    GlideUtils.loadCircleProjectUrl(ProjectActivity.this,ivProjectIcon, Constants.BASE_IMG_URL + projectInfo.getProjectIcon());
+                    GlideUtils.loadCircleProjectUrl(ProjectActivity.this, ivProjectIcon, Constants.BASE_IMG_URL + projectInfo.getProjectIcon());
                     tvProjectCode.setText(projectInfo.getProjectCode());
                     tvProjectChineseName.setText("/" + projectInfo.getProjectChineseName());
                     tvCreateTime.setText("发布时间：" + StringUtil.getTimeToM(projectInfo.getCreateTime()));
                     tvFollowerNum.setText(String.valueOf(projectInfo.getFollowerNum()));
-                    if(projectInfo.getTotalScore()!=0){
+                    if (projectInfo.getTotalScore() != 0) {
                         tvBuZu.setVisibility(View.GONE);
                         tvTotalScore.setVisibility(View.VISIBLE);
                         tvTotalScore.setText(String.valueOf(projectInfo.getTotalScore()));
@@ -200,13 +211,13 @@ public class ProjectActivity extends BaseActivity {
                     tvRaterNum.setText(String.valueOf(projectInfo.getRaterNum()));
                     tvProjectSignature.setText(projectInfo.getProjectSignature());
                     // 0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
-                    if(projectInfo.getFollowStatus()==0){
+                    if (projectInfo.getFollowStatus() == 0) {
                         tvFollowStatus.setSelected(false);
                         tvFollowStatus.setText(getResources().getString(R.string.follow_status_0));
-                    }else if(projectInfo.getFollowStatus() == 1){
+                    } else if (projectInfo.getFollowStatus() == 1) {
                         tvFollowStatus.setSelected(true);
                         tvFollowStatus.setText(getResources().getString(R.string.follow_status_1));
-                    }else{
+                    } else {
                         tvFollowStatus.setVisibility(View.GONE);
                     }
 
@@ -226,7 +237,7 @@ public class ProjectActivity extends BaseActivity {
 
             @Override
             public void onFinish() {
-                if(loadingDialog.isShowing()){
+                if (loadingDialog.isShowing()) {
                     loadingDialog.dismiss();
                 }
             }
@@ -237,7 +248,7 @@ public class ProjectActivity extends BaseActivity {
         return projectId;
     }
 
-    public LoadingDialog getloadingDialog(){
+    public LoadingDialog getloadingDialog() {
         return loadingDialog;
     }
 
@@ -344,30 +355,30 @@ public class ProjectActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.fab,R.id.rl_grade, R.id.tv_review, R.id.tv_follow_status})
+    @OnClick({R.id.fab, R.id.rl_grade, R.id.tv_review, R.id.tv_follow_status})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fab:
                 startAcy();
                 break;
             case R.id.rl_grade:
-                String key[] = {"id","code","chineseName","icon"};
-                String values[] = {projectId,projectInfo.getProjectCode(),projectInfo.getProjectChineseName(),projectInfo.getProjectIcon()};
+                String key[] = {"id", "code", "chineseName", "icon"};
+                String values[] = {projectId, projectInfo.getProjectCode(), projectInfo.getProjectChineseName(), projectInfo.getProjectIcon()};
                 IntentUtil.startActivity(DetailsUserGradeActivity.class, key, values);
                 break;
             case R.id.tv_review:
-                IntentUtil.startProjectSimplenessActivity(projectInfo.getProjectId(),projectInfo.getProjectIcon(),
-                        projectInfo.getProjectChineseName(),projectInfo.getProjectCode());
+                IntentUtil.startProjectSimplenessActivity(projectInfo.getProjectId(), projectInfo.getProjectIcon(),
+                        projectInfo.getProjectChineseName(), projectInfo.getProjectCode());
                 break;
             case R.id.tv_follow_status:
                 tvFollowStatus.setEnabled(false);
                 NetUtil.addSaveFollow(tvFollowStatus,
-                        Constants.SaveFollow.PROJECT,projectInfo.getProjectId(), new NetUtil.SaveFollowImp() {
+                        Constants.SaveFollow.PROJECT, projectInfo.getProjectId(), new NetUtil.SaveFollowImp() {
                             @Override
                             public void finishFollow(String str) {
-                               // 0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
+                                // 0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
                                 tvFollowStatus.setEnabled(true);
-                                if(!str.equals(Constants.FOLLOW_ERROR)){
+                                if (!str.equals(Constants.FOLLOW_ERROR)) {
                                     tvFollowStatus.setText(str);
                                 }
                             }
@@ -378,23 +389,83 @@ public class ProjectActivity extends BaseActivity {
 
     private void startAcy() {
         Intent intent;
-        switch (viewPager.getCurrentItem()){
+        switch (viewPager.getCurrentItem()) {
             case 1:
-                IntentUtil.startProjectSimplenessActivity(projectInfo.getProjectId(),projectInfo.getProjectIcon(),
-                        projectInfo.getProjectChineseName(),projectInfo.getProjectCode());
+                IntentUtil.startProjectSimplenessActivity(projectInfo.getProjectId(), projectInfo.getProjectIcon(),
+                        projectInfo.getProjectChineseName(), projectInfo.getProjectCode());
                 break;
             case 2:
                 intent = new Intent(this, ReleaseDiscussActivity.class);
-                intent.putExtra("projectId",projectInfo.getProjectId());
-                intent.putExtra("projectPay",projectInfo.getProjectCode());
+                intent.putExtra("projectId", projectInfo.getProjectId());
+                intent.putExtra("projectPay", projectInfo.getProjectCode());
                 startActivity(intent);
                 break;
             case 3:
                 intent = new Intent(this, ReleaseArticleActivity.class);
-                intent.putExtra("projectId",projectInfo.getProjectId());
-                intent.putExtra("projectPay",projectInfo.getProjectCode());
+                intent.putExtra("projectId", projectInfo.getProjectId());
+                intent.putExtra("projectPay", projectInfo.getProjectCode());
                 startActivity(intent);
                 break;
         }
+    }
+
+    /**
+     * 获1取CNY
+     */
+    public void getLoadData(int id, String name) {
+        RxHttpParams params = new RxHttpParams.Build()
+//                .url(Constants.SEND_TOKEN)
+                .url("https://api.coinmarketcap.com/v2/ticker/" + id + "/?convert=" + name + "")
+                .build();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onCompleted(String str) {
+                try {
+                    JSONObject obj = new JSONObject(str);
+                    if (obj.getJSONObject("data") != null) {
+                        JSONObject cny = obj.getJSONObject("data").getJSONObject("quotes").getJSONObject("CNY");
+                        double price = cny.getDouble("price");
+                        double percent_change_24h = cny.getDouble("percent_change_24h");
+                        tvPrice.setText("￥" + String.format("%.2f", price));
+
+                        ivMarketCap.setVisibility(View.VISIBLE);
+                        if (percent_change_24h < 0) {
+                            tvPercentChange24h.setBackgroundColor(getResources().getColor(R.color.theme_title_red));
+                            tvPercentChange24h.setText(String.format("%.2f", percent_change_24h) + "%");
+                            ivMarketCap.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_fall));
+                        } else {
+                            tvPercentChange24h.setBackgroundColor(getResources().getColor(R.color.theme_title_lv));
+                            tvPercentChange24h.setText("+"+String.format("%.2f", percent_change_24h) + "%");
+                            ivMarketCap.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_rise));
+                        }
+
+                        double market_cap = cny.getDouble("market_cap");
+                        String market_capStr = "";
+                        if (market_cap < 10000) {
+                            market_capStr = String.valueOf(Math.round(market_cap));
+                        } else if (market_cap < 100000000) {
+                            market_capStr = String.format("%.2f", market_cap / 10000) + "万";
+                        } else {
+                            market_capStr = String.format("%.2f", market_cap / 100000000) + "亿";
+                        }
+                        tvMarketCap.setText(market_capStr);
+
+                        double volume_24h = cny.getDouble("volume_24h");
+                        String volume_24hStr = "";
+                        if (volume_24h < 10000) {
+                            volume_24hStr = String.valueOf(Math.round(volume_24h));
+                        } else if (market_cap < 100000000) {
+                            volume_24hStr = String.format("%.2f", volume_24h / 10000) + "万";
+                        } else {
+                            volume_24hStr = String.format("%.2f", volume_24h / 100000000) + "亿";
+                        }
+
+                        tvVolume24h.setText(volume_24hStr);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

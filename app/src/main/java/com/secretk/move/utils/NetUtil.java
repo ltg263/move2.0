@@ -457,8 +457,8 @@ public class NetUtil {
                     if(obj.getJSONObject("data")!=null){
                         JSONObject cny = obj.getJSONObject("data").getJSONObject("quotes").getJSONObject("CNY");
                         double price = cny.getDouble("price");
-                        double percent_change_1h = cny.getDouble("percent_change_1h");
-                        collect.finishCommendation("￥"+String.format("%.2f", price),String.format("%.2f", percent_change_1h),true);
+                        double percent_change_24h = cny.getDouble("percent_change_24h");
+                        collect.finishCommendation("￥"+String.format("%.2f", price),String.format("%.2f", percent_change_24h),true);
                     }else{
                         collect.finishCommendation("","",false);
                     }

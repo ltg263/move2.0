@@ -87,6 +87,7 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_DUM_NORMAL);
         MobclickAgent.setSessionContinueMillis(1000);
 
+        getLoadData();
         //当用户使用自有账号登录时，可以这样统计：
         MobclickAgent.onProfileSignIn("1");
         adapter = new MainActivityPagerAdapter(getSupportFragmentManager());
@@ -197,117 +198,144 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
         }
     }
 
-        @Override
-        protected void onPause() {
-            super.onPause();
-        }
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 
-        @Override
-        protected void onResume() {
-            super.onResume();
-            String current = StringUtil.getTimeToM(System.currentTimeMillis());
-            LogUtil.w("isShowJlWind"+current);
-            LogUtil.w("isShowJlWind"+SharedUtils.singleton().get("isShowJlWind", ""));
-            int userCardStatus = SharedUtils.singleton().get("userCardStatus", 0);
-            if (SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken()) && userCardStatus==2) {
-                if (!current.equals(SharedUtils.singleton().get("isShowJlWind", ""))) {
-                    showJlWind(SharedUtils.getToken());
-                }
-            }
-            if (SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken())) {
-                if (!current.equals(SharedUtils.singleton().get("isShowSmWind", ""))
-                        && (userCardStatus==4 || userCardStatus==3)) {
-                    SharedUtils.singleton().put("isShowSmWind", StringUtil.getTimeToM(System.currentTimeMillis()));
-                    showSmWind();
-                }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getLoadData();
+        String current = StringUtil.getTimeToM(System.currentTimeMillis());
+        LogUtil.w("isShowJlWind"+current);
+        LogUtil.w("isShowJlWind"+SharedUtils.singleton().get("isShowJlWind", ""));
+        int userCardStatus = SharedUtils.singleton().get("userCardStatus", 0);
+        if (SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken()) && userCardStatus==2) {
+            if (!current.equals(SharedUtils.singleton().get("isShowJlWind", ""))) {
+                showJlWind(SharedUtils.getToken());
             }
         }
-
-        private void showSmWind() {
-            DialogUtils.showDialogAuthentication(this, new DialogUtils.ErrorDialogInterface() {
-                @Override
-                public void btnConfirm() {
-                    IntentUtil.startActivity(MineApproveSubmitiCertificateActivity.class);
-                }
-            });
-        }
-
-        /**
-         * 每日奖励
-         *
-         * @param token
-         */
-        private void showJlWind(String token) {
-            JSONObject node = new JSONObject();
-            try {
-                node.put("token", token);
-            } catch (JSONException e) {
-                e.printStackTrace();
+        if (SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken())) {
+            if (!current.equals(SharedUtils.singleton().get("isShowSmWind", ""))
+                    && (userCardStatus==4 || userCardStatus==3)) {
+                SharedUtils.singleton().put("isShowSmWind", StringUtil.getTimeToM(System.currentTimeMillis()));
+                showSmWind();
             }
-            final RxHttpParams params = new RxHttpParams.Build()
-                    .url(Constants.TOKEN_POP)
-                    .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
-                    .addQuery("sign", MD5.Md5(node.toString()))
-                    .build();
-            RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
-                @Override
-                public void onCompleted(String str) {
-                    double tokenTodaySum = 0;
-                    int pop = 1;//1不弹  0弹出
-                    try {
-                        JSONObject data = new JSONObject(str).getJSONObject("data");
-                        if (data != null) {
-                            tokenTodaySum = data.getDouble("tokenTodaySum");
-                            pop = data.getInt("pop");
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    if (pop == 1 || tokenTodaySum == 0) {
-                        return;
-                    }
-                    SharedUtils.singleton().put("isShowJlWind", StringUtil.getTimeToM(System.currentTimeMillis()));
-                    DialogUtils.showDialogAwardFind(MainActivity.this, "今日领取"+tokenTodaySum+"FIND");
-                }
-            });
-        }
-
-        @Override
-        public void showDialog(final VersionBean.DataBean str, final boolean force) {
-            DialogUtils.showDialogAppUpdate(this, force, str.getUpExplain(), new DialogUtils.ErrorDialogInterface() {
-                @Override
-                public void btnConfirm() {
-//                presenter.downLoadApk();
-                    Intent service = new Intent(MainActivity.this, DownloadService.class);
-                    if(force){
-                        service.putExtra("Url",str.getGuideUrl());
-                    }else{
-                        service.putExtra("Url",str.getUpgradeUrl());
-                    }
-                    startService(service);
-                }
-            });
-        }
-
-        private long exitTime = 0;
-        private int index = 0;
-        @Override
-        public boolean onKeyDown(int keyCode, KeyEvent event) {
-            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-                if (index != vp_main.getCurrentItem()) {
-                    rbMain.setChecked(true);
-                } else {
-                    if ((System.currentTimeMillis() - exitTime) > 2000) {
-                        ToastUtils.getInstance().show("再按一次退出" + getString(R.string.app_name));
-                        exitTime = System.currentTimeMillis();
-                    } else {
-                        MobclickAgent.onKillProcess(this);
-                        finish();
-                        System.exit(0);
-                    }
-                }
-                return true;
-            }
-            return super.onKeyDown(keyCode, event);
         }
     }
+
+    private void showSmWind() {
+        DialogUtils.showDialogAuthentication(this, new DialogUtils.ErrorDialogInterface() {
+            @Override
+            public void btnConfirm() {
+                IntentUtil.startActivity(MineApproveSubmitiCertificateActivity.class);
+            }
+        });
+    }
+
+    /**
+     * 每日奖励
+     *
+     * @param token
+     */
+    private void showJlWind(String token) {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.TOKEN_POP)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onCompleted(String str) {
+                double tokenTodaySum = 0;
+                int pop = 1;//1不弹  0弹出
+                try {
+                    JSONObject data = new JSONObject(str).getJSONObject("data");
+                    if (data != null) {
+                        tokenTodaySum = data.getDouble("tokenTodaySum");
+                        pop = data.getInt("pop");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (pop == 1 || tokenTodaySum == 0) {
+                    return;
+                }
+                SharedUtils.singleton().put("isShowJlWind", StringUtil.getTimeToM(System.currentTimeMillis()));
+                DialogUtils.showDialogAwardFind(MainActivity.this, "今日领取"+tokenTodaySum+"FIND");
+            }
+        });
+    }
+
+    @Override
+    public void showDialog(final VersionBean.DataBean str, final boolean force) {
+        DialogUtils.showDialogAppUpdate(this, force, str.getUpExplain(), new DialogUtils.ErrorDialogInterface() {
+            @Override
+            public void btnConfirm() {
+//                presenter.downLoadApk();
+                Intent service = new Intent(MainActivity.this, DownloadService.class);
+                if(force){
+                    service.putExtra("Url",str.getGuideUrl());
+                }else{
+                    service.putExtra("Url",str.getUpgradeUrl());
+                }
+                startService(service);
+            }
+        });
+    }
+
+    private long exitTime = 0;
+    private int index = 0;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (index != vp_main.getCurrentItem()) {
+                rbMain.setChecked(true);
+            } else {
+                if ((System.currentTimeMillis() - exitTime) > 2000) {
+                    ToastUtils.getInstance().show("再按一次退出" + getString(R.string.app_name));
+                    exitTime = System.currentTimeMillis();
+                } else {
+                    MobclickAgent.onKillProcess(this);
+                    finish();
+                    System.exit(0);
+                }
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 获1取CNY
+     */
+    public void getLoadData() {
+        RxHttpParams params = new RxHttpParams.Build()
+                .url("https://data.block.cc/api/v1/exchange_rate")
+                .build();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onCompleted(String str) {
+                try {
+                    JSONObject object = new JSONObject(str);
+                    if(object.getInt("code")==0){
+                        JSONObject rates = object.getJSONObject("data").getJSONObject("rates");
+                        if(rates!=null){
+                            String CNY = String.valueOf(rates.getDouble("CNY"));
+                            SharedUtils.singleton().put("EXCHANGE_RATE_CNY",CNY);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+}

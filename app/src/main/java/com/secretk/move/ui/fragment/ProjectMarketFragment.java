@@ -24,8 +24,6 @@ import com.secretk.move.view.LoadingDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
-
 import butterknife.BindView;
 
 /**
@@ -49,7 +47,6 @@ public class ProjectMarketFragment extends LazyFragment implements ItemClickList
     private int pageIndex = 1;
     private String projectId;
     private LoadingDialog loadingDialog;
-    private List<ProjectMarketBase.DataBean.TransactionPairResponseBean.RowsBean> httpData;
 
     @Override
     public int setFragmentView() {

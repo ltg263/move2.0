@@ -386,13 +386,33 @@ public class StringUtil {
                 calendarEnd.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(end));
                 endTime = calendarEnd.getTimeInMillis();
             }
+            if("0".equals(end)){
+                return startTime - endTime;
+            }
             return endTime-startTime;
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return 0;
     }
-
+    public static String getSytime(long date) {
+        long hour = date / (1000 * 60 * 60);
+        long min = ((date / (60 * 1000)) - hour * 60);
+        long ss = (date/1000 - hour*60*60 - min*60);
+        String h=String.valueOf(hour);
+        String m=String.valueOf(min);
+        String s=String.valueOf(ss);
+        if(hour<10){
+            h="0"+h;
+        }
+        if(min<10){
+            m="0"+m;
+        }
+        if(ss<10){
+            s="0"+s;
+        }
+        return h+":"+m+":"+s;
+    }
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
      */

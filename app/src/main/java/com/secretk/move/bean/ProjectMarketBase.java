@@ -191,7 +191,7 @@ public class ProjectMarketBase extends BaseRes{
                 private String symbol_pair;
                 private int rating;
                 private boolean has_kline;
-                private int usd_rate;
+                private double usd_rate;
 
 
                 public String getStrError() {
@@ -370,11 +370,11 @@ public class ProjectMarketBase extends BaseRes{
                     this.has_kline = has_kline;
                 }
 
-                public int getUsd_rate() {
+                public double getUsd_rate() {
                     return usd_rate;
                 }
 
-                public void setUsd_rate(int usd_rate) {
+                public void setUsd_rate(double usd_rate) {
                     this.usd_rate = usd_rate;
                 }
             }
