@@ -24,6 +24,8 @@ import com.secretk.move.view.LoadingDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import butterknife.BindView;
 
 /**
@@ -123,24 +125,69 @@ public class ProjectMarketFragment extends LazyFragment implements ItemClickList
                 }
                 llHaveData.setVisibility(View.VISIBLE);
                 ivNotContent.setVisibility(View.GONE);
-                if (pageIndex > 2) {
-                    adapter.setAddData(detailsBean.getRows());
-                } else {
-                    adapter.setData(detailsBean.getRows());
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                if (refreshLayoutF != null) {
-                    refreshLayoutF.finishLoadMore();
-                }
-                loadingDialog.dismiss();
+                List<ProjectMarketBase.DataBean.TransactionPairResponseBean.RowsBean> rows = detailsBean.getRows();
+                getHttpsData(rows,0);
             }
         });
     }
     SmartRefreshLayout refreshLayoutF;
     public void setSmartRefreshLayout(SmartRefreshLayout smartRefreshLayout) {
         this.refreshLayoutF = smartRefreshLayout;
+    }
+
+    public void getHttpsData(final List<ProjectMarketBase.DataBean.TransactionPairResponseBean.RowsBean> rows, final int index) {
+        final ProjectMarketBase.DataBean.TransactionPairResponseBean.RowsBean usersBean = rows.get(index);
+        RxHttpParams params = new RxHttpParams.Build()
+                .url("https://data.block.cc/api/v1/ticker")
+                .addQuery("market", usersBean.getExchangeName())
+                .addQuery("symbol_pair", usersBean.getMainCode()+"_"+usersBean.getCoinpair())
+                .build();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onError(String message) {
+                usersBean.setOk(false);
+            }
+            @Override
+            public void onCompleted(String bean) {
+                try {
+                    JSONObject data = new JSONObject(bean).getJSONObject("data");
+                    usersBean.setOk(true);
+                    usersBean.setTimestamps(data.getLong("timestamps"));
+                    usersBean.setLast(data.getDouble("last"));
+                    usersBean.setHigh(data.getDouble("high"));
+                    usersBean.setLow(data.getDouble("low"));
+                    usersBean.setBid(data.getDouble("bid"));
+                    usersBean.setAsk(data.getDouble("ask"));
+                    usersBean.setVol(data.getDouble("vol"));
+                    usersBean.setBase_volume(data.getDouble("base_volume"));
+                    usersBean.setChange_daily(data.getDouble("change_daily"));
+                    usersBean.setMarket(data.getString("market"));
+                    usersBean.setSymbol_name(data.getString("symbol_name"));
+                    usersBean.setSymbol_pair(data.getString("symbol_pair"));
+                    usersBean.setRating(data.getInt("rating"));
+                    usersBean.setHas_kline(data.getBoolean("has_kline"));
+                    usersBean.setUsd_rate(data.getDouble("usd_rate"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                if(index<rows.size()-1) {
+                    getHttpsData(rows, index + 1);
+                }else{
+                    if (pageIndex > 2) {
+                        adapter.setAddData(rows);
+                    } else {
+                        adapter.setData(rows);
+                        loadingDialog.dismiss();
+                    }
+                    if(refreshLayoutF.isEnableLoadMore()){
+                        refreshLayoutF.finishLoadMore();
+                    }
+                }
+            }
+        });
     }
 }

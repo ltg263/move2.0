@@ -163,7 +163,6 @@ public class ProjectActivity extends BaseActivity {
         viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(5);
         initListener();
-        getLoadData(1, "CNY");
     }
 
     @Override
@@ -222,6 +221,8 @@ public class ProjectActivity extends BaseActivity {
                     }
 
                 }
+
+                getLoadData(projectInfo.getCmcId(), "CNY");
 
             }
 

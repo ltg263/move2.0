@@ -371,6 +371,33 @@ public class StringUtil {
         return flag;
     }
 
+    /**
+     * 保存有效数字
+     * @param num
+     * @return
+     */
+    public static String getYxNum(double num){
+        if(num>=1000){
+            return String.format("%.2f", num);
+        }
+        if(num>=1){
+            return String.format("%.3f", num);
+        }
+        if(num==0){
+            return String.format("%.1f", num);
+        }
+        if(Double.valueOf(String.format("%.4f", num))!=0){
+            return String.format("%.5f", num);
+        }
+        if(Double.valueOf(String.format("%.5f", num))!=0){
+            return String.format("%.6f", num);
+        }
+        if(Double.valueOf(String.format("%.6f", num))!=0){
+            return String.format("%.8f", num);
+        }
+        return String.format("%.10f", num);
+    }
+
     public static long getSurplusTime (String begin,String end){
         try {
             long startTime = System.currentTimeMillis();

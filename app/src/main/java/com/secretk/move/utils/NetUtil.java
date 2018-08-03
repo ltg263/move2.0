@@ -444,7 +444,7 @@ public class NetUtil {
      * @param collect
      * https://api.coinmarketcap.com/v2/ticker/1/?convert=CNY
      */
-    public static void getCoinmarketcapTicker(String id,String name,final SaveCommendationImp collect){
+    public static void getCoinmarketcapTicker(String id, final String name, final SaveCommendationImp collect){
         RxHttpParams params = new RxHttpParams.Build()
 //                .url(Constants.SEND_TOKEN)
                 .url("https://api.coinmarketcap.com/v2/ticker/"+id+"/?convert="+name+"")
@@ -452,19 +452,20 @@ public class NetUtil {
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
-                try {
-                    JSONObject obj = new JSONObject(str);
-                    if(obj.getJSONObject("data")!=null){
-                        JSONObject cny = obj.getJSONObject("data").getJSONObject("quotes").getJSONObject("CNY");
-                        double price = cny.getDouble("price");
-                        double percent_change_24h = cny.getDouble("percent_change_24h");
-                        collect.finishCommendation("￥"+String.format("%.2f", price),String.format("%.2f", percent_change_24h),true);
-                    }else{
-                        collect.finishCommendation("","",false);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                collect.finishCommendation(str,"",true);
+//                try {
+//                    JSONObject obj = new JSONObject(str);
+//                    if(obj.getJSONObject("data")!=null){
+//                        JSONObject cny = obj.getJSONObject("data").getJSONObject("quotes").getJSONObject(name);
+//                        double price = cny.getDouble("price");
+//                        double percent_change_24h = cny.getDouble("percent_change_24h");
+//                        collect.finishCommendation("￥"+StringUtil.getYxNum(price),String.format("%.2f", percent_change_24h),true);
+//                    }else{
+//                        collect.finishCommendation("","",false);
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
             }
 
             @Override

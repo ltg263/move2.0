@@ -51,28 +51,39 @@
             android:textColor="@color/title_gray_aa"
             android:textSize="@dimen/sp_12" />
 
+        <TextView
+            android:id="@+id/tv_market_not"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_toLeftOf="@id/tv_total_score"
+            android:visibility="gone"
+            android:textSize="@dimen/sp_14" />
+
+
         <LinearLayout
             android:id="@+id/ll_market_yes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/dp_20"
             android:layout_toLeftOf="@id/tv_total_score"
-            android:orientation="vertical"
-            android:visibility="visible">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_market_current"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/title_gray_66"
+                android:gravity="right"
+                android:textColor="@color/theme_title"
                 android:textSize="@dimen/sp_14"
                 android:textStyle="bold" />
 
             <LinearLayout
-                android:id="@+id/ll_market_not"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical|right"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/tv_market_change"

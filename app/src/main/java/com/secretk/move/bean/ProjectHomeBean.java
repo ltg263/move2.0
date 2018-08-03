@@ -125,6 +125,7 @@ public class ProjectHomeBean extends BaseRes{
             private int followStatus;
             private int totalRaterNum;
             private int projectId;
+            private int cmcId;
             private String projectIcon;
             private int state;
             private String projectCode;
@@ -156,6 +157,15 @@ public class ProjectHomeBean extends BaseRes{
             private int followerNum;
             private int commentsNum;
             private int collectNum;
+
+            public int getCmcId() {
+                return cmcId;
+            }
+
+            public void setCmcId(int cmcId) {
+                this.cmcId = cmcId;
+            }
+
             private List<ActiveUsersBean> activeUsers;
 
             public int getTotalRaterNum() {

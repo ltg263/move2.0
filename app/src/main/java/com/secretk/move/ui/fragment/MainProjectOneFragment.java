@@ -23,12 +23,15 @@ import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.MainProjectListAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
+import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.view.LoadingDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -129,7 +132,7 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
         try {
             node.put("token", token);
             node.put("pageIndex", pageIndex++);
-            node.put("pageSize", 20);
+            node.put("pageSize", 10);
             node.put("tabId", tabId);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -159,11 +162,8 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
                 }
                 refreshLayout.setVisibility(View.VISIBLE);
                 convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
-                if (pageIndex > 2) {
-                    adapter.setAddData(detailsBean.getRows());
-                } else {
-                    adapter.setData(detailsBean.getRows());
-                }
+                List<ProjectByTabBean.DataBean.ProjectResponsePageBean.RowsBean> rows = detailsBean.getRows();
+                getCoinmarketcap(rows,0);
             }
 
             @Override
@@ -177,18 +177,52 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
                     refreshLayout.setVisibility(View.GONE);
                 }
             }
-
-            @Override
-            public void onFinish() {
-                loadingDialog.dismiss();
-                if(refreshLayout.isEnableRefresh()){
-                    refreshLayout.finishRefresh();
-                }
-                if(refreshLayout.isEnableLoadMore()){
-                    refreshLayout.finishLoadMore();
-                }
-            }
         });
+    }
+
+    private void getCoinmarketcap(final List<ProjectByTabBean.DataBean.ProjectResponsePageBean.RowsBean> rows , final int index) {
+        final ProjectByTabBean.DataBean.ProjectResponsePageBean.RowsBean row = rows.get(index);
+        if(row!=null){
+            NetUtil.getCoinmarketcapTicker(String.valueOf(row.getCmcId()), "CNY", new NetUtil.SaveCommendationImp() {
+                @Override
+                public void finishCommendation(String str, String donateNum, boolean status) {
+                    if(status){
+                        try {
+                            JSONObject obj = new JSONObject(str);
+                            if(obj.getJSONObject("data")!=null){
+                                JSONObject cny = obj.getJSONObject("data").getJSONObject("quotes").getJSONObject("CNY");
+                                row.setPrice(cny.getDouble("price"));
+                                row.setVolume_24h(cny.getDouble("volume_24h"));
+                                row.setMarket_cap(cny.getLong("market_cap"));
+                                row.setPercent_change_1h(cny.getLong("percent_change_1h"));
+                                row.setPercent_change_24h(cny.getDouble("percent_change_24h"));
+                                row.setPercent_change_7d(cny.getDouble("percent_change_7d"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        row.setPrice(-1);
+                    }
+                    if(index<rows.size()-1){
+                        getCoinmarketcap(rows, index + 1);
+                    }else {
+                        if (pageIndex > 2) {
+                            adapter.setAddData(rows);
+                        } else {
+                            adapter.setData(rows);
+                            loadingDialog.dismiss();
+                        }
+                        if(refreshLayout.isEnableRefresh()){
+                            refreshLayout.finishRefresh();
+                        }
+                        if(refreshLayout.isEnableLoadMore()){
+                            refreshLayout.finishLoadMore();
+                        }
+                    }
+                }
+            });
+        }
     }
 
     @Override

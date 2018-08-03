@@ -12,6 +12,7 @@ import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.ProjectByTabBean;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.StringUtil;
 
@@ -32,12 +33,14 @@ public class MainProjectOneFragmentHolder extends RecyclerViewBaseHolder {
     TextView tvProjectName;
     @BindView(R.id.tv_follow_num)
     TextView tvFollowNum;
-    @BindView(R.id.ll_market_not)
-    LinearLayout llMarketNot;
+    @BindView(R.id.ll_market_yes)
+    LinearLayout llMarketYes;
     @BindView(R.id.tv_market_current)
     TextView tvMarketCurrent;
     @BindView(R.id.tv_market_change)
     TextView tvMarketChange;
+    @BindView(R.id.tv_market_not)
+    TextView tvMarketNot;
     @BindView(R.id.iv_market_change)
     ImageView ivMarketChange;
     @BindView(R.id.tv_total_score)
@@ -63,27 +66,53 @@ public class MainProjectOneFragmentHolder extends RecyclerViewBaseHolder {
             tvFollowStatus.setSelected(false);
             tvFollowStatus.setText(context.getResources().getString(R.string.follow_status_0));
         }
-
-        NetUtil.getCoinmarketcapTicker("1", "CNY", new NetUtil.SaveCommendationImp() {
-            @Override
-            public void finishCommendation(String commendationNum, String donateNum, boolean status) {
-                if(status){
-                    tvMarketCurrent.setText(commendationNum);
-                    if(!donateNum.contains("-")){
-                        tvMarketChange.setText("+"+donateNum+"%");
-                        tvMarketChange.setTextColor(Color.parseColor("#23b25c"));
-                        ivMarketChange.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_price_rise));
-                    }else{
-                        tvMarketChange.setText(donateNum+"%");
-                        tvMarketChange.setTextColor(Color.parseColor("#ff4b4b"));
-                        ivMarketChange.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_price_fall));
-                    }
-                }else{
-                    tvMarketChange.setText("暂无");
-                    llMarketNot.setVisibility(View.GONE);
-                }
+        double price = bean.getPrice();
+        double percent_change_24h = bean.getPercent_change_24h();
+        if(price<0.0){
+            LogUtil.w("price:"+price);
+            tvMarketNot.setText("暂无");
+            tvMarketNot.setVisibility(View.VISIBLE);
+            llMarketYes.setVisibility(View.GONE);
+        }else {
+            tvMarketNot.setVisibility(View.GONE);
+            llMarketYes.setVisibility(View.VISIBLE);
+            tvMarketCurrent.setText(String.valueOf(price));
+            if (percent_change_24h < 0) {
+                tvMarketChange.setText(percent_change_24h + "%");
+                tvMarketChange.setTextColor(Color.parseColor("#ff4b4b"));
+                ivMarketChange.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_price_fall));
+            } else {
+                tvMarketChange.setText("+" + percent_change_24h + "%");
+                tvMarketChange.setTextColor(Color.parseColor("#23b25c"));
+                ivMarketChange.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_price_rise));
             }
-        });
+        }
+
+
+
+
+//     collect.finishCommendation("￥"+StringUtil.getYxNum(price),String.format("%.2f", percent_change_24h),true);
+
+//        NetUtil.getCoinmarketcapTicker(String.valueOf(bean.getCmcId()), "CNY", new NetUtil.SaveCommendationImp() {
+//            @Override
+//            public void finishCommendation(String commendationNum, String donateNum, boolean status) {
+//                if(status){
+//                    tvMarketCurrent.setText(commendationNum);
+//                    if(!donateNum.contains("-")){
+//                        tvMarketChange.setText("+"+donateNum+"%");
+//                        tvMarketChange.setTextColor(Color.parseColor("#23b25c"));
+//                        ivMarketChange.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_price_rise));
+//                    }else{
+//                        tvMarketChange.setText(donateNum+"%");
+//                        tvMarketChange.setTextColor(Color.parseColor("#ff4b4b"));
+//                        ivMarketChange.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_price_fall));
+//                    }
+//                }else{
+//                    tvMarketChange.setText("暂无");
+//                    llMarketNot.setVisibility(View.GONE);
+//                }
+//            }
+//        });
 
         tvFollowStatus.setOnClickListener(new View.OnClickListener() {
             @Override

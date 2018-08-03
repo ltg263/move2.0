@@ -187,6 +187,7 @@ public class ProjectByTabBean extends BaseRes{
                 private int projectId;
                 private String projectIcon;
                 private int state;
+                private int cmcId;
                 private String projectCode;
                 private String projectEnglishName;
                 private String projectChineseName;
@@ -217,6 +218,30 @@ public class ProjectByTabBean extends BaseRes{
                 private int commentsNum;
                 private int collectNum;
                 private int totalRaterNum;
+                /**
+                 * price : 7602.20969588
+                 * volume_24h : 4.30093141893544E9
+                 * market_cap : 130646915679
+                 * percent_change_1h : -0.03
+                 * percent_change_24h : 0.18
+                 * percent_change_7d : -7.64
+                 */
+
+                private double price;
+                private double volume_24h;
+                private long market_cap;
+                private double percent_change_1h;
+                private double percent_change_24h;
+                private double percent_change_7d;
+
+
+                public int getCmcId() {
+                    return cmcId;
+                }
+
+                public void setCmcId(int cmcId) {
+                    this.cmcId = cmcId;
+                }
 
                 public Object getActiveUsers() {
                     return activeUsers;
@@ -504,6 +529,54 @@ public class ProjectByTabBean extends BaseRes{
 
                 public void setTotalRaterNum(int totalRaterNum) {
                     this.totalRaterNum = totalRaterNum;
+                }
+
+                public double getPrice() {
+                    return price;
+                }
+
+                public void setPrice(double price) {
+                    this.price = price;
+                }
+
+                public double getVolume_24h() {
+                    return volume_24h;
+                }
+
+                public void setVolume_24h(double volume_24h) {
+                    this.volume_24h = volume_24h;
+                }
+
+                public long getMarket_cap() {
+                    return market_cap;
+                }
+
+                public void setMarket_cap(long market_cap) {
+                    this.market_cap = market_cap;
+                }
+
+                public double getPercent_change_1h() {
+                    return percent_change_1h;
+                }
+
+                public void setPercent_change_1h(double percent_change_1h) {
+                    this.percent_change_1h = percent_change_1h;
+                }
+
+                public double getPercent_change_24h() {
+                    return percent_change_24h;
+                }
+
+                public void setPercent_change_24h(double percent_change_24h) {
+                    this.percent_change_24h = percent_change_24h;
+                }
+
+                public double getPercent_change_7d() {
+                    return percent_change_7d;
+                }
+
+                public void setPercent_change_7d(double percent_change_7d) {
+                    this.percent_change_7d = percent_change_7d;
                 }
             }
         }

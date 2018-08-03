@@ -132,6 +132,10 @@ public class FindWksyActivity extends BaseActivity{
             @Override
             public void onCompleted(FindWksyList bean) {
                 FindWksyList.DataBeanX.DataBean detailsBean = bean.getData().getData();
+                if(detailsBean==null){
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                    return;
+                }
                 if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
