@@ -13,13 +13,11 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.InfoBean;
-import com.secretk.move.ui.adapter.InfoFragmentAdapter;
-import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.bean.InfoNewsBean;
+import com.secretk.move.ui.adapter.InfoNewsFragmentAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
-import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.ShareView;
 
@@ -35,7 +33,7 @@ import butterknife.ButterKnife;
  * Created by zc on 2018/4/14.
  */
 
-public class InfoFragmentHolder extends RecyclerViewBaseHolder {
+public class InfoNewsFragmentHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.tv_top_time)
     TextView tvTopTime;
     @BindView(R.id.view_top)
@@ -46,10 +44,14 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
     ImageView ivDotG;
     @BindView(R.id.tv_time)
     TextView tvTime;
-    @BindView(R.id.ll)
-    LinearLayout ll;
+    @BindView(R.id.tv_site)
+    TextView tvSite;
+    @BindView(R.id.tv_bzyhzc)
+    TextView tvBzyhzc;
     @BindView(R.id.ll_top_time)
     LinearLayout llTopTime;
+    @BindView(R.id.ll)
+    LinearLayout ll;
     @BindView(R.id.tv_head_title)
     TextView tvHeadTitle;
     @BindView(R.id.tv_detail_desc)
@@ -63,29 +65,29 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.tv_info_share)
     TextView tvInfoShare;
     int position;
-    public InfoFragmentHolder(View itemView) {
+    public InfoNewsFragmentHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         tvDetailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //               ：0-完整版专业评测，1-自定义评测，2-文章，3-打假，4-单项评测
-                int type = rowsBean.getType();
-                if(type==5 && StringUtil.isNotBlank(rowsBean.getOutUrl())){
-                    IntentUtil.startWebViewActivity(rowsBean.getOutUrl(),"区分");
-                    return;
-                }
-                if(type==0 || type ==1 || type==4){
-                    type=1;
-                }else if(type==3){
-                    type=2;
-                }else if(type==2){
-                    type=3;
-                }else{
-                    ToastUtils.getInstance().show("类型出错");
-                    return;
-                }
-                IntentUtil.go2DetailsByType(type, String.valueOf(rowsBean.getArticleId()));
+//                int type = rowsBean.getType();
+//                if(type==5 && StringUtil.isNotBlank(rowsBean.getOutUrl())){
+//                    IntentUtil.startWebViewActivity(rowsBean.getOutUrl(),"区分");
+//                    return;
+//                }
+//                if(type==0 || type ==1 || type==4){
+//                    type=1;
+//                }else if(type==3){
+//                    type=2;
+//                }else if(type==2){
+//                    type=3;
+//                }else{
+//                    ToastUtils.getInstance().show("类型出错");
+//                    return;
+//                }
+//                IntentUtil.go2DetailsByType(type, String.valueOf(rowsBean.getArticleId()));
             }
         });
         tvInfoZ.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +118,7 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
         tvInfoShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RelativeLayout relativeLayout = DialogUtils.showDialogImage(mContext, rowsBean.getUpdatedAt(), rowsBean.getTitle(), rowsBean.getContent());
+                RelativeLayout relativeLayout = DialogUtils.showDialogImage(mContext, rowsBean.getCreatedAt(), rowsBean.getTitle(), rowsBean.getAbstractc());
                 ShareView.showShare1(relativeLayout,"");
             }
         });
@@ -127,46 +129,50 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
             }
         });
     }
-    InfoBean.DataBeanX.DataBean.RowsBean rowsBean;
-    InfoFragmentAdapter adapter;
+    InfoNewsBean.DataBeanX.DataBean.RowsBean rowsBean;
+    InfoNewsFragmentAdapter adapter;
     Context mContext;
-    public void refresh(Context context, int position, List<InfoBean.DataBeanX.DataBean.RowsBean> list, InfoFragmentAdapter infoFragmentAdapter) {
+    public void refresh(Context context, int position, List<InfoNewsBean.DataBeanX.DataBean.RowsBean> list, InfoNewsFragmentAdapter infoFragmentAdapter) {
 //        tvInfoShare.setVisibility(View.GONE);
+        tvSite.setVisibility(View.VISIBLE);
         this.position = position;
-        this.mContext=context;
+        this.mContext = context;
         adapter = infoFragmentAdapter;
         rowsBean = list.get(position);
-        String topTime = StringUtil.getTimeToE(rowsBean.getCreatedAt());
-        if(position > 0){
-            if(topTime.equals(StringUtil.getTimeToE(list.get(position-1).getCreatedAt()))){
+        tvSite.setText(rowsBean.getSite());
+        String topTime = StringUtil.getTimeToE(StringUtil.getMsToTime(rowsBean.getPublishTime()));
+        if (position > 0) {
+            if (topTime.equals(StringUtil.getTimeToE(StringUtil.getMsToTime(list.get(position - 1).getPublishTime())))) {
                 llTopTime.setVisibility(View.GONE);
                 viewTop.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 llTopTime.setVisibility(View.VISIBLE);
                 viewTop.setVisibility(View.GONE);
             }
-        }else{
+        } else {
             viewTop.setVisibility(View.GONE);
             llTopTime.setVisibility(View.VISIBLE);
         }
         tvTopTime.setText(topTime);
-        tvTime.setText(StringUtil.getTimeToHm(rowsBean.getUpdatedAt()));
+        tvBzyhzc.setText("币智慧支持");
+        tvTime.setText(StringUtil.getTimeToHm(StringUtil.getMsToTime(rowsBean.getPublishTime())));
         tvHeadTitle.setText(StringUtil.getBeanString(rowsBean.getTitle()));
-        tvDetailDesc.setText(StringUtil.getBeanString(rowsBean.getContent()));
+        tvDetailDesc.setText(StringUtil.getBeanString(rowsBean.getAbstractc()));
         tvInfoZ.setSelected(!rowsBean.isRise());
         tvInfoJ.setSelected(!rowsBean.isFall());
 
-        tvInfoZ.setText("看涨"+rowsBean.getRise());
-        tvInfoJ.setText("看跌"+rowsBean.getFall());
+        tvInfoZ.setText("看涨" + rowsBean.getRise());
+        tvInfoJ.setText("看跌" + rowsBean.getFall());
         //0-是，1-否
-        if(rowsBean.getIsProminent()==0){
+        if (false) {
+//        if(rowsBean.getIsProminent()==0){
             ivDotB.setVisibility(View.VISIBLE);
             ivDotG.setVisibility(View.INVISIBLE);
             tvTime.setTextColor(context.getResources().getColor(R.color.app_background));
             tvHeadTitle.setTextColor(context.getResources().getColor(R.color.app_background));
             tvDetailDesc.setTextColor(context.getResources().getColor(R.color.app_background));
 //            tvDetailBtn.setTextColor(context.getResources().getColor(R.color.app_background));
-        }else{
+        } else {
             ivDotB.setVisibility(View.INVISIBLE);
             ivDotG.setVisibility(View.VISIBLE);
             tvTime.setTextColor(context.getResources().getColor(R.color.title_gray_8c));
@@ -174,17 +180,21 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
             tvDetailDesc.setTextColor(context.getResources().getColor(R.color.title_gray_7e));
 //            tvDetailBtn.setTextColor(context.getResources().getColor(R.color.title_gray_7e));
         }
-        //0-是，1-否
-        if(rowsBean.getIsCheckDetails()==0){
-            tvDetailBtn.setVisibility(View.VISIBLE);
-        }else{
-            tvDetailBtn.setVisibility(View.GONE);
+//        if(rowsBean.getIsProminent()==0){
+        if (false) {
+            //0-是，1-否
+//            if(rowsBean.getIsCheckDetails()==0){
+//                tvDetailBtn.setVisibility(View.VISIBLE);
+//            }else{
+//                tvDetailBtn.setVisibility(View.GONE);
+//            }
         }
     }
     private void updateNewsFlashRiseAndFall(String type,int id){
         JSONObject node = new JSONObject();
         try {
             node.put("id", id);
+            node.put("type", 1);
             if(type.equals("rise")){
                 node.put("rise", 1);
                 node.put("fall", 0);

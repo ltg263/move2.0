@@ -27,6 +27,7 @@ import com.secretk.move.ui.fragment.ProjectArticleFragment;
 import com.secretk.move.ui.fragment.ProjectDiscussFragment;
 import com.secretk.move.ui.fragment.ProjectIntroFragment;
 import com.secretk.move.ui.fragment.ProjectMarketFragment;
+import com.secretk.move.ui.fragment.ProjectNewsFragment;
 import com.secretk.move.ui.fragment.ProjectReviewFragment;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
@@ -116,6 +117,7 @@ public class ProjectActivity extends BaseActivity {
     private ProjectDiscussFragment discussFragment;
     private ProjectArticleFragment articleFragment;
     private ProjectMarketFragment marketFragment;
+    private ProjectNewsFragment newsFragment;
     private String projectId;
     private ProjectHomeBean.DataBean.ProjectBean projectInfo;
 
@@ -141,6 +143,7 @@ public class ProjectActivity extends BaseActivity {
         list.add(getString(R.string.discuss));
         list.add(getString(R.string.article));
         list.add(getString(R.string.market));
+        list.add(getString(R.string.news));
         list.add(getString(R.string.intro));
         MagicIndicatorUtils.initMagicIndicatorTitle(this, list, viewPager, magicIndicatorTitle);
         introFragment = new ProjectIntroFragment();
@@ -148,20 +151,23 @@ public class ProjectActivity extends BaseActivity {
         discussFragment = new ProjectDiscussFragment();
         articleFragment = new ProjectArticleFragment();
         marketFragment = new ProjectMarketFragment();
+        newsFragment = new ProjectNewsFragment();
         ProjectPageAdapter adapter = new ProjectPageAdapter(getSupportFragmentManager());
         adapter.addFragment(reviewFragment);
         adapter.addFragment(discussFragment);
         adapter.addFragment(articleFragment);
         adapter.addFragment(marketFragment);
+        adapter.addFragment(newsFragment);
         adapter.addFragment(introFragment);
         reviewFragment.setSmartRefreshLayout(refreshLayout);
         discussFragment.setSmartRefreshLayout(refreshLayout);
         articleFragment.setSmartRefreshLayout(refreshLayout);
         marketFragment.setSmartRefreshLayout(refreshLayout);
+        newsFragment.setSmartRefreshLayout(refreshLayout);
         viewPager.setAdapter(adapter);
         adapter.setData(list);
         viewPager.setCurrentItem(0);
-        viewPager.setOffscreenPageLimit(5);
+        viewPager.setOffscreenPageLimit(6);
         initListener();
     }
 
@@ -194,6 +200,7 @@ public class ProjectActivity extends BaseActivity {
                 reviewFragment.initUiData(projectHomeBean.getData().getHotEva());
                 if (projectInfo != null) {
                     mHeadView.setTitle(projectInfo.getProjectCode());
+                    setProjectCode(projectInfo.getProjectCode());
                     mHeadView.setTitleVice("/" + projectInfo.getProjectChineseName());
                     introFragment.initUiData(projectInfo);
                     //  discussFragment.initUiData(30);
@@ -247,6 +254,9 @@ public class ProjectActivity extends BaseActivity {
 
     public String getProjectId() {
         return projectId;
+    }
+    public void setProjectCode(String projectCode) {
+        newsFragment.setProjectCode(projectCode);
     }
 
     public LoadingDialog getloadingDialog() {
@@ -308,6 +318,10 @@ public class ProjectActivity extends BaseActivity {
                         if (marketFragment.isHaveData) {
                             marketFragment.getLoadData("");
                         }
+                    case 4:
+                        if (newsFragment.isHaveData) {
+                            newsFragment.getLoadData("");
+                        }
                         break;
                 }
             }
@@ -315,7 +329,7 @@ public class ProjectActivity extends BaseActivity {
         StringUtil.getVpPosition(viewPager, new StringUtil.VpPageSelected() {
             @Override
             public void getVpPageSelected(int position) {
-                if (viewPager.getCurrentItem() == 4) {
+                if (viewPager.getCurrentItem() == 5) {
                     fab.setVisibility(View.GONE);
                     refreshLayout.setEnableLoadMore(false);
                 } else {
@@ -345,6 +359,12 @@ public class ProjectActivity extends BaseActivity {
                         }
                     case 3:
                         if (marketFragment.isHaveData) {
+                            refreshLayout.setNoMoreData(false);
+                        } else {
+                            refreshLayout.finishLoadMoreWithNoMoreData();
+                        }
+                    case 4:
+                        if (newsFragment.isHaveData) {
                             refreshLayout.setNoMoreData(false);
                         } else {
                             refreshLayout.finishLoadMoreWithNoMoreData();

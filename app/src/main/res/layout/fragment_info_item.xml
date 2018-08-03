@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/ll_top_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/title_gray_ee"
@@ -25,10 +26,8 @@
             android:id="@+id/tv_bzyhzc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="币智慧支持"
             android:textColor="@color/theme_title"
-            android:textSize="@dimen/sp_14"
-            android:visibility="gone" />
+            android:textSize="@dimen/sp_14" />
 
     </LinearLayout>
 
@@ -81,9 +80,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_10"
-            android:text="今日区块链"
             android:textColor="@color/theme_title"
             android:textSize="14sp"
             android:visibility="gone" />
@@ -116,7 +114,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dp_10"
+                android:ellipsize="end"
                 android:lineSpacingExtra="@dimen/item_line_spacing"
+                android:maxLines="3"
                 android:textColor="@color/title_gray_7e"
                 android:textSize="@dimen/sp_14" />
 
