@@ -95,8 +95,8 @@ public class ProjectFragment extends LazyFragment {
                         defaultOpen=i;
                     }
                 }
-                vp_main_children.setCurrentItem(defaultOpen);
                 MagicIndicatorUtils.initMagicIndicatorTitle(getActivity(),list,vp_main_children,magicIndicatorTitle);
+                vp_main_children.setCurrentItem(defaultOpen);
             }
         });
     }
