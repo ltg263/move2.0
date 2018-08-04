@@ -12,7 +12,6 @@ import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.ProjectByTabBean;
 import com.secretk.move.utils.GlideUtils;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.StringUtil;
 
@@ -69,14 +68,13 @@ public class MainProjectOneFragmentHolder extends RecyclerViewBaseHolder {
         double price = bean.getPrice();
         double percent_change_24h = bean.getPercent_change_24h();
         if(price<0.0){
-            LogUtil.w("price:"+price);
             tvMarketNot.setText("暂无");
             tvMarketNot.setVisibility(View.VISIBLE);
             llMarketYes.setVisibility(View.GONE);
         }else {
             tvMarketNot.setVisibility(View.GONE);
             llMarketYes.setVisibility(View.VISIBLE);
-            tvMarketCurrent.setText(String.valueOf(price));
+            tvMarketCurrent.setText(StringUtil.getYxNum(price));
             if (percent_change_24h < 0) {
                 tvMarketChange.setText(percent_change_24h + "%");
                 tvMarketChange.setTextColor(Color.parseColor("#ff4b4b"));

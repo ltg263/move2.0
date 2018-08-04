@@ -26,6 +26,7 @@ import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.LoadingDialog;
 
 import org.json.JSONException;
@@ -54,6 +55,9 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
     int pageIndex = 1;
     int tabId;
 
+
+    @BindView(R.id.rl_context)
+    RelativeLayout rlContext;
     @BindView(R.id.rl_top_theme)
     RelativeLayout rlTopTheme;
     @BindView(R.id.tv_icon)
@@ -123,7 +127,9 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
     @Override
     public void onFirstUserVisible() {
         if(!showFragment){
-            loadingDialog.show();
+            rlContext.setVisibility(View.GONE);
+            refreshLayout.autoRefresh();
+//            loadingDialog.show();
         }
         showFragment=true;
         tokenLs = token;
@@ -160,8 +166,6 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
                 if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
-                refreshLayout.setVisibility(View.VISIBLE);
-                convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
                 List<ProjectByTabBean.DataBean.ProjectResponsePageBean.RowsBean> rows = detailsBean.getRows();
                 getCoinmarketcap(rows,0);
             }
@@ -191,12 +195,16 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
                             JSONObject obj = new JSONObject(str);
                             if(obj.getJSONObject("data")!=null){
                                 JSONObject cny = obj.getJSONObject("data").getJSONObject("quotes").getJSONObject("CNY");
-                                row.setPrice(cny.getDouble("price"));
-                                row.setVolume_24h(cny.getDouble("volume_24h"));
-                                row.setMarket_cap(cny.getLong("market_cap"));
-                                row.setPercent_change_1h(cny.getLong("percent_change_1h"));
-                                row.setPercent_change_24h(cny.getDouble("percent_change_24h"));
-                                row.setPercent_change_7d(cny.getDouble("percent_change_7d"));
+                                if(StringUtil.isEmptyObject(cny.get("price"))){
+                                    row.setPrice(-1);
+                                }else {
+                                    row.setPrice(cny.getDouble("price"));
+                                    row.setVolume_24h(cny.getDouble("volume_24h"));
+                                    row.setMarket_cap(cny.getLong("market_cap"));
+                                    row.setPercent_change_1h(cny.getLong("percent_change_1h"));
+                                    row.setPercent_change_24h(cny.getDouble("percent_change_24h"));
+                                    row.setPercent_change_7d(cny.getDouble("percent_change_7d"));
+                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -219,6 +227,9 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
                         if(refreshLayout.isEnableLoadMore()){
                             refreshLayout.finishLoadMore();
                         }
+                        refreshLayout.setVisibility(View.VISIBLE);
+                        rlContext.setVisibility(View.VISIBLE);
+                        convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
                     }
                 }
             });

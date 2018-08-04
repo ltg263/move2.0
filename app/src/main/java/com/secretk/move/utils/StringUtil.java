@@ -556,6 +556,36 @@ public class StringUtil {
             return htmltext;
         }
     }
+
+    // 判断Object是空
+    public static boolean isEmptyObject(Object obj) {
+
+        if (obj == null) {
+            return true;
+        }
+        if ((obj instanceof List)) {
+            return ((List) obj).size() == 0;
+        }
+        if (obj instanceof String) {
+            return StringUtil.isBlank((String) obj);
+        }
+
+        if(obj.toString().equals("null")) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * 判断对象不为空
+     *
+     * @param obj 对象名
+     * @return 是否不为空
+     */
+    public static boolean isNotEmpty(Object obj) {
+        return !isEmptyObject(obj);
+    }
     /**
      * EditText获取焦点并显示软键盘
      */

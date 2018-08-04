@@ -51,7 +51,16 @@ public class ProjectTabBean {
 
             private int tabId;
             private int tabOrderNumber;
+            private int isDefaultOpen;
             private String tabTitle;
+
+            public int getIsDefaultOpen() {
+                return isDefaultOpen;
+            }
+
+            public void setIsDefaultOpen(int isDefaultOpen) {
+                this.isDefaultOpen = isDefaultOpen;
+            }
 
             public int getTabId() {
                 return tabId;

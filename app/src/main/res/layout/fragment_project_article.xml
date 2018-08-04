@@ -34,6 +34,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@color/white"
                         android:textColor="@color/title_gray"
                         android:textSize="@dimen/sp_14" />
 
@@ -58,8 +59,7 @@
                     android:id="@+id/rv_review"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:background="@color/white" />
+                    android:nestedScrollingEnabled="false" />
             </LinearLayout>
 
             <ImageView

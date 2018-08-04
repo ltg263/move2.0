@@ -18,7 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/view"
-        android:visibility="visible"
         app:srlEnablePreviewInEditMode="false">
 
         <com.secretk.move.view.RecycleScrollView
@@ -29,7 +28,9 @@
             android:scrollbars="none">
 
             <RelativeLayout
+                android:id="@+id/rl_context"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
@@ -69,7 +70,6 @@
                         android:paddingHorizontal="@dimen/dp_20"
                         android:text="关注"
                         android:textColor="#393d46"
-
                         android:textSize="@dimen/sp_14" />
 
                 </LinearLayout>

@@ -64,8 +64,10 @@
                                     android:id="@+id/ll"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_margin="@dimen/dp_10"
+                                    android:layout_marginHorizontal="@dimen/dp_10"
+                                    android:layout_marginTop="@dimen/dp_10"
                                     android:layout_toLeftOf="@id/ll_3"
+                                    android:gravity="center_vertical"
                                     android:orientation="horizontal">
 
                                     <ImageView
@@ -115,20 +117,30 @@
                                         </LinearLayout>
 
                                         <TextView
-                                            android:id="@+id/tv_project_signature"
+                                            android:id="@+id/tv_project_signature_1"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="第二代区块链区块链啊"
                                             android:textColor="#545d71"
-                                            android:textSize="@dimen/sp_12" />
+                                            android:textSize="@dimen/sp_12"
+                                            android:visibility="gone" />
                                     </LinearLayout>
                                 </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/dp_line"
+                                    android:layout_below="@id/ll"
+                                    android:layout_marginHorizontal="@dimen/dp_10"
+                                    android:layout_toLeftOf="@id/ll_3"
+                                    android:background="@color/cut_off_rule" />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/ll"
-                                    android:layout_marginTop="@dimen/dp_25"
+                                    android:layout_marginHorizontal="@dimen/dp_10"
+                                    android:layout_marginTop="@dimen/dp_5"
                                     android:layout_toLeftOf="@id/ll_3">
 
                                     <RelativeLayout
@@ -307,10 +319,17 @@
                                 </LinearLayout>
                             </RelativeLayout>
 
+                            <TextView
+                                android:id="@+id/tv_project_signature"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/dp_10"
+                                android:textColor="#545d71"
+                                android:textSize="@dimen/sp_14" />
+
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dp_20">
+                                android:layout_height="wrap_content">
 
                                 <TextView
                                     android:id="@+id/tv_review"
@@ -365,7 +384,8 @@
                     <com.secretk.move.view.ViewPagerFixed
                         android:id="@+id/view_pager"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:background="@color/background_gray" />
                 </LinearLayout>
 
             </android.support.design.widget.CoordinatorLayout>

@@ -91,16 +91,17 @@ public class FindRingRequiredHolder extends RecyclerViewBaseHolder {
                     listImgs.add(info);
                 }
                 if (listImgs != null && listImgs.size()>0) {
-                    if (listImgs.size() > 2) {
+//                    if (listImgs.size() > 2) {
+                    if (false) {
                         llMultiImg.setVisibility(View.VISIBLE);
                         ivImgMax.setVisibility(View.GONE);
-                        GlideUtils.loadSideMinImage_76(context, ivOnt, Constants.BASE_IMG_URL + listImgs.get(0).getUrl());
-                        GlideUtils.loadSideMinImage_76(context, ivTwo, Constants.BASE_IMG_URL + listImgs.get(1).getUrl());
-                        GlideUtils.loadSideMinImage_76(context, ivThree, Constants.BASE_IMG_URL + listImgs.get(2).getUrl());
+                        GlideUtils.loadSideMinImage(context, ivOnt, Constants.BASE_IMG_URL + listImgs.get(0).getUrl());
+                        GlideUtils.loadSideMinImage(context, ivTwo, Constants.BASE_IMG_URL + listImgs.get(1).getUrl());
+                        GlideUtils.loadSideMinImage(context, ivThree, Constants.BASE_IMG_URL + listImgs.get(2).getUrl());
                     } else {
                         llMultiImg.setVisibility(View.GONE);
                         ivImgMax.setVisibility(View.VISIBLE);
-                        GlideUtils.loadSideMaxImage_135(context, ivImgMax, Constants.BASE_IMG_URL + listImgs.get(0).getUrl());
+                        GlideUtils.loadSideMaxImage(context, ivImgMax, Constants.BASE_IMG_URL + listImgs.get(0).getUrl());
                     }
                 }else{
                     llMultiImg.setVisibility(View.GONE);

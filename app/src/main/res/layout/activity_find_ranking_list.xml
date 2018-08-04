@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_gray"
     android:orientation="vertical">
-
-    <com.secretk.move.view.AppBarHeadView
-        android:id="@+id/head_app_server"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/app_background" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -35,12 +29,18 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_find_qhb">
+                    android:background="@drawable/ic_find_qhb"
+                    android:clipChildren="false"
+                    android:gravity="center"
+                    android:layerType="software"
+                    android:orientation="vertical"
+                    android:paddingTop="44dp">
 
                     <com.secretk.move.view.ViewPagerFixed
                         android:id="@+id/vp_main_children"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="150dp"
+                        android:clipChildren="false"
                         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
                 </LinearLayout>
 
@@ -114,5 +114,10 @@
         </com.secretk.move.view.RecycleScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
+    <com.secretk.move.view.AppBarHeadView
+        android:id="@+id/head_app_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_background" />
 
-</LinearLayout>
+</RelativeLayout>

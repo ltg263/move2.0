@@ -1,8 +1,10 @@
 package com.secretk.move.ui.activity;
 
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -81,6 +83,41 @@ public class FindRankingListActivity extends BaseActivity {
         return R.layout.activity_find_ranking_list;
     }
 
+    public void setZx(){
+        vp_main_children.setOffscreenPageLimit(3);
+        int pagerWidth = (int) (getResources().getDisplayMetrics().widthPixels * 1.0f / 3.0f);
+        ViewGroup.LayoutParams lp = vp_main_children.getLayoutParams();
+        if (lp == null) {
+            lp = new ViewGroup.LayoutParams(pagerWidth, ViewGroup.LayoutParams.MATCH_PARENT);
+        } else {
+            lp.width = pagerWidth;
+        }
+        vp_main_children.setLayoutParams(lp);
+
+//        vp_main_children.setPageMargin(getResources().getDimensionPixelSize(R.dimen.dp_2));
+        vp_main_children.setPageTransformer(true,new MyGallyPageTransformer());//如果显示动画 间距就改为dp_2
+    }
+    public class MyGallyPageTransformer implements ViewPager.PageTransformer {
+        private static final float min_scale = 0.72f;
+
+        @Override
+        public void transformPage(View page, float position) {
+            float scaleFactor = Math.max(min_scale, 1 - Math.abs(position));
+            if (position < -1) {
+                page.setScaleX(scaleFactor);
+                page.setScaleY(scaleFactor);
+            } else if (position < 0) {
+                page.setScaleX(scaleFactor);
+                page.setScaleY(scaleFactor);
+            } else if (position >= 0 && position < 1) {
+                page.setScaleX(scaleFactor);
+                page.setScaleY(scaleFactor);
+            } else if (position >= 1) {
+                page.setScaleX(scaleFactor);
+                page.setScaleY(scaleFactor);
+            }
+        }
+    }
     @Override
     protected void initUI(Bundle savedInstanceState) {
         StatusBarUtil.setLightMode(this);
@@ -98,6 +135,7 @@ public class FindRankingListActivity extends BaseActivity {
         list.add("最佳项目榜");
         adapter.setData(list);
         vp_main_children.setCurrentItem(1);
+        setZx();
         StringUtil.getVpPosition(vp_main_children, new StringUtil.VpPageSelected() {
             @Override
             public void getVpPageSelected(int position) {

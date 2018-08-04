@@ -94,7 +94,7 @@ public class ProjectMarketHolder extends RecyclerViewBaseHolder {
             tvMarketChange.setTextColor(Color.parseColor("#23b25c"));
             ivMarketChange.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_price_rise));
         }
-        tvMarketCurrent.setText(StringUtil.getYxNum(usersBean.getLast())+"  "+usersBean.getMainCode());
+        tvMarketCurrent.setText(StringUtil.getYxNum(usersBean.getLast())+"  "+usersBean.getCoinpair());
         tvFollowNum.setText(styJyl);
         tvMarketNew.setText(styZxjg);
     }

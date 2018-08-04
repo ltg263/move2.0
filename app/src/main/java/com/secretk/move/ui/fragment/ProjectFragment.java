@@ -64,6 +64,7 @@ public class ProjectFragment extends LazyFragment {
                 startActivity(intent);
             }
         });
+
     }
 
     @Override
@@ -87,9 +88,14 @@ public class ProjectFragment extends LazyFragment {
                 vp_main_children.setOffscreenPageLimit(tabs.size());
                 adapter.setData(tabs);
                 List<String> list = new ArrayList<>();
+                int defaultOpen=4;
                 for(int i=0;i<tabs.size();i++){
                     list.add(tabs.get(i).getTabTitle());
+                    if(tabs.get(i).getIsDefaultOpen()==1){
+                        defaultOpen=i;
+                    }
                 }
+                vp_main_children.setCurrentItem(defaultOpen);
                 MagicIndicatorUtils.initMagicIndicatorTitle(getActivity(),list,vp_main_children,magicIndicatorTitle);
             }
         });

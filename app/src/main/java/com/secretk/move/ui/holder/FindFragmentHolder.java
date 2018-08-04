@@ -32,6 +32,8 @@ import butterknife.ButterKnife;
 public class FindFragmentHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.iv_icon)
     ImageView ivIcon;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     @BindView(R.id.tv_code)
     TextView tvCode;
     @BindView(R.id.tv_name)
@@ -62,7 +64,8 @@ public class FindFragmentHolder extends RecyclerViewBaseHolder {
         rowsBean.getEndDt();//结束时间
 
         GlideUtils.loadCircleProjectUrl(context,ivIcon, Constants.BASE_IMG_URL+StringUtil.getBeanString(rowsBean.getProjectIcon()));
-        tvCode.setText(rowsBean.getProjectCode());
+        tvCode.setText(StringUtil.getBeanString(rowsBean.getProjectCode()));
+        tvTitle.setText(StringUtil.getBeanString(rowsBean.getTitle()));
         tvPrice.setText(Html.fromHtml("共<font color=\"#ff4b4b\">"+rowsBean.getTokenUnclaimed()+"</font>约 ¥"+rowsBean.getTokenCash()));
         tvName.setText("/"+StringUtil.getBeanString(rowsBean.getProjectChineseName()));
         tvLimit.setText("限量"+StringUtil.getBeanString(String.valueOf(rowsBean.getTokenCount()))+"份");

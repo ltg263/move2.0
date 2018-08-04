@@ -141,7 +141,7 @@ public class FindFragment extends LazyFragment {
         public void displayImage(String imageURL, ImageView imageView) {
             // TODO 加载显示图片
             imageView.setTag(null);
-            GlideUtils.loadSideMaxImage_135(getActivity(),imageView,imageURL);
+            GlideUtils.loadSideMaxImage(getActivity(),imageView,imageURL);
         }
     };
 
