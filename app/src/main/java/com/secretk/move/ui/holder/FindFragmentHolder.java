@@ -133,8 +133,8 @@ public class FindFragmentHolder extends RecyclerViewBaseHolder {
                     IntentUtil.startActivity(LoginHomeActivity.class);
                     return;
                 }
-                String key[] = {"id"};
-                String values[] = {String.valueOf(rowsBean.getId())};
+                String key[] = {"id","projectIcon"};
+                String values[] = {String.valueOf(rowsBean.getId()),rowsBean.getProjectIcon()};
                 IntentUtil.startActivity(FindWkDetailsActivity.class,key,values);
             }
         });

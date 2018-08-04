@@ -101,6 +101,7 @@ public class DetailsArticleActivity extends BaseActivity {
     private int praiseNum;
     String postShortDesc = "";
     String imgUrl = "";
+    private String activityId;
 
     @Override
     protected int setOnCreate() {
@@ -118,12 +119,13 @@ public class DetailsArticleActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        ShareView.showShare(Constants.ARTICLE_SHARE + Integer.valueOf(postId), tvPostTitle.getText().toString(), postShortDesc, imgUrl);
+        ShareView.showShare(token,activityId,Constants.ARTICLE_SHARE + Integer.valueOf(postId), tvPostTitle.getText().toString(), postShortDesc, imgUrl);
     }
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
         postId = getIntent().getStringExtra("postId");
+        activityId = getIntent().getStringExtra("activityId");
         setVerticalManager(rvImg);
         adapter = new ImagesAdapter(this);
         rvImg.setAdapter(adapter);

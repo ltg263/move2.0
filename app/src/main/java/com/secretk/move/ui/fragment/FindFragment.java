@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -25,6 +24,7 @@ import com.secretk.move.ui.activity.FindWkActivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.FindFragmentAdapter;
 import com.secretk.move.ui.adapter.FindNewAdapter;
+import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
@@ -57,6 +57,8 @@ public class FindFragment extends LazyFragment {
     RecyclerView recycler;
     @BindView(R.id.iv_status)
     ImageView ivStatus;
+    @BindView(R.id.iv_head_img)
+    ImageView ivHeadImg;
     @BindView(R.id.rcv)
     RecycleScrollView rcv;
     @BindView(R.id.refreshLayout)
@@ -100,7 +102,7 @@ public class FindFragment extends LazyFragment {
         adapter = new FindFragmentAdapter(getActivity());
         recycler.setAdapter(adapter);
         loadingDialog = new LoadingDialog(getActivity());
-//        viewpager.setZx();
+        viewpager.setZx();
     }
 
     private CustomViewPager.ImageCycleViewListener mAdCycleViewListener = new CustomViewPager.ImageCycleViewListener() {
@@ -139,7 +141,7 @@ public class FindFragment extends LazyFragment {
         public void displayImage(String imageURL, ImageView imageView) {
             // TODO 加载显示图片
             imageView.setTag(null);
-            Glide.with(getActivity()).load(imageURL).into(imageView);
+            GlideUtils.loadSideMaxImage_135(getActivity(),imageView,imageURL);
         }
     };
 
@@ -216,7 +218,15 @@ public class FindFragment extends LazyFragment {
                     for (int i = 0; i < rows.size(); i++) {
                         imageAdList.add(rows.get(i).getImgPath());
                     }
-                    viewpager.setImageResources(imageAdList, mAdCycleViewListener);
+                    if(imageAdList.size()>1){
+                        viewpager.setVisibility(View.VISIBLE);
+                        ivHeadImg.setVisibility(View.GONE);
+                        viewpager.setImageResources(imageAdList, mAdCycleViewListener);
+                    }else{
+                        viewpager.setVisibility(View.GONE);
+                        ivHeadImg.setVisibility(View.VISIBLE);
+                        GlideUtils.loadSideMaxImage(getActivity(),ivHeadImg,imageAdList.get(0));
+                    }
                 }
             }
         });

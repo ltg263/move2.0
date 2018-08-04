@@ -114,6 +114,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
     private String postShortDesc;
     private String shareUrl;
     private String imgUrl="";
+    private String activityId;
 
     @Override
     protected int setOnCreate() {
@@ -133,12 +134,13 @@ public class DetailsReviewAllActivity extends BaseActivity {
     protected void OnToolbarRightListener() {
 //        String str =  postShortDesc.substring(0, 10);
 //        1对应为值为“简单评测", 2 为 "ALL-专业评测" 3 为 "PART-专业评测" 4 为 "ALL-专业评测
-        ShareView.showShare(shareUrl,tvPostTitle.getText().toString(),postShortDesc,imgUrl);
+        ShareView.showShare(token,activityId,shareUrl,tvPostTitle.getText().toString(),postShortDesc,imgUrl);
     }
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
         postId = getIntent().getStringExtra("postId");
+        activityId = getIntent().getStringExtra("activityId");
         setVerticalManager(rvImg);
         setVerticalManager(rvReview);
         adapterProgress = new ProgressAdapter(this);

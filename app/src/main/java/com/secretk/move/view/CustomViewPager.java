@@ -138,16 +138,18 @@ public class CustomViewPager extends LinearLayout {
         llZx.setVisibility(View.VISIBLE);
         mAdvPagerZx.setVisibility(View.GONE);
         mAdvPager.setOffscreenPageLimit(3);
-        int pagerWidth = (int) (getResources().getDisplayMetrics().widthPixels * 4.3f / 5.0f);
+        int pagerWidth = (int) (getResources().getDisplayMetrics().widthPixels * 4.0f / 5.0f);
         ViewGroup.LayoutParams lp = mAdvPager.getLayoutParams();
         if (lp == null) {
             lp = new ViewGroup.LayoutParams(pagerWidth, ViewGroup.LayoutParams.MATCH_PARENT);
         } else {
             lp.width = pagerWidth;
         }
+        mGroup.setVisibility(View.GONE);
         mAdvPager.setLayoutParams(lp);
-        mAdvPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.dp_5));
-//        mAdvPager.setPageTransformer(true,new MyGallyPageTransformer());
+
+        mAdvPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.dp_12));
+//        mAdvPager.setPageTransformer(true,new MyGallyPageTransformer());如果显示动画 间距就改为dp_2
     }
 
     /**
@@ -270,14 +272,12 @@ public class CustomViewPager extends LinearLayout {
             // 设置当前显示的图片
             mImageIndex = index;
             // 设置图片滚动指示器背
-//            mImageViews[index].setBackgroundResource(R.drawable.banner_dian_focus);
             mImageViews[index].setBackgroundResource(R.drawable.bule_dot);
 
             for (int i = 0; i < mImageViews.length; i++) {
                 if (index != i) {
                     mImageViews[i].setBackground(ContextCompat.getDrawable(mContext, R.drawable.white_dot));
                     mImageViews[i].getBackground().setAlpha(50);
-//                    mImageViews[i].setBackgroundResource(R.drawable.banner_dian_blur);
                 }
             }
         }
@@ -391,7 +391,7 @@ public class CustomViewPager extends LinearLayout {
     }
 
     class MyGallyPageTransformer implements ViewPager.PageTransformer {
-        private static final float min_scale = 0.85f;
+        private static final float min_scale = 0.92f;
 
         @Override
         public void transformPage(View page, float position) {

@@ -127,6 +127,8 @@ public class DetailsDiscussActivity extends BaseActivity {
     int pageIndex = 1;
     private int projectId;
     String postShortDesc;
+    private String activityId;
+
     @Override
     protected int setOnCreate() {
         return R.layout.activity_details_discuss;
@@ -144,13 +146,14 @@ public class DetailsDiscussActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        ShareView.showShare(Constants.DISCUSS_SHARE+Integer.valueOf(postId),tvPostTitle.getText().toString(),postShortDesc,imgUrl);
+        ShareView.showShare(token,activityId,Constants.DISCUSS_SHARE+Integer.valueOf(postId),tvPostTitle.getText().toString(),postShortDesc,imgUrl);
     }
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
 //        refreshLayout.setEnableRefresh(false);//关闭下拉刷新
         postId = getIntent().getStringExtra("postId");
+        activityId = getIntent().getStringExtra("activityId");
         setHorizontalManager(rvImg);
         imagesadapter = new ImagesAdapter(this);
         rvImg.setAdapter(imagesadapter);

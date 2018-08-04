@@ -242,7 +242,7 @@
 
                                         <TextView
                                             android:id="@+id/tv_percent_change_24h"
-                                            android:layout_width="@dimen/dp_65"
+                                            android:layout_width="@dimen/dp_80"
                                             android:layout_height="wrap_content"
                                             android:background="#d3d3d3"
                                             android:gravity="center"

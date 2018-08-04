@@ -15,6 +15,7 @@ import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.InfoNewsBean;
 import com.secretk.move.ui.adapter.InfoNewsFragmentAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
@@ -50,6 +51,8 @@ public class InfoNewsFragmentHolder extends RecyclerViewBaseHolder {
     TextView tvBzyhzc;
     @BindView(R.id.ll_top_time)
     LinearLayout llTopTime;
+    @BindView(R.id.ll_html)
+    LinearLayout llHtml;
     @BindView(R.id.ll)
     LinearLayout ll;
     @BindView(R.id.tv_head_title)
@@ -68,28 +71,6 @@ public class InfoNewsFragmentHolder extends RecyclerViewBaseHolder {
     public InfoNewsFragmentHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        tvDetailBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//               ：0-完整版专业评测，1-自定义评测，2-文章，3-打假，4-单项评测
-//                int type = rowsBean.getType();
-//                if(type==5 && StringUtil.isNotBlank(rowsBean.getOutUrl())){
-//                    IntentUtil.startWebViewActivity(rowsBean.getOutUrl(),"区分");
-//                    return;
-//                }
-//                if(type==0 || type ==1 || type==4){
-//                    type=1;
-//                }else if(type==3){
-//                    type=2;
-//                }else if(type==2){
-//                    type=3;
-//                }else{
-//                    ToastUtils.getInstance().show("类型出错");
-//                    return;
-//                }
-//                IntentUtil.go2DetailsByType(type, String.valueOf(rowsBean.getArticleId()));
-            }
-        });
         tvInfoZ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,6 +96,7 @@ public class InfoNewsFragmentHolder extends RecyclerViewBaseHolder {
                 updateNewsFlashRiseAndFall("fall",rowsBean.getId());
             }
         });
+//
         tvInfoShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,10 +104,18 @@ public class InfoNewsFragmentHolder extends RecyclerViewBaseHolder {
                 ShareView.showShare1(relativeLayout,"");
             }
         });
-        tvDetailDesc.setOnClickListener(new View.OnClickListener() {
+        llHtml.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                tvDetailDesc.setMaxLines(50);
+                String url = Constants.CURRENCY+rowsBean.getId();
+                IntentUtil.startWebViewActivity(url,"区分");
+            }
+        });
+        tvBzyhzc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = Constants.BI_ZHI_HUI;
+                IntentUtil.startWebViewActivity(url,"区分");
             }
         });
     }
@@ -134,6 +124,7 @@ public class InfoNewsFragmentHolder extends RecyclerViewBaseHolder {
     Context mContext;
     public void refresh(Context context, int position, List<InfoNewsBean.DataBeanX.DataBean.RowsBean> list, InfoNewsFragmentAdapter infoFragmentAdapter) {
 //        tvInfoShare.setVisibility(View.GONE);
+        tvDetailDesc.setMaxLines(3);
         tvSite.setVisibility(View.VISIBLE);
         this.position = position;
         this.mContext = context;

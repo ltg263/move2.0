@@ -121,8 +121,12 @@ public class MoveApplication extends Application {
             @Override
             public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
                 //指定为经典Footer，默认是 BallPulseFooter
-
-                return new ClassicsFooter(context).setSpinnerStyle(SpinnerStyle.FixedBehind);
+                layout.setEnableFooterFollowWhenLoadFinished(true);
+//                layout.setEnableLoadMoreWhenContentNotFull(true);
+                ClassicsFooter footer = new ClassicsFooter(context);
+                footer.REFRESH_FOOTER_NOTHING = "我也是有底线的！";
+                footer.setSpinnerStyle(SpinnerStyle.FixedBehind);
+                return footer;
 //                return new ClassicsFooter(context).setDrawableSize(20);
             }
         });

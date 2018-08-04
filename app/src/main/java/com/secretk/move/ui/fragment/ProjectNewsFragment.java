@@ -20,6 +20,7 @@ import com.secretk.move.ui.adapter.InfoNewsFragmentAdapter;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.LoadingDialog;
 
 import org.json.JSONException;
@@ -100,10 +101,13 @@ public class ProjectNewsFragment extends LazyFragment implements ItemClickListen
      */
     public void getLoadData(String sort) {
         LogUtil.w("projectCode"+projectCode);
+        if(StringUtil.isBlank(projectCode)){
+            return;
+        }
         JSONObject node = new JSONObject();
         try {
 //            node.put("token", token);
-            node.put("projectCode", "SMT");
+            node.put("projectCode", projectCode);
             node.put("pageIndex", pageIndex++);
             node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
@@ -118,6 +122,9 @@ public class ProjectNewsFragment extends LazyFragment implements ItemClickListen
             @Override
             public void onCompleted(InfoNewsBean bean) {
                 InfoNewsBean.DataBeanX.DataBean detailsBean = bean.getData().getData();
+                if(detailsBean==null){
+                    return;
+                }
                 if (detailsBean.getPageSize() == detailsBean.getCurPageNum()) {
                     if(refreshLayoutF!=null){
                         refreshLayoutF.finishLoadMoreWithNoMoreData();

@@ -1,5 +1,6 @@
 package com.secretk.move.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Html;
@@ -85,6 +86,7 @@ public class FindWkDetailsActivity extends BaseActivity {
     private SparseArray<CountDownTimer> countDownCounters;
     private FindWkDetailsBean.DataBeanX.DataBean data;
     private int activityId;
+    private String projectIcon;
 
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
@@ -148,6 +150,7 @@ public class FindWkDetailsActivity extends BaseActivity {
     protected void initUI(Bundle savedInstanceState) {
         this.countDownCounters = new SparseArray<>();
         activityId =  Integer.valueOf(getIntent().getStringExtra("id"));
+        projectIcon =  getIntent().getStringExtra("projectIcon");
         initRefresh();
     }
 
@@ -177,7 +180,7 @@ public class FindWkDetailsActivity extends BaseActivity {
                 if (data == null) {
                     return;
                 }
-                GlideUtils.loadCircleProjectUrl(FindWkDetailsActivity.this, ivIcon, Constants.BASE_IMG_URL + StringUtil.getBeanString(data.getProjectIcon()));
+                GlideUtils.loadCircleProjectUrl(FindWkDetailsActivity.this, ivIcon, Constants.BASE_IMG_URL + StringUtil.getBeanString(projectIcon));
                 tvTitle.setText(StringUtil.getBeanString(data.getTitle()));
                 tvFindNum.setText(String.valueOf(data.getTokenCount()) + data.getTokenName());
                 tvFindYd.setText("≈¥" + String.valueOf(data.getTokenCash()));
@@ -368,10 +371,40 @@ public class FindWkDetailsActivity extends BaseActivity {
                 } else {
                     return;
                 }
-                IntentUtil.go2DetailsByType(typeId, String.valueOf(data.getArticleId()));
+                go2DetailsByType(typeId, String.valueOf(data.getArticleId()),String.valueOf(data.getId()));
                 break;
             case R.id.tv_go_lqjl:
                 getFindJl();
+                break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+    }
+
+    public void go2DetailsByType(int type, String postId, String activityId) {
+        Intent intent=null;
+        switch (type) {
+            case 1:
+                intent=new Intent(this, DetailsReviewAllActivity.class);
+                intent.putExtra("postId",postId);
+                intent.putExtra("activityId",activityId);
+                startActivity(intent);
+                break;
+            case 2://
+                intent=new Intent(this, DetailsDiscussActivity.class);
+                intent.putExtra("postId",postId);
+                intent.putExtra("activityId",activityId);
+                startActivity(intent);
+                break;
+            case 3:
+                intent=new Intent(this, DetailsArticleActivity.class);
+                intent.putExtra("postId",postId);
+                intent.putExtra("activityId",activityId);
+                startActivity(intent);
                 break;
         }
     }

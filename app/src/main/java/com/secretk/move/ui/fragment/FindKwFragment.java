@@ -22,7 +22,6 @@ import com.secretk.move.utils.PolicyUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,7 +48,6 @@ public class FindKwFragment extends LazyFragment{
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     private FindFragmentAdapter adapter;
-    private ArrayList<String> list;
     private int state;
     @Override
     public int setFragmentView() {
@@ -61,18 +59,6 @@ public class FindKwFragment extends LazyFragment{
         setVerticalManager(recycler);
         adapter = new FindFragmentAdapter(getActivity());
         recycler.setAdapter(adapter);
-        list = new ArrayList<>();
-        list.add("100010001000");
-        list.add("200010001000");
-        list.add("30001000");
-        list.add("60001000");
-        list.add("990001000");
-        list.add("100010001000");
-        list.add("200010001000");
-        list.add("30001000");
-        list.add("60001000");
-        list.add("990001000");
-        list.add("100010001000");
         initRefresh();
     }
     private void initRefresh() {
