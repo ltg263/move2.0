@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -14,7 +15,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.FindRankingUserBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.utils.GlideUtils;
-import com.secretk.move.utils.LogUtil;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class FindRankingUserAdapter extends RecyclerView.Adapter<FindRankingUser
     private ItemClickListener mListener;
     Context context;
     int index;
+
     public FindRankingUserAdapter(Context context) {
         this.context = context;
     }
@@ -68,7 +70,7 @@ public class FindRankingUserAdapter extends RecyclerView.Adapter<FindRankingUser
         notifyDataSetChanged();
     }
 
-    public void setData(List<FindRankingUserBean.DataBean.KFFUserPageBean.RowsBean> list,int index) {
+    public void setData(List<FindRankingUserBean.DataBean.KFFUserPageBean.RowsBean> list, int index) {
         this.list = list;
         this.index = index;
         notifyDataSetChanged();
@@ -79,6 +81,8 @@ public class FindRankingUserAdapter extends RecyclerView.Adapter<FindRankingUser
     }
 
     class FindRankingUserHolder extends RecyclerViewBaseHolder {
+        @BindView(R.id.rl_ge_ren)
+        RelativeLayout rlGeRen;
         @BindView(R.id.iv_move)
         ImageView ivMove;
         @BindView(R.id.iv_icon)
@@ -102,27 +106,27 @@ public class FindRankingUserAdapter extends RecyclerView.Adapter<FindRankingUser
         }
 
         public void setData(final FindRankingUserBean.DataBean.KFFUserPageBean.RowsBean bean, int position, final Context context) {
-            if(position==0){
+            if (position == 0) {
                 ivMove.setImageDrawable(context.getResources().getDrawable(R.drawable.topic_one));
                 ivMove.setVisibility(View.VISIBLE);
                 tvMove.setVisibility(View.GONE);
-            }else if(position==1){
+            } else if (position == 1) {
                 ivMove.setImageDrawable(context.getResources().getDrawable(R.drawable.topic_two));
                 ivMove.setVisibility(View.VISIBLE);
                 tvMove.setVisibility(View.GONE);
-            }else if(position==2){
+            } else if (position == 2) {
                 ivMove.setImageDrawable(context.getResources().getDrawable(R.drawable.topic_three));
                 ivMove.setVisibility(View.VISIBLE);
                 tvMove.setVisibility(View.GONE);
-            }else{
-                tvMove.setText(String.valueOf(position+1));
+            } else {
+                tvMove.setText(String.valueOf(position + 1));
                 ivMove.setVisibility(View.INVISIBLE);
                 tvMove.setVisibility(View.VISIBLE);
             }
-            if(index!=1){
-                GlideUtils.loadCircleUserUrl(context,ivIcon, Constants.BASE_IMG_URL+ StringUtil.getBeanString(bean.getProjectIcon()));
+            if (index != 1) {
+                GlideUtils.loadCircleUserUrl(context, ivIcon, Constants.BASE_IMG_URL + StringUtil.getBeanString(bean.getProjectIcon()));
                 tvName.setText(StringUtil.getBeanString(bean.getProjectCode()));
-                tvNameF.setText("/"+StringUtil.getBeanString(bean.getProjectChineseName()));
+                tvNameF.setText("/" + StringUtil.getBeanString(bean.getProjectChineseName()));
                 tvNum.setText(String.valueOf(bean.getFollowerNum()));
                 if (bean.getFollowStatus() == 1) { //关注状态  "//0 未关注；1-已关注；2-不显示关注按钮"
                     tvProjectFolly.setSelected(true);
@@ -133,8 +137,8 @@ public class FindRankingUserAdapter extends RecyclerView.Adapter<FindRankingUser
                 }
                 tvScore.setVisibility(View.VISIBLE);
                 tvNameF.setVisibility(View.VISIBLE);
-            }else{
-                GlideUtils.loadCircleUserUrl(context,ivIcon, Constants.BASE_IMG_URL+ StringUtil.getBeanString(bean.getIcon()));
+            } else {
+                GlideUtils.loadCircleUserUrl(context, ivIcon, Constants.BASE_IMG_URL + StringUtil.getBeanString(bean.getIcon()));
                 tvName.setText(StringUtil.getBeanString(bean.getUserName()));
                 tvNum.setText(String.valueOf(bean.getFansNum()));
                 if (bean.getFollowStatus() == 1) { //关注状态  "//0 未关注；1-已关注；2-不显示关注按钮"
@@ -147,6 +151,16 @@ public class FindRankingUserAdapter extends RecyclerView.Adapter<FindRankingUser
                 tvScore.setVisibility(View.INVISIBLE);
                 tvNameF.setVisibility(View.INVISIBLE);
             }
+            rlGeRen.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(index==1){
+                        IntentUtil.startHomeActivity(bean.getUserId());
+                    }else{
+                        IntentUtil.startProjectActivity(bean.getProjectId());
+                    }
+                }
+            });
         }
     }
 }

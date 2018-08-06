@@ -35,12 +35,18 @@ public class MoveApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = this;
+
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            // This process is dedicated to LeakCanary for heap analysis.
+//            // You should not init your app in this process.
+//            return;
+//        }
+//        LeakCanary.install(this);
 //        CrashHandler.getInstance().init(mContext);
 //        BlockCanary.install(mContext, new AppBlockCanaryContext()).start();
         AppConfig.initAppConfig(this);
         initSDK();
     }
-
     private void initSDK() {
         //分享
         MobSDK.init(this,getString(R.string.mob_sdk_key),getString(R.string.mob_sdk_var));

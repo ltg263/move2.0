@@ -10,6 +10,7 @@
         android:background="@color/cut_off_rule" />
 
     <RelativeLayout
+        android:id="@+id/rl_ge_ren"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -40,31 +41,35 @@
             android:layout_toRightOf="@id/iv_move"
             android:src="@drawable/ic_find_1" />
 
-        <TextView
-            android:id="@+id/tv_name"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_10"
-            android:layout_toRightOf="@id/iv_icon"
-            android:text="波场割韭菜"
-            android:textColor="@color/theme_title"
-            android:textSize="@dimen/sp_16" />
-
-        <TextView
-            android:id="@+id/tv_name_f"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/tv_score"
-            android:layout_toRightOf="@id/tv_name"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="/波场割韭菜波场割韭菜"
-            android:textColor="@color/theme_title_name"
-            android:textSize="@dimen/sp_14"
-            android:visibility="visible" />
+            android:layout_toRightOf="@id/iv_icon">
 
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="波场割"
+                android:textColor="@color/theme_title"
+                android:textSize="@dimen/sp_16" />
+
+            <TextView
+                android:id="@+id/tv_name_f"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="/波场割韭"
+                android:textColor="@color/theme_title_name"
+                android:textSize="@dimen/sp_14"
+                android:visibility="visible" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_score"
@@ -93,19 +98,11 @@
 
         <TextView
             android:id="@+id/tv_project_folly"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/BtnSelectorFollow"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/selector_follow_state"
-            android:paddingBottom="@dimen/dp_3"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_3"
             android:text="@string/follow_status_0"
-            android:textColor="@drawable/selector_follow_state_text"
             android:visibility="visible" />
-
     </RelativeLayout>
 
 </LinearLayout>

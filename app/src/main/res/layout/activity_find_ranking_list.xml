@@ -19,6 +19,7 @@
             android:layout_above="@+id/ll"
             android:layout_below="@id/view"
             android:fillViewport="true"
+            android:overScrollMode="never"
             android:scrollbars="none">
 
             <LinearLayout
@@ -39,8 +40,9 @@
                     <com.secretk.move.view.ViewPagerFixed
                         android:id="@+id/vp_main_children"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
+                        android:layout_height="200dp"
                         android:clipChildren="false"
+                        android:overScrollMode="never"
                         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
                 </LinearLayout>
 
@@ -80,7 +82,7 @@
                             android:id="@+id/tv_p"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingHorizontal="@dimen/dp_20"
+                            android:paddingHorizontal="@dimen/dp_10"
                             android:text="评分"
                             android:textColor="#393d46"
                             android:textSize="@dimen/sp_14" />
@@ -88,7 +90,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/dp_20"
+                            android:paddingHorizontal="@dimen/dp_10"
                             android:text="粉丝"
                             android:textColor="#393d46"
                             android:textSize="@dimen/sp_14" />
@@ -96,7 +98,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingHorizontal="@dimen/dp_20"
+                            android:paddingHorizontal="@dimen/dp_25"
                             android:text="关注"
                             android:textColor="#393d46"
                             android:textSize="@dimen/sp_14"
@@ -105,9 +107,22 @@
                     </LinearLayout>
 
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recycler"
+                        android:id="@+id/recycler_new_p"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_below="@id/ll" />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_user"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_below="@id/ll" />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_pf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_below="@id/ll" />
                 </RelativeLayout>
             </LinearLayout>

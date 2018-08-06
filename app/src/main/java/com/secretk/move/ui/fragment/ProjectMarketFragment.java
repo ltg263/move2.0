@@ -126,7 +126,16 @@ public class ProjectMarketFragment extends LazyFragment implements ItemClickList
                 llHaveData.setVisibility(View.VISIBLE);
                 ivNotContent.setVisibility(View.GONE);
                 List<ProjectMarketBase.DataBean.TransactionPairResponseBean.RowsBean> rows = detailsBean.getRows();
-                getHttpsData(rows,0);
+                if (pageIndex > 2) {
+                    adapter.setAddData(rows);
+                } else {
+                    adapter.setData(rows);
+                    loadingDialog.dismiss();
+                }
+                if(refreshLayoutF.isEnableLoadMore()){
+                    refreshLayoutF.finishLoadMore();
+                }
+//                getHttpsData(rows,0);
             }
         });
     }

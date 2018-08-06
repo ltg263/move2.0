@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.secretk.move.ui.fragment.FindRankingUserFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,22 +15,27 @@ import java.util.List;
 
 public class FindRankingListAdapter extends FragmentStatePagerAdapter {
     private  List<String>  head_list;
+    private ArrayList<Fragment> mFragments;
     public FindRankingListAdapter(FragmentManager fm) {
         super(fm);
+        mFragments = new ArrayList<>();
+        mFragments.add(new FindRankingUserFragment());
+        mFragments.add(new FindRankingUserFragment());
+        mFragments.add(new FindRankingUserFragment());
     }
 
     @Override
     public Fragment getItem(int position) {
-            FindRankingUserFragment fragment = new FindRankingUserFragment();
-            fragment.setTabName(position);
-            return fragment;
-
+        FindRankingUserFragment fragment = (FindRankingUserFragment) mFragments.get(position);
+        fragment.setTabName(position);
+        return fragment;
     }
 
     @Override
     public int getCount() {
         if (head_list==null)return  0;
         return head_list.size();
+//        return Integer.MAX_VALUE;
     }
 
     @Override

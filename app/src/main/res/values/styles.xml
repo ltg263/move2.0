@@ -104,5 +104,28 @@
     <style name="TabLayoutTextStyleProject">
         <item name="android:textSize">@dimen/sp_14</item>
     </style>
+    <!--
+    <TextView
+            android:paddingBottom="@dimen/dp_3"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_3"
+            android:text="@string/follow_status_0"
+            android:textColor="@drawable/selector_follow_state_text"
+            android:visibility="visible" />
+
+    -->
+    <style name="BtnSelectorFollow">
+        <item name="android:layout_width">@dimen/dp_65</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@drawable/selector_follow_state_text</item>
+        <item name="android:background">@drawable/selector_follow_state</item>
+        <item name="android:paddingTop">@dimen/dp_3</item>
+        <item name="android:paddingBottom">@dimen/dp_3</item>
+        <item name="android:paddingRight">@dimen/dp_10</item>
+        <item name="android:paddingLeft">@dimen/dp_10</item>
+    </style>
 
 </resources>

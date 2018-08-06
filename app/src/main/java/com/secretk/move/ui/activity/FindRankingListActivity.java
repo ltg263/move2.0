@@ -65,8 +65,17 @@ public class FindRankingListActivity extends BaseActivity {
     RelativeLayout rlTopTheme;
     @BindView(R.id.ll)
     LinearLayout ll;
-    @BindView(R.id.recycler)
-    RecyclerView recycler;
+    @BindView(R.id.recycler_new_p)
+    RecyclerView recyclerNewP;
+    @BindView(R.id.recycler_user)
+    RecyclerView recyclerUser;
+    @BindView(R.id.recycler_pf)
+    RecyclerView recyclerPf;
+    private FindRankingUserAdapter adapterPf;
+    private FindRankingUserAdapter adapterNewP;
+    private FindRankingUserBean.DataBean.KFFUserPageBean evaProjectPage;//项目评分榜
+    private FindRankingUserBean.DataBean.KFFUserPageBean kffUserPage;//KLO榜单
+    private FindRankingUserBean.DataBean.KFFUserPageBean projectHot;//最佳项目榜
 
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
@@ -83,7 +92,7 @@ public class FindRankingListActivity extends BaseActivity {
         return R.layout.activity_find_ranking_list;
     }
 
-    public void setZx(){
+    public void setZx() {
         vp_main_children.setOffscreenPageLimit(3);
         int pagerWidth = (int) (getResources().getDisplayMetrics().widthPixels * 1.0f / 3.0f);
         ViewGroup.LayoutParams lp = vp_main_children.getLayoutParams();
@@ -95,8 +104,9 @@ public class FindRankingListActivity extends BaseActivity {
         vp_main_children.setLayoutParams(lp);
 
 //        vp_main_children.setPageMargin(getResources().getDimensionPixelSize(R.dimen.dp_2));
-        vp_main_children.setPageTransformer(true,new MyGallyPageTransformer());//如果显示动画 间距就改为dp_2
+        vp_main_children.setPageTransformer(true, new MyGallyPageTransformer());//如果显示动画 间距就改为dp_2
     }
+
     public class MyGallyPageTransformer implements ViewPager.PageTransformer {
         private static final float min_scale = 0.72f;
 
@@ -118,17 +128,24 @@ public class FindRankingListActivity extends BaseActivity {
             }
         }
     }
+
     @Override
     protected void initUI(Bundle savedInstanceState) {
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.app_background), 0);
         refreshLayout.setEnableLoadMore(false);
         refreshLayout.setEnableRefresh(false);
-        setVerticalManager(recycler);
+        setVerticalManager(recyclerNewP);
+        setVerticalManager(recyclerPf);
+        setVerticalManager(recyclerUser);
         adapter = new FindRankingListAdapter(getSupportFragmentManager());
         vp_main_children.setAdapter(adapter);
         adapterUser = new FindRankingUserAdapter(this);
-        recycler.setAdapter(adapterUser);
+        adapterPf = new FindRankingUserAdapter(this);
+        adapterNewP = new FindRankingUserAdapter(this);
+        recyclerNewP.setAdapter(adapterNewP);
+        recyclerPf.setAdapter(adapterPf);
+        recyclerUser.setAdapter(adapterUser);
         List<String> list = new ArrayList<>();
         list.add("项目评分榜");
         list.add("KLO榜单");
@@ -139,18 +156,27 @@ public class FindRankingListActivity extends BaseActivity {
         StringUtil.getVpPosition(vp_main_children, new StringUtil.VpPageSelected() {
             @Override
             public void getVpPageSelected(int position) {
-                pageIndex=1;
-                if(position==0){
+                pageIndex = 1;
+                recyclerNewP.setVisibility(View.GONE);
+                recyclerPf.setVisibility(View.GONE);
+                recyclerUser.setVisibility(View.GONE);
+                if (position == 0) {
                     tv_p.setVisibility(View.VISIBLE);
-                    getDataUrl(Constants.GET_EVA_PROJECT_PAGE, 0);
+                    recyclerNewP.setVisibility(View.VISIBLE);
+//                    getDataUrl(Constants.GET_EVA_PROJECT_PAGE, 0);
+//                    setListAdapter(evaProjectPage, 0);
                 }
-                if(position==1){
+                if (position == 1) {
                     tv_p.setVisibility(View.GONE);
-                    getDataUrl(Constants.GET_KOL_PROJECT_PAGE, 1);
+                    recyclerUser.setVisibility(View.VISIBLE);
+//                    getDataUrl(Constants.GET_KOL_PROJECT_PAGE, 1);
+//                    setListAdapter(kffUserPage, 1);
                 }
-                if(position==2){
+                if (position == 2) {
                     tv_p.setVisibility(View.VISIBLE);
-                    getDataUrl(Constants.GET_HOT_PROJECT_PAGE, 2);
+                    recyclerPf.setVisibility(View.VISIBLE);
+//                    getDataUrl(Constants.GET_HOT_PROJECT_PAGE, 2);
+//                    setListAdapter(projectHot, 2);
                 }
             }
         });
@@ -158,11 +184,99 @@ public class FindRankingListActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        tv_p.setVisibility(View.GONE);
-        getDataUrl(Constants.GET_KOL_PROJECT_PAGE,1);
-
+//        tv_p.setVisibility(View.GONE);
+//        getDataUrl(Constants.GET_KOL_PROJECT_PAGE,1);
+        getDataUrl_A(Constants.GET_EVA_PROJECT_PAGE, 0);
+        getDataUrl_A(Constants.GET_KOL_PROJECT_PAGE, 1);
+        getDataUrl_A(Constants.GET_HOT_PROJECT_PAGE, 2);
+        recyclerUser.setVisibility(View.VISIBLE);
     }
 
+
+    public void getDataUrl_A(String url, final int index) {
+        final String token = SharedUtils.singleton().get("token", "");
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+            node.put("pageIndex", 1);
+            node.put("pageSize", 20);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(url)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, FindRankingUserBean.class, new HttpCallBackImpl<FindRankingUserBean>() {
+            @Override
+            public void onCompleted(FindRankingUserBean bean) {
+
+                FindRankingUserBean.DataBean.KFFUserPageBean detailsBean = null;
+                if (index == 0) {
+                    evaProjectPage = bean.getData().getEvaProjectPage();
+                    setListAdapter(evaProjectPage, index);
+                }
+                if (index == 1) {
+                    kffUserPage = bean.getData().getKFFUserPage();
+                    setListAdapter(kffUserPage, index);
+                }
+                if (index == 2) {
+                    projectHot = bean.getData().getProjectHot();
+                    setListAdapter(projectHot, index);
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                loadingDialog.dismiss();
+                if (refreshLayout.isEnableRefresh()) {
+                    refreshLayout.finishRefresh();
+                }
+                if (refreshLayout.isEnableLoadMore()) {
+                    refreshLayout.finishLoadMore();
+                }
+            }
+        });
+    }
+
+    private void setListAdapter(FindRankingUserBean.DataBean.KFFUserPageBean detailsBean, int index) {
+        if ((detailsBean == null || detailsBean.getRows() == null) && pageIndex == 2) {
+//                    convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+//                    refreshLayout.setVisibility(View.GONE);
+            rlTopTheme.setVisibility(View.VISIBLE);
+            tvIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_not_gznr));
+            tvName.setVisibility(View.INVISIBLE);
+            tvSubmit.setText(getResources().getString(R.string.not_refresh));
+            return;
+        }
+        if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
+            refreshLayout.finishLoadMoreWithNoMoreData();
+        }
+        refreshLayout.setVisibility(View.VISIBLE);
+        findViewById(R.id.no_data).setVisibility(View.GONE);
+        if (pageIndex > 2) {
+            if (index == 0) {
+                adapterNewP.setAddData(detailsBean.getRows());
+            }
+            if (index == 1) {
+                adapterUser.setAddData(detailsBean.getRows());
+            }
+            if (index == 2) {
+                adapterPf.setAddData(detailsBean.getRows());
+            }
+        } else {
+            if (index == 0) {
+                adapterNewP.setData(detailsBean.getRows(),index);
+            }
+            if (index == 1) {
+                adapterUser.setData(detailsBean.getRows(),index);
+            }
+            if (index == 2) {
+                adapterPf.setData(detailsBean.getRows(),index);
+            }
+        }
+    }
 
     public void getDataUrl(String url, final int index) {
         final String token = SharedUtils.singleton().get("token", "");
@@ -183,14 +297,14 @@ public class FindRankingListActivity extends BaseActivity {
             @Override
             public void onCompleted(FindRankingUserBean bean) {
 
-                FindRankingUserBean.DataBean.KFFUserPageBean detailsBean=null;
-                if(index==0){
+                FindRankingUserBean.DataBean.KFFUserPageBean detailsBean = null;
+                if (index == 0) {
                     detailsBean = bean.getData().getEvaProjectPage();
                 }
-                if(index==1){
+                if (index == 1) {
                     detailsBean = bean.getData().getKFFUserPage();
                 }
-                if(index==2){
+                if (index == 2) {
                     detailsBean = bean.getData().getProjectHot();
                 }
                 if ((detailsBean == null || detailsBean.getRows() == null) && pageIndex == 2) {
@@ -210,7 +324,7 @@ public class FindRankingListActivity extends BaseActivity {
                 if (pageIndex > 2) {
                     adapterUser.setAddData(detailsBean.getRows());
                 } else {
-                    adapterUser.setData(detailsBean.getRows(),index);
+                    adapterUser.setData(detailsBean.getRows(), index);
                 }
             }
 

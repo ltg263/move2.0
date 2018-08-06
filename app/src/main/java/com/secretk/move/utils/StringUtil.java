@@ -559,7 +559,6 @@ public class StringUtil {
 
     // 判断Object是空
     public static boolean isEmptyObject(Object obj) {
-
         if (obj == null) {
             return true;
         }
@@ -569,7 +568,6 @@ public class StringUtil {
         if (obj instanceof String) {
             return StringUtil.isBlank((String) obj);
         }
-
         if(obj.toString().equals("null")) {
             return true;
         }

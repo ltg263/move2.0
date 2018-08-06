@@ -17,18 +17,10 @@ import butterknife.BindView;
 public class FindRankingUserFragment extends LazyFragment {
 
 
-    @BindView(R.id.iv_1)
-    ImageView iv1;
-    @BindView(R.id.tv_1)
-    TextView tv1;
-    @BindView(R.id.iv_2)
-    ImageView iv2;
-    @BindView(R.id.tv_2)
-    TextView tv2;
-    @BindView(R.id.iv_3)
-    ImageView iv3;
-    @BindView(R.id.tv_3)
-    TextView tv3;
+    @BindView(R.id.iv)
+    ImageView iv;
+    @BindView(R.id.tv)
+    TextView tv;
     private int index;
 
     @Override
@@ -38,49 +30,22 @@ public class FindRankingUserFragment extends LazyFragment {
 
     @Override
     public void initViews() {
-
 //        list.add("项目评分榜");
 //        list.add("KLO榜单");
 //        list.add("最佳项目榜");
-        if(index==0){
-
-            tv1.setText("项目评分榜");
-            iv1.setImageDrawable(getResources().getDrawable(R.drawable.ic_find_1));
-
-            tv2.setText("最佳项目榜");
-            iv2.setImageDrawable(getResources().getDrawable(R.drawable.ic_find_3));
-
-            tv3.setText("KLO榜单");
-            iv3.setImageDrawable(getResources().getDrawable(R.drawable.ic_find_2));
-
+        if (index == 0) {
+            tv.setText("最佳项目榜");
+            iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_king_zxxmb));
         }
-        if(index==1){
-            tv1.setText("最佳项目榜");
-            iv1.setImageDrawable(getResources().getDrawable(R.drawable.ic_find_3));
-
-            tv2.setText("KLO榜单");
-            iv2.setImageDrawable(getResources().getDrawable(R.drawable.ic_find_2));
-
-            tv3.setText("项目评分榜");
-            iv3.setImageDrawable(getResources().getDrawable(R.drawable.ic_find_1));
-
-
+        if (index == 1) {
+            tv.setText("KLO榜单");
+            iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_king_klobd));
         }
-        if(index==2){
-
-            tv1.setText("KLO榜单");
-            iv1.setImageDrawable(getResources().getDrawable(R.drawable.ic_find_2));
-
-            tv2.setText("项目评分榜");
-            iv2.setImageDrawable(getResources().getDrawable(R.drawable.ic_find_1));
-
-            tv3.setText("最佳项目榜");
-            iv3.setImageDrawable(getResources().getDrawable(R.drawable.ic_find_3));
+        if (index == 2) {
+            tv.setText("项目评分榜");
+            iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_king_xmqfb));
         }
-
     }
-
-
     @Override
     public void onFirstUserVisible() {
 

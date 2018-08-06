@@ -186,6 +186,9 @@ public class ProjectMarketBase extends BaseRes{
                 private double vol;
                 private double base_volume;
                 private double change_daily;
+                private double baseVolume;
+                private double changeDaily;
+                private double usdRate;
                 private String market;
                 private String symbol_name;
                 private String symbol_pair;
@@ -193,6 +196,30 @@ public class ProjectMarketBase extends BaseRes{
                 private boolean has_kline;
                 private double usd_rate;
 
+
+                public void setBaseVolume(double baseVolume) {
+                    this.baseVolume = baseVolume;
+                }
+
+                public void setChangeDaily(double changeDaily) {
+                    this.changeDaily = changeDaily;
+                }
+
+                public void setUsdRate(double usdRate) {
+                    this.usdRate = usdRate;
+                }
+
+                public double getBaseVolume() {
+                    return baseVolume;
+                }
+
+                public double getChangeDaily() {
+                    return changeDaily;
+                }
+
+                public double getUsdRate() {
+                    return usdRate;
+                }
 
                 public String getStrError() {
                     return strError;

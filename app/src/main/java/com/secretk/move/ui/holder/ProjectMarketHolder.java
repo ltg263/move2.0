@@ -58,12 +58,12 @@ public class ProjectMarketHolder extends RecyclerViewBaseHolder {
         //涨跌幅：change_daily*100
         //2470 BTC：last BTC
         llMarketNot.setVisibility(View.INVISIBLE);
-        tvFollowNum.setVisibility(View.INVISIBLE);
+        tvFollowNum.setVisibility(View.GONE);
         tvMarketCurrent.setVisibility(View.GONE);
-        if(usersBean.isOk()){
-            setBeanData(usersBean, context);
-        }else{
+        if(usersBean.getLast()==0 && usersBean.getUsdRate()==0 && usersBean.getChangeDaily()==0){
             tvMarketNew.setText("暂无");
+        }else{
+            setBeanData(usersBean, context);
         }
     }
 
@@ -72,8 +72,8 @@ public class ProjectMarketHolder extends RecyclerViewBaseHolder {
         tvFollowNum.setVisibility(View.VISIBLE);
         tvMarketCurrent.setVisibility(View.VISIBLE);
 
-        double jyl = usersBean.getBase_volume()*usersBean.getUsd_rate()*CNY;
-        double zxjg = usersBean.getUsd_rate()*usersBean.getLast()*CNY;
+        double jyl = usersBean.getBaseVolume()*usersBean.getUsdRate()*CNY;
+        double zxjg = usersBean.getUsdRate()*usersBean.getLast()*CNY;
         String styJyl = "";
         if(jyl<10000){
             styJyl="量"+Math.round(jyl);
@@ -85,12 +85,12 @@ public class ProjectMarketHolder extends RecyclerViewBaseHolder {
 
         String styZxjg ="￥"+ StringUtil.getYxNum(zxjg);
 
-        if(usersBean.getChange_daily()<0){
-            tvMarketChange.setText(String.format("%.2f", usersBean.getChange_daily()*100)+"%");
+        if(usersBean.getChangeDaily()<0){
+            tvMarketChange.setText(String.format("%.2f", usersBean.getChangeDaily()*100)+"%");
             tvMarketChange.setTextColor(Color.parseColor("#ff4b4b"));
             ivMarketChange.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_price_fall));
         }else{
-            tvMarketChange.setText("+"+String.format("%.2f", usersBean.getChange_daily()*100)+"%");
+            tvMarketChange.setText("+"+String.format("%.2f", usersBean.getChangeDaily()*100)+"%");
             tvMarketChange.setTextColor(Color.parseColor("#23b25c"));
             ivMarketChange.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_price_rise));
         }

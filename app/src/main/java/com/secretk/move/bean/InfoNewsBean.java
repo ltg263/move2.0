@@ -165,6 +165,7 @@ public class InfoNewsBean extends BaseRes{
                  */
 
                 private int id;
+                private int typec;
                 private long createdAt;
                 private Object updatedAt;
                 private Object bzjId;
@@ -185,6 +186,14 @@ public class InfoNewsBean extends BaseRes{
                 private int rise;
                 private int fall;
 
+
+                public int getTypec() {
+                    return typec;
+                }
+
+                public void setTypec(int typec) {
+                    this.typec = typec;
+                }
 
                 private boolean isRise=false;
                 private boolean isFall=false;
