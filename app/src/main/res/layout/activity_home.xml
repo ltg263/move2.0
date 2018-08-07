@@ -239,8 +239,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/cut_off_rule" />
+                    android:layout_height="@dimen/dp_10" />
 
                 <com.secretk.move.view.ViewPagerFixed
                     android:id="@+id/view_pager"

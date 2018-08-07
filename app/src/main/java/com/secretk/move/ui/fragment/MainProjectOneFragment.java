@@ -183,7 +183,6 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
 
             @Override
             public void onFinish() {
-                loadingDialog.dismiss();
                 if(refreshLayout.isEnableRefresh()){
                     refreshLayout.finishRefresh();
                 }

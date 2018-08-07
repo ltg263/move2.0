@@ -151,8 +151,16 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
         }
         tvTopTime.setText(topTime);
         tvTime.setText(StringUtil.getTimeToHm(rowsBean.getUpdatedAt()));
-        tvHeadTitle.setText(StringUtil.getBeanString(rowsBean.getTitle()));
-        tvDetailDesc.setText(StringUtil.getBeanString(rowsBean.getContent()));
+        tvHeadTitle.setVisibility(View.GONE);
+        if(StringUtil.isNotBlank(rowsBean.getTitle())){
+            tvHeadTitle.setVisibility(View.VISIBLE);
+            tvHeadTitle.setText(StringUtil.getBeanString(rowsBean.getTitle()));
+        }
+        tvDetailDesc.setVisibility(View.GONE);
+        if(StringUtil.isNotBlank(rowsBean.getContent())){
+            tvDetailDesc.setVisibility(View.VISIBLE);
+            tvDetailDesc.setText(StringUtil.getBeanString(rowsBean.getContent()));
+        }
         tvInfoZ.setSelected(!rowsBean.isRise());
         tvInfoJ.setSelected(!rowsBean.isFall());
 

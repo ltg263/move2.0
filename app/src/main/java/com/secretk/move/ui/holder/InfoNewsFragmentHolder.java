@@ -146,9 +146,17 @@ public class InfoNewsFragmentHolder extends RecyclerViewBaseHolder {
         }
         tvTopTime.setText(topTime);
         tvBzyhzc.setText("币智慧支持");
+        tvHeadTitle.setVisibility(View.GONE);
+        if(StringUtil.isNotBlank(rowsBean.getTitle())){
+            tvHeadTitle.setVisibility(View.VISIBLE);
+            tvHeadTitle.setText(StringUtil.getBeanString(rowsBean.getTitle()));
+        }
+        tvDetailDesc.setVisibility(View.GONE);
+        if(StringUtil.isNotBlank(rowsBean.getAbstractc())){
+            tvDetailDesc.setVisibility(View.VISIBLE);
+            tvDetailDesc.setText(StringUtil.getBeanString(rowsBean.getAbstractc()));
+        }
         tvTime.setText(StringUtil.getTimeToHm(StringUtil.getMsToTime(rowsBean.getPublishTime())));
-        tvHeadTitle.setText(StringUtil.getBeanString(rowsBean.getTitle()));
-        tvDetailDesc.setText(StringUtil.getBeanString(rowsBean.getAbstractc()));
         tvInfoZ.setSelected(!rowsBean.isRise());
         tvInfoJ.setSelected(!rowsBean.isFall());
 
