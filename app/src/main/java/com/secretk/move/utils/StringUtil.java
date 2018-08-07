@@ -413,7 +413,9 @@ public class StringUtil {
                 calendarEnd.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(end));
                 endTime = calendarEnd.getTimeInMillis();
             }
+            LogUtil.w("end:"+end);
             if("0".equals(end)){
+                LogUtil.w("startTime - endTime:"+(startTime - endTime));
                 return startTime - endTime;
             }
             return endTime-startTime;

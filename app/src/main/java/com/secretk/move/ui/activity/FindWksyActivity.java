@@ -134,6 +134,7 @@ public class FindWksyActivity extends BaseActivity{
                 FindWksyList.DataBeanX.DataBean detailsBean = bean.getData().getData();
                 if(detailsBean==null){
                     refreshLayout.finishLoadMoreWithNoMoreData();
+                    refreshLayout.setVisibility(View.GONE);
                     return;
                 }
                 if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
@@ -141,7 +142,7 @@ public class FindWksyActivity extends BaseActivity{
                 }
                 if (detailsBean.getRows() == null || detailsBean.getRows().size() == 0) {
 //                    findViewById(R.id.no_data).setVisibility(View.VISIBLE);
-//                    refreshLayout.setVisibility(View.GONE);
+                    refreshLayout.setVisibility(View.GONE);
                     return;
                 }
                 if (pageIndex > 2) {

@@ -219,6 +219,7 @@ public class FindWkDetailsActivity extends BaseActivity {
 
                 //  "followType": 0,//判断用户是否关注了该项目:0-未关注，1-已关注，
                 if (data.getFollowType() == 0) {
+                    tvGoFollow.setText("去关注项目");
                     tvGoFollow.setSelected(false);
                 } else {
                     tvGoFollow.setSelected(true);
@@ -226,9 +227,10 @@ public class FindWkDetailsActivity extends BaseActivity {
                 }
                 //0-未点评，1-已点评
                 if (data.getCommentType() == 0) {
+                    tvGoComment.setText("去点评项目");
                     tvGoComment.setSelected(false);
                 } else {
-                    tvGoShare.setText("已完成");
+                    tvGoComment.setText("已完成");
                     tvGoComment.setSelected(true);
                 }
                 //：0-未分享，1-已分享
@@ -236,10 +238,11 @@ public class FindWkDetailsActivity extends BaseActivity {
                     tvGoShare.setSelected(true);
                     tvGoShare.setText("已完成");
                 } else {
+                    tvGoShare.setText("去分享");
                     tvGoShare.setSelected(false);
                 }
                 long surplusTime = 0;
-                final Date date = new Date(StringUtil.getMsToTime(data.getEndDt()));
+                final Date date = new Date(StringUtil.getMsToTime(data.getBeginDt()));
                 final SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm");
                 // status:0,//活动状态：0-未开始，1-进行中，2-已结束，3-已终止,4-已挖完
                 if (data.getStatus() == 0) {
@@ -345,21 +348,21 @@ public class FindWkDetailsActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_go_follow:
-                if(tvGoFollow.isSelected()){
-                    return;
-                }
+//                if(tvGoFollow.isSelected()){
+//                    return;
+//                }
                 IntentUtil.startProjectActivity(data.getProjectId());
                 break;
             case R.id.tv_go_comment:
-                if(tvGoComment.isSelected()){
-                    return;
-                }
+//                if(tvGoComment.isSelected()){
+//                    return;
+//                }
                 IntentUtil.startProjectActivity(data.getProjectId());
                 break;
             case R.id.tv_go_share:
-                if(tvGoShare.isSelected()){
-                    return;
-                }
+//                if(tvGoShare.isSelected()){
+//                    return;
+//                }
                 // "type": 2,//(当activity_step为2时才会有：)类型：0-完整版专业评测，1-自定义评测，2-文章，3-打假，4-单项评测
                 int typeId = data.getType();
                 if (typeId == 0 || typeId == 1 || typeId == 4) {

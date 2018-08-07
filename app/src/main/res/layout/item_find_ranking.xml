@@ -67,7 +67,7 @@
                 android:text="/波场割韭"
                 android:textColor="@color/theme_title_name"
                 android:textSize="@dimen/sp_14"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -86,13 +86,13 @@
 
         <TextView
             android:id="@+id/tv_num"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dp_65"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
             android:layout_toLeftOf="@id/tv_project_folly"
-            android:paddingRight="@dimen/dp_25"
-            android:text="8.6"
+            android:text="8.61111"
+            android:gravity="right"
             android:textColor="@color/theme_title_lan"
             android:textSize="@dimen/sp_16" />
 

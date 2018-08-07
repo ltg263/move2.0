@@ -34,7 +34,7 @@ public class MagicIndicatorUtils {
         commonNavigator.setEnablePivotScroll(true);
 //        commonNavigator.setScrollPivotX(0.65f);
         if(mContext instanceof ProjectActivity){
-             commonNavigator.setAdjustMode(true);
+             commonNavigator.setAdjustMode(true);//ture 即标题平分屏幕宽度的模式
         }
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
@@ -49,6 +49,9 @@ public class MagicIndicatorUtils {
                 simplePagerTitleView.setNormalColor(ContextCompat.getColor(mContext, R.color.app_toolbar));
                 simplePagerTitleView.setSelectedColor(ContextCompat.getColor(mContext, R.color.app_background));
                 simplePagerTitleView.setTextSize(16);
+                if(!(mContext instanceof ProjectActivity)){
+                    simplePagerTitleView.setPadding(45,0,45,0);
+                }
                 simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

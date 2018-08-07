@@ -229,10 +229,56 @@ public class ProjectByTabBean extends BaseRes{
 
                 private double price;
                 private double volume_24h;
-                private long market_cap;
+                private double market_cap;
                 private double percent_change_1h;
                 private double percent_change_24h;
                 private double percent_change_7d;
+                private double volume24h;
+                private double marketCap;
+                private double percentChange1h;
+                private double percentChange24h;
+                private double percentChange7d;
+
+
+                public void setMarketCap(double marketCap) {
+                    this.marketCap = marketCap;
+                }
+
+                public void setPercentChange1h(double percentChange1h) {
+                    this.percentChange1h = percentChange1h;
+                }
+
+                public void setPercentChange7d(double percentChange7d) {
+                    this.percentChange7d = percentChange7d;
+                }
+
+                public void setPercentChange24h(double percentChange24h) {
+                    this.percentChange24h = percentChange24h;
+                }
+
+                public void setVolume24h(double volume24h) {
+                    this.volume24h = volume24h;
+                }
+
+                public double getPercentChange1h() {
+                    return percentChange1h;
+                }
+
+                public double getPercentChange7d() {
+                    return percentChange7d;
+                }
+
+                public double getPercentChange24h() {
+                    return percentChange24h;
+                }
+
+                public double getVolume24h() {
+                    return volume24h;
+                }
+
+                public double getMarketCap() {
+                    return marketCap;
+                }
 
 
                 public int getCmcId() {
@@ -547,11 +593,11 @@ public class ProjectByTabBean extends BaseRes{
                     this.volume_24h = volume_24h;
                 }
 
-                public long getMarket_cap() {
+                public double getMarket_cap() {
                     return market_cap;
                 }
 
-                public void setMarket_cap(long market_cap) {
+                public void setMarket_cap(double market_cap) {
                     this.market_cap = market_cap;
                 }
 

@@ -16,6 +16,7 @@ import com.secretk.move.bean.FindRankingUserBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -136,7 +137,7 @@ public class FindRankingUserAdapter extends RecyclerView.Adapter<FindRankingUser
                     tvProjectFolly.setText(context.getString(R.string.follow_status_0));
                 }
                 tvScore.setVisibility(View.VISIBLE);
-                tvNameF.setVisibility(View.VISIBLE);
+//                tvNameF.setVisibility(View.VISIBLE);
             } else {
                 GlideUtils.loadCircleUserUrl(context, ivIcon, Constants.BASE_IMG_URL + StringUtil.getBeanString(bean.getIcon()));
                 tvName.setText(StringUtil.getBeanString(bean.getUserName()));
@@ -151,6 +152,37 @@ public class FindRankingUserAdapter extends RecyclerView.Adapter<FindRankingUser
                 tvScore.setVisibility(View.INVISIBLE);
                 tvNameF.setVisibility(View.INVISIBLE);
             }
+            tvProjectFolly.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    tvProjectFolly.setEnabled(false);
+                    if(index==1){
+                        NetUtil.addSaveFollow(tvProjectFolly,
+                                Constants.SaveFollow.USER,bean.getUserId(), new NetUtil.SaveFollowImp() {
+                                    @Override
+                                    public void finishFollow(String str) {
+                                        // 0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
+                                        tvProjectFolly.setEnabled(true);
+                                        if(!str.equals(Constants.FOLLOW_ERROR)){
+                                            tvProjectFolly.setText(str);
+                                        }
+                                    }
+                                });
+                        return;
+                    }
+                    NetUtil.addSaveFollow(tvProjectFolly,
+                            Constants.SaveFollow.PROJECT,bean.getProjectId(), new NetUtil.SaveFollowImp() {
+                                @Override
+                                public void finishFollow(String str) {
+                                    // 0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
+                                    tvProjectFolly.setEnabled(true);
+                                    if(!str.equals(Constants.FOLLOW_ERROR)){
+                                        tvProjectFolly.setText(str);
+                                    }
+                                }
+                            });
+                }
+            });
             rlGeRen.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

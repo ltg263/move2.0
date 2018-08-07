@@ -450,7 +450,7 @@ public class ProjectActivity extends BaseActivity {
                         }
                         double price = cny.getDouble("price");
                         double percent_change_24h = cny.getDouble("percent_change_24h");
-                        tvPrice.setText("￥" + String.format("%.2f", price));
+                        tvPrice.setText("￥"+StringUtil.getYxNum(price));
 
                         ivMarketCap.setVisibility(View.VISIBLE);
                         if (percent_change_24h < 0) {

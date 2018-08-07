@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginVertical="@dimen/dp_10"
-                android:src="@drawable/ic_head_a" />
+                android:src="@drawable/ic_show_jl" />
 
 
             <Button

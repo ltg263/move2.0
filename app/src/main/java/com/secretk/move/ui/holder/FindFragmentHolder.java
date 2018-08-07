@@ -6,6 +6,7 @@ import android.text.Html;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -32,6 +33,8 @@ import butterknife.ButterKnife;
 public class FindFragmentHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.iv_icon)
     ImageView ivIcon;
+    @BindView(R.id.ll_go)
+    LinearLayout llGo;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tv_code)
@@ -129,7 +132,7 @@ public class FindFragmentHolder extends RecyclerViewBaseHolder {
             //将此 countDownTimer 放入list.
             countDownCounters.put(tvTime.hashCode(), countDownTimer);
         }
-        tvGo.setOnClickListener(new View.OnClickListener() {
+        llGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!SharedUtils.getLoginZt() || StringUtil.isBlank(SharedUtils.getToken())){

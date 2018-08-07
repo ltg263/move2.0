@@ -106,6 +106,9 @@ public interface Constants {
     //:15537894586   abc12310  志远手机密码：0405
 //    String BASE_URL = "http://47.98.197.101/rest/";//宋
 
+
+//     String BASE_URL = "http://192.168.10.205/";//測試
+
     /**
      * 关于我们
       */
@@ -138,6 +141,14 @@ public interface Constants {
      * 打假分享
       */
     String DISCUSS_SHARE= BASE_IMG_HTML5+"project/discuss?id=";
+    /**
+     * 打假分享
+      */
+    String CURRENCY= BASE_IMG_HTML5+"project/currency?id=";
+    /**
+     * 币智慧
+     */
+    String BI_ZHI_HUI= "http://bizhihui.baiduux.com/h5/bizhihui.html";
 
     //发送验证码通用接口
 //    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/send";
@@ -277,6 +288,8 @@ public interface Constants {
 
     //获取首页资讯的列表
     String GET_NEWS_FLASH_PAGE_LIST = BASE_URL + "kff/newsFlash/getNewsFlashPageList";
+    //获取币种详情页的快讯列表接口
+    String GET_APP_NEWS_FLASH_PAGE_LIST = BASE_URL + "kff/newsFlash/getAppNewsFlashPageList";
 
     //点评挖矿列表接口
     String GET_MINING_ACTIVITY_PAGE_LIST = BASE_URL + "kff/miningActivity/getMiningActivityPageList";
@@ -315,6 +328,9 @@ public interface Constants {
 
     //讨论详情 页
     String HOME_DISCUSS_DETAIL = BASE_URL + "kff/home/discussDetail";
+
+    //活动分享成功回调页面
+    String ADD_POST_SHARE = BASE_URL + "kff/postShare/addPostShare";
     //根据用户查询挖矿的奖励收益列表接口
     String GET_USER_REWARD_LIST = BASE_URL + "kff/rewardDetail/getUserRewardList";
     //讨论，评测，文章 中 某个评论的评论列表

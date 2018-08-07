@@ -107,7 +107,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //检测卡顿
-//    implementation 'com.github.markzhai:blockcanary-android:1.5.0'
+    implementation 'com.github.markzhai:blockcanary-android:1.5.0'
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
 //    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 //    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'

@@ -84,6 +84,7 @@
             android:layout_marginRight="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_10"
             android:maxLines="1"
+            android:gravity="right"
             android:ellipsize="end"
             android:textColor="@color/theme_title"
             android:textSize="14sp"

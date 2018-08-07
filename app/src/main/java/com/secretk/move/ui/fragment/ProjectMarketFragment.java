@@ -130,12 +130,16 @@ public class ProjectMarketFragment extends LazyFragment implements ItemClickList
                     adapter.setAddData(rows);
                 } else {
                     adapter.setData(rows);
-                    loadingDialog.dismiss();
                 }
+//                getHttpsData(rows,0);
+            }
+
+            @Override
+            public void onFinish() {
                 if(refreshLayoutF.isEnableLoadMore()){
                     refreshLayoutF.finishLoadMore();
                 }
-//                getHttpsData(rows,0);
+                loadingDialog.dismiss();
             }
         });
     }

@@ -88,6 +88,14 @@ public class FindRankingListActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        getDataUrl_A(Constants.GET_EVA_PROJECT_PAGE, 0);
+        getDataUrl_A(Constants.GET_KOL_PROJECT_PAGE, 1);
+        getDataUrl_A(Constants.GET_HOT_PROJECT_PAGE, 2);
+    }
+
+    @Override
     protected int setOnCreate() {
         return R.layout.activity_find_ranking_list;
     }
@@ -189,6 +197,7 @@ public class FindRankingListActivity extends BaseActivity {
         getDataUrl_A(Constants.GET_EVA_PROJECT_PAGE, 0);
         getDataUrl_A(Constants.GET_KOL_PROJECT_PAGE, 1);
         getDataUrl_A(Constants.GET_HOT_PROJECT_PAGE, 2);
+        tv_p.setVisibility(View.GONE);
         recyclerUser.setVisibility(View.VISIBLE);
     }
 

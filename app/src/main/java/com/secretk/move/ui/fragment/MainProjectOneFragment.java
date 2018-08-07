@@ -54,6 +54,8 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
     boolean showFragment = false;//需要弹框
     int pageIndex = 1;
     int tabId;
+    @BindView(R.id.tv_code_num)
+    TextView tvCodeNum;
 
 
     @BindView(R.id.rl_context)
@@ -167,7 +169,27 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
                 List<ProjectByTabBean.DataBean.ProjectResponsePageBean.RowsBean> rows = detailsBean.getRows();
-                getCoinmarketcap(rows,0);
+                tvCodeNum.setText("共"+detailsBean.getRowCount()+"个币种");
+//                getCoinmarketcap(rows,0);
+                if (pageIndex > 2) {
+                    adapter.setAddData(rows);
+                } else {
+                    adapter.setData(rows);
+                }
+                refreshLayout.setVisibility(View.VISIBLE);
+                rlContext.setVisibility(View.VISIBLE);
+                convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFinish() {
+                loadingDialog.dismiss();
+                if(refreshLayout.isEnableRefresh()){
+                    refreshLayout.finishRefresh();
+                }
+                if(refreshLayout.isEnableLoadMore()){
+                    refreshLayout.finishLoadMore();
+                }
             }
 
             @Override
