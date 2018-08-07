@@ -14,6 +14,7 @@
         android:background="@color/app_bar_background" />
 
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_line"
         android:background="@color/cut_off_rule" />

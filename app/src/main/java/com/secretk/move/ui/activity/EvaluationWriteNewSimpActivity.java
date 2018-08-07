@@ -34,6 +34,7 @@ import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
+import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.EvaluationSliderView;
 import com.secretk.move.view.ProgressBarStyleView;
 import com.secretk.move.view.RichTextEditor;
@@ -135,13 +136,21 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
             ToastUtils.getInstance().show("评测内容不能为空");
             return;
         }
-
+        if (etNewContent.isBlankEdLeng(list)) {
+            ToastUtils.getInstance().show("评测字数最少10个字");
+            return;
+        }
         if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
         }
-        qiToken="";
-        setPostSmallImages();
+        DialogUtils.showEvaluationDialogHint(this, getString(R.string.evaluation_state_ts),new DialogUtils.ErrorDialogInterface() {
+            @Override
+            public void btnConfirm() {
+                qiToken="";
+                setPostSmallImages();
+            }
+        });
     }
 
     @Override

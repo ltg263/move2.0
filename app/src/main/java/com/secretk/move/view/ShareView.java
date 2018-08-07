@@ -3,6 +3,7 @@ package com.secretk.move.view;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -21,6 +22,7 @@ import com.secretk.move.utils.StringUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 
 import cn.sharesdk.framework.Platform;
@@ -92,19 +94,24 @@ public class ShareView {
         oks.show(mContext);
     }
 
+    static String str="";
+    public static void showShare1(final ScrollView scrollView, final String imgPath) {
 
-    private static String str;
-    public static void showShare1(final RelativeLayout relativeLayout, final String imgPath) {
-        if(StringUtil.isBlank(imgPath) && relativeLayout!=null){
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Bitmap b = DialogUtils.getViewBitmap(relativeLayout);
-//                String pathDj = Environment.getExternalStorageDirectory()+ File.separator +"区分";
-                    String pathDj = Constants.LOCAL_PATH;
-                    str = ImageUtils.saveBitmap(b, pathDj, "share_"+System.currentTimeMillis()+".png");
-                }
-            }).start();
+        if(scrollView!=null){
+            final String pathDj = Constants.LOCAL_PATH;
+            File file = new File(pathDj+File.separator+imgPath+".png");
+            if(file.exists()){
+                str = file.getPath();
+            }else{
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Bitmap b = DialogUtils.getViewBitmap(scrollView);
+                        str = ImageUtils.saveBitmap(b, pathDj, imgPath+".png");
+
+                    }
+                }).start();
+            }
         }
 
         OnekeyShare oks = new OnekeyShare();
@@ -126,7 +133,7 @@ public class ShareView {
                 } else {
 
                 }
-                if(StringUtil.isBlank(imgPath)){
+                if(StringUtil.isNotBlank(str)){
                     paramsToShare.setImagePath(str);
                 }else{
                     paramsToShare.setImageUrl(imgPath);

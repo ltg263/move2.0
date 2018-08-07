@@ -108,7 +108,7 @@ public class MineAttentionUserFragment extends LazyFragment {
             node.put("token", token);
             node.put("followType", 3);
             node.put("pageIndex", pageIndexUser++);
-            node.put("pageSize", Constants.PAGE_SIZE);
+            node.put("pageSize", 15);
         } catch (JSONException e) {
             e.printStackTrace();
         }

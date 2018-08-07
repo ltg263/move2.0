@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -100,8 +100,8 @@ public class InfoNewsFragmentHolder extends RecyclerViewBaseHolder {
         tvInfoShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RelativeLayout relativeLayout = DialogUtils.showDialogImage(mContext, rowsBean.getCreatedAt(), rowsBean.getTitle(), rowsBean.getAbstractc());
-                ShareView.showShare1(relativeLayout,"");
+                ScrollView scrollView = DialogUtils.showDialogImage(mContext, rowsBean.getCreatedAt(), rowsBean.getTitle(), rowsBean.getAbstractc());
+                ShareView.showShare1(scrollView,"share_info_news_"+rowsBean.getId());
             }
         });
         llHtml.setOnClickListener(new View.OnClickListener() {

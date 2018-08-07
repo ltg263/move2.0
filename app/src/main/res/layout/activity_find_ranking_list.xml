@@ -91,6 +91,7 @@
                             android:layout_width="@dimen/dp_80"
                             android:layout_height="wrap_content"
                             android:paddingRight="@dimen/dp_12"
+                            android:layout_marginRight="@dimen/dp_25"
                             android:gravity="right"
                             android:text="粉丝"
                             android:textColor="#393d46"

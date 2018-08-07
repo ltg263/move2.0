@@ -97,9 +97,9 @@ public interface Constants {
     String QUNIU_IMG_RUL = "https://pic.qufen.top/";
 
 
-//    String BASE_URL = "http://app.qufen.top/rest/";//线上
+    String BASE_URL = "http://app.qufen.top/rest/";//线上
 //
-     String BASE_URL = "http://192.168.10.153:809/";//栋栋
+//     String BASE_URL = "http://192.168.10.153:809/";//栋栋
 //
 //      String BASE_URL = "http://repay.free.ngrok.cc/rest/";//林俊
 //      String BASE_URL = "http://192.168.10.133:8044/rest/";//林俊

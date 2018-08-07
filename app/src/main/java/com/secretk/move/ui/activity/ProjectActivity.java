@@ -255,6 +255,7 @@ public class ProjectActivity extends BaseActivity {
     public String getProjectId() {
         return projectId;
     }
+
     public void setProjectCode(String projectCode) {
         newsFragment.setProjectCode(projectCode);
     }
@@ -445,21 +446,23 @@ public class ProjectActivity extends BaseActivity {
                     JSONObject obj = new JSONObject(str);
                     if (obj.getJSONObject("data") != null) {
                         JSONObject cny = obj.getJSONObject("data").getJSONObject("quotes").getJSONObject("CNY");
-                        if(StringUtil.isEmptyObject(cny.get("price"))){
+                        if (StringUtil.isEmptyObject(cny.get("price"))) {
                             return;
                         }
                         double price = cny.getDouble("price");
                         double percent_change_24h = cny.getDouble("percent_change_24h");
-                        tvPrice.setText("￥"+StringUtil.getYxNum(price));
+                        tvPrice.setText("￥" + StringUtil.getYxNum(price));
 
                         ivMarketCap.setVisibility(View.VISIBLE);
                         if (percent_change_24h < 0) {
                             tvPercentChange24h.setBackgroundColor(getResources().getColor(R.color.theme_title_red));
+                            tvPrice.setTextColor(getResources().getColor(R.color.theme_title_red));
                             tvPercentChange24h.setText(String.format("%.2f", percent_change_24h) + "%");
                             ivMarketCap.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_fall));
                         } else {
                             tvPercentChange24h.setBackgroundColor(getResources().getColor(R.color.theme_title_lv));
-                            tvPercentChange24h.setText("+"+String.format("%.2f", percent_change_24h) + "%");
+                            tvPrice.setTextColor(getResources().getColor(R.color.theme_title_lv));
+                            tvPercentChange24h.setText("+" + String.format("%.2f", percent_change_24h) + "%");
                             ivMarketCap.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_rise));
                         }
 

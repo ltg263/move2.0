@@ -101,6 +101,10 @@ public class EvaluationSimplenessActivity extends BaseActivity {
             ToastUtils.getInstance().show("评测内容不能为空");
             return;
         }
+        if (etEvaluationContent.getText().toString().trim().length()<10) {
+            ToastUtils.getInstance().show("评测字数最少10个字");
+            return;
+        }
         if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;

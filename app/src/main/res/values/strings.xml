@@ -58,8 +58,8 @@
     <string name="fan">粉丝</string>
     <string name="my_home_page">我的主页</string>
     <string name="the_home_page_of">的主页</string>
-    <string name="grade">评分</string>
-    <string name="grade_num">人数</string>
+    <string name="grade">短评></string>
+    <string name="grade_num">评分人数</string>
     <string name="attention">关注</string>
 
     <string name="project_intro">项目简介</string>
@@ -215,6 +215,7 @@
     <string name="evaluation_hint_name">填写纬度名称</string>
     <string name="evaluation_hint_weight">填写权重(0-1)，最多2位小数</string>
     <string name="evaluation_hint_grade">填写分数(1-10)，最多1位小数</string>
+    <string name="evaluation_state_ts">尊敬的项目分析师：\n\n为了保证区分平台项目分析的公正性，您的内容一旦发布将不可修改和删除，请对您的内容和打分再次确认。</string>
     <string name="evaluation_hint">请安规则输入</string>
     <string name="evaluation_state_1">点击每个板块对应的“单项评测”，可进行单项评测，可任选模块评测，也可全评；\n\n点击左下方“自定义化评测”，可直接发布评测文章，也可自建模型再评测；\n\n点击右下方“FIND模型评测”，按照区分模型进行评测。</string>
 
@@ -279,7 +280,7 @@
     <string name="home_find_3">币圈必读</string>
     <string name="home_find_4">热门项目</string>
     <string name="home_find_5">活跃用户</string>
-    <string name="home_find_6">点击挖矿</string>
+    <string name="home_find_6">点评挖矿</string>
 
     <string name="home_find_wk_1">我的钱包</string>
     <string name="home_find_wk_2">活动说明</string>

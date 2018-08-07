@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -185,7 +186,7 @@ public class DialogUtils {
         dialog5.show();
     }
 
-    public static Bitmap getViewBitmap(RelativeLayout rlShare) {
+    public static Bitmap getViewBitmap(ScrollView rlShare) {
         rlShare.setDrawingCacheEnabled(true);
         rlShare.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
@@ -193,8 +194,6 @@ public class DialogUtils {
         rlShare.buildDrawingCache();
 
         Bitmap bitmap = rlShare.getDrawingCache(); // 获取图片
-
-
         return bitmap;
     }
 
@@ -204,10 +203,11 @@ public class DialogUtils {
          * @param
          * @param context
          */
-    public static RelativeLayout showDialogImage(final Context context,long time,String title,String content) {
+    public static ScrollView showDialogImage(final Context context,long time,String title,String content) {
         final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_share_img, null);
         RelativeLayout ivIcon = view.findViewById(R.id.rl_share);
+        ScrollView svShare = view.findViewById(R.id.sv_share);
         TextView tvTitle = view.findViewById(R.id.tv_title);
         TextView tvTime = view.findViewById(R.id.tv_time);
         TextView tvContent = view.findViewById(R.id.tv_content);
@@ -222,7 +222,7 @@ public class DialogUtils {
         });
         dialog5.setContentView(view);
         dialog5.show();
-        return ivIcon;
+        return svShare;
     }
 
     /**
@@ -574,6 +574,40 @@ public class DialogUtils {
     }
     /**
      * 单个按钮，提示框；
+     *
+     * @param context
+     * @param
+     */
+    public static void showEvaluationDialogHint(Context context, String title, final ErrorDialogInterface dialogConfirm) {
+
+            final Dialog dialog5 = new Dialog(context, R.style.selectorDialog);
+            final View view = LayoutInflater.from(context).inflate(R.layout.dialog_hine, null);
+            TextView bt_ok = (TextView) view.findViewById(R.id.bt_confirm);
+            TextView suanle = (TextView) view.findViewById(R.id.bt_suanle);
+            TextView tv_title = (TextView) view.findViewById(R.id.tv_title);
+            tv_title.setText(title);
+            bt_ok.setText("确认发布");
+            suanle.setText("再斟酌下");
+            suanle.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    dialog5.dismiss();
+                }
+            });
+            bt_ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialogConfirm.btnConfirm();
+                    dialog5.dismiss();
+                }
+            });
+            dialog5.setCancelable(false);
+            dialog5.setContentView(view);
+            dialog5.show();
+        }
+    /**
+     * 写评测提示，提示框；
      *
      * @param context
      * @param

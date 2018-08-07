@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -16,6 +17,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.RowsBean;
 import com.secretk.move.ui.activity.DetailsReviewAllActivity;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
@@ -87,6 +89,8 @@ public class ProjectHotDiscussAdapter extends RecyclerView.Adapter<ProjectHotDis
         View viewDash;
         @BindView(R.id.tv_bnt)
         TextView tvBnt;
+        @BindView(R.id.rl_ge_ren)
+        RelativeLayout rlGeRen;
 
         public ImagesHolder(View itemView) {
             super(itemView);
@@ -129,6 +133,12 @@ public class ProjectHotDiscussAdapter extends RecyclerView.Adapter<ProjectHotDis
                     Intent intent = new Intent(context, DetailsReviewAllActivity.class);
                     intent.putExtra("postId",String.valueOf(hotDiscussBean.getPostId()));
                     context.startActivity(intent);
+                }
+            });
+            rlGeRen.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    IntentUtil.startHomeActivity(hotDiscussBean.getCreateUserId());
                 }
             });
 

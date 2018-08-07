@@ -50,6 +50,8 @@ public class FindRingRequiredActivity extends BaseActivity {
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.tv_icon)
     ImageView tvIcon;
+    @BindView(R.id.view)
+    View view;
     @BindView(R.id.tv_name)
     TextView tvName;
     @BindView(R.id.tv_submit)
@@ -77,6 +79,7 @@ public class FindRingRequiredActivity extends BaseActivity {
     @Override
     protected void initUI(Bundle savedInstanceState) {
         setVerticalManager(rvCollect);
+        view.setVisibility(View.GONE);
         adapter = new FindRingRequiredAdapter(this);
         rvCollect.setAdapter(adapter);
         initRefresh();

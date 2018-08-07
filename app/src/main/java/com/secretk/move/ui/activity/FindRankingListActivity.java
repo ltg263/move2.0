@@ -156,8 +156,8 @@ public class FindRankingListActivity extends BaseActivity {
         recyclerUser.setAdapter(adapterUser);
         List<String> list = new ArrayList<>();
         list.add("项目评分榜");
-        list.add("KLO榜单");
-        list.add("最佳项目榜");
+        list.add("KOL榜单");
+        list.add("最热项目榜");
         adapter.setData(list);
         vp_main_children.setCurrentItem(1);
         setZx();

@@ -34,11 +34,11 @@ public class FindRankingUserFragment extends LazyFragment {
 //        list.add("KLO榜单");
 //        list.add("最佳项目榜");
         if (index == 0) {
-            tv.setText("最佳项目榜");
+            tv.setText("最热项目榜");
             iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_king_zxxmb));
         }
         if (index == 1) {
-            tv.setText("KLO榜单");
+            tv.setText("KOL榜单");
             iv.setImageDrawable(getResources().getDrawable(R.drawable.ic_king_klobd));
         }
         if (index == 2) {

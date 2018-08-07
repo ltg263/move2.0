@@ -50,7 +50,7 @@
             android:maxLines="2"
             android:text="今年以来，加密货币跌势难止。数据显示，在截至6月25日的一周内，它是未来......"
             android:textColor="@color/theme_title_code"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/sp_16" />
 
 
         <ImageView

@@ -89,7 +89,7 @@
             android:layout_width="@dimen/dp_65"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_35"
             android:layout_toLeftOf="@id/tv_project_folly"
             android:text="8.61111"
             android:gravity="right"

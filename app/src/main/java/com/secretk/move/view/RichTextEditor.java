@@ -408,6 +408,21 @@ public class RichTextEditor extends ScrollView {
         }
         return true;
     }
+    /**
+     * 生成控件中的数据
+     */
+    public static boolean isBlankEdLeng(List<RichTextEditor.EditData> editList) {
+        if (editList.size() > 0) {
+            for (RichTextEditor.EditData itemData : editList) {
+                if (StringUtil.isNotBlank(replaceBlank(itemData.inputStr))) {
+                    if(replaceBlank(itemData.inputStr).length()>10){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
     public static String replaceBlank(String str) {
         String dest = "";
         if (StringUtil.isNotBlank(str)) {
