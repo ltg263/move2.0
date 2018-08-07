@@ -132,6 +132,7 @@
                                     android:layout_height="@dimen/dp_line"
                                     android:layout_below="@id/ll"
                                     android:layout_marginHorizontal="@dimen/dp_10"
+                                    android:visibility="gone"
                                     android:layout_toLeftOf="@id/ll_3"
                                     android:background="@color/cut_off_rule" />
 
@@ -139,8 +140,9 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/ll"
+                                    android:gravity="bottom"
                                     android:layout_marginHorizontal="@dimen/dp_10"
-                                    android:layout_marginTop="@dimen/dp_5"
+                                    android:layout_alignBottom="@id/ll_3"
                                     android:layout_toLeftOf="@id/ll_3">
 
                                     <RelativeLayout
@@ -338,7 +340,7 @@
                                     android:layout_height="@dimen/dp_35"
                                     android:layout_margin="@dimen/dp_10"
                                     android:layout_weight="1"
-                                    android:background="@drawable/selector_follow_state"
+                                    android:background="@drawable/selector_follow_2_state"
                                     android:gravity="center"
                                     android:text="@string/review"
                                     android:textColor="@drawable/selector_follow_state_text" />
@@ -349,7 +351,7 @@
                                     android:layout_height="@dimen/dp_35"
                                     android:layout_margin="@dimen/dp_10"
                                     android:layout_weight="1"
-                                    android:background="@drawable/selector_follow_state"
+                                    android:background="@drawable/selector_follow_2_state"
                                     android:gravity="center"
                                     android:text="+关注"
                                     android:textColor="@drawable/selector_follow_state_text" />

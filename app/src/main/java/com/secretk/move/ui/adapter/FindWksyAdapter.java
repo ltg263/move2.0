@@ -99,7 +99,7 @@ public class FindWksyAdapter extends RecyclerView.Adapter<FindWksyAdapter.FindWk
             tvTime.setText(StringUtil.getTimeToM(bean.getUpdatedAt()));
             GlideUtils.loadCircleProjectUrl(mContext,ivIcon, Constants.BASE_IMG_URL+bean.getProjectIcon());
             tvCode.setText(StringUtil.getBeanString(bean.getProjectCode()));
-            tvName.setText("/"+StringUtil.getBeanString(bean.getProjectChineseName()));
+//            tvName.setText("/"+StringUtil.getBeanString(bean.getProjectChineseName()));
             tvNum.setText(String.valueOf(bean.getReward()));
             //"status": 0,//状态：0-待发放，1-已发放，2-发放失败
             if(bean.getStatus()==0){

@@ -17,9 +17,12 @@
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="EOS点评挖矿第一弹"
+            android:layout_below="@id/ll_project_info"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_toLeftOf="@id/tv_num"
+            android:text="BIT"
             android:textColor="@color/theme_title"
             android:textSize="@dimen/sp_14" />
 
@@ -37,9 +40,6 @@
             android:id="@+id/ll_project_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_title"
-            android:layout_marginTop="@dimen/dp_15"
-            android:layout_toLeftOf="@id/tv_num"
             android:gravity="center_vertical">
 
             <ImageView
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_5"
-                android:text="BIT"
+                android:text="EOS点评挖矿第一弹"
                 android:textColor="#393d46"
                 android:textSize="@dimen/sp_16"
                 android:textStyle="bold" />
@@ -66,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:visibility="gone"
                 android:text="/ 比特币"
                 android:textColor="@color/theme_title_name"
                 android:textSize="@dimen/sp_14" />
@@ -75,7 +76,7 @@
             android:id="@+id/tv_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/ll_project_info"
+            android:layout_alignBottom="@id/tv_title"
             android:layout_marginBottom="@dimen/dp_3"
             android:layout_marginRight="100dp"
             android:layout_toLeftOf="@id/tv_status"
@@ -86,7 +87,7 @@
             android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/ll_project_info"
+            android:layout_alignBottom="@id/tv_title"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="@dimen/dp_3"
             android:text="已发放"

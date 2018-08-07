@@ -69,9 +69,9 @@ public class FindFragmentHolder extends RecyclerViewBaseHolder {
         GlideUtils.loadCircleProjectUrl(context,ivIcon, Constants.BASE_IMG_URL+StringUtil.getBeanString(rowsBean.getProjectIcon()));
         tvCode.setText(StringUtil.getBeanString(rowsBean.getProjectCode()));
         tvTitle.setText(StringUtil.getBeanString(rowsBean.getTitle()));
-        tvPrice.setText(Html.fromHtml("共<font color=\"#ff4b4b\">"+rowsBean.getTokenUnclaimed()+"</font>约 ¥"+rowsBean.getTokenCash()));
+        tvPrice.setText(Html.fromHtml("共<font color=\"#ff4b4b\">"+rowsBean.getTokenUnclaimed()+"</font> "+rowsBean.getTokenName()+" 约¥"+rowsBean.getTokenCash()));
         tvName.setText("/"+StringUtil.getBeanString(rowsBean.getProjectChineseName()));
-        tvLimit.setText("限量"+StringUtil.getBeanString(String.valueOf(rowsBean.getTokenCount()))+"份");
+        tvLimit.setText("限量"+StringUtil.getBeanString(String.valueOf(rowsBean.getTokenNum()))+"份");
         // status:0,//活动状态：0-未开始，1-进行中，2-已结束，3-已终止,4-已挖完
         if(rowsBean.getStatus()==0){
             surplusTime = StringUtil.getSurplusTime(rowsBean.getBeginDt(),"0");

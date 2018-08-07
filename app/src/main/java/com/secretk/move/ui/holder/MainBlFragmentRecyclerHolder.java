@@ -2,7 +2,6 @@ package com.secretk.move.ui.holder;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,21 +11,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
-import com.secretk.move.apiService.HttpCallBackImpl;
-import com.secretk.move.apiService.RetrofitUtil;
-import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MainGzBean;
 import com.secretk.move.bean.PostDataInfo;
-import com.secretk.move.bean.base.BaseRes;
 import com.secretk.move.ui.activity.ImageViewVpAcivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.MD5;
-import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.TimeToolUtils;
@@ -54,8 +48,8 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     TextView tvName;
     @BindView(R.id.tvTime)
     TextView tvTime;
-    @BindView(R.id.tvIsFollw)
-    TextView tvIsFollw;
+    @BindView(R.id.tv_project_folly)
+    TextView tvProjectFolly;
     @BindView(R.id.rl_project)
     RelativeLayout rlProject;
     @BindView(R.id.rl)
@@ -101,39 +95,36 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         StringUtil.getUserType(bean.getUserType(),ivModelType);
         showPostDesc(bean);
 
-        tvIsFollw.setVisibility(View.VISIBLE);
-        if (0 == bean.getFollowStatus()) {
-            tvIsFollw.setText(context.getString(R.string.follow_status_0));
-            tvIsFollw.setSelected(false);
-            tvIsFollw.setPressed(false);
-            tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
-        } else if (1 == bean.getFollowStatus()) {
-            tvIsFollw.setText(context.getString(R.string.follow_status_1));
-            tvIsFollw.setSelected(true);
-            tvIsFollw.setPressed(true);
-            tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
-        } else {
-            tvIsFollw.setText(context.getString(R.string.follow_status_0));
-            tvIsFollw.setSelected(false);
-            tvIsFollw.setPressed(false);
-            tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
+        tvProjectFolly.setVisibility(View.VISIBLE);
+        if(bean.getFollowStatus() == 1){
+            tvProjectFolly.setSelected(true);
+            tvProjectFolly.setText(context.getResources().getString(R.string.follow_status_1));
+        }else{
+            tvProjectFolly.setSelected(false);
+            tvProjectFolly.setText(context.getResources().getString(R.string.follow_status_0));
         }
         if (SharedUtils.getUserId()==bean.getCreateUserId()){
-            tvIsFollw.setVisibility(View.GONE);
+            tvProjectFolly.setVisibility(View.GONE);
         }
         //关注
-        tvIsFollw.setOnClickListener(new View.OnClickListener() {
+        tvProjectFolly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!SharedUtils.getLoginZt()){
                     IntentUtil.startActivity(LoginHomeActivity.class);
                     return;
                 }
-                if (getString().equals("已关注")) {
-                    http(context,Constants.CANCEL_FOLLOW,bean.getCreateUserId());
-                } else {
-                    http(context,Constants.SAVE_FOLLOW,bean.getCreateUserId());
-                }
+                tvProjectFolly.setEnabled(false);
+                NetUtil.addSaveFollow(tvProjectFolly,
+                        Constants.SaveFollow.USER, bean.getCreateUserId(), new NetUtil.SaveFollowImp() {
+                            @Override
+                            public void finishFollow(String str) {
+                                tvProjectFolly.setEnabled(true);
+                                if(!str.equals(Constants.FOLLOW_ERROR)){
+                                    tvProjectFolly.setText(str);
+                                }
+                            }
+                        });
             }
         });
         //用户
@@ -181,47 +172,6 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             }
         });
 
-    }
-    public void http(final Context context, String url, int id) {
-        JSONObject node = new JSONObject();
-        try {
-            node.put("token", SharedUtils.getToken());
-            node.put("followType", 3);
-            node.put("followedId", id);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        RxHttpParams params = new RxHttpParams.Build()
-                .url(url)
-                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
-                .addQuery("sign", MD5.Md5(node.toString()))
-                .build();
-        RetrofitUtil.request(params, BaseRes.class, new HttpCallBackImpl<BaseRes>() {
-            @Override
-            public void onCompleted(BaseRes bean) {
-                if (bean.getCode()==0){
-                    if (getString().equals(context.getString(R.string.follow_status_1))) {
-                        tvIsFollw.setText(context.getString(R.string.follow_status_0));
-                        tvIsFollw.setSelected(false);
-                        tvIsFollw.setPressed(false);
-                        tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
-                    } else {
-                        tvIsFollw.setText(context.getString(R.string.follow_status_1));
-                        tvIsFollw.setSelected(true);
-                        tvIsFollw.setPressed(true);
-                        tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
-                    }
-                }
-            }
-
-            @Override
-            public void onError(String message) {
-
-            }
-        });
-    }
-    public String getString(){
-        return tvIsFollw.getText().toString();
     }
 
     ArrayList<PostDataInfo> imageLists;

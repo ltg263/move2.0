@@ -60,17 +60,11 @@
                 android:textSize="@dimen/sp_10" />
 
             <TextView
-                android:id="@+id/tvIsFollw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/tv_project_folly"
+                style="@style/BtnSelectorFollow"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/selector_follow"
-                android:paddingBottom="@dimen/dp_3"
-                android:paddingLeft="@dimen/dp_10"
-                android:paddingRight="@dimen/dp_10"
-                android:paddingTop="@dimen/dp_3"
-                android:textColor="@color/app_background" />
+                android:visibility="visible" />
         </RelativeLayout>
 
         <RelativeLayout

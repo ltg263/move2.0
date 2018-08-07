@@ -1,28 +1,19 @@
 package com.secretk.move.ui.holder;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.secretk.move.R;
-import com.secretk.move.apiService.HttpCallBackImpl;
-import com.secretk.move.apiService.RetrofitUtil;
-import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.BlueSkyBean;
-import com.secretk.move.bean.base.BaseRes;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.MD5;
-import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,8 +37,8 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
     TextView tv_score;
     @BindView(R.id.tv_follow)
     TextView tv_follow;
-    @BindView(R.id.tvIsFollw)
-    TextView tvIsFollw;
+    @BindView(R.id.tv_project_folly)
+    TextView tvProjectFolly;
 
     @BindView(R.id.tv_order)
     TextView tv_order;
@@ -57,13 +48,9 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
     public MainBlueSkyFragmentHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        tvIsFollw.setOnClickListener(this);
+        tvProjectFolly.setOnClickListener(this);
     }
-    String follow0;
-    String follow1;
     public void setData(final BlueSkyBean.RankList bean, int position, Context context) {
-        follow0 = context.getString(R.string.follow_status_0);
-        follow1 = context.getString(R.string.follow_status_1);
         GlideUtils.loadCircleUserUrl(context,img_head, Constants.BASE_IMG_URL + bean.getProjectIcon());
         tv_code.setText(bean.getProjectCode());
         tv_name.setText(" /" + bean.getProjectChineseName());
@@ -74,37 +61,34 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
         bean.setPosition(position + 1 + "");
         tv_order.setText(bean.getPosition());
         if (!SharedUtils.getLoginZt()) {
-            tvIsFollw.setText(follow0);
-            tvIsFollw.setSelected(false);
-            tvIsFollw.setPressed(false);
-            tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
-            tvIsFollw.setVisibility(View.VISIBLE);
+            tvProjectFolly.setSelected(false);
+            tvProjectFolly.setText(context.getResources().getString(R.string.follow_status_0));
         } else {
-            if (0 == bean.getFollowStatus()) {
-                tvIsFollw.setText(follow0);
-                tvIsFollw.setSelected(false);
-                tvIsFollw.setPressed(false);
-                tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
-            } else if (1 == bean.getFollowStatus()) {
-                tvIsFollw.setText(follow1);
-                tvIsFollw.setSelected(true);
-                tvIsFollw.setPressed(true);
-                tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
-            } else {
-                tvIsFollw.setVisibility(View.GONE);
+            if(bean.getFollowStatus() == 1){
+                tvProjectFolly.setSelected(true);
+                tvProjectFolly.setText(context.getResources().getString(R.string.follow_status_1));
+            }else{
+                tvProjectFolly.setSelected(false);
+                tvProjectFolly.setText(context.getResources().getString(R.string.follow_status_0));
             }
         }
-        tvIsFollw.setOnClickListener(new View.OnClickListener() {
+        tvProjectFolly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!SharedUtils.getLoginZt()) {
                     IntentUtil.startActivity(LoginHomeActivity.class);
                 } else {
-                    if (getString().equals(follow1)) {
-                        http(Constants.CANCEL_FOLLOW, bean.getProjectId(),SharedUtils.getToken());
-                    } else {
-                        http(Constants.SAVE_FOLLOW, bean.getProjectId(),SharedUtils.getToken());
-                    }
+                    tvProjectFolly.setEnabled(false);
+                    NetUtil.addSaveFollow(tvProjectFolly,
+                            Constants.SaveFollow.PROJECT, bean.getProjectId(), new NetUtil.SaveFollowImp() {
+                                @Override
+                                public void finishFollow(String str) {
+                                    tvProjectFolly.setEnabled(true);
+                                    if(!str.equals(Constants.FOLLOW_ERROR)){
+                                        tvProjectFolly.setText(str);
+                                    }
+                                }
+                            });
                 }
             }
         });
@@ -129,51 +113,5 @@ public class MainBlueSkyFragmentHolder extends RecyclerViewBaseHolder {
                 tv_order.setVisibility(View.VISIBLE);
                 break;
         }
-    }
-
-    public void http(String url, int id,String token) {
-        JSONObject node = new JSONObject();
-        try {
-            node.put("token", token);
-            node.put("followType", 1);
-            node.put("followedId", id);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        RxHttpParams params = new RxHttpParams.Build()
-                .url(url)
-                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
-                .addQuery("sign", MD5.Md5(node.toString()))
-                .build();
-        RetrofitUtil.request(params, BaseRes.class, new HttpCallBackImpl<BaseRes>() {
-            @Override
-            public void onCompleted(BaseRes bean) {
-                SharedUtils.singleton().put("isFollowerFx",true);
-//                SharedUtils.singleton().put("isFollowerSky",true);
-                if (bean.getCode() == 0) {
-                    if (getString().equals(follow1)) {
-                        tvIsFollw.setText(follow0);
-                        tvIsFollw.setPressed(false);
-                        tvIsFollw.setSelected(false);
-                        tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
-                    } else {
-                        tvIsFollw.setText(follow1);
-                        tvIsFollw.setPressed(true);
-                        tvIsFollw.setSelected(true);
-                        tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
-                    }
-                }
-            }
-
-            @Override
-            public void onError(String message) {
-
-            }
-        });
-
-    }
-
-    public String getString() {
-        return tvIsFollw.getText().toString();
     }
 }

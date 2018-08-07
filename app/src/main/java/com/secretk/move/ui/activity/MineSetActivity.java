@@ -274,6 +274,7 @@ public class MineSetActivity extends BaseActivity {
                 NetUtil.sendQiniuImgUrl(file, QiToken, NetUtil.getQiniuImgName("avatars",userId,0), new NetUtil.QiniuImgUpload() {
                     @Override
                     public void uploadStatus(String str, boolean status) {
+                        PicUtil.uritempFile = null;
                         if(status){
                             saveData(str);
                         }else{

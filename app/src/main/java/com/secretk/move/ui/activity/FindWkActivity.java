@@ -68,7 +68,7 @@ public class FindWkActivity extends BaseActivity {
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitleColor(R.color.title_gray);
         mHeadView.setTitle("点评挖矿");
-        mMenuInfos.add(0, new MenuInfo(R.string.home_find_wk_1, getString(R.string.home_find_wk_1), 0));
+        mMenuInfos.add(0, new MenuInfo(R.string.home_find_wk_3, getString(R.string.home_find_wk_3), 0));
         return mHeadView;
     }
 
