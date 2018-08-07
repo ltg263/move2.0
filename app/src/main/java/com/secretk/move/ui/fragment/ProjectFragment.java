@@ -3,6 +3,7 @@ package com.secretk.move.ui.fragment;
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -11,8 +12,11 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.ProjectTabBean;
+import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.activity.SearchActivity;
+import com.secretk.move.ui.activity.SubmitProjectActivity;
 import com.secretk.move.ui.adapter.MainProjectFragmentPagerAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.view.MagicIndicatorUtils;
@@ -40,6 +44,8 @@ public class ProjectFragment extends LazyFragment {
     ViewPagerFixed vp_main_children;
     @BindView(R.id.tool_bar)
     Toolbar tool_bar;
+    @BindView(R.id.iv_project_add)
+    ImageView ivProjectAdd;
     MainProjectFragmentPagerAdapter adapter;
 
     @BindView(R.id.magic_indicator_title)
@@ -62,6 +68,16 @@ public class ProjectFragment extends LazyFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), SearchActivity.class);
                 startActivity(intent);
+            }
+        });
+        ivProjectAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isLoginZt){
+                    IntentUtil.startActivity(SubmitProjectActivity.class);
+                    return;
+                }
+                IntentUtil.startActivity(LoginHomeActivity.class);
             }
         });
 
