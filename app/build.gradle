@@ -7,6 +7,8 @@ MobSDK {
     appKey "25fecb277347b"
     appSecret "32ee70fd96c34aeb83b639f7a06ae04b"
     ShareSDK {
+        //cn.sharesdk.framework.Platform 防止找不到此包指定版本号
+        version '3.2.1.1'
         //平台配置信息
         devInfo {
             Wechat {
@@ -67,7 +69,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 21
         versionCode 25
-        versionName "1.4.1"
+        versionName "1.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         /* 个推 */
         manifestPlaceholders = [
