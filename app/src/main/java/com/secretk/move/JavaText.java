@@ -9,6 +9,7 @@ package com.secretk.move;
 public class JavaText {
     public static void main(String[] args) {
 
+        
         double num = 0.0000001000343000;
         if(num>=1000){
             System.out.print("String.format(\"%.2f\", num)："+String.format("%.2f", num));
