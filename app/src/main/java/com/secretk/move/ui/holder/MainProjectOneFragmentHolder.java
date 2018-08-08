@@ -11,8 +11,11 @@ import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.ProjectByTabBean;
+import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.NetUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 
 import butterknife.BindView;
@@ -90,6 +93,10 @@ public class MainProjectOneFragmentHolder extends RecyclerViewBaseHolder {
         tvFollowStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!SharedUtils.getLoginZt() || StringUtil.isBlank(SharedUtils.getToken())){
+                    IntentUtil.startActivity(LoginHomeActivity.class);
+                    return;
+                }
                 tvFollowStatus.setEnabled(false);
                 NetUtil.addSaveFollow(tvFollowStatus,
                         Constants.SaveFollow.PROJECT, bean.getProjectId(), new NetUtil.SaveFollowImp() {

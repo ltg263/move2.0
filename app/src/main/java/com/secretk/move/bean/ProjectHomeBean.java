@@ -158,6 +158,61 @@ public class ProjectHomeBean extends BaseRes{
             private int commentsNum;
             private int collectNum;
 
+            private double price;
+            private double volume24h;
+            private double marketCap;
+            private double percentChange1h;
+            private double percentChange24h;
+            private double percentChange7d;
+
+            public double getPrice() {
+                return price;
+            }
+
+            public void setPrice(double price) {
+                this.price = price;
+            }
+
+            public double getVolume24h() {
+                return volume24h;
+            }
+
+            public void setVolume24h(double volume24h) {
+                this.volume24h = volume24h;
+            }
+
+            public double getMarketCap() {
+                return marketCap;
+            }
+
+            public void setMarketCap(double marketCap) {
+                this.marketCap = marketCap;
+            }
+
+            public double getPercentChange1h() {
+                return percentChange1h;
+            }
+
+            public void setPercentChange1h(double percentChange1h) {
+                this.percentChange1h = percentChange1h;
+            }
+
+            public double getPercentChange24h() {
+                return percentChange24h;
+            }
+
+            public void setPercentChange24h(double percentChange24h) {
+                this.percentChange24h = percentChange24h;
+            }
+
+            public double getPercentChange7d() {
+                return percentChange7d;
+            }
+
+            public void setPercentChange7d(double percentChange7d) {
+                this.percentChange7d = percentChange7d;
+            }
+
             public int getCmcId() {
                 return cmcId;
             }

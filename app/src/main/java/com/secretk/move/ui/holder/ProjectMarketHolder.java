@@ -76,11 +76,11 @@ public class ProjectMarketHolder extends RecyclerViewBaseHolder {
         double zxjg = usersBean.getUsdRate()*usersBean.getLast()*CNY;
         String styJyl = "";
         if(jyl<10000){
-            styJyl="量"+Math.round(jyl);
+            styJyl="量 ￥"+Math.round(jyl);
         }else if(jyl<100000000){
-            styJyl="量"+String.format("%.2f", jyl/10000)+"万";
+            styJyl="量 ￥"+String.format("%.2f", jyl/10000)+"万";
         }else{
-            styJyl="量"+String.format("%.2f", jyl/100000000)+"亿";
+            styJyl="量 ￥"+String.format("%.2f", jyl/100000000)+"亿";
         }
 
         String styZxjg ="￥"+ StringUtil.getYxNum(zxjg);

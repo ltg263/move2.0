@@ -229,7 +229,51 @@ public class ProjectActivity extends BaseActivity {
 
                 }
 
-                getLoadData(projectInfo.getCmcId(), "CNY");
+                double price = projectInfo.getPrice();
+                double percent_change_24h = projectInfo.getPercentChange24h();
+                double volume_24h = projectInfo.getVolume24h();
+                double market_cap = projectInfo.getMarketCap();
+                if(price!=0 || percent_change_24h!=0
+                        || volume_24h!=0 || market_cap!=0){
+                    tvPrice.setText("￥" + StringUtil.getYxNum(price));
+                    ivMarketCap.setVisibility(View.VISIBLE);
+                    if (percent_change_24h < 0) {
+                        tvPercentChange24h.setBackgroundColor(getResources().getColor(R.color.theme_title_red));
+                        tvPrice.setTextColor(getResources().getColor(R.color.theme_title_red));
+                        tvPercentChange24h.setText(String.format("%.2f", percent_change_24h) + "%");
+                        ivMarketCap.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_fall));
+                    } else {
+                        tvPercentChange24h.setBackgroundColor(getResources().getColor(R.color.theme_title_lv));
+                        tvPrice.setTextColor(getResources().getColor(R.color.theme_title_lv));
+                        tvPercentChange24h.setText("+" + String.format("%.2f", percent_change_24h) + "%");
+                        ivMarketCap.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_rise));
+                    }
+                    if(market_cap!=0){
+                        String market_capStr = "";
+                        if (market_cap < 10000) {
+                            market_capStr = String.valueOf(Math.round(market_cap));
+                        } else if (market_cap < 100000000) {
+                            market_capStr = String.format("%.2f", market_cap / 10000) + "万";
+                        } else {
+                            market_capStr = String.format("%.2f", market_cap / 100000000) + "亿";
+                        }
+                        tvMarketCap.setText(market_capStr);
+
+                    }
+                    if(volume_24h!=0){
+                        String volume_24hStr = "";
+                        if (volume_24h < 10000) {
+                            volume_24hStr = String.valueOf(Math.round(volume_24h));
+                        } else if (market_cap < 100000000) {
+                            volume_24hStr = String.format("%.2f", volume_24h / 10000) + "万";
+                        } else {
+                            volume_24hStr = String.format("%.2f", volume_24h / 100000000) + "亿";
+                        }
+                        tvVolume24h.setText(volume_24hStr);
+                    }
+
+                }
+//                getLoadData(projectInfo.getCmcId(), "CNY");
 
             }
 
@@ -330,7 +374,7 @@ public class ProjectActivity extends BaseActivity {
         StringUtil.getVpPosition(viewPager, new StringUtil.VpPageSelected() {
             @Override
             public void getVpPageSelected(int position) {
-                if (viewPager.getCurrentItem() == 5) {
+                if (viewPager.getCurrentItem() == 5 || viewPager.getCurrentItem()==4 || viewPager.getCurrentItem()==3) {
                     fab.setVisibility(View.GONE);
                     refreshLayout.setEnableLoadMore(false);
                 } else {
@@ -412,17 +456,17 @@ public class ProjectActivity extends BaseActivity {
     private void startAcy() {
         Intent intent;
         switch (viewPager.getCurrentItem()) {
-            case 1:
+            case 0:
                 IntentUtil.startProjectSimplenessActivity(projectInfo.getProjectId(), projectInfo.getProjectIcon(),
                         projectInfo.getProjectChineseName(), projectInfo.getProjectCode());
                 break;
-            case 2:
+            case 1:
                 intent = new Intent(this, ReleaseDiscussActivity.class);
                 intent.putExtra("projectId", projectInfo.getProjectId());
                 intent.putExtra("projectPay", projectInfo.getProjectCode());
                 startActivity(intent);
                 break;
-            case 3:
+            case 2:
                 intent = new Intent(this, ReleaseArticleActivity.class);
                 intent.putExtra("projectId", projectInfo.getProjectId());
                 intent.putExtra("projectPay", projectInfo.getProjectCode());

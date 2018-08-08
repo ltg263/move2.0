@@ -161,7 +161,6 @@ public class FindFragment extends LazyFragment {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                pageIndex = 1;
                 loadData();
 
             }
@@ -184,11 +183,13 @@ public class FindFragment extends LazyFragment {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
         }
+        pageIndex=1;
         //轮播图
         getNewsFlashImgList();
         //发现页面取热门项目，活跃用户
         getHotProjectAndHotUser();
         //挖矿列表页
+        adapter.clearData();
         getMiningActivityPageList();
     }
 

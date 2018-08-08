@@ -180,7 +180,7 @@
 
     <string name="permission_ask_now">您需要打开%1$s权限</string>
     <string name="permission_ask_error">申请%1$s权限失敗，请在应用详情中打开</string>
-    <string name="follow_status_0">+&#160;&#160;关注</string>
+    <string name="follow_status_0">+关注</string>
     <string name="follow_status_1">已关注</string>
     <string name="sort_love">按点赞排序</string>
     <string name="sort_time">按时间排序</string>

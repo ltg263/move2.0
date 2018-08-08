@@ -50,6 +50,10 @@ public class FindFragmentAdapter extends RecyclerView.Adapter<FindFragmentHolder
         this.list = list;
         notifyDataSetChanged();
     }
+    public void clearData() {
+        list.clear();
+        notifyDataSetChanged();
+    }
 
     public List<FindKwBean.DataBeanX.DataBean.RowsBean> getData() {
         return list;

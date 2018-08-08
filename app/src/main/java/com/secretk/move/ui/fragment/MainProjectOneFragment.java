@@ -22,6 +22,7 @@ import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.MainProjectListAdapter;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -135,6 +136,16 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
         }
         showFragment=true;
         tokenLs = token;
+
+        if(!SharedUtils.getLoginZt() && tabId==2){
+            convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+            rlTopTheme.setVisibility(View.VISIBLE);
+            tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_go_login));
+            tvName.setVisibility(View.VISIBLE);
+            tvSubmit.setText(getActivity().getResources().getString(R.string.go_login));
+            refreshLayout.setVisibility(View.GONE);
+            return;
+        }
         final String token = SharedUtils.singleton().get("token", "");
         JSONObject node = new JSONObject();
         try {
@@ -193,6 +204,10 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
 
             @Override
             public void onError(String message) {
+                LogUtil.w("message:"+message);
+                if(StringUtil.isBlank(message)){
+                    return;
+                }
                 if(message.contains("用户未登录,请重新登录")){
                     convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
                     rlTopTheme.setVisibility(View.VISIBLE);

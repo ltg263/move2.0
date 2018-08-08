@@ -190,6 +190,7 @@ public class InfoFragment extends LazyFragment {
                     for(int i = 0;i<rows.size();i++){
                         imageAdList.add(rows.get(i).getImgPath());
                     }
+                    viewpager.setVisibility(View.VISIBLE);
                     viewpager.setImageResources(imageAdList, mAdCycleViewListener);
                 }
             }

@@ -95,10 +95,10 @@ public class FindWksyAdapter extends RecyclerView.Adapter<FindWksyAdapter.FindWk
 
         private void refresh(int position) {
             FindWksyList.DataBeanX.DataBean.RowsBean bean = lists.get(position);
-            tvTitle.setText(StringUtil.getBeanString(bean.getTitle()));
+            tvTitle.setText(StringUtil.getBeanString(bean.getProjectCode()));
             tvTime.setText(StringUtil.getTimeToM(bean.getUpdatedAt()));
             GlideUtils.loadCircleProjectUrl(mContext,ivIcon, Constants.BASE_IMG_URL+bean.getProjectIcon());
-            tvCode.setText(StringUtil.getBeanString(bean.getProjectCode()));
+            tvCode.setText(StringUtil.getBeanString(bean.getTitle()));
 //            tvName.setText("/"+StringUtil.getBeanString(bean.getProjectChineseName()));
             tvNum.setText(String.valueOf(bean.getReward()));
             //"status": 0,//状态：0-待发放，1-已发放，2-发放失败
