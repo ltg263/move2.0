@@ -114,7 +114,7 @@ public class FindFragment extends LazyFragment {
                 return;
             }
 
-            InfoBean.DataBeanX.DataBean.RowsBean row = rows.get(viewpager.getCurPos(0));
+            InfoBean.DataBeanX.DataBean.RowsBean row = rows.get(viewpager.getCurPos(position));
             int type = row.getType();
 
             if (type == 5 && StringUtil.isNotBlank(row.getOutUrl())) {

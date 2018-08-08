@@ -35,7 +35,7 @@ import butterknife.BindView;
  * 作者： litongge
  * 时间： 2018/6/8 13:46
  * 邮箱；ltg263@126.com
- * 描述：主页 --发现
+ * 描述：主页 --推薦
  */
 public class MainBlueFxFragment extends LazyFragment implements ItemClickListener {
     @BindView(R.id.recycler)
