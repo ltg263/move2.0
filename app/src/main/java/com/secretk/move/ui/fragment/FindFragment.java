@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -141,7 +142,9 @@ public class FindFragment extends LazyFragment {
         public void displayImage(String imageURL, ImageView imageView) {
             // TODO 加载显示图片
             imageView.setTag(null);
-            GlideUtils.loadSideMaxImage(getActivity(),imageView,imageURL);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            Glide.with(getActivity()).load(imageURL).into(imageView);
+//            GlideUtils.loadSideMaxImage(getActivity(),imageView,imageURL);
         }
     };
 
