@@ -189,6 +189,7 @@
     <string name="sponsor_title">为人赞助</string>
     <string name="comment">评论</string>
     <string name="sponsor_num">人已赞助</string>
+    <string name="share_link">复制链接</string>
 
 
     <string name="block_chain">投资区块链</string>

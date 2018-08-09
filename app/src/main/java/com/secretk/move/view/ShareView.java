@@ -1,8 +1,11 @@
 package com.secretk.move.view;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.widget.RelativeLayout;
+import android.graphics.BitmapFactory;
+import android.view.View;
 import android.widget.ScrollView;
 
 import com.secretk.move.R;
@@ -18,6 +21,7 @@ import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.ToastUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +31,8 @@ import java.util.HashMap;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
+
+import static android.view.View.OnClickListener;
 
 /**
  * 作者： litongge
@@ -91,6 +97,21 @@ public class ShareView {
                 }
             }
         });
+
+        Bitmap enableLogo = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.share_link);
+        String label = mContext.getString(R.string.share_link);
+        OnClickListener listener = new OnClickListener() {
+            public void onClick(View v) {
+                ClipboardManager cmb = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                if (cmb != null) {
+                    ToastUtils.getInstance().show("复制成功");
+                } else {
+                    ToastUtils.getInstance().show("复制失败，请重新复制");
+                }
+                cmb.setPrimaryClip(ClipData.newPlainText(null, skipRrl));
+            }
+        };
+//        oks.setCustomerLogo(enableLogo, label, listener);
         oks.show(mContext);
     }
 
@@ -144,6 +165,7 @@ public class ShareView {
     // 启动分享GUI
         oks.show(mContext);
     }
+
 
     static class OnekeyShareCallback implements PlatformActionListener {
         String token;

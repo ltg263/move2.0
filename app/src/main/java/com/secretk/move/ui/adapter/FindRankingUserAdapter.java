@@ -136,6 +136,7 @@ public class FindRankingUserAdapter extends RecyclerView.Adapter<FindRankingUser
                     tvProjectFolly.setSelected(false);
                     tvProjectFolly.setText(context.getString(R.string.follow_status_0));
                 }
+                tvScore.setText(String.valueOf(bean.getTotalScore()));
                 tvScore.setVisibility(View.VISIBLE);
 //                tvNameF.setVisibility(View.VISIBLE);
             } else {

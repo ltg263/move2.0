@@ -78,7 +78,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_toLeftOf="@id/tv_num"
-            android:paddingRight="@dimen/dp_20"
+            android:paddingRight="@dimen/dp_10"
             android:text="8.6"
             android:textColor="@color/theme_title_lan"
             android:textSize="@dimen/sp_16"

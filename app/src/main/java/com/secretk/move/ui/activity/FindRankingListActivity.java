@@ -170,7 +170,7 @@ public class FindRankingListActivity extends BaseActivity {
                 recyclerUser.setVisibility(View.GONE);
                 if (position == 0) {
                     tv_p.setVisibility(View.VISIBLE);
-                    recyclerNewP.setVisibility(View.VISIBLE);
+                    recyclerPf.setVisibility(View.VISIBLE);
 //                    getDataUrl(Constants.GET_EVA_PROJECT_PAGE, 0);
 //                    setListAdapter(evaProjectPage, 0);
                 }
@@ -182,7 +182,7 @@ public class FindRankingListActivity extends BaseActivity {
                 }
                 if (position == 2) {
                     tv_p.setVisibility(View.VISIBLE);
-                    recyclerPf.setVisibility(View.VISIBLE);
+                    recyclerNewP.setVisibility(View.VISIBLE);
 //                    getDataUrl(Constants.GET_HOT_PROJECT_PAGE, 2);
 //                    setListAdapter(projectHot, 2);
                 }
