@@ -283,6 +283,11 @@ public class CustomViewPager extends LinearLayout {
         }
     }
 
+    /**
+     *  0 资讯
+     * @param stye
+     * @return
+     */
     public int getCurPos(int stye) {
         if(stye==0){
             return mAdvPagerZx.getCurrentItem() % mImageViews.length;
