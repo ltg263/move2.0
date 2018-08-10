@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/share_circle_top">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_context"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rv_context"
+            android:background="#f9f9f9"
+            android:gravity="center"
+            android:padding="@dimen/dp_18"
+            android:textSize="@dimen/sp_16"
+            android:text="确定"
+            android:textColor="@color/title_gray" />
+    </RelativeLayout>
+
+</RelativeLayout>

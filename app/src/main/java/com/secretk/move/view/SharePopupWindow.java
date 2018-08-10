@@ -5,6 +5,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.bean.ProjectTypeListBean;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
@@ -30,7 +32,9 @@ import com.secretk.move.utils.ToastUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -198,6 +202,7 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
                     shareCopy(url);
                     break;
                 case R.id.tv_share_report:
+                    shareReport();
                     break;
                 case R.id.tv_cancel:
                     break;
@@ -329,6 +334,35 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
             }
         }
 
+    }
+
+    private void shareReport() {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", SharedUtils.getToken());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.PROJECT_TYPE_LIST)//
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, ProjectTypeListBean.class, new HttpCallBackImpl<ProjectTypeListBean>() {
+            @Override
+            public void onCompleted(ProjectTypeListBean str) {
+                ReportPopupWindow window = new ReportPopupWindow(mContext);
+                List<ProjectTypeListBean.DataBean.ProjectTypesBean> projectTypes = str.getData().getProjectTypes();
+                List<String> list = new ArrayList();
+                list.add("违反法规");
+                list.add("广告营销");
+                list.add("重复灌水");
+                list.add("涉嫌抄袭");
+                list.add("与主题无关");
+                window.setData(list);
+                window.showAtLocation(tvCancel, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+            }
+        });
     }
 
     @Override
