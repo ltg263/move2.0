@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -19,8 +18,7 @@ import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
-import com.secretk.move.view.DialogUtils;
-import com.secretk.move.view.ShareView;
+import com.secretk.move.view.CustomDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -100,8 +98,12 @@ public class InfoNewsFragmentHolder extends RecyclerViewBaseHolder {
         tvInfoShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ScrollView scrollView = DialogUtils.showDialogImage(mContext, rowsBean.getCreatedAt(), rowsBean.getTitle(), rowsBean.getAbstractc());
-                ShareView.showShare1(scrollView,"share_info_news_"+rowsBean.getId());
+//                ScrollView scrollView = DialogUtils.showDialogImage(mContext, rowsBean.getCreatedAt(), rowsBean.getTitle(), rowsBean.getAbstractc());
+//                ShareView.showShareImg(ll,scrollView,"share_info_news_"+rowsBean.getId());
+                CustomDialog dialog = new CustomDialog(mContext,R.style.selectorDialog);
+                dialog.setData(rowsBean.getCreatedAt(), rowsBean.getTitle(), rowsBean.getAbstractc(),"share_info_news_"+rowsBean.getId());
+                dialog.show();
+                dialog.shareUi();
             }
         });
         llHtml.setOnClickListener(new View.OnClickListener() {

@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ScrollView;
 
@@ -16,7 +17,6 @@ import com.secretk.move.baseManager.BaseManager;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.sharesdk.OnekeyShare;
 import com.secretk.move.sharesdk.ShareContentCustomizeCallback;
-import com.secretk.move.utils.ImageUtils;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
@@ -44,15 +44,25 @@ public class ShareView {
     private static Context mContext = BaseManager.app;
 
     /**
-     * 不考虑回调
+     * 使用自定义布局
      */
-    public static void showShare(final String skipRrl, final String title, final String content, final String imgUrl) {
-        showShare("","",skipRrl,title,content,imgUrl);
+    public static void showShare(View view,String activityId,String skipRrl, String title,
+                                 String content, String imgUrl) {
+        SharePopupWindow popupWindow = new SharePopupWindow(mContext);
+        popupWindow.setShareUrl(activityId,title,content,skipRrl,imgUrl);
+        popupWindow.showAtLocation(view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
+    public static void showShareImg(View view,ScrollView scrollView, String imgPath) {
+        SharePopupWindow popupWindow = new SharePopupWindow(mContext);
+//        popupWindow.setShareImg(scrollView,imgPath);
+        popupWindow.showAtLocation(view,Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+
+    }
+
     /**
      * 考虑回掉
      */
-    public static void showShare(final String token,final String activityId,final String skipRrl, final String title, final String content, final String imgUrl) {
+    public static void showShare1(final String token,final String activityId,final String skipRrl, final String title, final String content, final String imgUrl) {
         final OnekeyShare oks = new OnekeyShare();
         if(StringUtil.isNotBlank(activityId) && StringUtil.isNotBlank(token)){
             oks.setCallback(new OnekeyShareCallback(token,activityId));
@@ -116,7 +126,7 @@ public class ShareView {
     }
 
     static String str="";
-    public static void showShare1(final ScrollView scrollView, final String imgPath) {
+    public static void showShareImg1(final ScrollView scrollView, final String imgPath) {
 
         if(scrollView!=null){
             final String pathDj = Constants.LOCAL_PATH;
@@ -127,8 +137,8 @@ public class ShareView {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Bitmap b = DialogUtils.getViewBitmap(scrollView);
-                        str = ImageUtils.saveBitmap(b, pathDj, imgPath+".png");
+//                        Bitmap b = DialogUtils.getViewBitmap(scrollView);
+//                        str = ImageUtils.saveBitmap(b, pathDj, imgPath+".png");
 
                     }
                 }).start();

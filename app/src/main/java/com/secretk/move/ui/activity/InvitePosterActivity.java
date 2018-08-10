@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,7 +17,7 @@ import com.secretk.move.utils.ImageUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
-import com.secretk.move.view.ShareView;
+import com.secretk.move.view.SharePopupWindow;
 
 import java.io.File;
 import java.util.List;
@@ -51,7 +52,9 @@ public class InvitePosterActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        ShareView.showShare1(null,imgUrl);
+        SharePopupWindow popupWindow = new SharePopupWindow(this);
+        popupWindow.setShareImg(imgUrl);
+        popupWindow.showAtLocation(tvBnt, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
 

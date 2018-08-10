@@ -22,6 +22,7 @@ import com.secretk.move.bean.ProjectTypeListBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.MainActivity;
 import com.secretk.move.ui.adapter.DiaLogListAdapter;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.StringUtil;
 
 import java.util.List;
@@ -186,14 +187,16 @@ public class DialogUtils {
         dialog5.show();
     }
 
-    public static Bitmap getViewBitmap(ScrollView rlShare) {
+    public static Bitmap getViewBitmap(RelativeLayout rlShare) {
         rlShare.setDrawingCacheEnabled(true);
         rlShare.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+
         rlShare.layout(0, 0, rlShare.getMeasuredWidth(),rlShare.getMeasuredHeight());
         rlShare.buildDrawingCache();
-
+//
         Bitmap bitmap = rlShare.getDrawingCache(); // 获取图片
+        LogUtil.w("bitmap:"+bitmap);
         return bitmap;
     }
 

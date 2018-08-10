@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -20,8 +19,7 @@ import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
-import com.secretk.move.view.DialogUtils;
-import com.secretk.move.view.ShareView;
+import com.secretk.move.view.CustomDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -116,8 +114,10 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
         tvInfoShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ScrollView scrollView = DialogUtils.showDialogImage(mContext, rowsBean.getUpdatedAt(), rowsBean.getTitle(), rowsBean.getContent());
-                ShareView.showShare1(scrollView,"share_info_"+rowsBean.getId());
+                CustomDialog dialog = new CustomDialog(mContext,R.style.selectorDialog);
+                dialog.setData(rowsBean.getUpdatedAt(), rowsBean.getTitle(), rowsBean.getContent(),"share_info_"+rowsBean.getId());
+                dialog.show();
+                dialog.shareUi();
             }
         });
         tvDetailDesc.setOnClickListener(new View.OnClickListener() {

@@ -29,7 +29,6 @@ import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
-import com.secretk.move.view.ShareView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -95,7 +94,7 @@ public class DetailsArticleCommentActivity extends BaseActivity {
         String shareUrl = getIntent().getStringExtra("share_url");
         String shareTitle = getIntent().getStringExtra("share_title");
         String shareContent = getIntent().getStringExtra("share_content");
-        ShareView.showShare(shareUrl,shareTitle,shareContent,imgUrl);
+//        ShareView.showShare(shareUrl,shareTitle,shareContent,imgUrl);
     }
 
     @Override

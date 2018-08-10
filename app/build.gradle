@@ -21,18 +21,24 @@ MobSDK {
                 appSecret "02bcd92a7a4c82fd6a48bb46121f6d03"
                 sortId 1
             }
+            SinaWeibo {
+                appId ""
+                appKey ""
+                shareByAppClient true
+                sortId 2
+            }
+            QZone {
+                appId "1106995226"
+                appKey "K2XaByyVBpYmwzIE"
+                shareByAppClient true
+                sortId 3
+            }
             QQ {
                 appId "1106995226"
                 appKey "K2XaByyVBpYmwzIE"
                 shareByAppClient true
-                sortId 2
+                sortId 4
             }
-//            SinaWeibo {
-//                appId ""
-//                appKey ""
-//                shareByAppClient true
-//                sortId 3
-//            }
         }
     }
 
@@ -77,6 +83,7 @@ android {
                 GETUI_APP_KEY : "FTfDlpO5ea5WaRk2LldqW5",
                 GETUI_APP_SECRET : "8KE66t6hE16j6SCRdoxh5"
         ]
+        multiDexEnabled true
 //        ndk {
 //            abiFilters "armeabi", "armeabi-v7a", "x86_64"
 //        }
@@ -150,7 +157,5 @@ dependencies {
 //    注意：统计SDK必须依赖基础组件库。所以需要加入对应依赖:
     implementation 'com.umeng.sdk:common:latest.integration'
 //    implementation 'com.umeng.sdk:analytics:latest.integration'
-
-
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
 }
