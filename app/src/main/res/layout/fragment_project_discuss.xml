@@ -26,15 +26,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
+                    android:drawableLeft="@drawable/ic_project_jx"
+                    android:drawablePadding="@dimen/dp_10"
                     android:padding="@dimen/dp_10"
-                    android:text="热门帖"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14" />
+                    android:text="热门爆料"
+                    android:textColor="@color/title_gray_66"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_line"
-                    android:background="@color/cut_off_rule" />
+                    android:layout_height="@dimen/dp_10"
+                    android:background="@color/background_gray" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_review_hot"
@@ -62,9 +65,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_project_new"
+                        android:drawablePadding="@dimen/dp_10"
                         android:text="最新贴"
-                        android:textColor="@color/title_gray"
-                        android:textSize="@dimen/sp_14" />
+                        android:textColor="@color/title_gray_66"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_sort"
@@ -81,8 +87,8 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_line"
-                    android:background="@color/cut_off_rule" />
+                    android:layout_height="@dimen/dp_10"
+                    android:background="@color/background_gray" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_review_newest"

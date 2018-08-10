@@ -112,7 +112,7 @@
                                         android:layout_toRightOf="@id/iv_model_type"
                                         android:background="@drawable/garden_crack"
                                         android:paddingHorizontal="@dimen/dp_5"
-                                        android:textColor="@color/colorAccent"
+                                        android:textColor="@color/white"
                                         android:textSize="@dimen/sp_12"
                                         android:visibility="gone" />
 

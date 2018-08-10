@@ -52,8 +52,8 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_line"
-                    android:background="@color/cut_off_rule" />
+                    android:layout_height="@dimen/dp_10"
+                    android:background="@color/background_gray" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_review"

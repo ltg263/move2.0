@@ -17,7 +17,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonListBase;
 import com.secretk.move.bean.RowsBean;
 import com.secretk.move.ui.activity.ProjectActivity;
-import com.secretk.move.ui.adapter.ProjectRecommendAdapter;
+import com.secretk.move.ui.adapter.MainBlFragmentRecyclerAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.view.LoadingDialog;
@@ -50,8 +50,8 @@ public class ProjectDiscussFragment extends LazyFragment {
     @BindView(R.id.tv_sort)
     TextView tvSort;
 
-    private ProjectRecommendAdapter adapterNot;
-    private ProjectRecommendAdapter adapterNew;
+    private MainBlFragmentRecyclerAdapter adapterNot;
+    private MainBlFragmentRecyclerAdapter adapterNew;
     public boolean isHaveData = true;
     public int pageIndex = 1;
     private String projectId;
@@ -67,9 +67,9 @@ public class ProjectDiscussFragment extends LazyFragment {
     public void initViews() {
         setVerticalManager(rvReviewHot);
         setVerticalManager(rvReviewNewest);
-        adapterNot = new ProjectRecommendAdapter(getActivity());
+        adapterNot = new MainBlFragmentRecyclerAdapter(getActivity());
         rvReviewHot.setAdapter(adapterNot);
-        adapterNew = new ProjectRecommendAdapter(getActivity());
+        adapterNew = new MainBlFragmentRecyclerAdapter(getActivity());
         rvReviewNewest.setAdapter(adapterNew);
         tvSort.setOnClickListener(new View.OnClickListener() {
             @Override

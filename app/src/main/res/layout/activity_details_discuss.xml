@@ -194,7 +194,7 @@
                             android:background="@drawable/garden_crack"
                             android:paddingHorizontal="@dimen/dp_15"
                             android:paddingVertical="@dimen/dp_4"
-                            android:textColor="#3b88f6"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/sp_14"
                             android:visibility="visible" />
 

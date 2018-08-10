@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
-import com.secretk.move.bean.MainGzBean;
+import com.secretk.move.bean.RowsBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.holder.MainBlFragmentRecyclerHolder;
 
@@ -22,7 +22,7 @@ import java.util.List;
 
 public class MainBlFragmentRecyclerAdapter extends RecyclerView.Adapter<MainBlFragmentRecyclerHolder> {
 
-    private List<MainGzBean.DataBean.FollowsBean.RowsBean> list = new ArrayList<>();
+    private List<RowsBean> list = new ArrayList<>();
     private ItemClickListener mListener;
     Context context;
 
@@ -43,7 +43,7 @@ public class MainBlFragmentRecyclerAdapter extends RecyclerView.Adapter<MainBlFr
 
     @Override
     public void onBindViewHolder(MainBlFragmentRecyclerHolder holder, int position) {
-        MainGzBean.DataBean.FollowsBean.RowsBean bean = list.get(position);
+        RowsBean bean = list.get(position);
         holder.setData(bean, context);
         holder.setItemListener(mListener);
 
@@ -57,18 +57,18 @@ public class MainBlFragmentRecyclerAdapter extends RecyclerView.Adapter<MainBlFr
         return list.size();
     }
 
-    public void setData(List<MainGzBean.DataBean.FollowsBean.RowsBean> list) {
+    public void setData(List<RowsBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
 
-    public void setAddData(List<MainGzBean.DataBean.FollowsBean.RowsBean> list) {
+    public void setAddData(List<RowsBean> list) {
         this.list.addAll(list);
         notifyDataSetChanged();
     }
 
 
-    public MainGzBean.DataBean.FollowsBean.RowsBean getDataIndex(int position) {
+    public RowsBean getDataIndex(int position) {
         return list.get(position);
     }
 

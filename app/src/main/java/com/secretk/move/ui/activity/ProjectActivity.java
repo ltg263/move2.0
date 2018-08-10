@@ -34,8 +34,10 @@ import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
+import com.secretk.move.utils.UiUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.LoadingDialog;
@@ -76,6 +78,8 @@ public class ProjectActivity extends BaseActivity {
     TextView tvProjectCode;
     @BindView(R.id.tv_project_chinese_name)
     TextView tvProjectChineseName;
+    @BindView(R.id.view)
+    View view;
     @BindView(R.id.tv_create_time)
     TextView tvCreateTime;
     @BindView(R.id.tv_total_score)
@@ -137,6 +141,8 @@ public class ProjectActivity extends BaseActivity {
     @Override
     protected void initUI(Bundle savedInstanceState) {
 //        tvReview.setSelected(true);
+        StatusBarUtil.setLightMode(this);
+        StatusBarUtil.setColor(this, UiUtils.getColor(R.color.white), 0);
         projectId = getIntent().getStringExtra("projectId");
         List<String> list = new ArrayList<>();
         list.add(getString(R.string.review));
@@ -199,9 +205,9 @@ public class ProjectActivity extends BaseActivity {
                 discussFragment.initUiData(projectHomeBean.getData().getHotDiscuss());
                 reviewFragment.initUiData(projectHomeBean.getData().getHotEva());
                 if (projectInfo != null) {
-                    mHeadView.setTitle(projectInfo.getProjectCode());
+//                    mHeadView.setTitle(projectInfo.getProjectCode());
+//                    mHeadView.setTitleVice("/" + projectInfo.getProjectChineseName());
                     setProjectCode(projectInfo.getProjectCode());
-                    mHeadView.setTitleVice("/" + projectInfo.getProjectChineseName());
                     introFragment.initUiData(projectInfo);
                     //  discussFragment.initUiData(30);
                     GlideUtils.loadCircleProjectUrl(ProjectActivity.this, ivProjectIcon, Constants.BASE_IMG_URL + projectInfo.getProjectIcon());
@@ -320,13 +326,23 @@ public class ProjectActivity extends BaseActivity {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 //if (Math.abs(verticalOffset) == DensityUtil.dp2px(200)-mHeadView.getHeight()) {//关闭
-                if (Math.abs(verticalOffset) > 200) {//关闭
-//                    mHeadView.getImageView().setVisibility(View.VISIBLE);
-//                    mHeadView.getTextView().setVisibility(View.GONE);
+                if (Math.abs(verticalOffset) < 200) {//关闭
+                    StatusBarUtil.setLightMode(ProjectActivity.this);
+                    StatusBarUtil.setColor(ProjectActivity.this, UiUtils.getColor(R.color.white), 0);
+                    mHeadView.setHeadViewColor(R.color.white);
+                    view.setVisibility(View.GONE);
+                    mHeadView.setTitle("");
+                    mHeadView.setTitleVice("");
+//                    mHeadView.setAlpha(verticalOffset);
                 } else {  //展开
-//                    mHeadView.getImageView().setVisibility(View.GONE);
-//                    mHeadView.getTextView().setVisibility(View.VISIBLE);
-//                    mHeadView.setTitle("项目首页");
+                    StatusBarUtil.setLightMode(ProjectActivity.this);
+                    StatusBarUtil.setColor(ProjectActivity.this, UiUtils.getColor(R.color.background_gray), 0);
+                    view.setVisibility(View.VISIBLE);
+                    mHeadView.setHeadViewColor(R.color.background_gray);
+                    if(projectInfo!=null){
+                        mHeadView.setTitle(projectInfo.getProjectCode());
+                        mHeadView.setTitleVice("/" + projectInfo.getProjectChineseName());
+                    }
                 }
             }
         });

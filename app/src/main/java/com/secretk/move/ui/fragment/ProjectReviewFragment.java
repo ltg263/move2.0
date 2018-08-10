@@ -171,6 +171,11 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
     }
     public void initUiData(List<RowsBean> rows) {
         this.newData = rows;
+        if(adapterTop!=null && newData!=null && newData.size()>0){
+            llZxpcTop.setVisibility(View.VISIBLE);
+            rlNotContent.setVisibility(View.GONE);
+            adapterTop.setData(newData);
+        }
     }
     @Override
     public void onAttach(Context context) {

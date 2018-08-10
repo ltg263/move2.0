@@ -16,7 +16,7 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.MainGzBean;
+import com.secretk.move.bean.CommonListBase;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.MainBlFragmentRecyclerAdapter;
@@ -134,10 +134,10 @@ public class MainBlueBlFragment extends LazyFragment implements ItemClickListene
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, MainGzBean.class, new HttpCallBackImpl<MainGzBean>() {
+        RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
             @Override
-            public void onCompleted(MainGzBean bean) {
-                MainGzBean.DataBean.FollowsBean detailsBean = bean.getData().getRecommends();
+            public void onCompleted(CommonListBase bean) {
+                CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getRecommends();
                 if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }

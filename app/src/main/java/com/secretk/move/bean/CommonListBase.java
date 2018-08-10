@@ -41,6 +41,8 @@ public class CommonListBase extends BaseRes{
         private DetailsBean articles;
         private DetailsBean discusses;
 
+        private DetailsBean recommends;
+
         public void setEvaluations(DetailsBean evaluations) {
             this.evaluations = evaluations;
         }
@@ -59,6 +61,14 @@ public class CommonListBase extends BaseRes{
 
         public void setDiscusses(DetailsBean discusses) {
             this.discusses = discusses;
+        }
+
+        public DetailsBean getRecommends() {
+            return recommends;
+        }
+
+        public void setRecommends(DetailsBean recommends) {
+            this.recommends = recommends;
         }
 
         public DetailsBean getDiscusses() {

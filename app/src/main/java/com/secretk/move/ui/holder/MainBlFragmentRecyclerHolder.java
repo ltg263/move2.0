@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.MainGzBean;
 import com.secretk.move.bean.PostDataInfo;
+import com.secretk.move.bean.RowsBean;
 import com.secretk.move.ui.activity.ImageViewVpAcivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.ImagesAdapter;
@@ -24,7 +24,6 @@ import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.TimeToolUtils;
-import com.secretk.move.view.Clickable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +43,8 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     ImageView imgOrganization;
     @BindView(R.id.iv_model_type)
     ImageView ivModelType;
+    @BindView(R.id.iv_pupo)
+    ImageView ivPupo;
     @BindView(R.id.tvName)
     TextView tvName;
     @BindView(R.id.tvTime)
@@ -68,6 +69,10 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     TextView tvProjectCode;
     @BindView(R.id.tv_crack_down)
     TextView tvCrackDown;
+    @BindView(R.id.tv_crack_down_1)
+    TextView tvCrackDown1;
+    @BindView(R.id.tv_crack_down_2)
+    TextView tvCrackDown2;
     @BindView(R.id.ll_below)
     RelativeLayout llBelow;
     @BindView(R.id.tvPraise)
@@ -85,7 +90,7 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvImg.setLayoutManager(layoutManager);
     }
-    public void setData(final MainGzBean.DataBean.FollowsBean.RowsBean bean, final Context context){
+    public void setData(final RowsBean bean, final Context context){
         this.mContext=context;
         //actionType  //1 关注的用户 点赞帖子  2关注的用户 发表帖子  3关注的用户 关注项目 4关注的项目下发表的帖子
         GlideUtils.loadCircleUserUrl(context,imgOrganization, Constants.BASE_IMG_URL + StringUtil.getBeanString(bean.getCreateUserIcon()));
@@ -171,11 +176,17 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 context.startActivity(intent);
             }
         });
+        ivPupo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
     }
 
     ArrayList<PostDataInfo> imageLists;
-    public void showPostDesc(MainGzBean.DataBean.FollowsBean.RowsBean bean) {
+    public void showPostDesc(RowsBean bean) {
         tvTitle.setText(StringUtil.getBeanString(bean.getPostTitle()));
         tvDesc.setText(StringUtil.getBeanString(bean.getPostShortDesc()));
         tvPraise.setText(bean.getPraiseNum() + "");
@@ -214,7 +225,9 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 e.printStackTrace();
             }
         }
-
+        tvCrackDown.setVisibility(View.GONE);
+        tvCrackDown1.setVisibility(View.GONE);
+        tvCrackDown2.setVisibility(View.GONE);
         if (StringUtil.isNotBlank(bean.getTagInfos())&& bean.getTagInfos().contains("tagName")) {
             try {
                 JSONArray object = new JSONArray(bean.getTagInfos());
@@ -223,15 +236,27 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 String tagOnly[] = new String[object.length()];
                 for (int i = 0; i < object.length(); i++) {
                     JSONObject strObj = object.getJSONObject(i);
-                    tagOnly[i] = "#" + strObj.getString("tagName") + "#";
-                    tagAll += "#" + strObj.getString("tagName") + "#   ";
-                }
-                Clickable.getSpannableString(tagAll, tagOnly, tvCrackDown, new Clickable.ClickListener() {
-                    @Override
-                    public void setOnClick(String name) {
-                        //ToastUtils.getInstance().show(name);
+                    if(i==0){
+                        tvCrackDown.setVisibility(View.VISIBLE);
+                        tvCrackDown.setText(strObj.getString("tagName"));
                     }
-                });
+                    if(i==1){
+                        tvCrackDown1.setVisibility(View.VISIBLE);
+                        tvCrackDown1.setText(strObj.getString("tagName"));
+                    }
+                    if(i==2){
+                        tvCrackDown2.setVisibility(View.VISIBLE);
+                        tvCrackDown2.setText(strObj.getString("tagName"));
+                    }
+//                    tagOnly[i] = "#" + strObj.getString("tagName") + "#";
+//                    tagAll += "#" + strObj.getString("tagName") + "#   ";
+                }
+//                Clickable.getSpannableString(tagAll, tagOnly, tvCrackDown, new Clickable.ClickListener() {
+//                    @Override
+//                    public void setOnClick(String name) {
+//                        //ToastUtils.getInstance().show(name);
+//                    }
+//                });
             } catch (JSONException e) {
                 e.printStackTrace();
             }

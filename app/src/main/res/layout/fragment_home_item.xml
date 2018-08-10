@@ -235,7 +235,7 @@
                 android:background="@drawable/garden_crack"
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10"
-                android:textColor="@color/app_background"
+                android:textColor="@color/white"
                 android:textSize="@dimen/sp_14"
                 android:visibility="visible" />
 

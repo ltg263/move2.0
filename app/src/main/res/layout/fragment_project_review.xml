@@ -64,14 +64,6 @@
                     android:visibility="gone" />
             </LinearLayout>
             <!--评分結束-->
-            <!--项目介绍結束-->
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="@color/cut_off_rule"
-                android:visibility="gone" />
             <!--站長開始-->
             <LinearLayout
                 android:id="@+id/ll_zxpc_top"
@@ -85,22 +77,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_margin="@dimen/dp_10"
                     android:layout_weight="3"
-                    android:text="@string/assessment"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:drawableLeft="@drawable/ic_project_jx"
                     android:background="@color/white"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14" />
+                    android:padding="@dimen/dp_10"
+                    android:text="@string/assessment"
+                    android:textColor="@color/title_gray_66"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="bold" />
 
-                <!--  <View
-                      android:layout_width="match_parent"
-                      android:layout_height="@dimen/dp_line"
-                      android:background="@color/cut_off_rule" />-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_10"
+                    android:background="@color/background_gray" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_review_top"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -128,7 +124,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/assessment_new"
-                        android:textColor="@color/title_gray"
+                        android:textStyle="bold"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:drawableLeft="@drawable/ic_project_new"
+                        android:textColor="@color/title_gray_66"
                         android:textSize="@dimen/sp_14" />
 
                     <TextView
@@ -143,10 +142,10 @@
 
                 </LinearLayout>
 
-                <!-- <View
+                 <View
                      android:layout_width="match_parent"
-                     android:layout_height="@dimen/dp_line"
-                     android:background="@color/cut_off_rule" />-->
+                     android:layout_height="@dimen/dp_10"
+                     android:background="@color/background_gray" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_review"
@@ -157,7 +156,7 @@
             <!--站長結束-->
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
+                android:layout_height="@dimen/dp_line"
                 android:background="@color/cut_off_rule" />
 
             <RelativeLayout

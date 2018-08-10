@@ -228,7 +228,7 @@
                             android:background="@drawable/garden_crack"
                             android:paddingLeft="@dimen/dp_10"
                             android:paddingRight="@dimen/dp_10"
-                            android:textColor="#3b88f6"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/sp_14" />
 
                         <TextView
