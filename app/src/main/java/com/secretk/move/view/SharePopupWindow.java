@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -31,7 +30,6 @@ import com.secretk.move.utils.ToastUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -298,30 +296,12 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
     private void shareCopy(String str) {
         ClipboardManager cmb = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
         if (cmb != null) {
-            ToastUtils.getInstance().show("复制成功");
+            DialogUtils.showDialogPraise(mContext,3,true,0);
         } else {
             ToastUtils.getInstance().show("复制失败，请重新复制");
         }
         cmb.setPrimaryClip(ClipData.newPlainText(null, str));
     }
-
-    public static byte[] bmpToByteArray(final Bitmap bmp, final boolean needRecycle) {
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 100, output);
-        if (needRecycle) {
-            bmp.recycle();
-        }
-
-        byte[] result = output.toByteArray();
-        try {
-            output.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
-
 
     @Override
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {

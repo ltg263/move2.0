@@ -146,7 +146,7 @@ public class DetailsDiscussActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        ShareView.showShare(mHeadView,activityId,Constants.DISCUSS_SHARE+Integer.valueOf(postId),
+        ShareView.showShare(this,mHeadView,activityId,Constants.DISCUSS_SHARE+Integer.valueOf(postId),
                 tvPostTitle.getText().toString(),postShortDesc,imgUrl);
     }
 

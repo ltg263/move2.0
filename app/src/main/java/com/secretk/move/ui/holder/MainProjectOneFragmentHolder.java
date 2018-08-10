@@ -105,6 +105,11 @@ public class MainProjectOneFragmentHolder extends RecyclerViewBaseHolder {
                                 tvFollowStatus.setEnabled(true);
                                 if(!str.equals(Constants.FOLLOW_ERROR)){
                                     tvFollowStatus.setText(str);
+                                    if(str.equals(context.getResources().getString(R.string.follow_status_1))){
+                                        bean.setFollowStatus(1);
+                                    }else{
+                                        bean.setFollowStatus(0);
+                                    }
                                 }
                             }
                         });

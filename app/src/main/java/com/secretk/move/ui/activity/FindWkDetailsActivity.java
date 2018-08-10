@@ -265,13 +265,13 @@ public class FindWkDetailsActivity extends BaseActivity {
                         }
                         if(data.getActivityStep().contains("1")){
                             isAll=false;
-                            if(data.getCommentType() == 1){
+                            if(data.getCommentType() == 1 && data.getFollowType() == 1){
                                 isAll=true;
                             }
                         }
                         if(data.getActivityStep().contains("2")){
                             isAll=false;
-                            if(data.getShareType() == 1){
+                            if(data.getShareType() == 1 && data.getCommentType() == 1 && data.getFollowType() == 1){
                                 isAll=true;
                             }
                         }

@@ -527,7 +527,7 @@ public class DialogUtils {
     /**
     /**
      * @param context
-     * @param type:1 点赞  2 收藏
+     * @param type:1 点赞  2 收藏 3复制
      * 点赞框
      */
     public static void showDialogPraise(Context context,int type,boolean isCollect,double find) {
@@ -537,9 +537,11 @@ public class DialogUtils {
         TextView tv_praise = view.findViewById(R.id.tv_praise);
         TextView tv_find = view.findViewById(R.id.tv_find);
         TextView tv_collect = view.findViewById(R.id.tv_collect);
+        TextView tv_copy = view.findViewById(R.id.tv_copy);
         if (type==1){
             tv_praise.setVisibility(View.VISIBLE);
             tv_collect.setVisibility(View.GONE);
+            tv_copy.setVisibility(View.GONE);
             if(find!=0){
                 tv_find.setVisibility(View.VISIBLE);
                 if(find == (int)find){
@@ -548,9 +550,14 @@ public class DialogUtils {
                     tv_find.setText("+"+find+"FIND");
                 }
             }
+        }else if(type ==3){
+            tv_praise.setVisibility(View.GONE);
+            tv_collect.setVisibility(View.GONE);
+            tv_copy.setVisibility(View.VISIBLE);
         }else{
             tv_praise.setVisibility(View.GONE);
             tv_find.setVisibility(View.GONE);
+            tv_copy.setVisibility(View.GONE);
             tv_collect.setVisibility(View.VISIBLE);
             if(!isCollect){
                 tv_collect.setText("收藏成功");

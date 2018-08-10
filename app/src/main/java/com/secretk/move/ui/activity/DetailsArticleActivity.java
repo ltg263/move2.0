@@ -119,7 +119,7 @@ public class DetailsArticleActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        ShareView.showShare(mHeadView,activityId,Constants.ARTICLE_SHARE + Integer.valueOf(postId),
+        ShareView.showShare(this,mHeadView,activityId,Constants.ARTICLE_SHARE + Integer.valueOf(postId),
                 tvPostTitle.getText().toString(), postShortDesc, imgUrl);
     }
 
