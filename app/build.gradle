@@ -22,8 +22,8 @@ MobSDK {
                 sortId 1
             }
             SinaWeibo {
-                appId ""
-                appKey ""
+                appId "1230024693"
+                appKey "300e09f802d9fa420a364232f05274d7"
                 shareByAppClient true
                 sortId 2
             }

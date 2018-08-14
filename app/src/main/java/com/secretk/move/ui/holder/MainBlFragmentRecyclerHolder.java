@@ -24,6 +24,7 @@ import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.TimeToolUtils;
+import com.secretk.move.view.ReportPopupWindowPull;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -83,12 +84,13 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     TextView tvComments;
     private ImagesAdapter imagesadapter;
     private Context mContext;
-    public MainBlFragmentRecyclerHolder(View itemView) {
+    public MainBlFragmentRecyclerHolder(View itemView,Context context) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         GridLayoutManager layoutManager = new GridLayoutManager(mContext,3);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvImg.setLayoutManager(layoutManager);
+
     }
     public void setData(final RowsBean bean, final Context context){
         this.mContext=context;
@@ -99,7 +101,6 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvProjectCode.setText(bean.getProjectCode());
         StringUtil.getUserType(bean.getUserType(),ivModelType);
         showPostDesc(bean);
-
         tvProjectFolly.setVisibility(View.VISIBLE);
         if(bean.getFollowStatus() == 1){
             tvProjectFolly.setSelected(true);
@@ -179,10 +180,16 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         ivPupo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                final ReportPopupWindowPull popupWindowPull = new ReportPopupWindowPull(context);
+                popupWindowPull.showAtLocation(ivPupo);
+                popupWindowPull.setOnItemClickListener(new ReportPopupWindowPull.OnItemClickListener() {
+                    @Override
+                    public void OnItemClick(View v) {
+                        popupWindowPull.setListenerDate(v,bean.getPostId());
+                    }
+                });
             }
         });
-
     }
 
     ArrayList<PostDataInfo> imageLists;

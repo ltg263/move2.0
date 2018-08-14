@@ -27,6 +27,8 @@ public class DiaLogListReportAdapter extends RecyclerView.Adapter<DiaLogListRepo
     private ItemClickListener mListener;
     private List<String> lists = new ArrayList<>();
     private List<String> listSelect = new ArrayList<>();
+
+    int lsPosition = -1;
     Context context;
     public DiaLogListReportAdapter(Context context) {
         this.context=context;
@@ -60,6 +62,9 @@ public class DiaLogListReportAdapter extends RecyclerView.Adapter<DiaLogListRepo
     public List<String> getData() {
         return listSelect;
     }
+    public int getPosition() {
+        return lsPosition;
+    }
 
 
     class ListHolder extends RecyclerViewBaseHolder {
@@ -69,19 +74,26 @@ public class DiaLogListReportAdapter extends RecyclerView.Adapter<DiaLogListRepo
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-
         public void refresh(final int position, final List<String> lists){
             tvItem.setText(lists.get(position));
+            tvItem.setTextColor(context.getResources().getColor(R.color.title_gray));
+            if(lsPosition!=-1 && lsPosition==position){
+                tvItem.setTextColor(context.getResources().getColor(R.color.app_background));
+            }
             tvItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(listSelect.contains(lists.get(position))){
-                        listSelect.remove(lists.get(position));
-                        tvItem.setTextColor(context.getResources().getColor(R.color.title_gray));
-                    }else{
-                        listSelect.add(lists.get(position));
-                        tvItem.setTextColor(context.getResources().getColor(R.color.app_background));
-                    }
+//                    多选
+//                    if(listSelect.contains(lists.get(position))){
+//                        listSelect.remove(lists.get(position));
+//                        tvItem.setTextColor(context.getResources().getColor(R.color.title_gray));
+//                    }else{
+//                        listSelect.add(lists.get(position));
+//                        tvItem.setTextColor(context.getResources().getColor(R.color.app_background));
+//                    }
+//                    单选
+                    lsPosition = position;
+                    notifyDataSetChanged();
                 }
             });
         }

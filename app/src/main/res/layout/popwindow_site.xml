@@ -1,29 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/ll_popup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/btn_circle_5dp"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_popu_colle"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dp_15"
+            android:text="加入收藏"
+            android:textColor="@color/title_gray_66"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_line"
             android:background="@color/cut_off_rule" />
 
-        <Button
-            android:id="@+id/btn_cancel"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:background="@drawable/btn_bj_gray_selector"
-            android:padding="10dp"
-            android:text="下载图片"
-            android:textColor="@color/title_gray"
-            android:textSize="14sp" />
+            android:drawableLeft="@drawable/ic_report_pu"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dp_15"
+            android:text="举报"
+            android:textColor="@color/title_gray_66"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
+
+        <com.secretk.move.view.FixGridLayout
+            android:id="@+id/ll_add_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_15"/>
     </LinearLayout>
 </RelativeLayout>

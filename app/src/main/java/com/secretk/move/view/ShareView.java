@@ -47,9 +47,9 @@ public class ShareView {
      * 使用自定义布局
      */
     public static void showShare(Context context,View view,String activityId,String skipRrl, String title,
-                                 String content, String imgUrl) {
+                                 String content, String imgUrl,int postId) {
         SharePopupWindow popupWindow = new SharePopupWindow(context);
-        popupWindow.setShareUrl(activityId,title,content,skipRrl,imgUrl);
+        popupWindow.setShareUrl(activityId,title,content,skipRrl,imgUrl,postId);
         popupWindow.showAtLocation(view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
     public static void showShareImg(View view,ScrollView scrollView, String imgPath) {

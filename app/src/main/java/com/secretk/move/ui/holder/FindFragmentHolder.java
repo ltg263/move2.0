@@ -76,15 +76,20 @@ public class FindFragmentHolder extends RecyclerViewBaseHolder {
         if(rowsBean.getStatus()==0){
             surplusTime = StringUtil.getSurplusTime(rowsBean.getBeginDt(),"0");
             tvGo.setVisibility(View.GONE);
+            tvSurplus.setVisibility(View.VISIBLE);
             tvSurplus.setText("距开始");
             tvSurplus.setTextColor(context.getResources().getColor(R.color.theme_title_red));
+            tvTime.setVisibility(View.VISIBLE);
             tvTime.setText(StringUtil.getTimeToHms(surplusTime));
         }else if(rowsBean.getStatus()==1){
             surplusTime = StringUtil.getSurplusTime("0",rowsBean.getEndDt());
             tvGo.setSelected(false);
             tvGo.setVisibility(View.VISIBLE);
+            tvGo.setText("去挖矿");
             tvSurplus.setText("剩余");
+            tvSurplus.setVisibility(View.VISIBLE);
             tvSurplus.setTextColor(context.getResources().getColor(R.color.theme_title_code));
+            tvTime.setVisibility(View.VISIBLE);
             tvTime.setText(StringUtil.getTimeToHms(surplusTime));
         }else if(rowsBean.getStatus()==2){
             tvGo.setSelected(true);

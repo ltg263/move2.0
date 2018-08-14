@@ -323,6 +323,38 @@ public class NetUtil {
             }
         });
     }
+    /**
+     *k进行投诉操作
+     * 	type postId 填1---comment填2
+     *  contentId postId或者commentId
+     */
+    public static void saveReport(int type ,int contentId, int reportModelId,final SaveCollectImp collect){
+        String token = SharedUtils.singleton().get(Constants.TOKEN_KEY,"");
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+            node.put("type", type);
+            node.put("contentId", contentId);
+            node.put("reportModelId", reportModelId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.SAVE_REPORT)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onCompleted(String str) {
+                collect.finishCollect("",true);
+            }
+            @Override
+            public void onError(String message) {
+                collect.finishCollect(Constants.COLLECT_ERROR,true);
+            }
+        });
+    }
 
     public static abstract class SaveCollectImp{
         public abstract void finishCollect(String code,boolean status);

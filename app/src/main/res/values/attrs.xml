@@ -17,4 +17,9 @@
         <attr name="PileLayout_vertivalSpace" format="dimension"/>
         <attr name="PileLayout_pileWidth" format="dimension"/>
     </declare-styleable>
+    <declare-styleable name="AutoNewLineLayout">
+        <attr name="horizontalSpace" format="dimension|reference"/>
+
+        <attr name="vertivalSpace" format="dimension|reference"/>
+    </declare-styleable>
 </resources>

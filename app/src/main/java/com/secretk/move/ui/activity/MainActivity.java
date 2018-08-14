@@ -25,7 +25,6 @@ import com.secretk.move.ui.fragment.MainBlueFxFragment;
 import com.secretk.move.ui.fragment.MainBlueGzFragment;
 import com.secretk.move.utils.DownloadService;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -37,6 +36,7 @@ import com.secretk.move.view.DialogUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -86,8 +86,10 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
         UMConfigure.setEncryptEnabled(true);
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_DUM_NORMAL);
         MobclickAgent.setSessionContinueMillis(1000);
-
-        getLoadData();
+        if(SharedUtils.getLoginZt()){
+            getLoadData();
+            getReportData();
+        }
         //当用户使用自有账号登录时，可以这样统计：
         MobclickAgent.onProfileSignIn("1");
         adapter = new MainActivityPagerAdapter(getSupportFragmentManager());
@@ -206,21 +208,26 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
     @Override
     protected void onResume() {
         super.onResume();
-        getLoadData();
-        String current = StringUtil.getTimeToM(System.currentTimeMillis());
-        LogUtil.w("isShowJlWind"+current);
-        LogUtil.w("isShowJlWind"+SharedUtils.singleton().get("isShowJlWind", ""));
-        int userCardStatus = SharedUtils.singleton().get("userCardStatus", 0);
-        if (SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken()) && userCardStatus==2) {
-            if (!current.equals(SharedUtils.singleton().get("isShowJlWind", ""))) {
-                showJlWind(SharedUtils.getToken());
+        if(SharedUtils.getLoginZt()){
+//            获1取CNY
+            getLoadData();
+//            获取举报列表
+            getReportData();
+//            奖励弹框
+            String current = StringUtil.getTimeToM(System.currentTimeMillis());
+            int userCardStatus = SharedUtils.singleton().get("userCardStatus", 0);
+            if (SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken()) && userCardStatus==2) {
+                if (!current.equals(SharedUtils.singleton().get("isShowJlWind", ""))) {
+                    showJlWind(SharedUtils.getToken());
+                }
             }
-        }
-        if (SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken())) {
-            if (!current.equals(SharedUtils.singleton().get("isShowSmWind", ""))
-                    && (userCardStatus==4 || userCardStatus==3)) {
-                SharedUtils.singleton().put("isShowSmWind", StringUtil.getTimeToM(System.currentTimeMillis()));
-                showSmWind();
+//            实名认证弹框
+            if (SharedUtils.getLoginZt() && StringUtil.isNotBlank(SharedUtils.getToken())) {
+                if (!current.equals(SharedUtils.singleton().get("isShowSmWind", ""))
+                        && (userCardStatus==4 || userCardStatus==3)) {
+                    SharedUtils.singleton().put("isShowSmWind", StringUtil.getTimeToM(System.currentTimeMillis()));
+                    showSmWind();
+                }
             }
         }
     }
@@ -330,6 +337,30 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
                         if(rates!=null){
                             String CNY = String.valueOf(rates.getDouble("CNY"));
                             SharedUtils.singleton().put("EXCHANGE_RATE_CNY",CNY);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+    /**
+     * 获取举报的List
+     */
+    public void getReportData() {
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.GET_REPORT_LIST)
+                .build();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onCompleted(String str) {
+                try {
+                    JSONObject object = new JSONObject(str);
+                    if(object.getInt("code")==0){
+                        JSONArray rates = object.getJSONObject("data").getJSONArray("getReportModelList");
+                        if(rates!=null){
+                            SharedUtils.singleton().put("getReportModelList",rates.toString());
                         }
                     }
                 } catch (JSONException e) {

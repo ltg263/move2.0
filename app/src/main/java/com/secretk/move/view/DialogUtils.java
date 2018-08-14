@@ -527,7 +527,7 @@ public class DialogUtils {
     /**
     /**
      * @param context
-     * @param type:1 点赞  2 收藏 3复制
+     * @param type:1 点赞  2 收藏 3复制 4举报
      * 点赞框
      */
     public static void showDialogPraise(Context context,int type,boolean isCollect,double find) {
@@ -554,7 +554,7 @@ public class DialogUtils {
             tv_praise.setVisibility(View.GONE);
             tv_collect.setVisibility(View.GONE);
             tv_copy.setVisibility(View.VISIBLE);
-        }else{
+        }else if(type==2){
             tv_praise.setVisibility(View.GONE);
             tv_find.setVisibility(View.GONE);
             tv_copy.setVisibility(View.GONE);
@@ -566,6 +566,13 @@ public class DialogUtils {
                 tv_collect.setText("取消收藏");
                 tv_collect.setSelected(true);
             }
+        }else if(type==4){
+            tv_praise.setVisibility(View.GONE);
+            tv_find.setVisibility(View.GONE);
+            tv_copy.setVisibility(View.GONE);
+            tv_collect.setVisibility(View.VISIBLE);
+            tv_collect.setText("举报成功");
+            tv_collect.setCompoundDrawables(null,context.getResources().getDrawable(R.drawable.ic_report_pu),null,null);
         }
         dialog5.setCancelable(false);
         dialog5.setContentView(view);

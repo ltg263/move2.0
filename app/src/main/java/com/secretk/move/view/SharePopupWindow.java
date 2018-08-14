@@ -21,7 +21,6 @@ import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.ProjectTypeListBean;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
@@ -29,6 +28,7 @@ import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -75,6 +75,7 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
     private String imgUrl;
     private String activityId;
     private boolean isImg = false;
+    private int postId;
     private String imgPath;
     private ShareTypeListener mShareTypeListener;
 
@@ -128,13 +129,14 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
         });
     }
 
-    public void setShareUrl(String activityId,String title, String content, String url, String imgUrl) {
+    public void setShareUrl(String activityId,String title, String content, String url, String imgUrl,int postId) {
         this.title = title;
         this.content = content;
         this.url = url;
         this.imgUrl = imgUrl;
         this.activityId = activityId;
         this.isImg = false;
+        this.postId = postId;
     }
 
     /**
@@ -337,32 +339,26 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
     }
 
     private void shareReport() {
-        JSONObject node = new JSONObject();
-        try {
-            node.put("token", SharedUtils.getToken());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.PROJECT_TYPE_LIST)//
-                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
-                .addQuery("sign", MD5.Md5(node.toString()))
-                .build();
-        RetrofitUtil.request(params, ProjectTypeListBean.class, new HttpCallBackImpl<ProjectTypeListBean>() {
-            @Override
-            public void onCompleted(ProjectTypeListBean str) {
+        String getReportModelList = SharedUtils.singleton().get("getReportModelList", "");
+        if(StringUtil.isNotBlank(getReportModelList)){
+            try {
+                final JSONArray array = new JSONArray(getReportModelList);
+                List<String> list = new ArrayList<>();
+                List<Integer> listIndex = new ArrayList<>();
+                for(int i=0;i<array.length();i++){
+                    final JSONObject object = array.getJSONObject(i);
+                    if(StringUtil.isNotBlank(object.getString("reportName"))){
+                        list.add(object.getString("reportName"));
+                        listIndex.add(object.getInt("reportId"));
+                    }
+                }
                 ReportPopupWindow window = new ReportPopupWindow(mContext);
-                List<ProjectTypeListBean.DataBean.ProjectTypesBean> projectTypes = str.getData().getProjectTypes();
-                List<String> list = new ArrayList();
-                list.add("违反法规");
-                list.add("广告营销");
-                list.add("重复灌水");
-                list.add("涉嫌抄袭");
-                list.add("与主题无关");
-                window.setData(list);
+                window.setData(list,listIndex,postId);
                 window.showAtLocation(tvCancel, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        });
+        }
     }
 
     @Override

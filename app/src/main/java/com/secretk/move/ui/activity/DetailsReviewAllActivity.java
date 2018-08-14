@@ -135,7 +135,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
 //        String str =  postShortDesc.substring(0, 10);
 //        1对应为值为“简单评测", 2 为 "ALL-专业评测" 3 为 "PART-专业评测" 4 为 "ALL-专业评测
         ShareView.showShare(this,mHeadView,activityId,shareUrl,
-                tvPostTitle.getText().toString(),postShortDesc,imgUrl);
+                tvPostTitle.getText().toString(),postShortDesc,imgUrl,Integer.valueOf(postId));
     }
 
     @Override

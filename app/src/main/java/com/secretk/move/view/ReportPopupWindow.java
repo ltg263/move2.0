@@ -13,8 +13,10 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.ui.adapter.DiaLogListReportAdapter;
 import com.secretk.move.utils.LogUtil;
+import com.secretk.move.utils.NetUtil;
 
 import java.util.List;
 
@@ -28,9 +30,13 @@ public class ReportPopupWindow extends PopupWindow {
     private final TextView tvPopWindow;
     private final DiaLogListReportAdapter adapter;
     private View mMenuView;
+    private List<Integer> listIndex;
+    private int postId;
+    private Context mContext;
 
     public ReportPopupWindow(Context context) {
         super(context);
+        this.mContext = context;
         LayoutInflater inflater = (LayoutInflater) context .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMenuView = inflater.inflate(R.layout.pop_window_report, null);
         rvPopWindow =  mMenuView.findViewById(R.id.rv_context);
@@ -59,15 +65,29 @@ public class ReportPopupWindow extends PopupWindow {
 
     }
 
-    public void setData(List<String> list){
+    public void setData(List<String> list, List<Integer> listIndex, int postId){
+        this.listIndex = listIndex;
         adapter.setData(list);
+        this.postId=postId;
     }
 
     private void setEvent() {
         tvPopWindow.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                List<String> list = adapter.getData();
-                LogUtil.w("list:"+list.toString());
+//                List<String> list = adapter.getData();
+//                LogUtil.w("list:"+list.toString());
+                LogUtil.w("list:"+adapter.getPosition());
+                if(listIndex==null){
+                    return;
+                }
+                NetUtil.saveReport(1, postId, listIndex.get(adapter.getPosition()), new NetUtil.SaveCollectImp() {
+                    @Override
+                    public void finishCollect(String code, boolean status) {
+                        if(!code.equals(Constants.COLLECT_ERROR)){
+                            DialogUtils.showDialogPraise(mContext,4,status,0);
+                        }
+                    }
+                });
                 dismiss();
             }
         });
