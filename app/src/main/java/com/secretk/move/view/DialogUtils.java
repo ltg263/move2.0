@@ -538,6 +538,7 @@ public class DialogUtils {
         TextView tv_find = view.findViewById(R.id.tv_find);
         TextView tv_collect = view.findViewById(R.id.tv_collect);
         TextView tv_copy = view.findViewById(R.id.tv_copy);
+        TextView tv_report = view.findViewById(R.id.tv_report);
         if (type==1){
             tv_praise.setVisibility(View.VISIBLE);
             tv_collect.setVisibility(View.GONE);
@@ -570,9 +571,8 @@ public class DialogUtils {
             tv_praise.setVisibility(View.GONE);
             tv_find.setVisibility(View.GONE);
             tv_copy.setVisibility(View.GONE);
-            tv_collect.setVisibility(View.VISIBLE);
-            tv_collect.setText("举报成功");
-            tv_collect.setCompoundDrawables(null,context.getResources().getDrawable(R.drawable.ic_report_pu),null,null);
+            tv_collect.setVisibility(View.GONE);
+            tv_report.setVisibility(View.VISIBLE);
         }
         dialog5.setCancelable(false);
         dialog5.setContentView(view);

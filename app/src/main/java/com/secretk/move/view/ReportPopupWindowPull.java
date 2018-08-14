@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
@@ -45,6 +46,30 @@ public class ReportPopupWindowPull extends BasePopupWindowWithMask{
         contentView = LayoutInflater.from(context).inflate(R.layout.popwindow_site, null, false);
         tv = contentView.findViewById(R.id.tv_1);
         ll_add_view = contentView.findViewById(R.id.ll_add_view);
+        return contentView;
+    }
+
+    private void initListener() {
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listener!=null){
+                    listener.OnItemClick(tv);
+                }
+                dismiss();
+            }
+        });
+    }
+    @Override
+    protected int initHeight() {
+        return WindowManager.LayoutParams.WRAP_CONTENT;
+    }
+    @Override
+    protected int initWidth() {
+        return WindowManager.LayoutParams.WRAP_CONTENT;
+    }
+
+    public void showAtLocation(View anchor) {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(15,10,15,10);
@@ -77,37 +102,16 @@ public class ReportPopupWindowPull extends BasePopupWindowWithMask{
                             }
                         });
                         ll_add_view.addView(crack_down);
+                        LogUtil.w("ll_add_view.getChildCount():"+ll_add_view.getChildCount());
+                        if(ll_add_view.getChildCount()==1){
+                            super.showAtLocation(anchor,contentView);
+                        }
                     }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        return contentView;
-    }
-
-    private void initListener() {
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(listener!=null){
-                    listener.OnItemClick(tv);
-                }
-                dismiss();
-            }
-        });
-    }
-    @Override
-    protected int initHeight() {
-        return WindowManager.LayoutParams.WRAP_CONTENT;
-    }
-    @Override
-    protected int initWidth() {
-        return WindowManager.LayoutParams.WRAP_CONTENT;
-    }
-
-    public void showAtLocation(View anchor) {
-        super.showAtLocation(anchor,contentView);
     }
     public void setListenerDate(View v, int postId){
         if(v.getId()==R.id.tv_1){

@@ -24,6 +24,7 @@ import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.TimeToolUtils;
+import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.ReportPopupWindowPull;
 
 import org.json.JSONArray;
@@ -78,8 +79,6 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     RelativeLayout llBelow;
     @BindView(R.id.tvPraise)
     TextView tvPraise;
-    @BindView(R.id.img_comment)
-    ImageView imgComment;
     @BindView(R.id.tvComments)
     TextView tvComments;
     private ImagesAdapter imagesadapter;
@@ -101,6 +100,12 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvProjectCode.setText(bean.getProjectCode());
         StringUtil.getUserType(bean.getUserType(),ivModelType);
         showPostDesc(bean);
+        ///0-未点赞，1-已点赞，数字
+        if (bean.getPraiseStatus() == 0) {
+            tvPraise.setSelected(true);
+        } else {
+            tvPraise.setSelected(false);
+        }
         tvProjectFolly.setVisibility(View.VISIBLE);
         if(bean.getFollowStatus() == 1){
             tvProjectFolly.setSelected(true);
@@ -170,11 +175,35 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         ivFileName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(context,ImageViewVpAcivity.class);
                 intent.putParcelableArrayListExtra("lists", imageLists);
                 intent.putExtra("position",0);
                 context.startActivity(intent);
+            }
+        });
+        tvPraise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (SharedUtils.getLoginZt()) {
+                    if(!tvPraise.isSelected()){
+                        return;
+                    }
+                    if(!NetUtil.isPraise(bean.getCreateUserId(),SharedUtils.getUserId())){
+                        return;
+                    }
+                    tvPraise.setEnabled(false);
+                    String strS;
+                    if(tvPraise.isSelected()){
+                        strS = String.valueOf(bean.getPraiseNum()+1);
+                    }else{
+                        strS = String.valueOf(bean.getPraiseNum()-1);
+                    }
+                    tvPraise.setText(strS);
+                    tvPraise.setSelected(!tvPraise.isSelected());
+                    setPraise(!tvPraise.isSelected(),bean);
+                } else {
+                    IntentUtil.startActivity(LoginHomeActivity.class);
+                }
             }
         });
         ivPupo.setOnClickListener(new View.OnClickListener() {
@@ -268,5 +297,20 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 e.printStackTrace();
             }
         }
+    }
+    private void setPraise(boolean isPraise, final RowsBean bead) {
+        NetUtil.setPraise(isPraise, bead.getPostId(), new NetUtil.SaveFollowImpl() {
+            @Override
+            public void finishFollow(String praiseNum,boolean status,double find) {
+                tvPraise.setEnabled(true);
+                ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
+                if(!praiseNum.equals(Constants.PRAISE_ERROR)){
+                    DialogUtils.showDialogPraise(mContext,1,true,find);
+                    tvPraise.setSelected(status);
+                    bead.setPageviewNum(Integer.valueOf(praiseNum));
+                    tvPraise.setText(praiseNum);
+                }
+            }
+        });
     }
 }

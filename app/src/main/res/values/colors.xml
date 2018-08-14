@@ -102,7 +102,7 @@
     <color name="title_gray_8c">#8c8c8c</color>
     <color name="title_gray_7e">#7e7e7e</color>
     <color name="background_gray">#f4f4f4</color>
-    <color name="follow_true">#f5f4f4</color>
+    <color name="follow_true">#d3d3d3</color>
     <color name="title_gray_db">#dbdbdb</color>
     <!--评分进度色-->
     <color name="xmdw">#54c7fc</color>
