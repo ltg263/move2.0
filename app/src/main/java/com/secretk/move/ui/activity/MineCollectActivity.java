@@ -17,9 +17,10 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.bean.CommonListBase;
 import com.secretk.move.bean.MenuInfo;
-import com.secretk.move.bean.MyCollectList;
-import com.secretk.move.ui.adapter.MineCollectAdapter;
+import com.secretk.move.listener.ItemClickListener;
+import com.secretk.move.ui.adapter.MainRfFragmentRecyclerAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
@@ -42,7 +43,7 @@ import butterknife.OnClick;
  * 邮箱；ltg263@126.com
  * 描述：我的收藏
  */
-public class MineCollectActivity extends BaseActivity {
+public class MineCollectActivity extends BaseActivity  implements ItemClickListener {
 
     @BindView(R.id.rv_collect)
     RecyclerView rvCollect;
@@ -58,7 +59,7 @@ public class MineCollectActivity extends BaseActivity {
     RelativeLayout rlTopTheme;
     private String postId;
     private int pageIndex = 1;
-    private MineCollectAdapter adapter;
+    private MainRfFragmentRecyclerAdapter adapter;
 
     @Override
     protected int setOnCreate() {
@@ -79,8 +80,9 @@ public class MineCollectActivity extends BaseActivity {
     protected void initUI(Bundle savedInstanceState) {
         postId = getIntent().getStringExtra("postId");
         setVerticalManager(rvCollect);
-        adapter = new MineCollectAdapter(this);
+        adapter = new MainRfFragmentRecyclerAdapter(this);
         rvCollect.setAdapter(adapter);
+        adapter.setItemListener(this);
         initRefresh();
         loadingDialog.show();
         rlTopTheme.setVisibility(View.VISIBLE);
@@ -129,10 +131,10 @@ public class MineCollectActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, MyCollectList.class, new HttpCallBackImpl<MyCollectList>() {
+        RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
             @Override
-            public void onCompleted(MyCollectList bean) {
-                MyCollectList.DataBean.MyTokenRecordsBean detailsBean = bean.getData().getMyTokenRecords();
+            public void onCompleted(CommonListBase bean) {
+                CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getMyTokenRecords();
                 if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
@@ -167,5 +169,21 @@ public class MineCollectActivity extends BaseActivity {
     public void onViewClicked() {
         IntentUtil.startActivity(MainActivity.class);
         finish();
+    }
+
+    @Override
+    public void onItemClick(View view, int postion) {
+        if (isLoginZt) {
+            int postId = adapter.getDataIndex(postion).getPostId();
+            int postType = adapter.getDataIndex(postion).getPostType();
+            IntentUtil.go2DetailsByType(postType, String.valueOf(postId));
+        } else {
+            IntentUtil.startActivity(LoginHomeActivity.class);
+        }
+    }
+
+    @Override
+    public void onItemLongClick(View view, int postion) {
+
     }
 }

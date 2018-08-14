@@ -44,7 +44,7 @@ public class MainProjectCyAdapter extends RecyclerView.Adapter<MainRfFragmentRec
     public void onBindViewHolder(MainRfFragmentRecyclerHolder holder, int position) {
         holder.setItemListener(mListener);
         MainGzBean.DataBean.FollowsBean.RowsBean bean = list.get(position);
-        holder.setData(bean, context);
+//        holder.setData(bean, context);
 
     }
 

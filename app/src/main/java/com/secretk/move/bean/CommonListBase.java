@@ -42,6 +42,15 @@ public class CommonListBase extends BaseRes{
         private DetailsBean discusses;
 
         private DetailsBean recommends;
+        private DetailsBean myTokenRecords;
+
+        public DetailsBean getMyTokenRecords() {
+            return myTokenRecords;
+        }
+
+        public void setMyTokenRecords(DetailsBean myTokenRecords) {
+            this.myTokenRecords = myTokenRecords;
+        }
 
         public void setEvaluations(DetailsBean evaluations) {
             this.evaluations = evaluations;

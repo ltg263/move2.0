@@ -108,21 +108,12 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvTime.setText(TimeToolUtils.convertTimeToFormat(bean.getCreateTime()));
         StringUtil.getUserType(bean.getUserType(),ivModelIcon);
         tvProjectFolly.setVisibility(View.VISIBLE);
-        if (0 == bean.getFollowStatus()) {
-            tvProjectFolly.setText(context.getString(R.string.follow_status_0));
-            tvProjectFolly.setSelected(false);
-            tvProjectFolly.setPressed(false);
-            tvProjectFolly.setTextColor(Color.parseColor("#ffffff"));
-        } else if (1 == bean.getFollowStatus()) {
-            tvProjectFolly.setText(context.getString(R.string.follow_status_1));
+        if (bean.getFollowStatus() == 1) { //关注状态  "//0 未关注；1-已关注；2-不显示关注按钮"
             tvProjectFolly.setSelected(true);
-            tvProjectFolly.setPressed(true);
-            tvProjectFolly.setTextColor(Color.parseColor("#3b88f6"));
-        } else {
-            tvProjectFolly.setText(context.getString(R.string.follow_status_0));
+            tvProjectFolly.setText(context.getString(R.string.follow_status_1));
+        } else if (bean.getFollowStatus() == 0) {
             tvProjectFolly.setSelected(false);
-            tvProjectFolly.setPressed(false);
-            tvProjectFolly.setTextColor(Color.parseColor("#ffffff"));
+            tvProjectFolly.setText(context.getString(R.string.follow_status_0));
         }
         if(bean.getActionType()==3){//项目
             llBelow.setVisibility(View.GONE);

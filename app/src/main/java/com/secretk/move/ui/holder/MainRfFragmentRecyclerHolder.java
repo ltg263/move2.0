@@ -1,31 +1,32 @@
 package com.secretk.move.ui.holder;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
-import com.secretk.move.apiService.HttpCallBackImpl;
-import com.secretk.move.apiService.RetrofitUtil;
-import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.MainGzBean;
 import com.secretk.move.bean.PostDataInfo;
-import com.secretk.move.bean.base.BaseRes;
+import com.secretk.move.bean.RowsBean;
+import com.secretk.move.ui.activity.ImageViewVpAcivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
+import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.MD5;
-import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.TimeToolUtils;
-import com.secretk.move.view.Clickable;
+import com.secretk.move.view.DialogUtils;
+import com.secretk.move.view.ReportPopupWindowPull;
+import com.secretk.move.view.ShareView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,30 +43,22 @@ import butterknife.ButterKnife;
  */
 
 public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
-    @BindView(R.id.img_user_head)
-    ImageView imgUserHead;
-    @BindView(R.id.iv_model_icon)
-    ImageView ivModelIcon;
-    @BindView(R.id.tv_user)
-    TextView tvUser;
-    @BindView(R.id.tv_user_dynamic)
-    TextView tvUserDynamic;
-    @BindView(R.id.ll_user)
-    LinearLayout llUser;
-    @BindView(R.id.view_center)
-    View viewCenter;
-    @BindView(R.id.iv_project_icon)
-    ImageView ivProjectIcon;
-    @BindView(R.id.tv_project_code)
-    TextView tvProjectCode;
-    @BindView(R.id.tv_project_name)
-    TextView tvProjectName;
+    @BindView(R.id.iv_user_icon)
+    ImageView ivUserIcon;
+    @BindView(R.id.iv_model_icon_d)
+    ImageView ivModelIconD;
+    @BindView(R.id.rl_head_z)
+    RelativeLayout rlHeadZ;
+    @BindView(R.id.tv_user_name)
+    TextView tvUserName;
     @BindView(R.id.tv_time)
     TextView tvTime;
-    @BindView(R.id.tv_project_folly)
-    TextView tvProjectFolly;
-    @BindView(R.id.rl_project)
-    RelativeLayout rlProject;
+    @BindView(R.id.tv_user_folly)
+    TextView tvUserFolly;
+    @BindView(R.id.iv_pupo)
+    ImageView ivPupo;
+    @BindView(R.id.rl_user_info)
+    RelativeLayout rlUserInfo;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tv_sore)
@@ -74,108 +67,145 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     TextView tvDesc;
     @BindView(R.id.iv_img_max)
     ImageView ivImgMax;
-    @BindView(R.id.iv_ont)
-    ImageView ivOnt;
-    @BindView(R.id.iv_two)
-    ImageView ivTwo;
-    @BindView(R.id.iv_three)
-    ImageView ivThree;
-    @BindView(R.id.ll_multi_img)
-    LinearLayout llMultiImg;
-    @BindView(R.id.rl_context)
-    RelativeLayout rlContext;
+    @BindView(R.id.rv_img)
+    RecyclerView rvImg;
+    @BindView(R.id.tv_project_code)
+    TextView tvProjectCode;
     @BindView(R.id.tv_crack_down)
     TextView tvCrackDown;
-    @BindView(R.id.tv_praise)
+    @BindView(R.id.tv_crack_down_1)
+    TextView tvCrackDown1;
+    @BindView(R.id.tv_crack_down_2)
+    TextView tvCrackDown2;
+    @BindView(R.id.rl_context)
+    RelativeLayout rlContext;
+    @BindView(R.id.tvPraise)
     TextView tvPraise;
-    @BindView(R.id.img_comment)
-    ImageView imgComment;
-    @BindView(R.id.tv_comments)
+    @BindView(R.id.tvComments)
     TextView tvComments;
+    @BindView(R.id.tvRead)
+    TextView tvRead;
+    @BindView(R.id.tvShare)
+    TextView tvShare;
+    private ImagesAdapter imagesadapter;
+    Context mContext;
     public MainRfFragmentRecyclerHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        GridLayoutManager layoutManager = new GridLayoutManager(mContext,3);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rvImg.setLayoutManager(layoutManager);
     }
-    public  void  setData(final MainGzBean.DataBean.FollowsBean.RowsBean bean, Context context){
-        GlideUtils.loadCircleProjectUrl(context, ivProjectIcon,Constants.BASE_IMG_URL + bean.getProjectIcon());
-        showRecommend(context,bean);
-        tvProjectCode.setText(bean.getProjectCode());
-        tvProjectName.setText("/"+bean.getProjectChineseName());
+    ArrayList<PostDataInfo> imageLists;
+    public  void  setData(final RowsBean bean, Context context){
+        this.mContext = context;
+        GlideUtils.loadCircleProjectUrl(context, ivUserIcon,Constants.BASE_IMG_URL + bean.getCreateUserIcon());
+        StringUtil.getUserType(bean.getUserType(),ivModelIconD);
         String time= TimeToolUtils.convertTimeToFormat(bean.getCreateTime());
-       tvTime.setText(time);
-        setCrackTag(bean,bean.getPostType());
-        tvProjectFolly.setVisibility(View.VISIBLE);
-        if (0 == bean.getFollowStatus()) {
-            tvProjectFolly.setText("+ 关注");
-            tvProjectFolly.setSelected(false);
-            tvProjectFolly.setPressed(false);
-            tvProjectFolly.setTextColor(Color.parseColor("#ffffff"));
-        } else if (1 == bean.getFollowStatus()) {
-            tvProjectFolly.setText("已关注");
-            tvProjectFolly.setSelected(true);
-            tvProjectFolly.setPressed(true);
-            tvProjectFolly.setTextColor(Color.parseColor("#3b88f6"));
-        } else {
-            tvProjectFolly.setText("+ 关注");
-            tvProjectFolly.setSelected(false);
-            tvProjectFolly.setPressed(false);
-            tvProjectFolly.setTextColor(Color.parseColor("#ffffff"));
+        tvUserName.setText(StringUtil.getBeanString(bean.getCreateUserName()));
+        tvTime.setText(time);
+        tvUserFolly.setVisibility(View.VISIBLE);
+        if(bean.getFollowStatus() == 1){
+            tvUserFolly.setSelected(true);
+            tvUserFolly.setText(context.getResources().getString(R.string.follow_status_1));
+        }else{
+            tvUserFolly.setSelected(false);
+            tvUserFolly.setText(context.getResources().getString(R.string.follow_status_0));
         }
         tvTitle.setText(bean.getPostTitle());
         tvDesc.setText(bean.getPostShortDesc());
-        tvPraise.setText(bean.getPraiseNum() + "");
-        tvComments.setText(bean.getCommentsNum() + "");
-        llMultiImg.setVisibility(View.GONE);
+        showRecommend(bean);
+        tvProjectCode.setText(bean.getProjectCode());
+        setCrackTag(bean,bean.getPostType());
+
+        imagesadapter = new ImagesAdapter(mContext);
+        rvImg.setAdapter(imagesadapter);
         ivImgMax.setVisibility(View.GONE);
+        rvImg.setVisibility(View.GONE);
         if(StringUtil.isNotBlank(bean.getPostSmallImages())){
             try {
+                //{"fileUrl":"/upload/posts/201805/1.jpg","fileName":"进度讨论","extension":"jpg"},
                 JSONArray images = new JSONArray(bean.getPostSmallImages());
-                List<PostDataInfo> lists = new ArrayList<>();
+                imageLists = new ArrayList<>();
                 for (int i = 0; i < images.length(); i++) {
                     JSONObject strObj = images.getJSONObject(i);
                     PostDataInfo info = new PostDataInfo();
                     info.setUrl(StringUtil.getBeanString(strObj.getString("fileUrl")));
                     info.setName(StringUtil.getBeanString(strObj.getString("fileName")));
                     info.setTitle(StringUtil.getBeanString(strObj.getString("extension")));
-                    lists.add(info);
+                    imageLists.add(info);
                 }
-                if (lists != null && lists.size()>0) {
-                    if (lists.size() > 2) {
-                        llMultiImg.setVisibility(View.VISIBLE);
-                        ivImgMax.setVisibility(View.GONE);
-                        GlideUtils.loadSideMinImage(context, ivOnt, Constants.BASE_IMG_URL + lists.get(0).getUrl());
-                        GlideUtils.loadSideMinImage(context, ivTwo, Constants.BASE_IMG_URL + lists.get(1).getUrl());
-                        GlideUtils.loadSideMinImage(context, ivThree, Constants.BASE_IMG_URL + lists.get(2).getUrl());
-                    } else {
-                        llMultiImg.setVisibility(View.GONE);
+                if (imageLists.size() != 0) {
+                    if (imageLists.size() == 1) {
                         ivImgMax.setVisibility(View.VISIBLE);
-                        GlideUtils.loadSideMaxImage(context, ivImgMax, Constants.BASE_IMG_URL + lists.get(0).getUrl());
+                        rvImg.setVisibility(View.GONE);
+                        GlideUtils.loadSideMaxImage(mContext, ivImgMax, Constants.BASE_IMG_URL + imageLists.get(0).getUrl());
+                    } else {
+                        ivImgMax.setVisibility(View.GONE);
+                        rvImg.setVisibility(View.VISIBLE);
+                        imagesadapter.setData(imageLists);
                     }
-                }else{
-                    llMultiImg.setVisibility(View.GONE);
-                    ivImgMax.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }else if(bean.getPostSmallImagesList()!=null){
+            List<RowsBean.PostSmallImagesListBean> listBeans = bean.getPostSmallImagesList();
+            imageLists = new ArrayList<>();
+            for (int i = 0; i < listBeans.size(); i++) {
+                PostDataInfo info = new PostDataInfo();
+                RowsBean.PostSmallImagesListBean listBean = listBeans.get(i);
+                info.setUrl(StringUtil.getBeanString(listBean.getFileUrl()));
+                info.setName(StringUtil.getBeanString(listBean.getFileName()));
+                info.setTitle(StringUtil.getBeanString(listBean.getExtension()));
+                imageLists.add(info);
+            }
+            if (imageLists.size() != 0) {
+                if (imageLists.size() == 1) {
+                    ivImgMax.setVisibility(View.VISIBLE);
+                    rvImg.setVisibility(View.GONE);
+                    GlideUtils.loadSideMaxImage(mContext, ivImgMax, Constants.BASE_IMG_URL + imageLists.get(0).getUrl());
+                } else {
+                    ivImgMax.setVisibility(View.GONE);
+                    rvImg.setVisibility(View.VISIBLE);
+                    imagesadapter.setData(imageLists);
+                }
+            }
         }
+        ///0-未点赞，1-已点赞，数字
+        if (bean.getPraiseStatus() == 0) {
+            tvPraise.setSelected(true);
+        } else {
+            tvPraise.setSelected(false);
+        }
+        tvPraise.setText(bean.getPraiseNum() + "");
+        tvComments.setText(bean.getCommentsNum() + "");
+        tvRead.setText(bean.getPageviewNum() +"");
+
         //关注
-        tvProjectFolly.setOnClickListener(new View.OnClickListener() {
+        tvUserFolly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!SharedUtils.getLoginZt()){
                     IntentUtil.startActivity(LoginHomeActivity.class);
                     return;
                 }
-                if (getString().equals("已关注")) {
-                  http(Constants.CANCEL_FOLLOW,bean.getProjectId());
-                } else {
-                    http(Constants.SAVE_FOLLOW,bean.getProjectId());
-                }
+                tvUserFolly.setEnabled(false);
+                NetUtil.addSaveFollow(tvUserFolly,
+                        Constants.SaveFollow.USER, bean.getCreateUserId(), new NetUtil.SaveFollowImp() {
+                            @Override
+                            public void finishFollow(String str) {
+                                tvUserFolly.setEnabled(true);
+                                if(!str.equals(Constants.FOLLOW_ERROR)){
+                                    tvUserFolly.setText(str);
+                                }
+                            }
+                        });
             }
         });
+
         //项目
-        rlProject.setOnClickListener(new View.OnClickListener() {
+        tvProjectCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!SharedUtils.getLoginZt()){
@@ -186,7 +216,7 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             }
         });
         //用户
-        llUser.setOnClickListener(new View.OnClickListener() {
+        rlUserInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!SharedUtils.getLoginZt()){
@@ -196,83 +226,123 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 IntentUtil.startHomeActivity(bean.getCreateUserId());
             }
         });
-
-
-    }
-    public void http(String url,int id) {
-        JSONObject node = new JSONObject();
-        try {
-            node.put("token", SharedUtils.getToken());
-            node.put("followType", 1);
-            node.put("followedId", id);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        RxHttpParams params = new RxHttpParams.Build()
-                .url(url)
-                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
-                .addQuery("sign", MD5.Md5(node.toString()))
-                .build();
-        RetrofitUtil.request(params, BaseRes.class, new HttpCallBackImpl<BaseRes>() {
+        ivPupo.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCompleted(BaseRes bean) {
-                if (bean.getCode()==0){
-                    if (getString().equals("已关注")) {
-                        tvProjectFolly.setText("+ 关注");
-                        tvProjectFolly.setSelected(false);
-                        tvProjectFolly.setPressed(false);
-                        tvProjectFolly.setTextColor(Color.parseColor("#ffffff"));
-                    } else {
-                        tvProjectFolly.setText("已关注");
-                        tvProjectFolly.setSelected(true);
-                        tvProjectFolly.setPressed(true);
-                        tvProjectFolly.setTextColor(Color.parseColor("#3b88f6"));
+            public void onClick(View view) {
+                final ReportPopupWindowPull popupWindowPull = new ReportPopupWindowPull(mContext);
+                popupWindowPull.showAtLocation(ivPupo);
+                popupWindowPull.setOnItemClickListener(new ReportPopupWindowPull.OnItemClickListener() {
+                    @Override
+                    public void OnItemClick(View v) {
+                        popupWindowPull.setListenerDate(v,bean.getPostId());
                     }
+                });
+            }
+        });
+        ivImgMax.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext,ImageViewVpAcivity.class);
+                intent.putParcelableArrayListExtra("lists", imageLists);
+                intent.putExtra("position",0);
+                mContext.startActivity(intent);
+            }
+        });
+
+        tvPraise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (SharedUtils.getLoginZt()) {
+                    if(!tvPraise.isSelected()){
+                        return;
+                    }
+                    if(!NetUtil.isPraise(bean.getCreateUserId(),SharedUtils.getUserId())){
+                        return;
+                    }
+                    tvPraise.setEnabled(false);
+                    String strS;
+                    if(tvPraise.isSelected()){
+                        strS = String.valueOf(bean.getPraiseNum()+1);
+                    }else{
+                        strS = String.valueOf(bean.getPraiseNum()-1);
+                    }
+                    tvPraise.setText(strS);
+                    tvPraise.setSelected(!tvPraise.isSelected());
+                    setPraise(!tvPraise.isSelected(),bean);
+                } else {
+                    IntentUtil.startActivity(LoginHomeActivity.class);
                 }
             }
-
+        });
+        tvShare.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onError(String message) {
+            public void onClick(View view) {
 
+                String uslStr = "";
+                switch (bean.getPostType()) {
+                    case 1:
+//                        if(bean.getModelType()==3){
+                        if(false){//自定义评测
+                            uslStr=Constants.EVALUATION_PART_SHARE+bean.getPostId();
+                        }else{
+                            uslStr=Constants.EVALUATION_SHARE+bean.getPostId();
+                        }
+                        break;
+                    case 2://
+                        uslStr=Constants.DISCUSS_SHARE+bean.getPostId();
+                        break;
+                    case 3:
+                        uslStr=Constants.ARTICLE_SHARE+bean.getPostId();
+                        break;
+                }
+                String imgUrl = imageLists.get(0).getUrl();
+                ShareView.showShare(mContext,tvShare,"",uslStr,
+                        tvTitle.getText().toString(), tvDesc.getText().toString(), imgUrl,bean.getPostId());
             }
         });
     }
 
-    public String getString(){
-        return tvProjectFolly.getText().toString();
-    }
-
-    public void showRecommend(Context context, MainGzBean.DataBean.FollowsBean.RowsBean bean){
-        llUser.setVisibility(View.VISIBLE);
-        GlideUtils.loadCircleUserUrl(context,imgUserHead, Constants.BASE_IMG_URL + bean.getCreateUserIcon());
-        StringUtil.getUserType(bean.getUserType(),ivModelIcon);
-        tvUser.setText(bean.getCreateUserName());
+    public void showRecommend(RowsBean bean){
         switch (bean.getPostType()){
             case 1:
-                tvUserDynamic.setText("发表了评测");
                 tvSore.setVisibility(View.VISIBLE);
                 tvSore.setText(bean.getTotalScore()+"分");
                 if(bean.getTotalScore()==0){
-                    tvSore.setVisibility(View.INVISIBLE);
+                    tvSore.setVisibility(View.GONE);
                 }
                 break;
             case 2:
-                tvSore.setVisibility(View.INVISIBLE);
-                tvUserDynamic.setText("发表了爆料");
+                tvSore.setVisibility(View.GONE);
                 break;
             case 3:
-                tvSore.setVisibility(View.INVISIBLE);
-                tvUserDynamic.setText("发表了文章");
+                tvSore.setVisibility(View.GONE);
                 break;
         }
     }
+    private void setPraise(boolean isPraise, final RowsBean bead) {
+        NetUtil.setPraise(isPraise, bead.getPostId(), new NetUtil.SaveFollowImpl() {
+            @Override
+            public void finishFollow(String praiseNum,boolean status,double find) {
+                tvPraise.setEnabled(true);
+                ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
+                if(!praiseNum.equals(Constants.PRAISE_ERROR)){
+                    DialogUtils.showDialogPraise(mContext,1,true,find);
+                    tvPraise.setSelected(status);
+                    bead.setPageviewNum(Integer.valueOf(praiseNum));
+                    tvPraise.setText(praiseNum);
+                }
+            }
+        });
+    }
 
-    private void setCrackTag(MainGzBean.DataBean.FollowsBean.RowsBean discussDetail, int type){
+    private void setCrackTag(RowsBean discussDetail, int type){
         String tagVal = discussDetail.getTagInfos();
         if(type==1){
             tagVal=discussDetail.getEvaluationTags();
         }
         tvCrackDown.setVisibility(View.GONE);
+        tvCrackDown1.setVisibility(View.GONE);
+        tvCrackDown2.setVisibility(View.GONE);
         if (StringUtil.isNotBlank(tagVal)&& tagVal.contains("tagName")) {
             try {
                 JSONArray object = new JSONArray(tagVal);
@@ -281,16 +351,28 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 String tagOnly[] = new String[object.length()];
                 for (int i = 0; i < object.length(); i++) {
                     JSONObject strObj = object.getJSONObject(i);
-                    tagOnly[i] = "#" + strObj.getString("tagName") + "#";
-                    tagAll += "#" + strObj.getString("tagName") + "#   ";
-                }
-                tvCrackDown.setVisibility(View.VISIBLE);
-                Clickable.getSpannableString(tagAll, tagOnly, tvCrackDown, new Clickable.ClickListener() {
-                    @Override
-                    public void setOnClick(String name) {
-                        //ToastUtils.getInstance().show(name);
+                    if(i==0){
+                        tvCrackDown.setVisibility(View.VISIBLE);
+                        tvCrackDown.setText(strObj.getString("tagName"));
                     }
-                });
+                    if(i==1){
+                        tvCrackDown1.setVisibility(View.VISIBLE);
+                        tvCrackDown1.setText(strObj.getString("tagName"));
+                    }
+                    if(i==2){
+                        tvCrackDown2.setVisibility(View.VISIBLE);
+                        tvCrackDown2.setText(strObj.getString("tagName"));
+                    }
+//                    tagOnly[i] = "#" + strObj.getString("tagName") + "#";
+//                    tagAll += "#" + strObj.getString("tagName") + "#   ";
+                }
+//                tvCrackDown.setVisibility(View.VISIBLE);
+//                Clickable.getSpannableString(tagAll, tagOnly, tvCrackDown, new Clickable.ClickListener() {
+//                    @Override
+//                    public void setOnClick(String name) {
+//                        //ToastUtils.getInstance().show(name);
+//                    }
+//                });
             } catch (JSONException e) {
                 e.printStackTrace();
             }

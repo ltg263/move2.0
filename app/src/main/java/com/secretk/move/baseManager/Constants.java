@@ -101,8 +101,8 @@ public interface Constants {
 //
 //     String BASE_URL = "http://192.168.10.153:809/";//栋栋
 //
-//      String BASE_URL = "http://repay.free.ngrok.cc/rest/";//林俊
-//      String BASE_URL = "http://192.168.10.133:8044/rest/";//林俊
+//      String BASE_URL = "http://repayy.free.ngrok.cc/rest/";//林俊
+//      String BASE_URL = "http://192.168.10.130:8044/rest/";//林俊
     //:15537894586   abc12310  志远手机密码：0405
 //    String BASE_URL = "http://47.98.197.101/rest/";//宋
 
@@ -235,6 +235,11 @@ public interface Constants {
     String USERHOME_ARTICLE_LIST = BASE_URL + "kff/userhome/articleList";
     //  简单评测  项目统计
     String SIMPLE_EVALUATION_LIST = BASE_URL + "kff/project/simpleEvaluationList";
+
+    //获得投诉详情选项列表
+    String GET_REPORT_LIST = BASE_URL + "kff/report/getReportModelList";
+    //进行投诉操作
+    String SAVE_REPORT = BASE_URL + "kff/report/saveReport";
 
     //项目主页 ，显示项目基本信息
     String PROJECT_INDEX = BASE_URL + "kff/project/index";

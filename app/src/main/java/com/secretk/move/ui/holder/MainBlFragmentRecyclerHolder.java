@@ -117,6 +117,17 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         if (SharedUtils.getUserId()==bean.getCreateUserId()){
             tvProjectFolly.setVisibility(View.GONE);
         }
+
+        tvProjectCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!SharedUtils.getLoginZt()){
+                    IntentUtil.startActivity(LoginHomeActivity.class);
+                    return;
+                }
+                IntentUtil.startProjectActivity(bean.getProjectId());
+            }
+        });
         //关注
         tvProjectFolly.setOnClickListener(new View.OnClickListener() {
             @Override
