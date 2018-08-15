@@ -43,6 +43,15 @@ public class CommonListBase extends BaseRes{
 
         private DetailsBean recommends;
         private DetailsBean myTokenRecords;
+        private DetailsBean follows;
+
+        public DetailsBean getFollows() {
+            return follows;
+        }
+
+        public void setFollows(DetailsBean follows) {
+            this.follows = follows;
+        }
 
         public DetailsBean getMyTokenRecords() {
             return myTokenRecords;

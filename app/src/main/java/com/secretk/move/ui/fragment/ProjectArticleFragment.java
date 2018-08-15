@@ -18,7 +18,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonListBase;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.ProjectActivity;
-import com.secretk.move.ui.adapter.ProjectRecommendAdapter;
+import com.secretk.move.ui.adapter.MainRfFragmentRecyclerAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.view.LoadingDialog;
@@ -48,7 +48,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
     @BindView(R.id.iv_not_content)
     ImageView ivNotContent;
 
-    private ProjectRecommendAdapter adapter;
+    private MainRfFragmentRecyclerAdapter adapter;
     public boolean isHaveData = true;
     private int pageIndex = 1;
     private String projectId;
@@ -65,7 +65,7 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
             loadingDialog=new LoadingDialog(getActivity());
         }
         setVerticalManager(rvReview);
-        adapter = new ProjectRecommendAdapter(getActivity());
+        adapter = new MainRfFragmentRecyclerAdapter(getActivity());
         rvReview.setAdapter(adapter);
         tvSort.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -104,28 +104,44 @@
     <style name="TabLayoutTextStyleProject">
         <item name="android:textSize">@dimen/sp_14</item>
     </style>
-    <!--
-    <TextView
-            android:paddingBottom="@dimen/dp_3"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_3"
-            android:text="@string/follow_status_0"
-            android:textColor="@drawable/selector_follow_state_text"
-            android:visibility="visible" />
 
-    -->
+    <!-- 关注按钮 -->
     <style name="BtnSelectorFollow">
-        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_width">@dimen/dp_65</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textSize">@dimen/sp_12</item>
         <item name="android:textColor">@drawable/selector_follow_state_text</item>
         <item name="android:background">@drawable/selector_follow_state</item>
+        <item name="android:paddingTop">@dimen/dp_5</item>
+        <item name="android:paddingBottom">@dimen/dp_5</item>
+    </style>
+    <!-- 打假标签 -->
+    <style name="TvCrackDown">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingTop">@dimen/dp_3</item>
         <item name="android:paddingBottom">@dimen/dp_3</item>
         <item name="android:paddingRight">@dimen/dp_10</item>
         <item name="android:paddingLeft">@dimen/dp_10</item>
+        <item name="android:background">@drawable/shape_add_label_selected</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/app_background</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:visibility">gone</item>
     </style>
-
+    <!-- 币种标签 -->
+    <style name="TvProjectCode">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/dp_3</item>
+        <item name="android:paddingBottom">@dimen/dp_3</item>
+        <item name="android:paddingRight">@dimen/dp_10</item>
+        <item name="android:paddingLeft">@dimen/dp_10</item>
+        <item name="android:background">@drawable/garden_crack</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:visibility">gone</item>
+    </style>
 </resources>

@@ -25,6 +25,7 @@ import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.GridSpacingItemDecoration;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
@@ -128,6 +129,7 @@ public class DetailsArticleActivity extends BaseActivity {
         postId = getIntent().getStringExtra("postId");
         activityId = getIntent().getStringExtra("activityId");
         setVerticalManager(rvImg);
+        rvImg.addItemDecoration(new GridSpacingItemDecoration());
         adapter = new ImagesAdapter(this);
         rvImg.setAdapter(adapter);
         WebSettings webSettings = wvPostShortDesc.getSettings();//获取webview设置属性

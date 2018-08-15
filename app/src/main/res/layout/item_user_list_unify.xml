@@ -6,7 +6,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_20"
+        android:layout_height="@dimen/dp_8"
         android:background="@color/white" />
 
     <RelativeLayout
@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:background="#ffffff"
         android:paddingHorizontal="@dimen/dp_15"
-        android:paddingVertical="@dimen/dp_10"
+        android:paddingVertical="@dimen/dp_2"
         android:visibility="visible">
 
         <TextView
@@ -109,10 +109,9 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/tv_title"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
             android:layout_marginLeft="@dimen/dp_5"
-            android:gravity="center_vertical"
             android:text="0999"
+            android:layout_marginBottom="@dimen/dp_8"
             android:textColor="@color/app_background"
             android:textSize="@dimen/list_item_score"
             android:textStyle="bold" />
@@ -122,12 +121,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_title"
-            android:layout_marginTop="@dimen/dp_8"
             android:ellipsize="end"
             android:letterSpacing="0.05"
             android:lineSpacingExtra="@dimen/item_line_spacing"
             android:maxLines="3"
-            android:text="啦啦啦啦啦啦啦阿联"
+            android:text="啦啦啦啦啦啦啦阿联啦啦啦啦啦啦啦阿联啦啦啦啦啦啦啦阿联啦啦啦啦啦啦啦阿联"
             android:textColor="@color/title_gray_66"
             android:textSize="@dimen/list_item_details" />
 
@@ -135,13 +133,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_desc"
-            android:layout_marginTop="@dimen/dp_10"
             android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/iv_img_max"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/list_item_img_max"
+                android:layout_marginVertical="@dimen/dp_5"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_aaa"
                 android:visibility="gone" />
@@ -150,68 +148,39 @@
                 android:id="@+id/rv_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/dp_5"
                 android:visibility="gone" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/dp_10">
+                android:layout_marginVertical="@dimen/dp_5">
 
                 <TextView
                     android:id="@+id/tv_project_code"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/garden_crack"
-                    android:paddingHorizontal="@dimen/dp_10"
-                    android:paddingVertical="@dimen/dp_2"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_14" />
+                    style="@style/TvProjectCode"
+                    android:layout_centerVertical="true" />
 
                 <TextView
                     android:id="@+id/tv_crack_down"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/TvCrackDown"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_toRightOf="@id/tv_project_code"
-                    android:background="@drawable/shape_add_label_selected"
-                    android:paddingHorizontal="@dimen/dp_10"
-                    android:paddingVertical="@dimen/dp_2"
-                    android:singleLine="true"
-                    android:textColor="@color/app_background"
-                    android:textSize="@dimen/sp_14"
-                    android:visibility="gone" />
+                    android:layout_toRightOf="@id/tv_project_code" />
 
                 <TextView
                     android:id="@+id/tv_crack_down_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/TvCrackDown"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_toRightOf="@id/tv_crack_down"
-                    android:background="@drawable/shape_add_label_selected"
-                    android:paddingHorizontal="@dimen/dp_10"
-                    android:paddingVertical="@dimen/dp_2"
-                    android:singleLine="true"
-                    android:textColor="@color/app_background"
-                    android:textSize="@dimen/sp_14"
-                    android:visibility="gone" />
+                    android:layout_toRightOf="@id/tv_crack_down" />
 
                 <TextView
                     android:id="@+id/tv_crack_down_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/TvCrackDown"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_toRightOf="@id/tv_crack_down_1"
-                    android:background="@drawable/shape_add_label_selected"
-                    android:paddingHorizontal="@dimen/dp_10"
-                    android:paddingVertical="@dimen/dp_2"
-                    android:singleLine="true"
-                    android:textColor="@color/app_background"
-                    android:textSize="@dimen/sp_14"
-                    android:visibility="gone" />
+                    android:layout_toRightOf="@id/tv_crack_down_1" />
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
@@ -228,7 +197,7 @@
         android:background="#ffffff"
         android:gravity="bottom"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_10"
         android:paddingHorizontal="@dimen/dp_15"
         android:visibility="visible">
 
@@ -285,10 +254,10 @@
             android:textSize="@dimen/sp_14" />
     </LinearLayout>
 
-    <View
+    <!--<View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_10"
-        android:background="@color/white" />
+        android:background="@color/white" />-->
 
     <View
         android:layout_width="match_parent"

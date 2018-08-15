@@ -19,6 +19,7 @@ import com.secretk.move.ui.activity.ImageViewVpAcivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.GridSpacingItemDecoration;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -89,6 +90,7 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         GridLayoutManager layoutManager = new GridLayoutManager(mContext,3);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvImg.setLayoutManager(layoutManager);
+        rvImg.addItemDecoration(new GridSpacingItemDecoration());
 
     }
     public void setData(final RowsBean bean, final Context context){
@@ -97,7 +99,10 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         GlideUtils.loadCircleUserUrl(context,imgOrganization, Constants.BASE_IMG_URL + StringUtil.getBeanString(bean.getCreateUserIcon()));
         tvName.setText(bean.getCreateUserName());
         tvTime.setText(TimeToolUtils.convertTimeToFormat(bean.getCreateTime()));
-        tvProjectCode.setText(bean.getProjectCode());
+        if(StringUtil.isNotBlank(bean.getProjectCode())){
+            tvProjectCode.setVisibility(View.VISIBLE);
+            tvProjectCode.setText(bean.getProjectCode());
+        }
         StringUtil.getUserType(bean.getUserType(),ivModelType);
         showPostDesc(bean);
         ///0-未点赞，1-已点赞，数字

@@ -19,6 +19,7 @@ import com.secretk.move.ui.activity.ImageViewVpAcivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.GridSpacingItemDecoration;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -95,6 +96,7 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         GridLayoutManager layoutManager = new GridLayoutManager(mContext,3);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvImg.setLayoutManager(layoutManager);
+        rvImg.addItemDecoration(new GridSpacingItemDecoration());
     }
     ArrayList<PostDataInfo> imageLists;
     public  void  setData(final RowsBean bean, Context context){
@@ -115,7 +117,10 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvTitle.setText(bean.getPostTitle());
         tvDesc.setText(bean.getPostShortDesc());
         showRecommend(bean);
-        tvProjectCode.setText(bean.getProjectCode());
+        if(StringUtil.isNotBlank(bean.getProjectCode())){
+            tvProjectCode.setVisibility(View.VISIBLE);
+            tvProjectCode.setText(bean.getProjectCode());
+        }
         setCrackTag(bean,bean.getPostType());
 
         imagesadapter = new ImagesAdapter(mContext);
@@ -215,6 +220,18 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 IntentUtil.startProjectActivity(bean.getProjectId());
             }
         });
+        rlContext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (SharedUtils.getLoginZt()) {
+                    int postId = bean.getPostId();
+                    int postType = bean.getPostType();
+                    IntentUtil.go2DetailsByType(postType, String.valueOf(postId));
+                } else {
+                    IntentUtil.startActivity(LoginHomeActivity.class);
+                }
+            }
+        });
         //用户
         rlUserInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -295,7 +312,10 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                         uslStr=Constants.ARTICLE_SHARE+bean.getPostId();
                         break;
                 }
-                String imgUrl = imageLists.get(0).getUrl();
+                String imgUrl ="";
+                if(imageLists!=null && imageLists.size()>0){
+                    imgUrl = imageLists.get(0).getUrl();
+                }
                 ShareView.showShare(mContext,tvShare,"",uslStr,
                         tvTitle.getText().toString(), tvDesc.getText().toString(), imgUrl,bean.getPostId());
             }

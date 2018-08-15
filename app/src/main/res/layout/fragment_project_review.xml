@@ -98,10 +98,6 @@
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
-                    android:background="@color/cut_off_rule" />
             </LinearLayout>
 
             <LinearLayout

@@ -19,7 +19,7 @@ import com.secretk.move.bean.ProjectHomeBean;
 import com.secretk.move.bean.RowsBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.ProjectActivity;
-import com.secretk.move.ui.adapter.ProjectRecommendAdapter;
+import com.secretk.move.ui.adapter.MainRfFragmentRecyclerAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.view.LoadingDialog;
@@ -64,12 +64,12 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
     LinearLayout llZxpc;
     @BindView(R.id.tv_sort)
     TextView tvSort;
-    private ProjectRecommendAdapter adapter;
+    private MainRfFragmentRecyclerAdapter adapter;
     int pageIndex = 1;
     public boolean isHaveData = true;
     private String projectId;
     private LoadingDialog loadingDialog;
-    private ProjectRecommendAdapter adapterTop;
+    private MainRfFragmentRecyclerAdapter adapterTop;
     private List<RowsBean> newData;
 
     @Override
@@ -81,9 +81,9 @@ public class ProjectReviewFragment extends LazyFragment implements ItemClickList
     public void initViews() {
         setVerticalManager(rvReview);
         setVerticalManager(rvReviewTop);
-        adapter = new ProjectRecommendAdapter(getActivity());
+        adapter = new MainRfFragmentRecyclerAdapter(getActivity());
         rvReview.setAdapter(adapter);
-        adapterTop = new ProjectRecommendAdapter(getActivity());
+        adapterTop = new MainRfFragmentRecyclerAdapter(getActivity());
         rvReviewTop.setAdapter(adapterTop);
         tvSort.setOnClickListener(new View.OnClickListener() {
             @Override

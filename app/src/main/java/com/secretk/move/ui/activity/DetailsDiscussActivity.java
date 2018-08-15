@@ -31,6 +31,7 @@ import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.ui.adapter.DetailsDiscussAdapter;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.GridSpacingItemDecoration;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
@@ -156,6 +157,7 @@ public class DetailsDiscussActivity extends BaseActivity {
         postId = getIntent().getStringExtra("postId");
         activityId = getIntent().getStringExtra("activityId");
         setHorizontalManager(rvImg);
+        rvImg.addItemDecoration(new GridSpacingItemDecoration());
         imagesadapter = new ImagesAdapter(this);
         rvImg.setAdapter(imagesadapter);
 

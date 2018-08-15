@@ -26,6 +26,7 @@ import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.ui.adapter.ProgressAdapter;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.GridSpacingItemDecoration;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
@@ -143,6 +144,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
         postId = getIntent().getStringExtra("postId");
         activityId = getIntent().getStringExtra("activityId");
         setVerticalManager(rvImg);
+        rvImg.addItemDecoration(new GridSpacingItemDecoration());
         setVerticalManager(rvReview);
         adapterProgress = new ProgressAdapter(this);
         rvReview.setAdapter(adapterProgress);
