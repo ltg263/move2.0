@@ -33,6 +33,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesHold
 
     private List<PostDataInfo> lists = new ArrayList<>();
     Context context;
+    private boolean isNull = false;
     public ImagesAdapter(Context context) {
         this.context=context;
     }
@@ -46,10 +47,16 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesHold
 
     @Override
     public void onBindViewHolder(ImagesHolder holder, final int position) {
+        if(lists.get(position)==null){
+            return;
+        }
         GlideUtils.loadSideMaxImage(context,holder.img, Constants.BASE_IMG_URL+lists.get(position).getUrl());
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(isNull){
+                    lists.remove(2);
+                }
                 Intent intent = new Intent(context,ImageViewVpAcivity.class);
                 intent.putParcelableArrayListExtra("lists", (ArrayList<? extends Parcelable>) lists);
                 intent.putExtra("position",position);
@@ -65,6 +72,10 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesHold
     }
 
     public void setData(List<PostDataInfo> list) {
+        if(list.size()==4){
+            isNull=true;
+            list.add(2,null);
+        }
         this.lists = list;
         notifyDataSetChanged();
     }

@@ -19,8 +19,8 @@ import com.secretk.move.customview.GlideRoundTransform;
  http://pic.qufen.top/4481528959156_.pic.jpg?imageView2/1/w/342/h/187
  */
 public class GlideUtils {
-    static String ImgUrlMix = "?imageView2/1/w/187";
-    static String ImgUrlMax = "?imageView2/1/w/342/h/187";
+    static String ImgUrlMix = "?imageView2/1/w/374";
+    static String ImgUrlMax = "?imageView2/1/w/684/h/374";
 
     static String ImgUrlMix_76 = "?imageView2/1/h/76";
     static String ImgUrlMax_135 = "?imageView2/1/w/316/h/135";

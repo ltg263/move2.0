@@ -48,18 +48,28 @@
 
 
             <TextView
-                android:id="@+id/tvName"
+                android:id="@+id/tv_project_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="AA"
                 android:textColor="@color/title_gray"
                 android:textSize="@dimen/sp_14"
                 android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_project_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AA"
+                android:layout_toRightOf="@id/tv_project_code"
+                android:layout_alignBottom="@id/tv_project_code"
+                android:textColor="@color/title_gray_66"
+                android:textSize="@dimen/sp_12" />
 
             <TextView
                 android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvName"
+                android:layout_below="@id/tv_project_code"
                 android:textColor="@color/title_gray_66"
                 android:textSize="@dimen/sp_12" />
 
@@ -147,17 +157,15 @@
             android:layout_toRightOf="@id/rl_head"
             android:padding="@dimen/dp_10">
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/tv_project_code"
                 style="@style/TvProjectCode"
-                android:layout_centerVertical="true" />
+                android:layout_centerVertical="true" />-->
 
             <TextView
                 android:id="@+id/tv_crack_down"
                 style="@style/TvCrackDown"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_toRightOf="@id/tv_project_code" />
+                android:layout_centerVertical="true"/>
 
             <TextView
                 android:id="@+id/tv_crack_down_1"

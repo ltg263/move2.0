@@ -14,7 +14,7 @@ import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonListBase;
 import com.secretk.move.ui.activity.HomeActivity;
-import com.secretk.move.ui.adapter.HomeListAdapter;
+import com.secretk.move.ui.adapter.MineProjectListBlAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
@@ -39,7 +39,7 @@ public class HomeDiscussFragment extends LazyFragment{
     ImageView ivNotContent;
     private int pageIndex=1;
 
-    private HomeListAdapter adapter;
+    private MineProjectListBlAdapter adapter;
     public Boolean isHaveData = true;//是否还有数据
     private String userId;
     private LoadingDialog loadingDialog;
@@ -52,7 +52,7 @@ public class HomeDiscussFragment extends LazyFragment{
     @Override
     public void initViews() {
         setVerticalManager(rvReview);
-        adapter = new HomeListAdapter(getActivity());
+        adapter = new MineProjectListBlAdapter(getActivity());
         rvReview.setAdapter(adapter);
         if(loadingDialog==null){
             loadingDialog=new LoadingDialog(getActivity());
