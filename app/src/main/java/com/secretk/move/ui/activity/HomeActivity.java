@@ -91,6 +91,7 @@ public class HomeActivity extends BaseActivity {
     LinearLayout llFans;
     private String homePageTitle;
     private String currentType;
+    private String userName="";
 
     @Override
     protected int setOnCreate() {
@@ -175,7 +176,9 @@ public class HomeActivity extends BaseActivity {
                 String iconUrl = Constants.BASE_IMG_URL + userData.getIcon();
                 GlideUtils.loadCircleUserUrl(HomeActivity.this, ivHead, iconUrl);
                 GlideUtils.loadCircleUserUrl(HomeActivity.this, mHeadView.getImageView(), iconUrl);
+                userId = String.valueOf(userData.getUserId());
                 mHeadView.setTitle(userData.getHomePageTitle());
+                userName = userData.getUserName();
                 tvUserName.setText(userData.getUserName());
                 tvIndividualResume.setText(userData.getUserSignature());
                 //"userType": 1,// 用户类型:1-普通用户；2-项目方；3-评测机构；4-机构用户
@@ -230,8 +233,8 @@ public class HomeActivity extends BaseActivity {
                         });
                 break;
             case R.id.ll_fans:
-                String key[] = {"userId"};
-                String values[] = {String.valueOf(userId)};
+                String key[] = {"id","name","type"};
+                String values[] = {String.valueOf(userId),userName,"0"};
                 IntentUtil.startActivity(HomeFansActivity.class, key, values);
                 break;
         }

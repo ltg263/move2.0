@@ -437,7 +437,7 @@ public class ProjectActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.fab, R.id.rl_grade, R.id.tv_review, R.id.tv_follow_status})
+    @OnClick({R.id.fab, R.id.rl_grade, R.id.tv_review, R.id.tv_follow_status,R.id.ll_follower})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fab:
@@ -465,6 +465,11 @@ public class ProjectActivity extends BaseActivity {
                                 }
                             }
                         });
+                break;
+            case R.id.ll_follower:
+                String keyF[] = {"id","name","type"};
+                String valuesF[] = {String.valueOf(projectId),projectInfo.getProjectCode(),"1"};
+                IntentUtil.startActivity(HomeFansActivity.class, keyF, valuesF);
                 break;
         }
     }
