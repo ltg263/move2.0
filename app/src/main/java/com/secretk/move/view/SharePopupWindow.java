@@ -314,9 +314,10 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
         ToastUtils.getInstance().show("分享成功");
         LogUtil.d("分享成功:" + i + "--" + platform.getName());
-        if(StringUtil.isNotBlank(activityId)){
-            addPostShare(activityId);
+        if(StringUtil.isBlank(activityId)){
+            activityId="0";
         }
+        addPostShare(activityId,postId);
         if (platform.getName().equals("QQ")) {
             if (mShareTypeListener != null) {
                 mShareTypeListener.shareType(1);
@@ -380,11 +381,12 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
         this.mShareTypeListener = mShareTypeListener;
     }
 
-    private void addPostShare(String activityId){
+    private void addPostShare(String activityId, int postId){
         JSONObject node = new JSONObject();
         try {
             node.put("token", SharedUtils.getToken());
             node.put("activityId", Integer.valueOf(activityId));
+            node.put("postId", postId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -395,7 +397,9 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
                 .build();
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
-            public void onCompleted(String str) {}
+            public void onCompleted(String str) {
+                ToastUtils.getInstance().show(str);
+            }
         });
     }
 }

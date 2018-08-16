@@ -108,8 +108,8 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
             @Override
             public void onPageSelected(int position) {
                 if (position == 4) {
-                    StatusBarUtil.setDarkMode(MainActivity.this);
-                    StatusBarUtil.setColor(MainActivity.this, UiUtils.getColor(R.color.app_background), 0);
+                    StatusBarUtil.setLightMode(MainActivity.this);
+                    StatusBarUtil.setColor(MainActivity.this, UiUtils.getColor(R.color.white), 0);
                 } else {
                     StatusBarUtil.setLightMode(MainActivity.this);
                     StatusBarUtil.setColor(MainActivity.this, UiUtils.getColor(R.color.main_background), 0);
@@ -283,6 +283,9 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
 
     @Override
     public void showDialog(final VersionBean.DataBean str, final boolean force) {
+        if(true){
+            return;
+        }
         DialogUtils.showDialogAppUpdate(this, force, str.getUpExplain(), new DialogUtils.ErrorDialogInterface() {
             @Override
             public void btnConfirm() {

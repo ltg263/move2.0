@@ -120,9 +120,6 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
     @Override
     public void initViews() {
-
-//        StatusBarUtil_1.immersive(getActivity());
-//        StatusBarUtil_1.setPaddingSmart(getActivity(), ivMySet);
     }
 
     @Override
@@ -313,9 +310,6 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
             @Override
             public void onError(String message) {
-                if(true){
-                    return;
-                }
                 DialogUtils.showDialogHint(getActivity(), "帐号或密码错误请重新登陆",
                         true, new DialogUtils.ErrorDialogInterface() {
                             @Override

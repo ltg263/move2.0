@@ -25,6 +25,7 @@ import com.secretk.move.ui.fragment.HomeArticleFragment;
 import com.secretk.move.ui.fragment.HomeDiscussFragment;
 import com.secretk.move.ui.fragment.HomeReviewFragment;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -229,9 +230,9 @@ public class HomeActivity extends BaseActivity {
                         });
                 break;
             case R.id.ll_fans:
-//                String key[] = {"userId"};
-//                String values[] = {String.valueOf(userId)};
-//                IntentUtil.startActivity(HomeFansActivity.class, key, values);
+                String key[] = {"userId"};
+                String values[] = {String.valueOf(userId)};
+                IntentUtil.startActivity(HomeFansActivity.class, key, values);
                 break;
         }
     }
