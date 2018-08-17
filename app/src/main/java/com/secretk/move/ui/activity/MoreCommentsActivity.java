@@ -25,6 +25,7 @@ import com.secretk.move.bean.MoreCommentsBean;
 import com.secretk.move.ui.adapter.MoreCommentsAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.KeybordS;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -33,6 +34,7 @@ import com.secretk.move.utils.TimeToolUtils;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.DialogUtils;
+import com.secretk.move.view.InputMethodLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,6 +53,8 @@ import butterknife.OnClick;
  */
 public class MoreCommentsActivity extends BaseActivity{
 
+    @BindView(R.id.input_method_layout)
+    InputMethodLayout inputMethodLayout;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.iv_commented_user_icon)
@@ -69,12 +73,14 @@ public class MoreCommentsActivity extends BaseActivity{
     TextView tvCommentContent;
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
-    @BindView(R.id.et_message)
+    @BindView(R.id.et_content)
     EditText etMessage;
     @BindView(R.id.tv_send)
     TextView tvSend;
-    @BindView(R.id.rl)
-    RelativeLayout rl;
+    @BindView(R.id.rl_select_yse)
+    RelativeLayout rlSelectYse;
+    @BindView(R.id.rl_select_no)
+    RelativeLayout rlSelectNo;
     private MoreCommentsAdapter adapter;
     private int commentsId;
     private int userId;
@@ -106,6 +112,7 @@ public class MoreCommentsActivity extends BaseActivity{
         adapter = new MoreCommentsAdapter(this);
         rvReview.setAdapter(adapter);
         initRefresh();
+        inputMethod();
         StringUtil.etSearchChangedListener(etMessage, null, new StringUtil.EtChange() {
             @Override
             public void etYes() {
@@ -139,6 +146,28 @@ public class MoreCommentsActivity extends BaseActivity{
             }
         });
     }
+
+    private void inputMethod() {
+        inputMethodLayout.setOnkeyboarddStateListener(new InputMethodLayout.onKeyboardsChangeListener() {// 监听软键盘状态
+            @Override
+            public void onKeyBoardStateChange(int state) {
+                // TODO Auto-generated method stub
+                switch (state) {
+                    case InputMethodLayout.KEYBOARD_STATE_SHOW:
+                        etMessage.setFocusable(true);
+                        etMessage.setFocusableInTouchMode(true);
+                        etMessage.requestFocus();
+                        rlSelectYse.setVisibility(View.VISIBLE);
+                        rlSelectNo.setVisibility(View.GONE);
+                        break;
+                    case InputMethodLayout.KEYBOARD_STATE_HIDE:
+                        rlSelectYse.setVisibility(View.GONE);
+                        rlSelectNo.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+        });
+    }
     CommonCommentsBean commentsBean;
     protected void initData() {
         commentsBean = getIntent().getParcelableExtra("commentsBean");
@@ -166,7 +195,7 @@ public class MoreCommentsActivity extends BaseActivity{
         getWlData();
     }
 
-    @OnClick({R.id.tv_praise_num, R.id.rl_ge_ren, R.id.tv_send})
+    @OnClick({R.id.tv_praise_num, R.id.rl_ge_ren, R.id.tv_send,R.id.tv_commented_user_name,R.id.rl_select_no})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_praise_num:
@@ -185,6 +214,7 @@ public class MoreCommentsActivity extends BaseActivity{
                 }
                 tvPraiseNum.setText(strNum);
                 tvPraiseNum.setSelected(!tvPraiseNum.isSelected());
+                NetUtil.setAnimation(tvPraiseNum);
                 NetUtil.addCommentsPraise(!tvPraiseNum.isSelected(), commentsId, new NetUtil.SaveFollowImpl() {
                     @Override
                     public void finishFollow(String praiseNum,boolean status,double find) {
@@ -202,12 +232,19 @@ public class MoreCommentsActivity extends BaseActivity{
             case R.id.rl_ge_ren:
                 IntentUtil.startHomeActivity(userId);
                 break;
+            case R.id.tv_commented_user_name:
+                IntentUtil.startHomeActivity(userId);
+                break;
+            case R.id.rl_select_no:
+                KeybordS.openKeybord(etMessage,this);
+                break;
             case R.id.tv_send:
                 String str = etMessage.getText().toString().trim();
                 if (StringUtil.isNotBlank(str)) {
                     if(str.contains(strLs)){
                         str = str.replaceAll( strLs,"");
                     }
+                    KeybordS.closeKeybord(etMessage,this);
                     saveComment(str);
                 } else {
                     ToastUtils.getInstance().show("内容不能为空");

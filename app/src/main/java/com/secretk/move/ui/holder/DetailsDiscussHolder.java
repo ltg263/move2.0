@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -55,16 +54,10 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
     TextView tvChildContent1;
     @BindView(R.id.tv_child_content2)
     TextView tvChildContent2;
-    @BindView(R.id.view_child_content1)
-    View viewChildContent1;
-    @BindView(R.id.view_child_content2)
-    View viewChildContent2;
-    @BindView(R.id.view_child_comments_num)
-    View viewChildCommentsNum;
     @BindView(R.id.tv_child_comments_num)
     TextView tvChildCommentsNum;
-    @BindView(R.id.rl_ge_ren)
-    RelativeLayout rlGeRen;
+    @BindView(R.id.tvComments)
+    TextView tvComments;
     private CommonCommentsBean commentsBean;
     int loginUserId;
     public DetailsDiscussHolder(View itemView) {
@@ -82,7 +75,8 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
         StringUtil.getUserType(commentsBean.getUserType(),ivModelIcon);
         tvCommentedUserName.setText(commentsBean.getCommentUserName());
         tvPraiseNum.setText(String.valueOf(commentsBean.getPraiseNum()));
-        tvCreateTime.setText(commentsBean.getFloor() +"楼    "+ TimeToolUtils.convertTimeToFormat(commentsBean.getCreateTime()));
+        tvCreateTime.setText(TimeToolUtils.convertTimeToFormat(commentsBean.getCreateTime()));
+//        tvCreateTime.setText(commentsBean.getFloor() +"楼    "+ TimeToolUtils.convertTimeToFormat(commentsBean.getCreateTime()));
         tvCommentContent.setText(commentsBean.getCommentContent());
         //"praiseStatus":0,//点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
         if(commentsBean.getPraiseStatus()==1){
@@ -107,18 +101,23 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
             }
         });
         //跳转到用户
-        rlGeRen.setOnClickListener(new View.OnClickListener() {
+        ivCommentedUserIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IntentUtil.startHomeActivity(commentsBean.getCommentUserId());
+            }
+        });
+        //跳转到用户
+        tvCommentedUserName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 IntentUtil.startHomeActivity(commentsBean.getCommentUserId());
             }
         });
         tvChildCommentsNum.setVisibility(View.GONE);
-        viewChildCommentsNum.setVisibility(View.GONE);
         if(commentsBean.getChildCommentsNum()>2){
             tvChildCommentsNum.setVisibility(View.VISIBLE);
-            viewChildCommentsNum.setVisibility(View.VISIBLE);
-            tvChildCommentsNum.setText("更多"+commentsBean.getChildCommentsNum()+"条评论");
+            tvChildCommentsNum.setText("共"+commentsBean.getChildCommentsNum()+"条回复");
         }
         final List<CommonCommentsBean.ChildCommentsListBean> childLists = commentsBean.getChildCommentsList();
         //更多评论
@@ -149,6 +148,16 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
             }
         });
         tvCommentContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(context instanceof DetailsDiscussActivity){
+                    ((DetailsDiscussActivity)context).setIntput(commentsBean.getCommentUserName(),commentsBean.getCommentsId());
+                }else if(context instanceof DetailsArticleCommentActivity){
+                    ((DetailsArticleCommentActivity)context).setIntput(commentsBean.getCommentUserName(),commentsBean.getCommentsId());
+                }
+            }
+        });
+        tvComments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(context instanceof DetailsDiscussActivity){
@@ -203,9 +212,7 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
      */
     private void setChildLists(final List<CommonCommentsBean.ChildCommentsListBean> childLists, final Context context) {
         tvChildContent1.setVisibility(View.GONE);
-        viewChildContent1.setVisibility(View.GONE);
         tvChildContent2.setVisibility(View.GONE);
-        viewChildContent2.setVisibility(View.GONE);
         if(childLists!=null && childLists.size()>0){
             for(int i=0;i<childLists.size();i++){
                 final String userName = childLists.get(i).getCommentUserName();
@@ -219,7 +226,6 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
                 String name[] = {userName,userNameB};
                 if(i==0){
                     tvChildContent1.setVisibility(View.VISIBLE);
-                    viewChildContent1.setVisibility(View.VISIBLE);
                     Clickable.getSpannableString(all, name, tvChildContent1,new Clickable.ClickListener() {
                         @Override
                         public void setOnClick(String name) {
@@ -233,7 +239,6 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
                 }
                 if(i==1){
                     tvChildContent2.setVisibility(View.VISIBLE);
-                    viewChildContent2.setVisibility(View.VISIBLE);
                     Clickable.getSpannableString(all, name, tvChildContent2,new Clickable.ClickListener() {
                         @Override
                         public void setOnClick(String name) {

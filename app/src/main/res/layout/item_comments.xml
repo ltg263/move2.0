@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#fff"
     android:orientation="vertical">
 
     <View
@@ -57,7 +58,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_eave_content"
+                android:id="@+id/tv_comment_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_12"
@@ -66,6 +67,56 @@
                 android:text="今年以来，加密货币跌势难止数据显示，在截至6月25日的一"
                 android:textColor="@color/title_gray"
                 android:textSize="@dimen/dp_15" />
+
+            <TextView
+                android:id="@+id/tv_child_content1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@color/background_gray"
+                android:letterSpacing="0.05"
+                android:lineSpacingExtra="@dimen/item_line_spacing"
+                android:paddingBottom="@dimen/dp_5"
+                android:paddingHorizontal="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_10"
+                android:text="游来游去的雨 :今年以来，加密货币跌势难止数据显示，在截至6月25日的。"
+                android:textColor="@color/title_gray"
+                android:textSize="@dimen/sp_14"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_child_content2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background_gray"
+                android:letterSpacing="0.05"
+                android:lineSpacingExtra="@dimen/item_line_spacing"
+                android:paddingHorizontal="@dimen/dp_10"
+                android:paddingVertical="@dimen/dp_5"
+                android:text="区块链回复@游来游去的雨 : 今年以来，加密货币跌势难止数据显示，在截至6月25日的。"
+                android:textColor="@color/title_gray"
+                android:textSize="@dimen/sp_14" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background_gray">
+
+                <TextView
+                    android:id="@+id/tv_child_comments_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:drawablePadding="@dimen/dp_2"
+                    android:drawableRight="@drawable/ic_right_green"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:paddingHorizontal="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_5"
+                    android:text="共6条回复"
+                    android:textColor="@color/app_background"
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="visible" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

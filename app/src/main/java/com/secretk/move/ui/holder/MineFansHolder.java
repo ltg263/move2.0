@@ -56,10 +56,18 @@ public class MineFansHolder extends RecyclerViewBaseHolder {
     private void showUser(MyFansList.DataBean.MyFansBean.RowsBean rowsBean, Context context) {
         llProject.setVisibility(View.GONE);
         llUser.setVisibility(View.VISIBLE);
+        //“showFollow”: 0 , //是否显示 关注按钮 0- 不显示；1-显示关注  2-显示取消关注
+        if (rowsBean.getFollowType() == 1) {
+            tvSaveFollow.setSelected(false);
+            tvSaveFollow.setText(context.getResources().getString(R.string.follow_status_0));
+        } else {
+            tvSaveFollow.setSelected(true);
+            tvSaveFollow.setText(context.getResources().getString(R.string.follow_status_1));
+        }
         tvSaveFollow.setText(BaseManager.app.getResources().getString(R.string.follow_status_1));
-        GlideUtils.loadCircleUserUrl(context,img,Constants.BASE_IMG_URL+StringUtil.getBeanString(rowsBean.getFollowedUserIcon()));
-        tvName.setText(StringUtil.getBeanString(rowsBean.getFollowedUserName()));
-        tvLastContent.setText(StringUtil.getBeanString(rowsBean.getFollowedUserSignature()));
+        GlideUtils.loadCircleUserUrl(context,img,Constants.BASE_IMG_URL+StringUtil.getBeanString(rowsBean.getUserIcon()));
+        tvName.setText(StringUtil.getBeanString(rowsBean.getUserName()));
+        tvLastContent.setText(StringUtil.getBeanString(rowsBean.getUserSignature()));
     }
 
 

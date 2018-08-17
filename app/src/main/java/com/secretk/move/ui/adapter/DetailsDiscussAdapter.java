@@ -31,7 +31,7 @@ public class DetailsDiscussAdapter extends RecyclerView.Adapter<DetailsDiscussHo
 
     @Override
     public DetailsDiscussHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_discuss, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comments, parent, false);
         DetailsDiscussHolder holder = new DetailsDiscussHolder(view);
         return holder;
     }

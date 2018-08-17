@@ -27,14 +27,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/view"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <RelativeLayout
         android:id="@+id/have_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/view"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/refreshLayout"
@@ -230,14 +230,14 @@
                         android:background="@color/white"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
-                        android:padding="@dimen/dp_15">
+                        android:paddingBottom="@dimen/dp_25"
+                        android:paddingTop="@dimen/dp_10">
 
                         <com.secretk.move.view.PileLayout
                             android:id="@+id/pile_layout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:padding="@dimen/dp_10"
                             android:visibility="gone"
                             app:PileLayout_pileWidth="@dimen/dp_25" />
 
@@ -272,10 +272,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
-                            android:padding="@dimen/dp_10"
+                            android:padding="@dimen/dp_15"
                             android:textColor="@color/title_gray"
-                            android:textSize="@dimen/sp_14"
-                            android:visibility="visible" />
+                            android:textSize="@dimen/sp_16" />
 
                         <View
                             android:layout_width="match_parent"
@@ -285,32 +284,66 @@
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/rv_hot_review"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingHorizontal="@dimen/dp_10" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_line"
-                            android:background="@color/cut_off_rule" />
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/ll_zx"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:background="@color/white"
                         android:orientation="vertical"
                         android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/tv_zx"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/white"
-                            android:padding="@dimen/dp_10"
-                            android:text="最新评测"
-                            android:textColor="@color/title_gray"
-                            android:textSize="@dimen/sp_14" />
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tv_zx"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:background="@color/white"
+                                android:padding="@dimen/dp_15"
+                                android:text="最新评测"
+                                android:textColor="@color/title_gray"
+                                android:textSize="@dimen/sp_16" />
+
+                            <TextView
+                                android:id="@+id/tv_sort_new"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+
+                                android:layout_toLeftOf="@+id/view_cut"
+                                android:padding="@dimen/dp_15"
+                                android:text="按热度"
+                                android:textColor="@color/app_background"
+                                android:textSize="@dimen/sp_16" />
+
+                            <View
+                                android:id="@+id/view_cut"
+                                android:layout_width="@dimen/dp_1"
+                                android:layout_height="@dimen/dp_20"
+                                android:layout_centerVertical="true"
+                                android:layout_marginHorizontal="@dimen/dp_2"
+                                android:layout_toLeftOf="@+id/tv_sort_time"
+                                android:background="@color/title_gray_66" />
+
+                            <TextView
+                                android:id="@+id/tv_sort_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:padding="@dimen/dp_15"
+                                android:text="按时间"
+                                android:textColor="@color/title_gray_66"
+                                android:textSize="@dimen/sp_16" />
+
+                        </RelativeLayout>
 
                         <View
                             android:layout_width="match_parent"
@@ -320,13 +353,13 @@
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/rv_new_review"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/dp_10" />
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
                 </LinearLayout>
             </com.secretk.move.view.RecycleScrollView>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </RelativeLayout>
+
     <include
         android:id="@+id/include"
         layout="@layout/unify_comment_layout"

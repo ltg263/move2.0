@@ -146,6 +146,7 @@ public class MoreCommentsBean extends BaseRes{
                 private int postType;
                 private int praiseNum;
                 private int parentCommentsId;
+                private int userType;
                 private int becommentedUserId;
                 private String becommentedUserName;
                 private String becommentedUserIcon;
@@ -154,6 +155,14 @@ public class MoreCommentsBean extends BaseRes{
                 private long updateTime;
                 private String updateTimeStr;
                 private int status;
+
+                public int getUserType() {
+                    return userType;
+                }
+
+                public void setUserType(int userType) {
+                    this.userType = userType;
+                }
 
                 public int getPraiseStatus() {
                     return praiseStatus;

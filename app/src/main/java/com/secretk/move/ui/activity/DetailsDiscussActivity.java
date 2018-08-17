@@ -233,7 +233,6 @@ public class DetailsDiscussActivity extends BaseActivity {
                 }
             }
         });
-
     }
 
     @OnClick({R.id.tv_follow_status, R.id.iv_post_small_images, R.id.tv_send, R.id.rl_ge_ren,
@@ -617,13 +616,12 @@ public class DetailsDiscussActivity extends BaseActivity {
                         e.printStackTrace();
                     }
                 }
-
-
-                if (discussDetail.getHotComments() != null && discussDetail.getHotComments().size() > 0) {
-                    llRm.setVisibility(View.VISIBLE);
-                    tvRm.setText("热门评测(" + discussDetail.getHotComments().size() + ")");
-                    adapter.setData(discussDetail.getHotComments());
-                }
+                //热门评测
+//                if (discussDetail.getHotComments() != null && discussDetail.getHotComments().size() > 0) {
+//                    llRm.setVisibility(View.VISIBLE);
+//                    tvRm.setText("热门评测(" + discussDetail.getHotComments().size() + ")");
+//                    adapter.setData(discussDetail.getHotComments());
+//                }
             }
         });
 
@@ -674,7 +672,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                 if (commentsBean != null) {
                     if (commentsBean.getRows() != null && commentsBean.getRows().size() > 0) {
                         llZx.setVisibility(View.VISIBLE);
-                        tvZx.setText("最新评测(" + commentsBean.getRowCount() + ")");
+                        tvZx.setText("评论 (" + commentsBean.getRowCount() + ")");
                         if (pageIndex > 2) {
                             adapterNew.addData(commentsBean.getRows());
                         } else {

@@ -58,8 +58,8 @@ public class HomeFansActivity extends BaseActivity {
     RelativeLayout rlTopTheme;
     private int pageIndex = 1;
     private HomeFansAdapter adapter;
-    private String id;
-
+    int userId = 0;
+    int projectId = 0 ;
     @Override
     protected int setOnCreate() {
         return R.layout.activity_mine_collect;
@@ -79,10 +79,15 @@ public class HomeFansActivity extends BaseActivity {
         // 类型 0用户 1 项目
         String FansType = getIntent().getStringExtra("type");
         String userName = getIntent().getStringExtra("name");
-        id = getIntent().getStringExtra("id");
+        String id = getIntent().getStringExtra("id");
         mHeadView.setTitle(userName+"粉丝");
-        if(FansType.equals("0") && Integer.valueOf(id)==baseUserId){
-            mHeadView.setTitle("我的粉丝");
+        if(FansType.equals("0")){
+            userId = Integer.valueOf(id);
+            if(Integer.valueOf(id)==baseUserId){
+                mHeadView.setTitle("我的粉丝");
+            }
+        }else{
+            projectId = Integer.valueOf(id);
         }
         setVerticalManager(rvCollect);
         adapter = new HomeFansAdapter(this);
@@ -125,7 +130,8 @@ public class HomeFansActivity extends BaseActivity {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            node.put("userId", Integer.valueOf(id));
+            node.put("userId", userId);
+            node.put("projectId", projectId);
             node.put("followType", 3);//关注类型：3-关注用户
             node.put("pageIndex", pageIndex++);//帖子ID
             node.put("pageSize", Constants.PAGE_SIZE);//帖子ID

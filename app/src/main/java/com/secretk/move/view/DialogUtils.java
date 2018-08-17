@@ -566,25 +566,25 @@ public class DialogUtils {
             tv_report.setVisibility(View.VISIBLE);
         }else if(type==5){
             tv_share.setVisibility(View.VISIBLE);
-            if(isCollect && find!=0){
-                tv_share_find.setVisibility(View.VISIBLE);
-                if(find == (int)find){
-                    tv_share_find.setText("+"+(int)find+"FIND");
-                }else{
-                    tv_share_find.setText("+"+find+"FIND");
+                    if(isCollect && find!=0){
+                        tv_share_find.setVisibility(View.VISIBLE);
+                        if(find == (int)find){
+                            tv_share_find.setText("+"+(int)find+"FIND");
+                        }else{
+                            tv_share_find.setText("+"+find+"FIND");
+                        }
+                    }
                 }
-            }
-        }
-        dialog5.setCancelable(false);
-        dialog5.setContentView(view);
-        dialog5.show();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                    dialog5.dismiss();
-                } catch (InterruptedException e) {
+                dialog5.setCancelable(false);
+                dialog5.setContentView(view);
+                dialog5.show();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(1000);
+                            dialog5.dismiss();
+                        } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }

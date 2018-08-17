@@ -84,8 +84,8 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     TextView tvPraise;
     @BindView(R.id.tvComments)
     TextView tvComments;
-    @BindView(R.id.tvRead)
-    TextView tvRead;
+    @BindView(R.id.tv_total_income)
+    TextView tvTotalIncome;
     @BindView(R.id.tvShare)
     TextView tvShare;
     private ImagesAdapter imagesadapter;
@@ -188,7 +188,11 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         }
         tvPraise.setText(bean.getPraiseNum() + "");
         tvComments.setText(bean.getCommentsNum() + "");
-        tvRead.setText(bean.getPageviewNum() +"");
+        if(bean.getPostTotalIncome() == (int)bean.getPostTotalIncome()){
+            tvTotalIncome.setText((int)bean.getPostTotalIncome() +"");
+        }else{
+            tvTotalIncome.setText(bean.getPostTotalIncome() +"");
+        }
 
         //关注
         tvUserFolly.setOnClickListener(new View.OnClickListener() {

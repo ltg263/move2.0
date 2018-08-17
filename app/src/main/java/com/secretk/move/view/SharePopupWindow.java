@@ -312,7 +312,7 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
 
     @Override
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-        ToastUtils.getInstance().show("分享成功");
+//        ToastUtils.getInstance().show("分享成功");
         LogUtil.d("分享成功:" + i + "--" + platform.getName());
         if(StringUtil.isBlank(activityId)){
             activityId="0";
@@ -401,7 +401,7 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
                 try {
                     JSONObject object = new JSONObject().getJSONObject("data");
                     boolean isShare = object.getBoolean("isShareAward");
-                    int amount = object.getInt("amount");
+                    double amount = object.getInt("amount");
                     DialogUtils.showDialogPraise(mContext,5,isShare,amount);
                 } catch (JSONException e) {
                     e.printStackTrace();

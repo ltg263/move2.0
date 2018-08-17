@@ -61,6 +61,7 @@ public class RowsBean extends CommonListBase {
     private int collectNum;
     private int createUserId;
     private int userType;
+    private double postTotalIncome;
     private String createUserIcon;
     private String createUserSignature;
     private String createUserName;
@@ -89,6 +90,14 @@ public class RowsBean extends CommonListBase {
     private String evaluationTags;
     private String evauationContent;
     private String tagInfos;
+
+    public double getPostTotalIncome() {
+        return postTotalIncome;
+    }
+
+    public void setPostTotalIncome(double postTotalIncome) {
+        this.postTotalIncome = postTotalIncome;
+    }
 
     public int getUserType() {
         return userType;
