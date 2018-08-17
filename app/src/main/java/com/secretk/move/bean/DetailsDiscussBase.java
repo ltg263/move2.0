@@ -101,12 +101,32 @@ public class DetailsDiscussBase extends BaseRes{
             private int createUserId;
             private String createUserIcon;
             private String createUserSignature;
+
+            private double commendationNum;
+
             private String createUserName;
             private long createTime;
             private String createTimeStr;
             private long updateTime;
             private String updateTimeStr;
             private List<CommonCommentsBean> hotComments;
+            private List<CommendationListBean> commendationList;
+
+            public List<CommendationListBean> getCommendationList() {
+                return commendationList;
+            }
+
+            public void setCommendationList(List<CommendationListBean> commendationList) {
+                this.commendationList = commendationList;
+            }
+
+            public double getCommendationNum() {
+                return commendationNum;
+            }
+
+            public void setCommendationNum(double commendationNum) {
+                this.commendationNum = commendationNum;
+            }
 
             public int getUserType() {
                 return userType;
@@ -362,6 +382,141 @@ public class DetailsDiscussBase extends BaseRes{
 
             public void setHotComments(List<CommonCommentsBean> hotComments) {
                 this.hotComments = hotComments;
+            }
+        }
+        public static class CommendationListBean {
+            /**
+             * commendationId : 2
+             * status : 1
+             * createTime : 1525700995000
+             * createTimeStr : 2018-05-07 21:49:55
+             * updateTime : 1525700998000
+             * updateTimeStr : 2018-05-07 21:49:58
+             * sendUserId : 3
+             * sendUserIcon : /upload/avatars/avatar.png
+             * receiveUserId : 14
+             * postId : 2
+             * projectId : 1
+             * postType : 1
+             * amount : 20
+             */
+
+            private int commendationId;
+            private int status;
+            private long createTime;
+            private String createTimeStr;
+            private long updateTime;
+            private String updateTimeStr;
+            private int sendUserId;
+            private String sendUserIcon;
+            private int receiveUserId;
+            private int postId;
+            private int projectId;
+            private int postType;
+            private double amount;
+
+            public int getCommendationId() {
+                return commendationId;
+            }
+
+            public void setCommendationId(int commendationId) {
+                this.commendationId = commendationId;
+            }
+
+            public int getStatus() {
+                return status;
+            }
+
+            public void setStatus(int status) {
+                this.status = status;
+            }
+
+            public long getCreateTime() {
+                return createTime;
+            }
+
+            public void setCreateTime(long createTime) {
+                this.createTime = createTime;
+            }
+
+            public String getCreateTimeStr() {
+                return createTimeStr;
+            }
+
+            public void setCreateTimeStr(String createTimeStr) {
+                this.createTimeStr = createTimeStr;
+            }
+
+            public long getUpdateTime() {
+                return updateTime;
+            }
+
+            public void setUpdateTime(long updateTime) {
+                this.updateTime = updateTime;
+            }
+
+            public String getUpdateTimeStr() {
+                return updateTimeStr;
+            }
+
+            public void setUpdateTimeStr(String updateTimeStr) {
+                this.updateTimeStr = updateTimeStr;
+            }
+
+            public int getSendUserId() {
+                return sendUserId;
+            }
+
+            public void setSendUserId(int sendUserId) {
+                this.sendUserId = sendUserId;
+            }
+
+            public String getSendUserIcon() {
+                return sendUserIcon;
+            }
+
+            public void setSendUserIcon(String sendUserIcon) {
+                this.sendUserIcon = sendUserIcon;
+            }
+
+            public int getReceiveUserId() {
+                return receiveUserId;
+            }
+
+            public void setReceiveUserId(int receiveUserId) {
+                this.receiveUserId = receiveUserId;
+            }
+
+            public int getPostId() {
+                return postId;
+            }
+
+            public void setPostId(int postId) {
+                this.postId = postId;
+            }
+
+            public int getProjectId() {
+                return projectId;
+            }
+
+            public void setProjectId(int projectId) {
+                this.projectId = projectId;
+            }
+
+            public int getPostType() {
+                return postType;
+            }
+
+            public void setPostType(int postType) {
+                this.postType = postType;
+            }
+
+            public double getAmount() {
+                return amount;
+            }
+
+            public void setAmount(double amount) {
+                this.amount = amount;
             }
         }
     }

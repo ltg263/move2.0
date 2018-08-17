@@ -114,6 +114,9 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             tvUserFolly.setSelected(false);
             tvUserFolly.setText(context.getResources().getString(R.string.follow_status_0));
         }
+        if (SharedUtils.getUserId()==bean.getCreateUserId()){
+            tvUserFolly.setVisibility(View.GONE);
+        }
         tvTitle.setText(bean.getPostTitle());
         tvDesc.setText(bean.getPostShortDesc());
         showRecommend(bean);
@@ -340,6 +343,7 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         }
     }
     private void setPraise(boolean isPraise, final RowsBean bead) {
+        NetUtil.setAnimation(tvPraise);
         NetUtil.setPraise(isPraise, bead.getPostId(), new NetUtil.SaveFollowImpl() {
             @Override
             public void finishFollow(String praiseNum,boolean status,double find) {

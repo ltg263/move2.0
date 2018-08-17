@@ -239,7 +239,10 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
 
     ArrayList<PostDataInfo> imageLists;
     public void showPostDesc(RowsBean bean) {
-        tvTitle.setText(StringUtil.getBeanString(bean.getPostTitle()));
+        if(StringUtil.isNotBlank(bean.getPostTitle())){
+            tvTitle.setVisibility(View.VISIBLE);
+            tvTitle.setText(StringUtil.getBeanString(bean.getPostTitle()));
+        }
         tvDesc.setText(StringUtil.getBeanString(bean.getPostShortDesc()));
         tvPraise.setText(bean.getPraiseNum() + "");
         tvComments.setText(bean.getCommentsNum() + "");
@@ -315,6 +318,7 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         }
     }
     private void setPraise(boolean isPraise, final RowsBean bead) {
+        NetUtil.setAnimation(tvPraise);
         NetUtil.setPraise(isPraise, bead.getPostId(), new NetUtil.SaveFollowImpl() {
             @Override
             public void finishFollow(String praiseNum,boolean status,double find) {

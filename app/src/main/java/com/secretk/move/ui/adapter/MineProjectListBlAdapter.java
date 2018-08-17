@@ -36,7 +36,7 @@ public class MineProjectListBlAdapter extends RecyclerView.Adapter<MineProjectLi
 
     @Override
     public MineProjectListBlHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_project_list_bl, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_project_list_unify_bl, parent, false);
         MineProjectListBlHolder holder = new MineProjectListBlHolder(view,context);
         return holder;
     }

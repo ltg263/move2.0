@@ -14,7 +14,7 @@ import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonListBase;
 import com.secretk.move.ui.activity.HomeActivity;
-import com.secretk.move.ui.adapter.MineProjectListAdapter;
+import com.secretk.move.ui.adapter.MainRfFragmentRecyclerAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
@@ -38,8 +38,8 @@ public class HomeArticleFragment extends LazyFragment{
     RecyclerView rvReview;
     @BindView(R.id.iv_not_content)
     ImageView ivNotContent;
-
-    private MineProjectListAdapter adapter;
+    //MineProjectListAdapter  如果以项目为主就用这个
+    private MainRfFragmentRecyclerAdapter adapter;
     public Boolean isHaveData = true;//是否还有数据
     public int pageIndex = 1;
     private String userId;
@@ -53,7 +53,7 @@ public class HomeArticleFragment extends LazyFragment{
     @Override
     public void initViews() {
         setVerticalManager(rvReview);
-        adapter = new MineProjectListAdapter(getActivity());
+        adapter = new MainRfFragmentRecyclerAdapter(getActivity());
         rvReview.setAdapter(adapter);
     }
 

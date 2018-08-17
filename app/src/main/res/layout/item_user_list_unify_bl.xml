@@ -97,6 +97,7 @@
                 android:ellipsize="end"
                 android:letterSpacing="0.05"
                 android:lineSpacingExtra="@dimen/item_line_spacing"
+                android:visibility="gone"
                 android:maxLines="2"
                 android:paddingHorizontal="@dimen/dp_10"
                 android:textColor="@color/title_gray"

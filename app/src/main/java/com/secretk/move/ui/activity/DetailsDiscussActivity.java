@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -33,14 +35,17 @@ import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.GridSpacingItemDecoration;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.KeybordS;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
-import com.secretk.move.view.Clickable;
 import com.secretk.move.view.DialogUtils;
+import com.secretk.move.view.FixGridLayout;
+import com.secretk.move.view.InputMethodLayout;
+import com.secretk.move.view.PileLayout;
 import com.secretk.move.view.PopupWindowUtils;
 import com.secretk.move.view.RecycleScrollView;
 import com.secretk.move.view.ShareView;
@@ -64,6 +69,8 @@ import butterknife.OnClick;
  */
 public class DetailsDiscussActivity extends BaseActivity {
 
+    @BindView(R.id.input_method_layout)
+    InputMethodLayout inputMethodLayout;
     @BindView(R.id.rv_img)
     RecyclerView rvImg;
     @BindView(R.id.rv_hot_review)
@@ -106,16 +113,38 @@ public class DetailsDiscussActivity extends BaseActivity {
     TextView tvTagName;
     @BindView(R.id.et_content)
     EditText etContent;
-    @BindView(R.id.tv_send)
-    TextView tvSend;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.have_data)
     RelativeLayout haveData;
-    @BindView(R.id.tv_collect_status)
-    TextView tvCollectStatus;
-    @BindView(R.id.tv_praise_status)
-    TextView tvPraiseStatus;
+    @BindView(R.id.iv_sc)
+    ImageView ivSc;
+    @BindView(R.id.iv_dz)
+    ImageView ivDz;
+    @BindView(R.id.tv_dz_num)
+    TextView tvDzNum;
+    @BindView(R.id.rl_head)
+    RelativeLayout rlHead;
+    @BindView(R.id.ll_add_view)
+    FixGridLayout llAddView;
+    @BindView(R.id.pile_layout)
+    PileLayout pileLayout;
+    @BindView(R.id.tv_donate_num)
+    TextView tvDonateNum;
+    @BindView(R.id.tv_pl_num)
+    TextView tvPlNum;
+    @BindView(R.id.iv_pl)
+    ImageView ivPl;
+    @BindView(R.id.rl_pl)
+    RelativeLayout rlPl;
+    @BindView(R.id.rl_sc)
+    RelativeLayout rlSc;
+    @BindView(R.id.rl_dz)
+    RelativeLayout rlDz;
+    @BindView(R.id.rl_select_yse)
+    RelativeLayout rlSelectYse;
+    @BindView(R.id.rl_select_no)
+    RelativeLayout rlSelectNo;
     private DetailsDiscussAdapter adapter;
     private DetailsDiscussAdapter adapterNew;
     private String postId;
@@ -147,8 +176,8 @@ public class DetailsDiscussActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        ShareView.showShare(this,mHeadView,activityId,Constants.DISCUSS_SHARE+Integer.valueOf(postId),
-                tvPostTitle.getText().toString(),postShortDesc,imgUrl,Integer.valueOf(postId));
+        ShareView.showShare(this, mHeadView, activityId, Constants.DISCUSS_SHARE + Integer.valueOf(postId),
+                tvPostTitle.getText().toString(), postShortDesc, imgUrl, Integer.valueOf(postId));
     }
 
     @Override
@@ -169,12 +198,13 @@ public class DetailsDiscussActivity extends BaseActivity {
         adapterNew = new DetailsDiscussAdapter(this);
         rvNewReview.setAdapter(adapterNew);
         initRefresh();
+        inputMethod();
         StringUtil.etSearchChangedListener(etContent, null, new StringUtil.EtChange() {
             @Override
             public void etYes() {
-                if(!etContent.getText().toString().contains(strLs) && !strLs.equals("find_apk")){
+                if (!etContent.getText().toString().contains(strLs) && !strLs.equals("find_apk")) {
                     parentCommentsId = 0;
-                    strLs="find_apk";
+                    strLs = "find_apk";
                     etContent.setText("");
                 }
             }
@@ -182,8 +212,32 @@ public class DetailsDiscussActivity extends BaseActivity {
         loadingDialog.show();
     }
 
+    private void inputMethod() {
+        inputMethodLayout.setOnkeyboarddStateListener(new InputMethodLayout.onKeyboardsChangeListener() {// 监听软键盘状态
+
+            @Override
+            public void onKeyBoardStateChange(int state) {
+                // TODO Auto-generated method stub
+                switch (state) {
+                    case InputMethodLayout.KEYBOARD_STATE_SHOW:
+                        etContent.setFocusable(true);
+                        etContent.setFocusableInTouchMode(true);
+                        etContent.requestFocus();
+                        rlSelectYse.setVisibility(View.VISIBLE);
+                        rlSelectNo.setVisibility(View.GONE);
+                        break;
+                    case InputMethodLayout.KEYBOARD_STATE_HIDE:
+                        rlSelectYse.setVisibility(View.GONE);
+                        rlSelectNo.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+        });
+
+    }
+
     @OnClick({R.id.tv_follow_status, R.id.iv_post_small_images, R.id.tv_send, R.id.rl_ge_ren,
-            R.id.tv_commendation_Num, R.id.tv_collect_status, R.id.tv_praise_status})
+            R.id.tv_commendation_Num, R.id.rl_sc, R.id.rl_dz,R.id.rl_pl,R.id.tv_content})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_follow_status:
@@ -201,9 +255,9 @@ public class DetailsDiscussActivity extends BaseActivity {
                 break;
             case R.id.iv_post_small_images:
 
-                Intent intent = new Intent(this,ImageViewVpAcivity.class);
+                Intent intent = new Intent(this, ImageViewVpAcivity.class);
                 intent.putParcelableArrayListExtra("lists", (ArrayList<? extends Parcelable>) imageLists);
-                intent.putExtra("position",0);
+                intent.putExtra("position", 0);
                 startActivity(intent);
 //                String key[] = {"imgUrl", "imgName"};
 //                String values[] = {imgUrl, imgName};
@@ -215,16 +269,17 @@ public class DetailsDiscussActivity extends BaseActivity {
             case R.id.tv_send:
                 String str = etContent.getText().toString().trim();
                 if (StringUtil.isNotBlank(str)) {
-                    if(str.contains(strLs)){
-                        str = str.replaceAll( strLs,"");
+                    if (str.contains(strLs)) {
+                        str = str.replaceAll(strLs, "");
                     }
+                    KeybordS.closeKeybord(etContent,this);
                     saveComment(str);
                 } else {
                     ToastUtils.getInstance().show("内容不能为空");
                 }
                 break;
             case R.id.tv_commendation_Num:
-                if(!NetUtil.isSponsor(createUserId,baseUserId)){
+                if (!NetUtil.isSponsor(createUserId, baseUserId)) {
                     return;
                 }
                 PopupWindowUtils window = new PopupWindowUtils(this, new PopupWindowUtils.GiveDialogInterface() {
@@ -244,43 +299,61 @@ public class DetailsDiscussActivity extends BaseActivity {
                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                 window.showAtLocation(findViewById(R.id.head_app_server), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); // 设置layout在PopupWindow中显示的位置
                 break;
-            case R.id.tv_collect_status:
-                tvCollectStatus.setEnabled(false);
-                tvCollectStatus.setSelected(!tvCollectStatus.isSelected());
-                NetUtil.saveCollect(tvCollectStatus.isSelected(),
+            case R.id.rl_sc:
+                rlSc.setEnabled(false);
+                ivSc.setSelected(!ivSc.isSelected());
+                NetUtil.saveCollect(ivSc.isSelected(),
                         Integer.valueOf(postId), new NetUtil.SaveCollectImp() {
                             @Override
-                            public void finishCollect(String str,boolean status) {
-                                tvCollectStatus.setEnabled(true);
-                                if(!str.equals(Constants.COLLECT_ERROR)){
-                                    DialogUtils.showDialogPraise(DetailsDiscussActivity.this,2,status,0);
-                                    tvCollectStatus.setSelected(status);
+                            public void finishCollect(String str, boolean status) {
+                                rlSc.setEnabled(true);
+                                if (!str.equals(Constants.COLLECT_ERROR)) {
+                                    DialogUtils.showDialogPraise(DetailsDiscussActivity.this, 2, status, 0);
+                                    ivSc.setSelected(status);
                                 }
                             }
                         });
 
                 break;
-            case R.id.tv_praise_status:
-                if(!tvPraiseStatus.isSelected()){
+            case R.id.rl_dz:
+                if (!ivDz.isSelected()) {
                     return;
                 }
-                if(!NetUtil.isPraise(createUserId,baseUserId)){
+                if (!NetUtil.isPraise(createUserId, baseUserId)) {
                     return;
                 }
-                tvPraiseStatus.setEnabled(false);
+                rlDz.setEnabled(false);
                 String strS;
-                if(tvPraiseStatus.isSelected()){
-                    strS = String.valueOf(praiseNum+1);
-                }else{
-                    strS = String.valueOf(praiseNum-1);
+                if (ivDz.isSelected()) {
+                    strS = String.valueOf(praiseNum + 1);
+                } else {
+                    strS = String.valueOf(praiseNum - 1);
                 }
-                tvPraiseStatus.setText(strS);
-                tvPraiseStatus.setSelected(!tvPraiseStatus.isSelected());
-                setPraise(!tvPraiseStatus.isSelected(),Integer.valueOf(postId));
+                tvDzNum.setText(strS);
+                ivDz.setSelected(!ivDz.isSelected());
+                setPraise(!ivDz.isSelected(), Integer.valueOf(postId));
+                break;
+            case R.id.rl_pl:
+//                rcv.fullScroll(ScrollView.FOCUS_UP);
+                if(llRm.getVisibility()==View.VISIBLE){
+                    if(rcv.getScrollY()<llRm.getTop()){
+                        rcv.scrollTo(0,  llRm.getTop());
+                    }else{
+                        rcv.fullScroll(ScrollView.FOCUS_UP);
+                    }
+                }else if(llZx.getVisibility()==View.VISIBLE){
+                    if(rcv.getScrollY()<llZx.getTop()){
+                        rcv.scrollTo(0,  llZx.getTop());
+                    }else{
+                        rcv.fullScroll(ScrollView.FOCUS_UP);
+                    }
+                }
+                break;
+            case R.id.tv_content:
+                KeybordS.openKeybord(etContent,this);
                 break;
         }
     }
-
     private void initRefresh() {
         /**
          * 下拉刷新
@@ -308,7 +381,9 @@ public class DetailsDiscussActivity extends BaseActivity {
             }
         });
     }
-    int parentCommentsId=0;
+
+    int parentCommentsId = 0;
+
     private void saveComment(String content) {
         if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(getString(R.string.network_error));
@@ -320,7 +395,7 @@ public class DetailsDiscussActivity extends BaseActivity {
             node.put("token", token);
             node.put("commentContent", content);//帖子ID
             node.put("postId", Integer.valueOf(postId));
-            if(parentCommentsId!=0){
+            if (parentCommentsId != 0) {
                 node.put("parentCommentsId", parentCommentsId);//parentCommentsId 未null
                 node.put("becommentedId", parentCommentsId);//becommentedId 未null
             }
@@ -346,7 +421,7 @@ public class DetailsDiscussActivity extends BaseActivity {
             @Override
             public void onCompleted(String str) {
 //                ToastUtils.getInstance().show("评论成功");
-                etContent.setText("");
+                    etContent.setText("");
 //                rcv.fullScroll(ScrollView.FOCUS_UP);
 //                initDataList();
 
@@ -366,6 +441,7 @@ public class DetailsDiscussActivity extends BaseActivity {
     }
 
     List<PostDataInfo> imageLists;
+
     /**
      * 详情信息
      */
@@ -398,15 +474,30 @@ public class DetailsDiscussActivity extends BaseActivity {
                 DetailsDiscussBase.DataBean.DiscussDetailBean discussDetail = bean.getData().getDiscussDetail();
                 createUserId = discussDetail.getCreateUserId();
                 mHeadView.setTitle(discussDetail.getProjectCode());
-                postShortDesc=discussDetail.getPostShortDesc();
+                postShortDesc = discussDetail.getPostShortDesc();
                 mHeadView.setTitleVice("/" + discussDetail.getProjectEnglishName());
+                if(discussDetail.getCommentsNum()!=0){
+                    tvPlNum.setVisibility(View.VISIBLE);
+                    tvPlNum.setText(String.valueOf(discussDetail.getCommentsNum()));
+                }
+//共有8人赞助10000FIND
+                if(discussDetail.getDonateNum()>0){
+                    pileLayout.setVisibility(View.VISIBLE);
+                    tvDonateNum.setText("共有" + discussDetail.getDonateNum()+"人赞助"+String.valueOf(new Double(discussDetail.getCommendationNum()).intValue())+"FIND");
+                }
                 projectId = discussDetail.getProjectId();
                 mHeadView.setToolbarListener(projectId);
-                tvProjectCode.setText(discussDetail.getProjectCode());
+                if(StringUtil.isNotBlank(discussDetail.getProjectCode())){
+                    tvProjectCode.setVisibility(View.VISIBLE);
+                    tvProjectCode.setText(discussDetail.getProjectCode());
+                }
                 GlideUtils.loadCircleProjectUrl(DetailsDiscussActivity.this, mHeadView.getImageView(), Constants.BASE_IMG_URL + discussDetail.getProjectIcon());
-                tvPostTitle.setText(discussDetail.getPostTitle());
+                if(StringUtil.isNotBlank(discussDetail.getPostTitle())){
+                    tvPostTitle.setVisibility(View.VISIBLE);
+                    tvPostTitle.setText(discussDetail.getPostTitle());
+                }
                 GlideUtils.loadCircleUserUrl(DetailsDiscussActivity.this, ivCreateUserIcon, Constants.BASE_IMG_URL + discussDetail.getCreateUserIcon());
-                if(discussDetail.getUserType()!=1){
+                if (discussDetail.getUserType() != 1) {
 //                    ivModelIcon.setVisibility(View.VISIBLE);
 //                    StringUtil.getUserType(discussDetail.getUserType(),ivModelIcon);
 //                    ivModelIconD.setVisibility(View.VISIBLE);
@@ -417,16 +508,19 @@ public class DetailsDiscussActivity extends BaseActivity {
                 tvCreateUserSignature.setText(discussDetail.getCreateUserSignature());
                 //0-未收藏，1-已收藏，数字
                 if (discussDetail.getCollectStatus() == 0) {
-                    tvCollectStatus.setSelected(true);
+                    ivSc.setSelected(true);
                 } else {
-                    tvCollectStatus.setSelected(false);
+                    ivSc.setSelected(false);
                 }
-                tvPraiseStatus.setText(String.valueOf(discussDetail.getPraiseNum()));
+                if(discussDetail.getPraiseNum()!=0){
+                    tvDzNum.setVisibility(View.VISIBLE);
+                    tvDzNum.setText(String.valueOf(discussDetail.getPraiseNum()));
+                }
                 ///0-未点赞，1-已点赞，数字
                 if (discussDetail.getPraiseStatus() == 0) {
-                    tvPraiseStatus.setSelected(true);
+                    ivDz.setSelected(true);
                 } else {
-                    tvPraiseStatus.setSelected(false);
+                    ivDz.setSelected(false);
                 }
                 //关注状态  "//0 未关注；1-已关注；2-不显示关注按钮"
                 if (discussDetail.getFollowStatus() == 0) {
@@ -438,12 +532,12 @@ public class DetailsDiscussActivity extends BaseActivity {
                 } else {
                     tvFollowStatus.setVisibility(View.GONE);
                 }
-                if(baseUserId==discussDetail.getCreateUserId()){
+                if (baseUserId == discussDetail.getCreateUserId()) {
                     tvFollowStatus.setVisibility(View.GONE);
                 }
                 tvPostShortDesc.setText(discussDetail.getDisscussContents());
                 tvCreateTime.setText(StringUtil.getTimeToM(discussDetail.getCreateTime()));
-                if(StringUtil.isNotBlank(discussDetail.getPostSmallImages())){
+                if (StringUtil.isNotBlank(discussDetail.getPostSmallImages())) {
                     try {
                         //{"fileUrl":"/upload/posts/201805/1.jpg","fileName":"进度讨论","extension":"jpg"},
                         JSONArray images = new JSONArray(discussDetail.getPostSmallImages());
@@ -471,27 +565,60 @@ public class DetailsDiscussActivity extends BaseActivity {
                         e.printStackTrace();
                     }
                 }
-                if (StringUtil.isNotBlank(discussDetail.getTagInfos())&& discussDetail.getTagInfos().contains("tagName")) {
+                List<DetailsDiscussBase.DataBean.CommendationListBean> pileLists = discussDetail.getCommendationList();
+                if (pileLists != null) {
+                    initPraises(pileLists);
+                }
+//                if (StringUtil.isNotBlank(discussDetail.getTagInfos()) && discussDetail.getTagInfos().contains("tagName")) {
+//                    try {
+//                        JSONArray object = new JSONArray(discussDetail.getTagInfos());
+//                        //[{"tagId":1,"tagName":"进度讨论"},{"tagId":3,"tagName":"项目前景讨论"},{"tagId":4,"tagName":"打假"}]
+//                        String tagAll = "";
+//                        String tagOnly[] = new String[object.length()];
+//                        for (int i = 0; i < object.length(); i++) {
+//                            JSONObject strObj = object.getJSONObject(i);
+//                            tagOnly[i] = "#" + strObj.getString("tagName") + "#";
+//                            tagAll += "#" + strObj.getString("tagName") + "#   ";
+//                        }
+//                        Clickable.getSpannableString(tagAll, tagOnly, tvTagName, new Clickable.ClickListener() {
+//                            @Override
+//                            public void setOnClick(String name) {
+//                                //ToastUtils.getInstance().show(name);
+//                            }
+//                        });
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+
+                if (StringUtil.isNotBlank(discussDetail.getTagInfos()) && discussDetail.getTagInfos().contains("tagName")) {
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    params.setMargins(15,10,15,10);
                     try {
-                        JSONArray object = new JSONArray(discussDetail.getTagInfos());
-                        //[{"tagId":1,"tagName":"进度讨论"},{"tagId":3,"tagName":"项目前景讨论"},{"tagId":4,"tagName":"打假"}]
-                        String tagAll = "";
-                        String tagOnly[] = new String[object.length()];
-                        for (int i = 0; i < object.length(); i++) {
-                            JSONObject strObj = object.getJSONObject(i);
-                            tagOnly[i] = "#" + strObj.getString("tagName") + "#";
-                            tagAll += "#" + strObj.getString("tagName") + "#   ";
+                        JSONArray array = new JSONArray(discussDetail.getTagInfos());
+                        if(llAddView.getChildCount()>0){
+                            llAddView.removeAllViews();
                         }
-                        Clickable.getSpannableString(tagAll, tagOnly, tvTagName, new Clickable.ClickListener() {
-                            @Override
-                            public void setOnClick(String name) {
-                                //ToastUtils.getInstance().show(name);
+                        for(int i=0;i<array.length();i++){
+                            final JSONObject object = array.getJSONObject(i);
+                            if(StringUtil.isNotBlank(object.getString("tagName"))){
+                                final TextView crack_down = new TextView(DetailsDiscussActivity.this);
+                                crack_down.setPadding(20,10,20,10);
+                                crack_down.setBackground(getResources().getDrawable(R.drawable.shape_add_label_selected));
+                                crack_down.setTextColor(getResources().getColor(R.color.app_background));
+                                crack_down.setTextSize(14);
+                                crack_down.setText(object.getString("tagName"));
+                                crack_down.setLayoutParams(params);
+                                llAddView.addView(crack_down);
                             }
-                        });
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
+
+
                 if (discussDetail.getHotComments() != null && discussDetail.getHotComments().size() > 0) {
                     llRm.setVisibility(View.VISIBLE);
                     tvRm.setText("热门评测(" + discussDetail.getHotComments().size() + ")");
@@ -500,6 +627,26 @@ public class DetailsDiscussActivity extends BaseActivity {
             }
         });
 
+    }
+    /**
+     * 设置捐款人头像
+     *
+     * @param pileLists
+     */
+    public void initPraises(List<DetailsDiscussBase.DataBean.CommendationListBean> pileLists) {
+        LayoutInflater nflater = LayoutInflater.from(this);
+        if (pileLayout != null) {
+            pileLayout.removeAllViews();
+        }
+        List<String> lists = new ArrayList<>();
+        for (int i = 0; i < pileLists.size() && i < 7; i++) {
+            if (!lists.contains(String.valueOf(pileLists.get(i).getSendUserId()))) {
+                ImageView imageView = (ImageView) nflater.inflate(R.layout.item_praise, pileLayout, false);
+                GlideUtils.loadCircleUserUrl(this, imageView, Constants.BASE_IMG_URL + pileLists.get(i).getSendUserIcon());
+                pileLayout.addView(imageView);
+            }
+            lists.add(String.valueOf(pileLists.get(i).getSendUserId()));
+        }
     }
 
     /**
@@ -577,47 +724,51 @@ public class DetailsDiscussActivity extends BaseActivity {
     private int praiseNum;
 
     private void setPraise(boolean isPraise, int postId) {
+        NetUtil.setAnimation(rlDz);
         NetUtil.setPraise(isPraise, postId, new NetUtil.SaveFollowImpl() {
             @Override
-            public void finishFollow(String praiseNum,boolean status,double find) {
-                tvPraiseStatus.setEnabled(true);
+            public void finishFollow(String praiseNum, boolean status, double find) {
+                rlDz.setEnabled(true);
                 ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
-                if(!praiseNum.equals(Constants.PRAISE_ERROR)){
-                    DialogUtils.showDialogPraise(DetailsDiscussActivity.this,1,true,find);
-                    tvPraiseStatus.setSelected(status);
-                    DetailsDiscussActivity.this.praiseNum=Integer.valueOf(praiseNum);
-                    tvPraiseStatus.setText(praiseNum);
+                if (!praiseNum.equals(Constants.PRAISE_ERROR)) {
+                    DialogUtils.showDialogPraise(DetailsDiscussActivity.this, 1, true, find);
+                    ivDz.setSelected(status);
+                    DetailsDiscussActivity.this.praiseNum = Integer.valueOf(praiseNum);
+                    tvDzNum.setVisibility(View.VISIBLE);
+                    tvDzNum.setText(praiseNum);
                 }
             }
         });
     }
+
     String strLs = "find_apk";
-    public void setIntput(String str,int commentsId){
-        if(commentsId==0){
+
+    public void setIntput(String str, int commentsId) {
+        if (commentsId == 0) {
             ToastUtils.getInstance().show("错误数据：parentCommentsId==0");
             return;
         }
-        strLs="@"+str+":";
+        strLs = "@" + str + ":";
         etContent.setText(strLs);
-        this.parentCommentsId=commentsId;
-        StringUtil.showSoftInputFromWindow(this,etContent);
+        this.parentCommentsId = commentsId;
+        StringUtil.showSoftInputFromWindow(this, etContent);
     }
 
-    public void setCommentsIdPraise(DetailsDiscussAdapter mAdapter, int commentsId, int praiseNum, int praiseStatus){
+    public void setCommentsIdPraise(DetailsDiscussAdapter mAdapter, int commentsId, int praiseNum, int praiseStatus) {
         List<CommonCommentsBean> commonCommentsBeans;
-        if(adapter==mAdapter){
-            commonCommentsBeans=adapterNew.getData();
-        }else{
-            commonCommentsBeans=adapter.getData();
+        if (adapter == mAdapter) {
+            commonCommentsBeans = adapterNew.getData();
+        } else {
+            commonCommentsBeans = adapter.getData();
         }
-        if(commonCommentsBeans!=null && commonCommentsBeans.size()>0){
-            for(int i = 0;i<commonCommentsBeans.size();i++){
-                if(commentsId == commonCommentsBeans.get(i).getCommentsId()){
+        if (commonCommentsBeans != null && commonCommentsBeans.size() > 0) {
+            for (int i = 0; i < commonCommentsBeans.size(); i++) {
+                if (commentsId == commonCommentsBeans.get(i).getCommentsId()) {
                     commonCommentsBeans.get(i).setPraiseNum(praiseNum);
                     commonCommentsBeans.get(i).setPraiseStatus(praiseStatus);
-                    if(adapter==mAdapter){
+                    if (adapter == mAdapter) {
                         adapterNew.notifyDataSetChanged();
-                    }else{
+                    } else {
                         adapter.notifyDataSetChanged();
                     }
                     break;

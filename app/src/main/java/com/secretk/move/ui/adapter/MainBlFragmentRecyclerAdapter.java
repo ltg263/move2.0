@@ -36,7 +36,7 @@ public class MainBlFragmentRecyclerAdapter extends RecyclerView.Adapter<MainBlFr
 
     @Override
     public MainBlFragmentRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_main_bl_recycler_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_list_unify_bl, parent, false);
         MainBlFragmentRecyclerHolder holder = new MainBlFragmentRecyclerHolder(view,context);
         return holder;
     }

@@ -398,6 +398,14 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
+                try {
+                    JSONObject object = new JSONObject().getJSONObject("data");
+                    boolean isShare = object.getBoolean("isShareAward");
+                    int amount = object.getInt("amount");
+                    DialogUtils.showDialogPraise(mContext,5,isShare,amount);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 ToastUtils.getInstance().show(str);
             }
         });

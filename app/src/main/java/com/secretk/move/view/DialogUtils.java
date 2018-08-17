@@ -528,21 +528,21 @@ public class DialogUtils {
     /**
      * @param context
      * @param type:1 点赞  2 收藏 3复制 4举报
+     *            5 分享
      * 点赞框
      */
     public static void showDialogPraise(Context context,int type,boolean isCollect,double find) {
         final Dialog dialog5 = new Dialog(context, R.style.selectorDialog_bj);
-
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_praise_find, null);
         TextView tv_praise = view.findViewById(R.id.tv_praise);
         TextView tv_find = view.findViewById(R.id.tv_find);
+        TextView tv_share = view.findViewById(R.id.tv_share);
+        TextView tv_share_find = view.findViewById(R.id.tv_share_find);
         TextView tv_collect = view.findViewById(R.id.tv_collect);
         TextView tv_copy = view.findViewById(R.id.tv_copy);
         TextView tv_report = view.findViewById(R.id.tv_report);
         if (type==1){
             tv_praise.setVisibility(View.VISIBLE);
-            tv_collect.setVisibility(View.GONE);
-            tv_copy.setVisibility(View.GONE);
             if(find!=0){
                 tv_find.setVisibility(View.VISIBLE);
                 if(find == (int)find){
@@ -552,13 +552,8 @@ public class DialogUtils {
                 }
             }
         }else if(type ==3){
-            tv_praise.setVisibility(View.GONE);
-            tv_collect.setVisibility(View.GONE);
             tv_copy.setVisibility(View.VISIBLE);
         }else if(type==2){
-            tv_praise.setVisibility(View.GONE);
-            tv_find.setVisibility(View.GONE);
-            tv_copy.setVisibility(View.GONE);
             tv_collect.setVisibility(View.VISIBLE);
             if(!isCollect){
                 tv_collect.setText("收藏成功");
@@ -568,11 +563,17 @@ public class DialogUtils {
                 tv_collect.setSelected(true);
             }
         }else if(type==4){
-            tv_praise.setVisibility(View.GONE);
-            tv_find.setVisibility(View.GONE);
-            tv_copy.setVisibility(View.GONE);
-            tv_collect.setVisibility(View.GONE);
             tv_report.setVisibility(View.VISIBLE);
+        }else if(type==5){
+            tv_share.setVisibility(View.VISIBLE);
+            if(isCollect && find!=0){
+                tv_share_find.setVisibility(View.VISIBLE);
+                if(find == (int)find){
+                    tv_share_find.setText("+"+(int)find+"FIND");
+                }else{
+                    tv_share_find.setText("+"+find+"FIND");
+                }
+            }
         }
         dialog5.setCancelable(false);
         dialog5.setContentView(view);

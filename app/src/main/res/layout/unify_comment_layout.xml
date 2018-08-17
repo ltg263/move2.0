@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_select_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_5">
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_35"
+            android:layout_toStartOf="@+id/rl_pl"
+            android:background="@drawable/et_circle_bj"
+            android:drawableLeft="@drawable/ic_leave"
+            android:drawablePadding="@dimen/dp_15"
+            android:hint="写评论..."
+            android:maxLines="1"
+            android:padding="@dimen/dp_10"
+            android:textColor="@color/title_gray"
+            android:textColorHint="@color/title_gray_aa"
+            android:textCursorDrawable="@drawable/shape_edit_cursor"
+            android:textSize="@dimen/sp_12" />
+
+        <RelativeLayout
+            android:id="@+id/rl_pl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_content"
+            android:layout_alignTop="@id/tv_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/rl_sc">
+
+
+            <ImageView
+                android:id="@+id/iv_pl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/selector_comment_pl" />
+
+            <TextView
+                android:id="@+id/tv_pl_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:background="@drawable/btn_circle_app"
+                android:paddingHorizontal="@dimen/dp_5"
+                android:text="2,237"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_10"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_sc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_content"
+            android:layout_alignTop="@id/tv_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/rl_dz"
+            android:paddingLeft="@dimen/dp_15"
+            android:paddingRight="@dimen/dp_20">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:background="@drawable/btn_circle_app"
+                android:paddingHorizontal="@dimen/dp_5"
+                android:text="2,237"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_10"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_sc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/selector_comment_sc" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_dz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/tv_content"
+            android:layout_centerVertical="true">
+
+
+            <ImageView
+                android:id="@+id/iv_dz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/selector_comment_dz" />
+
+            <TextView
+                android:id="@+id/tv_dz_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:background="@drawable/btn_circle_app"
+                android:paddingHorizontal="@dimen/dp_5"
+                android:text="2,237"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_10"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_select_yse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_gray"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_15"
+            android:layout_toLeftOf="@id/tv_send"
+            android:background="@drawable/et_circle_select_bj"
+            android:gravity="top"
+            android:hint="优质评论可获得FIND奖励"
+            android:maxLines="5"
+            android:minLines="5"
+            android:padding="@dimen/dp_10"
+            android:textColor="@color/title_gray"
+            android:textColorHint="@color/title_gray_aa"
+            android:textCursorDrawable="@drawable/shape_edit_cursor"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/tv_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/et_content"
+            android:layout_alignParentRight="true"
+            android:paddingHorizontal="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_15"
+            android:text="发送"
+            android:textColor="@color/app_background"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</LinearLayout>

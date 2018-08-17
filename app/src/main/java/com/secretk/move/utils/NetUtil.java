@@ -3,6 +3,9 @@ package com.secretk.move.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.TextView;
 
 import com.qiniu.android.http.ResponseInfo;
@@ -571,5 +574,11 @@ public class NetUtil {
          *      false：已赞
          */
         public void uploadLoading(String name,double status){};
+    }
+    public static void setAnimation(View view){
+        ScaleAnimation animation_max =new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        animation_max.setDuration(500);//执行时间
+        view.startAnimation(animation_max);
     }
 }

@@ -103,6 +103,20 @@ public class StringUtil {
     }
 
     /**
+     * @return
+     * @describe:  校验以太坊钱包地址
+     * 它只能包含以下字母：a，b，c，d，e和f。
+     * 包括最初的“0x”
+     * 可以具有0到9之间的任何数字
+     */
+    public static boolean isEthereumSite(String eth) {
+//        if(StringUtil.isBlank(eth) || eth.length()!=42 || ){
+//            return false;
+//        }
+        return true;
+
+    }
+    /**
      * @param idcard
      * @return
      * @describe: 验证身份证号
