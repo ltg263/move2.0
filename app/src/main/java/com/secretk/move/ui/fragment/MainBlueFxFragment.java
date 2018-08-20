@@ -4,8 +4,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 
+import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -17,6 +19,7 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonListBase;
+import com.secretk.move.bean.InfoBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.MainRfFragmentRecyclerAdapter;
@@ -24,10 +27,16 @@ import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.ToastUtils;
+import com.secretk.move.view.CustomViewPager;
 import com.secretk.move.view.RecycleScrollView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -35,7 +44,7 @@ import butterknife.BindView;
  * 作者： litongge
  * 时间： 2018/6/8 13:46
  * 邮箱；ltg263@126.com
- * 描述：主页 --推薦
+ * 描述：主页 --推荐
  */
 public class MainBlueFxFragment extends LazyFragment implements ItemClickListener {
     @BindView(R.id.recycler)
@@ -44,11 +53,14 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.rcv)
     RecycleScrollView rcv;
+    @BindView(R.id.viewpager)
+    CustomViewPager viewpager;
     private MainRfFragmentRecyclerAdapter adapter;
     int pageIndex = 1;
     String tokenLs = "";
     boolean showFragment = false;//需要弹框
-
+    private List<InfoBean.DataBeanX.DataBean.RowsBean> rows;
+    private ArrayList<String> imageAdList;
 
     @Override
     public int setFragmentView() {
@@ -62,7 +74,82 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
         adapter = new MainRfFragmentRecyclerAdapter(getActivity());
         recycler.setAdapter(adapter);
         adapter.setItemListener(this);
+        viewpager.setZx();
     }
+
+    private void getNewsFlashImgList() {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("pageIndex", 1);
+            node.put("pageSize", Constants.PAGE_SIZE);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.GET_NEWS_FLASH_IMG_LIST)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, InfoBean.class, new HttpCallBackImpl<InfoBean>() {
+            @Override
+            public void onCompleted(InfoBean bean) {
+                InfoBean.DataBeanX.DataBean data = bean.getData().getData();
+                if(data==null){
+                    return;
+                }
+                rows = bean.getData().getData().getRows();
+                if(rows!=null && rows.size()>0){
+                    imageAdList = new ArrayList<>();
+                    for(int i = 0;i<rows.size();i++){
+                        imageAdList.add(rows.get(i).getImgPath());
+                    }
+                    viewpager.setVisibility(View.VISIBLE);
+                    viewpager.setImageResources(imageAdList, mAdCycleViewListener);
+                }
+            }
+        });
+    }
+    private CustomViewPager.ImageCycleViewListener mAdCycleViewListener = new CustomViewPager.ImageCycleViewListener() {
+        @Override
+        public void onImageClick(int position, View imageView) {
+            //  ：0-完整版专业评测，1-自定义评测，2-文章，3-打假，4-单项评测
+            if (rows == null || rows.size() == 0) {
+                return;
+            }
+
+            InfoBean.DataBeanX.DataBean.RowsBean row = rows.get(viewpager.getCurPos(1));
+            int type = row.getType();
+
+            if (type == 5 && StringUtil.isNotBlank(row.getOutUrl())) {
+                IntentUtil.startWebViewActivity(row.getOutUrl(), "区分");
+                return;
+            }
+            int postId = row.getArticleId();
+            if (row.getIsCheckDetails() == 1 || row.getArticleId() == 0) {
+                return;
+            }
+            if (type == 0 || type == 1 || type == 4) {
+                type = 1;
+            } else if (type == 3) {
+                type = 2;
+            } else if (type == 2) {
+                type = 3;
+            } else {
+                ToastUtils.getInstance().show("类型出错");
+                return;
+            }
+            IntentUtil.go2DetailsByType(type, String.valueOf(postId));
+        }
+
+        @Override
+        public void displayImage(String imageURL, ImageView imageView) {
+            // TODO 加载显示图片
+            imageView.setTag(null);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            Glide.with(getActivity()).load(imageURL).into(imageView);
+//            GlideUtils.loadSideMaxImage(getActivity(),imageView,imageURL);
+        }
+    };
 
     private void initRefresh() {
         /**
@@ -99,28 +186,33 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
 
     public void dblclickRefresh() {
         if (getUserVisibleHint()) {
-            recycler.setFocusable(false);
-            rcv.fullScroll(ScrollView.FOCUS_UP);
-//            refreshLayout.autoRefresh();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(1000);
-                        Message message = new Message();
-                        message.what = 1;
-                        mHandler.sendMessage(message);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }).start();
+//            recycler.setFocusable(false);
+            if(rcv.getScrollY()!=0){
+                rcv.fullScroll(ScrollView.FOCUS_UP);
+            }
+            refreshLayout.autoRefresh();
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        Thread.sleep(1000);
+//                        Message message = new Message();
+//                        message.what = 1;
+//                        mHandler.sendMessage(message);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//            }).start();
         }
     }
 
     @Override
     public void onFirstUserVisible() {
+        //轮播图
+        getNewsFlashImgList();
+
         tokenLs = token;
         if (!refreshLayout.isEnableRefresh() && !refreshLayout.isEnableLoadMore() && !showFragment) {
             loadingDialog.show();

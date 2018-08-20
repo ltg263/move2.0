@@ -135,7 +135,7 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
 
     }
 
-    @OnClick({R.id.tv_follow_status, R.id.rl_station_agent,R.id.tv_website_url})
+    @OnClick({R.id.tv_follow_status, R.id.rl_station_agent,R.id.tv_website_url,R.id.tv_project_desc})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_follow_status:
@@ -153,6 +153,9 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
                 break;
             case R.id.rl_station_agent:
                 IntentUtil.startHomeActivity(submitUserId);
+                break;
+            case R.id.tv_project_desc:
+                tvProjectDesc.setMaxLines(20);
                 break;
             case R.id.tv_website_url:
                 if(StringUtil.isNotBlank(tvWebsiteUrl.getText().toString().trim())){

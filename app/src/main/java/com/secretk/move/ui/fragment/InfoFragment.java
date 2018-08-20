@@ -160,7 +160,7 @@ public class InfoFragment extends LazyFragment {
             return;
         }
         //轮播图
-        getNewsFlashImgList();
+//        getNewsFlashImgList();
         getNewsFlashPageList();
     }
 

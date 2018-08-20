@@ -60,6 +60,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/dp_5"
+                        android:maxLines="5"
+                        android:ellipsize="end"
                         android:layout_weight="1"
                         android:lineSpacingExtra="@dimen/item_line_spacing"
                         android:textColor="@color/title_gray"

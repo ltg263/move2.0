@@ -161,24 +161,25 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
 
     public void dblclickRefresh() {
         if (getUserVisibleHint()) {
-            recycler.setFocusable(false);
-            rcv.fullScroll(ScrollView.FOCUS_UP);
-            refreshLayout.setNoMoreData(false);
-//            refreshLayout.autoRefresh();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(1000);
-                        Message message = new Message();
-                        message.what = 1;
-                        mHandler.sendMessage(message);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }).start();
+//            recycler.setFocusable(false);
+            if(rcv.getScrollY()!=0){
+                rcv.fullScroll(ScrollView.FOCUS_UP);
+            }
+            refreshLayout.autoRefresh();
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        Thread.sleep(1000);
+//                        Message message = new Message();
+//                        message.what = 1;
+//                        mHandler.sendMessage(message);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//            }).start();
         }
     }
     @Override
@@ -225,6 +226,10 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
                     tvName.setVisibility(View.INVISIBLE);
                     tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
                     refreshLayout.setVisibility(View.GONE);
+                    return;
+                }
+                if(bean.getData().getFollows().getRows() == null){
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                     return;
                 }
                 refreshLayout.setVisibility(View.VISIBLE);
