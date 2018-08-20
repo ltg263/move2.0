@@ -11,8 +11,10 @@ import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonCommentsBean;
+import com.secretk.move.ui.activity.DetailsArticleActivity;
 import com.secretk.move.ui.activity.DetailsArticleCommentActivity;
 import com.secretk.move.ui.activity.DetailsDiscussActivity;
+import com.secretk.move.ui.activity.DetailsReviewAllActivity;
 import com.secretk.move.ui.activity.MoreCommentsActivity;
 import com.secretk.move.ui.adapter.DetailsDiscussAdapter;
 import com.secretk.move.utils.GlideUtils;
@@ -154,6 +156,10 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
                     ((DetailsDiscussActivity)context).setIntput(commentsBean.getCommentUserName(),commentsBean.getCommentsId());
                 }else if(context instanceof DetailsArticleCommentActivity){
                     ((DetailsArticleCommentActivity)context).setIntput(commentsBean.getCommentUserName(),commentsBean.getCommentsId());
+                }else if(context instanceof DetailsArticleActivity){
+                    ((DetailsArticleActivity)context).setIntput(commentsBean.getCommentUserName(),commentsBean.getCommentsId());
+                }else if(context instanceof DetailsReviewAllActivity){
+                    ((DetailsReviewAllActivity)context).setIntput(commentsBean.getCommentUserName(),commentsBean.getCommentsId());
                 }
             }
         });
@@ -164,6 +170,10 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
                     ((DetailsDiscussActivity)context).setIntput(commentsBean.getCommentUserName(),commentsBean.getCommentsId());
                 }else if(context instanceof DetailsArticleCommentActivity){
                     ((DetailsArticleCommentActivity)context).setIntput(commentsBean.getCommentUserName(),commentsBean.getCommentsId());
+                }else if(context instanceof DetailsArticleActivity){
+                    ((DetailsArticleActivity)context).setIntput(commentsBean.getCommentUserName(),commentsBean.getCommentsId());
+                }else if(context instanceof DetailsReviewAllActivity){
+                    ((DetailsReviewAllActivity)context).setIntput(commentsBean.getCommentUserName(),commentsBean.getCommentsId());
                 }
             }
         });
@@ -196,6 +206,10 @@ public class DetailsDiscussHolder extends RecyclerViewBaseHolder {
                         ((DetailsDiscussActivity)context).setCommentsIdPraise(adapter,commentsId,Integer.valueOf(praiseNum),status?0:1);
                     }else if(context instanceof DetailsArticleCommentActivity){
                         ((DetailsArticleCommentActivity)context).setCommentsIdPraise(adapter,commentsId,Integer.valueOf(praiseNum),status?0:1);
+                    }else if(context instanceof DetailsArticleActivity){
+                        ((DetailsArticleActivity)context).setCommentsIdPraise(adapter,commentsId,Integer.valueOf(praiseNum),status?0:1);
+                    }else if(context instanceof DetailsReviewAllActivity){
+                        ((DetailsReviewAllActivity)context).setCommentsIdPraise(adapter,commentsId,Integer.valueOf(praiseNum),status?0:1);
                     }
                 }else{
 //                    tvPraiseNum.setSelected(false);

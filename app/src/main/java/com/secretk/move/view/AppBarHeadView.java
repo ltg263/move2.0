@@ -30,6 +30,7 @@ public class AppBarHeadView extends FrameLayout {
     protected String setText;
     private ImageView ivBoult;
     private LinearLayout llToolbar;
+    private TextView tvShare;
 
     public boolean isHeadBackShow() {
         return headBackShow;
@@ -78,6 +79,7 @@ public class AppBarHeadView extends FrameLayout {
             mTitle = mAppBarLayout.findViewById(R.id.tv_head_title);
             mTitleVice = mAppBarLayout.findViewById(R.id.tv_head_vice);
             mImg = mAppBarLayout.findViewById(R.id.iv_head_img);
+            tvShare = mAppBarLayout.findViewById(R.id.tv_share);
             ivBoult = mAppBarLayout.findViewById(R.id.iv_boult);
             mTitle.setText(setText);
         }
@@ -121,4 +123,8 @@ public class AppBarHeadView extends FrameLayout {
         return mImg;
     }
 
+    public TextView getShareTv() {
+        tvShare.setVisibility(View.VISIBLE);
+        return tvShare;
+    }
 }

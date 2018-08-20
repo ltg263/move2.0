@@ -288,6 +288,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                             @Override
                             public void finishCommendation(String commendationNum, String donateNum, boolean status) {
                                 if (status) {
+                                    initDataList();
 //                                    tvCommendationNum.setText(getString(R.string.sponsor)+ commendationNum);
 //                                    tvDonateNum.setText(donateNum+getString(R.string.sponsor_num));
                                 }
@@ -474,7 +475,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                 createUserId = discussDetail.getCreateUserId();
                 mHeadView.setTitle(discussDetail.getProjectCode());
                 postShortDesc = discussDetail.getPostShortDesc();
-                mHeadView.setTitleVice("/" + discussDetail.getProjectEnglishName());
+                mHeadView.setTitleVice("/" + discussDetail.getProjectChineseName());
                 if(discussDetail.getCommentsNum()!=0){
                     tvPlNum.setVisibility(View.VISIBLE);
                     tvPlNum.setText(String.valueOf(discussDetail.getCommentsNum()));

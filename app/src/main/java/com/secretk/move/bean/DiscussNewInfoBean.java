@@ -32,9 +32,18 @@ public class DiscussNewInfoBean extends BaseRes{
          */
 
         private CommentsBean comments;
+        private CommentsBean newestComments;
 
         public CommentsBean getComments() {
             return comments;
+        }
+
+        public CommentsBean getNewestComments() {
+            return newestComments;
+        }
+
+        public void setNewestComments(CommentsBean newestComments) {
+            this.newestComments = newestComments;
         }
 
         public void setComments(CommentsBean comments) {

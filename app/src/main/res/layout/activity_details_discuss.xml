@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.secretk.move.view.InputMethodLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/input_method_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -27,14 +28,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/view"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/have_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/view"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/refreshLayout"
@@ -70,6 +71,7 @@
                         android:text="区分"
                         android:textColor="@color/title_gray"
                         android:textSize="@dimen/sp_22"
+                        android:textStyle="bold"
                         android:visibility="gone" />
 
                     <RelativeLayout
@@ -152,6 +154,42 @@
                     </RelativeLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+                        <!--评分开始-->
+                        <com.secretk.move.view.ProgressBarStyleView
+                            android:id="@+id/pb_comprehensive_evaluation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/dp_5" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_review"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/dp_5"
+                            android:background="@drawable/ic_shade_grey"
+                            android:visibility="gone" />
+                        <!--评分結束-->
+                        <!--项目介绍結束-->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/dp_10"
+                            android:layout_marginHorizontal="@dimen/dp_10"
+                            android:background="@color/background_gray"
+                            android:padding="@dimen/dp_10"
+                            android:text="评测结果仅供参考，不构成投资建议。"
+                            android:textColor="@color/title_gray_66"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
@@ -169,6 +207,13 @@
                             android:textColor="@color/title_gray"
                             android:textSize="@dimen/sp_16" />
 
+                        <WebView
+                            android:id="@+id/wv_post_short_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            tools:ignore="WebViewLayout" />
+
                         <ImageView
                             android:id="@+id/iv_post_small_images"
                             android:layout_width="match_parent"
@@ -183,11 +228,6 @@
                             android:layout_height="wrap_content"
                             android:visibility="gone" />
                     </LinearLayout>
-
-                    <!--<View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_line"
-                        android:background="@color/cut_off_rule" />-->
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -218,7 +258,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginBottom="@dimen/dp_15"
                             android:layout_marginLeft="@dimen/dp_10"
                             android:layout_toRightOf="@id/tv_project_code" />
 
@@ -230,14 +269,14 @@
                         android:background="@color/white"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
-                        android:paddingBottom="@dimen/dp_25"
-                        android:paddingTop="@dimen/dp_10">
+                        android:paddingBottom="@dimen/dp_25">
 
                         <com.secretk.move.view.PileLayout
                             android:id="@+id/pile_layout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:layout_marginBottom="@dimen/dp_15"
                             android:visibility="gone"
                             app:PileLayout_pileWidth="@dimen/dp_25" />
 
@@ -245,7 +284,7 @@
                             android:id="@+id/tv_donate_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="@dimen/dp_15"
+                            android:layout_marginBottom="@dimen/dp_15"
                             android:text="无人赞助"
                             android:textColor="@color/title_gray_88"
                             android:textSize="@dimen/sp_14" />

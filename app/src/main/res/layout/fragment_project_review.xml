@@ -132,7 +132,7 @@
                         android:layout_height="wrap_content"
                         android:drawableRight="@drawable/right_boult"
                         android:padding="@dimen/dp_5"
-                        android:text="@string/sort_time"
+                        android:text="@string/sort_love"
                         android:textColor="#aaaaaa"
                         android:textSize="@dimen/sp_12" />
 

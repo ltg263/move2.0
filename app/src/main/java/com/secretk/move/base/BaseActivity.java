@@ -132,13 +132,21 @@ public abstract class BaseActivity extends AppCompatActivity {
             loadingDialog=new LoadingDialog(this);
         }
     }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
         for (MenuInfo item : mMenuInfos) {
-            if(item.getIcon()!=0){
+            if(item.getId()==R.string.share){
+                mHeadView.getShareTv().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        OnToolbarRightListener();
+                    }
+                });
+            }else if(item.getIcon()!=0){
                 menu.add(0, item.getId(), 0, item.getName()).setIcon(item.getIcon()).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            }else {
+            }else{
                 TextView tv = new TextView(this);
                 tv.setText(item.getName());
                 tv.setPadding(0,0,10,0);

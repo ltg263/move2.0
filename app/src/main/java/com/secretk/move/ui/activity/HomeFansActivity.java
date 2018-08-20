@@ -96,7 +96,7 @@ public class HomeFansActivity extends BaseActivity {
         loadingDialog.show();
         rlTopTheme.setVisibility(View.VISIBLE);
         tvIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_not_data));
-        tvName.setText(getResources().getString(R.string.not_collect));
+        tvName.setText("无粉丝");
         tvSubmit.setText(getResources().getString(R.string.not_go_look));
     }
 
@@ -147,6 +147,13 @@ public class HomeFansActivity extends BaseActivity {
             @Override
             public void onCompleted(MyFansList bean) {
                 MyFansList.DataBean.MyFansBean detailsBean = bean.getData().getMyFans();
+                if(detailsBean==null){
+                    findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+                    refreshLayout.setVisibility(View.GONE);
+                    return;
+                }
+                //{"status":null,"msg":"Success","code":0,"reason":null,"fromuri":null,"token":null,"data":
+                // {"myFans":null},"serverDatetime":1534730124390}
                 if (detailsBean.getRows() == null || detailsBean.getRows().size() == 0) {
                     findViewById(R.id.no_data).setVisibility(View.VISIBLE);
                     refreshLayout.setVisibility(View.GONE);
