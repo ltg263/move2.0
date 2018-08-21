@@ -240,7 +240,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
     private void localphoto() {
         Intent intent = new Intent(this, SelectedPicActivity.class);
         intent.putExtra("max_pic", 9);
-        intent.putExtra("current_pic", releasePicAdapter.getItemCount());
+        intent.putExtra("current_pic", releasePicAdapter.getItemCount()-1);
         startActivity(intent);
     }
     private void takephoto() {
@@ -282,6 +282,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
 
         if (SelectedPicActivity.picArray != null) {
             releasePicAdapter.addSparseData(SelectedPicActivity.picArray);
+            SelectedPicActivity.picArray=null;
         }
 
         if(SelectProjectActivity.staticProjectId!=0){
