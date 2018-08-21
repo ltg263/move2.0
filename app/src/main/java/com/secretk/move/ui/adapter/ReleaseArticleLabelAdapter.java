@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.bean.DiscussLabelListbean;
@@ -41,12 +40,14 @@ public class ReleaseArticleLabelAdapter extends RecyclerView.Adapter<ReleaseArti
         DiscussLabelListbean.TagList bean = list.get(key);
         holder.setItemListener(mListener);
         if(position==0){
-            holder.tvlabel.setText(bean.getTagName());
+            holder.tvCode.setVisibility(View.VISIBLE);
+            holder.tvDown.setVisibility(View.GONE);
+            holder.tvCode.setText(bean.getTagName());
         }else{
-            holder.tvlabel.setBackground(MoveApplication.getContext().getResources().getDrawable(R.color.white));
-            holder.tvlabel.setText("#"+bean.getTagName()+"#");
+            holder.tvCode.setVisibility(View.GONE);
+            holder.tvDown.setVisibility(View.VISIBLE);
+            holder.tvDown.setText(bean.getTagName());
         }
-
     }
 
     @Override
@@ -64,8 +65,10 @@ public class ReleaseArticleLabelAdapter extends RecyclerView.Adapter<ReleaseArti
 
 
     public class ViewHolder extends RecyclerViewBaseHolder {
-        @BindView(R.id.tvlabel)
-        public TextView tvlabel;
+        @BindView(R.id.tv_project_code)
+        public TextView tvCode;
+        @BindView(R.id.tv_crack_down)
+        public TextView tvDown;
 
         public ViewHolder(View itemView) {
             super(itemView);

@@ -9,14 +9,12 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvlabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/garden_crack"
-        android:gravity="center"
-        android:paddingVertical="@dimen/dp_5"
-        android:paddingHorizontal="@dimen/dp_10"
-        android:text="翻倍"
-        android:textColor="@color/white"
-        android:textSize="@dimen/sp_12" />
+        android:id="@+id/tv_project_code"
+        style="@style/TvProjectCode"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/tv_crack_down"
+        style="@style/TvCrackDown"
+        android:layout_centerVertical="true" />
 </LinearLayout>

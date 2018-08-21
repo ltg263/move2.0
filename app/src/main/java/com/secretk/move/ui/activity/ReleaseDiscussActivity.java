@@ -15,6 +15,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
@@ -37,6 +38,7 @@ import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
+import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.LoadingDialog;
 import com.umeng.analytics.MobclickAgent;
 
@@ -63,6 +65,10 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
     RecyclerView recycler_horizontal;
     @BindView(R.id.ed_title)
     EditText ed_title;
+    @BindView(R.id.tv_1)
+    TextView tv1;
+    @BindView(R.id.tv_2)
+    TextView tv2;
     ReleaseArticleLabelAdapter releaseArticleLabelAdapter;
     LinearLayoutManager layoutManager;
 
@@ -86,6 +92,25 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         MoveApplication.getContext().addActivity(this);
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.main_background), 0);
+
+        StringUtil.etSearchChangedListener(ed_content, null, new StringUtil.EtChange() {
+            @Override
+            public void etYes() {
+                if(getEdContent().length()>9){
+                    tv1.setVisibility(View.INVISIBLE);
+                }else{
+                    tv1.setVisibility(View.VISIBLE);
+                    tv1.setText("加油，还差"+(10-getEdContent().length())+"个字");
+                }
+                tv2.setText(getEdContent().length()+"/300");
+            }
+
+            @Override
+            public void etNo() {
+                tv1.setText("加油，还差10个字");
+                tv2.setText("0/300");
+            }
+        });
         imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
         picList = new ArrayList<>();
 
@@ -93,6 +118,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         recycler_pic.setLayoutManager(new GridLayoutManager(this, 3));
         recycler_pic.setAdapter(releasePicAdapter);
         releasePicAdapter.setItemListener(this);
+        releasePicAdapter.addData("move");
 
         releaseArticleLabelAdapter = new ReleaseArticleLabelAdapter();
         layoutManager = new LinearLayoutManager(this);
@@ -118,10 +144,10 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
     List<String> adapterImgList;
     @OnClick(R.id.tv_release)
     public void tv_release() {
-        if (TextUtils.isEmpty(getEdTitle())) {
-            ToastUtils.getInstance().show("请输入标题");
-            return;
-        }
+//        if (TextUtils.isEmpty(getEdTitle())) {
+//            ToastUtils.getInstance().show("请输入标题");
+//            return;
+//        }
         if (TextUtils.isEmpty(getEdContent())) {
             ToastUtils.getInstance().show("请输入内容");
             return;
@@ -163,30 +189,8 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
 
     }
 
-    @OnClick(R.id.localphoto)
-    public void localphoto(View view) {
-        Intent intent = new Intent(this, SelectedPicActivity.class);
-        intent.putExtra("max_pic", 9);
-        intent.putExtra("current_pic", releasePicAdapter.getItemCount());
-        startActivity(intent);
-    }
-
     int REQUEST_CODE_CAMERA = 199;
     String picPath;
-
-    @OnClick(R.id.takephoto)
-    public void takephoto(View view) {
-        if (releasePicAdapter.getItemCount() >= 9) {
-            ToastUtils.getInstance().show("最多选择九张图片");
-            return;
-        }
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        picPath = getExternalFilesDir(null).getAbsolutePath() + "/" + System.currentTimeMillis() + ".png";
-        Uri uri = Uri.fromFile(new File(picPath));
-        //为拍摄的图片指定一个存储的路径
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        startActivityForResult(intent, REQUEST_CODE_CAMERA);
-    }
 
     @OnClick(R.id.addlabel)
     public void addlabel(View view) {
@@ -194,10 +198,6 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         startActivity(intent);
     }
 
-    @OnClick(R.id.swithKeyboard)
-    public void swithKeyboard(View view) {
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-    }
 
     // takephoto addlabel
     @Override
@@ -213,9 +213,44 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
 
     @Override
     public void onItemClick(View view, int postion) {
-        releasePicAdapter.removeIndex(postion);
+        if(releasePicAdapter.getData().get(postion).equals("move")){
+            openChangeHeadDialog();
+        }
+        if(view.getId()==R.id.img_delect){
+            releasePicAdapter.removeIndex(postion);
+        }
     }
-
+    private void openChangeHeadDialog() {
+        if (releasePicAdapter.getItemCount() > 9) {
+            ToastUtils.getInstance().show("最多选择九张图片");
+            return;
+        }
+        String[] srt = {"上传图片", "从手机相册中选择", "拍照上传"};
+        DialogUtils.ShowAlertDialog(this, srt, new DialogUtils.AlertDialogInterface() {
+            @Override
+            public void btnLineListener(int index) {
+                if (index == 1) {//从手机相册中选择
+                    localphoto();
+                } else if (index == 2) {//拍照上传
+                    takephoto();
+                }
+            }
+        });
+    }
+    private void localphoto() {
+        Intent intent = new Intent(this, SelectedPicActivity.class);
+        intent.putExtra("max_pic", 9);
+        intent.putExtra("current_pic", releasePicAdapter.getItemCount());
+        startActivity(intent);
+    }
+    private void takephoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        picPath = getExternalFilesDir(null).getAbsolutePath() + "/" + System.currentTimeMillis() + ".png";
+        Uri uri = Uri.fromFile(new File(picPath));
+        //为拍摄的图片指定一个存储的路径
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        startActivityForResult(intent, REQUEST_CODE_CAMERA);
+    }
     @Override
     public void onItemLongClick(View view, int postion) {
 

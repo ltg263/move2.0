@@ -14,7 +14,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:focusable="true"
-        android:scaleType="centerCrop" />
+        android:src="@drawable/ic_poho_bj"
+        android:scaleType="fitXY" />
 
     <ImageView
         android:id="@+id/img_delect"
@@ -25,4 +26,5 @@
         android:layout_margin="@dimen/dp_5"
         android:scaleType="fitXY"
         android:src="@drawable/icon_close" />
+
 </RelativeLayout>

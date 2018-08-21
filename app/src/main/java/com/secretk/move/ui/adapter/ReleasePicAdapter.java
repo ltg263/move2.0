@@ -45,10 +45,16 @@ public class ReleasePicAdapter extends RecyclerView.Adapter<ReleasePicAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         String str = list.get(position);
         holder.setItemListener(mListener);
-        GlideUtils.loadSideMaxImage(mContext, holder.img, str);
+        if("move".equals(str)){
+            GlideUtils.loadUrlDd(mContext, holder.img, R.drawable.ic_poho_bj);
+            holder.img_delect.setVisibility(View.GONE);
+        }else{
+            GlideUtils.loadSideMaxImage(mContext, holder.img, str);
+            holder.img_delect.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -75,19 +81,28 @@ public class ReleasePicAdapter extends RecyclerView.Adapter<ReleasePicAdapter.Vi
         for (int i = 0; i < picArray.size(); i++) {
             long key = picArray.keyAt(i);
             PicBean bean = picArray.get(key);
-            list.add(bean.getPath());
+            list.add(0,bean.getPath());
+        }
+        if(list.size()==10){
+            list.remove(9);
         }
         notifyDataSetChanged();
 
     }
 
     public void addData(String str) {
-        list.add(str);
+        list.add(0,str);
+        if(list.size()==10){
+            list.remove(9);
+        }
         notifyDataSetChanged();
     }
 
     public void removeIndex(int index) {
         list.remove(index);
+        if(!list.contains("move")){
+            list.add("move");
+        }
         notifyDataSetChanged();
     }
 
