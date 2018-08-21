@@ -282,7 +282,12 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
 
         if (SelectedPicActivity.picArray != null) {
             releasePicAdapter.addSparseData(SelectedPicActivity.picArray);
-            SelectedPicActivity.picArray=null;
+        }
+
+        if(SelectProjectActivity.staticProjectId!=0){
+            projectId = SelectProjectActivity.staticProjectId;
+            releaseArticleLabelAdapter.amendCode(projectId,SelectProjectActivity.staticProjectCode);
+            SelectProjectActivity.staticProjectId=0;
         }
     }
 

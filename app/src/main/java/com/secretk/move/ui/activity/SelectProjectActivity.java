@@ -230,7 +230,8 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
             }
         });
     }
-
+    public static int staticProjectId =0;
+    public static String staticProjectCode ="";
     /**
      * 1 评测
      * 2 文章
@@ -259,11 +260,15 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
             intent.putExtra("projectId", bean.getProjectId());
             intent.putExtra("projectPay", bean.getProjectCode());
             startActivity(intent);
-        } else {
+        } else if(publicationType == 3){
             Intent intent = new Intent(this, ReleaseDiscussActivity.class);
             intent.putExtra("projectId", bean.getProjectId());
             intent.putExtra("projectPay", bean.getProjectCode());
             startActivity(intent);
+        }else{
+            staticProjectId = bean.getProjectId();
+            staticProjectCode = bean.getProjectCode();
+           this.finish();
         }
 
     }
