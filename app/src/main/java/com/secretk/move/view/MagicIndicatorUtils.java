@@ -78,4 +78,45 @@ public class MagicIndicatorUtils {
         ViewPagerHelper.bind(magicIndicatorTitle, vp_main_children);
 
     }
+    public static void initMagicIndicator(final Context mContext, final List<String> mDataList,
+                                                final ViewPagerFixed vp_main_children,MagicIndicator magicIndicator) {
+        CommonNavigator commonNavigator = new CommonNavigator(mContext);
+        commonNavigator.setSkimOver(true);
+        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+            @Override
+            public int getCount() {
+                return mDataList == null ? 0 : mDataList.size();
+            }
+
+            @Override
+            public IPagerTitleView getTitleView(Context context, final int index) {
+                SimplePagerTitleView simplePagerTitleView = new ScaleTransitionPagerTitleView(context);
+                simplePagerTitleView.setText(mDataList.get(index));
+                simplePagerTitleView.setTextSize(29);
+                simplePagerTitleView.setNormalColor(ContextCompat.getColor(mContext, R.color.title_gray_66));
+                simplePagerTitleView.setSelectedColor(ContextCompat.getColor(mContext, R.color.title_gray));
+
+                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        vp_main_children.setCurrentItem(index);
+                    }
+                });
+                return simplePagerTitleView;
+            }
+
+            @Override
+            public IPagerIndicator getIndicator(Context context) {
+                return null;
+            }
+
+            @Override
+            public float getTitleWeight(Context context, int index) {
+                return 0.5f;
+            }
+        });
+        magicIndicator.setNavigator(commonNavigator);
+        ViewPagerHelper.bind(magicIndicator, vp_main_children);
+    }
+
 }

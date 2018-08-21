@@ -10,7 +10,6 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.secretk.move.R;
@@ -27,8 +27,12 @@ import com.secretk.move.ui.activity.SelectProjectActivity;
 import com.secretk.move.ui.adapter.MainFragmentPagerAdapter;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.UiUtils;
+import com.secretk.move.view.MagicIndicatorUtils;
 import com.secretk.move.view.ViewPagerFixed;
 
+import net.lucode.hackware.magicindicator.MagicIndicator;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,11 +55,17 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
     @BindView(R.id.tab_layout)
     TabLayout tab_layout;
     MainFragmentPagerAdapter adapter;
+    @BindView(R.id.iv_search)
+    ImageView ivSearch;
+    @BindView(R.id.iv_edit)
+    ImageView ivEdit;
     public String[] head_list;
     Dialog dialog;
     Intent intent;
-    @BindView(R.id.main_content)
-    CoordinatorLayout main_content;
+//    @BindView(R.id.main_content)
+//    CoordinatorLayout main_content;
+    @BindView(R.id.magic_indicator_title)
+    MagicIndicator magicIndicatorTitle;
 
     @Override
     public int setFragmentView() {
@@ -68,7 +78,7 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         tool_bar.setNavigationIcon(R.drawable.main_search);
         adapter = new MainFragmentPagerAdapter(getChildFragmentManager());
         vp_main_children.setAdapter(adapter);
-        vp_main_children.setOffscreenPageLimit(3);
+        vp_main_children.setOffscreenPageLimit(2);
         tab_layout.setupWithViewPager(vp_main_children);
         tab_layout.setTabMode(TabLayout.MODE_FIXED);
         tool_bar.setOnMenuItemClickListener(this);
@@ -80,7 +90,26 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
                 startActivity(intent);
             }
         });
+        ivSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+        ivEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initDailog();
+            }
+        });
         TabLayoutLenth();
+        List<String> list = new ArrayList<>();
+        list.add("推荐");
+        list.add("关注");
+        list.add("爆料");
+//        list.add("新榜");
+        MagicIndicatorUtils.initMagicIndicator(getActivity(),list,vp_main_children,magicIndicatorTitle);
     }
 
     @Override

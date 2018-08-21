@@ -4,7 +4,7 @@
         <item>@string/main_fragment_recommend</item>
         <item>@string/main_fragment_follow</item>
         <item>@string/main_fragment_discuss</item>
-        <item>@string/main_fragment_bluesky</item>
+       <!-- <item>@string/main_fragment_bluesky</item>-->
 
     </string-array>
     <string-array name="mine_attention_titles">
