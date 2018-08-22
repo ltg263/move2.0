@@ -112,7 +112,7 @@ public class EvaluationSliderView extends FrameLayout {
      * @param color
      */
     public void setEsvBackground(int color){
-        tvEvaluationMun.setTextColor(getResources().getColor(color));
+//        tvEvaluationMun.setTextColor(getResources().getColor(color));
         esView.setAlphaColor(color);
         GradientDrawable gradientDrawable = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,

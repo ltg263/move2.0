@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
-import com.secretk.move.baseManager.BaseManager;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MyFansList;
 import com.secretk.move.utils.GlideUtils;
@@ -26,6 +25,8 @@ import butterknife.ButterKnife;
 public class MineFansHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.img)
     ImageView img;
+    @BindView(R.id.iv_model_icon)
+    ImageView ivModelIcon;
     @BindView(R.id.tvName)
     TextView tvName;
     @BindView(R.id.tvLastContent)
@@ -49,22 +50,22 @@ public class MineFansHolder extends RecyclerViewBaseHolder {
             @Override
             public void onClick(View view) {
                 //1-关注项目;2-关注帖子；3-关注用户
-                IntentUtil.startHomeActivity(rowsBean.getFollowedUserId());
+                IntentUtil.startHomeActivity(rowsBean.getUserId());
             }
         });
     }
     private void showUser(MyFansList.DataBean.MyFansBean.RowsBean rowsBean, Context context) {
         llProject.setVisibility(View.GONE);
         llUser.setVisibility(View.VISIBLE);
-        //“showFollow”: 0 , //是否显示 关注按钮 0- 不显示；1-显示关注  2-显示取消关注
-        if (rowsBean.getFollowType() == 1) {
-            tvSaveFollow.setSelected(false);
-            tvSaveFollow.setText(context.getResources().getString(R.string.follow_status_0));
-        } else {
+        //“showFollow”: 0 , //关注状态:0-未关注；1-已关注，2-不显示
+        if (rowsBean.getFollowStatus() == 1) {
             tvSaveFollow.setSelected(true);
             tvSaveFollow.setText(context.getResources().getString(R.string.follow_status_1));
+        } else {
+            tvSaveFollow.setSelected(false);
+            tvSaveFollow.setText(context.getResources().getString(R.string.follow_status_0));
         }
-        tvSaveFollow.setText(BaseManager.app.getResources().getString(R.string.follow_status_1));
+        StringUtil.getUserType(rowsBean.getUserType(),ivModelIcon);
         GlideUtils.loadCircleUserUrl(context,img,Constants.BASE_IMG_URL+StringUtil.getBeanString(rowsBean.getUserIcon()));
         tvName.setText(StringUtil.getBeanString(rowsBean.getUserName()));
         tvLastContent.setText(StringUtil.getBeanString(rowsBean.getUserSignature()));

@@ -97,12 +97,12 @@
                 android:ellipsize="end"
                 android:letterSpacing="0.05"
                 android:lineSpacingExtra="@dimen/item_line_spacing"
-                android:visibility="gone"
                 android:maxLines="2"
                 android:paddingHorizontal="@dimen/dp_10"
                 android:textColor="@color/title_gray"
                 android:textSize="@dimen/sp_16"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tvDesc"
@@ -133,9 +133,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvDesc"
-                android:nestedScrollingEnabled="false"
                 android:layout_marginBottom="@dimen/dp_5"
                 android:layout_marginHorizontal="@dimen/dp_10"
+                android:nestedScrollingEnabled="false"
                 android:visibility="gone" />
         </RelativeLayout>
 
@@ -177,14 +177,30 @@
 
         <LinearLayout
             android:id="@+id/ll"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_below="@id/ll_below"
+            android:layout_toRightOf="@id/rl_head"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/dp_10"
             android:paddingHorizontal="@dimen/dp_10">
+
+            <TextView
+                android:id="@+id/tv_total_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp_10"
+                android:drawableLeft="@drawable/ic_logo_list"
+                android:drawablePadding="@dimen/dp_4"
+                android:padding="@dimen/dp_8"
+                android:textColor="@color/title_gray_99"
+                android:textSize="@dimen/sp_14" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/tvPraise"

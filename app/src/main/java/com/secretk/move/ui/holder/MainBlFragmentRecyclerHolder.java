@@ -70,6 +70,8 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     RelativeLayout rlContext;
     @BindView(R.id.tv_project_code)
     TextView tvProjectCode;
+    @BindView(R.id.tv_total_income)
+    TextView tvTotalIncome;
     @BindView(R.id.tv_crack_down)
     TextView tvCrackDown;
     @BindView(R.id.tv_crack_down_1)
@@ -123,6 +125,15 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             tvProjectFolly.setVisibility(View.GONE);
         }
 
+        if(bean.getPostTotalIncome()==0){
+            tvTotalIncome.setText("未结算");
+        }else{
+            if(bean.getPostTotalIncome() == (int)bean.getPostTotalIncome()){
+                tvTotalIncome.setText((int)bean.getPostTotalIncome() +"");
+            }else{
+                tvTotalIncome.setText(bean.getPostTotalIncome() +"");
+            }
+        }
         tvProjectCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -239,6 +250,7 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
 
     ArrayList<PostDataInfo> imageLists;
     public void showPostDesc(RowsBean bean) {
+        tvTitle.setVisibility(View.GONE);
         if(StringUtil.isNotBlank(bean.getPostTitle())){
             tvTitle.setVisibility(View.VISIBLE);
             tvTitle.setText(StringUtil.getBeanString(bean.getPostTitle()));

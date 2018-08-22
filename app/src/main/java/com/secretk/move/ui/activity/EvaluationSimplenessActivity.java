@@ -1,7 +1,17 @@
 package com.secretk.move.ui.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.SparseArray;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secretk.move.MoveApplication;
@@ -11,19 +21,29 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.listener.ItemClickListener;
+import com.secretk.move.ui.adapter.ReleaseArticleLabelAdapter;
+import com.secretk.move.ui.adapter.ReleasePicAdapter;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
+import com.secretk.move.utils.PicUtil;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
+import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.EvaluationSliderView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,17 +55,29 @@ import butterknife.OnClick;
  * 邮箱；ltg263@126.com
  * 描述：简单测评
  */
-public class EvaluationSimplenessActivity extends BaseActivity {
+public class EvaluationSimplenessActivity extends BaseActivity implements ItemClickListener {
 
     @BindView(R.id.es_viewa)
     EvaluationSliderView esViewa;
     @BindView(R.id.tv_evaluation_state)
     TextView tvEvaluationState;
-    @BindView(R.id.tv_project_code)
-    TextView tvProjectCode;
     @BindView(R.id.et_evaluation_content)
     EditText etEvaluationContent;
     String projectId;
+    @BindView(R.id.tv_1)
+    TextView tv1;
+    @BindView(R.id.tv_2)
+    TextView tv2;
+    ReleaseArticleLabelAdapter releaseArticleLabelAdapter;
+    ReleasePicAdapter releasePicAdapter;
+    @BindView(R.id.recycler_horizontal)
+    RecyclerView recyclerHorizontal;
+    @BindView(R.id.recycler_pic)
+    RecyclerView recyclerPic;
+    @BindView(R.id.addlabel)
+    RelativeLayout addlabel;
+    @BindView(R.id.tv_release)
+    TextView tvRelease;
 
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
@@ -63,12 +95,48 @@ public class EvaluationSimplenessActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-        mHeadView.setTitle(getIntent().getStringExtra("projectPay")+"-"+getString(R.string.evaluation_simpleness));
+        StringUtil.etSearchChangedListener(etEvaluationContent, null, new StringUtil.EtChange() {
+            @Override
+            public void etYes() {
+                if (getEdContent().length() > 9) {
+                    tv1.setVisibility(View.INVISIBLE);
+                } else {
+                    tv1.setVisibility(View.VISIBLE);
+                    tv1.setText("加油，还差" + (10 - getEdContent().length()) + "个字");
+                }
+                tv2.setText(getEdContent().length() + "/300");
+            }
+
+            @Override
+            public void etNo() {
+                tv1.setText("加油，还差10个字");
+                tv2.setText("0/300");
+            }
+        });
+        addlabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EvaluationSimplenessActivity.this, AddLabelActivity.class);
+                startActivity(intent);
+            }
+        });
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerHorizontal.setLayoutManager(layoutManager);
+        releaseArticleLabelAdapter = new ReleaseArticleLabelAdapter();
+        recyclerHorizontal.setAdapter(releaseArticleLabelAdapter);
+
+        recyclerPic.setLayoutManager(new GridLayoutManager(this, 3));
+        releasePicAdapter = new ReleasePicAdapter();
+        recyclerPic.setAdapter(releasePicAdapter);
+        releasePicAdapter.setItemListener(this);
+        releasePicAdapter.addData("move");
+
+        mHeadView.setTitle(getIntent().getStringExtra("projectPay") + "-" + getString(R.string.evaluation_simpleness));
         projectId = getIntent().getStringExtra("projectId");
         esViewa.setScore(8.0f);
         esViewa.setEsvBackground(R.color.app_background);
         tvEvaluationState.setText(StringUtil.getStateValueStr(8.0f));
-        tvProjectCode.setText(getIntent().getStringExtra("projectPay"));
     }
 
     public void setTvEvaluationState(String value) {
@@ -90,25 +158,189 @@ public class EvaluationSimplenessActivity extends BaseActivity {
 //        startActivity(intent);
 
         IntentUtil.startProjectCompileDxZjyActivity(String.valueOf(Constants.ModelType.MODEL_TYPE_ALL_NEW),
-                String.valueOf(projectId),getIntent().getStringExtra("projectPay"),
-                "","8.0",getString(R.string.comprehensive_evaluation));
+                String.valueOf(projectId), getIntent().getStringExtra("projectPay"),
+                "", "8.0", getString(R.string.comprehensive_evaluation));
     }
 
-    @OnClick(R.id.rl_submit)
+    SparseArray<DiscussLabelListbean.TagList> arrayTags = new SparseArray<>();//默认标签
+    DiscussLabelListbean.TagList beans;//
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (AddLabelActivity.array != null) {
+            if(arrayTags!=null){
+                arrayTags.clear();
+            }
+            beans = new DiscussLabelListbean.TagList();
+            beans.setTagId(String.valueOf(projectId));
+            beans.setTagName(getIntent().getStringExtra("projectPay"));
+            arrayTags.put(-1,beans);
+            for (int i = 0; i < AddLabelActivity.array.size(); i++) {
+                DiscussLabelListbean.TagList bean = AddLabelActivity.array.get(AddLabelActivity.array.keyAt(i));
+                arrayTags.put(AddLabelActivity.array.keyAt(i),bean);
+            }
+            AddLabelActivity.array = null;
+        }
+        releaseArticleLabelAdapter.setData(arrayTags);
+
+        if (SelectedPicActivity.picArray != null) {
+            releasePicAdapter.addSparseData(SelectedPicActivity.picArray);
+            SelectedPicActivity.picArray=null;
+        }
+
+        if(SelectProjectActivity.staticProjectId!=0){
+            projectId = String.valueOf(SelectProjectActivity.staticProjectId);
+            releaseArticleLabelAdapter.amendCode(Integer.valueOf(projectId),SelectProjectActivity.staticProjectCode);
+            SelectProjectActivity.staticProjectId=0;
+        }
+    }
+
+    String discussImages = "";
+    List<String> adapterImgList;
+    List<String> serverImgList = new ArrayList<>();
+    JSONArray sonArray;
+    @OnClick(R.id.tv_release)
     public void onViewClicked() {
-        Float num = Float.valueOf(esViewa.getTvEvaluationMun());
-        if (StringUtil.isBlank(etEvaluationContent.getText().toString().trim())) {
-            ToastUtils.getInstance().show("评测内容不能为空");
-            return;
-        }
-        if (etEvaluationContent.getText().toString().trim().length()<10) {
-            ToastUtils.getInstance().show("评测字数最少10个字");
-            return;
-        }
+
         if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(getString(R.string.network_error));
             return;
         }
+        if (StringUtil.isBlank(etEvaluationContent.getText().toString().trim())) {
+            ToastUtils.getInstance().show("评测内容不能为空");
+            return;
+        }
+        if (etEvaluationContent.getText().toString().trim().length() < 10) {
+            ToastUtils.getInstance().show("评测字数最少10个字");
+            return;
+        }
+        // tagId,tagName
+        if(arrayTags!=null){
+            sonArray = new JSONArray();
+            for(int i=0;i<arrayTags.size();i++){
+                JSONObject object = new JSONObject();
+                DiscussLabelListbean.TagList aa = arrayTags.get(arrayTags.keyAt(i));
+                try {
+                    object.put("tagId",aa.getTagId());
+                    object.put("tagName",aa.getTagName());
+                    if(i!=0){
+                        sonArray.put(object);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        discussImages="";
+        adapterImgList= releasePicAdapter.getData();
+        if (adapterImgList!=null&&adapterImgList.size()!=0 && adapterImgList.size()>1){
+            qiToken = "";
+            upImgHttp(adapterImgList.get(0),0);
+        }else{
+            httpRelease();
+        }
+    }
+
+    String qiToken = "";
+    String userId = "";
+    public void upImgHttp(String path, final int position) {
+        if(path.equals("move")){
+            try {
+                generatePostSmallImages(serverImgList);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+        final File file = new File(path);
+        if (!file.exists()) {
+            return;
+        }
+        if (TextUtils.isEmpty(token)) {
+            ToastUtils.getInstance().show("请先登录账号");
+            return;
+        }
+        LogUtil.w("当前文件大小："+ PicUtil.getPrintSize(file.length()));
+        if(StringUtil.isNotBlank(qiToken) && StringUtil.isNotBlank(userId)){
+            NetUtil.sendQiniuImgUrl(file, qiToken, NetUtil.getQiniuImgName("posts",userId,position), new NetUtil.QiniuImgUpload() {
+                @Override
+                public void uploadStatus(String str, boolean status) {
+                    if(status){
+                        serverImgList.add(str);
+                        if (serverImgList.size() == releasePicAdapter.getItemCount()) {
+                            try {
+                                generatePostSmallImages(serverImgList);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }else {
+                            upImgHttp(adapterImgList.get(position+1),position+1);
+                        }
+                    }else{
+                        ToastUtils.getInstance().show("照片上传失败，请重新上传");
+                        loadingDialog.dismiss();
+                    }
+                }
+            });
+        }else{
+            NetUtil.getQiniuToken(new NetUtil.SaveCommendationImp() {
+                @Override
+                public void finishCommendation(String mUserId,String mQiToken, boolean status) {
+                    qiToken=mQiToken;
+                    userId=mUserId;
+                    if(!status){
+                        ToastUtils.getInstance().show("服务器出错了");
+                        loadingDialog.dismiss();
+                        return;
+                    }
+                    NetUtil.sendQiniuImgUrl(file, mQiToken, NetUtil.getQiniuImgName("avatars",mUserId,0), new NetUtil.QiniuImgUpload() {
+                        @Override
+                        public void uploadStatus(String str, boolean status) {
+                            if(status){
+                                serverImgList.add(str);
+                                if (serverImgList.size() == releasePicAdapter.getItemCount()) {
+                                    try {
+                                        generatePostSmallImages(serverImgList);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }else {
+                                    upImgHttp(adapterImgList.get(position+1),position+1);
+                                }
+                            }else{
+                                ToastUtils.getInstance().show("照片上传失败，请重新上传");
+                                loadingDialog.dismiss();
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    JSONArray array = new JSONArray();
+
+    public void generatePostSmallImages(List<String> list) throws JSONException {
+        for (int i = 0; i < list.size(); i++) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("fileName", "");
+
+            String str = list.get(i);
+            jsonObject.put("fileUrl", str);
+            jsonObject.put("size", "");
+            jsonObject.put("extension", "");
+            array.put(jsonObject);
+        }
+        if(array.length()>0){
+            discussImages = array.toString();
+        }
+        httpRelease();
+    }
+
+    private void httpRelease() {
+
+        Float num = Float.valueOf(esViewa.getTvEvaluationMun());
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
@@ -127,6 +359,14 @@ public class EvaluationSimplenessActivity extends BaseActivity {
 //            node.put("discussImages", token);
             //包含 tagId,tagName 的json数组，数量最多3个
 //            node.put("professionalEvaDetail", token);
+            //包含 fileName,fileUrl,size,extension 信息的json数组,最多3个
+            if (StringUtil.isNotBlank(discussImages)) {
+                node.put("postSmallImages", discussImages);
+            }
+            //包含 tagId,tagName 的json数组，
+            if(sonArray.length()!=0){
+                node.put("evaluationTags", sonArray);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -145,7 +385,7 @@ public class EvaluationSimplenessActivity extends BaseActivity {
                     int postId = object.getJSONObject("data").getInt("postId");
                     IntentUtil.startPublishSucceedActivity(String.valueOf(postId),
                             getString(R.string.evaluation_simpleness), getResources().getString(R.string.evaluation_succeed),
-                            getResources().getString(R.string.not_go_look) ,Constants.PublishSucceed.EVALUATION);
+                            getResources().getString(R.string.not_go_look), Constants.PublishSucceed.EVALUATION);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -156,5 +396,69 @@ public class EvaluationSimplenessActivity extends BaseActivity {
                 loadingDialog.dismiss();
             }
         });
+    }
+
+
+    public String getEdContent() {
+        return etEvaluationContent.getText().toString().trim();
+    }
+
+    @Override
+    public void onItemClick(View view, int postion) {
+        if(releasePicAdapter.getData().get(postion).equals("move")){
+            openChangeHeadDialog();
+        }
+        if(view.getId()==R.id.img_delect){
+            releasePicAdapter.removeIndex(postion);
+        }
+    }
+    private void openChangeHeadDialog() {
+        if (releasePicAdapter.getItemCount() > 9) {
+            ToastUtils.getInstance().show("最多选择九张图片");
+            return;
+        }
+        String[] srt = {"上传图片", "从手机相册中选择", "拍照上传"};
+        DialogUtils.ShowAlertDialog(this, srt, new DialogUtils.AlertDialogInterface() {
+            @Override
+            public void btnLineListener(int index) {
+                if (index == 1) {//从手机相册中选择
+                    localphoto();
+                } else if (index == 2) {//拍照上传
+                    takephoto();
+                }
+            }
+        });
+    }
+    private void localphoto() {
+        Intent intent = new Intent(this, SelectedPicActivity.class);
+        intent.putExtra("max_pic", 9);
+        intent.putExtra("current_pic", releasePicAdapter.getItemCount()-1);
+        startActivity(intent);
+    }
+    int REQUEST_CODE_CAMERA = 199;
+    String picPath;
+    private void takephoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        picPath = getExternalFilesDir(null).getAbsolutePath() + "/" + System.currentTimeMillis() + ".png";
+        Uri uri = Uri.fromFile(new File(picPath));
+        //为拍摄的图片指定一个存储的路径
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        startActivityForResult(intent, REQUEST_CODE_CAMERA);
+    }
+    // takephoto addlabel
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CAMERA && resultCode == RESULT_OK) {
+            File file = new File(picPath);
+            if (file.exists()) {
+                releasePicAdapter.addData(picPath);
+            }
+        }
+    }
+
+    @Override
+    public void onItemLongClick(View view, int postion) {
+
     }
 }

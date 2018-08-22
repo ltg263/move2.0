@@ -185,6 +185,7 @@ public class MyFansList extends BaseRes{
                 private int followId;
                 private Object followUserId;
                 private int followType;
+                private int followStatus;
                 private String followerUserName;
                 private int followedUserId;
                 private String followedUserSignature;
@@ -209,7 +210,7 @@ public class MyFansList extends BaseRes{
                 private Object createUserIcon;
                 private Object createUserSignature;
                 private Object createUserName;
-                private int totalScore;
+                private double totalScore;
                 private Object projectIcon;
                 private Object projectCode;
                 private Object projectEnglishName;
@@ -220,6 +221,14 @@ public class MyFansList extends BaseRes{
                 private int userId;
                 private String userSignature;
                 private String userIcon;
+
+                public int getFollowStatus() {
+                    return followStatus;
+                }
+
+                public void setFollowStatus(int followStatus) {
+                    this.followStatus = followStatus;
+                }
 
                 public int getFollowId() {
                     return followId;
@@ -437,11 +446,11 @@ public class MyFansList extends BaseRes{
                     this.createUserName = createUserName;
                 }
 
-                public int getTotalScore() {
+                public double getTotalScore() {
                     return totalScore;
                 }
 
-                public void setTotalScore(int totalScore) {
+                public void setTotalScore(double totalScore) {
                     this.totalScore = totalScore;
                 }
 

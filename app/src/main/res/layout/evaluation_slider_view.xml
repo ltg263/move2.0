@@ -22,6 +22,18 @@
             android:textStyle="" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawablePadding="@dimen/dp_5"
+            android:drawableRight="@drawable/ic_evaluation_no"
+            android:paddingHorizontal="@dimen/dp_8"
+            android:paddingVertical="@dimen/dp_3"
+            android:text="专业评测选精评"
+            android:textColor="@color/title_gray_aa"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
             android:id="@+id/tv_dimensionality_evaluate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +43,9 @@
             android:paddingHorizontal="@dimen/dp_8"
             android:paddingVertical="@dimen/dp_3"
             android:textColor="@color/title_gray"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/tv_dimensionality_compile"
             android:layout_width="wrap_content"
@@ -43,9 +57,9 @@
             android:paddingHorizontal="@dimen/dp_8"
             android:paddingVertical="@dimen/dp_3"
             android:text="编辑"
-            android:visibility="gone"
             android:textColor="@color/app_background"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -53,16 +67,19 @@
         android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="-3dp"
-        android:layout_below="@id/rl_state">
+        android:layout_below="@id/rl_state"
+        android:layout_marginBottom="-3dp">
 
         <TextView
             android:id="@+id/tv_evaluation_mun"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_35"
+            android:layout_height="@dimen/dp_35"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/xmdw"
-            android:textSize="25sp"
+            android:background="@drawable/btn_circle_app"
+            android:gravity="center"
+            android:text="9.0"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_18"
             android:textStyle="bold" />
 
         <View
@@ -71,6 +88,7 @@
             android:layout_height="@dimen/dp_line"
             android:layout_below="@+id/tv_evaluation_mun"
             android:layout_centerHorizontal="true"
+            android:visibility="gone"
             android:background="#aaaaaa" />
 
         <com.secretk.move.view.EvaluationItemView

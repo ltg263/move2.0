@@ -47,6 +47,29 @@
             android:visibility="gone" />
 
         <TextView
+            android:id="@+id/tv_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/dp_10"
+            android:drawableTop="@drawable/ic_share"
+            android:padding="@dimen/dp_20"
+            android:text="评论成功"
+            android:textColor="@color/app_background"
+            android:textSize="@dimen/sp_12"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/tv_comment_find"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/app_background"
+            android:layout_marginTop="-18dp"
+            android:layout_below="@id/tv_comment"
+            android:paddingBottom="@dimen/dp_10"
+            android:textSize="@dimen/sp_12"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/tv_copy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,18 +92,6 @@
             android:paddingBottom="@dimen/dp_10"
             android:textSize="@dimen/sp_12"
             android:visibility="gone" />
-        <TextView
-            android:id="@+id/tv_find"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/app_background"
-            android:layout_marginTop="-18dp"
-            android:layout_below="@id/tv_praise"
-            android:paddingBottom="@dimen/dp_10"
-            android:textSize="@dimen/sp_12"
-            android:visibility="gone" />
-
         <TextView
             android:id="@+id/tv_collect"
             android:layout_width="wrap_content"

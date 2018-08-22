@@ -152,10 +152,10 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
             ToastUtils.getInstance().show("请输入内容");
             return;
         }
-        if (getEdTitle().length() < 6) {
-            ToastUtils.getInstance().show("标题不能少于6个汉字");
-            return;
-        }
+//        if (getEdTitle().length() < 6) {
+//            ToastUtils.getInstance().show("标题不能少于6个汉字");
+//            return;
+//        }
         // tagId,tagName
         sonArray = new JSONArray();
         if(arrayTags!=null){
@@ -180,7 +180,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         loadingDialog.show();
         discussImages="";
         adapterImgList= releasePicAdapter.getData();
-        if (adapterImgList!=null&&adapterImgList.size()!=0){
+        if (adapterImgList!=null && adapterImgList.size()!=0 && adapterImgList.size()>1){
             qiToken = "";
             upImgHttp(adapterImgList.get(0),0);
         }else{
@@ -337,8 +337,17 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
     String qiToken = "";
     String userId = "";
     public void upImgHttp(String path, final int position) {
+        if(path.equals("move")){
+            try {
+                generatePostSmallImages(serverImgList);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return;
+        }
         final File file = new File(path);
         if (!file.exists()) {
+            ToastUtils.getInstance().show("图片不存在,请重新上传");
             return;
         }
         if (TextUtils.isEmpty(token)) {
@@ -415,10 +424,10 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
             jsonObject.put("size", "");
             jsonObject.put("extension", "");
             array.put(jsonObject);
-            if (i == list.size() - 1) {
+            if(array.length()>0){
                 discussImages = array.toString();
-                httpRelease();
             }
+            httpRelease();
         }
 
     }

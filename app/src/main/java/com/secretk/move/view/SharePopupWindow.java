@@ -399,9 +399,12 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
             @Override
             public void onCompleted(String str) {
                 try {
-                    JSONObject object = new JSONObject().getJSONObject("data");
+                    JSONObject object = new JSONObject(str).getJSONObject("data");
                     boolean isShare = object.getBoolean("isShareAward");
-                    double amount = object.getInt("amount");
+                    double amount = 0;
+                    if(isShare){
+                        amount = object.getDouble("amount");
+                    }
                     DialogUtils.showDialogPraise(mContext,5,isShare,amount);
                 } catch (JSONException e) {
                     e.printStackTrace();

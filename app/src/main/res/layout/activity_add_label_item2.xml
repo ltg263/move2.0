@@ -11,7 +11,9 @@
     <TextView
         android:id="@+id/tv_project_code"
         style="@style/TvProjectCode"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:drawablePadding="@dimen/dp_5"
+        android:drawableRight="@drawable/ic_to_right_mix" />
 
     <TextView
         android:id="@+id/tv_crack_down"

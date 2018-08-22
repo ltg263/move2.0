@@ -528,7 +528,7 @@ public class DialogUtils {
     /**
      * @param context
      * @param type:1 点赞  2 收藏 3复制 4举报
-     *            5 分享
+     *            5 分享 6评论
      * 点赞框
      */
     public static void showDialogPraise(Context context,int type,boolean isCollect,double find) {
@@ -541,6 +541,8 @@ public class DialogUtils {
         TextView tv_collect = view.findViewById(R.id.tv_collect);
         TextView tv_copy = view.findViewById(R.id.tv_copy);
         TextView tv_report = view.findViewById(R.id.tv_report);
+        TextView tv_comment = view.findViewById(R.id.tv_comment);
+        TextView tv_comment_find = view.findViewById(R.id.tv_comment_find);
         if (type==1){
             tv_praise.setVisibility(View.VISIBLE);
             if(find!=0){
@@ -566,25 +568,35 @@ public class DialogUtils {
             tv_report.setVisibility(View.VISIBLE);
         }else if(type==5){
             tv_share.setVisibility(View.VISIBLE);
-                    if(isCollect && find!=0){
-                        tv_share_find.setVisibility(View.VISIBLE);
-                        if(find == (int)find){
-                            tv_share_find.setText("+"+(int)find+"FIND");
-                        }else{
-                            tv_share_find.setText("+"+find+"FIND");
-                        }
-                    }
+            if(isCollect && find!=0){
+                tv_share_find.setVisibility(View.VISIBLE);
+                if(find == (int)find){
+                    tv_share_find.setText("+"+(int)find+"FIND");
+                }else{
+                    tv_share_find.setText("+"+find+"FIND");
                 }
-                dialog5.setCancelable(false);
-                dialog5.setContentView(view);
-                dialog5.show();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(1000);
-                            dialog5.dismiss();
-                        } catch (InterruptedException e) {
+            }
+        }else if(type ==6){
+            tv_comment.setVisibility(View.VISIBLE);
+            if(isCollect && find!=0){
+                tv_comment_find.setVisibility(View.VISIBLE);
+                if(find == (int)find){
+                    tv_comment_find.setText("+"+(int)find+"FIND");
+                }else{
+                    tv_comment_find.setText("+"+find+"FIND");
+                }
+            }
+        }
+        dialog5.setCancelable(false);
+        dialog5.setContentView(view);
+        dialog5.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                    dialog5.dismiss();
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }

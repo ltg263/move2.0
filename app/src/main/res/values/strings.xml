@@ -136,7 +136,7 @@
     <string name="bill">账单</string>
     <string name="find_num">FIND总数 (个)</string>
     <string name="usable_num">可用数量 (FIND)</string>
-    <string name="lock">锁定</string>
+    <string name="lock">锁仓</string>
     <string name="record">记录</string>
     <string name="unlock_the">解锁中</string>
     <string name="send">发放中</string>
