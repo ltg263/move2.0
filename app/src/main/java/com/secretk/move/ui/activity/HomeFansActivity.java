@@ -132,9 +132,13 @@ public class HomeFansActivity extends BaseActivity {
             node.put("token", token);
             node.put("userId", userId);
             node.put("projectId", projectId);
-            node.put("followType", 3);//关注类型：3-关注用户
+            if (userId!=0){
+                node.put("followType", 3);//关注类型：1-关注项目;2-关注帖子；3-关注用户',
+            }else{
+                node.put("followType", 1);
+            }
             node.put("pageIndex", pageIndex++);//帖子ID
-            node.put("pageSize", Constants.PAGE_SIZE);//帖子ID
+            node.put("pageSize", 20);//帖子ID
         } catch (JSONException e) {
             e.printStackTrace();
         }

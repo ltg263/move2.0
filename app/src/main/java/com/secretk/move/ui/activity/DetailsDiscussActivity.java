@@ -441,11 +441,18 @@ public class DetailsDiscussActivity extends BaseActivity {
 
             @Override
             public void onCompleted(String str) {
-//                ToastUtils.getInstance().show("评论成功");
-                    etContent.setText("");
-//                rcv.fullScroll(ScrollView.FOCUS_UP);
-//                initDataList();
-
+                try {
+                    JSONObject object = new JSONObject(str).getJSONObject("data");
+                    boolean isShare = object.getBoolean("isCommentAward");
+                    double amount = 0;
+                    if(isShare){
+                        amount = object.getDouble("amount");
+                    }
+                    DialogUtils.showDialogPraise(DetailsDiscussActivity.this,6,isShare,amount);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                etContent.setText("");
                 initNewsDataList();
             }
         });

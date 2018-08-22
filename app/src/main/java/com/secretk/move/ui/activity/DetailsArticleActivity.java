@@ -495,10 +495,20 @@ public class DetailsArticleActivity extends BaseActivity {
             @Override
             public void onCompleted(String str) {
 //                ToastUtils.getInstance().show("评论成功");
+//                {"status":null,"msg":"Success","code":0,"reason":null,"fromuri":null,"token":null,"data":
+// {"amount":2.0,"commentId":1576,"isCommentAward":true},"serverDatetime":1534909717191}
+                try {
+                    JSONObject object = new JSONObject(str).getJSONObject("data");
+                    boolean isShare = object.getBoolean("isCommentAward");
+                    double amount = 0;
+                    if(isShare){
+                        amount = object.getDouble("amount");
+                    }
+                    DialogUtils.showDialogPraise(DetailsArticleActivity.this,6,isShare,amount);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 etContent.setText("");
-//                rcv.fullScroll(ScrollView.FOCUS_UP);
-//                initDataList();
-
                 initNewsDataList();
             }
         });

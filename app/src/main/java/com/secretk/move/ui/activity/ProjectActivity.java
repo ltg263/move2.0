@@ -352,6 +352,7 @@ public class ProjectActivity extends BaseActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+
             }
         });
         /**
