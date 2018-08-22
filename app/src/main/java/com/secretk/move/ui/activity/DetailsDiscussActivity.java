@@ -133,6 +133,10 @@ public class DetailsDiscussActivity extends BaseActivity {
     TextView tvDonateNum;
     @BindView(R.id.tv_pl_num)
     TextView tvPlNum;
+    @BindView(R.id.tv_sort_new)
+    TextView tvSortNew;
+    @BindView(R.id.tv_sort_time)
+    TextView tvSortTime;
     @BindView(R.id.iv_pl)
     ImageView ivPl;
     @BindView(R.id.rl_pl)
@@ -236,7 +240,8 @@ public class DetailsDiscussActivity extends BaseActivity {
     }
 
     @OnClick({R.id.tv_follow_status, R.id.iv_post_small_images, R.id.tv_send, R.id.rl_ge_ren,
-            R.id.tv_commendation_Num, R.id.rl_sc, R.id.rl_dz,R.id.rl_pl,R.id.tv_content})
+            R.id.tv_commendation_Num, R.id.rl_sc, R.id.rl_dz,R.id.rl_pl,R.id.tv_content,
+             R.id.tv_sort_new,R.id.tv_sort_time})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_follow_status:
@@ -352,6 +357,22 @@ public class DetailsDiscussActivity extends BaseActivity {
             case R.id.tv_content:
                 KeybordS.openKeybord(etContent,this);
                 break;
+            case R.id.tv_sort_new:
+                if(!isSortField){
+                    pageIndex=1;
+                    isSortField = true;
+                    refreshLayout.setNoMoreData(false);
+                    initNewsDataList();
+                }
+                break;
+            case R.id.tv_sort_time:
+                if(isSortField){
+                    pageIndex=1;
+                    isSortField = false;
+                    refreshLayout.setNoMoreData(false);
+                    initNewsDataList();
+                }
+                break;
         }
     }
     private void initRefresh() {
@@ -361,13 +382,13 @@ public class DetailsDiscussActivity extends BaseActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                pageIndex = 1;
                 if (!NetUtil.isNetworkAvailable()) {
                     ToastUtils.getInstance().show(getString(R.string.network_error));
                     return;
                 }
                 initDataList();
-
+                pageIndex = 1;
+                isSortField = false;
                 initNewsDataList();
             }
         });
@@ -647,17 +668,24 @@ public class DetailsDiscussActivity extends BaseActivity {
             lists.add(String.valueOf(pileLists.get(i).getSendUserId()));
         }
     }
-
+    boolean isSortField = false;
     /**
      * 评论最新
      */
     public void initNewsDataList() {
+        tvSortNew.setTextColor(getResources().getColor(R.color.title_gray_66));
+        tvSortTime.setTextColor(getResources().getColor(R.color.app_background));
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
             node.put("postId", Integer.valueOf(postId));//帖子ID
             node.put("pageIndex", pageIndex++);
             node.put("pageSize", Constants.PAGE_SIZE);
+            if (isSortField) {
+                tvSortNew.setTextColor(getResources().getColor(R.color.app_background));
+                tvSortTime.setTextColor(getResources().getColor(R.color.title_gray_66));
+                node.put("sortField", "praise_num");//需要按点赞数倒序排序的话 增加传入参数ortField 值为字符串“praise_num”
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
