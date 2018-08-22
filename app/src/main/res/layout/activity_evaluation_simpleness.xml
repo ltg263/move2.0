@@ -138,7 +138,8 @@
                     android:id="@+id/recycler_pic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10" />
+                    android:layout_marginHorizontal="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_5" />
             </LinearLayout>
 
 
@@ -149,6 +150,7 @@
         android:id="@+id/view_top"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_line"
+        android:layout_marginTop="@dimen/dp_5"
         android:layout_above="@id/rg_bottom"
         android:background="@color/cut_off_rule" />
 
