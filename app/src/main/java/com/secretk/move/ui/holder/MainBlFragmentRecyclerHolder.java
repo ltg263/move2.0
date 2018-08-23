@@ -70,6 +70,8 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     RelativeLayout rlContext;
     @BindView(R.id.tv_project_code)
     TextView tvProjectCode;
+    @BindView(R.id.tv_sore)
+    TextView tvSore;
     @BindView(R.id.tv_total_income)
     TextView tvTotalIncome;
     @BindView(R.id.tv_crack_down)
@@ -246,6 +248,15 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 });
             }
         });
+
+        if(bean.getPostType()==1){
+            tvTitle.setVisibility(View.GONE);
+            tvProjectCode.setVisibility(View.GONE);
+            tvProjectFolly.setVisibility(View.GONE);
+            ivPupo.setVisibility(View.GONE);
+            tvSore.setText(bean.getTotalScore()+"分");
+            tvSore.setVisibility(View.VISIBLE);
+        }
     }
 
     ArrayList<PostDataInfo> imageLists;

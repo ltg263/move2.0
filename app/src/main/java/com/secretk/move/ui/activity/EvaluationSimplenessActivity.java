@@ -19,6 +19,7 @@ import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
+import com.secretk.move.base.TagsAndTagtbean;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.bean.MenuInfo;
@@ -485,21 +486,30 @@ public class EvaluationSimplenessActivity extends BaseActivity{
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
+            node.put("typeId", 1);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.RELEASE_DISCUSS_LIST)
+                .url(Constants.GET_TAGS_AND_TAG_TYPE)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, DiscussLabelListbean.class, new HttpCallBackImpl<DiscussLabelListbean>() {
+        RetrofitUtil.request(params, TagsAndTagtbean.class, new HttpCallBackImpl<TagsAndTagtbean>() {
             @Override
-            public void onCompleted(DiscussLabelListbean bean) {
-                int code = bean.getCode();
-                List<DiscussLabelListbean.TagList> lists = bean.getData().getTagList();
-                if (code == 0) {
-                    addLabelAdapter.setData(lists);
+            public void onCompleted(TagsAndTagtbean bean) {
+                List<TagsAndTagtbean.DataBean.ResultBean> lists = bean.getData().getResult();
+                if(lists!=null){
+                    List<TagsAndTagtbean.DataBean.ResultBean.DtagsListBean> listBeans = lists.get(0).getDtagsList();
+                    List<DiscussLabelListbean.TagList> tagList = new ArrayList<>();
+                    for(int i=0;i<listBeans.size();i++){
+                        TagsAndTagtbean.DataBean.ResultBean.DtagsListBean b = listBeans.get(i);
+                        DiscussLabelListbean.TagList tag = new DiscussLabelListbean.TagList();
+                        tag.setTagName(b.getTagName());
+                        tag.setTagId(String.valueOf(b.getTagId()));
+                        tagList.add(tag);
+                    }
+                    addLabelAdapter.setData(tagList);
                 }
             }
         });

@@ -9,6 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
@@ -19,7 +23,7 @@ import com.secretk.move.bean.CommonListBase;
 import com.secretk.move.bean.DetailsUserGradeBean;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.adapter.ProjectHotDiscussAdapter;
+import com.secretk.move.ui.adapter.MainBlFragmentRecyclerAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
@@ -80,15 +84,16 @@ public class DetailsUserGradeActivity extends BaseActivity implements ItemClickL
     LinearLayout llHotDiscuss;
     @BindView(R.id.tv_write_discuss)
     TextView tvWriteDiscuss;
-    ProjectHotDiscussAdapter hotDiscussAdapter;
-    private DetailsUserGradeBean.DataBean.ProjectBean projectInfo;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
+    MainBlFragmentRecyclerAdapter hotDiscussAdapter;
     private Intent intent;
     private int id;
     String code = "";
     String chineseName = "";
     String icon = "";
     @Override
-    protected int setOnCreate() {
+    protected int setOnCreate(){
         return R.layout.activity_details_user_grade;
     }
 
@@ -105,6 +110,7 @@ public class DetailsUserGradeActivity extends BaseActivity implements ItemClickL
     @Override
     protected void initUI(Bundle savedInstanceState) {
 //        {"id","code","chineseName","icon"};
+        initRefresh();
         intent = getIntent();
         if(intent!=null){
             id = Integer.valueOf(intent.getStringExtra("id"));
@@ -113,7 +119,7 @@ public class DetailsUserGradeActivity extends BaseActivity implements ItemClickL
             icon = intent.getStringExtra("icon");
         }
         setVerticalManager(rvHotDiscuss);
-        hotDiscussAdapter=new ProjectHotDiscussAdapter(this);
+        hotDiscussAdapter=new MainBlFragmentRecyclerAdapter(this);
         rvHotDiscuss.setAdapter(hotDiscussAdapter);
         tvWriteDiscuss.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +128,28 @@ public class DetailsUserGradeActivity extends BaseActivity implements ItemClickL
                     IntentUtil.startProjectSimplenessActivity(id,icon,
                             chineseName,code);
                 }
+            }
+        });
+    }
+
+    private void initRefresh() {
+        /**
+         * 下拉刷新
+         */
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+                pageIndex = 1;
+                initData();
+            }
+        });
+        /**
+         * 上啦加载
+         */
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshLayout) {
+                simpleEvaluationList();
             }
         });
     }
@@ -160,7 +188,7 @@ public class DetailsUserGradeActivity extends BaseActivity implements ItemClickL
             node.put("token", token);
             node.put("projectId", id);
             node.put("pageIndex", pageIndex++);
-            node.put("pageSize", 50);
+            node.put("pageSize", 20);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -173,28 +201,40 @@ public class DetailsUserGradeActivity extends BaseActivity implements ItemClickL
             @Override
             public void onCompleted(CommonListBase bean) {
                 CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getEvaluations();
-//                if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
-//                    isHaveData=false;
-//                }
+
                 if(detailsBean==null){
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                     return;
                 }
-                if(detailsBean.getRows()==null ||detailsBean.getRows().size()==0){
+                if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                }
+                if (detailsBean.getRows() == null || detailsBean.getRows().size() == 0) {
+                    findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+                    refreshLayout.setVisibility(View.GONE);
                     return;
                 }
 
                 llHotDiscuss.setVisibility(View.VISIBLE);
-                tvNotDiscuss.setText("热们评论("+detailsBean.getRows().size()+")");
-                hotDiscussAdapter.setData(detailsBean.getRows());
-                if(pageIndex>2){
-                }else {
-
+                tvNotDiscuss.setText("热们评论("+detailsBean.getRowCount()+")");
+                if (pageIndex > 2) {
+                    hotDiscussAdapter.setAddData(detailsBean.getRows());
+                } else {
+                    hotDiscussAdapter.setData(detailsBean.getRows());
                 }
             }
 
             @Override
             public void onFinish() {
-                loadingDialog.dismiss();
+                if (refreshLayout.isEnableRefresh()) {
+                    refreshLayout.finishRefresh();
+                }
+                if (refreshLayout.isEnableLoadMore()) {
+                    refreshLayout.finishLoadMore();
+                }
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
             }
         });
     }

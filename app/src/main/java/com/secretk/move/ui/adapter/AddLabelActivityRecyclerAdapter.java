@@ -1,20 +1,15 @@
 package com.secretk.move.ui.adapter;
 
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
-
 import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.activity.AddLabelActivity;
-import com.secretk.move.ui.holder.MessageFragmentRecyclerHolder;
 import com.secretk.move.utils.UiUtils;
 
 import java.util.ArrayList;
@@ -50,7 +45,7 @@ public class AddLabelActivityRecyclerAdapter extends RecyclerView.Adapter<AddLab
         if (bean.getSelected()){
             holder.tvlabel.setTextColor(UiUtils.getColor(R.color.app_background));
         }else {
-            holder.tvlabel.setTextColor(Color.parseColor("#333333"));
+            holder.tvlabel.setTextColor(UiUtils.getColor(R.color.title_gray_66));
         }
 
     }
