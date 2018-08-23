@@ -119,7 +119,7 @@ public class AddLabelActivity extends BaseActivity implements ItemClickListener 
                     return;
                 }
                 bean.setSelected(true);
-                array.put( Integer.parseInt(bean.getTagId()),bean);
+                array.put(Integer.parseInt(bean.getTagId()),bean);
             }
             if (array.size()>3){
               ToastUtils.getInstance().show("最多选三个");

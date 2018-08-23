@@ -77,7 +77,6 @@
                     android:background="@null"
                     android:gravity="top"
                     android:hint="又发生大事情了，来爆料吧！"
-                    android:lineSpacingExtra="@dimen/item_line_spacing"
                     android:maxLength="300"
                     android:minLines="4"
                     android:padding="@dimen/dp_10"

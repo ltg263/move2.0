@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.SparseArray;
@@ -24,7 +23,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.adapter.ReleaseArticleLabelAdapter;
+import com.secretk.move.ui.adapter.EvaluationSimplenessLabelAdapter;
 import com.secretk.move.ui.adapter.ReleasePicAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
@@ -55,7 +54,7 @@ import butterknife.OnClick;
  * 邮箱；ltg263@126.com
  * 描述：简单测评
  */
-public class EvaluationSimplenessActivity extends BaseActivity implements ItemClickListener {
+public class EvaluationSimplenessActivity extends BaseActivity{
 
     @BindView(R.id.es_viewa)
     EvaluationSliderView esViewa;
@@ -68,7 +67,9 @@ public class EvaluationSimplenessActivity extends BaseActivity implements ItemCl
     TextView tv1;
     @BindView(R.id.tv_2)
     TextView tv2;
-    ReleaseArticleLabelAdapter releaseArticleLabelAdapter;
+    @BindView(R.id.tv_project_code)
+    TextView tvProjectCode;
+    EvaluationSimplenessLabelAdapter addLabelAdapter;
     ReleasePicAdapter releasePicAdapter;
     @BindView(R.id.recycler_horizontal)
     RecyclerView recyclerHorizontal;
@@ -95,6 +96,9 @@ public class EvaluationSimplenessActivity extends BaseActivity implements ItemCl
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+
+        tvProjectCode.setText(getIntent().getStringExtra("projectPay"));
+        projectId = getIntent().getStringExtra("projectId");
         StringUtil.etSearchChangedListener(etEvaluationContent, null, new StringUtil.EtChange() {
             @Override
             public void etYes() {
@@ -120,20 +124,47 @@ public class EvaluationSimplenessActivity extends BaseActivity implements ItemCl
                 startActivity(intent);
             }
         });
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recyclerHorizontal.setLayoutManager(layoutManager);
-        releaseArticleLabelAdapter = new ReleaseArticleLabelAdapter();
-        recyclerHorizontal.setAdapter(releaseArticleLabelAdapter);
+        tvProjectCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EvaluationSimplenessActivity.this, SelectProjectActivity.class);
+                intent.putExtra("publication_type",4);
+                startActivity(intent);
+            }
+        });
+        recyclerHorizontal.setLayoutManager(new GridLayoutManager(this, 4));
+        addLabelAdapter = new EvaluationSimplenessLabelAdapter();
+        recyclerHorizontal.setAdapter(addLabelAdapter);
+        addLabelAdapter.setItemListener(new ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int postion) {
+                selectLable(postion);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int postion) {}
+        });
 
         recyclerPic.setLayoutManager(new GridLayoutManager(this, 3));
         releasePicAdapter = new ReleasePicAdapter();
         recyclerPic.setAdapter(releasePicAdapter);
-        releasePicAdapter.setItemListener(this);
+        releasePicAdapter.setItemListener(new ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int postion) {
+                if(releasePicAdapter.getData().get(postion).equals("move")){
+                    openChangeHeadDialog();
+                }
+                if(view.getId()==R.id.img_delect){
+                    releasePicAdapter.removeIndex(postion);
+                }
+            }
+
+            @Override
+            public void onItemLongClick(View view, int postion) {}
+        });
         releasePicAdapter.addData("move");
 
         mHeadView.setTitle(getIntent().getStringExtra("projectPay") + "-" + getString(R.string.evaluation_simpleness));
-        projectId = getIntent().getStringExtra("projectId");
         esViewa.setScore(8.0f);
         esViewa.setEsvBackground(R.color.app_background);
         tvEvaluationState.setText(StringUtil.getStateValueStr(8.0f));
@@ -146,6 +177,7 @@ public class EvaluationSimplenessActivity extends BaseActivity implements ItemCl
     @Override
     protected void initData() {
         MoveApplication.getContext().addActivity(this);
+        initTagList();
     }
 
     @Override
@@ -167,30 +199,14 @@ public class EvaluationSimplenessActivity extends BaseActivity implements ItemCl
     @Override
     protected void onResume() {
         super.onResume();
-        if (AddLabelActivity.array != null) {
-            if(arrayTags!=null){
-                arrayTags.clear();
-            }
-            beans = new DiscussLabelListbean.TagList();
-            beans.setTagId(String.valueOf(projectId));
-            beans.setTagName(getIntent().getStringExtra("projectPay"));
-            arrayTags.put(-1,beans);
-            for (int i = 0; i < AddLabelActivity.array.size(); i++) {
-                DiscussLabelListbean.TagList bean = AddLabelActivity.array.get(AddLabelActivity.array.keyAt(i));
-                arrayTags.put(AddLabelActivity.array.keyAt(i),bean);
-            }
-            AddLabelActivity.array = null;
-        }
-        releaseArticleLabelAdapter.setData(arrayTags);
-
         if (SelectedPicActivity.picArray != null) {
             releasePicAdapter.addSparseData(SelectedPicActivity.picArray);
             SelectedPicActivity.picArray=null;
         }
-
         if(SelectProjectActivity.staticProjectId!=0){
             projectId = String.valueOf(SelectProjectActivity.staticProjectId);
-            releaseArticleLabelAdapter.amendCode(Integer.valueOf(projectId),SelectProjectActivity.staticProjectCode);
+            tvProjectCode.setText(SelectProjectActivity.staticProjectCode);
+            SelectProjectActivity.staticProjectCode="";
             SelectProjectActivity.staticProjectId=0;
         }
     }
@@ -223,15 +239,14 @@ public class EvaluationSimplenessActivity extends BaseActivity implements ItemCl
                 try {
                     object.put("tagId",aa.getTagId());
                     object.put("tagName",aa.getTagName());
-                    if(i!=0){
-                        sonArray.put(object);
-                    }
+                    sonArray.put(object);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         }
 
+        loadingDialog.show();
         discussImages="";
         adapterImgList= releasePicAdapter.getData();
         if (adapterImgList!=null&&adapterImgList.size()!=0 && adapterImgList.size()>1){
@@ -255,10 +270,13 @@ public class EvaluationSimplenessActivity extends BaseActivity implements ItemCl
         }
         final File file = new File(path);
         if (!file.exists()) {
+            ToastUtils.getInstance().show("图片不存在");
+            loadingDialog.dismiss();
             return;
         }
         if (TextUtils.isEmpty(token)) {
             ToastUtils.getInstance().show("请先登录账号");
+            loadingDialog.dismiss();
             return;
         }
         LogUtil.w("当前文件大小："+ PicUtil.getPrintSize(file.length()));
@@ -325,7 +343,6 @@ public class EvaluationSimplenessActivity extends BaseActivity implements ItemCl
         for (int i = 0; i < list.size(); i++) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("fileName", "");
-
             String str = list.get(i);
             jsonObject.put("fileUrl", str);
             jsonObject.put("size", "");
@@ -370,7 +387,6 @@ public class EvaluationSimplenessActivity extends BaseActivity implements ItemCl
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        loadingDialog.show();
         RxHttpParams params = new RxHttpParams.Build()
                 .url(Constants.SAVE_EVALUATION)
                 .method(RxHttpParams.HttpMethod.POST)
@@ -403,15 +419,23 @@ public class EvaluationSimplenessActivity extends BaseActivity implements ItemCl
         return etEvaluationContent.getText().toString().trim();
     }
 
-    @Override
-    public void onItemClick(View view, int postion) {
-        if(releasePicAdapter.getData().get(postion).equals("move")){
-            openChangeHeadDialog();
+
+    private void selectLable(int postion) {
+        DiscussLabelListbean.TagList bean = addLabelAdapter.getDataIndex(postion);
+        if (bean.getSelected()) {
+            bean.setSelected(false);
+            arrayTags.remove(Integer.parseInt(bean.getTagId()));
+        } else {
+            if(arrayTags.size()==3){
+                ToastUtils.getInstance().show("最多选三个");
+                return;
+            }
+            bean.setSelected(true);
+            arrayTags.put(Integer.parseInt(bean.getTagId()),bean);
         }
-        if(view.getId()==R.id.img_delect){
-            releasePicAdapter.removeIndex(postion);
-        }
+        addLabelAdapter.notifyDataSetChanged();
     }
+
     private void openChangeHeadDialog() {
         if (releasePicAdapter.getItemCount() > 9) {
             ToastUtils.getInstance().show("最多选择九张图片");
@@ -457,8 +481,27 @@ public class EvaluationSimplenessActivity extends BaseActivity implements ItemCl
         }
     }
 
-    @Override
-    public void onItemLongClick(View view, int postion) {
-
+    public void initTagList() {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.RELEASE_DISCUSS_LIST)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, DiscussLabelListbean.class, new HttpCallBackImpl<DiscussLabelListbean>() {
+            @Override
+            public void onCompleted(DiscussLabelListbean bean) {
+                int code = bean.getCode();
+                List<DiscussLabelListbean.TagList> lists = bean.getData().getTagList();
+                if (code == 0) {
+                    addLabelAdapter.setData(lists);
+                }
+            }
+        });
     }
 }
