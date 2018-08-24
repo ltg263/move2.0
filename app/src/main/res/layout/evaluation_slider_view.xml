@@ -22,6 +22,7 @@
             android:textStyle="" />
 
         <TextView
+            android:id="@+id/tv_xsjl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

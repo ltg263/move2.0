@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.secretk.move.R;
 import com.secretk.move.ui.activity.EvaluationCompileListActivity;
 import com.secretk.move.ui.activity.EvaluationSimplenessActivity;
+import com.secretk.move.ui.activity.EvaluationWriteNewSimpActivity;
 import com.secretk.move.utils.StringUtil;
 
 /**
@@ -33,6 +34,8 @@ public class EvaluationSliderView extends FrameLayout {
     private View esv;
     private TextView tvDimensionalityEvaluate;
     Context context;
+    private TextView tv_xsjl;
+
     public EvaluationSliderView(Context context) {
         super(context);
         initView(context, null);
@@ -56,6 +59,7 @@ public class EvaluationSliderView extends FrameLayout {
         rlState = esv.findViewById(R.id.rl_state);
         tvEvaluationMun = esv.findViewById(R.id.tv_evaluation_mun);
         esView = esv.findViewById(R.id.es_view);
+        tv_xsjl = esv.findViewById(R.id.tv_xsjl);
         rl = esv.findViewById(R.id.rl);
         setScore(8);
         setEsvBackground(R.color.app_background);
@@ -81,8 +85,8 @@ public class EvaluationSliderView extends FrameLayout {
             ((EvaluationCompileListActivity) activity).setComprehensiveGrade(getTvDimensionalityName(),value);
         }else if(activity instanceof EvaluationSimplenessActivity){
             ((EvaluationSimplenessActivity) activity).setTvEvaluationState(StringUtil.getStateValueStr(value));
-        }else{
-
+        }else if(activity instanceof EvaluationWriteNewSimpActivity){
+            ((EvaluationWriteNewSimpActivity) activity).setTvEvaluationState(StringUtil.getStateValueStr(value));
         }
     }
 
@@ -107,6 +111,9 @@ public class EvaluationSliderView extends FrameLayout {
         setEvaluate(StringUtil.getStateValueStr(score));
     }
 
+    public TextView getTv_xsjl(){
+        return tv_xsjl;
+    }
     /**
      * 设置改变的颜色
      * @param color

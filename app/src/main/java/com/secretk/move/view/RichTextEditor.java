@@ -18,6 +18,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.ui.activity.EvaluationWriteNewSimpActivity;
+import com.secretk.move.ui.activity.ReleaseArticleActivity;
 import com.secretk.move.utils.BaseUtils;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.StringUtil;
@@ -113,6 +115,10 @@ public class RichTextEditor extends ScrollView {
         firstEdit = createEditText("请发表您对当前项目的看法，字数少于10000。", dip2px(context, EDIT_PADDING));
         allLayout.addView(firstEdit, firstEditParam);
         lastFocusEdit = firstEdit;
+    }
+
+    public EditText getLastFocusEdit() {
+        return lastFocusEdit;
     }
 
     /**
@@ -212,6 +218,28 @@ public class RichTextEditor extends ScrollView {
         int lastEditIndex = allLayout.getChildCount();
         return lastEditIndex;
     }
+
+    public StringUtil.EtChange inputLinent = new StringUtil.EtChange() {
+        @Override
+        public void etYes() {
+            if(context instanceof EvaluationWriteNewSimpActivity){
+                ((EvaluationWriteNewSimpActivity)context).setTextViewNum();
+            }
+            if(context instanceof ReleaseArticleActivity){
+                ((ReleaseArticleActivity)context).setTextViewNum();
+            }
+
+        }
+        @Override
+        public void etNo() {
+            if(context instanceof EvaluationWriteNewSimpActivity){
+                ((EvaluationWriteNewSimpActivity)context).setTextViewNum();
+            }
+            if(context instanceof ReleaseArticleActivity){
+                ((ReleaseArticleActivity)context).setTextViewNum();
+            }
+        }
+    };
     /**
      * 生成文本输入框
      */
@@ -223,6 +251,7 @@ public class RichTextEditor extends ScrollView {
         editText.setHint(hint);
         editText.setOnFocusChangeListener(focusListener);
         editText.setLineSpacing(BaseUtils.getInstance().dip2px(6), 1);
+        StringUtil.etSearchChangedListener(editText, null,inputLinent);
         try //修改光标的颜色（反射）
         {
             Field f = TextView.class.getDeclaredField("mCursorDrawableRes");
@@ -413,15 +442,29 @@ public class RichTextEditor extends ScrollView {
      */
     public static boolean isBlankEdLeng(List<RichTextEditor.EditData> editList) {
         if (editList.size() > 0) {
+            int length = 0;
             for (RichTextEditor.EditData itemData : editList) {
                 if (StringUtil.isNotBlank(replaceBlank(itemData.inputStr))) {
-                    if(replaceBlank(itemData.inputStr).length()>10){
-                        return false;
-                    }
+                    length += replaceBlank(itemData.inputStr).length();
                 }
+            }
+            if(length>100){
+                return false;
             }
         }
         return true;
+    }
+    /**
+     * 生成控件中的数据
+     */
+    public static int getBlankEdLeng(List<RichTextEditor.EditData> editList) {
+        int length = 0;
+        if (editList.size() > 0) {
+            for (RichTextEditor.EditData itemData : editList) {
+                 length += replaceBlank(itemData.inputStr).length();
+            }
+        }
+        return length;
     }
     public static String replaceBlank(String str) {
         String dest = "";

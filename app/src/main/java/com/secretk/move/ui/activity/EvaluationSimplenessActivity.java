@@ -168,7 +168,7 @@ public class EvaluationSimplenessActivity extends BaseActivity{
         mHeadView.setTitle(getIntent().getStringExtra("projectPay") + "-" + getString(R.string.evaluation_simpleness));
         esViewa.setScore(8.0f);
         esViewa.setEsvBackground(R.color.app_background);
-        tvEvaluationState.setText(StringUtil.getStateValueStr(8.0f));
+        tvEvaluationState.setText(StringUtil.getStateValueStr(Constants.DEFAULT_SCORE));
     }
 
     public void setTvEvaluationState(String value) {

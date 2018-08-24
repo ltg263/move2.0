@@ -6,12 +6,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.util.LongSparseArray;
 import android.util.SparseArray;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
@@ -38,6 +37,7 @@ import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.EvaluationSliderView;
 import com.secretk.move.view.ProgressBarStyleView;
 import com.secretk.move.view.RichTextEditor;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,11 +57,12 @@ import butterknife.OnClick;
  * 描述：写评测  专业
  */
 public class EvaluationWriteNewSimpActivity extends BaseActivity implements ItemClickListener {
-    InputMethodManager imm;
     @BindView(R.id.es_viewa)
     EvaluationSliderView esViewa;
     private List<String> picList;
     //    ReleasePicAdapter releasePicAdapter;
+    @BindView(R.id.tv_evaluation_state)
+    TextView tvEvaluationState;
     @BindView(R.id.rv_evaluation_tags)
     RecyclerView rvEvaluationTags;
     @BindView(R.id.pb_project_location)
@@ -72,6 +73,12 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
     RichTextEditor etNewContent;
     @BindView(R.id.ed_title)
     EditText edTitle;
+    @BindView(R.id.tv_1)
+    TextView tv1;
+    @BindView(R.id.tv_2)
+    TextView tv2;
+    @BindView(R.id.tv_num)
+    TextView tvNum;
 
     String modelPbTitle;
 
@@ -91,7 +98,7 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitleColor(R.color.title_gray);
         mHeadView.setTitle(getString(R.string.evaluation_write));
-        mMenuInfos.add(0, new MenuInfo(R.string.evaluation_issue, getString(R.string.evaluation_issue), 0));
+//        mMenuInfos.add(0, new MenuInfo(R.string.evaluation_issue, getString(R.string.evaluation_issue), 0));
         return mHeadView;
     }
 
@@ -104,53 +111,45 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
     protected void initUI(Bundle savedInstanceState) {
         MoveApplication.getContext().addActivity(this);
         modelPbTitle = getResources().getString(R.string.comprehensive_evaluation);
-        imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
         picList = new ArrayList<>();
-        edTitle.setHint(Html.fromHtml("请输入标题 <small>(6-60字之间)</small>"));
-        etNewContent.setHintText("请发表您对当前项目的看法，字数少于10000");
+//        edTitle.setHint(Html.fromHtml("请输入标题 <small>(6-60字之间)</small>"));
+        etNewContent.setHintText("请写下您对项目的深度解读，做个分析师！");
 //        releasePicAdapter = new ReleasePicAdapter();
 //        rvPostSmallImages.setLayoutManager(new GridLayoutManager(this, 3));
 //        rvPostSmallImages.setAdapter(releasePicAdapter);
 //        releasePicAdapter.setItemListener(this);
 
+        tvEvaluationState.setText(StringUtil.getStateValueStr(Constants.DEFAULT_SCORE));
         releaseArticleLabelAdapter = new ReleaseArticleLabelAdapter();
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rvEvaluationTags.setLayoutManager(layoutManager);
         rvEvaluationTags.setAdapter(releaseArticleLabelAdapter);
         releaseArticleLabelAdapter.setItemListener(this);
-    }
-
-    @Override
-    protected void OnToolbarRightListener() {
-        list = etNewContent.buildEditData();
-        if (StringUtil.isBlank(getEdTitle())) {
-            ToastUtils.getInstance().show("请输入标题");
-            return;
-        }
-        if (getEdTitle().length() < 6) {
-            ToastUtils.getInstance().show("标题不能少于6个汉字");
-            return;
-        }
-        if (etNewContent.isBlankEd(list)) {
-            ToastUtils.getInstance().show("评测内容不能为空");
-            return;
-        }
-        if (etNewContent.isBlankEdLeng(list)) {
-            ToastUtils.getInstance().show("评测字数最少10个字");
-            return;
-        }
-        if (!NetUtil.isNetworkAvailable()) {
-            ToastUtils.getInstance().show(getString(R.string.network_error));
-            return;
-        }
-        DialogUtils.showEvaluationDialogHint(this, getString(R.string.evaluation_state_ts),new DialogUtils.ErrorDialogInterface() {
+        StringUtil.etSearchChangedListener(edTitle, null, new StringUtil.EtChange() {
             @Override
-            public void btnConfirm() {
-                qiToken="";
-                setPostSmallImages();
+            public void etYes() {
+                tvNum.setText(edTitle.getText().toString().trim().length()+ "/60");
+            }
+            @Override
+            public void etNo() {
+                tvNum.setText("0/60");
             }
         });
+        esViewa.getTv_xsjl().setVisibility(View.INVISIBLE);
+    }
+    public void setTextViewNum(){
+        list = etNewContent.buildEditData();
+        tv2.setText(etNewContent.getBlankEdLeng(list) + "/5000");
+        if(etNewContent.getBlankEdLeng(list)>=100){
+            tv1.setVisibility(View.INVISIBLE);
+            return;
+        }
+        tv1.setVisibility(View.VISIBLE);
+        tv1.setText("加油，还差"+(100-etNewContent.getBlankEdLeng(list))+"个字");
+    }
+    public void setTvEvaluationState(String value) {
+        tvEvaluationState.setText(value);
     }
 
     @Override
@@ -199,36 +198,79 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
     String picPath;
     int REQUEST_CODE_CAMERA = 199;
 
-    @OnClick({R.id.localphoto, R.id.takephoto, R.id.addlabel, R.id.swithKeyboard})
+    @OnClick({R.id.localphoto,R.id.addlabel, R.id.tv_release})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
             case R.id.localphoto:
-                intent = new Intent(this, SelectedPicActivity.class);
-                intent.putExtra("max_pic", 99);
-                intent.putExtra("current_pic", 0);
-                startActivity(intent);
-                break;
-            case R.id.takephoto:
-//                if (releasePicAdapter.getItemCount() >= 9) {
-//                    ToastUtils.getInstance().show("最多选择九张图片");
-//                    return;
-//                }
-                intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                picPath = getExternalFilesDir(null).getAbsolutePath() + "/" + System.currentTimeMillis() + ".png";
-                Uri uri = Uri.fromFile(new File(picPath));
-                //为拍摄的图片指定一个存储的路径
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                startActivityForResult(intent, REQUEST_CODE_CAMERA);
+                openChangeHeadDialog();
                 break;
             case R.id.addlabel:
                 intent = new Intent(this, AddLabelActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.swithKeyboard:
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            case R.id.tv_release:
+                subData();
                 break;
         }
+    }
+
+    private void subData() {
+        list = etNewContent.buildEditData();
+        if (StringUtil.isBlank(getEdTitle())) {
+            ToastUtils.getInstance().show("请输入标题");
+            return;
+        }
+        if (getEdTitle().length() < 6) {
+            ToastUtils.getInstance().show("标题不能少于6个汉字");
+            return;
+        }
+        if (etNewContent.isBlankEd(list)) {
+            ToastUtils.getInstance().show("评测内容不能为空");
+            return;
+        }
+        if (etNewContent.isBlankEdLeng(list)) {
+            ToastUtils.getInstance().show("评测字数最少100个字");
+            return;
+        }
+        if (!NetUtil.isNetworkAvailable()) {
+            ToastUtils.getInstance().show(getString(R.string.network_error));
+            return;
+        }
+        DialogUtils.showEvaluationDialogHint(this, getString(R.string.evaluation_state_ts),new DialogUtils.ErrorDialogInterface() {
+            @Override
+            public void btnConfirm() {
+                qiToken="";
+                setPostSmallImages();
+            }
+        });
+    }
+    private void openChangeHeadDialog() {
+        String[] srt = {"上传图片", "从手机相册中选择", "拍照上传"};
+        DialogUtils.ShowAlertDialog(this, srt, new DialogUtils.AlertDialogInterface() {
+            @Override
+            public void btnLineListener(int index) {
+                if (index == 1) {//从手机相册中选择
+                    localphoto();
+                } else if (index == 2) {//拍照上传
+                    takephoto();
+                }
+            }
+        });
+    }
+    private void localphoto() {
+        Intent intent = new Intent(this, SelectedPicActivity.class);
+        intent.putExtra("max_pic", 99);
+        intent.putExtra("current_pic", 0);
+        startActivity(intent);
+    }
+    private void takephoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        picPath = getExternalFilesDir(null).getAbsolutePath() + "/" + System.currentTimeMillis() + ".png";
+        Uri uri = Uri.fromFile(new File(picPath));
+        //为拍摄的图片指定一个存储的路径
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        startActivityForResult(intent, REQUEST_CODE_CAMERA);
     }
 
     @Override
@@ -248,39 +290,37 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (SelectedPicActivity.picArray != null) {
-            arrayTags.clear();
+        LogUtil.w("当前的Class名称:"+StringUtil.getCurrentClassName(this));
+        MobclickAgent.onPageStart(StringUtil.getCurrentClassName(this));
+        MobclickAgent.onResume(this);
+        if (AddLabelActivity.array != null) {
+            if(arrayTags!=null){
+                arrayTags.clear();
+            }
             beans = new DiscussLabelListbean.TagList();
             beans.setTagId(String.valueOf(projectId));
             beans.setTagName(getIntent().getStringExtra("projectPay"));
-            arrayTags.put(-1, beans);
-
-            LongSparseArray<PicBean> picArray = SelectedPicActivity.picArray;
-            for (int i = 0; i < picArray.size(); i++) {
-                etNewContent.insertImage(null, picArray.get(picArray.keyAt(i)).getPath());
-            }
-            SelectedPicActivity.picArray = null;
-        }
-        if (AddLabelActivity.array != null) {
-            JSONArray array = new JSONArray();
+            arrayTags.put(-1,beans);
             for (int i = 0; i < AddLabelActivity.array.size(); i++) {
-                JSONObject object = new JSONObject();
                 DiscussLabelListbean.TagList bean = AddLabelActivity.array.get(AddLabelActivity.array.keyAt(i));
-                arrayTags.put(AddLabelActivity.array.keyAt(i), bean);
-                //tagId,tagName
-                try {
-                    object.put("tagId", bean.getTagId());
-                    object.put("tagName", bean.getTagName());
-                    array.put(object);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                arrayTags.put(AddLabelActivity.array.keyAt(i),bean);
             }
-            evaluationTags = array.toString();
             AddLabelActivity.array = null;
         }
         releaseArticleLabelAdapter.setData(arrayTags);
+
+        if (SelectedPicActivity.picArray != null) {
+            LongSparseArray<PicBean> picArray = SelectedPicActivity.picArray;
+            for(int i= 0 ;i<picArray.size();i++){
+                etNewContent.insertImage(null,picArray.get(picArray.keyAt(i)).getPath());
+            }
+            SelectedPicActivity.picArray = null;
+        }
+        if(SelectProjectActivity.staticProjectId!=0){
+            projectId = SelectProjectActivity.staticProjectId;
+            releaseArticleLabelAdapter.amendCode(projectId,SelectProjectActivity.staticProjectCode);
+            SelectProjectActivity.staticProjectId=0;
+        }
     }
 
     List<RichTextEditor.EditData> list;

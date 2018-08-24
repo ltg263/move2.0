@@ -2,21 +2,18 @@ package com.secretk.move.ui.activity;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.LongSparseArray;
 import android.util.SparseArray;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
@@ -39,6 +36,7 @@ import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
+import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.LoadingDialog;
 import com.secretk.move.view.RichTextEditor;
 import com.umeng.analytics.MobclickAgent;
@@ -56,12 +54,17 @@ import butterknife.OnClick;
 
 /*发表文章*/
 public class ReleaseArticleActivity extends AppCompatActivity implements ItemClickListener {
-    InputMethodManager imm;
 
-    @BindView(R.id.recycler_horizontal)
+    @BindView(R.id.rv_evaluation_tags)
     RecyclerView recycler_horizontal;
     @BindView(R.id.ed_title)
     EditText ed_title;
+    @BindView(R.id.tv_1)
+    TextView tv1;
+    @BindView(R.id.tv_2)
+    TextView tv2;
+    @BindView(R.id.tv_num)
+    TextView tvNum;
 
     ReleaseArticleLabelAdapter releaseArticleLabelAdapter;
     LinearLayoutManager layoutManager;
@@ -86,14 +89,25 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         MoveApplication.getContext().addActivity(this);
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.main_background), 0);
-        imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
         releaseArticleLabelAdapter = new ReleaseArticleLabelAdapter();
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recycler_horizontal.setLayoutManager(layoutManager);
         recycler_horizontal.setAdapter(releaseArticleLabelAdapter);
         releaseArticleLabelAdapter.setItemListener(this);
-        ed_title.setHint(Html.fromHtml("请输入标题 <small>(6-60字之间)</small>"));
+//        ed_title.setHint(Html.fromHtml("请输入标题 <small>(6-60字之间)</small>"));
+        richtext_editor.setHintText("请写下您对项目的深度解读，做个分析师！");
+
+        StringUtil.etSearchChangedListener(ed_title, null, new StringUtil.EtChange() {
+            @Override
+            public void etYes() {
+                tvNum.setText(ed_title.getText().toString().trim().length()+ "/60");
+            }
+            @Override
+            public void etNo() {
+                tvNum.setText("0/60");
+            }
+        });
         loadingDialog = new LoadingDialog(this);
         projectId = getIntent().getIntExtra("projectId", 0);
 
@@ -102,14 +116,23 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         beans.setTagName(getIntent().getStringExtra("projectPay"));
         arrayTags.put(-1,beans);
     }
+    public void setTextViewNum(){
+        list = richtext_editor.buildEditData();
+        tv2.setText(richtext_editor.getBlankEdLeng(list) + "/5000");
+        if(richtext_editor.getBlankEdLeng(list)>=100){
+            tv1.setVisibility(View.INVISIBLE);
+            return;
+        }
+        tv1.setVisibility(View.VISIBLE);
+        tv1.setText("加油，还差"+(100-richtext_editor.getBlankEdLeng(list))+"个字");
+    }
 
     @OnClick(R.id.img_return)
     public void img_return() {
         finish();
     }
 
-    @OnClick(R.id.tv_release)
-    public void tv_release() {
+    private void tv_release() {
         list = richtext_editor.buildEditData();
         if (StringUtil.isBlank(getEdTitle())) {
             ToastUtils.getInstance().show("请输入标题");
@@ -123,7 +146,10 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
             ToastUtils.getInstance().show("文章内容不能为空");
             return;
         }
-
+        if (richtext_editor.isBlankEdLeng(list)) {
+            ToastUtils.getInstance().show("评测字数最少100个字");
+            return;
+        }
         setPostSmallImages();
     }
 
@@ -282,8 +308,39 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         });
     }
 
-    @OnClick(R.id.localphoto)
-    public void localphoto(View view) {
+    @OnClick({R.id.localphoto,R.id.addlabel, R.id.tv_release})
+    public void onClick(View view) {
+        Intent intent;
+        switch (view.getId()) {
+            case R.id.localphoto:
+                openChangeHeadDialog();
+                break;
+            case R.id.addlabel:
+                intent = new Intent(this, AddLabelActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.tv_release:
+                tv_release();
+                break;
+        }
+    }
+
+    int REQUEST_CODE_CAMERA = 199;
+    String picPath;
+    private void openChangeHeadDialog() {
+        String[] srt = {"上传图片", "从手机相册中选择", "拍照上传"};
+        DialogUtils.ShowAlertDialog(this, srt, new DialogUtils.AlertDialogInterface() {
+            @Override
+            public void btnLineListener(int index) {
+                if (index == 1) {//从手机相册中选择
+                    localphoto();
+                } else if (index == 2) {//拍照上传
+                    takephoto();
+                }
+            }
+        });
+    }
+    private void localphoto() {
         Intent intent = new Intent(this, SelectedPicActivity.class);
         intent.putExtra("max_pic", 99);
 //        intent.putExtra("current_pic", releasePicAdapter.getItemCount());
@@ -291,12 +348,8 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         startActivity(intent);
     }
 
-    int REQUEST_CODE_CAMERA = 199;
-    String picPath;
 
-    @RequiresApi(api = Build.VERSION_CODES.FROYO)
-    @OnClick(R.id.takephoto)
-    public void takephoto(View view) {
+    private void takephoto() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         picPath = getExternalFilesDir(null).getAbsolutePath() + "/" + System.currentTimeMillis() + ".png";
         Uri uri = Uri.fromFile(new File(picPath));
@@ -305,18 +358,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         startActivityForResult(intent, REQUEST_CODE_CAMERA);
     }
 
-    @OnClick(R.id.addlabel)
-    public void addlabel(View view) {
-        Intent intent = new Intent(this, AddLabelActivity.class);
-        startActivity(intent);
-    }
 
-    @OnClick(R.id.swithKeyboard)
-    public void swithKeyboard(View view) {
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-    }
-
-    // takephoto addlabel
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -373,6 +415,11 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
                 richtext_editor.insertImage(null,picArray.get(picArray.keyAt(i)).getPath());
             }
             SelectedPicActivity.picArray = null;
+        }
+        if(SelectProjectActivity.staticProjectId!=0){
+            projectId = SelectProjectActivity.staticProjectId;
+            releaseArticleLabelAdapter.amendCode(projectId,SelectProjectActivity.staticProjectCode);
+            SelectProjectActivity.staticProjectId=0;
         }
     }
 
