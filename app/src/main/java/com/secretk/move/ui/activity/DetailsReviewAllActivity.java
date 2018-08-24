@@ -558,8 +558,6 @@ public class DetailsReviewAllActivity extends BaseActivity {
             @Override
             public void onFinish() {
                 if (isFinish && loadingDialog.isShowing()) {
-                    haveData.setVisibility(View.VISIBLE);
-                    findViewById(R.id.no_data).setVisibility(View.GONE);
                     loadingDialog.dismiss();
                 }
                 isFinish = true;
@@ -568,6 +566,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
             @Override
             public void onCompleted(DetailsReviewBean bean) {
                 DetailsReviewBean.DataBean.EvaluationDetailBean evaluationDetail = bean.getData().getEvaluationDetail();
+                haveData.setVisibility(View.VISIBLE);
+                findViewById(R.id.no_data).setVisibility(View.GONE);
                 createUserId = evaluationDetail.getCreateUserId();
                 mHeadView.setTitle(evaluationDetail.getProjectCode());
                 postShortDesc = evaluationDetail.getPostShortDesc();
@@ -586,6 +586,36 @@ public class DetailsReviewAllActivity extends BaseActivity {
                     pbComprehensiveEvaluation.setTvOne(modelType, 0,getResources().getColor(R.color.title_gray));
                     pbComprehensiveEvaluation.setTvThree(evaluationDetail.getTotalScore(), 16, R.color.app_background);
                     pbComprehensiveEvaluation.setPbProgressMaxVisible();
+                    if(evaluationDetail.getModelType()==Constants.ModelType.MODEL_TYPE_SIMPLENESS){
+                        if (StringUtil.isNotBlank(evaluationDetail.getPostSmallImages())) {
+                            try {
+                                //{"fileUrl":"/upload/posts/201805/1.jpg","fileName":"进度讨论","extension":"jpg"},
+                                JSONArray images = new JSONArray(evaluationDetail.getPostSmallImages());
+                                imageLists = new ArrayList<>();
+                                for (int i = 0; i < images.length(); i++) {
+                                    JSONObject strObj = images.getJSONObject(i);
+                                    PostDataInfo info = new PostDataInfo();
+                                    info.setUrl(StringUtil.getBeanString(strObj.getString("fileUrl")));
+                                    info.setName(StringUtil.getBeanString(strObj.getString("fileName")));
+                                    info.setTitle(StringUtil.getBeanString(strObj.getString("extension")));
+                                    imageLists.add(info);
+                                }
+                                if (imageLists.size() != 0) {
+                                    imgName = imageLists.get(0).getName();
+                                    imgUrl = imageLists.get(0).getUrl();
+                                    if (imageLists.size() == 1) {
+                                        ivPostSmallImages.setVisibility(View.VISIBLE);
+                                        GlideUtils.loadSideMaxImage(DetailsReviewAllActivity.this, ivPostSmallImages, Constants.BASE_IMG_URL + imgUrl);
+                                    } else {
+                                        rvImg.setVisibility(View.VISIBLE);
+                                        imagesadapter.setData(imageLists);
+                                    }
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

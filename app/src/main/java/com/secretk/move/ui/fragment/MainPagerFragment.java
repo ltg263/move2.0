@@ -109,7 +109,7 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         list.add("关注");
         list.add("爆料");
 //        list.add("新榜");
-        MagicIndicatorUtils.initMagicIndicator(getActivity(),list,vp_main_children,magicIndicatorTitle);
+        MagicIndicatorUtils.initMagicIndicatorTitle(getActivity(),list,vp_main_children,magicIndicatorTitle);
     }
 
     @Override
