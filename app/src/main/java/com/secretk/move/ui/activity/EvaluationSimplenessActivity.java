@@ -262,11 +262,11 @@ public class EvaluationSimplenessActivity extends BaseActivity{
     String userId = "";
     public void upImgHttp(String path, final int position) {
         if(path.equals("move")){
-            try {
-                generatePostSmallImages(serverImgList);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                generatePostSmallImages(serverImgList);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
             return;
         }
         final File file = new File(path);
@@ -287,7 +287,7 @@ public class EvaluationSimplenessActivity extends BaseActivity{
                 public void uploadStatus(String str, boolean status) {
                     if(status){
                         serverImgList.add(str);
-                        if (serverImgList.size() == releasePicAdapter.getItemCount()) {
+                        if (serverImgList.size() == releasePicAdapter.getItemCount()-1) {
                             try {
                                 generatePostSmallImages(serverImgList);
                             } catch (JSONException e) {
@@ -318,7 +318,7 @@ public class EvaluationSimplenessActivity extends BaseActivity{
                         public void uploadStatus(String str, boolean status) {
                             if(status){
                                 serverImgList.add(str);
-                                if (serverImgList.size() == releasePicAdapter.getItemCount()) {
+                                if (serverImgList.size() == releasePicAdapter.getItemCount()-1) {
                                     try {
                                         generatePostSmallImages(serverImgList);
                                     } catch (JSONException e) {

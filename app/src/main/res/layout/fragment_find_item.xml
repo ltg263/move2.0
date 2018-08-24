@@ -102,7 +102,7 @@
                 android:id="@+id/tv_go"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selector_follow_state"
+                android:background="@drawable/selector_wk_state"
                 android:paddingHorizontal="@dimen/dp_10"
                 android:paddingVertical="@dimen/dp_3"
                 android:text="去挖矿"

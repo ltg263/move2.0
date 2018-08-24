@@ -28,14 +28,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/view"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/have_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/view"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/refreshLayout"
@@ -259,8 +259,21 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_toLeftOf="@id/tvRead"
                             android:layout_toRightOf="@id/tv_project_code" />
 
+                        <TextView
+                            android:id="@+id/tvRead"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:drawableLeft="@drawable/ic_logo_list"
+                            android:layout_centerVertical="true"
+                            android:drawablePadding="@dimen/dp_4"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/title_gray_99"
+                            android:textSize="@dimen/sp_14" />
                     </RelativeLayout>
 
                     <LinearLayout

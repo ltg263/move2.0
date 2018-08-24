@@ -116,7 +116,7 @@ public class MainBlueBlFragment extends LazyFragment implements ItemClickListene
             tvName.setText("您尚未登陆,无法预览已关注内容");
             return;
         }
-        if (!refreshLayout.isEnableRefresh() && !refreshLayout.isEnableLoadMore() && !showFragment) {
+        if (!showFragment) {
             loadingDialog.show();
         }
         showFragment = true;

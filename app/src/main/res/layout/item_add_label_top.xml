@@ -4,18 +4,33 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-
-    <TextView
-        android:id="@+id/tv_name"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_label_red"
-        android:drawablePadding="@dimen/dp_10"
-        android:padding="@dimen/dp_10"
-        android:text="评测维度"
-        android:textColor="@color/title_gray"
-        android:textSize="@dimen/sp_16"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:src="@drawable/ic_label_red" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_img"
+            android:padding="@dimen/dp_10"
+            android:text="评测维度"
+            android:textColor="@color/title_gray"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"

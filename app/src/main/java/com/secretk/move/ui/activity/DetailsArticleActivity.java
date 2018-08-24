@@ -127,6 +127,8 @@ public class DetailsArticleActivity extends BaseActivity {
     RelativeLayout haveData;
     @BindView(R.id.iv_sc)
     ImageView ivSc;
+    @BindView(R.id.tvRead)
+    TextView tvRead;
     @BindView(R.id.iv_dz)
     ImageView ivDz;
     @BindView(R.id.tv_dz_num)
@@ -595,6 +597,15 @@ public class DetailsArticleActivity extends BaseActivity {
                     ivSc.setSelected(true);
                 } else {
                     ivSc.setSelected(false);
+                }
+                if(articleDetail.getPostTotalIncome()==0){
+                    tvRead.setText("未结算");
+                }else{
+                    if(articleDetail.getPostTotalIncome() == (int)articleDetail.getPostTotalIncome()){
+                        tvRead.setText((int)articleDetail.getPostTotalIncome() +"");
+                    }else{
+                        tvRead.setText(articleDetail.getPostTotalIncome() +"");
+                    }
                 }
                 if(articleDetail.getPraiseNum()!=0){
                     tvDzNum.setVisibility(View.VISIBLE);

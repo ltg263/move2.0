@@ -43,7 +43,7 @@ public class AddLabelActivityRecyclerAdapter extends RecyclerView.Adapter<AddLab
         holder.tvlabel.setText(bean.getTagName());
         holder.tvlabel.setSelected(bean.getSelected());
         if (bean.getSelected()){
-            holder.tvlabel.setTextColor(UiUtils.getColor(R.color.app_background));
+            holder.tvlabel.setTextColor(UiUtils.getColor(R.color.white));
         }else {
             holder.tvlabel.setTextColor(UiUtils.getColor(R.color.title_gray_66));
         }

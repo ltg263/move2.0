@@ -7,6 +7,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.secretk.move.R;
@@ -15,6 +16,7 @@ import com.secretk.move.base.TagsAndTagtbean;
 import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.AddLabelActivity;
+import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -47,6 +49,11 @@ public class AddLabelTopAdapter extends RecyclerView.Adapter<AddLabelTopAdapter.
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         TagsAndTagtbean.DataBean.ResultBean resultBean = list.get(position);
         holder.tvName.setText(resultBean.getTypeName());
+        if(position % 2 ==0){
+            GlideUtils.loadUrlDd(mContext,holder.ivImg,R.drawable.ic_label_red);
+        }else{
+            GlideUtils.loadUrlDd(mContext,holder.ivImg,R.drawable.ic_label_lv);
+        }
         List<TagsAndTagtbean.DataBean.ResultBean.DtagsListBean> listBeans = resultBean.getDtagsList();
         final List<DiscussLabelListbean.TagList> tagList = new ArrayList<>();
         for(int i=0;i<listBeans.size();i++){
@@ -95,6 +102,8 @@ public class AddLabelTopAdapter extends RecyclerView.Adapter<AddLabelTopAdapter.
 
         @BindView(R.id.recycler)
         RecyclerView recycler;
+        @BindView(R.id.iv_img)
+        ImageView ivImg;
         @BindView(R.id.tv_name)
         TextView tvName;
         AddLabelActivityRecyclerAdapter adapter;

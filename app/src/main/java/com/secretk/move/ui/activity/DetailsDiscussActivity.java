@@ -123,6 +123,8 @@ public class DetailsDiscussActivity extends BaseActivity {
     ImageView ivDz;
     @BindView(R.id.tv_dz_num)
     TextView tvDzNum;
+    @BindView(R.id.tvRead)
+    TextView tvRead;
     @BindView(R.id.rl_head)
     RelativeLayout rlHead;
     @BindView(R.id.ll_add_view)
@@ -544,6 +546,16 @@ public class DetailsDiscussActivity extends BaseActivity {
                     tvDzNum.setVisibility(View.VISIBLE);
                     tvDzNum.setText(String.valueOf(discussDetail.getPraiseNum()));
                 }
+                if(discussDetail.getPostTotalIncome()==0){
+                    tvRead.setText("未结算");
+                }else{
+                    if(discussDetail.getPostTotalIncome() == (int)discussDetail.getPostTotalIncome()){
+                        tvRead.setText((int)discussDetail.getPostTotalIncome() +"");
+                    }else{
+                        tvRead.setText(discussDetail.getPostTotalIncome() +"");
+                    }
+                }
+
                 ///0-未点赞，1-已点赞，数字
                 if (discussDetail.getPraiseStatus() == 0) {
                     ivDz.setSelected(true);

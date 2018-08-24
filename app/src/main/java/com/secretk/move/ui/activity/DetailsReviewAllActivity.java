@@ -133,6 +133,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
     ImageView ivDz;
     @BindView(R.id.tv_dz_num)
     TextView tvDzNum;
+    @BindView(R.id.tvRead)
+    TextView tvRead;
     @BindView(R.id.rl_head)
     RelativeLayout rlHead;
     @BindView(R.id.ll_add_view)
@@ -667,6 +669,16 @@ public class DetailsReviewAllActivity extends BaseActivity {
                 if(evaluationDetail.getPraiseNum()!=0){
                     tvDzNum.setVisibility(View.VISIBLE);
                     tvDzNum.setText(String.valueOf(evaluationDetail.getPraiseNum()));
+                }
+
+                if(evaluationDetail.getPostTotalIncome()==0){
+                    tvRead.setText("未结算");
+                }else{
+                    if(evaluationDetail.getPostTotalIncome() == (int)evaluationDetail.getPostTotalIncome()){
+                        tvRead.setText((int)evaluationDetail.getPostTotalIncome() +"");
+                    }else{
+                        tvRead.setText(evaluationDetail.getPostTotalIncome() +"");
+                    }
                 }
                 ///0-未点赞，1-已点赞，数字
                 if (evaluationDetail.getPraiseStatus() == 0) {

@@ -1,7 +1,5 @@
 package com.secretk.move.ui.fragment;
 
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -147,39 +145,13 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
 
     }
 
-    private Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 1:
-                    pageIndex = 1;
-                    onFirstUserVisible();
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
 
     public void dblclickRefresh() {
         if (getUserVisibleHint()) {
-//            recycler.setFocusable(false);
             if(rcv.getScrollY()!=0){
                 rcv.fullScroll(ScrollView.FOCUS_UP);
             }
             refreshLayout.autoRefresh();
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    try {
-//                        Thread.sleep(1000);
-//                        Message message = new Message();
-//                        message.what = 1;
-//                        mHandler.sendMessage(message);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                }
-//            }).start();
         }
     }
     @Override
@@ -195,7 +167,7 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
             tvName.setText("您尚未登陆,无法预览已关注内容");
             return;
         }
-        if (!refreshLayout.isEnableRefresh() && !refreshLayout.isEnableLoadMore() && !showFragment) {
+        if (!showFragment) {
             loadingDialog.show();
         }
         showFragment = true;

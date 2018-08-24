@@ -1,7 +1,5 @@
 package com.secretk.move.ui.fragment;
 
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -171,19 +169,6 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
     }
 
 
-    private Handler mHandler = new android.os.Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 1:
-                    pageIndex = 1;
-                    refreshLayout.setNoMoreData(false);
-                    onFirstUserVisible();
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
-
     public void dblclickRefresh() {
         if (getUserVisibleHint()) {
 //            recycler.setFocusable(false);
@@ -191,20 +176,6 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
                 rcv.fullScroll(ScrollView.FOCUS_UP);
             }
             refreshLayout.autoRefresh();
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    try {
-//                        Thread.sleep(1000);
-//                        Message message = new Message();
-//                        message.what = 1;
-//                        mHandler.sendMessage(message);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                }
-//            }).start();
         }
     }
 
@@ -214,7 +185,7 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
         getNewsFlashImgList();
 
         tokenLs = token;
-        if (!refreshLayout.isEnableRefresh() && !refreshLayout.isEnableLoadMore() && !showFragment) {
+        if (!showFragment) {
             loadingDialog.show();
         }
         showFragment = true;

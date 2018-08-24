@@ -338,11 +338,11 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
     String userId = "";
     public void upImgHttp(String path, final int position) {
         if(path.equals("move")){
-            try {
-                generatePostSmallImages(serverImgList);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                generatePostSmallImages(serverImgList);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
             return;
         }
         final File file = new File(path);
@@ -361,13 +361,15 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
                 public void uploadStatus(String str, boolean status) {
                     if(status){
                         serverImgList.add(str);
-                        if (serverImgList.size() == releasePicAdapter.getItemCount()) {
+                        if (serverImgList.size() == releasePicAdapter.getItemCount()-1) {
+                            LogUtil.w("----------------------------------------------------");
                             try {
                                 generatePostSmallImages(serverImgList);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }else {
+                            LogUtil.w("----------------------------------------------------");
                             upImgHttp(adapterImgList.get(position+1),position+1);
                         }
                     }else{
@@ -392,13 +394,15 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
                         public void uploadStatus(String str, boolean status) {
                             if(status){
                                 serverImgList.add(str);
-                                if (serverImgList.size() == releasePicAdapter.getItemCount()) {
+                                if (serverImgList.size() == releasePicAdapter.getItemCount()-1) {
                                     try {
+                                        LogUtil.w("----------------------------------------------------");
                                         generatePostSmallImages(serverImgList);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
                                 }else {
+                                    LogUtil.w("----------------------------------------------------");
                                     upImgHttp(adapterImgList.get(position+1),position+1);
                                 }
                             }else{
@@ -424,11 +428,11 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
             jsonObject.put("size", "");
             jsonObject.put("extension", "");
             array.put(jsonObject);
-            if(array.length()>0){
-                discussImages = array.toString();
-            }
-            httpRelease();
         }
+        if(array.length()>0){
+            discussImages = array.toString();
+        }
+        httpRelease();
 
     }
 

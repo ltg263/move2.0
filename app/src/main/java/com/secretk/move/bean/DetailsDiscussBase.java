@@ -94,6 +94,7 @@ public class DetailsDiscussBase extends BaseRes{
             private int commentsNum;
             private int praiseStatus;
             private int praiseNum;
+            private double postTotalIncome;
             private int pageviewNum;
             private int donateNum;
             private int collectStatus;
@@ -118,6 +119,14 @@ public class DetailsDiscussBase extends BaseRes{
 
             public void setCommendationList(List<CommendationListBean> commendationList) {
                 this.commendationList = commendationList;
+            }
+
+            public double getPostTotalIncome() {
+                return postTotalIncome;
+            }
+
+            public void setPostTotalIncome(double postTotalIncome) {
+                this.postTotalIncome = postTotalIncome;
             }
 
             public double getCommendationNum() {

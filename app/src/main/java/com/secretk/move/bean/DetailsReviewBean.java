@@ -125,6 +125,7 @@ public class DetailsReviewBean {
             private Object postSmallImagesList;
             private int commentsNum;
             private int praiseNum;
+            private double postTotalIncome;
             private int pageviewNum;
             private int donateNum;
             private int collectNum;
@@ -134,6 +135,14 @@ public class DetailsReviewBean {
             private String createUserName;
             private Object fullProEvaList;
             private Object hotEvaList;
+
+            public double getPostTotalIncome() {
+                return postTotalIncome;
+            }
+
+            public void setPostTotalIncome(double postTotalIncome) {
+                this.postTotalIncome = postTotalIncome;
+            }
 
             public int getUserType() {
                 return userType;

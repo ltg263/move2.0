@@ -108,6 +108,7 @@ public class DetailsArticleBean extends BaseRes{
             private int donateNum;
             private int collectStatus;
             private int collectNum;
+            private double postTotalIncome;
             private double commendationNum;
             private int createUserId;
             private String createUserIcon;
@@ -118,6 +119,14 @@ public class DetailsArticleBean extends BaseRes{
             private long updateTime;
             private String updateTimeStr;
             private List<CommendationListBean> commendationList;
+
+            public double getPostTotalIncome() {
+                return postTotalIncome;
+            }
+
+            public void setPostTotalIncome(double postTotalIncome) {
+                this.postTotalIncome = postTotalIncome;
+            }
 
             public String getTagInfos() {
                 return tagInfos;
