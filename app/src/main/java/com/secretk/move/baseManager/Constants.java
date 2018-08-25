@@ -76,6 +76,10 @@ public interface Constants {
      */
     boolean DEBUG = true;
     /**
+     * 评测的默认分数
+     */
+    float DEFAULT_SCORE = 8.0f;
+    /**
      * 点赞失败
      */
     String PRAISE_ERROR = "praiseError";
@@ -350,6 +354,7 @@ public interface Constants {
 
     //发表讨论时 添加标签 获取标签列表
     String RELEASE_DISCUSS_LIST = BASE_URL + "kff/discuss/tagList";
+    String GET_TAGS_AND_TAG_TYPE = BASE_URL + "kff/tags/getTagsAndTagType";
     String RELEASE_ARTICLE = BASE_URL + "kff/article/saveArticle";
     String RELEASE_DISCUSS = BASE_URL + "kff/discuss/saveDiscuss";
     String SEARCH_PROJECTS_1 = BASE_URL + "kff/project/searchProjects";

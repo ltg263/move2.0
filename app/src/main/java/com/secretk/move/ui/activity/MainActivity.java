@@ -87,8 +87,8 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_DUM_NORMAL);
         MobclickAgent.setSessionContinueMillis(1000);
         if(SharedUtils.getLoginZt()){
-            getLoadData();
-            getReportData();
+//            getLoadData();
+//            getReportData();
         }
         //当用户使用自有账号登录时，可以这样统计：
         MobclickAgent.onProfileSignIn("1");

@@ -217,7 +217,7 @@ public class MoreCommentsActivity extends BaseActivity{
                 NetUtil.setAnimation(tvPraiseNum);
                 NetUtil.addCommentsPraise(!tvPraiseNum.isSelected(), commentsId, new NetUtil.SaveFollowImpl() {
                     @Override
-                    public void finishFollow(String praiseNum,boolean status,double find) {
+                    public void finishFollow(String praiseNum,boolean status,double find,double postTotalIncome) {
                         tvPraiseNum.setEnabled(true);
                         if(!praiseNum.equals(Constants.PRAISE_ERROR)){
                             DialogUtils.showDialogPraise(MoreCommentsActivity.this,1,true,find);

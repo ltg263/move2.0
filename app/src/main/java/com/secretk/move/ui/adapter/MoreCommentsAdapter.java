@@ -173,7 +173,7 @@ public class MoreCommentsAdapter extends RecyclerView.Adapter<MoreCommentsAdapte
             NetUtil.setAnimation(tvPraiseNum);
             NetUtil.addCommentsPraise(!tvPraiseNum.isSelected(), bean.getCommentsId(), new NetUtil.SaveFollowImpl() {
                 @Override
-                public void finishFollow(String praiseNum,boolean status,double find) {
+                public void finishFollow(String praiseNum,boolean status,double find,double postTotalIncome) {
                     tvPraiseNum.setEnabled(true);
                     if(!praiseNum.equals(Constants.PRAISE_ERROR)){
                         DialogUtils.showDialogPraise(context,1,true,find);

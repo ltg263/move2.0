@@ -113,7 +113,6 @@ public class StringUtil {
         Pattern p = Pattern.compile("(^0x[0-9a-f]{40}$)");
         Matcher m = p.matcher(eth);
         return m.matches();
-
     }
     /**
      * @param idcard

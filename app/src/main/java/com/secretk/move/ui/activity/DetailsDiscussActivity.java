@@ -773,7 +773,7 @@ public class DetailsDiscussActivity extends BaseActivity {
         NetUtil.setAnimation(rlDz);
         NetUtil.setPraise(isPraise, postId, new NetUtil.SaveFollowImpl() {
             @Override
-            public void finishFollow(String praiseNum, boolean status, double find) {
+            public void finishFollow(String praiseNum, boolean status, double find,double postTotalIncome) {
                 rlDz.setEnabled(true);
                 ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
                 if (!praiseNum.equals(Constants.PRAISE_ERROR)) {
@@ -782,6 +782,13 @@ public class DetailsDiscussActivity extends BaseActivity {
                     DetailsDiscussActivity.this.praiseNum = Integer.valueOf(praiseNum);
                     tvDzNum.setVisibility(View.VISIBLE);
                     tvDzNum.setText(praiseNum);
+                    if(postTotalIncome!=0){
+                        if(postTotalIncome == postTotalIncome){
+                            tvRead.setText((int)postTotalIncome +"");
+                        }else{
+                            tvRead.setText(postTotalIncome +"");
+                        }
+                    }
                 }
             }
         });

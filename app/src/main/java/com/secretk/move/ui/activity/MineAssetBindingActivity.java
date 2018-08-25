@@ -99,12 +99,16 @@ public class MineAssetBindingActivity extends BaseActivity {
     }
 
     private void submit() {
+        if (!NetUtil.isNetworkAvailable()) {
+            ToastUtils.getInstance().show(getString(R.string.network_error));
+            return;
+        }
         if(StringUtil.isBlank(etBinding.getText().toString().trim())){
             ToastUtils.getInstance().show("钱包地址不能为空");
             return;
         }
-        if (!NetUtil.isNetworkAvailable()) {
-            ToastUtils.getInstance().show(getString(R.string.network_error));
+        if(StringUtil.isEthereumSite(etBinding.getText().toString().trim())){
+            ToastUtils.getInstance().show("钱包地址格式不正确");
             return;
         }
         JSONObject node = new JSONObject();

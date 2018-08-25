@@ -313,7 +313,7 @@ public class MineProjectListBlHolder extends RecyclerViewBaseHolder {
     private void setPraise(boolean isPraise, final RowsBean bead) {
         NetUtil.setPraise(isPraise, bead.getPostId(), new NetUtil.SaveFollowImpl() {
             @Override
-            public void finishFollow(String praiseNum,boolean status,double find) {
+            public void finishFollow(String praiseNum,boolean status,double find,double postTotalIncome) {
                 tvPraise.setEnabled(true);
                 ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
                 if(!praiseNum.equals(Constants.PRAISE_ERROR)){
