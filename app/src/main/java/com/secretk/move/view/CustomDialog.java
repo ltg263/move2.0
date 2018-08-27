@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.secretk.move.R;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.utils.ImageUtils;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 
 import java.io.File;
@@ -30,6 +31,7 @@ public class CustomDialog extends Dialog {
     private Context context;
     TextView tvTitle;
     TextView tvTime;
+    TextView tvNum;
     TextView tvContent;
     ScrollView svShare;
     RelativeLayout ivIcon;
@@ -57,6 +59,9 @@ public class CustomDialog extends Dialog {
         svShare = view.findViewById(R.id.sv_share);
         tvTitle = view.findViewById(R.id.tv_title);
         tvTime = view.findViewById(R.id.tv_time);
+        tvNum = view.findViewById(R.id.tv_num);
+        int awardToken = SharedUtils.singleton().get("awardToken", 0);
+        tvNum.setText(awardToken+"w");
         tvContent = view.findViewById(R.id.tv_content);
         tvTitle.setText(title);
         tvTime.setText(StringUtil.getTimeToEhm(time));

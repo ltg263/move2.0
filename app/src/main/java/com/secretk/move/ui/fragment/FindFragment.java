@@ -118,7 +118,7 @@ public class FindFragment extends LazyFragment {
             int type = row.getType();
 
             if (type == 5 && StringUtil.isNotBlank(row.getOutUrl())) {
-                IntentUtil.startWebViewActivity(row.getOutUrl(), "区分");
+                IntentUtil.startWebViewActivity(row.getOutUrl(), getString(R.string.app_name));
                 return;
             }
             int postId = row.getArticleId();

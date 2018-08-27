@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.ui.activity.MineApproveSubmitiCertificateActivity;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -126,6 +128,16 @@ public class ReportPopupWindowPull extends BasePopupWindowWithMask{
                     });
         }else{
             if(reportId==-1){
+                return;
+            }
+            int userCardStatus = SharedUtils.singleton().get("userCardStatus", 0);
+            if(userCardStatus!=2){
+                DialogUtils.showDialogHint(context, "请先实名认证",false, new DialogUtils.ErrorDialogInterface() {
+                    @Override
+                    public void btnConfirm() {
+                        IntentUtil.startActivity(MineApproveSubmitiCertificateActivity.class);
+                    }
+                });
                 return;
             }
             NetUtil.saveReport(1, postId, reportId, new NetUtil.SaveCollectImp() {

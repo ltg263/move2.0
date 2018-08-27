@@ -17,7 +17,6 @@ import com.secretk.move.bean.InfoNewsBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.adapter.InfoNewsFragmentAdapter;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
@@ -75,8 +74,8 @@ public class ProjectNewsFragment extends LazyFragment implements ItemClickListen
 
     @Override
     public void onFirstUserVisible() {
-        loadingDialog.show();
-        getLoadData("");
+//        loadingDialog.show();
+        getLoadData();
     }
 
 
@@ -95,12 +94,14 @@ public class ProjectNewsFragment extends LazyFragment implements ItemClickListen
         projectId = ((ProjectActivity) context).getProjectId();
         loadingDialog = ((ProjectActivity) context).getloadingDialog();
     }
-
+    public void onRefreshLayout(){
+        pageIndex=1;
+        getLoadData();
+    }
     /**
-     * @param sort:排毒方式     空时间   否则赞
+     * @param :排毒方式     空时间   否则赞
      */
-    public void getLoadData(String sort) {
-        LogUtil.w("projectCode"+projectCode);
+    public void getLoadData() {
         if(StringUtil.isBlank(projectCode)){
             return;
         }
@@ -145,8 +146,13 @@ public class ProjectNewsFragment extends LazyFragment implements ItemClickListen
 
             @Override
             public void onFinish() {
-                if (refreshLayoutF != null) {
-                    refreshLayoutF.finishLoadMore();
+                if(refreshLayoutF!=null){
+                    if(refreshLayoutF.isEnableLoadMore()){
+                        refreshLayoutF.finishLoadMore();
+                    }
+                    if(refreshLayoutF.isEnableRefresh()){
+                        refreshLayoutF.finishRefresh();
+                    }
                 }
                 loadingDialog.dismiss();
             }

@@ -1,6 +1,7 @@
 package com.secretk.move.ui.fragment;
 
 import android.content.Intent;
+import android.support.v4.widget.NestedScrollView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,6 +37,7 @@ import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.FragmentMineView;
+import com.secretk.move.view.RecycleNestedScrollView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,6 +61,8 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     ImageView ivHeadNotLogin;
     @BindView(R.id.tv_go_login)
     TextView tvGoLogin;
+    @BindView(R.id.tv_message_sum)
+    TextView tvMessageSum;
     @BindView(R.id.tv_go_register)
     TextView tvGoRegister;
     @BindView(R.id.rl_no_login)
@@ -89,6 +93,8 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     TextView tvArticleMun;
     @BindView(R.id.tv_user_type)
     TextView tvUserType;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     @BindView(R.id.iv_model_icon)
     ImageView ivModelIcon;
     @BindView(R.id.tv_user_card_status)
@@ -97,6 +103,8 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     TextView tvArticle;
     @BindView(R.id.rl_essay)
     RelativeLayout rlEssay;
+    @BindView(R.id.rl)
+    RelativeLayout rl;
     @BindView(R.id.tv_balance)
     TextView tvBalance;
     @BindView(R.id.ll_check_details)
@@ -111,6 +119,8 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     LinearLayout llMyAbout;
     @BindView(R.id.ll_my_feedback)
     LinearLayout llMyFeedback;
+    @BindView(R.id.sv)
+    RecycleNestedScrollView sv;
     private UserLoginInfo.DataBean.UserBean userInfos;
 
     @Override
@@ -120,17 +130,25 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
     @Override
     public void initViews() {
+        sv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                LogUtil.w("scrollY/300:"+scrollY/300f);
+                rl.setAlpha(scrollY/300f);
+
+            }
+        });
     }
 
     @Override
     public void onFirstUserVisible() {
         LogUtil.w("");
-        if(isLoginZt){
+        if (isLoginZt) {
             rlNoLogin.setVisibility(View.GONE);
             rlUserInfo.setVisibility(View.VISIBLE);
             presenter = new MineFragmentPresenterImpl(this);
             presenter.initialized();
-        }else{
+        } else {
             tvEvaluationMun.setText("0");
             tvDiscussMun.setText("0");
             tvArticleMun.setText("0");
@@ -144,10 +162,11 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     @Override
     public void loadInfoSuccess(UserLoginInfo.DataBean.UserBean infos) {
         userInfos = infos;
-        GlideUtils.loadCircleUserUrl(getActivity(),ivHeadImg, Constants.BASE_IMG_URL+StringUtil.getBeanString(infos.getIcon()));
+        GlideUtils.loadCircleUserUrl(getActivity(), ivHeadImg, Constants.BASE_IMG_URL + StringUtil.getBeanString(infos.getIcon()));
         tvUserName.setText(StringUtil.getBeanString(infos.getUserName()));
+        tvTitle.setText(StringUtil.getBeanString(infos.getUserName()));
         //300 粉丝 •1568 赞
-        String fansNum = String.valueOf(infos.getFansNum())+"  粉丝 • "+String.valueOf(infos.getPraiseNum())+" 赞";
+        String fansNum = String.valueOf(infos.getFansNum()) + "  粉丝 • " + String.valueOf(infos.getPraiseNum()) + " 赞";
         tvFansNum.setText(fansNum);
         tvUserState.setText(StringUtil.getBeanString(infos.getUserSignature()));
         tvEvaluationMun.setText(String.valueOf(infos.getEvaluationNum()));
@@ -155,44 +174,44 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
         tvArticleMun.setText(String.valueOf(infos.getArticleNum()));
         tvBalance.setText(String.valueOf(infos.getKffCoinNum()));
         // //用户类型，数字，用户类型:1-普通用户；2-项目方；3-评测机构；4-机构用户
-        if(infos.getUserType()!=1){
+        if (infos.getUserType() != 1) {
             tvUserType.setVisibility(View.VISIBLE);
             ivModelIcon.setVisibility(View.VISIBLE);
-            tvUserType.setText(StringUtil.getUserType(infos.getUserType(),ivModelIcon));
-        }else{
+            tvUserType.setText(StringUtil.getUserType(infos.getUserType(), ivModelIcon));
+        } else {
             tvUserType.setVisibility(View.GONE);
             ivModelIcon.setVisibility(View.GONE);
         }
         int userCardStatus = sharedUtils.get("userCardStatus", 0);
         tvUserCardStatus.setTextColor(getResources().getColor(R.color.gplus_color_5));
-        if(userCardStatus==2){
+        if (userCardStatus == 2) {
             tvUserCardStatus.setTextColor(getResources().getColor(R.color.title_gray_66));
             tvUserCardStatus.setText("已认证");
-        }else if(userCardStatus==1){// 1  待审核  2   审核通过  3   未通过审核  4   未提交
+        } else if (userCardStatus == 1) {// 1  待审核  2   审核通过  3   未通过审核  4   未提交
             tvUserCardStatus.setText("审核中");
-        }else if(userCardStatus==3){
+        } else if (userCardStatus == 3) {
             tvUserCardStatus.setText("未通过审核");
-        }else{
+        } else {
             tvUserCardStatus.setText("去认证");
         }
     }
 
-    @OnClick({R.id.iv_my_set,R.id.ll_my_approve, R.id.tv_go_login, R.id.tv_go_register, R.id.rl_user_info,
+    @OnClick({R.id.iv_my_set, R.id.ll_my_approve, R.id.tv_go_login, R.id.tv_go_register, R.id.rl_user_info,
             R.id.rl_appraisal, R.id.rl_discuss, R.id.rl_essay, R.id.ll_check_details, R.id.ll_my_attention,
-            R.id.ll_my_collect, R.id.ll_my_message,R.id.ll_my_recommend, R.id.ll_my_about, R.id.ll_my_feedback,
+            R.id.ll_my_collect, R.id.ll_my_message, R.id.ll_my_recommend, R.id.ll_my_about, R.id.ll_my_feedback,
             R.id.btn})
     public void onViewClicked(View view) {
-        if(!isLoginZt){
+        if (!isLoginZt) {
             IntentUtil.startActivity(LoginHomeActivity.class);
             return;
         }
         String key[] = {"currentType"};
         switch (view.getId()) {
             case R.id.iv_my_set:
-                if(userInfos!=null){
-                    Intent intent = new Intent(getActivity(),MineSetActivity.class);
+                if (userInfos != null) {
+                    Intent intent = new Intent(getActivity(), MineSetActivity.class);
                     intent.putExtra(Constants.USER_INFOS, userInfos);
-                    startActivityForResult(intent,0);
+                    startActivityForResult(intent, 0);
                 }
                 break;
             case R.id.tv_go_login://登陆
@@ -201,7 +220,11 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
             case R.id.tv_go_register://注册
                 break;
             case R.id.rl_user_info://用户Head
-                IntentUtil.startActivity(HomeActivity.class);
+                if (userInfos != null) {
+                    Intent intent = new Intent(getActivity(), MineSetActivity.class);
+                    intent.putExtra(Constants.USER_INFOS, userInfos);
+                    startActivityForResult(intent, 0);
+                }
                 break;
             case R.id.rl_appraisal://评测
                 String value0[] = {String.valueOf(0)};
@@ -234,7 +257,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 IntentUtil.startActivity(MineRecommendActivity.class);
                 break;
             case R.id.ll_my_about://关于我们
-                IntentUtil.startWebViewActivity(Constants.ABOUT,"关于我们");
+                IntentUtil.startWebViewActivity(Constants.ABOUT, "关于我们");
                 break;
             case R.id.ll_my_feedback://意见反馈
                 IntentUtil.startActivity(MineOpinionBackActivity.class);
@@ -264,26 +287,26 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     @Override
     public void onResume() {
         super.onResume();
-        isLoginZt = sharedUtils.get(Constants.IS_LOGIN_KEY,false);
-        if(isLoginZt){
-            token = sharedUtils.get(Constants.TOKEN_KEY,"");
-            if(StringUtil.isNotBlank(token)){
+        isLoginZt = sharedUtils.get(Constants.IS_LOGIN_KEY, false);
+        if (isLoginZt) {
+            token = sharedUtils.get(Constants.TOKEN_KEY, "");
+            if (StringUtil.isNotBlank(token)) {
                 getUserInfo(token);
             }
-        }else{
-            token="";
+        } else {
+            token = "";
             onFirstUserVisible();
         }
     }
 
-    private  void getUserInfo(String token) {
+    private void getUserInfo(String token) {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        String url =Constants.GET_USER_INFO;
+        String url = Constants.GET_USER_INFO;
         RxHttpParams params = new RxHttpParams.Build()
                 .url(url)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
@@ -294,16 +317,18 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
             public void onCompleted(UserLoginInfo userInfo) {
                 ////用户信息
                 //登录的状态
-                sharedUtils.put(Constants.IS_LOGIN_KEY,true);
+                sharedUtils.put(Constants.IS_LOGIN_KEY, true);
                 ////用户信息
 //                UserLoginInfo.DataBean dataBean = userInfo.getData();
-                sharedUtils.put(Constants.USER_INFOS,userInfo.getData().getUser().toString());
-                sharedUtils.put(Constants.USER_TYPE,userInfo.getData().getUser().getUserType());
-                sharedUtils.put(Constants.MOBILE,userInfo.getData().getUser().getMobile());
-                sharedUtils.put(Constants.USER_ID,userInfo.getData().getUser().getUserId());
+                sharedUtils.put(Constants.USER_INFOS, userInfo.getData().getUser().toString());
+                sharedUtils.put(Constants.USER_TYPE, userInfo.getData().getUser().getUserType());
+                sharedUtils.put(Constants.MOBILE, userInfo.getData().getUser().getMobile());
+                sharedUtils.put(Constants.USER_ID, userInfo.getData().getUser().getUserId());
 
-                sharedUtils.put("userCardStatus",userInfo.getData().getUserCardStatus());
-                sharedUtils.put("statusHierarchyType",userInfo.getData().getStatusHierarchyType());
+                tvMessageSum.setText(userInfo.getData().getMessageSum() + "条未读");
+                sharedUtils.put("awardToken", userInfo.getData().getAwardToken());
+                sharedUtils.put("userCardStatus", userInfo.getData().getUserCardStatus());
+                sharedUtils.put("statusHierarchyType", userInfo.getData().getStatusHierarchyType());
                 onFirstUserVisible();
 
             }

@@ -237,10 +237,6 @@
                     app:tabSelectedTextColor="@color/app_background"
                     app:tabTextColor="#aeaeae" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_10" />
-
                 <com.secretk.move.view.ViewPagerFixed
                     android:id="@+id/view_pager"
                     android:layout_width="match_parent"

@@ -67,8 +67,8 @@ public class ProjectMarketFragment extends LazyFragment implements ItemClickList
 
     @Override
     public void onFirstUserVisible() {
-        loadingDialog.show();
-        getLoadData("");
+//        loadingDialog.show();
+        getLoadData();
     }
 
 
@@ -87,11 +87,14 @@ public class ProjectMarketFragment extends LazyFragment implements ItemClickList
         projectId = ((ProjectActivity) context).getProjectId();
         loadingDialog = ((ProjectActivity) context).getloadingDialog();
     }
-
+    public void onRefreshLayout(){
+        pageIndex=1;
+        getLoadData();
+    }
     /**
-     * @param sort:排毒方式     空时间   否则赞
+     * @param :排毒方式     空时间   否则赞
      */
-    public void getLoadData(String sort) {
+    public void getLoadData() {
         JSONObject node = new JSONObject();
         try {
             node.put("projectId", Integer.valueOf(projectId));
@@ -136,8 +139,13 @@ public class ProjectMarketFragment extends LazyFragment implements ItemClickList
 
             @Override
             public void onFinish() {
-                if(refreshLayoutF.isEnableLoadMore()){
-                    refreshLayoutF.finishLoadMore();
+                if(refreshLayoutF!=null){
+                    if(refreshLayoutF.isEnableLoadMore()){
+                        refreshLayoutF.finishLoadMore();
+                    }
+                    if(refreshLayoutF.isEnableRefresh()){
+                        refreshLayoutF.finishRefresh();
+                    }
                 }
                 loadingDialog.dismiss();
             }

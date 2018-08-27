@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_gray"
     android:orientation="vertical">
 
-    <ScrollView
+    <com.secretk.move.view.RecycleNestedScrollView
+        android:id="@+id/sv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never">
@@ -173,8 +174,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_shade_img"
-                android:layout_margin="@dimen/dp_10">
+                android:layout_margin="@dimen/dp_10"
+                android:background="@drawable/ic_shade_img">
 
                 <LinearLayout
                     android:id="@+id/ll_check_details"
@@ -309,7 +310,6 @@
             </RelativeLayout>
 
 
-
             <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_line"
@@ -408,16 +408,26 @@
                     android:textColor="@color/title_gray"
                     android:textSize="@dimen/sp_14" />
 
+                <TextView
+                    android:id="@+id/tv_message_sum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:textColor="@color/theme_title_red"
+                    android:textSize="@dimen/sp_12" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/right_boult" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_10"
                 android:background="@color/background_gray" />
+
             <LinearLayout
                 android:id="@+id/ll_my_recommend"
                 android:layout_width="match_parent"
@@ -457,10 +467,10 @@
                     android:src="@drawable/right_boult" />
             </LinearLayout>
 
-           <!-- <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_line"
-                android:background="@color/cut_off_rule" />-->
+            <!-- <View
+                 android:layout_width="match_parent"
+                 android:layout_height="@dimen/dp_line"
+                 android:background="@color/cut_off_rule" />-->
 
             <LinearLayout
                 android:id="@+id/ll_my_approve"
@@ -500,10 +510,10 @@
                     android:src="@drawable/right_boult" />
             </LinearLayout>
 
-           <!-- <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_line"
-                android:background="@color/cut_off_rule" />-->
+            <!-- <View
+                 android:layout_width="match_parent"
+                 android:layout_height="@dimen/dp_line"
+                 android:background="@color/cut_off_rule" />-->
 
             <LinearLayout
                 android:id="@+id/ll_my_about"
@@ -589,6 +599,31 @@
                 android:textSize="@dimen/sp_14"
                 android:visibility="visible" />
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </com.secretk.move.view.RecycleNestedScrollView>
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:background="@color/app_bar_background"
+        android:layout_height="44dp"
+        android:alpha="0">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="个人中心"
+            android:textColor="@color/title_gray"
+            android:textSize="@dimen/sp_18" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_line"
+            android:layout_alignParentBottom="true"
+            android:background="@color/cut_off_rule" />
+    </RelativeLayout>
+
+
+</RelativeLayout>
 

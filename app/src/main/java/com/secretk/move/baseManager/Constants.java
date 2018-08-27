@@ -78,7 +78,7 @@ public interface Constants {
     /**
      * 评测的默认分数
      */
-    float DEFAULT_SCORE = 8.0f;
+    float DEFAULT_SCORE = 6.0f;
     /**
      * 点赞失败
      */

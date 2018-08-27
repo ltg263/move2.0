@@ -45,7 +45,12 @@ public class ProjectMarketHolder extends RecyclerViewBaseHolder {
     public ProjectMarketHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        CNY = Double.valueOf(SharedUtils.singleton().get("EXCHANGE_RATE_CNY",""));
+        String cny = SharedUtils.singleton().get("EXCHANGE_RATE_CNY", "");
+        if(StringUtil.isNotBlank(cny)){
+            CNY = Double.valueOf(cny);
+        }else{
+            CNY = 6.8062;
+        }
     }
 
     public void refresh(final int position, List<ProjectMarketBase.DataBean.TransactionPairResponseBean.RowsBean> lists, final Context context) {

@@ -79,7 +79,7 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
     @Override
     protected void initView() {
         StatusBarUtil.setLightMode(this);
-        StatusBarUtil.setColor(this, UiUtils.getColor(R.color.main_background), 0);
+        StatusBarUtil.setColor(this, UiUtils.getColor(R.color.white), 0);
         SharedUtils.singleton().put("isFollower", true);
         //友盟统计
         UMConfigure.setLogEnabled(true);

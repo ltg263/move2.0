@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.ui.activity.EvaluationCompileListActivity;
 import com.secretk.move.ui.activity.EvaluationSimplenessActivity;
 import com.secretk.move.ui.activity.EvaluationWriteNewSimpActivity;
@@ -35,6 +36,7 @@ public class EvaluationSliderView extends FrameLayout {
     private TextView tvDimensionalityEvaluate;
     Context context;
     private TextView tv_xsjl;
+    private boolean isSlide = false;
 
     public EvaluationSliderView(Context context) {
         super(context);
@@ -61,11 +63,12 @@ public class EvaluationSliderView extends FrameLayout {
         esView = esv.findViewById(R.id.es_view);
         tv_xsjl = esv.findViewById(R.id.tv_xsjl);
         rl = esv.findViewById(R.id.rl);
-        setScore(8);
+        setScore(Constants.DEFAULT_SCORE);
         setEsvBackground(R.color.app_background);
         esView.setOnValueChangeListener(new EvaluationItemView.OnValueChangeListener() {
             @Override
             public void onValueChange(float value) {
+                isSlide=true;
                 String strValue;
                 if(value==(int)value){
                     strValue=String.valueOf((int)value);
@@ -99,6 +102,9 @@ public class EvaluationSliderView extends FrameLayout {
                 compile.OnClick(view);
             }
         });
+    }
+    public boolean isSlide(){
+        return isSlide;
     }
 
     /**

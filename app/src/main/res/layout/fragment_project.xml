@@ -56,10 +56,6 @@
         android:background="@color/white"
         app:layout_collapseMode="pin" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10" />
-
     <com.secretk.move.view.ViewPagerFixed
         android:id="@+id/vp_main_children"
         android:layout_width="match_parent"

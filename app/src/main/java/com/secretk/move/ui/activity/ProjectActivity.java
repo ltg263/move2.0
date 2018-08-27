@@ -195,7 +195,7 @@ public class ProjectActivity extends BaseActivity {
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        loadingDialog.show();
+//        loadingDialog.show();
         //网络请求方式 默认为POST
         RetrofitUtil.request(params, ProjectHomeBean.class, new HttpCallBackImpl<ProjectHomeBean>() {
             @Override
@@ -298,6 +298,11 @@ public class ProjectActivity extends BaseActivity {
                 if (loadingDialog.isShowing()) {
                     loadingDialog.dismiss();
                 }
+                if(refreshLayout!=null){
+                    if(refreshLayout.isEnableRefresh()){
+                        refreshLayout.finishRefresh();
+                    }
+                }
             }
         });
     }
@@ -317,7 +322,7 @@ public class ProjectActivity extends BaseActivity {
 
     private void initListener() {
 //        fab.setVisibility(View.GONE);
-        refreshLayout.setEnableRefresh(false);//禁止下拉刷新
+//        refreshLayout.setEnableRefresh(false);//禁止下拉刷新
 //        refreshLayout.setEnableLoadmore(false);
         /**
          * 设置Toolbar的变化
@@ -352,7 +357,26 @@ public class ProjectActivity extends BaseActivity {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-
+                switch (viewPager.getCurrentItem()) {
+                    case 0:
+                        reviewFragment.onRefreshLayout();
+                        break;
+                    case 1:
+                        discussFragment.onRefreshLayout();
+                        break;
+                    case 2:
+                        articleFragment.onRefreshLayout();
+                        break;
+                    case 3:
+                        marketFragment.onRefreshLayout();
+                        break;
+                    case 4:
+                        newsFragment.onRefreshLayout();
+                        break;
+                    case 5:
+                        initData();
+                        break;
+                }
             }
         });
         /**
@@ -364,25 +388,27 @@ public class ProjectActivity extends BaseActivity {
                 switch (viewPager.getCurrentItem()) {
                     case 0:
                         if (reviewFragment.isHaveData) {
-                            reviewFragment.getLoadData("");
+                            reviewFragment.getLoadData();
                         }
                         break;
                     case 1:
                         if (discussFragment.isHaveData) {
-                            discussFragment.getLoadData("");
+                            discussFragment.getLoadData();
                         }
                         break;
                     case 2:
                         if (articleFragment.isHaveData) {
-                            articleFragment.getLoadData("");
+                            articleFragment.getLoadData();
                         }
+                        break;
                     case 3:
                         if (marketFragment.isHaveData) {
-                            marketFragment.getLoadData("");
+                            marketFragment.getLoadData();
                         }
+                        break;
                     case 4:
                         if (newsFragment.isHaveData) {
-                            newsFragment.getLoadData("");
+                            newsFragment.getLoadData();
                         }
                         break;
                 }

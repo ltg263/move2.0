@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_gray"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.secretk.move.view.AppBarHeadView
         android:id="@+id/head_app_server"
         android:layout_width="match_parent"
-        android:background="@color/app_bar_background"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@color/app_bar_background" />
 
     <View
         android:layout_width="match_parent"
@@ -26,10 +26,23 @@
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_2"
-        android:progressDrawable="@drawable/pb_view_grade" />
+        android:progressDrawable="@drawable/pb_view_grade"
+        android:visibility="gone" />
 
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dp_20"
+        android:background="@color/background_gray"
+        android:gravity="center"
+        android:text="第三方网页"
+        android:textColor="@color/title_gray"
+        android:textSize="@dimen/sp_16" />
 </LinearLayout>

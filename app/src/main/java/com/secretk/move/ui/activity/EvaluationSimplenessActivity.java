@@ -166,7 +166,7 @@ public class EvaluationSimplenessActivity extends BaseActivity{
         releasePicAdapter.addData("move");
 
         mHeadView.setTitle(getIntent().getStringExtra("projectPay") + "-" + getString(R.string.evaluation_simpleness));
-        esViewa.setScore(8.0f);
+        esViewa.setScore(Constants.DEFAULT_SCORE);
         esViewa.setEsvBackground(R.color.app_background);
         tvEvaluationState.setText(StringUtil.getStateValueStr(Constants.DEFAULT_SCORE));
     }
@@ -192,7 +192,7 @@ public class EvaluationSimplenessActivity extends BaseActivity{
 
         IntentUtil.startProjectCompileDxZjyActivity(String.valueOf(Constants.ModelType.MODEL_TYPE_ALL_NEW),
                 String.valueOf(projectId), getIntent().getStringExtra("projectPay"),
-                "", "8.0", getString(R.string.comprehensive_evaluation));
+                "", String.valueOf(Constants.DEFAULT_SCORE), getString(R.string.comprehensive_evaluation));
     }
 
     SparseArray<DiscussLabelListbean.TagList> arrayTags = new SparseArray<>();//默认标签
@@ -218,9 +218,13 @@ public class EvaluationSimplenessActivity extends BaseActivity{
     JSONArray sonArray;
     @OnClick(R.id.tv_release)
     public void onViewClicked() {
-
         if (!NetUtil.isNetworkAvailable()) {
             ToastUtils.getInstance().show(getString(R.string.network_error));
+            return;
+        }
+
+        if(!esViewa.isSlide()){
+            DialogUtils.showDialogHint(this, "请给项目评分再发布",true, null);
             return;
         }
         if (StringUtil.isBlank(etEvaluationContent.getText().toString().trim())) {

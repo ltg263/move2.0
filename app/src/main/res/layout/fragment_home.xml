@@ -5,17 +5,36 @@
     android:background="@color/background_gray"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_review"
+    <com.secretk.move.view.RecycleNestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:fillViewport="true"
+        android:scrollbars="none">
 
-    <ImageView
-        android:id="@+id/iv_not_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_130"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_not_content" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_not_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_130"
+                android:src="@drawable/ic_not_content" />
+        </RelativeLayout>
+    </com.secretk.move.view.RecycleNestedScrollView>
 </RelativeLayout>

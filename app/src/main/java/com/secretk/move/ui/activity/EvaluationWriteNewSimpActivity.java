@@ -119,7 +119,6 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
 //        rvPostSmallImages.setAdapter(releasePicAdapter);
 //        releasePicAdapter.setItemListener(this);
 
-        tvEvaluationState.setText(StringUtil.getStateValueStr(Constants.DEFAULT_SCORE));
         releaseArticleLabelAdapter = new ReleaseArticleLabelAdapter();
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -136,6 +135,7 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
                 tvNum.setText("0/60");
             }
         });
+
         esViewa.getTv_xsjl().setVisibility(View.INVISIBLE);
     }
     public void setTextViewNum(){
@@ -188,6 +188,7 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
         esViewa.setScore(Float.valueOf(totalScore));
         esViewa.setTvDimensionalityName(modelPbTitle);
         esViewa.setEsvBackground(R.color.app_background);
+        tvEvaluationState.setText(StringUtil.getStateValueStr(Float.valueOf(totalScore)));
 
         beans = new DiscussLabelListbean.TagList();
         beans.setTagId(String.valueOf(projectId));
@@ -217,6 +218,10 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
 
     private void subData() {
         list = etNewContent.buildEditData();
+        if(!esViewa.isSlide()){
+            DialogUtils.showDialogHint(this, "请给项目评分再发布",true, null);
+            return;
+        }
         if (StringUtil.isBlank(getEdTitle())) {
             ToastUtils.getInstance().show("请输入标题");
             return;

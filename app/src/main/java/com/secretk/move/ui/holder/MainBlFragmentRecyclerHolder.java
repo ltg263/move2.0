@@ -126,7 +126,9 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         if (SharedUtils.getUserId()==bean.getCreateUserId()){
             tvProjectFolly.setVisibility(View.GONE);
         }
-
+        if (SharedUtils.getUserId()==bean.getCreateUserId()){
+            tvProjectFolly.setVisibility(View.GONE);
+        }
         if(bean.getPostTotalIncome()==0){
             tvTotalIncome.setText("未结算");
         }else{

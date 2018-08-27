@@ -31,7 +31,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlEnablePreviewInEditMode="false">
-
+            <com.scwang.smartrefresh.header.MaterialHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
             <android.support.design.widget.CoordinatorLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -344,10 +346,10 @@
                                     android:layout_height="@dimen/dp_35"
                                     android:layout_margin="@dimen/dp_10"
                                     android:layout_weight="1"
-                                    android:background="@drawable/selector_follow_2_state"
+                                    android:background="@drawable/selector_follow_2_true"
                                     android:gravity="center"
                                     android:text="@string/review"
-                                    android:textColor="@drawable/selector_follow_state_text" />
+                                    android:textColor="@drawable/selector_follow_2_text" />
 
                                 <TextView
                                     android:id="@+id/tv_follow_status"
@@ -357,8 +359,8 @@
                                     android:layout_weight="1"
                                     android:background="@drawable/selector_follow_2_state"
                                     android:gravity="center"
-                                    android:text="+关注"
-                                    android:textColor="@drawable/selector_follow_state_text" />
+                                    android:text="关 注"
+                                    android:textColor="@drawable/selector_follow_2_text" />
                             </LinearLayout>
                         </LinearLayout>
                     </android.support.design.widget.CollapsingToolbarLayout>

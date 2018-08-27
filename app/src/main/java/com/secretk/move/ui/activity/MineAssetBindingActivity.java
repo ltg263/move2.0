@@ -107,7 +107,7 @@ public class MineAssetBindingActivity extends BaseActivity {
             ToastUtils.getInstance().show("钱包地址不能为空");
             return;
         }
-        if(StringUtil.isEthereumSite(etBinding.getText().toString().trim())){
+        if(!StringUtil.isEthereumSite(etBinding.getText().toString().trim())){
             ToastUtils.getInstance().show("钱包地址格式不正确");
             return;
         }

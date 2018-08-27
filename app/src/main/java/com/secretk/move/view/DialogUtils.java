@@ -663,7 +663,9 @@ public class DialogUtils {
             bt_ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dialogConfirm.btnConfirm();
+                    if(dialogConfirm!=null){
+                        dialogConfirm.btnConfirm();
+                    }
                     dialog5.dismiss();
                 }
             });

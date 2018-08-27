@@ -110,14 +110,14 @@ public class InfoNewsFragmentHolder extends RecyclerViewBaseHolder {
             @Override
             public void onClick(View view) {
                 String url = Constants.CURRENCY+rowsBean.getId();
-                IntentUtil.startWebViewActivity(url,"区分");
+                IntentUtil.startWebViewActivity(url,mContext.getString(R.string.app_name));
             }
         });
         tvBzyhzc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String url = Constants.BI_ZHI_HUI;
-                IntentUtil.startWebViewActivity(url,"区分");
+                IntentUtil.startWebViewActivity(url,mContext.getString(R.string.app_name));
             }
         });
     }

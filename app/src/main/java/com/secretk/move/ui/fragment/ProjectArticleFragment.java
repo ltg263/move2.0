@@ -72,21 +72,21 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
             public void onClick(View view) {
                 String sort = tvSort.getText().toString();
                 pageIndex = 1;
-                loadingDialog.show();
+//                loadingDialog.show();
                 if (sort.equals(getString(R.string.sort_love))) {
                     tvSort.setText(getString(R.string.sort_time));
                 } else {
                     tvSort.setText(getString(R.string.sort_love));
                 }
-                getLoadData(tvSort.getText().toString().trim());
+                getLoadData();
             }
         });
     }
 
     @Override
     public void onFirstUserVisible() {
-        loadingDialog.show();
-        getLoadData("");
+//        loadingDialog.show();
+        getLoadData();
     }
 
 
@@ -106,17 +106,21 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
         projectId = ((ProjectActivity) context).getProjectId();
         loadingDialog = ((ProjectActivity) context).getloadingDialog();
     }
-
+    public void onRefreshLayout(){
+        pageIndex=1;
+        getLoadData();
+    }
     /**
-     * @param sort:排毒方式     空时间   否则赞
+     * @param :排毒方式     空时间   否则赞
      */
-    public void getLoadData(String sort) {
+    public void getLoadData() {
+        String sort = tvSort.getText().toString().trim();
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
             node.put("projectId", Integer.valueOf(projectId));
             node.put("pageIndex", pageIndex++);
-            if (sort.equals(getString(R.string.sort_love))) {
+            if (sort.equals(getString(R.string.sort_time))) {
                 node.put("sortField", "praise_num");//需要按点赞数倒序排序的话 增加传入参数ortField 值为字符串“praise_num”
             }
             node.put("pageSize", Constants.PAGE_SIZE);
@@ -153,8 +157,13 @@ public class ProjectArticleFragment extends LazyFragment implements ItemClickLis
 
             @Override
             public void onFinish() {
-                if (refreshLayoutF != null) {
-                    refreshLayoutF.finishLoadMore();
+                if(refreshLayoutF!=null){
+                    if(refreshLayoutF.isEnableLoadMore()){
+                        refreshLayoutF.finishLoadMore();
+                    }
+                    if(refreshLayoutF.isEnableRefresh()){
+                        refreshLayoutF.finishRefresh();
+                    }
                 }
                 loadingDialog.dismiss();
             }

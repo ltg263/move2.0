@@ -92,9 +92,9 @@ public class MagicIndicatorUtils {
             public IPagerTitleView getTitleView(Context context, final int index) {
                 SimplePagerTitleView simplePagerTitleView = new ScaleTransitionPagerTitleView(context);
                 simplePagerTitleView.setText(mDataList.get(index));
-                simplePagerTitleView.setTextSize(29);
-                simplePagerTitleView.setNormalColor(ContextCompat.getColor(mContext, R.color.title_gray_66));
-                simplePagerTitleView.setSelectedColor(ContextCompat.getColor(mContext, R.color.title_gray));
+                simplePagerTitleView.setTextSize(18);
+                simplePagerTitleView.setNormalColor(ContextCompat.getColor(mContext, R.color.title_gray));
+                simplePagerTitleView.setSelectedColor(ContextCompat.getColor(mContext, R.color.app_background));
 
                 simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -107,7 +107,15 @@ public class MagicIndicatorUtils {
 
             @Override
             public IPagerIndicator getIndicator(Context context) {
-                return null;
+                LinePagerIndicator indicator = new LinePagerIndicator(context);
+                indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
+                indicator.setLineHeight(UIUtil.dip2px(context, 3));
+                indicator.setLineWidth(UIUtil.dip2px(context, 20));
+                indicator.setRoundRadius(UIUtil.dip2px(context, 3));
+//                indicator.setStartInterpolator(new AccelerateInterpolator());
+//                indicator.setEndInterpolator(new DecelerateInterpolator(2.0f));
+                indicator.setColors(ContextCompat.getColor(mContext, R.color.app_background));
+                return indicator;
             }
 
             @Override

@@ -175,7 +175,7 @@ public class RetrofitUtil {
                              } else {
                                 if(!response.raw().toString().contains("api.coinmarketcap.com")
                                         && !response.raw().toString().contains("data.block.cc")){
-                                    ToastUtils.getInstance().show(response.raw().toString());
+                                    ToastUtils.getInstance().show("网络错误");
                                 }
                                  if (callBack != null) {
                                      callBack.onFinish();

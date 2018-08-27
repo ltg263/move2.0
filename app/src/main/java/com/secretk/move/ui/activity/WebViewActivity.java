@@ -8,6 +8,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
@@ -29,6 +30,7 @@ import java.util.List;
 public class WebViewActivity extends BaseActivity {
     private WebView mWbview;
     private WebSettings webSettings;
+    private TextView tv;
     private String url;
     private ProgressBar progressbar;
 //    private WebViewInterface webViewInterface;
@@ -52,13 +54,21 @@ public class WebViewActivity extends BaseActivity {
     protected void initUI(Bundle savedInstanceState) {
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.app_bar_background), 0);
+        tv = findViewById(R.id.tv);
+        progressbar = findViewById(R.id.myProgressBar);
+        mWbview = findViewById(R.id.webview);
         url = getIntent().getStringExtra("url");
         String name = getIntent().getStringExtra("name");
         if(name.equals("关于我们")){
             mMenuInfos.add(0,new MenuInfo(R.string.mine_help, getString(R.string.mine_help), 0));
         }
         mHeadView.setTitle(name);
-        initWebView();
+        if(!name.equals(getString(R.string.app_name))){
+            tv.setVisibility(View.GONE);
+            progressbar.setVisibility(View.VISIBLE);
+            mWbview.setVisibility(View.VISIBLE);
+            initWebView();
+        }
     }
 
     @Override
@@ -70,8 +80,6 @@ public class WebViewActivity extends BaseActivity {
      * 初始化webview
      */
     private void initWebView() {
-        progressbar = (ProgressBar) findViewById(R.id.myProgressBar);
-        mWbview = (WebView) findViewById(R.id.webview);
         //创建webview接口类
         webViewInterface = new WebViewInterface(WebViewActivity.this, mWbview);
         //设置webview的相关属性

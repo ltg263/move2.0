@@ -73,7 +73,7 @@
 
         <TextView
             android:id="@+id/tv_project_folly"
-            style="@style/BtnSelectorFollow"
+            style="@style/BtnSelectorFollow_PostList"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/iv_pupo"
             android:visibility="visible" />

@@ -14,9 +14,12 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.ui.activity.MineApproveSubmitiCertificateActivity;
 import com.secretk.move.ui.adapter.DiaLogListReportAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.NetUtil;
+import com.secretk.move.utils.SharedUtils;
 
 import java.util.List;
 
@@ -78,6 +81,18 @@ public class ReportPopupWindow extends PopupWindow {
 //                LogUtil.w("list:"+list.toString());
                 LogUtil.w("list:"+adapter.getPosition());
                 if(listIndex==null){
+                    dismiss();
+                    return;
+                }
+                int userCardStatus = SharedUtils.singleton().get("userCardStatus", 0);
+                if(userCardStatus!=2){
+                    DialogUtils.showDialogHint(mContext, "请先实名认证",false, new DialogUtils.ErrorDialogInterface() {
+                        @Override
+                        public void btnConfirm() {
+                            IntentUtil.startActivity(MineApproveSubmitiCertificateActivity.class);
+                        }
+                    });
+                    dismiss();
                     return;
                 }
                 NetUtil.saveReport(1, postId, listIndex.get(adapter.getPosition()), new NetUtil.SaveCollectImp() {

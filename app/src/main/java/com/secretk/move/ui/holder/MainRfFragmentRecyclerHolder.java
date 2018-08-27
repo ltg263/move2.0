@@ -15,6 +15,7 @@ import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.bean.RowsBean;
+import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.activity.ImageViewVpAcivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.ImagesAdapter;
@@ -115,6 +116,9 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             tvUserFolly.setText(context.getResources().getString(R.string.follow_status_0));
         }
         if (SharedUtils.getUserId()==bean.getCreateUserId()){
+            tvUserFolly.setVisibility(View.GONE);
+        }
+        if(mContext instanceof HomeActivity){
             tvUserFolly.setVisibility(View.GONE);
         }
         tvTitle.setText(bean.getPostTitle());

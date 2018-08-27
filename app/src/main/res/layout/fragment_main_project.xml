@@ -29,13 +29,20 @@
             <RelativeLayout
                 android:id="@+id/rl_context"
                 android:layout_width="match_parent"
-                android:visibility="gone"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_10"
+                    android:background="@color/background_gray" />
 
                 <LinearLayout
                     android:id="@+id/ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/view"
                     android:background="@color/white"
                     android:padding="@dimen/dp_10">
 

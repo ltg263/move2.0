@@ -70,7 +70,7 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
 //               ：0-完整版专业评测，1-自定义评测，2-文章，3-打假，4-单项评测
                 int type = rowsBean.getType();
                 if(type==5 && StringUtil.isNotBlank(rowsBean.getOutUrl())){
-                    IntentUtil.startWebViewActivity(rowsBean.getOutUrl(),"区分");
+                    IntentUtil.startWebViewActivity(rowsBean.getOutUrl(),mContext.getString(R.string.app_name));
                     return;
                 }
                 if(type==0 || type ==1 || type==4){
