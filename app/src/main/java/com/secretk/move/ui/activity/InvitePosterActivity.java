@@ -54,6 +54,7 @@ public class InvitePosterActivity extends BaseActivity {
     protected void OnToolbarRightListener() {
         SharePopupWindow popupWindow = new SharePopupWindow(this);
         popupWindow.setShareImg(imgUrl);
+        popupWindow.concealBelow();
         popupWindow.showAtLocation(tvBnt, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 

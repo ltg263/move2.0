@@ -218,6 +218,12 @@ public class DetailsDiscussActivity extends BaseActivity {
             }
         });
         loadingDialog.show();
+        tvProjectCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IntentUtil.startProjectActivity(projectId);
+            }
+        });
     }
 
     private void inputMethod() {

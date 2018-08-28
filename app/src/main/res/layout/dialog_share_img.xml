@@ -72,6 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_title"
                     android:lineSpacingExtra="@dimen/item_line_spacing"
+                    android:layout_marginBottom="@dimen/line_spacing_extra"
                     android:minLines="10"
                     android:padding="@dimen/dp_10"
                     android:textColor="#4a4949"

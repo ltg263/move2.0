@@ -50,6 +50,19 @@
             android:textColor="@color/title_gray"
             android:textSize="@dimen/list_item_user"
             android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv_stick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_toRightOf="@id/tv_user_name"
+            android:background="@drawable/garden_crack"
+            android:textSize="@dimen/sp_12"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:paddingVertical="@dimen/dp_1"
+            android:text="置顶" />
 
         <TextView
             android:id="@+id/tv_time"
@@ -98,7 +111,8 @@
             android:letterSpacing="0.05"
             android:lineSpacingExtra="@dimen/item_line_spacing"
             android:maxLines="2"
-            android:text="哈哈哈"
+            android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈"
+            android:layout_marginBottom="@dimen/line_spacing_extra"
             android:textColor="@color/title_gray"
             android:textSize="@dimen/list_item_title"
             android:textStyle="bold" />
@@ -110,6 +124,7 @@
             android:layout_alignBottom="@id/tv_title"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/line_spacing_extra_1"
             android:text="0999"
             android:textColor="@color/app_background"
             android:textSize="@dimen/list_item_score"
@@ -123,6 +138,7 @@
             android:ellipsize="end"
             android:letterSpacing="0.05"
             android:lineSpacingExtra="@dimen/item_line_spacing"
+            android:layout_marginBottom="@dimen/line_spacing_extra"
             android:maxLines="3"
             android:text="啦啦啦啦啦啦啦阿联啦啦啦啦啦啦啦阿联啦啦啦啦啦啦啦阿联啦啦啦啦啦啦啦阿联"
             android:textColor="@color/title_gray_66"

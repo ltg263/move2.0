@@ -107,6 +107,7 @@ public class CustomDialog extends Dialog {
     public void shareUi(){
         SharePopupWindow popupWindow = new SharePopupWindow(context);
         popupWindow.setShareImg(strPath);
+        popupWindow.concealBelow();
         popupWindow.showAtLocation(tvTime, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 }

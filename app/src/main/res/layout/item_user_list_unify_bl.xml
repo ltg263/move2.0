@@ -52,8 +52,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/title_gray"
+                android:text="ased"
                 android:textSize="@dimen/sp_14"
                 android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_stick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_toRightOf="@id/tvName"
+                android:visibility="gone"
+                android:background="@drawable/garden_crack"
+                android:textSize="@dimen/sp_12"
+                android:paddingHorizontal="@dimen/dp_10"
+                android:paddingVertical="@dimen/dp_1"
+                android:text="置顶" />
 
             <TextView
                 android:id="@+id/tvTime"
@@ -108,6 +122,7 @@
                 android:ellipsize="end"
                 android:letterSpacing="0.05"
                 android:lineSpacingExtra="@dimen/item_line_spacing"
+                android:layout_marginBottom="@dimen/line_spacing_extra"
                 android:maxLines="2"
                 android:paddingHorizontal="@dimen/dp_10"
                 android:textColor="@color/title_gray"
@@ -123,6 +138,7 @@
                 android:ellipsize="end"
                 android:letterSpacing="0.05"
                 android:lineSpacingExtra="@dimen/item_line_spacing"
+                android:layout_marginBottom="@dimen/line_spacing_extra"
                 android:maxLines="3"
                 android:paddingHorizontal="@dimen/dp_10"
                 android:textColor="@color/title_gray_66"

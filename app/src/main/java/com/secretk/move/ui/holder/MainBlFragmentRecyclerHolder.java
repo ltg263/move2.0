@@ -87,6 +87,8 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     TextView tvPraise;
     @BindView(R.id.tvComments)
     TextView tvComments;
+    @BindView(R.id.tv_stick)
+    TextView tvStick;
     private ImagesAdapter imagesadapter;
     private Context mContext;
     public MainBlFragmentRecyclerHolder(View itemView,Context context) {
@@ -107,6 +109,10 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         if(StringUtil.isNotBlank(bean.getProjectCode())){
             tvProjectCode.setVisibility(View.VISIBLE);
             tvProjectCode.setText(bean.getProjectCode());
+        }
+        tvStick.setVisibility(View.GONE);
+        if(bean.getDisStickTop()==1){
+            tvStick.setVisibility(View.VISIBLE);
         }
         StringUtil.getUserType(bean.getUserType(),ivModelType);
         showPostDesc(bean);

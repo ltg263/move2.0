@@ -227,6 +227,13 @@ public class DetailsArticleActivity extends BaseActivity {
                 }
             }
         });
+
+        tvProjectCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IntentUtil.startProjectActivity(projectId);
+            }
+        });
         loadingDialog.show();
     }
 

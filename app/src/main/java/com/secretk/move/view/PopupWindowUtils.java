@@ -138,7 +138,6 @@ public class PopupWindowUtils extends PopupWindow {
                 return true;
             }
         });
-        this.showAtLocation(view, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
     private void setEvent(View view, final GiveDialogInterface dialogInterface) {

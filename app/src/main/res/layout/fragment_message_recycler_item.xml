@@ -60,6 +60,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="115248关注"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textColor="@color/title_gray_aa"
                     android:textSize="@dimen/sp_12" />
             </LinearLayout>

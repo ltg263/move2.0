@@ -243,17 +243,17 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
                 break;
             case R.id.tv_ww_gw:
                 if (StringUtil.isNotBlank(projectIntro.getWhitepaperUrl())) {
-                    IntentUtil.startWebViewActivity(tvWebsiteUrl.getText().toString().trim(), "官网");
+                    IntentUtil.startWebViewActivity(projectIntro.getWhitepaperUrl(), "官网");
                 }
                 break;
             case R.id.tv_ww_bps:
                 if (StringUtil.isNotBlank(projectIntro.getWebsiteUrl())) {
-                    IntentUtil.startWebViewActivity(tvWebsiteUrl.getText().toString().trim(), "白皮书");
+                    IntentUtil.startWebViewActivity(projectIntro.getWebsiteUrl(), "白皮书");
                 }
                 break;
             case R.id.tv_ww_git:
                 if (StringUtil.isNotBlank(projectIntro.getGithub())) {
-                    IntentUtil.startWebViewActivity(tvWebsiteUrl.getText().toString().trim(), "Github");
+                    IntentUtil.startWebViewActivity(projectIntro.getGithub(), "Github");
                 }
                 break;
             case R.id.rl_gfzh:

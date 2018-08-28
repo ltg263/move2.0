@@ -34,7 +34,9 @@ import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.UiUtils;
 import com.secretk.move.view.DialogUtils;
 import com.secretk.move.view.FragmentMineView;
 import com.secretk.move.view.RecycleNestedScrollView;
@@ -142,8 +144,17 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
         sv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if(scrollY <211){
-                    rl.setAlpha(scrollY/150f);
+//                if(scrollY <211){
+//                    rl.setAlpha(scrollY/150f);
+//                }
+                if(scrollY>70){
+                    rl.setVisibility(View.VISIBLE);
+                    StatusBarUtil.setLightMode(getActivity());
+                    StatusBarUtil.setColor(getActivity(), UiUtils.getColor(R.color.background_gray), 0);
+                }else{
+                    rl.setVisibility(View.GONE);
+                    StatusBarUtil.setLightMode(getActivity());
+                    StatusBarUtil.setColor(getActivity(), UiUtils.getColor(R.color.white), 0);
                 }
             }
         });
@@ -336,17 +347,23 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 String mesSum = "";
                 int messageSum = userInfo.getData().getMessageSum();
                 rlMesNum.setVisibility(View.GONE);
-                rlActivity.setVisibility(View.GONE);
+                if(rlActivity != null){
+                    rlActivity.setVisibility(View.GONE);
+                }
                 if(messageSum>0){
-                    rlActivity.setVisibility(View.VISIBLE);
+                    if(rlActivity != null){
+                        rlActivity.setVisibility(View.VISIBLE);
+                    }
                     rlMesNum.setVisibility(View.VISIBLE);
                     if(messageSum<100){
                         mesSum = String.valueOf(messageSum);
                     }else{
                         mesSum = "99+";
                     }
-                    tvActivity.setText(mesSum);
                     tvMessageSum.setText(mesSum);
+                    if(tvMessageSum != null){
+                        tvActivity.setText(mesSum);
+                    }
                 }
                 sharedUtils.put("awardToken", userInfo.getData().getAwardToken());
                 sharedUtils.put("userCardStatus", userInfo.getData().getUserCardStatus());

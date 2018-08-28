@@ -90,6 +90,8 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     TextView tvTotalIncome;
     @BindView(R.id.tvShare)
     TextView tvShare;
+    @BindView(R.id.tv_stick)
+    TextView tvStick;
     private ImagesAdapter imagesadapter;
     Context mContext;
     public MainRfFragmentRecyclerHolder(View itemView) {
@@ -109,6 +111,10 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvUserName.setText(StringUtil.getBeanString(bean.getCreateUserName()));
         tvTime.setText(time);
         tvUserFolly.setVisibility(View.VISIBLE);
+        tvStick.setVisibility(View.GONE);
+        if(bean.getDisStickTop() ==1){
+            tvStick.setVisibility(View.VISIBLE);
+        }
         if(bean.getFollowStatus() == 1){
             tvUserFolly.setSelected(true);
             tvUserFolly.setText(context.getResources().getString(R.string.follow_status_1));

@@ -157,6 +157,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/tv_sore"
+            android:lineSpacingExtra="@dimen/item_line_spacing"
+            android:layout_marginBottom="@dimen/line_spacing_extra"
             android:ellipsize="end"
             android:maxLines="2"
             android:textColor="@color/title_gray"
@@ -182,6 +184,7 @@
             android:layout_marginTop="@dimen/dp_8"
             android:ellipsize="end"
             android:lineSpacingExtra="@dimen/item_line_spacing"
+            android:layout_marginBottom="@dimen/line_spacing_extra"
             android:maxLines="3"
             android:textColor="#4f4f4f"
             android:textSize="@dimen/list_item_details" />

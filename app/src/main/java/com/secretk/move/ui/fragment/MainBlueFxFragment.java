@@ -207,7 +207,7 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
             @Override
             public void onCompleted(CommonListBase bean) {
                 CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getRecommends();
-                if (detailsBean.getCurPageNum() == detailsBean.getPageSize()) {
+                if (detailsBean.getCurPageNum() == detailsBean.getPageCount()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
                 if (pageIndex > 2) {
@@ -224,7 +224,7 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
                     refreshLayout.finishRefresh();
                 }
                 if (refreshLayout.isEnableLoadMore()) {
-                    refreshLayout.finishLoadMore(true);
+                    refreshLayout.finishLoadMore();
                 }
                 loadingDialog.dismiss();
             }

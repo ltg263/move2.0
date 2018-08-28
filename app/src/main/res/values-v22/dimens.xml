@@ -1,0 +1,5 @@
+<resources>
+
+    <dimen name="line_spacing_extra">8dp</dimen>
+    <dimen name="line_spacing_extra_1">0dp</dimen>
+</resources>

@@ -162,6 +162,7 @@
             android:layout_marginTop="@dimen/dp_8"
             android:ellipsize="end"
             android:lineSpacingExtra="@dimen/item_line_spacing"
+            android:layout_marginBottom="@dimen/line_spacing_extra"
             android:maxLines="3"
             android:textColor="#4f4f4f"
             android:textSize="13sp" />

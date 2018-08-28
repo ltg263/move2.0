@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -67,6 +68,8 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
     TextView tvShareReport;
     @BindView(R.id.tv_cancel)
     TextView tvCancel;
+    @BindView(R.id.ll_below)
+    LinearLayout llBelow;
     private View mMenuView;
     private Context mContext;
     private String url;
@@ -370,6 +373,13 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
     @Override
     public void onCancel(Platform platform, int i) {
         ToastUtils.getInstance().show("取消分享");
+    }
+
+    /**
+     * 隐藏 复制链接和 举报
+     */
+    public void concealBelow() {
+        llBelow.setVisibility(View.GONE);
     }
 
 

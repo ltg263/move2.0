@@ -39,7 +39,9 @@ public class RowsBean extends CommonListBase {
      * updateTimeStr : 2018-05-06 23:08:20
      * status : 1
      */
+
     private int followStatus;
+    private int disStickTop;
     private int postId;
     private int projectId;
     private String projectIcon;
@@ -74,6 +76,14 @@ public class RowsBean extends CommonListBase {
     private String postSmallImages;
     private String professionalEvaDetail;
 
+    public int getDisStickTop() {
+        return disStickTop;
+    }
+
+    public void setDisStickTop(int disStickTop) {
+        this.disStickTop = disStickTop;
+    }
+
     /**
      * discussId
      * disscussContents
@@ -83,6 +93,7 @@ public class RowsBean extends CommonListBase {
      * evauationContent
      * tagInfos [{"tagId":1,"tagName":"进度讨论"},{"tagId":3,"tagName":"项目前景讨论"},{"tagId":4,"tagName":"打假"}]
      */
+
     private int discussId;
     private String disscussContents;
 

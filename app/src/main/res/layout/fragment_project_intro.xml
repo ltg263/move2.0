@@ -62,6 +62,7 @@
                         android:layout_weight="1"
                         android:ellipsize="end"
                         android:lineSpacingExtra="@dimen/item_line_spacing"
+                        android:paddingBottom="@dimen/line_spacing_extra"
                         android:maxLines="5"
                         android:text=";alskdjfawowoa发围殴阿斯顿发射点发围殴阿发围殴阿斯顿发射点发围殴阿发围殴阿斯顿发射点发围殴阿斯顿发射点发围殴阿斯顿发射点发围殴阿斯顿发射点发围殴阿斯顿发射点发围殴阿斯顿发射点发围殴阿斯顿发射点发围殴阿斯顿发射点发围殴阿斯顿发射点发围殴阿斯顿发射点发围殴阿斯顿发射点发围殴阿斯顿发射点发围殴阿斯顿发射点发围殴阿斯顿发射点发围殴阿斯顿发射点发围殴阿斯顿发射点"
                         android:textColor="@color/title_gray"
@@ -73,13 +74,13 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@id/tv_project_desc"
                         android:layout_alignRight="@id/tv_project_desc"
-                        android:layout_marginBottom="@dimen/dp_8"
                         android:background="@color/white"
                         android:paddingLeft="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_8"
                         android:text="查看更多>"
                         android:textColor="@color/app_background"
                         android:textSize="@dimen/sp_12"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
                 </RelativeLayout>
 
                 <TextView
