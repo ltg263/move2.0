@@ -1,5 +1,7 @@
 package com.secretk.move.ui.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,8 +9,8 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
@@ -30,8 +32,8 @@ import java.util.List;
 public class WebViewActivity extends BaseActivity {
     private WebView mWbview;
     private WebSettings webSettings;
-    private TextView tv;
     private String url;
+    private ImageView iv;
     private ProgressBar progressbar;
 //    private WebViewInterface webViewInterface;
     private static final int HANDLER_1 = 1;
@@ -54,21 +56,27 @@ public class WebViewActivity extends BaseActivity {
     protected void initUI(Bundle savedInstanceState) {
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.app_bar_background), 0);
-        tv = findViewById(R.id.tv);
         progressbar = findViewById(R.id.myProgressBar);
+        iv = findViewById(R.id.iv);
         mWbview = findViewById(R.id.webview);
         url = getIntent().getStringExtra("url");
         String name = getIntent().getStringExtra("name");
         if(name.equals("关于我们")){
             mMenuInfos.add(0,new MenuInfo(R.string.mine_help, getString(R.string.mine_help), 0));
         }
-        mHeadView.setTitle(name);
-        if(!name.equals(getString(R.string.app_name))){
-            tv.setVisibility(View.GONE);
-            progressbar.setVisibility(View.VISIBLE);
-            mWbview.setVisibility(View.VISIBLE);
-            initWebView();
+        if(!url.contains("qufen.top")){
+            iv.setVisibility(View.VISIBLE);
         }
+        mHeadView.setTitle(name);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+        initWebView();
     }
 
     @Override

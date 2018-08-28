@@ -145,7 +145,7 @@
             android:textColor="@color/title_gray"
             android:textColorHint="@color/title_gray_aa"
             android:textCursorDrawable="@drawable/shape_edit_cursor"
-            android:textSize="@dimen/sp_12" />
+            android:textSize="@dimen/sp_14" />
 
         <TextView
             android:id="@+id/tv_send"

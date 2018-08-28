@@ -242,17 +242,20 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
         platform.share(paramsToShare);
 
     }
-
     private void shareSinaWeibo() {
-        Platform.ShareParams paramsToShare = new Platform.ShareParams();
-        paramsToShare.setShareType(Platform.SHARE_WEBPAGE);
-        paramsToShare.setTitle(mContext.getString(R.string.app_name));
-        paramsToShare.setText(content);
         Platform platform = ShareSDK.getPlatform(SinaWeibo.NAME);
+        Platform.ShareParams paramsToShare = new Platform.ShareParams();
+        //https://m.qufen.top/user/download
+        paramsToShare.setText(content+"... "+url);
+        if(StringUtil.isNotBlank(imgUrl)){
+            paramsToShare.setImageUrl(imgUrl);
+        }
+//        Platform a = ShareSDK.getPlatform()
         // 设置分享事件回调（注：回调放在不能保证在主线程调用，不可以在里面直接处理UI操作）
         platform.setPlatformActionListener(this);
         // 执行图文分享
         platform.share(paramsToShare);
+
     }
 
 

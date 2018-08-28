@@ -9,7 +9,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -243,7 +242,6 @@ public class DetailsArticleActivity extends BaseActivity {
         webSettings.setBlockNetworkImage(false); // 解决图片不显示
         //支持javascript
         webSettings.setJavaScriptEnabled(true);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
@@ -261,21 +259,6 @@ public class DetailsArticleActivity extends BaseActivity {
                 }
                 return false;
             }
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
-                //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    LogUtil.w("request.getUrl().toString():" + request.getUrl().toString());
-                    if (request.getUrl().toString().contains("sina.cn")) {
-//                        view.loadUrl("http://ask.csdn.net/questions/178242");
-                        return true;
-                    }
-                }
-                return false;
-            }
-
         });
     }
 
@@ -642,6 +625,7 @@ public class DetailsArticleActivity extends BaseActivity {
                 tvCreateTime.setText(StringUtil.getTimeToM(articleDetail.getCreateTime()));
 
                 wvPostShortDesc.loadData(StringUtil.getNewContent(articleDetail.getArticleContents()), "text/html; charset=UTF-8", null);//这种写法可以正确解码
+//                wvPostShortDesc.getSettings().setDefaultFontSize(30);
                 wvPostShortDesc.setVisibility(View.VISIBLE);
                 tvPostShortDesc.setVisibility(View.GONE);
 

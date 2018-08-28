@@ -557,6 +557,15 @@ public class StringUtil {
                 htmltext = htmltext.replaceAll("&nbsp", "&nbsp;");
             }
             Document doc= Jsoup.parse(htmltext);
+
+            Elements elementsAll = doc.getAllElements();
+            for (Element span : elementsAll) {
+//                Elements p = span.getElementsByTag("p");
+////                p.attr("style","font-size:16px;width:100%;margin:1rem 0px");
+////                Elements h1 = span.getElementsByTag("h1");
+                span.attr("style","font-size:16px;width:100%;margin:1rem 0px;line-height:26px;letter-spacing:1px;");
+            }
+
             Elements elements=doc.getElementsByTag("img");
             for (Element element : elements) {
                 element.attr("width","100%").attr("height","auto");
@@ -565,13 +574,18 @@ public class StringUtil {
                    element.attr("src","");
                }
             }
+            LogUtil.w("doc:"+doc.toString());
+
             return doc.toString();
         } catch (Exception e) {
             return htmltext;
         }
     }
 
-    // 判断Object是空
+
+
+
+        // 判断Object是空
     public static boolean isEmptyObject(Object obj) {
         if (obj == null) {
             return true;

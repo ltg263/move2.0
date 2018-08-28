@@ -130,7 +130,12 @@ public class ProjectIntroFragment extends LazyFragment implements ItemClickListe
             tvWebsiteUrl.setText(projectIntro.getWebsiteUrl());
             tvProjectTypeName.setText(projectIntro.getProjectTypeName());
             tvWhitepaperUrl.setText(projectIntro.getWhitepaperUrl());
-            tvIssueLtzl.setText(String.valueOf(projectIntro.getBsjCirculateData()));
+
+            if(projectIntro.getBsjCirculateData()==0){
+                tvIssueLtzl.setText("-");
+            }else{
+                tvIssueLtzl.setText(String.valueOf(projectIntro.getBsjCirculateData()));
+            }
             tvIssueFxzl.setText(String.valueOf(projectIntro.getIssueNum()));
             activeUsers = projectIntro.getActiveUsers();
             if(projectIntro.getProjectUserId()!=0){

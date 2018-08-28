@@ -396,13 +396,11 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
                                 serverImgList.add(str);
                                 if (serverImgList.size() == releasePicAdapter.getItemCount()-1) {
                                     try {
-                                        LogUtil.w("----------------------------------------------------");
                                         generatePostSmallImages(serverImgList);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
                                 }else {
-                                    LogUtil.w("----------------------------------------------------");
                                     upImgHttp(adapterImgList.get(position+1),position+1);
                                 }
                             }else{

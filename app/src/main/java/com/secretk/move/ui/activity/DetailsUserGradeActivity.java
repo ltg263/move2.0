@@ -124,7 +124,7 @@ public class DetailsUserGradeActivity extends BaseActivity implements ItemClickL
         tvWriteDiscuss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(id!=0){
+                if(id!=0 && intent!=null){
                     IntentUtil.startProjectSimplenessActivity(id,icon,
                             chineseName,code);
                 }

@@ -130,7 +130,7 @@ public class MineMessageActivity extends BaseActivity {
         try {
             node.put("token", token);
             node.put("pageIndex", pageIndex++);
-            node.put("pageSize", Constants.PAGE_SIZE);
+            node.put("pageSize", 15);
         } catch (JSONException e) {
             e.printStackTrace();
         }
