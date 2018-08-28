@@ -151,6 +151,8 @@ public class DetailsDiscussActivity extends BaseActivity {
     RelativeLayout rlSelectYse;
     @BindView(R.id.rl_select_no)
     RelativeLayout rlSelectNo;
+    @BindView(R.id.rl_not_content)
+    RelativeLayout rlNotContent;
     private DetailsDiscussAdapter adapter;
     private DetailsDiscussAdapter adapterNew;
     private String postId;
@@ -719,6 +721,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                 DiscussNewInfoBean.DataBean.CommentsBean commentsBean = newInfoBean.getData().getComments();
                 if (commentsBean != null) {
                     if (commentsBean.getRows() != null && commentsBean.getRows().size() > 0) {
+                        rlNotContent.setVisibility(View.GONE);
                         llZx.setVisibility(View.VISIBLE);
                         tvZx.setText("评论 (" + commentsBean.getRowCount() + ")");
                         if (pageIndex > 2) {
@@ -732,6 +735,11 @@ public class DetailsDiscussActivity extends BaseActivity {
                     }
                 } else {
                     refreshLayout.finishLoadMoreWithNoMoreData();
+                }
+                if(rlNotContent.getVisibility() ==View.VISIBLE){
+                    refreshLayout.setEnableLoadMore(false);
+                }else{
+                    refreshLayout.setEnableLoadMore(true);
                 }
             }
 

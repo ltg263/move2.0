@@ -165,6 +165,8 @@ public class DetailsReviewAllActivity extends BaseActivity {
     TextView tvSortTime;
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
+    @BindView(R.id.rl_not_content)
+    RelativeLayout rlNotContent;
     @BindView(R.id.pb_comprehensive_evaluation)
     ProgressBarStyleView pbComprehensiveEvaluation;
     private DetailsDiscussAdapter adapter;
@@ -846,6 +848,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
                 if (commentsBean != null) {
                     if (commentsBean.getRows() != null && commentsBean.getRows().size() > 0) {
                         llZx.setVisibility(View.VISIBLE);
+                        rlNotContent.setVisibility(View.GONE);
                         tvZx.setText("评论 (" + commentsBean.getRowCount() + ")");
                         if (pageIndex > 2) {
                             adapterNew.addData(commentsBean.getRows());
@@ -860,6 +863,11 @@ public class DetailsReviewAllActivity extends BaseActivity {
                     }
                 } else {
                     refreshLayout.finishLoadMoreWithNoMoreData();
+                }
+                if(rlNotContent.getVisibility() ==View.VISIBLE){
+                    refreshLayout.setEnableLoadMore(false);
+                }else{
+                    refreshLayout.setEnableLoadMore(true);
                 }
             }
 

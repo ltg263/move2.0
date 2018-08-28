@@ -9,6 +9,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.apiService.HttpCallBackImpl;
@@ -23,6 +25,7 @@ import com.secretk.move.presenter.impl.MainPresenterImpl;
 import com.secretk.move.ui.adapter.MainActivityPagerAdapter;
 import com.secretk.move.ui.fragment.MainBlueFxFragment;
 import com.secretk.move.ui.fragment.MainBlueGzFragment;
+import com.secretk.move.ui.fragment.MineFragment;
 import com.secretk.move.utils.DownloadService;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
@@ -62,6 +65,10 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
     RadioButton rbMessage;
     @BindView(R.id.rb_mine)
     RadioButton rbMine;
+    @BindView(R.id.rl_mes_num)
+    RelativeLayout rlMesNum;
+    @BindView(R.id.tv_message_sum)
+    TextView tvMessageSum;
     private String postId;
     private String type;
 
@@ -94,6 +101,8 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
         MobclickAgent.onProfileSignIn("1");
         adapter = new MainActivityPagerAdapter(getSupportFragmentManager());
         vp_main.setAdapter(adapter);
+        MineFragment fragment = (MineFragment) adapter.getItem(4);
+        fragment.setMessageView(rlMesNum,tvMessageSum);
         vp_main.setOffscreenPageLimit(5);
         presenter = new MainPresenterImpl(this);
         presenter.initialized();

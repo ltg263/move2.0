@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f4f4f4"
@@ -9,14 +9,14 @@
         android:id="@+id/vp_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="10" />
+        android:layout_above="@id/rg_main_parent" />
 
     <RadioGroup
         android:id="@+id/rg_main_parent"
         android:layout_width="match_parent"
         android:layout_height="65dp"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:layout_weight="1"
         android:background="@color/white"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/dp_5">
@@ -37,6 +37,7 @@
             style="@style/main_tab_bottom"
             android:drawableTop="@drawable/main_tab_project_selector"
             android:text="@string/main_tab_project" />
+
         <RadioButton
             android:id="@+id/rb_topic"
             style="@style/main_tab_bottom"
@@ -54,8 +55,32 @@
             android:id="@+id/rb_mine"
             style="@style/main_tab_bottom"
             android:drawableTop="@drawable/main_tab_mine_selector"
-
             android:text="@string/main_tab_mine" />
     </RadioGroup>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rl_mes_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/rg_main_parent"
+        android:layout_alignTop="@id/rg_main_parent"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginRight="@dimen/dp_22">
+
+        <ImageView
+            android:layout_width="@dimen/dp_15"
+            android:layout_height="@dimen/dp_15"
+            android:layout_centerInParent="true"
+            android:src="@drawable/btn_circle_app_red" />
+
+        <TextView
+            android:id="@+id/tv_message_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            android:textSize="8sp"
+            android:visibility="visible" />
+    </RelativeLayout>
+</RelativeLayout>

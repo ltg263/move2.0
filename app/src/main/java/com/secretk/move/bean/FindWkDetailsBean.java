@@ -83,7 +83,7 @@ public class FindWkDetailsBean extends BaseRes{
             private String projectCode;
             private String tokenName;
             private int tokenCount;
-            private int tokenEveryCount;
+            private double tokenEveryCount;
             private int tokenCash;
             private int tokenNum;
             private int tokenSurplusNum;
@@ -181,11 +181,11 @@ public class FindWkDetailsBean extends BaseRes{
                 this.tokenCount = tokenCount;
             }
 
-            public int getTokenEveryCount() {
+            public double getTokenEveryCount() {
                 return tokenEveryCount;
             }
 
-            public void setTokenEveryCount(int tokenEveryCount) {
+            public void setTokenEveryCount(double tokenEveryCount) {
                 this.tokenEveryCount = tokenEveryCount;
             }
 

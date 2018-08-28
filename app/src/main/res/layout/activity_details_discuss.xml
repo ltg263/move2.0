@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/view"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/refreshLayout"
@@ -338,6 +338,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
+                    <RelativeLayout
+                        android:id="@+id/rl_not_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/dp_35"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_not_contant"/>
+                    </RelativeLayout>
+
 
                     <LinearLayout
                         android:id="@+id/ll_zx"

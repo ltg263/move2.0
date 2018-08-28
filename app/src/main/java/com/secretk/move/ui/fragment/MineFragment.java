@@ -124,15 +124,21 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     @BindView(R.id.sv)
     RecycleNestedScrollView sv;
     private UserLoginInfo.DataBean.UserBean userInfos;
+    private RelativeLayout rlActivity;
+    private TextView tvActivity;
 
     @Override
     public int setFragmentView() {
         return R.layout.fragment_mine;
     }
+    public void setMessageView(RelativeLayout rlActivity,TextView tvActivity) {
+        this.rlActivity=rlActivity;
+        this.tvActivity = tvActivity;
+    }
 
     @Override
     public void initViews() {
-
+        LogUtil.w("rlActivity:"+rlActivity);
         sv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -330,13 +336,16 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 String mesSum = "";
                 int messageSum = userInfo.getData().getMessageSum();
                 rlMesNum.setVisibility(View.GONE);
+                rlActivity.setVisibility(View.GONE);
                 if(messageSum>0){
+                    rlActivity.setVisibility(View.VISIBLE);
                     rlMesNum.setVisibility(View.VISIBLE);
                     if(messageSum<100){
                         mesSum = String.valueOf(messageSum);
                     }else{
                         mesSum = "99+";
                     }
+                    tvActivity.setText(mesSum);
                     tvMessageSum.setText(mesSum);
                 }
                 sharedUtils.put("awardToken", userInfo.getData().getAwardToken());
