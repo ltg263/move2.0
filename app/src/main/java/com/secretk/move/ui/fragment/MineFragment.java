@@ -101,6 +101,8 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     TextView tvUserCardStatus;
     @BindView(R.id.tv_article)
     TextView tvArticle;
+    @BindView(R.id.rl_mes_num)
+    RelativeLayout rlMesNum;
     @BindView(R.id.rl_essay)
     RelativeLayout rlEssay;
     @BindView(R.id.rl)
@@ -130,12 +132,13 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 
     @Override
     public void initViews() {
+
         sv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                LogUtil.w("scrollY/300:"+scrollY/300f);
-                rl.setAlpha(scrollY/300f);
-
+                if(scrollY <211){
+                    rl.setAlpha(scrollY/150f);
+                }
             }
         });
     }
@@ -324,8 +327,18 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 sharedUtils.put(Constants.USER_TYPE, userInfo.getData().getUser().getUserType());
                 sharedUtils.put(Constants.MOBILE, userInfo.getData().getUser().getMobile());
                 sharedUtils.put(Constants.USER_ID, userInfo.getData().getUser().getUserId());
-
-                tvMessageSum.setText(userInfo.getData().getMessageSum() + "条未读");
+                String mesSum = "";
+                int messageSum = userInfo.getData().getMessageSum();
+                rlMesNum.setVisibility(View.GONE);
+                if(messageSum>0){
+                    rlMesNum.setVisibility(View.VISIBLE);
+                    if(messageSum<100){
+                        mesSum = String.valueOf(messageSum);
+                    }else{
+                        mesSum = "99+";
+                    }
+                    tvMessageSum.setText(mesSum);
+                }
                 sharedUtils.put("awardToken", userInfo.getData().getAwardToken());
                 sharedUtils.put("userCardStatus", userInfo.getData().getUserCardStatus());
                 sharedUtils.put("statusHierarchyType", userInfo.getData().getStatusHierarchyType());

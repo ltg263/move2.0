@@ -95,7 +95,7 @@ public class FindWksyAdapter extends RecyclerView.Adapter<FindWksyAdapter.FindWk
 
         private void refresh(int position) {
             FindWksyList.DataBeanX.DataBean.RowsBean bean = lists.get(position);
-            tvTitle.setText(StringUtil.getBeanString(bean.getProjectCode()));
+            tvTitle.setText(StringUtil.getBeanString(bean.getTokenName()));
             tvTime.setText(StringUtil.getTimeToM(bean.getUpdatedAt()));
             GlideUtils.loadCircleProjectUrl(mContext,ivIcon, Constants.BASE_IMG_URL+bean.getProjectIcon());
             tvCode.setText(StringUtil.getBeanString(bean.getTitle()));

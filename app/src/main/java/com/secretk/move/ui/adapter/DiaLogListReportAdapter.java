@@ -9,7 +9,14 @@ import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.listener.ItemClickListener;
+import com.secretk.move.ui.activity.MineApproveSubmitiCertificateActivity;
+import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.NetUtil;
+import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.view.DialogUtils;
+import com.secretk.move.view.ReportPopupWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +34,9 @@ public class DiaLogListReportAdapter extends RecyclerView.Adapter<DiaLogListRepo
     private ItemClickListener mListener;
     private List<String> lists = new ArrayList<>();
     private List<String> listSelect = new ArrayList<>();
+    private List<Integer> listIndex = new ArrayList<>();
+    private int postId;
+    private ReportPopupWindow reportPopupWindow;
 
     int lsPosition = -1;
     Context context;
@@ -54,8 +64,11 @@ public class DiaLogListReportAdapter extends RecyclerView.Adapter<DiaLogListRepo
         return lists.size();
     }
 
-    public void setData(List<String> list) {
+    public void setData(List<String> list, List<Integer> listIndex, int postId, ReportPopupWindow reportPopupWindow) {
         this.lists = list;
+        this.postId = postId;
+        this.listIndex = listIndex;
+        this.reportPopupWindow = reportPopupWindow;
         notifyDataSetChanged();
     }
 
@@ -92,10 +105,34 @@ public class DiaLogListReportAdapter extends RecyclerView.Adapter<DiaLogListRepo
 //                        tvItem.setTextColor(context.getResources().getColor(R.color.app_background));
 //                    }
 //                    单选
-                    lsPosition = position;
-                    notifyDataSetChanged();
+//                    lsPosition = position;
+//                    notifyDataSetChanged();
+                    setZjjb(position);
                 }
             });
+        }
+
+        private void setZjjb(int position) {
+            int userCardStatus = SharedUtils.singleton().get("userCardStatus", 0);
+            if(userCardStatus!=2){
+                DialogUtils.showDialogHint(context, "请先实名认证",false, new DialogUtils.ErrorDialogInterface() {
+                    @Override
+                    public void btnConfirm() {
+                        IntentUtil.startActivity(MineApproveSubmitiCertificateActivity.class);
+                    }
+                });
+                reportPopupWindow.dismiss();
+                return;
+            }
+            NetUtil.saveReport(1, postId, listIndex.get(position), new NetUtil.SaveCollectImp() {
+                @Override
+                public void finishCollect(String code, boolean status) {
+                    if(!code.equals(Constants.COLLECT_ERROR)){
+                        DialogUtils.showDialogPraise(context,4,status,0);
+                    }
+                }
+            });
+            reportPopupWindow.dismiss();
         }
 
     }

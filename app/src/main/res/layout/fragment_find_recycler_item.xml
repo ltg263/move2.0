@@ -73,18 +73,9 @@
 
         <TextView
             android:id="@+id/tvIsFollw"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/BtnSelectorFollow"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_5"
-            android:background="@drawable/selector_follow"
-            android:paddingBottom="@dimen/dp_3"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_3"
-            android:text="+关注"
-            android:textColor="@color/app_background" />
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 
     <View

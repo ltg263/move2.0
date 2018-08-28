@@ -20,6 +20,7 @@ import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.utils.ToastUtils;
 
 import java.util.List;
 
@@ -70,7 +71,7 @@ public class ReportPopupWindow extends PopupWindow {
 
     public void setData(List<String> list, List<Integer> listIndex, int postId){
         this.listIndex = listIndex;
-        adapter.setData(list);
+        adapter.setData(list,listIndex,postId,this);
         this.postId=postId;
     }
 
@@ -93,6 +94,10 @@ public class ReportPopupWindow extends PopupWindow {
                         }
                     });
                     dismiss();
+                    return;
+                }
+                if(listIndex==null || listIndex.size()==0){
+                    ToastUtils.getInstance().show("请选择举报原因");
                     return;
                 }
                 NetUtil.saveReport(1, postId, listIndex.get(adapter.getPosition()), new NetUtil.SaveCollectImp() {

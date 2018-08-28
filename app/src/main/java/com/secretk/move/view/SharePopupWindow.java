@@ -409,7 +409,6 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                ToastUtils.getInstance().show(str);
             }
         });
     }

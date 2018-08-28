@@ -220,7 +220,7 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
                     refreshLayout.finishRefresh();
                 }
                 if (refreshLayout.isEnableLoadMore()) {
-                    refreshLayout.finishLoadMore(true);
+                    refreshLayout.finishLoadMore();
                 }
                 loadingDialog.dismiss();
             }

@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/rv_context"
+            android:visibility="gone"
             android:background="#f9f9f9"
             android:gravity="center"
             android:padding="@dimen/dp_18"

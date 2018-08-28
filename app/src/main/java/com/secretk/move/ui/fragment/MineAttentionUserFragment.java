@@ -126,7 +126,7 @@ public class MineAttentionUserFragment extends LazyFragment {
                     refreshLayout.setVisibility(View.GONE);
                     return;
                 }
-                if (follows.getCurPageNum() == follows.getPageSize()) {
+                if (follows.getCurPageNum() == follows.getPageCount()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }else{
                     refreshLayout.setEnableLoadMoreWhenContentNotFull(true);

@@ -72,7 +72,10 @@ public class LoginHomeActivity extends BaseActivity {
         StringUtil.etSearchChangedListener(etPhone, butLogin, new StringUtil.EtChange() {
             @Override
             public void etYes() {
-                butLogin.setSelected(true);
+                butLogin.setSelected(false);
+                if(etPhone.getText().toString().trim().length()==11){
+                    butLogin.setSelected(true);
+                }
             }
         });
         StringUtil.etSearchChangedListener(etPhone, ivDelete, new StringUtil.EtChange() {

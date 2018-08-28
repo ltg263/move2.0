@@ -79,22 +79,14 @@ public class FindFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 break;
         }
         tvFollws.setText(currenBean.getFollowerNum() + "关注");
-        if (0 == currenBean.getFollowStatus()) {
-            tvIsFollw.setText(context.getString(R.string.follow_status_0));
-            tvIsFollw.setSelected(false);
-            tvIsFollw.setPressed(false);
-            tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
-        } else if (1 == currenBean.getFollowStatus()) {
-            tvIsFollw.setText(context.getString(R.string.follow_status_1));
+
+        //0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
+        if(currenBean.getFollowStatus() == 1){
             tvIsFollw.setSelected(true);
-            tvIsFollw.setPressed(true);
-            tvIsFollw.setTextColor(Color.parseColor("#3b88f6"));
-        } else {
-//            tvIsFollw.setVisibility(View.GONE);
-            tvIsFollw.setText(context.getString(R.string.follow_status_0));
+            tvIsFollw.setText(context.getResources().getString(R.string.follow_status_1));
+        }else{
             tvIsFollw.setSelected(false);
-            tvIsFollw.setPressed(false);
-            tvIsFollw.setTextColor(Color.parseColor("#ffffff"));
+            tvIsFollw.setText(context.getResources().getString(R.string.follow_status_0));
         }
         tvIsFollw.setOnClickListener(new View.OnClickListener() {
             @Override

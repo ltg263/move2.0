@@ -599,7 +599,7 @@ public class DetailsArticleActivity extends BaseActivity {
                     ivSc.setSelected(false);
                 }
                 if(articleDetail.getPostTotalIncome()==0){
-                    tvRead.setText("未结算");
+                    tvRead.setText("待结算");
                 }else{
                     if(articleDetail.getPostTotalIncome() == (int)articleDetail.getPostTotalIncome()){
                         tvRead.setText((int)articleDetail.getPostTotalIncome() +"");

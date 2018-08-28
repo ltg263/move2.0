@@ -195,11 +195,22 @@
                         android:textColor="@color/title_gray_66"
                         android:textSize="@dimen/sp_14" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_circle_app"
+                        android:paddingHorizontal="@dimen/dp_8"
+                        android:paddingVertical="@dimen/dp_2"
+                        android:text="赚币"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_12" />
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/right_boult" />
+                        android:src="@drawable/right_boult"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <TextView
@@ -302,7 +313,7 @@
                             android:layout_below="@id/tv_article_mun"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/dp_5"
-                            android:text="评测"
+                            android:text="文章"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_14" />
                     </RelativeLayout>
@@ -390,6 +401,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="@dimen/dp_15">
 
@@ -408,13 +420,29 @@
                     android:textColor="@color/title_gray"
                     android:textSize="@dimen/sp_14" />
 
-                <TextView
-                    android:id="@+id/tv_message_sum"
+                <RelativeLayout
+                    android:id="@+id/rl_mes_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:textColor="@color/theme_title_red"
-                    android:textSize="@dimen/sp_12" />
+                    android:visibility="gone"
+                    android:layout_marginRight="@dimen/dp_10">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/btn_circle_app_red" />
+
+                    <TextView
+                        android:id="@+id/tv_message_sum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        android:visibility="visible" />
+                </RelativeLayout>
+
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -597,16 +625,16 @@
                 android:text="測試接口"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_14"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </LinearLayout>
     </com.secretk.move.view.RecycleNestedScrollView>
 
     <RelativeLayout
         android:id="@+id/rl"
         android:layout_width="match_parent"
-        android:background="@color/app_bar_background"
         android:layout_height="44dp"
-        android:alpha="0">
+        android:alpha="0"
+        android:background="@color/app_bar_background">
 
         <TextView
             android:id="@+id/tv_title"

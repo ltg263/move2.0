@@ -133,11 +133,13 @@ public class ProjectHomeBean extends BaseRes{
             private String projectChineseName;
             private String projectSignature;
             private String websiteUrl;
+            private String github;
             private int listed;
             private long issueDate;
             private String issueDateStr;
             private long issueNum;
             private String whitepaperUrl;
+            private long bsjCirculateData;
             private String projectTypeName;
             private int projectTypeId;
             private String projectDesc;
@@ -164,6 +166,92 @@ public class ProjectHomeBean extends BaseRes{
             private double percentChange1h;
             private double percentChange24h;
             private double percentChange7d;
+
+            //项目方id
+            private int projectUserId;
+            //项目方手机
+            private String projectMobile;
+            //项目方类型
+            private Integer projectUserType;
+            //项目方头像
+            private String icon;
+            //项目方昵称
+            private String userName;
+            //项目方简介
+            private String userSignature;
+            private int projectFollowStatus;
+
+            public int getProjectFollowStatus() {
+                return projectFollowStatus;
+            }
+
+            public void setProjectFollowStatus(int projectFollowStatus) {
+                this.projectFollowStatus = projectFollowStatus;
+            }
+
+            public int getProjectUserId() {
+                return projectUserId;
+            }
+
+            public void setProjectUserId(int projectUserId) {
+                this.projectUserId = projectUserId;
+            }
+
+            public String getProjectMobile() {
+                return projectMobile;
+            }
+
+            public void setProjectMobile(String projectMobile) {
+                this.projectMobile = projectMobile;
+            }
+
+            public Integer getProjectUserType() {
+                return projectUserType;
+            }
+
+            public void setProjectUserType(Integer projectUserType) {
+                this.projectUserType = projectUserType;
+            }
+
+            public String getIcon() {
+                return icon;
+            }
+
+            public void setIcon(String icon) {
+                this.icon = icon;
+            }
+
+            public String getUserName() {
+                return userName;
+            }
+
+            public void setUserName(String userName) {
+                this.userName = userName;
+            }
+
+            public String getUserSignature() {
+                return userSignature;
+            }
+
+            public void setUserSignature(String userSignature) {
+                this.userSignature = userSignature;
+            }
+
+            public String getGithub() {
+                return github;
+            }
+
+            public void setGithub(String github) {
+                this.github = github;
+            }
+
+            public long getBsjCirculateData() {
+                return bsjCirculateData;
+            }
+
+            public void setBsjCirculateData(long bsjCirculateData) {
+                this.bsjCirculateData = bsjCirculateData;
+            }
 
             public double getPrice() {
                 return price;

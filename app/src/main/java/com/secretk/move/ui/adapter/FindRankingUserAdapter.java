@@ -138,7 +138,7 @@ public class FindRankingUserAdapter extends RecyclerView.Adapter<FindRankingUser
                 }
                 tvScore.setText(String.valueOf(bean.getTotalScore()));
                 tvScore.setVisibility(View.VISIBLE);
-//                tvNameF.setVisibility(View.VISIBLE);
+                tvNameF.setVisibility(View.GONE);
             } else {
                 GlideUtils.loadCircleUserUrl(context, ivIcon, Constants.BASE_IMG_URL + StringUtil.getBeanString(bean.getIcon()));
                 tvName.setText(StringUtil.getBeanString(bean.getUserName()));
@@ -150,8 +150,8 @@ public class FindRankingUserAdapter extends RecyclerView.Adapter<FindRankingUser
                     tvProjectFolly.setSelected(false);
                     tvProjectFolly.setText(context.getString(R.string.follow_status_0));
                 }
-                tvScore.setVisibility(View.INVISIBLE);
-                tvNameF.setVisibility(View.INVISIBLE);
+                tvScore.setVisibility(View.GONE);
+                tvNameF.setVisibility(View.GONE);
             }
             tvProjectFolly.setOnClickListener(new View.OnClickListener() {
                 @Override

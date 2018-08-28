@@ -547,7 +547,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                     tvDzNum.setText(String.valueOf(discussDetail.getPraiseNum()));
                 }
                 if(discussDetail.getPostTotalIncome()==0){
-                    tvRead.setText("未结算");
+                    tvRead.setText("待结算");
                 }else{
                     if(discussDetail.getPostTotalIncome() == (int)discussDetail.getPostTotalIncome()){
                         tvRead.setText((int)discussDetail.getPostTotalIncome() +"");

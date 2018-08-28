@@ -72,7 +72,7 @@
     <dimen name="list_item_details">14sp</dimen><!--详情-->
     <dimen name="list_item_tag">12sp</dimen><!--标签-->
     <dimen name="list_item_msg">12sp</dimen><!--赞和喜欢-->
-    <dimen name="list_item_img_max">125dp</dimen>
+    <dimen name="list_item_img_max">187dp</dimen>
     <dimen name="list_item_img_new">135dp</dimen>
     <dimen name="list_item_img_mix">107dp</dimen>
     <!-- 列表页的 item样式结束 -->

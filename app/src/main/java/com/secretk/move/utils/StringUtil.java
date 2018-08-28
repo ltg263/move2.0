@@ -110,7 +110,7 @@ public class StringUtil {
      * 可以具有0到9之间的任何数字
      */
     public static boolean isEthereumSite(String eth) {
-        Pattern p = Pattern.compile("(^0x[0-9a-f]{40}$)");
+        Pattern p = Pattern.compile("(^0x[0-9a-fA-F]{40}$)");
         Matcher m = p.matcher(eth);
         return m.matches();
     }

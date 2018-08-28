@@ -99,7 +99,7 @@ public class AppBarHeadView extends FrameLayout {
         mTitle.setText(title);
     }
     public void setTitleVice(String title) {
-        mTitleVice.setText(title);
+//        mTitleVice.setText(title);
     }
     public void setHeadViewColor(int color) {
         mAppBarLayout.setBackgroundResource(color);

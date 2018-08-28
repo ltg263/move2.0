@@ -129,7 +129,7 @@
             <ImageView
                 android:id="@+id/iv_file_name"
                 android:layout_width="match_parent"
-                android:layout_height="109dp"
+                android:layout_height="@dimen/list_item_img_max"
                 android:layout_below="@+id/tvDesc"
                 android:layout_marginBottom="@dimen/dp_5"
                 android:layout_marginHorizontal="@dimen/dp_10"

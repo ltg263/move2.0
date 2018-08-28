@@ -193,7 +193,7 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvPraise.setText(bean.getPraiseNum() + "");
         tvComments.setText(bean.getCommentsNum() + "");
         if(bean.getPostTotalIncome()==0){
-            tvTotalIncome.setText("未结算");
+            tvTotalIncome.setText("待结算");
         }else{
             if(bean.getPostTotalIncome() == (int)bean.getPostTotalIncome()){
                 tvTotalIncome.setText((int)bean.getPostTotalIncome() +"");
