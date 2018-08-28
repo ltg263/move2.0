@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -232,6 +233,21 @@ public class MineProjectListHolder extends RecyclerViewBaseHolder {
                 } else {
                     IntentUtil.startActivity(LoginHomeActivity.class);
                 }
+            }
+        });
+        rvImg.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    if (SharedUtils.getLoginZt()) {
+                        int postId = bean.getPostId();
+                        int postType = bean.getPostType();
+                        IntentUtil.go2DetailsByType(postType, String.valueOf(postId));
+                    } else {
+                        IntentUtil.startActivity(LoginHomeActivity.class);
+                    }
+                }
+                return false;
             }
         });
         ivPupo.setOnClickListener(new View.OnClickListener() {
