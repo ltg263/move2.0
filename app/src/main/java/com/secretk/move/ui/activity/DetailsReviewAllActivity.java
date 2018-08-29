@@ -181,6 +181,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
     String postShortDesc;
     private String activityId;
     private ProgressAdapter adapterProgress;
+    private String shareUrl;
 
     @Override
     protected int setOnCreate() {
@@ -199,7 +200,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        ShareView.showShare(this, mHeadView, activityId, Constants.DISCUSS_SHARE + Integer.valueOf(postId),
+        ShareView.showShare(this, mHeadView, activityId, shareUrl,
                 tvPostTitle.getText().toString(), postShortDesc, imgUrl, Integer.valueOf(postId));
     }
 
@@ -210,6 +211,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
         llReview.setVisibility(View.VISIBLE);
         postId = getIntent().getStringExtra("postId");
         activityId = getIntent().getStringExtra("activityId");
+
         setHorizontalManager(rvImg);
         rvImg.addItemDecoration(new GridSpacingItemDecoration());
         imagesadapter = new ImagesAdapter(this);
@@ -560,6 +562,11 @@ public class DetailsReviewAllActivity extends BaseActivity {
             @Override
             public void onCompleted(DetailsReviewBean bean) {
                 DetailsReviewBean.DataBean.EvaluationDetailBean evaluationDetail = bean.getData().getEvaluationDetail();
+                if(evaluationDetail.getModelType()==3){
+                    shareUrl=Constants.EVALUATION_PART_SHARE+Integer.valueOf(postId);
+                }else{
+                    shareUrl=Constants.EVALUATION_SHARE+Integer.valueOf(postId);
+                }
                 haveData.setVisibility(View.VISIBLE);
                 findViewById(R.id.no_data).setVisibility(View.GONE);
                 createUserId = evaluationDetail.getCreateUserId();

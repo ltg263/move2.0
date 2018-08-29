@@ -361,7 +361,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                         mesSum = "99+";
                     }
                     tvMessageSum.setText(mesSum);
-                    if(tvMessageSum != null){
+                    if(tvActivity != null){
                         tvActivity.setText(mesSum);
                     }
                 }

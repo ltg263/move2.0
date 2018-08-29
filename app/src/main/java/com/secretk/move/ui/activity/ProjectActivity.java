@@ -419,7 +419,11 @@ public class ProjectActivity extends BaseActivity {
             public void getVpPageSelected(int position) {
                 if (viewPager.getCurrentItem() == 5 || viewPager.getCurrentItem()==4 || viewPager.getCurrentItem()==3) {
                     fab.setVisibility(View.GONE);
-                    refreshLayout.setEnableLoadMore(false);
+                    if(viewPager.getCurrentItem() == 5){
+                        refreshLayout.setEnableLoadMore(false);
+                    }else{
+                        refreshLayout.setEnableLoadMore(true);
+                    }
                 } else {
                     fab.setVisibility(View.VISIBLE);
                     refreshLayout.setEnableLoadMore(true);

@@ -563,9 +563,15 @@ public class StringUtil {
 //                Elements p = span.getElementsByTag("p");
 ////                p.attr("style","font-size:16px;width:100%;margin:1rem 0px");
 ////                Elements h1 = span.getElementsByTag("h1");
-                span.attr("style","font-size:16px;width:100%;margin:1rem 0px;line-height:26px;letter-spacing:1px;");
+                if(!span.toString().contains("<html") &&
+                        !span.toString().contains("<head") &&
+                        !span.toString().contains("<body") &&
+                        !span.toString().contains("<div")){//.p:last-child{margin-bottom!important}
+                    span.attr("style","font-size:16px;width:100%;margin-bottom:1rem;line-height:26px;letter-spacing:1px;");
+                }
             }
-
+            Elements head = doc.getElementsByTag("head");
+            head.get(0).html("<style>*{border:0;margin:0;padding:0;};p:last-child{margin-bottom:0px;!important}</style>");
             Elements elements=doc.getElementsByTag("img");
             for (Element element : elements) {
                 element.attr("width","100%").attr("height","auto");

@@ -417,6 +417,7 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
         }
     }
 
+    private JSONArray sonArray;
     private void saveEvaluation() {
         totalScore = esViewa.getTvEvaluationMun();
         JSONArray array = new JSONArray();
@@ -431,6 +432,23 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
             e.printStackTrace();
         }
 
+        sonArray = new JSONArray();
+        if(arrayTags!=null){
+            for(int i=0;i<arrayTags.size();i++){
+                JSONObject object = new JSONObject();
+                DiscussLabelListbean.TagList aa = arrayTags.get(arrayTags.keyAt(i));
+                try {
+                    object.put("tagId",aa.getTagId());
+                    object.put("tagName",aa.getTagName());
+                    if(i!=0){
+                        sonArray.put(object);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            evaluationTags=sonArray.toString();
+        }
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
