@@ -528,7 +528,7 @@ public class DialogUtils {
     /**
      * @param context
      * @param type:1 点赞  2 收藏 3复制 4举报
-     *            5 分享 6评论
+     *            5 分享 6评论 7看涨
      * 点赞框
      */
     public static void showDialogPraise(Context context,int type,boolean isCollect,double find) {
@@ -541,6 +541,8 @@ public class DialogUtils {
         TextView tv_collect = view.findViewById(R.id.tv_collect);
         TextView tv_copy = view.findViewById(R.id.tv_copy);
         TextView tv_report = view.findViewById(R.id.tv_report);
+        TextView tv_info_j = view.findViewById(R.id.tv_info_j);
+        TextView tv_info_z = view.findViewById(R.id.tv_info_z);
         TextView tv_comment = view.findViewById(R.id.tv_comment);
         TextView tv_comment_find = view.findViewById(R.id.tv_comment_find);
         if (type==1){
@@ -585,6 +587,12 @@ public class DialogUtils {
                 }else{
                     tv_comment_find.setText("+"+find+"FIND");
                 }
+            }
+        }else if(type==7){
+            if(isCollect){
+                tv_info_z.setVisibility(View.VISIBLE);
+            }else{
+                tv_info_j.setVisibility(View.VISIBLE);
             }
         }
         dialog5.setCancelable(false);

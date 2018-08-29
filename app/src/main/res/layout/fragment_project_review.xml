@@ -14,6 +14,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10"/>
             <!--评分开始-->
             <com.secretk.move.view.ProgressBarStyleView
                 android:id="@+id/pb_comprehensive_evaluation"
@@ -78,9 +81,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="3"
-                    android:drawablePadding="@dimen/dp_10"
-                    android:drawableLeft="@drawable/ic_project_jx"
                     android:background="@color/white"
+                    android:drawableLeft="@drawable/ic_project_jx"
+                    android:drawablePadding="@dimen/dp_10"
                     android:padding="@dimen/dp_10"
                     android:text="@string/assessment"
                     android:textColor="@color/title_gray_66"
@@ -96,9 +99,75 @@
                     android:id="@+id/rv_review_top"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"/>
+                    android:nestedScrollingEnabled="false" />
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ll_jp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_jp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10"
+                        android:text="精评"
+                        android:textColor="@color/app_background"
+                        android:textSize="@dimen/sp_16" />
+
+                    <ImageView
+                        android:id="@+id/iv_jp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_bl_xl" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/dp_1"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="@dimen/dp_10"
+                    android:background="@color/background_gray" />
+
+                <LinearLayout
+                    android:id="@+id/ll_dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_10"
+                        android:text="短评"
+                        android:textColor="@color/title_gray"
+                        android:textSize="@dimen/sp_16" />
+
+                    <ImageView
+                        android:id="@+id/iv_dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_bl_xl"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10"/>
 
             <LinearLayout
                 android:id="@+id/ll_zxpc"
@@ -119,12 +188,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/assessment_new"
-                        android:textStyle="bold"
-                        android:drawablePadding="@dimen/dp_10"
                         android:drawableLeft="@drawable/ic_project_new"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:text="@string/assessment_new"
                         android:textColor="@color/title_gray_66"
-                        android:textSize="@dimen/sp_14" />
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_sort"
@@ -138,10 +207,10 @@
 
                 </LinearLayout>
 
-                 <View
-                     android:layout_width="match_parent"
-                     android:layout_height="@dimen/dp_10"
-                     android:background="@color/background_gray" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_10"
+                    android:background="@color/background_gray" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_review"
@@ -149,11 +218,57 @@
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false" />
             </LinearLayout>
-            <!--站長結束-->
-            <TextView
+            <LinearLayout
+                android:id="@+id/ll_jdpc"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_line"
-                android:background="@color/cut_off_rule" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_1"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_project_new"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:text="@string/assessment_new"
+                        android:textColor="@color/title_gray_66"
+                        android:textSize="@dimen/sp_14"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/right_boult"
+                        android:padding="@dimen/dp_5"
+                        android:text="@string/sort_time"
+                        android:textColor="#aaaaaa"
+                        android:textSize="@dimen/sp_12" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_10"
+                    android:visibility="gone"
+                    android:background="@color/background_gray" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_review_jdpc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+            </LinearLayout>
+            <!--站長結束-->
 
             <RelativeLayout
                 android:id="@+id/rl_not_content"

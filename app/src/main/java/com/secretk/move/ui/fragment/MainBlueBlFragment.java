@@ -66,10 +66,10 @@ public class MainBlueBlFragment extends LazyFragment implements ItemClickListene
         adapter = new MainBlFragmentRecyclerAdapter(getActivity());
         recycler.setAdapter(adapter);
         adapter.setItemListener(this);
-        rlTopTheme.setVisibility(View.VISIBLE);
-        tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_go_login));
-        tvName.setVisibility(View.VISIBLE);
-        tvSubmit.setText(getActivity().getResources().getString(R.string.go_login));
+//        rlTopTheme.setVisibility(View.VISIBLE);
+//        tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_go_login));
+//        tvName.setVisibility(View.VISIBLE);
+//        tvSubmit.setText(getActivity().getResources().getString(R.string.go_login));
     }
 
     private void initRefresh() {

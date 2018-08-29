@@ -19,6 +19,7 @@ import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.CustomDialog;
+import com.secretk.move.view.DialogUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -159,8 +160,8 @@ public class InfoNewsFragmentHolder extends RecyclerViewBaseHolder {
             tvDetailDesc.setText(StringUtil.getBeanString(rowsBean.getAbstractc()));
         }
         tvTime.setText(StringUtil.getTimeToHm(StringUtil.getMsToTime(rowsBean.getPublishTime())));
-        tvInfoZ.setSelected(!rowsBean.isRise());
-        tvInfoJ.setSelected(!rowsBean.isFall());
+//        tvInfoZ.setSelected(!rowsBean.isRise());
+//        tvInfoJ.setSelected(!rowsBean.isFall());
 
         tvInfoZ.setText("看涨" + rowsBean.getRise());
         tvInfoJ.setText("看跌" + rowsBean.getFall());
@@ -169,16 +170,16 @@ public class InfoNewsFragmentHolder extends RecyclerViewBaseHolder {
 //        if(rowsBean.getIsProminent()==0){
             ivDotB.setVisibility(View.VISIBLE);
             ivDotG.setVisibility(View.INVISIBLE);
-            tvTime.setTextColor(context.getResources().getColor(R.color.app_background));
-            tvHeadTitle.setTextColor(context.getResources().getColor(R.color.app_background));
-            tvDetailDesc.setTextColor(context.getResources().getColor(R.color.app_background));
+//            tvTime.setTextColor(context.getResources().getColor(R.color.app_background));
+//            tvHeadTitle.setTextColor(context.getResources().getColor(R.color.app_background));
+//            tvDetailDesc.setTextColor(context.getResources().getColor(R.color.app_background));
 //            tvDetailBtn.setTextColor(context.getResources().getColor(R.color.app_background));
         } else {
             ivDotB.setVisibility(View.INVISIBLE);
             ivDotG.setVisibility(View.VISIBLE);
-            tvTime.setTextColor(context.getResources().getColor(R.color.title_gray_8c));
-            tvHeadTitle.setTextColor(context.getResources().getColor(R.color.title_gray));
-            tvDetailDesc.setTextColor(context.getResources().getColor(R.color.title_gray_7e));
+//            tvTime.setTextColor(context.getResources().getColor(R.color.title_gray_8c));
+//            tvHeadTitle.setTextColor(context.getResources().getColor(R.color.title_gray));
+//            tvDetailDesc.setTextColor(context.getResources().getColor(R.color.title_gray_7e));
 //            tvDetailBtn.setTextColor(context.getResources().getColor(R.color.title_gray_7e));
         }
 //        if(rowsBean.getIsProminent()==0){
@@ -191,7 +192,7 @@ public class InfoNewsFragmentHolder extends RecyclerViewBaseHolder {
 //            }
         }
     }
-    private void updateNewsFlashRiseAndFall(String type,int id){
+    private void updateNewsFlashRiseAndFall(final String type, int id){
         JSONObject node = new JSONObject();
         try {
             node.put("id", id);
@@ -217,13 +218,21 @@ public class InfoNewsFragmentHolder extends RecyclerViewBaseHolder {
                 try {
                     JSONObject obj = new JSONObject(str);
                     if(obj.getJSONObject("data")!=null){
-                        int fall = obj.getJSONObject("data").getInt("fall");
-                        int rise = obj.getJSONObject("data").getInt("rise");
-                        if(rise!=0){
-                            tvInfoZ.setText("看涨"+String.valueOf(rise));
+                        if(!StringUtil.isEmptyObject(obj.getJSONObject("data").get("fall"))
+                                && !StringUtil.isEmptyObject(obj.getJSONObject("data").get("rise"))){
+                            int fall = obj.getJSONObject("data").getInt("fall");
+                            int rise = obj.getJSONObject("data").getInt("rise");
+                            if(rise!=0){
+                                tvInfoZ.setText("看涨"+String.valueOf(rise));
+                            }
+                            if(fall!=0){
+                                tvInfoJ.setText("看跌"+String.valueOf(fall));
+                            }
                         }
-                        if(fall!=0){
-                            tvInfoJ.setText("看跌"+String.valueOf(fall));
+                        if(type.equals("rise")){
+                            DialogUtils.showDialogPraise(mContext,7,true,0);
+                        }else{
+                            DialogUtils.showDialogPraise(mContext,7,false,0);
                         }
                     }else{
 

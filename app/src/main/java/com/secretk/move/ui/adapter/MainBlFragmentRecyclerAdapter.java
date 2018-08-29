@@ -61,6 +61,12 @@ public class MainBlFragmentRecyclerAdapter extends RecyclerView.Adapter<MainBlFr
         this.list = list;
         notifyDataSetChanged();
     }
+    public void clearData() {
+        if(list!=null){
+            list.clear();
+            notifyDataSetChanged();
+        }
+    }
 
     public void setAddData(List<RowsBean> list) {
         this.list.addAll(list);

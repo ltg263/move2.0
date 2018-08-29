@@ -71,10 +71,10 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
         adapter = new MainRfFragmentRecyclerAdapter(getActivity());
         recycler.setAdapter(adapter);
         adapter.setItemListener(this);
-        rlTopTheme.setVisibility(View.VISIBLE);
-        tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_go_login));
-        tvName.setVisibility(View.VISIBLE);
-        tvSubmit.setText(getActivity().getResources().getString(R.string.go_login));
+//        rlTopTheme.setVisibility(View.VISIBLE);
+//        tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_go_login));
+//        tvName.setVisibility(View.VISIBLE);
+//        tvSubmit.setText(getActivity().getResources().getString(R.string.go_login));
     }
 
     private void initRefresh() {
@@ -120,6 +120,8 @@ public class MainBlueGzFragment extends LazyFragment implements ItemClickListene
         if (!isLoginZt) {
             showFragment = true;
             refreshLayout.setVisibility(View.GONE);
+            rlTopTheme.setVisibility(View.VISIBLE);
+            tvName.setVisibility(View.VISIBLE);
             convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
             tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_go_login));
             tvSubmit.setText(getActivity().getResources().getString(R.string.go_login));

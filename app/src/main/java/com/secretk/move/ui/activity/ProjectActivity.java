@@ -387,9 +387,9 @@ public class ProjectActivity extends BaseActivity {
             public void onLoadMore(RefreshLayout refreshlayout) {
                 switch (viewPager.getCurrentItem()) {
                     case 0:
-                        if (reviewFragment.isHaveData) {
+//                        if (reviewFragment.isHaveData || ) {
                             reviewFragment.getLoadData();
-                        }
+//                        }
                         break;
                     case 1:
                         if (discussFragment.isHaveData) {
