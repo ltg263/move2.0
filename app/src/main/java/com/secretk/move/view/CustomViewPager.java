@@ -149,7 +149,7 @@ public class CustomViewPager extends LinearLayout {
         mAdvPager.setLayoutParams(lp);
 
         mAdvPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.dp_12));
-//        mAdvPager.setPageTransformer(true,new MyGallyPageTransformer());如果显示动画 间距就改为dp_2
+//        mAdvPager.setPageTransformer(true,new MyGallyPageTransformer());//如果显示动画 间距就改为dp_2
     }
 
     /**
@@ -188,6 +188,7 @@ public class CustomViewPager extends LinearLayout {
         mAdvAdapter = new ImageCycleAdapter(mContext, imageUrlList, imageNameList, imageCycleViewListener);
         mAdvPager.setAdapter(mAdvAdapter);
         mAdvPagerZx.setAdapter(mAdvAdapter);
+        mAdvPager.setCurrentItem(50);
         startImageTimerTask();
     }
 

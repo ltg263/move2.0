@@ -95,8 +95,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="left|top"
                     android:hint="聊聊你对这个项目的看法，你的意见很重要！"
-                    android:maxEms="300"
-                    android:maxLength="1000"
+                    android:maxLength="500"
                     android:minLines="8"
                     android:textColor="@color/title_gray"
                     android:textColorHint="#888888"
@@ -128,8 +127,7 @@
                         android:id="@+id/tv_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:maxLength="300"
-                        android:text="0/300"
+                        android:text="0/500"
                         android:textColor="@color/title_gray" />
                 </LinearLayout>
 

@@ -109,13 +109,13 @@ public class EvaluationSimplenessActivity extends BaseActivity{
                     tv1.setVisibility(View.VISIBLE);
                     tv1.setText("加油，还差" + (10 - getEdContent().length()) + "个字");
                 }
-                tv2.setText(getEdContent().length() + "/300");
+                tv2.setText(getEdContent().length() + "/500");
             }
 
             @Override
             public void etNo() {
                 tv1.setText("加油，还差10个字");
-                tv2.setText("0/300");
+                tv2.setText("0/500");
             }
         });
         addlabel.setOnClickListener(new View.OnClickListener() {
