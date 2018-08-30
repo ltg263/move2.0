@@ -81,4 +81,5 @@
     <!-- 列表页的 item样式结束 -->
 
     <dimen name="list_v_dp">15dp</dimen>
+    <dimen name="home_view_pager">122dp</dimen>
 </resources>

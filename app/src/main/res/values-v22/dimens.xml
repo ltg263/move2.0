@@ -2,4 +2,7 @@
 
     <dimen name="line_spacing_extra">8dp</dimen>
     <dimen name="line_spacing_extra_1">0dp</dimen>
+
+    <dimen name="home_view_pager">145dp</dimen>
+
 </resources>

@@ -141,7 +141,7 @@ public class CustomViewPager extends LinearLayout {
         int pagerWidth = (int) (getResources().getDisplayMetrics().widthPixels * 4.0f / 5.0f);
         ViewGroup.LayoutParams lp = mAdvPager.getLayoutParams();
         if (lp == null) {
-            lp = new ViewGroup.LayoutParams(pagerWidth, ViewGroup.LayoutParams.MATCH_PARENT);
+            lp = new ViewGroup.LayoutParams(pagerWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
         } else {
             lp.width = pagerWidth;
         }
@@ -345,7 +345,6 @@ public class CustomViewPager extends LinearLayout {
             if (mImageViewCacheList.isEmpty()) {
                 imageView = new RoundImageView(mContext);
                 imageView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 // 设置图片点击监听
                 imageView.setOnClickListener(new OnClickListener() {
                     @Override
@@ -356,6 +355,7 @@ public class CustomViewPager extends LinearLayout {
             } else {
                 imageView = (RoundImageView) mImageViewCacheList.remove(0);
             }
+            imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             imageView.setTag(imageUrl);
             container.addView(imageView);
             mImageCycleViewListener.displayImage(imageUrl, imageView);

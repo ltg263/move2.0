@@ -143,9 +143,7 @@ public class MainBlueFxFragment extends LazyFragment implements ItemClickListene
         public void displayImage(String imageURL, ImageView imageView) {
             // TODO 加载显示图片
             imageView.setTag(null);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             Glide.with(getActivity()).load(imageURL).into(imageView);
-//            GlideUtils.loadSideMaxImage(getActivity(),imageView,imageURL);
         }
     };
 
