@@ -25,6 +25,7 @@ import com.secretk.move.presenter.impl.MainPresenterImpl;
 import com.secretk.move.ui.adapter.MainActivityPagerAdapter;
 import com.secretk.move.ui.fragment.MainBlueFxFragment;
 import com.secretk.move.ui.fragment.MainBlueGzFragment;
+import com.secretk.move.ui.fragment.MainPagerFragment;
 import com.secretk.move.ui.fragment.MineFragment;
 import com.secretk.move.utils.DownloadService;
 import com.secretk.move.utils.IntentUtil;
@@ -188,6 +189,33 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
         });
         onStartTz();
     }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        String IntentType =  intent.getStringExtra("IntentType");
+        if(StringUtil.isNotBlank(IntentType)){
+            switch (Integer.valueOf(IntentType)){
+                case 4://个人中心
+                    rbMine.setChecked(true);
+                    break;
+                case 5://推荐
+                    rbMain.setChecked(true);
+                    MainPagerFragment f = (MainPagerFragment) adapter.getItem(0);
+                    f.getViewPagerFixed().setCurrentItem(0);
+                    break;
+                case 6://关注
+                    rbMain.setChecked(true);
+                    MainPagerFragment f1 = (MainPagerFragment) adapter.getItem(0);
+                    f1.getViewPagerFixed().setCurrentItem(1);
+                    break;
+                case 7://项目
+                    rbProject.setChecked(true);
+                    break;
+            }
+        }
+    }
+
 
     private void onStartTz() {
         if (StringUtil.isNotBlank(type) && StringUtil.isNotBlank(postId)) {
@@ -213,6 +241,7 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
     protected void onPause() {
         super.onPause();
     }
+
 
     @Override
     protected void onResume() {

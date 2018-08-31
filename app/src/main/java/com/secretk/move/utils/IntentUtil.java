@@ -14,6 +14,7 @@ import com.secretk.move.ui.activity.EvaluationSimplenessActivity;
 import com.secretk.move.ui.activity.EvaluationWriteActivity;
 import com.secretk.move.ui.activity.EvaluationWriteNewSimpActivity;
 import com.secretk.move.ui.activity.HomeActivity;
+import com.secretk.move.ui.activity.MainActivity;
 import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.activity.PublishSucceedActivity;
 import com.secretk.move.ui.activity.WebViewActivity;
@@ -209,7 +210,12 @@ public class IntentUtil {
     }
 
     public static void go2DetailsByType(int type,String postId) {
+        LogUtil.w("postId:"+postId);
+        if(StringUtil.isBlank(postId)){
+            postId = "0";
+        }
         Intent intent=null;
+        String key[] = {"IntentType"};
         switch (type) {
             case 1:
                 intent=new Intent(MoveApplication.getContext(), DetailsReviewAllActivity.class);
@@ -226,6 +232,31 @@ public class IntentUtil {
                 intent.putExtra("postId",postId);
                 startActivity(intent);
                 break;
+            case 4://个人中心
+                String values4[] = {"4"};
+                IntentUtil.startActivity(MainActivity.class,key,values4);
+                break;
+            case 5://推荐
+                String values5[] = {"5"};
+                IntentUtil.startActivity(MainActivity.class,key,values5);
+                break;
+            case 6://关注
+                String values6[] = {"6"};
+                IntentUtil.startActivity(MainActivity.class,key,values6);
+                break;
+            case 7://项目
+                String values7[] = {"7"};
+                IntentUtil.startActivity(MainActivity.class,key,values7);
+                break;
+            case 8:
+                IntentUtil.startProjectActivity(Integer.valueOf(postId));
+                break;
+            case 9:
+                IntentUtil.startHomeActivity(Integer.valueOf(postId));
+                break;
+
+
+
         }
     }
 }

@@ -182,7 +182,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp_10"
-                android:src="@drawable/ic_tiqu_qx" />
+                android:src="@drawable/ic_tiqu_zs" />
 
         </LinearLayout>
 

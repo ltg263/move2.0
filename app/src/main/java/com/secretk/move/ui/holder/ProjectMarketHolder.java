@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.bean.ProjectMarketBase;
+import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 
@@ -42,6 +43,8 @@ public class ProjectMarketHolder extends RecyclerViewBaseHolder {
     LinearLayout llMarketNot;
     @BindView(R.id.iv_market_change)
     ImageView ivMarketChange;
+    @BindView(R.id.img)
+    ImageView img;
     public ProjectMarketHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -100,6 +103,7 @@ public class ProjectMarketHolder extends RecyclerViewBaseHolder {
             ivMarketChange.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_price_rise));
         }
         tvMarketCurrent.setText(StringUtil.getYxNum(usersBean.getLast())+"  "+usersBean.getCoinpair());
+        GlideUtils.loadSideMinImage_76(context,img,"https://pic.qufen.top/projects20180620201538242.png");
         tvFollowNum.setText(styJyl);
         tvMarketNew.setText(styZxjg);
     }

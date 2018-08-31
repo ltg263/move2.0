@@ -146,7 +146,7 @@ public interface Constants {
       */
     String DISCUSS_SHARE= BASE_IMG_HTML5+"project/discuss?id=";
     /**
-     * 打假分享
+     * 新闻
       */
     String CURRENCY= BASE_IMG_HTML5+"project/currency?id=";
     /**

@@ -177,15 +177,15 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
         if(rowsBean.getIsProminent()==0){
             ivDotB.setVisibility(View.VISIBLE);
             ivDotG.setVisibility(View.INVISIBLE);
-//            tvTime.setTextColor(context.getResources().getColor(R.color.app_background));
-//            tvHeadTitle.setTextColor(context.getResources().getColor(R.color.app_background));
+            tvTime.setTextColor(context.getResources().getColor(R.color.app_background));
+            tvHeadTitle.setTextColor(context.getResources().getColor(R.color.app_background));
 //            tvDetailDesc.setTextColor(context.getResources().getColor(R.color.app_background));
 //            tvDetailBtn.setTextColor(context.getResources().getColor(R.color.app_background));
         }else{
             ivDotB.setVisibility(View.INVISIBLE);
             ivDotG.setVisibility(View.VISIBLE);
-//            tvTime.setTextColor(context.getResources().getColor(R.color.title_gray_8c));
-//            tvHeadTitle.setTextColor(context.getResources().getColor(R.color.title_gray));
+            tvTime.setTextColor(context.getResources().getColor(R.color.title_gray));
+            tvHeadTitle.setTextColor(context.getResources().getColor(R.color.title_gray));
 //            tvDetailDesc.setTextColor(context.getResources().getColor(R.color.title_gray_7e));
 //            tvDetailBtn.setTextColor(context.getResources().getColor(R.color.title_gray_7e));
         }

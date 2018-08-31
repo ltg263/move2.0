@@ -112,6 +112,10 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         MagicIndicatorUtils.initMagicIndicator(getActivity(),list,vp_main_children,magicIndicatorTitle);
     }
 
+    public ViewPagerFixed getViewPagerFixed() {
+        return vp_main_children;
+    }
+
     @Override
     public void onFirstUserVisible() {
         head_list = UiUtils.getStringArray(R.array.fragment_main_titles);

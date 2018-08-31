@@ -1,6 +1,7 @@
 package com.secretk.move.ui.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -268,6 +269,23 @@ public class DetailsReviewAllActivity extends BaseActivity {
                     //该方法在Build.VERSION_CODES.LOLLIPOP以前有效，从Build.VERSION_CODES.LOLLIPOP起，建议使用shouldOverrideUrlLoading(WebView, WebResourceRequest)} instead
                     //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
                     //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
+
+                    if(url.contains(Constants.BASE_IMG_HTML5)){
+                        int type = -1;
+                        if (url.contains("evaluationLitt") || url.contains("articleInfo")) {
+                            type = 1;
+                        } else if (url.contains("discuss")) {
+                            type = 2;
+                        } else if (url.contains("article")) {
+                            type = 3;
+                        } else {
+                            ToastUtils.getInstance().show("类型出错");
+                        }
+                        Uri uri = Uri.parse(url);
+                        String id = uri.getQueryParameter("id");
+                        IntentUtil.go2DetailsByType(type, String.valueOf(id));
+                        return true;
+                    }
                     if (StringUtil.isNotBlank(url)) {
                         IntentUtil.startWebViewActivity(url.toString(), getString(R.string.app_name));
                         return true;
