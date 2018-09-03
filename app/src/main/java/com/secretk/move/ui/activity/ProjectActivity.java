@@ -257,7 +257,7 @@ public class ProjectActivity extends BaseActivity {
                     if(market_cap!=0){
                         String market_capStr = "";
                         if (market_cap < 10000) {
-                            market_capStr = String.valueOf(Math.round(market_cap));
+
                         } else if (market_cap < 100000000) {
                             market_capStr = String.format("%.2f", market_cap / 10000) + "万";
                         } else {

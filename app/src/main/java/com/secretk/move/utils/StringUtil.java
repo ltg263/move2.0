@@ -63,6 +63,7 @@ public class StringUtil {
     public static boolean isNotBlank(String str) {
         return !isBlank(str);
     }
+
     /**
      * 判断字符串是否不为空
      *
@@ -70,7 +71,7 @@ public class StringUtil {
      * @return
      */
     public static String getBeanString(String str) {
-        if(isNotBlank(str)){
+        if (isNotBlank(str)) {
             return str;
         }
         return "";
@@ -84,11 +85,12 @@ public class StringUtil {
      * @return
      */
     public static boolean isMobileNO(String mobile) {
-        if(mobile.length()==11){
+        if (mobile.length() == 11) {
             return true;
         }
         return false;
     }
+
     /**
      * 判断是否是手机号
      *
@@ -104,7 +106,7 @@ public class StringUtil {
 
     /**
      * @return
-     * @describe:  校验以太坊钱包地址
+     * @describe: 校验以太坊钱包地址
      * 它只能包含以下字母：a，b，c，d，e和f。
      * 包括最初的“0x”
      * 可以具有0到9之间的任何数字
@@ -114,6 +116,7 @@ public class StringUtil {
         Matcher m = p.matcher(eth);
         return m.matches();
     }
+
     /**
      * @param idcard
      * @return
@@ -254,16 +257,18 @@ public class StringUtil {
     /**
      * 毫秒数转日期
      */
-    public static String getTimeToMs(long seconds) {
+    public static String getTimeToHH(long seconds) {
         Date d = new Date(seconds);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH");
         return sdf.format(d).toString();
     }
+
     public static String getTimeToHm(long seconds) {
         Date d = new Date(seconds);
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         return sdf.format(d).toString();
     }
+
     public static String getTimeToHms(long seconds) {
         Date d = new Date(seconds);
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -287,6 +292,7 @@ public class StringUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(d).toString();
     }
+
     /**
      * 毫秒数转日期
      */
@@ -295,6 +301,7 @@ public class StringUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd  EEEE");
         return sdf.format(d).toString();
     }
+
     /**
      * 毫秒数转日期
      */
@@ -305,10 +312,27 @@ public class StringUtil {
     }
 
 
+    /**
+     *     * 当前日期加上天数后的日期
+     *    * @param num 为增加的天数
+     *    * @return
+     */
+    public static String plusDay2(int num) {
+        Date d = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String currdate = format.format(d);
+        System.out.println("现在的日期是：" + currdate);
+
+        Calendar ca = Calendar.getInstance();
+        ca.add(Calendar.DATE, num);// num为增加的天数，可以改变的
+        d = ca.getTime();
+        String enddate = format.format(d);
+//        System.out.println("增加天数以后的日期：" + enddate);
+        return enddate;
+    }
 
 
-
-        public static String format(String format, Object value) {
+    public static String format(String format, Object value) {
         return String.format(format, value);
     }
 
@@ -362,6 +386,7 @@ public class StringUtil {
         return sb.toString();
     }
 */
+
     /**
      * 网络判断
      *
@@ -385,75 +410,78 @@ public class StringUtil {
 
     /**
      * 保存有效数字
+     *
      * @param num
      * @return
      */
-    public static String getYxNum(double num){
-        if(num>=1000){
+    public static String getYxNum(double num) {
+        if (num >= 1000) {
             return String.format("%.2f", num);
         }
-        if(num>=1){
+        if (num >= 1) {
             return String.format("%.3f", num);
         }
-        if(num==0){
+        if (num == 0) {
             return String.format("%.1f", num);
         }
-        if(Double.valueOf(String.format("%.4f", num))!=0){
+        if (Double.valueOf(String.format("%.4f", num)) != 0) {
             return String.format("%.5f", num);
         }
-        if(Double.valueOf(String.format("%.5f", num))!=0){
+        if (Double.valueOf(String.format("%.5f", num)) != 0) {
             return String.format("%.6f", num);
         }
-        if(Double.valueOf(String.format("%.6f", num))!=0){
+        if (Double.valueOf(String.format("%.6f", num)) != 0) {
             return String.format("%.8f", num);
         }
         return String.format("%.10f", num);
     }
 
-    public static long getSurplusTime (String begin,String end){
+    public static long getSurplusTime(String begin, String end) {
         try {
             long startTime = System.currentTimeMillis();
-            if(!"0".equals(begin)){
+            if (!"0".equals(begin)) {
                 Calendar calendarBegin = Calendar.getInstance();//2018-08-01 14:59:45
                 calendarBegin.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(begin));
                 startTime = calendarBegin.getTimeInMillis();
             }
 
             long endTime = System.currentTimeMillis();
-            if(!"0".equals(end)){
+            if (!"0".equals(end)) {
                 Calendar calendarEnd = Calendar.getInstance();//2018-08-01 14:59:45
                 calendarEnd.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(end));
                 endTime = calendarEnd.getTimeInMillis();
             }
-            LogUtil.w("end:"+end);
-            if("0".equals(end)){
-                LogUtil.w("startTime - endTime:"+(startTime - endTime));
+            LogUtil.w("end:" + end);
+            if ("0".equals(end)) {
+                LogUtil.w("startTime - endTime:" + (startTime - endTime));
                 return startTime - endTime;
             }
-            return endTime-startTime;
+            return endTime - startTime;
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return 0;
     }
+
     public static String getSytime(long date) {
         long hour = date / (1000 * 60 * 60);
         long min = ((date / (60 * 1000)) - hour * 60);
-        long ss = (date/1000 - hour*60*60 - min*60);
-        String h=String.valueOf(hour);
-        String m=String.valueOf(min);
-        String s=String.valueOf(ss);
-        if(hour<10){
-            h="0"+h;
+        long ss = (date / 1000 - hour * 60 * 60 - min * 60);
+        String h = String.valueOf(hour);
+        String m = String.valueOf(min);
+        String s = String.valueOf(ss);
+        if (hour < 10) {
+            h = "0" + h;
         }
-        if(min<10){
-            m="0"+m;
+        if (min < 10) {
+            m = "0" + m;
         }
-        if(ss<10){
-            s="0"+s;
+        if (ss < 10) {
+            s = "0" + s;
         }
-        return h+":"+m+":"+s;
+        return h + ":" + m + ":" + s;
     }
+
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
      */
@@ -470,6 +498,7 @@ public class StringUtil {
         }
         return true;
     }
+
     /**
      * 监听输入框输的变化
      */
@@ -485,7 +514,7 @@ public class StringUtil {
                     etChange.etYes();
                 }
                 if (et.getText().toString().trim().length() == 0) {
-                    if(btn!=null){
+                    if (btn != null) {
                         btn.setSelected(false);
                     }
                     etChange.etNo();
@@ -497,13 +526,17 @@ public class StringUtil {
             }
         });
     }
-    public abstract static class EtChange{
+
+    public abstract static class EtChange {
         //有内容
-         public abstract void etYes();
-         //无内容
-         public void etNo(){}
+        public abstract void etYes();
+
+        //无内容
+        public void etNo() {
+        }
     }
-    public static void getVpPosition(ViewPager vp, final VpPageSelected vps){
+
+    public static void getVpPosition(ViewPager vp, final VpPageSelected vps) {
         vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -512,23 +545,26 @@ public class StringUtil {
             @Override
             public void onPageScrollStateChanged(int state) {
             }
+
             @Override
             public void onPageSelected(int position) {
                 vps.getVpPageSelected(position);
             }
         });
     }
-    public abstract static class VpPageSelected{
+
+    public abstract static class VpPageSelected {
         public abstract void getVpPageSelected(int position);
     }
+
     public static String getMimeType(String fileName) {
         String result = "";
         int extPos = fileName.lastIndexOf(".");
-        if(extPos != -1) {
+        if (extPos != -1) {
             String ext = fileName.substring(extPos + 1);
             result = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext);
         }
-        if(TextUtils.isEmpty(result)){
+        if (TextUtils.isEmpty(result)) {
             result = "application/octet-stream";
         }
         return result;
@@ -536,51 +572,52 @@ public class StringUtil {
 
     /**
      * 文件后缀
+     *
      * @param fileName
-     * @return
-     * {"imgUrl":"/upload/posts/201805/ztFpnYSlKj.jpg"}
+     * @return {"imgUrl":"/upload/posts/201805/ztFpnYSlKj.jpg"}
      */
     public static String getFileSuffix(String fileName) {
         String result = "";
         int extPos = fileName.lastIndexOf(".");
-        if(extPos != -1) {
+        if (extPos != -1) {
             return fileName.substring(extPos + 1);
         }
         return result;
     }
+
     /**
      * 将html文本内容中包含img标签的图片，宽度变为屏幕宽度，高度根据宽度比例自适应
      **/
-    public static String getNewContent(String htmltext){
+    public static String getNewContent(String htmltext) {
         try {
-            if(!htmltext.contains("&nbsp;") && htmltext.contains("&nbsp")) {
+            if (!htmltext.contains("&nbsp;") && htmltext.contains("&nbsp")) {
                 htmltext = htmltext.replaceAll("&nbsp", "&nbsp;");
             }
-            Document doc= Jsoup.parse(htmltext);
+            Document doc = Jsoup.parse(htmltext);
 
             Elements elementsAll = doc.getAllElements();
             for (Element span : elementsAll) {
 //                Elements p = span.getElementsByTag("p");
 ////                p.attr("style","font-size:16px;width:100%;margin:1rem 0px");
 ////                Elements h1 = span.getElementsByTag("h1");
-                if(!span.toString().contains("<html") &&
+                if (!span.toString().contains("<html") &&
                         !span.toString().contains("<head") &&
                         !span.toString().contains("<body") &&
-                        !span.toString().contains("<div")){//.p:last-child{margin-bottom!important}
-                    span.attr("style","font-size:16px;width:100%;margin-bottom:1rem;line-height:26px;letter-spacing:1px;");
+                        !span.toString().contains("<div")) {//.p:last-child{margin-bottom!important}
+                    span.attr("style", "font-size:16px;width:100%;margin-bottom:1rem;line-height:26px;letter-spacing:1px;");
                 }
             }
             Elements head = doc.getElementsByTag("head");
             head.get(0).html("<style>*{border:0;margin:0;padding:0;};p:last-child{margin-bottom:0px;!important}</style>");
-            Elements elements=doc.getElementsByTag("img");
+            Elements elements = doc.getElementsByTag("img");
             for (Element element : elements) {
-                element.attr("width","100%").attr("height","auto");
-               String str =  element.attr("src");
-               if(str.contains("image/png;base64")){
-                   element.attr("src","");
-               }
+                element.attr("width", "100%").attr("height", "auto");
+                String str = element.attr("src");
+                if (str.contains("image/png;base64")) {
+                    element.attr("src", "");
+                }
             }
-            LogUtil.w("doc:"+doc.toString());
+            LogUtil.w("doc:" + doc.toString());
 
             return doc.toString();
         } catch (Exception e) {
@@ -589,9 +626,7 @@ public class StringUtil {
     }
 
 
-
-
-        // 判断Object是空
+    // 判断Object是空
     public static boolean isEmptyObject(Object obj) {
         if (obj == null) {
             return true;
@@ -602,7 +637,7 @@ public class StringUtil {
         if (obj instanceof String) {
             return StringUtil.isBlank((String) obj);
         }
-        if(obj.toString().equals("null")) {
+        if (obj.toString().equals("null")) {
             return true;
         }
 
@@ -618,86 +653,91 @@ public class StringUtil {
     public static boolean isNotEmpty(Object obj) {
         return !isEmptyObject(obj);
     }
+
     /**
      * EditText获取焦点并显示软键盘
      */
     public static void showSoftInputFromWindow(Activity activity, EditText editText) {
         //其中editText为dialog中的输入框的 EditText
-        if(editText!=null){
+        if (editText != null) {
             //设置可获得焦点
             editText.setFocusable(true);
             editText.setFocusableInTouchMode(true);
             //请求获得焦点
             editText.requestFocus();
             //调用系统输入法
-            InputMethodManager inputManager = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.showSoftInput(editText, 0);
             editText.setSelection(editText.getText().toString().length());
         }
     }
-    public static String getCurrentClassName(Activity activity){
+
+    public static String getCurrentClassName(Activity activity) {
         return activity.getComponentName().getClassName();
     }
 
     /**
      * 加V
-     *  //用户类型，数字，用户类型:
-     *  1-普通用户；
-     *  2-项目方；
-     *  3-评测媒体；4-机构
+     * //用户类型，数字，用户类型:
+     * 1-普通用户；
+     * 2-项目方；
+     * 3-评测媒体；4-机构
+     *
      * @return
      */
-    public static String getUserType(int userType, ImageView ivModelType){
-        if(ivModelType!=null){
+    public static String getUserType(int userType, ImageView ivModelType) {
+        if (ivModelType != null) {
             ivModelType.setVisibility(View.GONE);
         }
-        String ut="";
-        switch (userType){
+        String ut = "";
+        switch (userType) {
             case 1:
-                ut="普通用户";
+                ut = "普通用户";
                 break;
             case 2:
-                if(ivModelType!=null){
+                if (ivModelType != null) {
                     ivModelType.setVisibility(View.VISIBLE);
-                    GlideUtils.loadUrlDd(MoveApplication.getContext(),ivModelType, R.drawable.ic_model_type_xm);
+                    GlideUtils.loadUrlDd(MoveApplication.getContext(), ivModelType, R.drawable.ic_model_type_xm);
                 }
-                ut="项目方";
+                ut = "项目方";
                 break;
             case 3:
-                if(ivModelType!=null){
+                if (ivModelType != null) {
                     ivModelType.setVisibility(View.VISIBLE);
-                    GlideUtils.loadUrlDd(MoveApplication.getContext(),ivModelType, R.drawable.ic_model_type_mt);
+                    GlideUtils.loadUrlDd(MoveApplication.getContext(), ivModelType, R.drawable.ic_model_type_mt);
                 }
-                ut="评测媒体";
+                ut = "评测媒体";
                 break;
             case 4:
-                if(ivModelType!=null){
+                if (ivModelType != null) {
                     ivModelType.setVisibility(View.VISIBLE);
-                    GlideUtils.loadUrlDd(MoveApplication.getContext(),ivModelType, R.drawable.ic_model_type_jg);
+                    GlideUtils.loadUrlDd(MoveApplication.getContext(), ivModelType, R.drawable.ic_model_type_jg);
                 }
-                ut="机构用户";
+                ut = "机构用户";
                 break;
         }
         return ut;
     }
+
     /**
      * 用户等级
      * 1-普通用户；
      * 2-高级用户;
      * 3-VIP
+     *
      * @return
      */
-    public static String getUserDegree(int userType){
-        String ut="";
-        switch (userType){
+    public static String getUserDegree(int userType) {
+        String ut = "";
+        switch (userType) {
             case 1:
-                ut="普通用户";
+                ut = "普通用户";
                 break;
             case 2:
-                ut="高级用户";
+                ut = "高级用户";
                 break;
             case 3:
-                ut="VIP";
+                ut = "VIP";
                 break;
         }
         return ut;
@@ -719,31 +759,32 @@ public class StringUtil {
         return "";
     }
 
-    public static String getStateValueStr(float score){
-        if(score>=9.5){
+    public static String getStateValueStr(float score) {
+        if (score >= 9.5) {
             return "AAA";
-        }else if(score>=9){
+        } else if (score >= 9) {
             return "AA";
-        }else if(score>=8.5){
+        } else if (score >= 8.5) {
             return "A";
-        }else if(score>=8){
+        } else if (score >= 8) {
             return "BBB";
-        }else if(score>=7){
+        } else if (score >= 7) {
             return "BB";
-        }else if(score>=6){
+        } else if (score >= 6) {
             return "B";
-        }else if(score>=5){
+        } else if (score >= 5) {
             return "CCC";
-        }else if(score>=4){
+        } else if (score >= 4) {
             return "CC";
-        }else if(score>=3){
+        } else if (score >= 3) {
             return "C";
-        }else{
-          return "D";
+        } else {
+            return "D";
         }
     }
+
     //判断某一个类是否存在任务栈里面
-    public static boolean isExistMainActivity(Context mContext ,Class<?> activity){
+    public static boolean isExistMainActivity(Context mContext, Class<?> activity) {
         Intent intent = new Intent(mContext, activity);
         ComponentName cmpName = intent.resolveActivity(mContext.getPackageManager());
         boolean flag = false;

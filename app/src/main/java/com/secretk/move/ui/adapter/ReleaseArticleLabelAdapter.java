@@ -89,12 +89,10 @@ public class ReleaseArticleLabelAdapter extends RecyclerView.Adapter<ReleaseArti
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, SelectProjectActivity.class);
-                    intent.putExtra("publication_type",4);
+                    intent.putExtra("publication_type",-1);
                     mContext.startActivity(intent);
                 }
             });
         }
     }
-
-
 }

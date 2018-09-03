@@ -291,4 +291,6 @@
     <string name="home_find_wk_3">挖矿收益</string>
     <string name="home_find_wk_yes">恭喜你！\n挖矿成功</string>
 
+    <string name="sy_day"><![CDATA[<font color="#3b88f6">天</font>（时间可以随意调节）]]></string>
+
 </resources>

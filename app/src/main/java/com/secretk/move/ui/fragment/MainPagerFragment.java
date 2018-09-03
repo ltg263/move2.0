@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 
 import com.secretk.move.R;
 import com.secretk.move.base.LazyFragment;
+import com.secretk.move.ui.activity.ReleaseRewardOneActivity;
 import com.secretk.move.ui.activity.SearchActivity;
 import com.secretk.move.ui.activity.SelectProjectActivity;
 import com.secretk.move.ui.adapter.MainFragmentPagerAdapter;
@@ -166,6 +167,15 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
             public void onClick(View view) {
                 intent = new Intent(getContext(), SelectProjectActivity.class);
                 intent.putExtra("publication_type",3);
+                dialog.dismiss();
+                startActivity(intent);
+            }
+        });
+        view.findViewById(R.id.ll_reward).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent = new Intent(getContext(), ReleaseRewardOneActivity.class);
+                intent.putExtra("publication_type",4);
                 dialog.dismiss();
                 startActivity(intent);
             }

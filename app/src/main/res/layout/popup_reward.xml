@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_log_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/pop_layout"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_10"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/ic_close_pu" />
+
+    <LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_circle_top_white"
+        android:gravity="right"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/dp_15">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/dp_10"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/tv_give_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/selected_give_reward"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_10"
+                    android:text="1000"
+                    android:textColor="@drawable/selected_give_text"
+                    android:textSize="@dimen/dp_12" />
+
+                <View
+                    android:layout_width="20dp"
+                    android:layout_height="@dimen/dp_line" />
+
+                <TextView
+                    android:id="@+id/tv_give_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/selected_give_reward"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_10"
+                    android:text="5000"
+                    android:textColor="@drawable/selected_give_text"
+                    android:textSize="@dimen/dp_12" />
+
+                <View
+                    android:layout_width="20dp"
+                    android:layout_height="@dimen/dp_line" />
+
+                <TextView
+                    android:id="@+id/tv_give_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/selected_give_reward"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_10"
+                    android:text="1W"
+                    android:textColor="@drawable/selected_give_text"
+                    android:textSize="@dimen/dp_12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/tv_give_4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/selected_give_reward"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_10"
+                    android:text="2W"
+                    android:textColor="@drawable/selected_give_text"
+                    android:textSize="@dimen/dp_12" />
+
+                <View
+                    android:layout_width="20dp"
+                    android:layout_height="@dimen/dp_line" />
+
+                <TextView
+                    android:id="@+id/tv_give_5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/selected_give_reward"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_10"
+                    android:text="5W"
+                    android:textColor="@drawable/selected_give_text"
+                    android:textSize="@dimen/dp_12" />
+
+                <View
+                    android:layout_width="20dp"
+                    android:layout_height="@dimen/dp_line" />
+
+                <TextView
+                    android:id="@+id/tv_give_6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/selected_give_reward"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_10"
+                    android:text="10W"
+                    android:textColor="@drawable/selected_give_text"
+                    android:textSize="@dimen/dp_12" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10"
+                android:text="自定义"
+                android:textColor="@color/title_gray"
+                android:textSize="@dimen/sp_14" />
+
+            <EditText
+                android:id="@+id/et_log_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_10"
+                android:layout_weight="1"
+                android:background="@drawable/selected_give_no"
+                android:hint="最低1000"
+                android:padding="10dp"
+                android:textColor="@color/title_gray"
+                android:textColorHint="@color/title_gray_aa"
+                android:textCursorDrawable="@drawable/shape_edit_cursor"
+                android:textSize="@dimen/sp_14" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10"
+                android:src="@drawable/ic_tiqu_zs" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_log_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/dp_15"
+                android:layout_marginVertical="@dimen/dp_20"
+                android:background="@drawable/btn_max_selected_radius"
+                android:gravity="center"
+                android:paddingVertical="@dimen/dp_15"
+                android:text="确定"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

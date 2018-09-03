@@ -86,6 +86,7 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
     private int publicationType;
     private int projectId;
     private SearchedBean.DataBean.ProjectsBean.RowsBean beanTop;
+    private Bundle reward;
 
     @Override
     protected void onResume() {
@@ -110,6 +111,9 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
         setTopData();
         initRefresh();
         publicationType = getIntent().getIntExtra("publication_type", 0);
+        if(publicationType == 4){
+            reward = getIntent().getBundleExtra("reward");
+        }
         projectId = getIntent().getIntExtra("projectId", -1);
         setVerticalManager(recycler);
         adapter = new SelectProjectAdapter(this);
@@ -264,6 +268,12 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
             Intent intent = new Intent(this, ReleaseDiscussActivity.class);
             intent.putExtra("projectId", bean.getProjectId());
             intent.putExtra("projectPay", bean.getProjectCode());
+            startActivity(intent);
+        }else if(publicationType == 4){
+            Intent intent = new Intent(this, ReleaseRewardOkActivity.class);
+            intent.putExtra("projectId", bean.getProjectId());
+            intent.putExtra("projectPay", bean.getProjectCode());
+            intent.putExtra("reward", reward);
             startActivity(intent);
         }else{
             staticProjectId = bean.getProjectId();

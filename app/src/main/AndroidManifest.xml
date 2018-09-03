@@ -160,6 +160,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.ReleaseRewardOneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.FindRankingListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppEditTextStyle" />
@@ -173,6 +177,9 @@
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.MineAssetCoinActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ReleaseRewardOkActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MineAssetPinlessActivity"
