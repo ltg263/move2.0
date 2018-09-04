@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,19 +16,18 @@ import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.bean.RowsBean;
+import com.secretk.move.ui.activity.DetailsRewardActivity;
 import com.secretk.move.ui.activity.ImageViewVpAcivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.GridSpacingItemDecoration;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.NetUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.TimeToolUtils;
 import com.secretk.move.utils.ToastUtils;
-import com.secretk.move.view.DialogUtils;
-import com.secretk.move.view.ReportPopupWindowPull;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,26 +42,26 @@ import butterknife.ButterKnife;
  * Created by zc on 2018/4/14.
  */
 
-public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
+public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
     @BindView(R.id.img_organization)
     ImageView imgOrganization;
     @BindView(R.id.iv_model_type)
     ImageView ivModelType;
-    @BindView(R.id.iv_pupo)
-    ImageView ivPupo;
-    @BindView(R.id.tvName)
+    @BindView(R.id.rl_head)
+    RelativeLayout rlHead;
+    @BindView(R.id.tv_name)
     TextView tvName;
-    @BindView(R.id.tvTime)
+    @BindView(R.id.tv_stick)
+    TextView tvStick;
+    @BindView(R.id.tv_time)
     TextView tvTime;
-    @BindView(R.id.tv_project_folly)
-    TextView tvProjectFolly;
+    @BindView(R.id.tv_find_num)
+    TextView tvFindNum;
     @BindView(R.id.rl_project)
     RelativeLayout rlProject;
-    @BindView(R.id.rl)
-    RelativeLayout rl;
-    @BindView(R.id.tvTitle)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.tvDesc)
+    @BindView(R.id.tv_desc)
     TextView tvDesc;
     @BindView(R.id.iv_file_name)
     ImageView ivFileName;
@@ -74,10 +71,6 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     RelativeLayout rlContext;
     @BindView(R.id.tv_project_code)
     TextView tvProjectCode;
-    @BindView(R.id.tv_sore)
-    TextView tvSore;
-    @BindView(R.id.tv_total_income)
-    TextView tvTotalIncome;
     @BindView(R.id.tv_crack_down)
     TextView tvCrackDown;
     @BindView(R.id.tv_crack_down_1)
@@ -86,21 +79,17 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     TextView tvCrackDown2;
     @BindView(R.id.ll_below)
     RelativeLayout llBelow;
-    @BindView(R.id.tvPraise)
-    TextView tvPraise;
-    @BindView(R.id.tvComments)
-    TextView tvComments;
-    @BindView(R.id.tv_stick)
-    TextView tvStick;
-    @BindView(R.id.ll_xs)
-    LinearLayout ll_xs;
-    @BindView(R.id.tv_xs_1)
-    TextView tvXs1;
-    @BindView(R.id.tv_xs_2)
-    TextView tvXs2;
+    @BindView(R.id.tv_end_time)
+    TextView tvEndTime;
+    @BindView(R.id.tv_go_hd)
+    TextView tvGoHd;
+    @BindView(R.id.tv_go_gc)
+    TextView tvGoGc;
+    @BindView(R.id.rl)
+    RelativeLayout rl;
     private ImagesAdapter imagesadapter;
     private Context mContext;
-    public MainBlFragmentRecyclerHolder(View itemView,Context context) {
+    public UnifyUserListXsHolder(View itemView, Context context) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         this.mContext=context;
@@ -110,15 +99,15 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         rvImg.addItemDecoration(new GridSpacingItemDecoration());
 
     }
-    public void setData(final RowsBean bean,int position){
+    public void setData(final RowsBean bean, int position){
         //actionType  //1 关注的用户 点赞帖子  2关注的用户 发表帖子  3关注的用户 关注项目 4关注的项目下发表的帖子
         GlideUtils.loadCircleUserUrl(mContext,imgOrganization, Constants.BASE_IMG_URL + StringUtil.getBeanString(bean.getCreateUserIcon()));
-        ll_xs.setVisibility(View.GONE);
-        if(position ==0){
-            ll_xs.setVisibility(View.VISIBLE);
+        tvGoGc.setVisibility(View.GONE);
+        LogUtil.w("position："+position);
+        LogUtil.w("position&10："+(position%10));
+        if((position%10)==0 && position!=0){
+            tvGoGc.setVisibility(View.VISIBLE);
         }
-
-
         tvName.setText(bean.getCreateUserName());
         tvTime.setText(TimeToolUtils.convertTimeToFormat(bean.getCreateTime()));
         if(StringUtil.isNotBlank(bean.getProjectCode())){
@@ -131,35 +120,7 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         }
         StringUtil.getUserType(bean.getUserType(),ivModelType);
         showPostDesc(bean);
-        ///0-未点赞，1-已点赞，数字
-        if (bean.getPraiseStatus() == 0) {
-            tvPraise.setSelected(true);
-        } else {
-            tvPraise.setSelected(false);
-        }
-        tvProjectFolly.setVisibility(View.VISIBLE);
-        if(bean.getFollowStatus() == 1){
-            tvProjectFolly.setSelected(true);
-            tvProjectFolly.setText(mContext.getResources().getString(R.string.follow_status_1));
-        }else{
-            tvProjectFolly.setSelected(false);
-            tvProjectFolly.setText(mContext.getResources().getString(R.string.follow_status_0));
-        }
-        if (SharedUtils.getUserId()==bean.getCreateUserId()){
-            tvProjectFolly.setVisibility(View.GONE);
-        }
-        if (SharedUtils.getUserId()==bean.getCreateUserId()){
-            tvProjectFolly.setVisibility(View.GONE);
-        }
-        if(bean.getPostTotalIncome()==0){
-            tvTotalIncome.setText("待结算");
-        }else{
-            if(bean.getPostTotalIncome() == (int)bean.getPostTotalIncome()){
-                tvTotalIncome.setText((int)bean.getPostTotalIncome() +"");
-            }else{
-                tvTotalIncome.setText(bean.getPostTotalIncome() +"");
-            }
-        }
+
         tvProjectCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,27 +129,6 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                     return;
                 }
                 IntentUtil.startProjectActivity(bean.getProjectId());
-            }
-        });
-        //关注
-        tvProjectFolly.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!SharedUtils.getLoginZt()){
-                    IntentUtil.startActivity(LoginHomeActivity.class);
-                    return;
-                }
-                tvProjectFolly.setEnabled(false);
-                NetUtil.addSaveFollow(tvProjectFolly,
-                        Constants.SaveFollow.USER, bean.getCreateUserId(), new NetUtil.SaveFollowImp() {
-                            @Override
-                            public void finishFollow(String str) {
-                                tvProjectFolly.setEnabled(true);
-                                if(!str.equals(Constants.FOLLOW_ERROR)){
-                                    tvProjectFolly.setText(str);
-                                }
-                            }
-                        });
             }
         });
         //用户
@@ -213,13 +153,27 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 IntentUtil.startHomeActivity(bean.getCreateUserId());
             }
         });
+        //用户
+        rlHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!SharedUtils.getLoginZt()){
+                    IntentUtil.startActivity(LoginHomeActivity.class);
+                    return;
+                }
+                IntentUtil.startHomeActivity(bean.getCreateUserId());
+            }
+        });
         rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (SharedUtils.getLoginZt()) {
-                    int postId = bean.getPostId();
-                    int postType = bean.getPostType();
-                    IntentUtil.go2DetailsByType(postType, String.valueOf(postId));
+                        int postId = bean.getPostId();
+//                        int postType = bean.getPostType();
+//                        IntentUtil.go2DetailsByType(postType, String.valueOf(postId));
+                    Intent intent = new Intent(mContext,DetailsRewardActivity.class);
+                    intent.putExtra("postId",postId);
+                    mContext.startActivity(intent);
                 } else {
                     IntentUtil.startActivity(LoginHomeActivity.class);
                 }
@@ -230,9 +184,10 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if(motionEvent.getAction() == MotionEvent.ACTION_UP){
                     if (SharedUtils.getLoginZt()) {
-                        int postId = bean.getPostId();
-                        int postType = bean.getPostType();
-                        IntentUtil.go2DetailsByType(postType, String.valueOf(postId));
+//                        int postId = bean.getPostId();
+//                        int postType = bean.getPostType();
+//                        IntentUtil.go2DetailsByType(postType, String.valueOf(postId));
+                        IntentUtil.startActivity(DetailsRewardActivity.class);
                     } else {
                         IntentUtil.startActivity(LoginHomeActivity.class);
                     }
@@ -249,59 +204,12 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 mContext.startActivity(intent);
             }
         });
-        tvPraise.setOnClickListener(new View.OnClickListener() {
+        tvGoGc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (SharedUtils.getLoginZt()) {
-                    if(!tvPraise.isSelected()){
-                        return;
-                    }
-                    if(!NetUtil.isPraise(bean.getCreateUserId(),SharedUtils.getUserId())){
-                        return;
-                    }
-                    tvPraise.setEnabled(false);
-                    String strS;
-                    if(tvPraise.isSelected()){
-                        strS = String.valueOf(bean.getPraiseNum()+1);
-                    }else{
-                        strS = String.valueOf(bean.getPraiseNum()-1);
-                    }
-                    tvPraise.setText(strS);
-                    tvPraise.setSelected(!tvPraise.isSelected());
-                    setPraise(!tvPraise.isSelected(),bean);
-                } else {
-                    IntentUtil.startActivity(LoginHomeActivity.class);
-                }
+                ToastUtils.getInstance().show(tvGoGc.getText().toString());
             }
         });
-        ivPupo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final ReportPopupWindowPull popupWindowPull = new ReportPopupWindowPull(mContext);
-                popupWindowPull.showAtLocation(ivPupo);
-                popupWindowPull.setOnItemClickListener(new ReportPopupWindowPull.OnItemClickListener() {
-                    @Override
-                    public void OnItemClick(View v) {
-                        popupWindowPull.setListenerDate(v,bean.getPostId());
-                    }
-                });
-            }
-        });
-        tvXs2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ToastUtils.getInstance().show(tvXs2.getText().toString());
-
-            }
-        });
-        if(bean.getPostType()==1){
-            tvTitle.setVisibility(View.GONE);
-            tvProjectCode.setVisibility(View.GONE);
-            tvProjectFolly.setVisibility(View.GONE);
-            ivPupo.setVisibility(View.GONE);
-            tvSore.setText(bean.getTotalScore()+"分");
-            tvSore.setVisibility(View.VISIBLE);
-        }
     }
 
     ArrayList<PostDataInfo> imageLists;
@@ -311,14 +219,9 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             tvTitle.setVisibility(View.VISIBLE);
             tvTitle.setText(StringUtil.getBeanString(bean.getPostTitle()));
         }
-//        <![CDATA[邀请总收益<font color="#ff2851"><b>%1$s</b></font> FIND]]>
-        String a = StringUtil.getBeanString(bean.getPostShortDesc());
         String b = "【奖励1000FIND】";
-        String c = "<font color=\"#ff2851\">"+b+"</font>"+a;
-        tvDesc.setText(Html.fromHtml(c));
-        tvPraise.setText(bean.getPraiseNum() + "");
-        tvComments.setText(bean.getCommentsNum() + "");
-
+        tvDesc.setText(StringUtil.getBeanString(bean.getPostShortDesc()));
+        tvFindNum.setText(b);
         imagesadapter = new ImagesAdapter(mContext);
         rvImg.setAdapter(imagesadapter);
         ivFileName.setVisibility(View.GONE);
@@ -389,28 +292,5 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 e.printStackTrace();
             }
         }
-    }
-    private void setPraise(boolean isPraise, final RowsBean bead) {
-        NetUtil.setAnimation(tvPraise);
-        NetUtil.setPraise(isPraise, bead.getPostId(), new NetUtil.SaveFollowImpl() {
-            @Override
-            public void finishFollow(String praiseNum,boolean status,double find,double postTotalIncome) {
-                tvPraise.setEnabled(true);
-                ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
-                if(!praiseNum.equals(Constants.PRAISE_ERROR)){
-                    DialogUtils.showDialogPraise(mContext,1,true,find);
-                    tvPraise.setSelected(status);
-                    bead.setPageviewNum(Integer.valueOf(praiseNum));
-                    tvPraise.setText(praiseNum);
-                    if(postTotalIncome!=0){
-                        if(postTotalIncome == postTotalIncome){
-                            tvTotalIncome.setText((int)postTotalIncome +"");
-                        }else{
-                            tvTotalIncome.setText(postTotalIncome +"");
-                        }
-                    }
-                }
-            }
-        });
     }
 }

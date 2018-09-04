@@ -19,8 +19,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonListBase;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.LoginHomeActivity;
-import com.secretk.move.ui.adapter.MainBlHorizontalAdapter;
-import com.secretk.move.ui.adapter.MainBlFragmentRecyclerAdapter;
+import com.secretk.move.ui.adapter.UnifyUserListXsAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
@@ -29,22 +28,17 @@ import com.secretk.move.utils.SharedUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 
 /**
  * 作者： litongge
  * 时间： 2018/6/8 13:46
  * 邮箱；ltg263@126.com
- * 描述：主页 --打假
+ * 描述：主页 --悬赏
  */
-public class MainBlueBlFragment extends LazyFragment implements ItemClickListener {
+public class MainBlueXsFragment extends LazyFragment implements ItemClickListener {
     @BindView(R.id.recycler)
     RecyclerView recycler;
-    @BindView(R.id.recycler_horizontal)
-    RecyclerView recyclerHorizontal;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.tv_icon)
@@ -55,11 +49,10 @@ public class MainBlueBlFragment extends LazyFragment implements ItemClickListene
     TextView tvSubmit;
     @BindView(R.id.rl_top_theme)
     RelativeLayout rlTopTheme;
-    private MainBlFragmentRecyclerAdapter adapter;
+    private UnifyUserListXsAdapter adapter;
     int pageIndex = 1;
     boolean showFragment = false;
     String tokenLs = "";
-    private MainBlHorizontalAdapter adapterH;
 
     @Override
     public int setFragmentView() {
@@ -69,32 +62,10 @@ public class MainBlueBlFragment extends LazyFragment implements ItemClickListene
     @Override
     public void initViews() {
         setVerticalManager(recycler);
-        setHorizontalManager(recyclerHorizontal);
         initRefresh();
-        adapter = new MainBlFragmentRecyclerAdapter(getActivity());
+        adapter = new UnifyUserListXsAdapter(getActivity());
         recycler.setAdapter(adapter);
-
-        adapterH = new MainBlHorizontalAdapter(getActivity());
-        recyclerHorizontal.setAdapter(adapterH);
-        List<String> list = new ArrayList<>();
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        recyclerHorizontal.setVisibility(View.VISIBLE);
-        adapterH.setData(list);
         adapter.setItemListener(this);
-//        rlTopTheme.setVisibility(View.VISIBLE);
-//        tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_go_login));
-//        tvName.setVisibility(View.VISIBLE);
-//        tvSubmit.setText(getActivity().getResources().getString(R.string.go_login));
     }
 
     private void initRefresh() {

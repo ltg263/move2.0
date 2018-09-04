@@ -10,23 +10,23 @@ import android.view.ViewGroup;
 import com.secretk.move.R;
 import com.secretk.move.bean.RowsBean;
 import com.secretk.move.listener.ItemClickListener;
-import com.secretk.move.ui.holder.MainBlFragmentRecyclerHolder;
+import com.secretk.move.ui.holder.UnifyUserListXsHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by zc on 2018/4/14.
- *
  */
 
-public class MainBlFragmentRecyclerAdapter extends RecyclerView.Adapter<MainBlFragmentRecyclerHolder> {
+public class UnifyUserListXsAdapter extends RecyclerView.Adapter<UnifyUserListXsHolder> {
+
 
     private List<RowsBean> list = new ArrayList<>();
     private ItemClickListener mListener;
     Context context;
 
-    public MainBlFragmentRecyclerAdapter(Context context) {
+    public UnifyUserListXsAdapter(Context context) {
         this.context = context;
     }
 
@@ -35,14 +35,14 @@ public class MainBlFragmentRecyclerAdapter extends RecyclerView.Adapter<MainBlFr
     }
 
     @Override
-    public MainBlFragmentRecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_list_unify_bl, parent, false);
-        MainBlFragmentRecyclerHolder holder = new MainBlFragmentRecyclerHolder(view,context);
+    public UnifyUserListXsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_list_unify_xs, parent, false);
+        UnifyUserListXsHolder holder = new UnifyUserListXsHolder(view, context);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(MainBlFragmentRecyclerHolder holder, int position) {
+    public void onBindViewHolder(UnifyUserListXsHolder holder, int position) {
         RowsBean bean = list.get(position);
         holder.setData(bean, position);
         holder.setItemListener(mListener);
@@ -61,8 +61,9 @@ public class MainBlFragmentRecyclerAdapter extends RecyclerView.Adapter<MainBlFr
         this.list = list;
         notifyDataSetChanged();
     }
+
     public void clearData() {
-        if(list!=null){
+        if (list != null) {
             list.clear();
             notifyDataSetChanged();
         }

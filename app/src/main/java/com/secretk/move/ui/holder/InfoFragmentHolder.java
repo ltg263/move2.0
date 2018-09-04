@@ -179,15 +179,15 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
             ivDotG.setVisibility(View.INVISIBLE);
             tvTime.setTextColor(context.getResources().getColor(R.color.app_background));
             tvHeadTitle.setTextColor(context.getResources().getColor(R.color.app_background));
-//            tvDetailDesc.setTextColor(context.getResources().getColor(R.color.app_background));
-//            tvDetailBtn.setTextColor(context.getResources().getColor(R.color.app_background));
+            tvDetailDesc.setTextColor(context.getResources().getColor(R.color.app_background));
+            tvDetailBtn.setTextColor(context.getResources().getColor(R.color.app_background));
         }else{
             ivDotB.setVisibility(View.INVISIBLE);
             ivDotG.setVisibility(View.VISIBLE);
             tvTime.setTextColor(context.getResources().getColor(R.color.title_gray));
             tvHeadTitle.setTextColor(context.getResources().getColor(R.color.title_gray));
-//            tvDetailDesc.setTextColor(context.getResources().getColor(R.color.title_gray_7e));
-//            tvDetailBtn.setTextColor(context.getResources().getColor(R.color.title_gray_7e));
+            tvDetailDesc.setTextColor(context.getResources().getColor(R.color.title_gray_7e));
+            tvDetailBtn.setTextColor(context.getResources().getColor(R.color.title_gray_7e));
         }
         //0-是，1-否
         if(rowsBean.getIsCheckDetails()==0){

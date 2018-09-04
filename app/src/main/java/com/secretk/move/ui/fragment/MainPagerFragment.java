@@ -79,7 +79,7 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         tool_bar.setNavigationIcon(R.drawable.main_search);
         adapter = new MainFragmentPagerAdapter(getChildFragmentManager());
         vp_main_children.setAdapter(adapter);
-        vp_main_children.setOffscreenPageLimit(2);
+        vp_main_children.setOffscreenPageLimit(3);
         tab_layout.setupWithViewPager(vp_main_children);
         tab_layout.setTabMode(TabLayout.MODE_FIXED);
         tool_bar.setOnMenuItemClickListener(this);
@@ -109,7 +109,7 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         list.add("推荐");
         list.add("关注");
         list.add("爆料");
-//        list.add("新榜");
+        list.add("悬赏");
         MagicIndicatorUtils.initMagicIndicator(getActivity(),list,vp_main_children,magicIndicatorTitle);
     }
 

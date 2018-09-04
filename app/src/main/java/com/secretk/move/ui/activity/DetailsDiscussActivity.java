@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -153,6 +154,26 @@ public class DetailsDiscussActivity extends BaseActivity {
     RelativeLayout rlSelectNo;
     @BindView(R.id.rl_not_content)
     RelativeLayout rlNotContent;
+    @BindView(R.id.tv_xs_find)
+    TextView tvXsFind;
+    @BindView(R.id.tv_xs_1)
+    TextView tvXs1;
+    @BindView(R.id.tv_xs_2)
+    TextView tvXs2;
+    @BindView(R.id.tv_xs_3)
+    TextView tvXs3;
+    @BindView(R.id.ll_xs)
+    LinearLayout llXs;
+    @BindView(R.id.iv)
+    ImageView iv;
+    @BindView(R.id.tv_xs_title)
+    TextView tvXsTitle;
+    @BindView(R.id.tv_xs_con)
+    TextView tvXsCon;
+    @BindView(R.id.rl_xs_xsgc)
+    RelativeLayout rlXsXsgc;
+    @BindView(R.id.ll_bl_xs)
+    LinearLayout llBlXs;
     private DetailsDiscussAdapter adapter;
     private DetailsDiscussAdapter adapterNew;
     private String postId;
@@ -191,6 +212,7 @@ public class DetailsDiscussActivity extends BaseActivity {
     @Override
     protected void initUI(Bundle savedInstanceState) {
 //        refreshLayout.setEnableRefresh(false);//关闭下拉刷新
+        llBlXs.setVisibility(View.VISIBLE);
         postId = getIntent().getStringExtra("postId");
         activityId = getIntent().getStringExtra("activityId");
         setHorizontalManager(rvImg);
@@ -250,8 +272,8 @@ public class DetailsDiscussActivity extends BaseActivity {
     }
 
     @OnClick({R.id.tv_follow_status, R.id.iv_post_small_images, R.id.tv_send, R.id.rl_ge_ren,
-            R.id.tv_commendation_Num, R.id.rl_sc, R.id.rl_dz,R.id.rl_pl,R.id.tv_content,
-             R.id.tv_sort_new,R.id.tv_sort_time})
+            R.id.tv_commendation_Num, R.id.rl_sc, R.id.rl_dz, R.id.rl_pl, R.id.tv_content,
+            R.id.tv_sort_new, R.id.tv_sort_time})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_follow_status:
@@ -286,7 +308,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                     if (str.contains(strLs)) {
                         str = str.replaceAll(strLs, "");
                     }
-                    KeybordS.closeKeybord(etContent,this);
+                    KeybordS.closeKeybord(etContent, this);
                     saveComment(str);
                 } else {
                     ToastUtils.getInstance().show("内容不能为空");
@@ -350,34 +372,34 @@ public class DetailsDiscussActivity extends BaseActivity {
                 break;
             case R.id.rl_pl:
 //                rcv.fullScroll(ScrollView.FOCUS_UP);
-                if(llRm.getVisibility()==View.VISIBLE){
-                    if(rcv.getScrollY()<llRm.getTop()){
-                        rcv.scrollTo(0,  llRm.getTop());
-                    }else{
+                if (llRm.getVisibility() == View.VISIBLE) {
+                    if (rcv.getScrollY() < llRm.getTop()) {
+                        rcv.scrollTo(0, llRm.getTop());
+                    } else {
                         rcv.fullScroll(ScrollView.FOCUS_UP);
                     }
-                }else if(llZx.getVisibility()==View.VISIBLE){
-                    if(rcv.getScrollY()<llZx.getTop()){
-                        rcv.scrollTo(0,  llZx.getTop());
-                    }else{
+                } else if (llZx.getVisibility() == View.VISIBLE) {
+                    if (rcv.getScrollY() < llZx.getTop()) {
+                        rcv.scrollTo(0, llZx.getTop());
+                    } else {
                         rcv.fullScroll(ScrollView.FOCUS_UP);
                     }
                 }
                 break;
             case R.id.tv_content:
-                KeybordS.openKeybord(etContent,this);
+                KeybordS.openKeybord(etContent, this);
                 break;
             case R.id.tv_sort_new:
-                if(!isSortField){
-                    pageIndex=1;
+                if (!isSortField) {
+                    pageIndex = 1;
                     isSortField = true;
                     refreshLayout.setNoMoreData(false);
                     initNewsDataList();
                 }
                 break;
             case R.id.tv_sort_time:
-                if(isSortField){
-                    pageIndex=1;
+                if (isSortField) {
+                    pageIndex = 1;
                     isSortField = false;
                     refreshLayout.setNoMoreData(false);
                     initNewsDataList();
@@ -385,6 +407,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                 break;
         }
     }
+
     private void initRefresh() {
         /**
          * 下拉刷新
@@ -455,10 +478,10 @@ public class DetailsDiscussActivity extends BaseActivity {
                     JSONObject object = new JSONObject(str).getJSONObject("data");
                     boolean isShare = object.getBoolean("isCommentAward");
                     double amount = 0;
-                    if(isShare){
+                    if (isShare) {
                         amount = object.getDouble("amount");
                     }
-                    DialogUtils.showDialogPraise(DetailsDiscussActivity.this,6,isShare,amount);
+                    DialogUtils.showDialogPraise(DetailsDiscussActivity.this, 6, isShare, amount);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -514,23 +537,23 @@ public class DetailsDiscussActivity extends BaseActivity {
                 mHeadView.setTitle(discussDetail.getProjectCode());
                 postShortDesc = discussDetail.getPostShortDesc();
                 mHeadView.setTitleVice("/" + discussDetail.getProjectChineseName());
-                if(discussDetail.getCommentsNum()!=0){
+                if (discussDetail.getCommentsNum() != 0) {
                     tvPlNum.setVisibility(View.VISIBLE);
                     tvPlNum.setText(String.valueOf(discussDetail.getCommentsNum()));
                 }
 //共有8人赞助10000FIND
-                if(discussDetail.getDonateNum()>0){
+                if (discussDetail.getDonateNum() > 0) {
                     pileLayout.setVisibility(View.VISIBLE);
-                    tvDonateNum.setText("共有" + discussDetail.getDonateNum()+"人赞助"+String.valueOf(new Double(discussDetail.getCommendationNum()).intValue())+"FIND");
+                    tvDonateNum.setText("共有" + discussDetail.getDonateNum() + "人赞助" + String.valueOf(new Double(discussDetail.getCommendationNum()).intValue()) + "FIND");
                 }
                 projectId = discussDetail.getProjectId();
                 mHeadView.setToolbarListener(projectId);
-                if(StringUtil.isNotBlank(discussDetail.getProjectCode())){
+                if (StringUtil.isNotBlank(discussDetail.getProjectCode())) {
                     tvProjectCode.setVisibility(View.VISIBLE);
                     tvProjectCode.setText(discussDetail.getProjectCode());
                 }
                 GlideUtils.loadCircleProjectUrl(DetailsDiscussActivity.this, mHeadView.getImageView(), Constants.BASE_IMG_URL + discussDetail.getProjectIcon());
-                if(StringUtil.isNotBlank(discussDetail.getPostTitle())){
+                if (StringUtil.isNotBlank(discussDetail.getPostTitle())) {
                     tvPostTitle.setVisibility(View.VISIBLE);
                     tvPostTitle.setText(discussDetail.getPostTitle());
                 }
@@ -550,17 +573,17 @@ public class DetailsDiscussActivity extends BaseActivity {
                 } else {
                     ivSc.setSelected(false);
                 }
-                if(discussDetail.getPraiseNum()!=0){
+                if (discussDetail.getPraiseNum() != 0) {
                     tvDzNum.setVisibility(View.VISIBLE);
                     tvDzNum.setText(String.valueOf(discussDetail.getPraiseNum()));
                 }
-                if(discussDetail.getPostTotalIncome()==0){
+                if (discussDetail.getPostTotalIncome() == 0) {
                     tvRead.setText("待结算");
-                }else{
-                    if(discussDetail.getPostTotalIncome() == (int)discussDetail.getPostTotalIncome()){
-                        tvRead.setText((int)discussDetail.getPostTotalIncome() +"");
-                    }else{
-                        tvRead.setText(discussDetail.getPostTotalIncome() +"");
+                } else {
+                    if (discussDetail.getPostTotalIncome() == (int) discussDetail.getPostTotalIncome()) {
+                        tvRead.setText((int) discussDetail.getPostTotalIncome() + "");
+                    } else {
+                        tvRead.setText(discussDetail.getPostTotalIncome() + "");
                     }
                 }
 
@@ -583,7 +606,11 @@ public class DetailsDiscussActivity extends BaseActivity {
                 if (baseUserId == discussDetail.getCreateUserId()) {
                     tvFollowStatus.setVisibility(View.GONE);
                 }
-                tvPostShortDesc.setText(discussDetail.getDisscussContents());
+                String a = StringUtil.getBeanString(discussDetail.getPostShortDesc());
+                String b = "【奖励1000FIND】";
+                String c = "<font color=\"#ff2851\">" + b + "</font>" + a;
+                tvPostShortDesc.setText(Html.fromHtml(c));
+//                tvPostShortDesc.setText(discussDetail.getDisscussContents());
                 tvCreateTime.setText(StringUtil.getTimeToM(discussDetail.getCreateTime()));
                 if (StringUtil.isNotBlank(discussDetail.getPostSmallImages())) {
                     try {
@@ -642,17 +669,17 @@ public class DetailsDiscussActivity extends BaseActivity {
                 if (StringUtil.isNotBlank(discussDetail.getTagInfos()) && discussDetail.getTagInfos().contains("tagName")) {
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    params.setMargins(15,10,15,10);
+                    params.setMargins(15, 10, 15, 10);
                     try {
                         JSONArray array = new JSONArray(discussDetail.getTagInfos());
-                        if(llAddView.getChildCount()>0){
+                        if (llAddView.getChildCount() > 0) {
                             llAddView.removeAllViews();
                         }
-                        for(int i=0;i<array.length();i++){
+                        for (int i = 0; i < array.length(); i++) {
                             final JSONObject object = array.getJSONObject(i);
-                            if(StringUtil.isNotBlank(object.getString("tagName"))){
+                            if (StringUtil.isNotBlank(object.getString("tagName"))) {
                                 final TextView crack_down = new TextView(DetailsDiscussActivity.this);
-                                crack_down.setPadding(20,10,20,10);
+                                crack_down.setPadding(20, 10, 20, 10);
                                 crack_down.setBackground(getResources().getDrawable(R.drawable.shape_add_label_selected));
                                 crack_down.setTextColor(getResources().getColor(R.color.app_background));
                                 crack_down.setTextSize(14);
@@ -675,6 +702,7 @@ public class DetailsDiscussActivity extends BaseActivity {
         });
 
     }
+
     /**
      * 设置捐款人头像
      *
@@ -695,7 +723,9 @@ public class DetailsDiscussActivity extends BaseActivity {
             lists.add(String.valueOf(pileLists.get(i).getSendUserId()));
         }
     }
+
     boolean isSortField = false;
+
     /**
      * 评论最新
      */
@@ -742,9 +772,9 @@ public class DetailsDiscussActivity extends BaseActivity {
                 } else {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
-                if(rlNotContent.getVisibility() ==View.VISIBLE){
+                if (rlNotContent.getVisibility() == View.VISIBLE) {
                     refreshLayout.setEnableLoadMore(false);
-                }else{
+                } else {
                     refreshLayout.setEnableLoadMore(true);
                 }
             }
@@ -787,7 +817,7 @@ public class DetailsDiscussActivity extends BaseActivity {
         NetUtil.setAnimation(rlDz);
         NetUtil.setPraise(isPraise, postId, new NetUtil.SaveFollowImpl() {
             @Override
-            public void finishFollow(String praiseNum, boolean status, double find,double postTotalIncome) {
+            public void finishFollow(String praiseNum, boolean status, double find, double postTotalIncome) {
                 rlDz.setEnabled(true);
                 ////点赞状态：0-未点赞；1-已点赞，2-未登录用户不显示 数字
                 if (!praiseNum.equals(Constants.PRAISE_ERROR)) {
@@ -796,11 +826,11 @@ public class DetailsDiscussActivity extends BaseActivity {
                     DetailsDiscussActivity.this.praiseNum = Integer.valueOf(praiseNum);
                     tvDzNum.setVisibility(View.VISIBLE);
                     tvDzNum.setText(praiseNum);
-                    if(postTotalIncome!=0){
-                        if(postTotalIncome == postTotalIncome){
-                            tvRead.setText((int)postTotalIncome +"");
-                        }else{
-                            tvRead.setText(postTotalIncome +"");
+                    if (postTotalIncome != 0) {
+                        if (postTotalIncome == postTotalIncome) {
+                            tvRead.setText((int) postTotalIncome + "");
+                        } else {
+                            tvRead.setText(postTotalIncome + "");
                         }
                     }
                 }

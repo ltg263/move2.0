@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.secretk.move.view.InputMethodLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/input_method_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -34,14 +33,14 @@
         android:id="@+id/have_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/tv_go_hd_b"
         android:layout_below="@id/view"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="60dp"
             app:srlEnablePreviewInEditMode="false">
 
             <com.secretk.move.view.RecycleScrollView
@@ -71,8 +70,7 @@
                         android:text="区分"
                         android:textColor="@color/title_gray"
                         android:textSize="@dimen/sp_22"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
+                        android:textStyle="bold" />
 
                     <RelativeLayout
                         android:id="@+id/rl_ge_ren"
@@ -137,57 +135,11 @@
                             android:textSize="@dimen/sp_14" />
 
                         <TextView
-                            android:id="@+id/tv_create_user_signature"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/rl_head"
-                            android:layout_alignStart="@+id/tv_create_user_name"
-                            android:textColor="@color/title_gray_66"
-                            android:textSize="@dimen/sp_14"
-                            android:visibility="gone" />
-
-                        <TextView
                             android:id="@+id/tv_follow_status"
                             style="@style/BtnSelectorFollow"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true" />
                     </RelativeLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_review"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-                        <!--评分开始-->
-                        <com.secretk.move.view.ProgressBarStyleView
-                            android:id="@+id/pb_comprehensive_evaluation"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/dp_5" />
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/rv_review"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/dp_5"
-                            android:background="@drawable/ic_shade_grey"
-                            android:visibility="gone" />
-                        <!--评分結束-->
-                        <!--项目介绍結束-->
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/dp_10"
-                            android:layout_marginHorizontal="@dimen/dp_10"
-                            android:background="@color/background_gray"
-                            android:padding="@dimen/dp_10"
-                            android:text="评测结果仅供参考，不构成投资建议。"
-                            android:textColor="@color/title_gray_66"
-                            android:visibility="visible" />
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -207,13 +159,6 @@
                             android:lineSpacingExtra="@dimen/item_line_spacing"
                             android:textColor="@color/title_gray"
                             android:textSize="@dimen/sp_16" />
-
-                        <WebView
-                            android:id="@+id/wv_post_short_desc"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            tools:ignore="WebViewLayout" />
 
                         <ImageView
                             android:id="@+id/iv_post_small_images"
@@ -242,18 +187,6 @@
                             android:layout_centerVertical="true"
                             android:visibility="gone" />
 
-                        <TextView
-                            android:id="@+id/tv_tag_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/dp_10"
-                            android:ellipsize="end"
-                            android:lineSpacingMultiplier="1.2"
-                            android:maxLines="1"
-                            android:textColor="@color/app_background"
-                            android:visibility="gone" />
-
                         <com.secretk.move.view.FixGridLayout
                             android:id="@+id/ll_add_view"
                             android:layout_width="match_parent"
@@ -263,59 +196,12 @@
                             android:layout_toLeftOf="@id/tvRead"
                             android:layout_toRightOf="@id/tv_project_code" />
 
-                        <TextView
-                            android:id="@+id/tvRead"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="@dimen/dp_10"
-                            android:drawableLeft="@drawable/ic_logo_list"
-                            android:drawablePadding="@dimen/dp_4"
-                            android:gravity="center_vertical"
-                            android:textColor="@color/title_gray_99"
-                            android:textSize="@dimen/sp_14" />
                     </RelativeLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical"
-                        android:paddingBottom="@dimen/dp_25">
-
-                        <com.secretk.move.view.PileLayout
-                            android:id="@+id/pile_layout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginBottom="@dimen/dp_15"
-                            android:visibility="gone"
-                            app:PileLayout_pileWidth="@dimen/dp_25" />
-
-                        <TextView
-                            android:id="@+id/tv_donate_num"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/dp_15"
-                            android:text="赠人玫瑰，手留余香"
-                            android:textColor="@color/title_gray_88"
-                            android:textSize="@dimen/sp_14" />
-
-                        <TextView
-                            android:id="@+id/tv_commendation_Num"
-                            style="@style/BtnSponsor"
-                            android:layout_centerVertical="true"
-                            android:text="赞助" />
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/ll_bl_xs"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         android:background="@color/white"
                         android:orientation="vertical">
 
@@ -326,8 +212,10 @@
                             android:layout_below="@id/ll_below"
                             android:layout_marginHorizontal="@dimen/dp_10"
                             android:background="@drawable/btn_circle_5dp_bj"
+                            android:gravity="center_horizontal"
                             android:orientation="vertical"
-                            android:padding="@dimen/dp_10">
+                            android:paddingHorizontal="@dimen/dp_10"
+                            android:paddingVertical="@dimen/dp_15">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -357,32 +245,35 @@
 
                             <TextView
                                 android:id="@+id/tv_xs_1"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_10"
-                                android:text="ALL- 团队测评!!!"
-                                android:textColor="@color/title_gray"
-                                android:textSize="@dimen/sp_16"
-                                android:textStyle="bold" />
+                                android:gravity="center"
+                                android:text="优秀的回答这将会在悬赏结束后分享奖金"
+                                android:textColor="@color/title_gray_66"
+                                android:textSize="@dimen/sp_14" />
 
                             <TextView
                                 android:id="@+id/tv_xs_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_10"
-                                android:text="今年以来，加密货币跌势难止。数据显示，在截至6月25日的一周内，它是未来......"
+                                android:gravity="center"
+                                android:text="截止时间08.08 12:00，已有12人回答"
                                 android:textColor="@color/title_gray_66"
                                 android:textSize="@dimen/sp_14" />
 
                             <TextView
-                                android:id="@+id/tv_xs_3"
-                                android:layout_width="match_parent"
+                                android:id="@+id/tv_go_hd"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_10"
-                                android:gravity="right"
-                                android:text="去围观悬赏>>"
-                                android:textColor="@color/title_gray_66"
-                                android:textSize="@dimen/sp_14" />
+                                android:background="@drawable/btn_circle_app"
+                                android:paddingHorizontal="@dimen/dp_20"
+                                android:paddingVertical="@dimen/dp_5"
+                                android:text="去回答"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_16" />
                         </LinearLayout>
 
                         <View
@@ -428,42 +319,17 @@
                                 android:textSize="@dimen/sp_14" />
                         </RelativeLayout>
 
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_rm"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:background="@color/white"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/tv_rm"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/white"
-                            android:padding="@dimen/dp_15"
-                            android:textColor="@color/title_gray"
-                            android:textSize="@dimen/sp_16" />
-
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_line"
-                            android:background="@color/cut_off_rule" />
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/rv_hot_review"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="@dimen/dp_10"
+                            android:background="@color/background_gray" />
                     </LinearLayout>
 
                     <RelativeLayout
                         android:id="@+id/rl_not_content"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -480,32 +346,23 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_10"
                         android:background="@color/white"
-                        android:orientation="vertical"
-                        android:visibility="gone">
+                        android:orientation="vertical">
 
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/tv_zx"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:background="@color/white"
-                                android:padding="@dimen/dp_15"
-                                android:text="最新评测"
-                                android:textColor="@color/title_gray"
-                                android:textSize="@dimen/sp_16" />
 
                             <TextView
                                 android:id="@+id/tv_sort_new"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_toLeftOf="@+id/view_cut"
+                                android:layout_weight="1"
+                                android:gravity="center"
                                 android:padding="@dimen/dp_15"
-                                android:text="按热度"
+                                android:text="精彩回答"
                                 android:textColor="@color/app_background"
                                 android:textSize="@dimen/sp_16" />
 
@@ -513,23 +370,20 @@
                                 android:id="@+id/view_cut"
                                 android:layout_width="@dimen/dp_1"
                                 android:layout_height="@dimen/dp_20"
-                                android:layout_centerVertical="true"
-                                android:layout_marginHorizontal="@dimen/dp_2"
-                                android:layout_toLeftOf="@+id/tv_sort_time"
                                 android:background="@color/title_gray_66" />
 
                             <TextView
                                 android:id="@+id/tv_sort_time"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
+                                android:layout_weight="1"
+                                android:gravity="center"
                                 android:padding="@dimen/dp_15"
-                                android:text="按时间"
+                                android:text="全部回答"
                                 android:textColor="@color/title_gray_66"
                                 android:textSize="@dimen/sp_16" />
 
-                        </RelativeLayout>
+                        </LinearLayout>
 
                         <View
                             android:layout_width="match_parent"
@@ -546,10 +400,15 @@
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </RelativeLayout>
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/unify_comment_layout"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tv_go_hd_b"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:background="@color/app_background"
+        android:gravity="center"
+        android:padding="@dimen/dp_15"
+        android:text="去回答"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16" />
 </com.secretk.move.view.InputMethodLayout>
