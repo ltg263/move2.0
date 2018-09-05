@@ -63,7 +63,7 @@ public class ActivitySearchInteractorImpl  implements ActivitySearchContract.Int
 
                 if (bean.getCode() == 0) {
                     List<SearchedBean.DataBean.ProjectsBean.RowsBean> list = bean.getData().getProjects().getRows();
-                    callBack.searchSuccess(list,str);
+                    callBack.searchSuccess(list,str,0);
                 }
             }
 

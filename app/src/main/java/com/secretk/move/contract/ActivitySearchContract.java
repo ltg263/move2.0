@@ -32,7 +32,7 @@ public interface ActivitySearchContract {
     }
 
     interface CallBack {
-        void searchSuccess(List<SearchedBean.DataBean.ProjectsBean.RowsBean> list, String searchTxt);
+        void searchSuccess(List<SearchedBean.DataBean.ProjectsBean.RowsBean> list, String searchTxt,int type);
 
         void onError(String str);
     }

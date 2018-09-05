@@ -359,7 +359,9 @@ public interface Constants {
     String RELEASE_DISCUSS = BASE_URL + "kff/discuss/saveDiscuss";
     String SEARCH_PROJECTS_1 = BASE_URL + "kff/project/searchProjects";
     String SEARCH_PROJECTS = BASE_URL + "kff/project/getProjectPage";
-
+    //1-项目，2-内容，
+    //3-用户，4-话题
+    String INDEX_SEARCH = "http://192.168.10.128:8044/rest/kff/search/indexSearch";
     /**
      * 1-关注项目;2-关注帖子；3-关注用户
      */

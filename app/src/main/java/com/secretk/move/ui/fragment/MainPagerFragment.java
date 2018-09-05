@@ -24,6 +24,7 @@ import com.secretk.move.R;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.ui.activity.ReleaseRewardOneActivity;
 import com.secretk.move.ui.activity.SearchActivity;
+import com.secretk.move.ui.activity.SearchAllActivity;
 import com.secretk.move.ui.activity.SelectProjectActivity;
 import com.secretk.move.ui.adapter.MainFragmentPagerAdapter;
 import com.secretk.move.utils.StatusBarUtil;
@@ -94,7 +95,7 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         ivSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SearchActivity.class);
+                Intent intent = new Intent(getContext(), SearchAllActivity.class);
                 startActivity(intent);
             }
         });

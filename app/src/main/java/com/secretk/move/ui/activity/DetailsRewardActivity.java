@@ -125,7 +125,6 @@ public class DetailsRewardActivity extends BaseActivity {
     private int postId;
     private ImagesAdapter imagesadapter;
     private String imgUrl;
-    private String imgName;
     private boolean isFinish = false;
     private int userId;
     private int createUserId;
@@ -133,6 +132,7 @@ public class DetailsRewardActivity extends BaseActivity {
     private int projectId;
     String postShortDesc;
     private String activityId;
+    private DetailsDiscussBase.DataBean.DiscussDetailBean discussDetail;
 
     @Override
     protected int setOnCreate() {
@@ -181,7 +181,7 @@ public class DetailsRewardActivity extends BaseActivity {
 
 
     @OnClick({R.id.tv_follow_status, R.id.iv_post_small_images,R.id.rl_ge_ren,
-            R.id.tv_sort_new, R.id.tv_sort_time})
+            R.id.tv_sort_new, R.id.tv_sort_time,R.id.tv_go_hd_b,R.id.tv_go_hd})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_follow_status:
@@ -226,7 +226,20 @@ public class DetailsRewardActivity extends BaseActivity {
                     initNewsDataList();
                 }
                 break;
+            case R.id.tv_go_hd_b:
+                sendDiscuuss();
+                break;
+            case R.id.tv_go_hd:
+                sendDiscuuss();
+                break;
         }
+    }
+
+    private void sendDiscuuss() {
+        Intent intent = new Intent(this, ReleaseDiscussActivity.class);
+        intent.putExtra("projectId", discussDetail.getProjectId());
+        intent.putExtra("projectPay", discussDetail.getProjectCode());
+        startActivity(intent);
     }
 
     private void initRefresh() {
@@ -299,7 +312,7 @@ public class DetailsRewardActivity extends BaseActivity {
 
             @Override
             public void onCompleted(DetailsDiscussBase bean) {
-                DetailsDiscussBase.DataBean.DiscussDetailBean discussDetail = bean.getData().getDiscussDetail();
+                discussDetail = bean.getData().getDiscussDetail();
                 createUserId = discussDetail.getCreateUserId();
                 postShortDesc = discussDetail.getPostShortDesc();
                 projectId = discussDetail.getProjectId();
@@ -353,7 +366,6 @@ public class DetailsRewardActivity extends BaseActivity {
                             imageLists.add(info);
                         }
                         if (imageLists.size() != 0) {
-                            imgName = imageLists.get(0).getName();
                             imgUrl = imageLists.get(0).getUrl();
                             if (imageLists.size() == 1) {
                                 ivPostSmallImages.setVisibility(View.VISIBLE);

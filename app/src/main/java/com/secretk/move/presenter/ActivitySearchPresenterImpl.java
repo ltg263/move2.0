@@ -76,7 +76,18 @@ public class ActivitySearchPresenterImpl implements ActivitySearchContract.Prese
 
 
     @Override
-    public void searchSuccess(List<SearchedBean.DataBean.ProjectsBean.RowsBean> list, String searchTxt) {
+    public void searchSuccess(List<SearchedBean.DataBean.ProjectsBean.RowsBean> list, String searchTxt,int type) {
+        if(type == 1){
+            List<SearchBean> lists =  dao.queryBuilder().where(SearchBeanDao.Properties.SearchTxt.like("%"+searchTxt+"%")).build().list();
+            if (lists==null||lists.size()==0){
+                SearchBean searchBean = new SearchBean();
+                searchBean.setType(1);
+                searchBean.setTime(System.currentTimeMillis());
+                searchBean.setSearchTxt(searchTxt);
+                dao.insertOrReplace(searchBean);
+            }
+            return;
+        }
         if (list==null||list.size()==0){
             view.showMsg("未找到数据");
         }
@@ -90,7 +101,6 @@ public class ActivitySearchPresenterImpl implements ActivitySearchContract.Prese
             searchBean.setSearchTxt(searchTxt);
             dao.insertOrReplace(searchBean);
         }
-
     }
 
     @Override

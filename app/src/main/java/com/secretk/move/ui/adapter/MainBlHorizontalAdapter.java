@@ -27,7 +27,7 @@ public class MainBlHorizontalAdapter extends RecyclerView.Adapter<MainBlHorizont
 
     private List<String> list;
     Context context;
-    public MainBlHorizontalAdapter(Context context ) {
+    public MainBlHorizontalAdapter(Context context) {
         this.context=context;
     }
 

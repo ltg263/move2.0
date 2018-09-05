@@ -23,6 +23,7 @@ import com.secretk.move.ui.activity.FindRankingListActivity;
 import com.secretk.move.ui.activity.FindRingRequiredActivity;
 import com.secretk.move.ui.activity.FindWkActivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
+import com.secretk.move.ui.activity.RewardSquareActivity;
 import com.secretk.move.ui.adapter.FindFragmentAdapter;
 import com.secretk.move.ui.adapter.FindNewAdapter;
 import com.secretk.move.utils.GlideUtils;
@@ -73,6 +74,8 @@ public class FindFragment extends LazyFragment {
     LinearLayout homeFind2;
     @BindView(R.id.home_find_3)
     LinearLayout homeFind3;
+    @BindView(R.id.home_find_4)
+    LinearLayout homeFind4;
     @BindView(R.id.rv_new_pro)
     RecyclerView rvNewPro;
     @BindView(R.id.rv_new_user)
@@ -288,7 +291,7 @@ public class FindFragment extends LazyFragment {
         });
     }
 
-    @OnClick({R.id.home_find_1, R.id.home_find_2, R.id.home_find_3})
+    @OnClick({R.id.home_find_1, R.id.home_find_2, R.id.home_find_3,R.id.home_find_4})
     public void onViewClicked(View view) {
         if(!SharedUtils.getLoginZt() || StringUtil.isBlank(SharedUtils.getToken())){
             IntentUtil.startActivity(LoginHomeActivity.class);
@@ -303,6 +306,9 @@ public class FindFragment extends LazyFragment {
                 break;
             case R.id.home_find_3:
                 IntentUtil.startActivity(FindRingRequiredActivity.class);
+                break;
+            case R.id.home_find_4:
+                IntentUtil.startActivity(RewardSquareActivity.class);
                 break;
         }
     }

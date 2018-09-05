@@ -19,15 +19,14 @@ import com.secretk.move.bean.RowsBean;
 import com.secretk.move.ui.activity.DetailsRewardActivity;
 import com.secretk.move.ui.activity.ImageViewVpAcivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
+import com.secretk.move.ui.activity.RewardSquareActivity;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.GridSpacingItemDecoration;
 import com.secretk.move.utils.IntentUtil;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.TimeToolUtils;
-import com.secretk.move.utils.ToastUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -103,8 +102,6 @@ public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
         //actionType  //1 关注的用户 点赞帖子  2关注的用户 发表帖子  3关注的用户 关注项目 4关注的项目下发表的帖子
         GlideUtils.loadCircleUserUrl(mContext,imgOrganization, Constants.BASE_IMG_URL + StringUtil.getBeanString(bean.getCreateUserIcon()));
         tvGoGc.setVisibility(View.GONE);
-        LogUtil.w("position："+position);
-        LogUtil.w("position&10："+(position%10));
         if((position%10)==0 && position!=0){
             tvGoGc.setVisibility(View.VISIBLE);
         }
@@ -207,7 +204,7 @@ public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
         tvGoGc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.getInstance().show(tvGoGc.getText().toString());
+                IntentUtil.startActivity(RewardSquareActivity.class);
             }
         });
     }

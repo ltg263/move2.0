@@ -160,11 +160,23 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppEditTextStyle" />
         <activity
+            android:name=".ui.activity.SearchAllContentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.SearchAllActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
             android:name=".ui.activity.ReleaseRewardOneActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppEditTextStyle" />
         <activity
             android:name=".ui.activity.FindRankingListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.RewardSquareActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppEditTextStyle" />
         <activity

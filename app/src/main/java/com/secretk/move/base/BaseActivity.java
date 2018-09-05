@@ -144,6 +144,13 @@ public abstract class BaseActivity extends AppCompatActivity {
                         OnToolbarRightListener();
                     }
                 });
+            }else if((item.getId()==R.string.rule)){
+                mHeadView.getRuleTv().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        OnToolbarRightListener();
+                    }
+                });
             }else if(item.getIcon()!=0){
                 menu.add(0, item.getId(), 0, item.getName()).setIcon(item.getIcon()).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             }else{
