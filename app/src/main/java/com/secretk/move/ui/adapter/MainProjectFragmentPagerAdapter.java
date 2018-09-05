@@ -52,6 +52,5 @@ public class MainProjectFragmentPagerAdapter extends FragmentStatePagerAdapter {
     public  void setData(List<ProjectTabBean.DataBean.TabsBean> head_list){
         this.head_list=head_list;
         notifyDataSetChanged();
-
     }
 }

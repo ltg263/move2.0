@@ -644,53 +644,8 @@ public class DetailsDiscussActivity extends BaseActivity {
                 if (pileLists != null) {
                     initPraises(pileLists);
                 }
-//                if (StringUtil.isNotBlank(discussDetail.getTagInfos()) && discussDetail.getTagInfos().contains("tagName")) {
-//                    try {
-//                        JSONArray object = new JSONArray(discussDetail.getTagInfos());
-//                        //[{"tagId":1,"tagName":"进度讨论"},{"tagId":3,"tagName":"项目前景讨论"},{"tagId":4,"tagName":"打假"}]
-//                        String tagAll = "";
-//                        String tagOnly[] = new String[object.length()];
-//                        for (int i = 0; i < object.length(); i++) {
-//                            JSONObject strObj = object.getJSONObject(i);
-//                            tagOnly[i] = "#" + strObj.getString("tagName") + "#";
-//                            tagAll += "#" + strObj.getString("tagName") + "#   ";
-//                        }
-//                        Clickable.getSpannableString(tagAll, tagOnly, tvTagName, new Clickable.ClickListener() {
-//                            @Override
-//                            public void setOnClick(String name) {
-//                                //ToastUtils.getInstance().show(name);
-//                            }
-//                        });
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-
                 if (StringUtil.isNotBlank(discussDetail.getTagInfos()) && discussDetail.getTagInfos().contains("tagName")) {
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    params.setMargins(15, 10, 15, 10);
-                    try {
-                        JSONArray array = new JSONArray(discussDetail.getTagInfos());
-                        if (llAddView.getChildCount() > 0) {
-                            llAddView.removeAllViews();
-                        }
-                        for (int i = 0; i < array.length(); i++) {
-                            final JSONObject object = array.getJSONObject(i);
-                            if (StringUtil.isNotBlank(object.getString("tagName"))) {
-                                final TextView crack_down = new TextView(DetailsDiscussActivity.this);
-                                crack_down.setPadding(20, 10, 20, 10);
-                                crack_down.setBackground(getResources().getDrawable(R.drawable.shape_add_label_selected));
-                                crack_down.setTextColor(getResources().getColor(R.color.app_background));
-                                crack_down.setTextSize(14);
-                                crack_down.setText(object.getString("tagName"));
-                                crack_down.setLayoutParams(params);
-                                llAddView.addView(crack_down);
-                            }
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    IntentUtil.setTagInfos(DetailsDiscussActivity.this,llAddView,discussDetail.getTagInfos());
                 }
                 //热门评测
 //                if (discussDetail.getHotComments() != null && discussDetail.getHotComments().size() > 0) {

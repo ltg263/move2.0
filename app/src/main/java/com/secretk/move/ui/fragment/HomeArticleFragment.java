@@ -104,7 +104,12 @@ public class HomeArticleFragment extends LazyFragment{
             @Override
             public void onFinish() {
                 if(refreshLayouF!=null){
-                    refreshLayouF.finishLoadMore();
+                    if(refreshLayouF.isEnableLoadMore()){
+                        refreshLayouF.finishLoadMore();
+                    }
+                    if(refreshLayouF.isEnableRefresh()){
+                        refreshLayouF.finishRefresh();
+                    }
                 }
                 if(loadingDialog.isShowing()){
                     loadingDialog.dismiss();
@@ -121,5 +126,12 @@ public class HomeArticleFragment extends LazyFragment{
     SmartRefreshLayout refreshLayouF;
     public void setSmartRefreshLayout(SmartRefreshLayout smartRefreshLayout) {
         this.refreshLayouF = smartRefreshLayout;
+    }
+
+    public void onRefreshLayout() {
+        isHaveData = true;
+        refreshLayouF.setNoMoreData(false);
+        pageIndex=1;
+        getLoadData();
     }
 }

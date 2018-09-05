@@ -95,7 +95,9 @@
         </service>
         <service android:name=".apiService.MoveIntentService"/>
         <!-- 个推SDK配置结束 -->
-
+<!--{
+				window.location = "find://move/com.secretk.move?pid=11&postId=123";
+				-->
         <activity
             android:name=".ui.activity.SplashScreenActivity"
             android:screenOrientation="portrait"
@@ -103,6 +105,15 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="move"
+                    android:pathPrefix="/com.secretk.move"
+                    android:scheme="find" />
             </intent-filter>
         </activity>
         <!-- 微信分享回调 -->
@@ -157,6 +168,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.ForgetPasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppEditTextStyle" />
+        <activity
+            android:name=".ui.activity.TopicActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppEditTextStyle" />
         <activity

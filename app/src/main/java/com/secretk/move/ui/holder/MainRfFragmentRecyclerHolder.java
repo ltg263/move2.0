@@ -19,6 +19,7 @@ import com.secretk.move.bean.RowsBean;
 import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.activity.ImageViewVpAcivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
+import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.GridSpacingItemDecoration;
@@ -94,6 +95,7 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     TextView tvStick;
     private ImagesAdapter imagesadapter;
     Context mContext;
+    List<Integer> tagIdLists = new ArrayList<>();
     public MainRfFragmentRecyclerHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -114,6 +116,12 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvStick.setVisibility(View.GONE);
         if(bean.getDisStickTop() ==1){
             tvStick.setVisibility(View.VISIBLE);
+        }
+        if(mContext instanceof HomeActivity){
+            tvStick.setVisibility(View.GONE);
+        }
+        if(mContext instanceof ProjectActivity){
+            tvStick.setVisibility(View.GONE);
         }
         if(bean.getFollowStatus() == 1){
             tvUserFolly.setSelected(true);
@@ -420,14 +428,20 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                     if(i==0){
                         tvCrackDown.setVisibility(View.VISIBLE);
                         tvCrackDown.setText(strObj.getString("tagName"));
+                        tagIdLists.add(strObj.getInt("tagId"));
+                        IntentUtil.startCrackDown(tvCrackDown,tagIdLists.get(0));
                     }
                     if(i==1){
                         tvCrackDown1.setVisibility(View.VISIBLE);
                         tvCrackDown1.setText(strObj.getString("tagName"));
+                        tagIdLists.add(strObj.getInt("tagId"));
+                        IntentUtil.startCrackDown(tvCrackDown1,tagIdLists.get(1));
                     }
                     if(i==2){
                         tvCrackDown2.setVisibility(View.VISIBLE);
                         tvCrackDown2.setText(strObj.getString("tagName"));
+                        tagIdLists.add(strObj.getInt("tagId"));
+                        IntentUtil.startCrackDown(tvCrackDown2,tagIdLists.get(2));
                     }
 //                    tagOnly[i] = "#" + strObj.getString("tagName") + "#";
 //                    tagAll += "#" + strObj.getString("tagName") + "#   ";

@@ -2,6 +2,7 @@ package com.secretk.move.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
@@ -45,6 +46,14 @@ public class SplashScreenActivity extends Activity {
         isLogin = SharedUtils.singleton().get(Constants.IS_LOGIN_KEY,false);
         postId = getIntent().getStringExtra("postId");
         type = getIntent().getStringExtra("type");
+        Intent intent = getIntent();
+        Uri uri = intent.getData();
+        if(uri!=null){
+            String routeId = uri.getQueryParameter("pid");
+            String postId = uri.getQueryParameter("postId");
+            LogUtil.w("routeId:"+routeId);
+            LogUtil.w("postId:"+postId);
+        }
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

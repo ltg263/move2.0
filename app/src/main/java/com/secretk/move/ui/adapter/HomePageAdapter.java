@@ -37,6 +37,10 @@ public class HomePageAdapter extends FragmentStatePagerAdapter {
         return mFragments.size();
     }
 
+    public List<String> getmFragmentTitles() {
+        return mFragmentTitles;
+    }
+
     @Override
     public CharSequence getPageTitle(int position) {
         return mFragmentTitles.get(position);

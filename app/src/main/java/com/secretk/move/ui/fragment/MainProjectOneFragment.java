@@ -181,7 +181,6 @@ public class MainProjectOneFragment extends LazyFragment implements ItemClickLis
                 }
                 List<ProjectByTabBean.DataBean.ProjectResponsePageBean.RowsBean> rows = detailsBean.getRows();
                 tvCodeNum.setText("共"+detailsBean.getRowCount()+"个币种");
-//                getCoinmarketcap(rows,0);
                 if (pageIndex > 2) {
                     adapter.setAddData(rows);
                 } else {

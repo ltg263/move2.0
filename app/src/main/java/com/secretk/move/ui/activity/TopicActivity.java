@@ -2,9 +2,7 @@ package com.secretk.move.ui.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -20,16 +18,18 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.HomeUserIndexBean;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.ui.adapter.HomePageAdapter;
-import com.secretk.move.ui.fragment.HomeArticleFragment;
-import com.secretk.move.ui.fragment.HomeDiscussFragment;
-import com.secretk.move.ui.fragment.HomeReviewFragment;
+import com.secretk.move.ui.fragment.TopicArticleFragment;
+import com.secretk.move.ui.fragment.TopicDiscussFragment;
+import com.secretk.move.ui.fragment.TopicReviewFragment;
 import com.secretk.move.utils.GlideUtils;
-import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
+import com.secretk.move.utils.UiUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.LoadingDialog;
 import com.secretk.move.view.MagicIndicatorUtils;
@@ -43,39 +43,24 @@ import org.json.JSONObject;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * 作者： litongge
  * 时间： 2018/4/27 13:41
  * 邮箱；ltg263@126.com
  * 描述：我的主页 加载三个Fragment：
- * HomeReviewFragment      测评
- * HomeDiscussFragment     讨论
- * HomeArticleFragment     文章
+ * TopicReviewFragment      测评
+ * TopicDiscussFragment     讨论
+ * TopicArticleFragment     文章
  */
 
-public class HomeActivity extends BaseActivity {
-    @BindView(R.id.iv_head)
-    ImageView ivHead;
-    @BindView(R.id.tv_user_name)
-    TextView tvUserName;
-    @BindView(R.id.iv_model_icon)
-    ImageView ivModelIcon;
-    @BindView(R.id.iv_model_type)
-    ImageView ivModelType;
-    @BindView(R.id.tv_evaluating_sign)
-    TextView tvEvaluatingSign;
-    @BindView(R.id.tv_save_follow)
-    TextView tvSaveFollow;
-    @BindView(R.id.tv_answer)
-    TextView tvAnswer;
-    @BindView(R.id.tv_praise)
-    TextView tvPraise;
-    @BindView(R.id.tv_fans)
-    TextView tvFans;
-    @BindView(R.id.tv_individual_resume)
-    TextView tvIndividualResume;
+public class TopicActivity extends BaseActivity {
+    @BindView(R.id.iv_topic_icon)
+    ImageView ivTopicIcon;
+    @BindView(R.id.tv_topic_name)
+    TextView tvTopicName;
+    @BindView(R.id.tv_topic_sin)
+    TextView tvTopicSin;
     @BindView(R.id.appbar)
     AppBarLayout appbar;
     @BindView(R.id.view_pager)
@@ -87,38 +72,39 @@ public class HomeActivity extends BaseActivity {
     public static final int HOME_REVIEW_FRAGMENT = 0;
     public static final int HOME_DISCUSS_FRAGMENT = 1;
     public static final int HOME_ARTICLE_FRAGMENT = 2;
-    String userId;
-    @BindView(R.id.ll_fans)
-    LinearLayout llFans;
-    private String homePageTitle;
+    int tagId;
     private String currentType;
-    private String userName="";
 
     @Override
     protected int setOnCreate() {
-        return R.layout.activity_home;
+        return R.layout.activity_topic;
     }
 
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
         mHeadView = findViewById(R.id.head_app_server);
         mHeadView.setHeadBackShow(true);
-        mHeadView.setTitleColor(R.color.title_gray);
+        isLoginUi=true;
+        mHeadView.setTitleColor(R.color.white);
+        mHeadView.setTitle("话题");
         return mHeadView;
     }
 
-    HomeReviewFragment reviewFragment;
-    HomeDiscussFragment discussFragment;
-    HomeArticleFragment articleFragment;
+    TopicReviewFragment reviewFragment;
+    TopicDiscussFragment discussFragment;
+    TopicArticleFragment articleFragment;
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-        userId = getIntent().getStringExtra("userId");
+        StatusBarUtil.setLightMode(this);
+        StatusBarUtil.setColor(this, UiUtils.getColor(R.color.app_background), 0);
+        tagId = getIntent().getIntExtra("tagId",0);
+        LogUtil.w("---------------------tagId:"+tagId);
         currentType = getIntent().getStringExtra("currentType");
 //        refreshLayout.setEnableRefresh(false);//禁止下拉刷新
-        reviewFragment = new HomeReviewFragment();
-        discussFragment = new HomeDiscussFragment();
-        articleFragment = new HomeArticleFragment();
+        reviewFragment = new TopicReviewFragment();
+        discussFragment = new TopicDiscussFragment();
+        articleFragment = new TopicArticleFragment();
         reviewFragment.setSmartRefreshLayout(refreshLayout);
         discussFragment.setSmartRefreshLayout(refreshLayout);
         articleFragment.setSmartRefreshLayout(refreshLayout);
@@ -137,8 +123,8 @@ public class HomeActivity extends BaseActivity {
         initListener();
     }
 
-    public String getUserId() {
-        return userId;
+    public int getTagId() {
+        return tagId;
     }
 
     @Override
@@ -150,10 +136,7 @@ public class HomeActivity extends BaseActivity {
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            //查看自己不用传userId只用token就可以，查看他人需要传入他人userID
-            if (StringUtil.isNotBlank(userId)) {
-                node.put("userId", Integer.valueOf(userId));
-            }
+//                node.put("userId", tagId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -169,38 +152,10 @@ public class HomeActivity extends BaseActivity {
             public void onCompleted(HomeUserIndexBean userInfo) {
                 HomeUserIndexBean.DataBean.UserBean userData = userInfo.getData().getUser();
                 String iconUrl = Constants.BASE_IMG_URL + userData.getIcon();
-                GlideUtils.loadCircleUserUrl(HomeActivity.this, ivHead, iconUrl);
-                GlideUtils.loadCircleUserUrl(HomeActivity.this, mHeadView.getImageView(), iconUrl);
-                userId = String.valueOf(userData.getUserId());
-                mHeadView.setTitle(userData.getHomePageTitle());
-                userName = userData.getUserName();
-                tvUserName.setText(userData.getUserName());
-                tvIndividualResume.setText(userData.getUserSignature());
-                //"userType": 1,// 用户类型:1-普通用户；2-项目方；3-评测机构；4-机构用户
-                if (userData.getUserType() != 1) {
-                    tvEvaluatingSign.setVisibility(View.VISIBLE);
-                    ivModelType.setVisibility(View.VISIBLE);
-//                    ivModelIcon.setVisibility(View.VISIBLE);
-                    StringUtil.getUserType(userData.getUserType(), ivModelIcon);
-                    tvEvaluatingSign.setText(StringUtil.getUserType(userData.getUserType(), ivModelType));
-                }
-                //“showFollow”: 0 , //是否显示 关注按钮 0- 不显示；1-显示关注  2-显示取消关注
-                if (userData.getShowFollow() == 1) {
-                    tvSaveFollow.setSelected(false);
-                    tvSaveFollow.setText(getResources().getString(R.string.follow_status_0));
-                } else {
-                    tvSaveFollow.setSelected(true);
-                    tvSaveFollow.setText(getResources().getString(R.string.follow_status_1));
-                }
-
-                if (baseUserId == userData.getUserId()) {
-                    tvSaveFollow.setVisibility(View.GONE);
-                }
-                homePageTitle = userData.getHomePageTitle();
-                mHeadView.setTitle(homePageTitle);
-                tvAnswer.setText(String.valueOf(userData.getTotalPostNum()));
-                tvPraise.setText(String.valueOf(userData.getPraiseNum()));
-                tvFans.setText(String.valueOf(userData.getFansNum()));
+                GlideUtils.loadSideMinImage_76(TopicActivity.this, ivTopicIcon, iconUrl);
+                tvTopicName.setText(userData.getUserName());
+                tvTopicSin.setText(userData.getUserSignature());
+//                userId = String.valueOf(userData.getUserId());
             }
         });
     }
@@ -209,31 +164,6 @@ public class HomeActivity extends BaseActivity {
         return loadingDialog;
     }
 
-    @OnClick({R.id.tv_save_follow, R.id.ll_fans})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tv_save_follow:
-                tvSaveFollow.setEnabled(false);
-                NetUtil.addSaveFollow(tvSaveFollow,
-                        Constants.SaveFollow.USER, Integer.valueOf(userId), new NetUtil.SaveFollowImp() {
-                            @Override
-                            public void finishFollow(String str) {
-                                tvSaveFollow.setEnabled(true);
-                                if (!str.equals(Constants.FOLLOW_ERROR)) {
-                                    tvSaveFollow.setText(str);
-                                    tvSaveFollow.setSelected(tvSaveFollow.getText().toString().trim()
-                                            .equals(getResources().getString(R.string.follow_status_1)));
-                                }
-                            }
-                        });
-                break;
-            case R.id.ll_fans:
-                String key[] = {"id","name","type"};
-                String values[] = {String.valueOf(userId),userName,"0"};
-                IntentUtil.startActivity(HomeFansActivity.class, key, values);
-                break;
-        }
-    }
 
 
     /**
@@ -248,12 +178,11 @@ public class HomeActivity extends BaseActivity {
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 //if (Math.abs(verticalOffset) == DensityUtil.dp2px(200)-mHeadView.getHeight()) {//关闭
                 if (Math.abs(verticalOffset) > 200) {//关闭
-                    mHeadView.getImageView().setVisibility(View.VISIBLE);
-                    mHeadView.getTextView().setVisibility(View.GONE);
+//                    mHeadView.getImageView().setVisibility(View.VISIBLE);
+//                    mHeadView.getTextView().setVisibility(View.GONE);
                 } else {  //展开
-                    mHeadView.getImageView().setVisibility(View.GONE);
-                    mHeadView.getTextView().setVisibility(View.VISIBLE);
-                    mHeadView.setTitle(homePageTitle);
+//                    mHeadView.getImageView().setVisibility(View.GONE);
+//                    mHeadView.getTextView().setVisibility(View.VISIBLE);
                 }
             }
         });

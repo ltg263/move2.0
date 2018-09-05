@@ -13,11 +13,10 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonListBase;
-import com.secretk.move.ui.activity.HomeActivity;
-import com.secretk.move.ui.adapter.MainBlFragmentRecyclerAdapter;
+import com.secretk.move.ui.activity.TopicActivity;
+import com.secretk.move.ui.adapter.MainRfFragmentRecyclerAdapter;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
-import com.secretk.move.utils.StringUtil;
 import com.secretk.move.view.LoadingDialog;
 
 import org.json.JSONException;
@@ -27,21 +26,21 @@ import butterknife.BindView;
 
 /**
  * 作者： litongge
- * 时间： 2018/4/27 15:04
+ * 时间： 2018/4/27 15:03
  * 邮箱；ltg263@126.com
- * 描述：我的主页--讨论
+ * 描述：话题--测评
  */
 
-public class HomeDiscussFragment extends LazyFragment{
+public class TopicReviewFragment extends LazyFragment{
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
     @BindView(R.id.iv_not_content)
     ImageView ivNotContent;
-    private int pageIndex=1;
-    // 如果以项目为主就用 MineProjectListBlAdapter
-    private MainBlFragmentRecyclerAdapter adapter;
+    //MineProjectListAdapter   如果已项目为主就用这个
+    private MainRfFragmentRecyclerAdapter adapter;
+    int pageIndex = 1;//
     public Boolean isHaveData = true;//是否还有数据
-    private String userId;
+    int tagId;
     private LoadingDialog loadingDialog;
 
     @Override
@@ -52,18 +51,14 @@ public class HomeDiscussFragment extends LazyFragment{
     @Override
     public void initViews() {
         setVerticalManager(rvReview);
-        adapter = new MainBlFragmentRecyclerAdapter(getActivity());
+        adapter = new MainRfFragmentRecyclerAdapter(getActivity());
         rvReview.setAdapter(adapter);
-        if(loadingDialog==null){
-            loadingDialog=new LoadingDialog(getActivity());
-        }
     }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        userId = ((HomeActivity)context).getUserId();
-        loadingDialog = ((HomeActivity) context).getLoadingDialog();
+        tagId = ((TopicActivity)context).getTagId();
+        loadingDialog = ((TopicActivity) context).getLoadingDialog();
     }
 
     @Override
@@ -76,23 +71,21 @@ public class HomeDiscussFragment extends LazyFragment{
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            if(StringUtil.isNotBlank(userId)){
-                node.put("userId", userId);
-            }
+//            node.put("userId", tagId);
             node.put("pageIndex", pageIndex++);
-            node.put("pageSize",  Constants.PAGE_SIZE);
+            node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.USERHOME_DISCUSS_LIST)
+                .url(Constants.USERHOME_EVALUATION_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
         RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
             @Override
             public void onCompleted(CommonListBase bean) {
-                CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getDiscusses();
+                CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getEvaluations();
                 if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
                     if(refreshLayouF!=null){
                         refreshLayouF.finishLoadMoreWithNoMoreData();
@@ -114,15 +107,20 @@ public class HomeDiscussFragment extends LazyFragment{
             @Override
             public void onFinish() {
                 if(refreshLayouF!=null){
-                    refreshLayouF.finishLoadMore();
+                    if(refreshLayouF.isEnableLoadMore()){
+                        refreshLayouF.finishLoadMore();
+                    }
+                    if(refreshLayouF.isEnableRefresh()){
+                        refreshLayouF.finishRefresh();
+                    }
                 }
                 if(loadingDialog.isShowing()){
                     loadingDialog.dismiss();
                 }
+
             }
         });
     }
-
     SmartRefreshLayout refreshLayouF;
     public void setSmartRefreshLayout(SmartRefreshLayout smartRefreshLayout) {
         this.refreshLayouF = smartRefreshLayout;

@@ -1,9 +1,14 @@
 package com.secretk.move.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.secretk.move.MoveApplication;
+import com.secretk.move.R;
 import com.secretk.move.baseManager.BaseManager;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.ui.activity.DetailsArticleActivity;
@@ -17,7 +22,13 @@ import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.activity.MainActivity;
 import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.activity.PublishSucceedActivity;
+import com.secretk.move.ui.activity.TopicActivity;
 import com.secretk.move.ui.activity.WebViewActivity;
+import com.secretk.move.view.FixGridLayout;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -254,9 +265,63 @@ public class IntentUtil {
             case 9:
                 IntentUtil.startHomeActivity(Integer.valueOf(postId));
                 break;
-
-
-
         }
     }
+    public static void startCrackDown(View view, final int tagId){
+        if(view == null || tagId==0){
+            return;
+        }
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startTopicActivity(tagId);
+            }
+        });
+    }
+
+    public static void startTopicActivity(int tagId) {
+        Intent intent = new Intent(MoveApplication.getContext(), TopicActivity.class);
+        intent.putExtra("tagId",tagId);
+        startActivity(intent);
+    }
+
+
+
+    public static void setTagInfos(Context mContext, FixGridLayout llAddView, String tagInfos) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(15, 10, 15, 10);
+        try {
+            JSONArray array = new JSONArray(tagInfos);
+            if (llAddView.getChildCount() > 0) {
+                llAddView.removeAllViews();
+            }
+            for (int i = 0; i < array.length(); i++) {
+                final JSONObject object = array.getJSONObject(i);
+                if (StringUtil.isNotBlank(object.getString("tagName"))) {
+                    final TextView crack_down = new TextView(mContext);
+                    crack_down.setPadding(20, 10, 20, 10);
+                    crack_down.setBackground(mContext.getResources().getDrawable(R.drawable.shape_add_label_selected));
+                    crack_down.setTextColor(mContext.getResources().getColor(R.color.app_background));
+                    crack_down.setTextSize(14);
+                    crack_down.setText(object.getString("tagName"));
+                    crack_down.setLayoutParams(params);
+                    crack_down.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            try {
+                                startTopicActivity(object.getInt("tagId"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    llAddView.addView(crack_down);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

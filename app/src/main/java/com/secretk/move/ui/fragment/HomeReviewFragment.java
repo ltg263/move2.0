@@ -43,7 +43,6 @@ public class HomeReviewFragment extends LazyFragment{
     public Boolean isHaveData = true;//是否还有数据
     String userId;
     private LoadingDialog loadingDialog;
-    private SmartRefreshLayout smartRefreshLayout;
 
     @Override
     public int setFragmentView() {
@@ -59,8 +58,10 @@ public class HomeReviewFragment extends LazyFragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        userId = ((HomeActivity)context).getUserId();
-        loadingDialog = ((HomeActivity) context).getLoadingDialog();
+        if(context instanceof HomeActivity){
+            userId = ((HomeActivity)context).getUserId();
+            loadingDialog = ((HomeActivity) context).getLoadingDialog();
+        }
     }
 
     @Override
@@ -111,7 +112,12 @@ public class HomeReviewFragment extends LazyFragment{
             @Override
             public void onFinish() {
                 if(refreshLayouF!=null){
-                    refreshLayouF.finishLoadMore();
+                    if(refreshLayouF.isEnableLoadMore()){
+                        refreshLayouF.finishLoadMore();
+                    }
+                    if(refreshLayouF.isEnableRefresh()){
+                        refreshLayouF.finishRefresh();
+                    }
                 }
                 if(loadingDialog.isShowing()){
                     loadingDialog.dismiss();
@@ -123,5 +129,12 @@ public class HomeReviewFragment extends LazyFragment{
     SmartRefreshLayout refreshLayouF;
     public void setSmartRefreshLayout(SmartRefreshLayout smartRefreshLayout) {
         this.refreshLayouF = smartRefreshLayout;
+    }
+
+    public void onRefreshLayout() {
+        isHaveData = true;
+        refreshLayouF.setNoMoreData(false);
+        pageIndex=1;
+        getLoadData();
     }
 }

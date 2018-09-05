@@ -18,8 +18,10 @@ import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.bean.RowsBean;
+import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.activity.ImageViewVpAcivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
+import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.GridSpacingItemDecoration;
@@ -37,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -98,6 +101,7 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     TextView tvXs1;
     @BindView(R.id.tv_xs_2)
     TextView tvXs2;
+    List<Integer> tagIdLists = new ArrayList<>();
     private ImagesAdapter imagesadapter;
     private Context mContext;
     public MainBlFragmentRecyclerHolder(View itemView,Context context) {
@@ -118,7 +122,6 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             ll_xs.setVisibility(View.VISIBLE);
         }
 
-
         tvName.setText(bean.getCreateUserName());
         tvTime.setText(TimeToolUtils.convertTimeToFormat(bean.getCreateTime()));
         if(StringUtil.isNotBlank(bean.getProjectCode())){
@@ -128,6 +131,12 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvStick.setVisibility(View.GONE);
         if(bean.getDisStickTop()==1){
             tvStick.setVisibility(View.VISIBLE);
+        }
+        if(mContext instanceof HomeActivity){
+            tvStick.setVisibility(View.GONE);
+        }
+        if(mContext instanceof ProjectActivity){
+            tvStick.setVisibility(View.GONE);
         }
         StringUtil.getUserType(bean.getUserType(),ivModelType);
         showPostDesc(bean);
@@ -148,7 +157,7 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         if (SharedUtils.getUserId()==bean.getCreateUserId()){
             tvProjectFolly.setVisibility(View.GONE);
         }
-        if (SharedUtils.getUserId()==bean.getCreateUserId()){
+        if(mContext instanceof HomeActivity){
             tvProjectFolly.setVisibility(View.GONE);
         }
         if(bean.getPostTotalIncome()==0){
@@ -367,15 +376,22 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                     if(i==0){
                         tvCrackDown.setVisibility(View.VISIBLE);
                         tvCrackDown.setText(strObj.getString("tagName"));
+                        tagIdLists.add(strObj.getInt("tagId"));
+                        IntentUtil.startCrackDown(tvCrackDown,tagIdLists.get(0));
                     }
                     if(i==1){
                         tvCrackDown1.setVisibility(View.VISIBLE);
                         tvCrackDown1.setText(strObj.getString("tagName"));
+                        tagIdLists.add(strObj.getInt("tagId"));
+                        IntentUtil.startCrackDown(tvCrackDown1,tagIdLists.get(1));
                     }
                     if(i==2){
                         tvCrackDown2.setVisibility(View.VISIBLE);
                         tvCrackDown2.setText(strObj.getString("tagName"));
+                        tagIdLists.add(strObj.getInt("tagId"));
+                        IntentUtil.startCrackDown(tvCrackDown2,tagIdLists.get(2));
                     }
+
 //                    tagOnly[i] = "#" + strObj.getString("tagName") + "#";
 //                    tagAll += "#" + strObj.getString("tagName") + "#   ";
                 }

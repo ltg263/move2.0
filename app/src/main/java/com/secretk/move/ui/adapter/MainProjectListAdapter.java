@@ -54,12 +54,14 @@ public class MainProjectListAdapter extends RecyclerView.Adapter<MainProjectOneF
         return list.size();
     }
     public void setAddData(List<ProjectByTabBean.DataBean.ProjectResponsePageBean.RowsBean> list) {
-        this.list.addAll(list);
+//        notifyItemMoved(this.list.size(),this.list.size()+list.size());
         notifyDataSetChanged();
+        this.list.addAll(list);
     }
     public void setData(List<ProjectByTabBean.DataBean.ProjectResponsePageBean.RowsBean> list) {
         this.list = list;
         notifyDataSetChanged();
+
     }
 
     public ProjectByTabBean.DataBean.ProjectResponsePageBean.RowsBean getDataIndex(int position) {

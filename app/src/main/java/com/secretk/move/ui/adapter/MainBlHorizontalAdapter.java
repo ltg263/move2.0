@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
 
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class MainBlHorizontalAdapter extends RecyclerView.Adapter<MainBlHorizont
         holder.iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                IntentUtil.startTopicActivity(0);
             }
         });
     }

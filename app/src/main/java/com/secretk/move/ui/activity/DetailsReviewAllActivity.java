@@ -749,30 +749,7 @@ public class DetailsReviewAllActivity extends BaseActivity {
 //                }
 
                 if (StringUtil.isNotBlank(evaluationDetail.getEvaluationTags()) && evaluationDetail.getEvaluationTags().contains("tagName")) {
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    params.setMargins(15, 10, 15, 10);
-                    try {
-                        JSONArray array = new JSONArray(evaluationDetail.getEvaluationTags());
-                        if (llAddView.getChildCount() > 0) {
-                            llAddView.removeAllViews();
-                        }
-                        for (int i = 0; i < array.length(); i++) {
-                            final JSONObject object = array.getJSONObject(i);
-                            if (StringUtil.isNotBlank(object.getString("tagName"))) {
-                                final TextView crack_down = new TextView(DetailsReviewAllActivity.this);
-                                crack_down.setPadding(20, 10, 20, 10);
-                                crack_down.setBackground(getResources().getDrawable(R.drawable.shape_add_label_selected));
-                                crack_down.setTextColor(getResources().getColor(R.color.app_background));
-                                crack_down.setTextSize(14);
-                                crack_down.setText(object.getString("tagName"));
-                                crack_down.setLayoutParams(params);
-                                llAddView.addView(crack_down);
-                            }
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    IntentUtil.setTagInfos(DetailsReviewAllActivity.this,llAddView,evaluationDetail.getEvaluationTags());
                 }
                 //热门评测
 //                if (discussDetail.getHotComments() != null && discussDetail.getHotComments().size() > 0) {

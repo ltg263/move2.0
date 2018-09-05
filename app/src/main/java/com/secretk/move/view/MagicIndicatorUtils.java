@@ -5,9 +5,11 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.secretk.move.R;
+import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.activity.ProjectActivity;
 import com.secretk.move.ui.activity.RewardSquareActivity;
 import com.secretk.move.ui.activity.SearchAllContentActivity;
+import com.secretk.move.ui.activity.TopicActivity;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -37,7 +39,9 @@ public class MagicIndicatorUtils {
 //        commonNavigator.setScrollPivotX(0.65f);
         if(mContext instanceof ProjectActivity
                 || mContext instanceof RewardSquareActivity
-                || mContext instanceof SearchAllContentActivity){
+                || mContext instanceof SearchAllContentActivity
+                || mContext instanceof HomeActivity
+                || mContext instanceof TopicActivity){
              commonNavigator.setAdjustMode(true);//ture 即标题平分屏幕宽度的模式
         }
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
