@@ -15,14 +15,13 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.HomeUserIndexBean;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.bean.TopicDesIndexBean;
 import com.secretk.move.ui.adapter.HomePageAdapter;
 import com.secretk.move.ui.fragment.TopicArticleFragment;
 import com.secretk.move.ui.fragment.TopicDiscussFragment;
 import com.secretk.move.ui.fragment.TopicReviewFragment;
 import com.secretk.move.utils.GlideUtils;
-import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -99,7 +98,6 @@ public class TopicActivity extends BaseActivity {
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.app_background), 0);
         tagId = getIntent().getIntExtra("tagId",0);
-        LogUtil.w("---------------------tagId:"+tagId);
         currentType = getIntent().getStringExtra("currentType");
 //        refreshLayout.setEnableRefresh(false);//禁止下拉刷新
         reviewFragment = new TopicReviewFragment();
@@ -135,27 +133,26 @@ public class TopicActivity extends BaseActivity {
         }
         JSONObject node = new JSONObject();
         try {
-            node.put("token", token);
-//                node.put("userId", tagId);
+            node.put("id", tagId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.USERHOME_INDEX)
+                .url(Constants.GET_DTAG_DETAIL)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
         loadingDialog.show();
         //网络请求方式 默认为POST
-        RetrofitUtil.request(params, HomeUserIndexBean.class, new HttpCallBackImpl<HomeUserIndexBean>() {
+        RetrofitUtil.request(params, TopicDesIndexBean.class, new HttpCallBackImpl<TopicDesIndexBean>() {
             @Override
-            public void onCompleted(HomeUserIndexBean userInfo) {
-                HomeUserIndexBean.DataBean.UserBean userData = userInfo.getData().getUser();
-                String iconUrl = Constants.BASE_IMG_URL + userData.getIcon();
+            public void onCompleted(TopicDesIndexBean userInfo) {
+                TopicDesIndexBean.DataBean userData = userInfo.getData();
+                String iconUrl = Constants.BASE_IMG_URL + userData.getImgPath();
                 GlideUtils.loadSideMinImage_76(TopicActivity.this, ivTopicIcon, iconUrl);
-                tvTopicName.setText(userData.getUserName());
-                tvTopicSin.setText(userData.getUserSignature());
-//                userId = String.valueOf(userData.getUserId());
+                tvTopicName.setText(userData.getTagName());
+                tvTopicSin.setText(userData.getMemo());
+                tagId = userData.getTagId();
             }
         });
     }

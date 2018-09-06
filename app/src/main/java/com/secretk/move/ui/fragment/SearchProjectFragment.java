@@ -141,6 +141,16 @@ public class SearchProjectFragment extends LazyFragment implements ItemClickList
                 }
                 loadingDialog.dismiss();
             }
+
+            @Override
+            public void onError(String message) {
+                if(message.equals("暂无数据") && !(pageIndex > 2)){
+                    refreshLayout.setVisibility(View.GONE);
+                    ivNotContent.setVisibility(View.VISIBLE);
+                }else{
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                }
+            }
         });
     }
 

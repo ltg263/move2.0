@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
+import com.secretk.move.bean.TopicTagsBase;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
 
@@ -26,7 +27,7 @@ import butterknife.ButterKnife;
 
 public class MainBlHorizontalAdapter extends RecyclerView.Adapter<MainBlHorizontalAdapter.ImagesHolder> {
 
-    private List<String> list;
+    private List<TopicTagsBase.DataBean> list;
     Context context;
     public MainBlHorizontalAdapter(Context context) {
         this.context=context;
@@ -41,7 +42,7 @@ public class MainBlHorizontalAdapter extends RecyclerView.Adapter<MainBlHorizont
 
     @Override
     public void onBindViewHolder(ImagesHolder holder, final int position) {
-        GlideUtils.loadSideMinImage_76(context,holder.iv,list.get(position));
+        GlideUtils.loadSideMinImage_76(context,holder.iv,list.get(position).getImgPath());
         holder.view.setVisibility(View.GONE);
         if(position==0){
             holder.view.setVisibility(View.VISIBLE);
@@ -49,11 +50,11 @@ public class MainBlHorizontalAdapter extends RecyclerView.Adapter<MainBlHorizont
         holder.iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                IntentUtil.startTopicActivity(0);
+                IntentUtil.startTopicActivity(list.get(position).getTagId());
             }
         });
     }
-    public  void setData(List<String> head_list){
+    public  void setData(List<TopicTagsBase.DataBean> head_list){
         this.list=head_list;
         notifyDataSetChanged();
     }

@@ -137,12 +137,14 @@ public class RetrofitUtil {
                                          int code = jsonObject.getInt("code");
                                          String msg = jsonObject.getString("msg");
 //                                     String data = jsonObject.getJSONObject("data").toString();
-                                         if ((code != 0 && !msg.equals("Success"))) {
+                                         if ((code != 0 || !msg.equals("Success"))) {
 //                                         if(code==11004){
 //                                             msg = "帐号或密码错误请重新登陆";
 //                                             IntentUtil.startActivity(LoginHomeActivity.class);
 //                                         }
-                                             Toast.makeText(MoveApplication.getContext(), msg, Toast.LENGTH_SHORT).show();
+                                             if(code!=500){
+                                                 Toast.makeText(MoveApplication.getContext(), msg, Toast.LENGTH_SHORT).show();
+                                             }
                                              callBack.onError(msg);
                                              callBack.onFinish();
                                              return;

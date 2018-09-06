@@ -9,8 +9,9 @@ import android.widget.TextView;
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.MineAttentionBean;
+import com.secretk.move.bean.SearchTopicBean;
 import com.secretk.move.utils.GlideUtils;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.StringUtil;
 
 import butterknife.BindView;
@@ -35,13 +36,14 @@ public class SearchTopicHolder extends RecyclerViewBaseHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
-    public void refresh(final MineAttentionBean.DataBean.MyFollowsBean.RowsBean rowsBean, Context context) {
-        GlideUtils.loadSideMinImage_76(context,img,Constants.BASE_IMG_URL+StringUtil.getBeanString(rowsBean.getFollowedUserIcon()));
-        tvName.setText(StringUtil.getBeanString(rowsBean.getFollowedUserName()));
-        tvLastContent.setText(StringUtil.getBeanString(rowsBean.getFollowedUserSignature()));
+    public void refresh(final SearchTopicBean.DataBean.RowsBean rowsBean, Context context) {
+        GlideUtils.loadSideMinImage_76(context,img,Constants.BASE_IMG_URL+StringUtil.getBeanString(rowsBean.getImgPath()));
+        tvName.setText(StringUtil.getBeanString(rowsBean.getTagName()));
+        tvLastContent.setText(StringUtil.getBeanString(rowsBean.getMemo()));
         llTopic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                IntentUtil.startTopicActivity(rowsBean.getTagId());
             }
         });
     }

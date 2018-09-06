@@ -362,6 +362,13 @@ public interface Constants {
     //1-项目，2-内容，
     //3-用户，4-话题
     String INDEX_SEARCH = "http://192.168.10.128:8044/rest/kff/search/indexSearch";
+    //话题 详情
+    String GET_DTAG_DETAIL = "http://192.168.10.128:8044/rest/kff/tags/getDTagDetail";
+    //获取话题下的评测，文章，爆料
+    //type	int	帖子类型：1-评测；2-爆料；3-文章
+    String GET_POST_INFO_WITH_TAGS = "http://192.168.10.128:8044/rest/kff/post/getPostInfoWithTags";
+    //爆料页面获取话题接口
+    String GET_DTAGS_INFO = "http://192.168.10.128:8044/rest/kff/tags/getDTagsInfo";
     /**
      * 1-关注项目;2-关注帖子；3-关注用户
      */

@@ -14,7 +14,7 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.MineAttentionBean;
+import com.secretk.move.bean.SearchTopicBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.SearchTopicAdapter;
 import com.secretk.move.utils.MD5;
@@ -32,7 +32,6 @@ import butterknife.BindView;
  * 邮箱；ltg263@126.com
  * 描述：搜索===话题
  */
-
 
 public class SearchTopicFragment extends LazyFragment implements ItemClickListener {
     @BindView(R.id.rv_review)
@@ -113,13 +112,10 @@ public class SearchTopicFragment extends LazyFragment implements ItemClickListen
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, MineAttentionBean.class, new HttpCallBackImpl<MineAttentionBean>() {
+        RetrofitUtil.request(params, SearchTopicBean.class, new HttpCallBackImpl<SearchTopicBean>() {
             @Override
-            public void onCompleted(MineAttentionBean bean) {
-                if(true){
-                    return;
-                }
-                MineAttentionBean.DataBean.MyFollowsBean detailsBean = bean.getData().getMyFollows();
+            public void onCompleted(SearchTopicBean bean) {
+                SearchTopicBean.DataBean detailsBean = bean.getData();
                 if (detailsBean.getPageSize() == detailsBean.getCurPageNum()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
@@ -132,6 +128,16 @@ public class SearchTopicFragment extends LazyFragment implements ItemClickListen
                     adapter.addData(detailsBean.getRows());
                 } else {
                     adapter.setData(detailsBean.getRows());
+                }
+            }
+
+            @Override
+            public void onError(String message) {
+                if(message.equals("暂无数据") && !(pageIndex > 2)){
+                    refreshLayout.setVisibility(View.GONE);
+                    ivNotContent.setVisibility(View.VISIBLE);
+                }else{
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                 }
             }
 

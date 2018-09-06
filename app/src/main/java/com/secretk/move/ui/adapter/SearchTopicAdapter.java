@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.secretk.move.R;
-import com.secretk.move.bean.MineAttentionBean;
+import com.secretk.move.bean.SearchTopicBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.holder.SearchTopicHolder;
 
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class SearchTopicAdapter extends RecyclerView.Adapter<SearchTopicHolder> {
 
-    private List<MineAttentionBean.DataBean.MyFollowsBean.RowsBean> list = new ArrayList<>();
+    private List<SearchTopicBean.DataBean.RowsBean> list = new ArrayList<>();
     private ItemClickListener mListener;
 
     private Context context;
@@ -56,16 +56,16 @@ public class SearchTopicAdapter extends RecyclerView.Adapter<SearchTopicHolder> 
         return list.size();
     }
 
-    public void setData(List<MineAttentionBean.DataBean.MyFollowsBean.RowsBean> list) {
+    public void setData(List<SearchTopicBean.DataBean.RowsBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
 
-    public List<MineAttentionBean.DataBean.MyFollowsBean.RowsBean> getData() {
+    public List<SearchTopicBean.DataBean.RowsBean> getData() {
         return list;
     }
 
-    public void addData(List<MineAttentionBean.DataBean.MyFollowsBean.RowsBean> list) {
+    public void addData(List<SearchTopicBean.DataBean.RowsBean> list) {
         this.list.addAll(list);
         notifyDataSetChanged();
     }

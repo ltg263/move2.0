@@ -90,7 +90,7 @@ public class GlideUtils {
         if(url.contains("https:") || url.contains("http:") ){
             url=url+ImgUrlMix_76;
         }
-        Glide.with(context).applyDefaultRequestOptions(new RequestOptions().transform(new GlideRoundTransform()).placeholder(R.drawable.ic_silent_plate_mix).error(R.drawable.ic_silent_plate_mix)).
+        Glide.with(MoveApplication.getContext()).applyDefaultRequestOptions(new RequestOptions().transform(new GlideRoundTransform()).placeholder(R.drawable.ic_silent_plate_mix).error(R.drawable.ic_silent_plate_mix)).
                 load(url).into(img);
     }
 

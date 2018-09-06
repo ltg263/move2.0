@@ -17,10 +17,11 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonListBase;
+import com.secretk.move.bean.TopicTagsBase;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.LoginHomeActivity;
-import com.secretk.move.ui.adapter.MainBlHorizontalAdapter;
 import com.secretk.move.ui.adapter.MainBlFragmentRecyclerAdapter;
+import com.secretk.move.ui.adapter.MainBlHorizontalAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
@@ -29,7 +30,6 @@ import com.secretk.move.utils.SharedUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -76,20 +76,6 @@ public class MainBlueBlFragment extends LazyFragment implements ItemClickListene
 
         adapterH = new MainBlHorizontalAdapter(getActivity());
         recyclerHorizontal.setAdapter(adapterH);
-        List<String> list = new ArrayList<>();
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        list.add("https://pic.qufen.top/projects1532600745568132805");
-        recyclerHorizontal.setVisibility(View.VISIBLE);
-        adapterH.setData(list);
         adapter.setItemListener(this);
 //        rlTopTheme.setVisibility(View.VISIBLE);
 //        tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_go_login));
@@ -145,6 +131,7 @@ public class MainBlueBlFragment extends LazyFragment implements ItemClickListene
             loadingDialog.show();
         }
         showFragment = true;
+        getDTagsInfo();
         final String token = SharedUtils.singleton().get("token", "");
         JSONObject node = new JSONObject();
         try {
@@ -186,11 +173,9 @@ public class MainBlueBlFragment extends LazyFragment implements ItemClickListene
             @Override
             public void onFinish() {
                 super.onFinish();
-//                if (refreshLayout.isRefreshing()) {
                 if (refreshLayout.isEnableRefresh()) {
                     refreshLayout.finishRefresh();
                 }
-//                if (refreshLayout.isLoading()) {
                 if (refreshLayout.isEnableLoadMore()) {
                     refreshLayout.finishLoadMore();
                 }
@@ -224,4 +209,19 @@ public class MainBlueBlFragment extends LazyFragment implements ItemClickListene
 
     }
 
+    public void getDTagsInfo() {
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.GET_DTAGS_INFO)
+                .build();
+        RetrofitUtil.request(params, TopicTagsBase.class, new HttpCallBackImpl<TopicTagsBase>() {
+            @Override
+            public void onCompleted(TopicTagsBase bean) {
+                List<TopicTagsBase.DataBean> detailsBean = bean.getData();
+                if(detailsBean!=null && detailsBean.size()>0){
+                    recyclerHorizontal.setVisibility(View.VISIBLE);
+                    adapterH.setData(detailsBean);
+                }
+            }
+        });
+    }
 }
