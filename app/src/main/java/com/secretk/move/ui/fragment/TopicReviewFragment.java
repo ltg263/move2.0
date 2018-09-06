@@ -137,7 +137,15 @@ public class TopicReviewFragment extends LazyFragment{
                 if(loadingDialog.isShowing()){
                     loadingDialog.dismiss();
                 }
-
+            }
+            @Override
+            public void onError(String message) {
+                if(message.equals("暂无数据") && !(pageIndex > 2)){
+                    isHaveData=false;
+                    rvReview.setVisibility(View.GONE);
+                    ivNotContent.setVisibility(View.VISIBLE);
+                    refreshLayouF.finishLoadMoreWithNoMoreData();
+                }
             }
         });
     }

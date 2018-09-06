@@ -148,7 +148,6 @@ public class SearchContentFragment extends LazyFragment implements ItemClickList
                 if(message.equals("暂无数据") && !(pageIndex > 2)){
                     refreshLayout.setVisibility(View.GONE);
                     ivNotContent.setVisibility(View.VISIBLE);
-                }else{
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
             }

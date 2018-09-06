@@ -136,7 +136,6 @@ public class SearchTopicFragment extends LazyFragment implements ItemClickListen
                 if(message.equals("暂无数据") && !(pageIndex > 2)){
                     refreshLayout.setVisibility(View.GONE);
                     ivNotContent.setVisibility(View.VISIBLE);
-                }else{
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
             }
