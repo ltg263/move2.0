@@ -11,90 +11,21 @@
         android:fillViewport="true"
         android:scrollbars="none">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/ll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:id="@+id/ll_jx"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/tv_jx"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/dp_10"
-                        android:text="精选"
-                        android:textColor="@color/app_background"
-                        android:textSize="@dimen/sp_16" />
-
-                    <ImageView
-                        android:id="@+id/iv_jx"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_bl_xl"
-                        android:visibility="gone" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="@dimen/dp_1"
-                    android:layout_height="match_parent"
-                    android:layout_marginVertical="@dimen/dp_10"
-                    android:background="@color/background_gray" />
-
-                <LinearLayout
-                    android:id="@+id/ll_zx"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/tv_zx"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/dp_10"
-                        android:text="最新"
-                        android:textColor="@color/title_gray"
-                        android:textSize="@dimen/sp_16" />
-
-                    <ImageView
-                        android:id="@+id/iv_zx"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_bl_xl"
-                        android:visibility="gone" />
-
-                </LinearLayout>
-
-            </LinearLayout>
+            android:layout_height="wrap_content">
 
             <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_line"
-                android:background="@color/cut_off_rule"
-                android:visibility="gone" />
+                android:layout_height="@dimen/dp_10" />
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/view"
                 android:nestedScrollingEnabled="false"
                 android:visibility="gone" />
 
@@ -105,6 +36,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_130"
                 android:src="@drawable/ic_not_content" />
-        </LinearLayout>
+        </RelativeLayout>
     </com.secretk.move.view.RecycleNestedScrollView>
 </RelativeLayout>

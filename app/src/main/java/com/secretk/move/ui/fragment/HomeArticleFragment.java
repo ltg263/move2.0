@@ -83,7 +83,8 @@ public class HomeArticleFragment extends LazyFragment{
             @Override
             public void onCompleted(CommonListBase bean) {
                 CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getArticles();
-                if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
+                if(detailsBean.getPageSize()==detailsBean.getCurPageNum()
+                        || detailsBean.getPageSize()<detailsBean.getCurPageNum()){
                     if(refreshLayouF!=null){
                         refreshLayouF.finishLoadMoreWithNoMoreData();
                     }
@@ -133,5 +134,9 @@ public class HomeArticleFragment extends LazyFragment{
         refreshLayouF.setNoMoreData(false);
         pageIndex=1;
         getLoadData();
+    }
+
+    public ImageView getIvNotContent() {
+        return ivNotContent;
     }
 }

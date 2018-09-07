@@ -80,6 +80,8 @@ public class ReleaseRewardOkActivity extends AppCompatActivity implements ItemCl
     int projectId;
     String token = SharedUtils.singleton().get("token", "");
     private JSONArray sonArray;
+    private String reward_day;
+    private String reward_find;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,8 +99,8 @@ public class ReleaseRewardOkActivity extends AppCompatActivity implements ItemCl
 //        reward_find
 //        reward_day
 //        reward_time
-        String reward_find = reward.getString("reward_find");
-        String reward_day = reward.getString("reward_day");
+        reward_find = reward.getString("reward_find");
+        reward_day = reward.getString("reward_day");
         String reward_time = reward.getString("reward_time");
         LogUtil.w("reward_find:"+reward_find);
         LogUtil.w("reward_day:"+reward_day);
@@ -321,8 +323,10 @@ public class ReleaseRewardOkActivity extends AppCompatActivity implements ItemCl
             node.put("token", token);
             node.put("projectId", projectId);
             node.put("postTitle", getEdTitle());
-            node.put("disscussContents", getEdContent());
+            node.put("rewardContents", getEdContent());
             node.put("tagInfos", sonArray.toString());
+            node.put("rewardDate", Integer.valueOf(reward_day));
+            node.put("rewardMoney", reward_find);
             if (StringUtil.isNotBlank(discussImages)) {
                 node.put("discussImages", discussImages);
             }
@@ -330,7 +334,7 @@ public class ReleaseRewardOkActivity extends AppCompatActivity implements ItemCl
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.RELEASE_DISCUSS)
+                .url(Constants.SAVE_REWARD_ACTIVITY)
                 .method(RxHttpParams.HttpMethod.POST)
                 .addPart("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addPart("sign", MD5.Md5(node.toString()))

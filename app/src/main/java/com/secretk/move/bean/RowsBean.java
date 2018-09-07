@@ -56,6 +56,7 @@ public class RowsBean extends CommonListBase {
     private int modelType;
     private String postShortDesc;
     private int commentsNum;
+    private int rewardMoney;
     private int praiseStatus;
     private int praiseNum;
     private int pageviewNum;
@@ -63,6 +64,7 @@ public class RowsBean extends CommonListBase {
     private int collectNum;
     private int createUserId;
     private int userType;
+    private int answerCount;
     private double postTotalIncome;
     private String createUserIcon;
     private String createUserSignature;
@@ -70,6 +72,7 @@ public class RowsBean extends CommonListBase {
     private long createTime;
     private String createTimeStr;
     private long updateTime;
+    private long endTime;
     private String updateTimeStr;
     private int status;
     private List<PostSmallImagesListBean> postSmallImagesList;
@@ -101,6 +104,30 @@ public class RowsBean extends CommonListBase {
     private String evaluationTags;
     private String evauationContent;
     private String tagInfos;
+
+    public int getRewardMoney() {
+        return rewardMoney;
+    }
+
+    public void setRewardMoney(int rewardMoney) {
+        this.rewardMoney = rewardMoney;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
+    }
+
+    public int getAnswerCount() {
+        return answerCount;
+    }
+
+    public void setAnswerCount(int answerCount) {
+        this.answerCount = answerCount;
+    }
 
     public double getPostTotalIncome() {
         return postTotalIncome;

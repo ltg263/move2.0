@@ -44,7 +44,7 @@ public class UnifyUserListXsAdapter extends RecyclerView.Adapter<UnifyUserListXs
     @Override
     public void onBindViewHolder(UnifyUserListXsHolder holder, int position) {
         RowsBean bean = list.get(position);
-        holder.setData(bean, position);
+        holder.setData(bean, position,list.size());
         holder.setItemListener(mListener);
 
     }

@@ -301,6 +301,14 @@ public class StringUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd  EEEE");
         return sdf.format(d).toString();
     }
+    /**
+     * 毫秒数转日期
+     */
+    public static String getTimeMDHM(long seconds) {
+        Date d = new Date(seconds);
+        SimpleDateFormat sdf = new SimpleDateFormat("MM.dd HH:mm");
+        return sdf.format(d).toString();
+    }
 
     /**
      * 毫秒数转日期

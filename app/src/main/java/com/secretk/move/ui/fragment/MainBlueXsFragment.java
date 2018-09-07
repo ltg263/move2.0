@@ -16,7 +16,7 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.CommonListBase;
+import com.secretk.move.bean.SearchContentBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.UnifyUserListXsAdapter;
@@ -126,14 +126,15 @@ public class MainBlueXsFragment extends LazyFragment implements ItemClickListene
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.MAIN_DISCUSS)
+                .url("http://192.168.10.128:8044/rest/kff/rewardActivity/rewardList")
+//                .url(Constants.MAIN_DISCUSS)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
+        RetrofitUtil.request(params, SearchContentBean.class, new HttpCallBackImpl<SearchContentBean>() {
             @Override
-            public void onCompleted(CommonListBase bean) {
-                CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getRecommends();
+            public void onCompleted(SearchContentBean bean) {
+                SearchContentBean.DataBean detailsBean = bean.getData();
                 if (detailsBean.getCurPageNum() == detailsBean.getPageCount()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }

@@ -93,7 +93,8 @@ public class HomeDiscussFragment extends LazyFragment{
             @Override
             public void onCompleted(CommonListBase bean) {
                 CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getDiscusses();
-                if(detailsBean.getPageSize()==detailsBean.getCurPageNum()){
+                if(detailsBean.getPageSize()==detailsBean.getCurPageNum()
+                        || detailsBean.getPageSize()<detailsBean.getCurPageNum()){
                     if(refreshLayouF!=null){
                         refreshLayouF.finishLoadMoreWithNoMoreData();
                     }
@@ -114,7 +115,12 @@ public class HomeDiscussFragment extends LazyFragment{
             @Override
             public void onFinish() {
                 if(refreshLayouF!=null){
-                    refreshLayouF.finishLoadMore();
+                    if(refreshLayouF.isEnableLoadMore()){
+                        refreshLayouF.finishLoadMore();
+                    }
+                    if(refreshLayouF.isEnableRefresh()){
+                        refreshLayouF.finishRefresh();
+                    }
                 }
                 if(loadingDialog.isShowing()){
                     loadingDialog.dismiss();
@@ -133,5 +139,9 @@ public class HomeDiscussFragment extends LazyFragment{
         refreshLayouF.setNoMoreData(false);
         pageIndex=1;
         getLoadData();
+    }
+
+    public ImageView getIvNotContent() {
+        return ivNotContent;
     }
 }

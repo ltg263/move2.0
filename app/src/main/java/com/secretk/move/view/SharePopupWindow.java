@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -28,6 +27,7 @@ import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
+import com.secretk.move.utils.UiUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,6 +66,8 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
     TextView tvShareLink;
     @BindView(R.id.tv_share_report)
     TextView tvShareReport;
+    @BindView(R.id.tv_share_zzhd)
+    TextView tvShareZzhd;
     @BindView(R.id.tv_cancel)
     TextView tvCancel;
     @BindView(R.id.ll_below)
@@ -82,7 +84,7 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
     private String imgPath;
     private ShareTypeListener mShareTypeListener;
 
-    @SuppressLint("InflateParams")
+//    @SuppressLint("InflateParams")
     public SharePopupWindow(Context context) {
         super(context);
         mContext = context;
@@ -100,11 +102,12 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
         //		tv_photo_count.setText("亲，你还可以上传"+(5-mDataList.size())+"张图片。");
         //设置SelectPicPopupWindow的View
         this.setContentView(mMenuView);
-        this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+//        this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         //设置SelectPicPopupWindow弹出窗体的宽
-        this.setWidth(LayoutParams.MATCH_PARENT);
+//        this.setWidth(LayoutParams.MATCH_PARENT);
+        this.setWidth(UiUtils.getWindowWidth());
         //设置SelectPicPopupWindow弹出窗体的高
-        this.setHeight(LayoutParams.MATCH_PARENT);
+        this.setHeight(LayoutParams.WRAP_CONTENT);
         //设置SelectPicPopupWindow弹出窗体可点击
         this.setFocusable(true);
         // 设置SelectPicPopupWindow弹出窗体动画效果
@@ -383,6 +386,12 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
      */
     public void concealBelow() {
         llBelow.setVisibility(View.GONE);
+    }
+    /**
+     * 显示终止活动
+     */
+    public void showZzhd() {
+        tvShareZzhd.setVisibility(View.VISIBLE);
     }
 
 

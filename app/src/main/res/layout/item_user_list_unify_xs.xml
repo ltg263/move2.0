@@ -85,7 +85,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="@dimen/dp_5"
                 android:drawableLeft="@drawable/ic_xs_find"
-                android:text=" 悬赏1000FIND"
+                android:text="悬赏1000FIND"
                 android:textColor="@color/theme_title_red"
                 android:textSize="@dimen/sp_14"
                 android:textStyle="bold" />

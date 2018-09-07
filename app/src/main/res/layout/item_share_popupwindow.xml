@@ -125,13 +125,14 @@
                 android:textSize="@dimen/sp_12" />
 
             <TextView
+                android:id="@+id/tv_share_zzhd"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="10dp"
                 android:drawableTop="@drawable/ic_share_sina_weibo"
                 android:gravity="center_horizontal"
-                android:text="微博"
+                android:text="终止活动"
                 android:textColor="@color/title_gray"
                 android:textSize="@dimen/sp_12"
                 android:visibility="invisible" />

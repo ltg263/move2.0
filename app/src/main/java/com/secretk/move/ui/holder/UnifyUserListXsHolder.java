@@ -19,6 +19,8 @@ import com.secretk.move.bean.RowsBean;
 import com.secretk.move.ui.activity.DetailsRewardActivity;
 import com.secretk.move.ui.activity.ImageViewVpAcivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
+import com.secretk.move.ui.activity.MainActivity;
+import com.secretk.move.ui.activity.ReleaseDiscussActivity;
 import com.secretk.move.ui.activity.RewardSquareActivity;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
@@ -33,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,6 +91,7 @@ public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
     RelativeLayout rl;
     private ImagesAdapter imagesadapter;
     private Context mContext;
+    List<Integer> tagIdLists = new ArrayList<>();
     public UnifyUserListXsHolder(View itemView, Context context) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -96,14 +100,18 @@ public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvImg.setLayoutManager(layoutManager);
         rvImg.addItemDecoration(new GridSpacingItemDecoration());
-
     }
-    public void setData(final RowsBean bean, int position){
+    public void setData(final RowsBean bean, int position,int size){
         //actionType  //1 关注的用户 点赞帖子  2关注的用户 发表帖子  3关注的用户 关注项目 4关注的项目下发表的帖子
         GlideUtils.loadCircleUserUrl(mContext,imgOrganization, Constants.BASE_IMG_URL + StringUtil.getBeanString(bean.getCreateUserIcon()));
         tvGoGc.setVisibility(View.GONE);
-        if((position%10)==0 && position!=0){
-            tvGoGc.setVisibility(View.VISIBLE);
+        if(mContext instanceof MainActivity){
+            if((position%10)==0 && position!=0){
+                tvGoGc.setVisibility(View.VISIBLE);
+            }
+            if(position==size-1){
+                tvGoGc.setVisibility(View.VISIBLE);
+            }
         }
         tvName.setText(bean.getCreateUserName());
         tvTime.setText(TimeToolUtils.convertTimeToFormat(bean.getCreateTime()));
@@ -165,9 +173,7 @@ public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
             @Override
             public void onClick(View view) {
                 if (SharedUtils.getLoginZt()) {
-                        int postId = bean.getPostId();
-//                        int postType = bean.getPostType();
-//                        IntentUtil.go2DetailsByType(postType, String.valueOf(postId));
+                    int postId = bean.getPostId();
                     Intent intent = new Intent(mContext,DetailsRewardActivity.class);
                     intent.putExtra("postId",postId);
                     mContext.startActivity(intent);
@@ -207,6 +213,15 @@ public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
                 IntentUtil.startActivity(RewardSquareActivity.class);
             }
         });
+        tvGoHd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, ReleaseDiscussActivity.class);
+                intent.putExtra("projectId", bean.getProjectId());
+                intent.putExtra("projectPay", bean.getProjectCode());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     ArrayList<PostDataInfo> imageLists;
@@ -216,9 +231,12 @@ public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
             tvTitle.setVisibility(View.VISIBLE);
             tvTitle.setText(StringUtil.getBeanString(bean.getPostTitle()));
         }
-        String b = "【奖励1000FIND】";
+        String b = "【奖励"+bean.getRewardMoney()+"FIND】";
         tvDesc.setText(StringUtil.getBeanString(bean.getPostShortDesc()));
         tvFindNum.setText(b);
+        //截止时间08.08 12:00，已有12人回答
+        String endTime = "截止时间"+StringUtil.getTimeMDHM(bean.getEndTime())+"，已有"+bean.getAnswerCount()+"人回答";
+        tvEndTime.setText(endTime);
         imagesadapter = new ImagesAdapter(mContext);
         rvImg.setAdapter(imagesadapter);
         ivFileName.setVisibility(View.GONE);
@@ -260,31 +278,27 @@ public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
             try {
                 JSONArray object = new JSONArray(bean.getTagInfos());
                 //[{"tagId":1,"tagName":"进度讨论"},{"tagId":3,"tagName":"项目前景讨论"},{"tagId":4,"tagName":"打假"}]
-                String tagAll = "";
-                String tagOnly[] = new String[object.length()];
                 for (int i = 0; i < object.length(); i++) {
                     JSONObject strObj = object.getJSONObject(i);
                     if(i==0){
                         tvCrackDown.setVisibility(View.VISIBLE);
                         tvCrackDown.setText(strObj.getString("tagName"));
+                        tagIdLists.add(strObj.getInt("tagId"));
+                        IntentUtil.startCrackDown(tvCrackDown,tagIdLists.get(0));
                     }
                     if(i==1){
                         tvCrackDown1.setVisibility(View.VISIBLE);
                         tvCrackDown1.setText(strObj.getString("tagName"));
+                        tagIdLists.add(strObj.getInt("tagId"));
+                        IntentUtil.startCrackDown(tvCrackDown1,tagIdLists.get(1));
                     }
                     if(i==2){
                         tvCrackDown2.setVisibility(View.VISIBLE);
                         tvCrackDown2.setText(strObj.getString("tagName"));
+                        tagIdLists.add(strObj.getInt("tagId"));
+                        IntentUtil.startCrackDown(tvCrackDown2,tagIdLists.get(2));
                     }
-//                    tagOnly[i] = "#" + strObj.getString("tagName") + "#";
-//                    tagAll += "#" + strObj.getString("tagName") + "#   ";
                 }
-//                Clickable.getSpannableString(tagAll, tagOnly, tvCrackDown, new Clickable.ClickListener() {
-//                    @Override
-//                    public void setOnClick(String name) {
-//                        //ToastUtils.getInstance().show(name);
-//                    }
-//                });
             } catch (JSONException e) {
                 e.printStackTrace();
             }

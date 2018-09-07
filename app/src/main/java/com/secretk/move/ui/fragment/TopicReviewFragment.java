@@ -57,7 +57,7 @@ public class TopicReviewFragment extends LazyFragment{
 
     @Override
     public int setFragmentView() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_topic;
     }
 
     @Override

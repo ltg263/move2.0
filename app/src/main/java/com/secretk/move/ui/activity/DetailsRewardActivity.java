@@ -22,7 +22,7 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.CommonListBase;
-import com.secretk.move.bean.DetailsDiscussBase;
+import com.secretk.move.bean.DetailsRewardBase;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.ui.adapter.ImagesAdapter;
@@ -38,7 +38,7 @@ import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.FixGridLayout;
 import com.secretk.move.view.RecycleScrollView;
-import com.secretk.move.view.ShareView;
+import com.secretk.move.view.RewardShareDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -109,6 +109,8 @@ public class DetailsRewardActivity extends BaseActivity {
     TextView tvXs2;
     @BindView(R.id.tv_go_hd)
     TextView tvGoHd;
+    @BindView(R.id.tv_go_hd_b)
+    TextView tvGoHdB;
     @BindView(R.id.ll_xs)
     LinearLayout llXs;
     @BindView(R.id.iv)
@@ -126,13 +128,12 @@ public class DetailsRewardActivity extends BaseActivity {
     private ImagesAdapter imagesadapter;
     private String imgUrl;
     private boolean isFinish = false;
-    private int userId;
     private int createUserId;
     int pageIndex = 1;
     private int projectId;
     String postShortDesc;
     private String activityId;
-    private DetailsDiscussBase.DataBean.DiscussDetailBean discussDetail;
+    private DetailsRewardBase.DataBean discussDetail;
 
     @Override
     protected int setOnCreate() {
@@ -151,8 +152,14 @@ public class DetailsRewardActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        ShareView.showShare(this, mHeadView, activityId, Constants.DISCUSS_SHARE + Integer.valueOf(postId),
-                tvPostTitle.getText().toString(), postShortDesc, imgUrl, Integer.valueOf(postId));
+//        ShareView.showShare(this, mHeadView, activityId, Constants.DISCUSS_SHARE + Integer.valueOf(postId),
+//                tvPostTitle.getText().toString(), postShortDesc, imgUrl, Integer.valueOf(postId));
+//        logoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_share);
+        final RewardShareDialog dialog = new RewardShareDialog(this,R.style.selectorDialog);
+        dialog.setData(System.currentTimeMillis(), "", "",
+                "share_reward_"+System.currentTimeMillis(),"https://blog.csdn.net/pxcz110112/article/details/80234997",baseUserId==discussDetail.getCreateUserId());
+        dialog.show();
+        dialog.shareUi();
     }
 
     @Override
@@ -187,7 +194,7 @@ public class DetailsRewardActivity extends BaseActivity {
             case R.id.tv_follow_status:
                 tvFollowStatus.setEnabled(false);
                 NetUtil.addSaveFollow(tvFollowStatus,
-                        Constants.SaveFollow.USER, Integer.valueOf(userId), new NetUtil.SaveFollowImp() {
+                        Constants.SaveFollow.USER, Integer.valueOf(createUserId), new NetUtil.SaveFollowImp() {
                             @Override
                             public void finishFollow(String str) {
                                 tvFollowStatus.setEnabled(true);
@@ -295,11 +302,12 @@ public class DetailsRewardActivity extends BaseActivity {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.DISCUSS_DETAIL)
+//                .url(Constants.DISCUSS_DETAIL)
+                .url("http://192.168.10.128:8044/rest/kff/rewardActivity/rewardDetail")
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, DetailsDiscussBase.class, new HttpCallBackImpl<DetailsDiscussBase>() {
+        RetrofitUtil.request(params, DetailsRewardBase.class, new HttpCallBackImpl<DetailsRewardBase>() {
             @Override
             public void onFinish() {
                 if (isFinish && loadingDialog.isShowing()) {
@@ -311,8 +319,8 @@ public class DetailsRewardActivity extends BaseActivity {
             }
 
             @Override
-            public void onCompleted(DetailsDiscussBase bean) {
-                discussDetail = bean.getData().getDiscussDetail();
+            public void onCompleted(DetailsRewardBase bean) {
+                discussDetail = bean.getData();
                 createUserId = discussDetail.getCreateUserId();
                 postShortDesc = discussDetail.getPostShortDesc();
                 projectId = discussDetail.getProjectId();
@@ -332,7 +340,6 @@ public class DetailsRewardActivity extends BaseActivity {
                     StringUtil.getUserType(discussDetail.getUserType(), ivModelIconD);
                 }
                 tvCreateUserName.setText(discussDetail.getCreateUserName());
-                userId = discussDetail.getCreateUserId();
                 //关注状态  "//0 未关注；1-已关注；2-不显示关注按钮"
                 if (discussDetail.getFollowStatus() == 0) {
                     tvFollowStatus.setSelected(false);
@@ -347,9 +354,12 @@ public class DetailsRewardActivity extends BaseActivity {
                     tvFollowStatus.setVisibility(View.GONE);
                 }
                 String a = StringUtil.getBeanString(discussDetail.getPostShortDesc());
-                String b = "【奖励1000FIND】";
+                String b = "【奖励"+discussDetail.getRewardMoney()+"FIND】";
                 String c = "<font color=\"#ff2851\">" + b + "</font>" + a;
                 tvPostShortDesc.setText(Html.fromHtml(c));
+                tvXsFind.setText(" 悬赏"+discussDetail.getRewardMoney()+"FIND 】");
+                String endTime = "截止时间"+StringUtil.getTimeMDHM(discussDetail.getEndTime())+"，已有"+discussDetail.getAnswerCount()+"人回答";
+                tvXs2.setText(endTime);
 //                tvPostShortDesc.setText(discussDetail.getDisscussContents());
                 tvCreateTime.setText(StringUtil.getTimeToM(discussDetail.getCreateTime()));
                 if (StringUtil.isNotBlank(discussDetail.getPostSmallImages())) {
@@ -381,30 +391,7 @@ public class DetailsRewardActivity extends BaseActivity {
                 }
 
                 if (StringUtil.isNotBlank(discussDetail.getTagInfos()) && discussDetail.getTagInfos().contains("tagName")) {
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    params.setMargins(15, 10, 15, 10);
-                    try {
-                        JSONArray array = new JSONArray(discussDetail.getTagInfos());
-                        if (llAddView.getChildCount() > 0) {
-                            llAddView.removeAllViews();
-                        }
-                        for (int i = 0; i < array.length(); i++) {
-                            final JSONObject object = array.getJSONObject(i);
-                            if (StringUtil.isNotBlank(object.getString("tagName"))) {
-                                final TextView crack_down = new TextView(DetailsRewardActivity.this);
-                                crack_down.setPadding(20, 10, 20, 10);
-                                crack_down.setBackground(getResources().getDrawable(R.drawable.shape_add_label_selected));
-                                crack_down.setTextColor(getResources().getColor(R.color.app_background));
-                                crack_down.setTextSize(14);
-                                crack_down.setText(object.getString("tagName"));
-                                crack_down.setLayoutParams(params);
-                                llAddView.addView(crack_down);
-                            }
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    IntentUtil.setTagInfos(DetailsRewardActivity.this,llAddView,discussDetail.getTagInfos());
                 }
             }
         });

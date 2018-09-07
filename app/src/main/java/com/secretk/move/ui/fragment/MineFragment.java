@@ -18,13 +18,13 @@ import com.secretk.move.bean.UserLoginInfo;
 import com.secretk.move.presenter.MineFragmentPresenter;
 import com.secretk.move.presenter.impl.MineFragmentPresenterImpl;
 import com.secretk.move.ui.activity.HomeActivity;
-import com.secretk.move.ui.activity.HttpDomeActivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.activity.MineApproveSubmitiCertificateActivity;
 import com.secretk.move.ui.activity.MineAttentionActivity;
 import com.secretk.move.ui.activity.MineCheckDetailsActivity;
 import com.secretk.move.ui.activity.MineCollectActivity;
 import com.secretk.move.ui.activity.MineMessageActivity;
+import com.secretk.move.ui.activity.MineMoneyGuideActivity;
 import com.secretk.move.ui.activity.MineOpinionBackActivity;
 import com.secretk.move.ui.activity.MineRecommendActivity;
 import com.secretk.move.ui.activity.MineSetActivity;
@@ -219,7 +219,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     @OnClick({R.id.iv_my_set, R.id.ll_my_approve, R.id.tv_go_login, R.id.tv_go_register, R.id.rl_user_info,
             R.id.rl_appraisal, R.id.rl_discuss, R.id.rl_essay, R.id.ll_check_details, R.id.ll_my_attention,
             R.id.ll_my_collect, R.id.ll_my_message, R.id.ll_my_recommend, R.id.ll_my_about, R.id.ll_my_feedback,
-            R.id.btn})
+            R.id.btn,R.id.tv_zb})
     public void onViewClicked(View view) {
         if (!isLoginZt) {
             IntentUtil.startActivity(LoginHomeActivity.class);
@@ -283,9 +283,16 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 IntentUtil.startActivity(MineOpinionBackActivity.class);
 //                IntentUtil.startActivity(ImagesSelectorActivity.class);
                 break;
-            case R.id.btn://意见反馈
-                IntentUtil.startActivity(HttpDomeActivity.class);
+            case R.id.tv_zb://赚币指南
+                IntentUtil.startActivity(MineMoneyGuideActivity.class);
 //                IntentUtil.startActivity(ImagesSelectorActivity.class);
+                break;
+            case R.id.btn://意见反馈
+//                IntentUtil.startActivity(HttpDomeActivity.class);
+//                IntentUtil.startActivity(ImagesSelectorActivity.class);
+                //logoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_share)
+//                Bitmap bitmap = ZXingUtils.createQRImage("https://blog.csdn.net/pxcz110112/article/details/80234997", 600, 600,null);
+//                ivHeadImg.setImageBitmap(bitmap);
                 break;
         }
     }
