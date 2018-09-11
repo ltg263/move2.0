@@ -66,6 +66,8 @@ public class MoveIntentService extends GTIntentService {
                        }else if(type==5){
                            IntentUtil.startHomeActivity(Integer.valueOf(strId));
                            return;
+                       }else if(type==6){
+                           type=10;
                        }else{
                            return;
                        }

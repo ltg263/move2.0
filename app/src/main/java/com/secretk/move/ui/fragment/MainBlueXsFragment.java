@@ -126,8 +126,7 @@ public class MainBlueXsFragment extends LazyFragment implements ItemClickListene
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url("http://192.168.10.128:8044/rest/kff/rewardActivity/rewardList")
-//                .url(Constants.MAIN_DISCUSS)
+                .url(Constants.REWARD_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();

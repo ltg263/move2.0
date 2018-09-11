@@ -22,7 +22,6 @@ import com.umeng.analytics.MobclickAgent;
 
 public class SplashScreenActivity extends Activity {
 
-    private boolean isFirst = false;
     private Boolean isLogin=false;
     private String postId;
     private String type;
@@ -42,16 +41,16 @@ public class SplashScreenActivity extends Activity {
         MobclickAgent.openActivityDurationTrack(false);
 //		getWindow().setFormat(PixelFormat.RGBA_8888);
 
-        isFirst = SharedUtils.singleton().get("isFirst",false);
+        SharedUtils.singleton().put("isCreateApp", false);
         isLogin = SharedUtils.singleton().get(Constants.IS_LOGIN_KEY,false);
         postId = getIntent().getStringExtra("postId");
         type = getIntent().getStringExtra("type");
         Intent intent = getIntent();
         Uri uri = intent.getData();
         if(uri!=null){
-            String routeId = uri.getQueryParameter("pid");
-            String postId = uri.getQueryParameter("postId");
-            LogUtil.w("routeId:"+routeId);
+            type = uri.getQueryParameter("pid");
+            postId = uri.getQueryParameter("postId");
+            LogUtil.w("routeId:"+type);
             LogUtil.w("postId:"+postId);
         }
         new Handler().postDelayed(new Runnable() {
@@ -73,11 +72,12 @@ public class SplashScreenActivity extends Activity {
         }
         finish();
     }
+
     private void startUi1() {
         Intent intent = new Intent();
         if (false) {
 //            intent.setClass(SplashScreenActivity.this, ViewPagerActivity.class);
-//            SharedUtils.singleton().put("isFirst", false);
+//            SharedUtils.singleton().put("isCreateApp", false);
             intent.setClass(SplashScreenActivity.this, MainActivity.class);
         } else {
 //            if(isLogin){

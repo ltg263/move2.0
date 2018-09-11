@@ -29,6 +29,7 @@ import com.secretk.move.ui.fragment.MainPagerFragment;
 import com.secretk.move.ui.fragment.MineFragment;
 import com.secretk.move.utils.DownloadService;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -45,6 +46,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 
@@ -107,8 +110,6 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
         vp_main.setOffscreenPageLimit(5);
         presenter = new MainPresenterImpl(this);
         presenter.initialized();
-        postId = getIntent().getStringExtra("postId");
-        type = getIntent().getStringExtra("type");
         vp_main.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -187,7 +188,6 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
                 }
             }
         });
-        onStartTz();
     }
     @Override
     protected void onNewIntent(Intent intent) {
@@ -218,9 +218,15 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
 
 
     private void onStartTz() {
+        SharedUtils.singleton().put("isCreateApp", true);
+        postId = getIntent().getStringExtra("postId");
+        type = getIntent().getStringExtra("type");
+        LogUtil.w("routeId:"+type);
+        LogUtil.w("postId:"+postId);
+        // type =
         if (StringUtil.isNotBlank(type) && StringUtil.isNotBlank(postId)) {
             if(!SharedUtils.getLoginZt() || StringUtil.isBlank(SharedUtils.getToken())){
-                IntentUtil.startActivity(LoginActivity.class);
+                IntentUtil.startActivity(LoginHomeActivity.class);
                 return;
             }
             int typei = Integer.valueOf(type);
@@ -230,16 +236,38 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
                 typei = 2;
             } else if (typei == 2) {
                 typei = 3;
+            }else if(typei==6){
+                typei=10;
             } else {
                 return;
             }
             IntentUtil.go2DetailsByType(typei, postId);
         }
     }
+    private Timer timer;
+    private TimerTask task;
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(!SharedUtils.singleton().get("isCreateApp",false)){
+            timer = new Timer();
+            task = new TimerTask() {
+                @Override
+                public void run() {
+                    onStartTz();
+                }
+            };
+            timer.schedule(task, 1000);
+        }
+    }
 
     @Override
     protected void onPause() {
         super.onPause();
+        if(null != timer){
+            timer.cancel();
+            task.cancel();
+        }
     }
 
 
@@ -321,9 +349,6 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
 
     @Override
     public void showDialog(final VersionBean.DataBean str, final boolean force) {
-        if(true){
-            return;
-        }
         DialogUtils.showDialogAppUpdate(this, force, str.getUpExplain(), new DialogUtils.ErrorDialogInterface() {
             @Override
             public void btnConfirm() {

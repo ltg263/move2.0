@@ -15,6 +15,7 @@ import com.secretk.move.ui.activity.DetailsArticleActivity;
 import com.secretk.move.ui.activity.DetailsArticleCommentActivity;
 import com.secretk.move.ui.activity.DetailsDiscussActivity;
 import com.secretk.move.ui.activity.DetailsReviewAllActivity;
+import com.secretk.move.ui.activity.DetailsRewardActivity;
 import com.secretk.move.ui.activity.EvaluationSimplenessActivity;
 import com.secretk.move.ui.activity.EvaluationWriteActivity;
 import com.secretk.move.ui.activity.EvaluationWriteNewSimpActivity;
@@ -264,6 +265,11 @@ public class IntentUtil {
                 break;
             case 9:
                 IntentUtil.startHomeActivity(Integer.valueOf(postId));
+                break;
+            case 10:
+                intent=new Intent(MoveApplication.getContext(), DetailsRewardActivity.class);
+                intent.putExtra("postId",Integer.valueOf(postId));
+                startActivity(intent);
                 break;
         }
     }

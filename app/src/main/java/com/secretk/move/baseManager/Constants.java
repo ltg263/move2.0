@@ -107,7 +107,7 @@ public interface Constants {
 //
 //      String BASE_URL = "http://repayy.free.ngrok.cc/rest/";//林俊
 //      String BASE_URL = "http://192.168.10.130:8044/rest/";//林俊
-    //:15537894586   abc12310  志远手机密码：0405
+//      :15537894586   abc12310  志远手机密码：0405
 //    String BASE_URL = "http://47.98.197.101/rest/";//宋
 
 
@@ -359,6 +359,7 @@ public interface Constants {
     String RELEASE_DISCUSS = BASE_URL + "kff/discuss/saveDiscuss";
     String SEARCH_PROJECTS_1 = BASE_URL + "kff/project/searchProjects";
     String SEARCH_PROJECTS = BASE_URL + "kff/project/getProjectPage";
+
     //1-项目，2-内容，
     //3-用户，4-话题
     String INDEX_SEARCH = BASE_URL+"kff/search/indexSearch";
@@ -369,6 +370,10 @@ public interface Constants {
     String GET_POST_INFO_WITH_TAGS = BASE_URL+"kff/post/getPostInfoWithTags";
     //爆料页面获取话题接口
     String GET_DTAGS_INFO = BASE_URL+"kff/tags/getDTagsInfo";
+    //悬赏主页列表
+    String REWARD_LIST = BASE_URL+"kff/rewardActivity/rewardList";
+    //悬赏详情
+    String REWARD_DETAIL = BASE_URL+"kff/rewardActivity/rewardDetail";
 
 
     String SAVE_REWARD_ACTIVITY = BASE_URL+"kff/rewardActivity/saveRewardActivity";

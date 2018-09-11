@@ -302,8 +302,7 @@ public class DetailsRewardActivity extends BaseActivity {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-//                .url(Constants.DISCUSS_DETAIL)
-                .url("http://192.168.10.128:8044/rest/kff/rewardActivity/rewardDetail")
+                .url(Constants.REWARD_DETAIL)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();

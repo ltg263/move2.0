@@ -174,9 +174,7 @@ public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
             public void onClick(View view) {
                 if (SharedUtils.getLoginZt()) {
                     int postId = bean.getPostId();
-                    Intent intent = new Intent(mContext,DetailsRewardActivity.class);
-                    intent.putExtra("postId",postId);
-                    mContext.startActivity(intent);
+                    IntentUtil.go2DetailsByType(10, String.valueOf(postId));
                 } else {
                     IntentUtil.startActivity(LoginHomeActivity.class);
                 }
@@ -187,10 +185,9 @@ public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if(motionEvent.getAction() == MotionEvent.ACTION_UP){
                     if (SharedUtils.getLoginZt()) {
-//                        int postId = bean.getPostId();
+                        int postId = bean.getPostId();
 //                        int postType = bean.getPostType();
-//                        IntentUtil.go2DetailsByType(postType, String.valueOf(postId));
-                        IntentUtil.startActivity(DetailsRewardActivity.class);
+                        IntentUtil.go2DetailsByType(10, String.valueOf(postId));
                     } else {
                         IntentUtil.startActivity(LoginHomeActivity.class);
                     }
