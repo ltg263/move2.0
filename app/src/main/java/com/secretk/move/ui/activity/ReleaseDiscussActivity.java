@@ -77,6 +77,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
     List<String> serverImgList = new ArrayList<>();
     LoadingDialog loadingDialog;
     int projectId;
+    int postId;
     String token = SharedUtils.singleton().get("token", "");
     private JSONArray sonArray;
 
@@ -130,6 +131,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         ed_title.setHint(Html.fromHtml("请输入标题 <small>(6-60字之间)</small>"));
         loadingDialog = new LoadingDialog(this);
         projectId = getIntent().getIntExtra("projectId", 0);
+        postId = getIntent().getIntExtra("postId", 0);
 
         beans = new DiscussLabelListbean.TagList();
         beans.setTagId(String.valueOf(projectId));
@@ -306,6 +308,9 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
             if (StringUtil.isNotBlank(discussImages)) {
                 node.put("discussImages", discussImages);
             }
+            if(postId!=0){
+               node.put("postId",postId);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -362,14 +367,12 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
                     if(status){
                         serverImgList.add(str);
                         if (serverImgList.size() == releasePicAdapter.getItemCount()-1) {
-                            LogUtil.w("----------------------------------------------------");
                             try {
                                 generatePostSmallImages(serverImgList);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }else {
-                            LogUtil.w("----------------------------------------------------");
                             upImgHttp(adapterImgList.get(position+1),position+1);
                         }
                     }else{

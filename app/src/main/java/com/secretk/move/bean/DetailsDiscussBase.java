@@ -89,6 +89,8 @@ public class DetailsDiscussBase extends BaseRes{
             private String projectChineseName;
             private String postTitle;
             private int postType;
+            private int rewardMoneyToOne;
+            private int rewardMoney;
             private String postShortDesc;
             private String postSmallImages;
             private int commentsNum;
@@ -102,6 +104,22 @@ public class DetailsDiscussBase extends BaseRes{
             private int createUserId;
             private String createUserIcon;
             private String createUserSignature;
+
+            public int getRewardMoneyToOne() {
+                return rewardMoneyToOne;
+            }
+
+            public void setRewardMoneyToOne(int rewardMoneyToOne) {
+                this.rewardMoneyToOne = rewardMoneyToOne;
+            }
+
+            public int getRewardMoney() {
+                return rewardMoney;
+            }
+
+            public void setRewardMoney(int rewardMoney) {
+                this.rewardMoney = rewardMoney;
+            }
 
             private double commendationNum;
 

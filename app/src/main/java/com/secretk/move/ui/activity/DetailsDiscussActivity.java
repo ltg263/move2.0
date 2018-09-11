@@ -40,6 +40,7 @@ import com.secretk.move.utils.KeybordS;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
@@ -177,6 +178,7 @@ public class DetailsDiscussActivity extends BaseActivity {
     private DetailsDiscussAdapter adapter;
     private DetailsDiscussAdapter adapterNew;
     private String postId;
+    private int postIdToReward;
     private ImagesAdapter imagesadapter;
     private String imgUrl;
     private String imgName;
@@ -212,7 +214,6 @@ public class DetailsDiscussActivity extends BaseActivity {
     @Override
     protected void initUI(Bundle savedInstanceState) {
 //        refreshLayout.setEnableRefresh(false);//关闭下拉刷新
-        llBlXs.setVisibility(View.VISIBLE);
         postId = getIntent().getStringExtra("postId");
         activityId = getIntent().getStringExtra("activityId");
         setHorizontalManager(rvImg);
@@ -273,7 +274,7 @@ public class DetailsDiscussActivity extends BaseActivity {
 
     @OnClick({R.id.tv_follow_status, R.id.iv_post_small_images, R.id.tv_send, R.id.rl_ge_ren,
             R.id.tv_commendation_Num, R.id.rl_sc, R.id.rl_dz, R.id.rl_pl, R.id.tv_content,
-            R.id.tv_sort_new, R.id.tv_sort_time})
+            R.id.tv_sort_new, R.id.tv_sort_time,R.id.tv_xs_3})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_follow_status:
@@ -405,6 +406,13 @@ public class DetailsDiscussActivity extends BaseActivity {
                     initNewsDataList();
                 }
                 break;
+            case R.id.tv_xs_3:
+                    if (SharedUtils.getLoginZt()) {
+                        IntentUtil.go2DetailsByType(10, String.valueOf(postIdToReward));
+                    } else {
+                        IntentUtil.startActivity(LoginHomeActivity.class);
+                    }
+                break;
         }
     }
 
@@ -533,6 +541,7 @@ public class DetailsDiscussActivity extends BaseActivity {
             @Override
             public void onCompleted(DetailsDiscussBase bean) {
                 DetailsDiscussBase.DataBean.DiscussDetailBean discussDetail = bean.getData().getDiscussDetail();
+                postIdToReward = discussDetail.getPostId();
                 createUserId = discussDetail.getCreateUserId();
                 mHeadView.setTitle(discussDetail.getProjectCode());
                 postShortDesc = discussDetail.getPostShortDesc();
@@ -606,10 +615,23 @@ public class DetailsDiscussActivity extends BaseActivity {
                 if (baseUserId == discussDetail.getCreateUserId()) {
                     tvFollowStatus.setVisibility(View.GONE);
                 }
-                String a = StringUtil.getBeanString(discussDetail.getPostShortDesc());
-                String b = "【奖励1000FIND】";
-                String c = "<font color=\"#ff2851\">" + b + "</font>" + a;
-                tvPostShortDesc.setText(Html.fromHtml(c));
+
+                tvPostShortDesc.setText(Html.fromHtml(StringUtil.getBeanString(discussDetail.getDisscussContents())));
+                if(discussDetail.getPostType()==4){
+                    llBlXs.setVisibility(View.VISIBLE);
+                    tvXsFind.setText(discussDetail.getRewardMoney()+"FIND】");
+                    tvXs1.setVisibility(View.GONE);
+                    if(StringUtil.isNotBlank(discussDetail.getPostTitle())){
+                        tvXs1.setVisibility(View.VISIBLE);
+                        tvXs1.setText(discussDetail.getPostTitle());
+                    }
+                    tvXs2.setText(discussDetail.getPostShortDesc());
+                    tvXs3.setVisibility(View.VISIBLE);
+                    if(discussDetail.getRewardMoneyToOne()>0){
+                        tvPostShortDesc.setText(Html.fromHtml("<font color=\"#ff2851\">【奖励"+discussDetail.getRewardMoneyToOne()+"FIND】</font>"+postShortDesc));
+                    }
+                }
+
 //                tvPostShortDesc.setText(discussDetail.getDisscussContents());
                 tvCreateTime.setText(StringUtil.getTimeToM(discussDetail.getCreateTime()));
                 if (StringUtil.isNotBlank(discussDetail.getPostSmallImages())) {

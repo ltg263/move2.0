@@ -152,12 +152,10 @@ public class DetailsRewardActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-//        ShareView.showShare(this, mHeadView, activityId, Constants.DISCUSS_SHARE + Integer.valueOf(postId),
-//                tvPostTitle.getText().toString(), postShortDesc, imgUrl, Integer.valueOf(postId));
-//        logoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_share);
         final RewardShareDialog dialog = new RewardShareDialog(this,R.style.selectorDialog);
-        dialog.setData(System.currentTimeMillis(), "", "",
-                "share_reward_"+System.currentTimeMillis(),"https://blog.csdn.net/pxcz110112/article/details/80234997",baseUserId==discussDetail.getCreateUserId());
+        dialog.setData(discussDetail.getRewardMoney()+"FIND", "FCion宣布解散运营团队，真的跑路了么？",
+                "share_reward_"+System.currentTimeMillis(),"https://blog.csdn.net/pxcz110112/article/details/80234997",
+                "扫码参与活动，领取巨额奖励","活动截止时间"+StringUtil.getTimeMDHM(discussDetail.getEndTime()),baseUserId==discussDetail.getCreateUserId());
         dialog.show();
         dialog.shareUi();
     }
@@ -246,6 +244,7 @@ public class DetailsRewardActivity extends BaseActivity {
         Intent intent = new Intent(this, ReleaseDiscussActivity.class);
         intent.putExtra("projectId", discussDetail.getProjectId());
         intent.putExtra("projectPay", discussDetail.getProjectCode());
+        intent.putExtra("postId", discussDetail.getPostId());
         startActivity(intent);
     }
 

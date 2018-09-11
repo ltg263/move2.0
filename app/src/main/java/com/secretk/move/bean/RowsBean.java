@@ -43,6 +43,7 @@ public class RowsBean extends CommonListBase {
     private int followStatus;
     private int disStickTop;
     private int postId;
+    private int postIdToReward;
     private int projectId;
     private String projectIcon;
     private String projectCode;
@@ -57,6 +58,7 @@ public class RowsBean extends CommonListBase {
     private String postShortDesc;
     private int commentsNum;
     private int rewardMoney;
+    private int rewardMoneyToOne;
     private int praiseStatus;
     private int praiseNum;
     private int pageviewNum;
@@ -104,6 +106,14 @@ public class RowsBean extends CommonListBase {
     private String evaluationTags;
     private String evauationContent;
     private String tagInfos;
+
+    public int getPostIdToReward() {
+        return postIdToReward;
+    }
+
+    public void setPostIdToReward(int postIdToReward) {
+        this.postIdToReward = postIdToReward;
+    }
 
     public int getRewardMoney() {
         return rewardMoney;
@@ -175,6 +185,14 @@ public class RowsBean extends CommonListBase {
 
     public void setProfessionalEvaDetail(String professionalEvaDetail) {
         this.professionalEvaDetail = professionalEvaDetail;
+    }
+
+    public int getRewardMoneyToOne() {
+        return rewardMoneyToOne;
+    }
+
+    public void setRewardMoneyToOne(int rewardMoneyToOne) {
+        this.rewardMoneyToOne = rewardMoneyToOne;
     }
 
     public void setTagInfos(String tagInfos) {

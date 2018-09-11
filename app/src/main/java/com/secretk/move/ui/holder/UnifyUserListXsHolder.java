@@ -216,6 +216,7 @@ public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
                 Intent intent = new Intent(mContext, ReleaseDiscussActivity.class);
                 intent.putExtra("projectId", bean.getProjectId());
                 intent.putExtra("projectPay", bean.getProjectCode());
+                intent.putExtra("postId", bean.getPostId());
                 mContext.startActivity(intent);
             }
         });

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.RecyclerViewBaseHolder;
@@ -43,6 +44,7 @@ public class MainBlHorizontalAdapter extends RecyclerView.Adapter<MainBlHorizont
     @Override
     public void onBindViewHolder(ImagesHolder holder, final int position) {
         GlideUtils.loadSideMinImage_76(context,holder.iv,list.get(position).getImgPath());
+        holder.tvTopicName.setText(list.get(position).getTagName());
         holder.view.setVisibility(View.GONE);
         if(position==0){
             holder.view.setVisibility(View.VISIBLE);
@@ -75,6 +77,8 @@ public class MainBlHorizontalAdapter extends RecyclerView.Adapter<MainBlHorizont
         ImageView iv;
         @BindView(R.id.view)
         View view;
+        @BindView(R.id.tv_topic_name)
+        TextView tvTopicName;
         public ImagesHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

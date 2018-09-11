@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.baseManager.Constants;
@@ -30,14 +31,20 @@ public class RewardShareDialog extends AlertDialog {
     private Context context;
     ScrollView svShare;
     ImageView ivImg;
-    RelativeLayout ivIcon;
+    RelativeLayout rlIcon;
     String strPath = "";
-    long time;
-    String title;
-    String content;
+    String findNum;
+    String status;
     String imgPath;
     String url;
+    String endSm;
+    String endTime;
     boolean isShowZz;
+    private TextView tvFind;
+    private TextView tvStatus;
+    private TextView tvEndSm;
+    private TextView tvEndTime;
+
     public RewardShareDialog(Context context) {
         super(context);
         this.context = context;
@@ -52,13 +59,21 @@ public class RewardShareDialog extends AlertDialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_reward_share_img, null);
-        ivIcon = view.findViewById(R.id.rl_share);
+        rlIcon = view.findViewById(R.id.rl_share);
         svShare = view.findViewById(R.id.sv_share);
         ivImg = view.findViewById(R.id.iv_img);
+        tvFind = view.findViewById(R.id.tv_find);
+        tvStatus = view.findViewById(R.id.tv_status);
+        tvEndSm = view.findViewById(R.id.tv_end_sm);
+        tvEndTime = view.findViewById(R.id.tv_end_time);
         setContentView(view);
-        Bitmap bitmap = ZXingUtils.createQRImage("https://blog.csdn.net/pxcz110112/article/details/80234997", 600, 600, null);
+        Bitmap bitmap = ZXingUtils.createQRImage(url, 600, 600, null);
         ivImg.setImageBitmap(bitmap);
-        ivIcon.setOnClickListener(new View.OnClickListener() {
+        tvFind.setText(findNum);
+        tvStatus.setText(status);
+        tvEndSm.setText(endSm);
+        tvEndTime.setText(endTime);
+        rlIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismiss();
@@ -66,12 +81,13 @@ public class RewardShareDialog extends AlertDialog {
         });
         shareDownloadImg(imgPath);
     }
-    public void setData(long time, final String title, String content,String imgPath,String url,boolean isShowZz){
-        this.time = time;
-        this.title = title;
-        this.content = content;
+    public void setData(String findNum, String status, String imgPath,String url,String endSm,String endTime,boolean isShowZz){
+        this.findNum = findNum;
+        this.status = status;
         this.imgPath = imgPath;
         this.url = url;
+        this.endSm = endSm;
+        this.endTime = endTime;
         this.isShowZz = isShowZz;
     }
 
@@ -80,7 +96,7 @@ public class RewardShareDialog extends AlertDialog {
      * @param imgPath
      */
     public void shareDownloadImg(final String imgPath) {
-        if(ivIcon!=null){
+        if(rlIcon!=null){
             final String pathDj = Constants.LOCAL_PATH;
             File file = new File(pathDj+File.separator+imgPath+".png");
             if(file.exists() && file.length()>0){
@@ -90,7 +106,7 @@ public class RewardShareDialog extends AlertDialog {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Bitmap b = DialogUtils.getViewBitmap(ivIcon);
+                        Bitmap b = DialogUtils.getViewBitmap(rlIcon);
                         strPath = ImageUtils.saveBitmap(b, pathDj, imgPath+".png");
                     }
                 }).start();

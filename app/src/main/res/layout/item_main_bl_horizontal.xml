@@ -11,13 +11,28 @@
         android:background="@color/white"
         android:visibility="gone" />
 
-    <ImageView
-        android:id="@+id/iv"
-        android:layout_width="@dimen/dp_80"
-        android:layout_height="@dimen/dp_80"
-        android:layout_marginRight="@dimen/dp_15"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_aaa" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_15">
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_80"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_aaa" />
+
+        <TextView
+            android:id="@+id/tv_topic_name"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_12"
+            android:padding="@dimen/dp_5"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
 
 
 </LinearLayout>

@@ -117,11 +117,6 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     public void setData(final RowsBean bean,int position){
         //actionType  //1 关注的用户 点赞帖子  2关注的用户 发表帖子  3关注的用户 关注项目 4关注的项目下发表的帖子
         GlideUtils.loadCircleUserUrl(mContext,imgOrganization, Constants.BASE_IMG_URL + StringUtil.getBeanString(bean.getCreateUserIcon()));
-        ll_xs.setVisibility(View.GONE);
-        if(position ==0){
-            ll_xs.setVisibility(View.VISIBLE);
-        }
-
         tvName.setText(bean.getCreateUserName());
         tvTime.setText(TimeToolUtils.convertTimeToFormat(bean.getCreateTime()));
         if(StringUtil.isNotBlank(bean.getProjectCode())){
@@ -227,7 +222,9 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             public void onClick(View view) {
                 if (SharedUtils.getLoginZt()) {
                     int postId = bean.getPostId();
-                    int postType = bean.getPostType();
+//                    int postType = bean.getPostType();
+
+                    int postType = 2;
                     IntentUtil.go2DetailsByType(postType, String.valueOf(postId));
                 } else {
                     IntentUtil.startActivity(LoginHomeActivity.class);
@@ -240,7 +237,8 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 if(motionEvent.getAction() == MotionEvent.ACTION_UP){
                     if (SharedUtils.getLoginZt()) {
                         int postId = bean.getPostId();
-                        int postType = bean.getPostType();
+//                        int postType = bean.getPostType();
+                        int postType = 2;
                         IntentUtil.go2DetailsByType(postType, String.valueOf(postId));
                     } else {
                         IntentUtil.startActivity(LoginHomeActivity.class);
@@ -303,6 +301,17 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
 
             }
         });
+        tvXs2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (SharedUtils.getLoginZt()) {
+                    int postId = bean.getPostIdToReward();
+                    IntentUtil.go2DetailsByType(10, String.valueOf(postId));
+                } else {
+                    IntentUtil.startActivity(LoginHomeActivity.class);
+                }
+            }
+        });
         if(bean.getPostType()==1){
             tvTitle.setVisibility(View.GONE);
             tvProjectCode.setVisibility(View.GONE);
@@ -321,10 +330,17 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             tvTitle.setText(StringUtil.getBeanString(bean.getPostTitle()));
         }
 //        <![CDATA[邀请总收益<font color="#ff2851"><b>%1$s</b></font> FIND]]>
-        String a = StringUtil.getBeanString(bean.getPostShortDesc());
-        String b = "【奖励1000FIND】";
-        String c = "<font color=\"#ff2851\">"+b+"</font>"+a;
-        tvDesc.setText(Html.fromHtml(c));
+        String postShortDesc = StringUtil.getBeanString(bean.getPostShortDesc());
+        tvDesc.setText(postShortDesc);
+        ll_xs.setVisibility(View.GONE);
+        if(bean.getPostType()==4){
+            ll_xs.setVisibility(View.VISIBLE);
+            tvXs1.setText(Html.fromHtml( "<font color=\"#ff2851\">【￥"+bean.getRewardMoney()+"FIND】</font>"
+                    +StringUtil.getBeanString(bean.getPostTitle())));
+            if(bean.getRewardMoneyToOne()>0){
+                tvDesc.setText(Html.fromHtml("<font color=\"#ff2851\">【奖励"+bean.getRewardMoneyToOne()+"FIND】</font>"+postShortDesc));
+            }
+        }
         tvPraise.setText(bean.getPraiseNum() + "");
         tvComments.setText(bean.getCommentsNum() + "");
 
