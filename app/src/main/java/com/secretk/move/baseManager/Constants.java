@@ -106,13 +106,12 @@ public interface Constants {
 //     String BASE_URL = "http://192.168.10.153:809/";//栋栋
 //
 //      String BASE_URL = "http://repayy.free.ngrok.cc/rest/";//林俊
-//      String BASE_URL = "http://192.168.10.130:8044/rest/";//林俊
+//      String BASE_URL = "http://192.168.10.128:8044/rest/";//林俊
 //      :15537894586   abc12310  志远手机密码：0405
 //    String BASE_URL = "http://47.98.197.101/rest/";//宋
 
 
 //     String BASE_URL = "http://192.168.10.205/";//測試
-
     /**
      * 关于我们
       */
@@ -302,6 +301,8 @@ public interface Constants {
 
     //点评挖矿列表接口
     String GET_MINING_ACTIVITY_PAGE_LIST = BASE_URL + "kff/miningActivity/getMiningActivityPageList";
+    //尽调挖矿接口
+    String GET_REWARD_ACTIVITY_LIST = BASE_URL + "kff/rewardActivity/getRewardActivityList";
 
     //获取首页资讯的头部轮播图
     String GET_NEWS_FLASH_IMG_LIST = BASE_URL + "kff/newsFlashImg/getNewsFlashImgList";
@@ -370,13 +371,21 @@ public interface Constants {
     String GET_POST_INFO_WITH_TAGS = BASE_URL+"kff/post/getPostInfoWithTags";
     //爆料页面获取话题接口
     String GET_DTAGS_INFO = BASE_URL+"kff/tags/getDTagsInfo";
+
     //悬赏主页列表
     String REWARD_LIST = BASE_URL+"kff/rewardActivity/rewardList";
     //悬赏详情
     String REWARD_DETAIL = BASE_URL+"kff/rewardActivity/rewardDetail";
 
-
+    //发布悬赏接口
     String SAVE_REWARD_ACTIVITY = BASE_URL+"kff/rewardActivity/saveRewardActivity";
+    //悬赏精彩，全部回答接口
+    String GET_REWARD_ANSWER_LIST = BASE_URL+"kff/rewardActivity/getRewardAnswerList";
+//    悬赏广场接口?
+    String REWARD_SQUARE_LIST = BASE_URL+"kff/rewardActivity/rewardSquareList";
+    //终止悬赏接口
+    String REWARD_LIST_AZ = BASE_URL+"kff/rewardActivity/stopReward";
+    String GET_MEMBER = BASE_URL+"kff/userhome/getMember";
     //
 
     /**
@@ -430,6 +439,8 @@ public interface Constants {
         String ARTICLE = "article";
         //讨论
         String DISCUSS = "discuss";
+        //悬赏
+        String REWARD = "reward";
         //发布项目
         String PUBLISH_PROJECT = "publish_project";
     }

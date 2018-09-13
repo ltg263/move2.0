@@ -346,7 +346,7 @@ public class ReleaseRewardOkActivity extends AppCompatActivity implements ItemCl
                     JSONObject object = new JSONObject(str);
                     int postId = object.getJSONObject("data").getInt("postId");
                     IntentUtil.startPublishSucceedActivity(String.valueOf(postId),
-                            "发表爆料", getResources().getString(R.string.discuss_succeed),getResources().getString(R.string.not_go_look), Constants.PublishSucceed.DISCUSS);
+                            "发表悬赏", getResources().getString(R.string.discuss_reward),getResources().getString(R.string.not_go_look), Constants.PublishSucceed.REWARD);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

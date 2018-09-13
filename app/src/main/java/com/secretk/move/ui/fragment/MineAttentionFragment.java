@@ -49,7 +49,6 @@ public class MineAttentionFragment extends LazyFragment {
     TextView tvSubmit;
     @BindView(R.id.rl_top_theme)
     RelativeLayout rlTopTheme;
-    Unbinder unbinder;
     private LoadingDialog loadingDialog;
     private LinearLayoutManager layoutManager;
     private MineAttentionAdapter adapter;

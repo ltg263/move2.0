@@ -84,6 +84,10 @@ public class PublishSucceedActivity extends BaseActivity {
             case Constants.PublishSucceed.PUBLISH_PROJECT://评测
                 IntentUtil.startActivity(MainActivity.class);
                 break;
+            case Constants.PublishSucceed.REWARD://悬赏
+                IntentUtil.go2DetailsByType(10,postId);
+                MoveApplication.getContext().finishAllActivity();
+                break;
         }
     }
 

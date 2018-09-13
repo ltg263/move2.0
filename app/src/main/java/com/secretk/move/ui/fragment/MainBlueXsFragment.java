@@ -134,7 +134,7 @@ public class MainBlueXsFragment extends LazyFragment implements ItemClickListene
             @Override
             public void onCompleted(SearchContentBean bean) {
                 SearchContentBean.DataBean detailsBean = bean.getData();
-                if (detailsBean.getCurPageNum() == detailsBean.getPageCount()) {
+                if (detailsBean.getCurPageNum() >= detailsBean.getPageCount()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
                 if (detailsBean.getRows() == null && pageIndex == 2) {
@@ -154,6 +154,18 @@ public class MainBlueXsFragment extends LazyFragment implements ItemClickListene
                 }
             }
 
+            @Override
+            public void onError(String message) {
+                if(message.equals("暂无数据")){
+                    if(pageIndex > 2){
+                        refreshLayout.finishLoadMoreWithNoMoreData();
+                    }else {
+//                        rvNewReview.setVisibility(View.GONE);
+//                        rlNotContent.setVisibility(View.VISIBLE);
+                        refreshLayout.setEnableLoadMore(false);
+                    }
+                }
+            }
             @Override
             public void onFinish() {
                 super.onFinish();

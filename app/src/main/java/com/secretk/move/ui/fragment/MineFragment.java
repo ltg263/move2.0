@@ -18,6 +18,7 @@ import com.secretk.move.bean.UserLoginInfo;
 import com.secretk.move.presenter.MineFragmentPresenter;
 import com.secretk.move.presenter.impl.MineFragmentPresenterImpl;
 import com.secretk.move.ui.activity.HomeActivity;
+import com.secretk.move.ui.activity.HttpDomeActivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.activity.MineApproveSubmitiCertificateActivity;
 import com.secretk.move.ui.activity.MineAttentionActivity;
@@ -288,7 +289,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
 //                IntentUtil.startActivity(ImagesSelectorActivity.class);
                 break;
             case R.id.btn://意见反馈
-//                IntentUtil.startActivity(HttpDomeActivity.class);
+                IntentUtil.startActivity(HttpDomeActivity.class);
 //                IntentUtil.startActivity(ImagesSelectorActivity.class);
                 //logoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_share)
 //                Bitmap bitmap = ZXingUtils.createQRImage("https://blog.csdn.net/pxcz110112/article/details/80234997", 600, 600,null);

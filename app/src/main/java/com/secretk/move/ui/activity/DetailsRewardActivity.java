@@ -21,7 +21,7 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.CommonListBase;
+import com.secretk.move.bean.SearchContentBean;
 import com.secretk.move.bean.DetailsRewardBase;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.PostDataInfo;
@@ -71,8 +71,6 @@ public class DetailsRewardActivity extends BaseActivity {
     ImageView ivCreateUserIcon;
     @BindView(R.id.tv_project_code)
     TextView tvProjectCode;
-    @BindView(R.id.ll_zx)
-    LinearLayout llZx;
     @BindView(R.id.tv_create_user_name)
     TextView tvCreateUserName;
     @BindView(R.id.iv_model_icon)
@@ -153,9 +151,10 @@ public class DetailsRewardActivity extends BaseActivity {
     @Override
     protected void OnToolbarRightListener() {
         final RewardShareDialog dialog = new RewardShareDialog(this,R.style.selectorDialog);
-        dialog.setData(discussDetail.getRewardMoney()+"FIND", "FCion宣布解散运营团队，真的跑路了么？",
+        dialog.setData(discussDetail.getRewardMoney()+"FIND", discussDetail.getPostTitle(),
                 "share_reward_"+System.currentTimeMillis(),"https://blog.csdn.net/pxcz110112/article/details/80234997",
-                "扫码参与活动，领取巨额奖励","活动截止时间"+StringUtil.getTimeMDHM(discussDetail.getEndTime()),baseUserId==discussDetail.getCreateUserId());
+                "扫码参与活动，领取巨额奖励","活动截止时间"+StringUtil.getTimeMDHM(discussDetail.getEndTime()),
+                postId,baseUserId==discussDetail.getCreateUserId());
         dialog.show();
         dialog.shareUi();
     }
@@ -216,17 +215,17 @@ public class DetailsRewardActivity extends BaseActivity {
                 IntentUtil.startHomeActivity(createUserId);
                 break;
             case R.id.tv_sort_new:
-                if (!isSortField) {
+                if (isSortField) {
                     pageIndex = 1;
-                    isSortField = true;
+                    isSortField = false;
                     refreshLayout.setNoMoreData(false);
                     initNewsDataList();
                 }
                 break;
             case R.id.tv_sort_time:
-                if (isSortField) {
+                if (!isSortField) {
                     pageIndex = 1;
-                    isSortField = false;
+                    isSortField = true;
                     refreshLayout.setNoMoreData(false);
                     initNewsDataList();
                 }
@@ -397,72 +396,77 @@ public class DetailsRewardActivity extends BaseActivity {
     }
 
     boolean isSortField = false;
-
     /**
      * 评论最新
      */
     public void initNewsDataList() {
-        tvSortNew.setTextColor(getResources().getColor(R.color.title_gray_66));
-        tvSortTime.setTextColor(getResources().getColor(R.color.app_background));
+        tvSortNew.setTextColor(getResources().getColor(R.color.app_background));
+        tvSortTime.setTextColor(getResources().getColor(R.color.title_gray_66));
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
-            node.put("postId", Integer.valueOf(postId));//帖子ID
+            node.put("rewarId", Integer.valueOf(postId));//帖子ID
             node.put("pageIndex", pageIndex++);
             node.put("pageSize", Constants.PAGE_SIZE);
             if (isSortField) {
-                tvSortNew.setTextColor(getResources().getColor(R.color.app_background));
-                tvSortTime.setTextColor(getResources().getColor(R.color.title_gray_66));
+                tvSortNew.setTextColor(getResources().getColor(R.color.title_gray_66));
+                tvSortTime.setTextColor(getResources().getColor(R.color.app_background));
+                node.put("types", 2);//回答类型：1-精彩回答，2-全部回答
 //                node.put("sortField", "praise_num");//需要按点赞数倒序排序的话 增加传入参数ortField 值为字符串“praise_num”
+            }else{
+                node.put("types", 1);//回答类型：1-精彩回答，2-全部回答
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.MAIN_DISCUSS)
+                .url(Constants.GET_REWARD_ANSWER_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
+        RetrofitUtil.request(params, SearchContentBean.class, new HttpCallBackImpl<SearchContentBean>() {
             @Override
-            public void onCompleted(CommonListBase newInfoBean) {
-                CommonListBase.DataBean.DetailsBean commentsBean = newInfoBean.getData().getRecommends();
-                if (commentsBean != null) {
-                    if (commentsBean.getRows() != null && commentsBean.getRows().size() > 0) {
-                        rlNotContent.setVisibility(View.GONE);
-                        llZx.setVisibility(View.VISIBLE);
-                        if (pageIndex > 2) {
-                            adapterNew.setAddData(commentsBean.getRows());
-                        } else {
-                            adapterNew.setData(commentsBean.getRows());
-                        }
-                    }
-                    if (commentsBean.getCurPageNum() == commentsBean.getPageSize()) {
-                        refreshLayout.finishLoadMoreWithNoMoreData();
-                    }
-                } else {
+            public void onCompleted(SearchContentBean newInfoBean) {
+
+                SearchContentBean.DataBean detailsBean = newInfoBean.getData();
+                if (detailsBean.getPageSize() >= detailsBean.getCurPageNum()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
-                if (rlNotContent.getVisibility() == View.VISIBLE) {
-                    refreshLayout.setEnableLoadMore(false);
+                if (detailsBean.getRows() == null || detailsBean.getRows().size() == 0) {
+                    return;
+                }
+                rlNotContent.setVisibility(View.GONE);
+                rvNewReview.setVisibility(View.VISIBLE);
+                if (pageIndex > 2) {
+                    adapterNew.setAddData(detailsBean.getRows());
                 } else {
-                    refreshLayout.setEnableLoadMore(true);
+                    adapterNew.setData(detailsBean.getRows());
+                }
+            }
+            @Override
+            public void onError(String message) {
+                if(message.equals("暂无数据")){
+                    if(pageIndex > 2){
+                        refreshLayout.finishLoadMoreWithNoMoreData();
+                    }else {
+                        rvNewReview.setVisibility(View.GONE);
+                        rlNotContent.setVisibility(View.VISIBLE);
+                        refreshLayout.setEnableLoadMore(false);
+                    }
                 }
             }
 
             @Override
             public void onFinish() {
-//                if (refreshLayout.isRefreshing()) {
                 if (refreshLayout.isEnableRefresh()) {
                     refreshLayout.finishRefresh();
                 }
-//                if (refreshLayout.isLoading()) {
                 if (refreshLayout.isEnableLoadMore()) {
                     refreshLayout.finishLoadMore(true);
                 }
                 if (isFinish && loadingDialog.isShowing()) {
-                    haveData.setVisibility(View.VISIBLE);
-                    findViewById(R.id.no_data).setVisibility(View.GONE);
+                    rvNewReview.setVisibility(View.VISIBLE);
+                    rlNotContent.setVisibility(View.GONE);
                     loadingDialog.dismiss();
                 }
                 isFinish = true;

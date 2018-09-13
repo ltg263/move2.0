@@ -155,6 +155,7 @@ public class ProjectMarketBase extends BaseRes{
                 private int exchangeId;
                 private String mainCode;
                 private String coinpair;
+                private String exchangeLogo;
                 private String exchangeName;
 
                 private boolean isOk=false;
@@ -196,6 +197,14 @@ public class ProjectMarketBase extends BaseRes{
                 private boolean has_kline;
                 private double usd_rate;
 
+
+                public String getExchangeLogo() {
+                    return exchangeLogo;
+                }
+
+                public void setExchangeLogo(String exchangeLogo) {
+                    this.exchangeLogo = exchangeLogo;
+                }
 
                 public void setBaseVolume(double baseVolume) {
                     this.baseVolume = baseVolume;

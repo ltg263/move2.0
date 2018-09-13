@@ -6,10 +6,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.apiService.HttpCallBackImpl;
+import com.secretk.move.apiService.RetrofitUtil;
+import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.BaseActivity;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.bean.MoneyGuide;
+import com.secretk.move.utils.MD5;
+import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -91,46 +101,108 @@ public class MineMoneyGuideActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-        tvJrzbNum.setText("11111");
-        tvZbQfs.setText("区分指数100");
-        tvDlFind.setText("500FIND");
-        tvTopFind.setText("今日+3000");
-        tvFind.setText("每邀请一个好友赚1500FIND");
-
-        tvPlIncome.setText("2222");
-        tvPlTwo.setText("2FIND／次，首次5FIND");
-        tvPlGo.setText("去完成");
-        pbPlJd.setProgress(20);
-        tvPlNum.setText("1/88");
-
-        tvDzIncome.setText("2222");
-        tvDzTwo.setText("2FIND／次，首次5FIND");
-        tvDzGo.setText("去完成");
-        pbDzJd.setProgress(20);
-        tvDzNum.setText("1/88");
-
-        tvFxIncome.setText("2222");
-        tvFxTwo.setText("2FIND／次，首次5FIND");
-        tvFxGo.setText("去完成");
-        pbFxJd.setProgress(20);
-        tvFxNum.setText("1/88");
-
-        tvPcIncome.setText("2222");
-        tvPcTwo.setText("2FIND／次，首次5FIND");
-        tvPcGo.setText("去完成");
-        pbPcJd.setProgress(20);
-        tvPcNum.setText("1/88");
-
-        tvYdIncome.setText("2222");
-        tvYdTwo.setText("2FIND／次，首次5FIND");
-        tvYdGo.setText("去完成");
-        pbYdJd.setProgress(20);
-        tvYdNum.setText("1/88");
     }
 
     @Override
     protected void initData() {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", token);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.GET_MEMBER)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        loadingDialog.show();
+        RetrofitUtil.request(params, MoneyGuide.class, new HttpCallBackImpl<MoneyGuide>() {
+            @Override
+            public void onCompleted(MoneyGuide bean) {
+                MoneyGuide.DataBean.ResultBean resultBean = bean.getData().getResult();
+                initUiData(resultBean);
+            }
 
+            @Override
+            public void onFinish() {
+                loadingDialog.dismiss();
+            }
+        });
+    }
+
+    //(所有领取状态1 表示已领取 0 表示去完成)
+    private void initUiData(MoneyGuide.DataBean.ResultBean resultBean) {
+        tvJrzbNum.setText(resultBean.getTodayAward()+"");
+        tvZbQfs.setText("区分指数"+resultBean.getStatusHierarchyType());
+        tvDlFind.setText(resultBean.getLoginAward()+"FIND");
+        tvTopFind.setText("今日+"+resultBean.getTodayAward());
+        tvFind.setText("每邀请一个好友赚"+resultBean.getInvaEachAward()+"FIND");
+
+        tvPlIncome.setText(""+resultBean.getCommentAwardSum());
+        tvPlTwo.setText(resultBean.getCommentAward()+"FIND／次，首次"+resultBean.getCommentFirstAward()+"FIND");
+        pbPlJd.setMax(resultBean.getCommentSumDegr());
+        pbPlJd.setProgress(resultBean.getCommentDegr());
+        tvPlNum.setText(resultBean.getCommentDegr()+"/"+resultBean.getCommentSumDegr());
+        if(resultBean.getCommentReceStatus()==1){
+            tvPlGo.setText("已领取");
+            tvPlGo.setSelected(true);
+        }else{
+            tvPlGo.setText("去完成");
+            tvPlGo.setSelected(false);
+        }
+
+        tvDzIncome.setText(resultBean.getPraiseAwardSum()+"");
+        tvDzTwo.setText(resultBean.getPraiseAward()+"FIND／次");
+        pbDzJd.setMax(resultBean.getPraiseSumDegr());
+        pbDzJd.setProgress(resultBean.getPraiseDegr());
+        tvDzNum.setText(resultBean.getPraiseDegr()+"/"+resultBean.getPraiseSumDegr());
+        if(resultBean.getPraiseReceStatus()==1){
+            tvDzGo.setText("已领取");
+            tvDzGo.setSelected(true);
+        }else{
+            tvDzGo.setText("去完成");
+            tvDzGo.setSelected(false);
+        }
+
+        tvFxIncome.setText(resultBean.getSharePostAwardSum()+"");
+        tvFxTwo.setText(resultBean.getSharePostAward()+"FIND／次");
+        pbFxJd.setMax(resultBean.getSharePostSumDegr());
+        pbFxJd.setProgress(resultBean.getPraiseDegr());
+        tvFxNum.setText(resultBean.getSharePostDegr()+"/"+resultBean.getSharePostSumDegr());
+        if(resultBean.getSharePostReceStatus()==1){
+            tvFxGo.setText("已领取");
+            tvFxGo.setSelected(true);
+        }else{
+            tvFxGo.setText("去完成");
+            tvFxGo.setSelected(false);
+        }
+
+        tvPcIncome.setText(resultBean.getEvaAwardSumDegr()+"");
+        tvPcTwo.setText("专业评测"+resultBean.getEvaAward()+"FIND／篇");
+        pbPcJd.setMax(resultBean.getEvaAwardSumDegr());
+        pbPcJd.setProgress(resultBean.getEvaDegr());
+        tvPcNum.setText(resultBean.getEvaDegr()+"/"+resultBean.getEvaAwardSumDegr());
+        if(resultBean.getEvaReceStatus()==1){
+            tvPcGo.setText("已领取");
+            tvPcGo.setSelected(true);
+        }else{
+            tvPcGo.setText("去完成");
+            tvPcGo.setSelected(false);
+        }
+
+        tvYdIncome.setText(resultBean.getReadingAwardSum()+"");
+        tvYdTwo.setText("阅读"+resultBean.getReadingAwardSum()+"篇评测(已完成"+resultBean.getReadingDegr()+"次)");
+        if(resultBean.getReadingReceStatus()==1){
+            tvYdGo.setText("已领取");
+            tvYdGo.setSelected(true);
+        }else{
+            tvYdGo.setText("去完成");
+            tvYdGo.setSelected(false);
+        }
+
+//        pbYdJd.setProgress(20);
+//        tvYdNum.setText("1/88");
     }
 
     @Override
@@ -146,31 +218,37 @@ public class MineMoneyGuideActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_wh:
-                ToastUtils.getInstance().show("问号");
+//                ToastUtils.getInstance().show("问号");
                 break;
             case R.id.tv_dl_find:
-                ToastUtils.getInstance().show("登录奖励");
+//                ToastUtils.getInstance().show("登录奖励");
                 break;
             case R.id.tv_yqhy_wh:
-                ToastUtils.getInstance().show("邀请好友问号");
+//                ToastUtils.getInstance().show("邀请好友问号");
                 break;
             case R.id.tv_ljyq:
                 ToastUtils.getInstance().show("立即邀请");
                 break;
             case R.id.tv_pl_go:
-                ToastUtils.getInstance().show("评论");
+
+                finish();
+//                ToastUtils.getInstance().show("评论");
                 break;
             case R.id.tv_dz_go:
-                ToastUtils.getInstance().show("点赞");
+                finish();
+//                ToastUtils.getInstance().show("点赞");
                 break;
             case R.id.tv_fx_go:
-                ToastUtils.getInstance().show("分享");
+                finish();
+//                ToastUtils.getInstance().show("分享");
                 break;
             case R.id.tv_pc_go:
-                ToastUtils.getInstance().show("评测");
+                finish();
+//                ToastUtils.getInstance().show("评测");
                 break;
             case R.id.tv_yd_go:
-                ToastUtils.getInstance().show("阅读");
+                finish();
+//                ToastUtils.getInstance().show("阅读");
                 break;
         }
     }

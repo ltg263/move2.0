@@ -278,6 +278,7 @@
     <string name="evaluation_succeed">评测发布成功！</string>
     <string name="article_succeed">文章发布成功！</string>
     <string name="discuss_succeed">爆料发布成功！</string>
+    <string name="discuss_reward">悬赏发布成功！</string>
 
     <!--项目页-->
     <string name="home_find_1">点评挖矿</string>

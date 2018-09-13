@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -17,6 +18,7 @@ import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.FindKwBean;
+import com.secretk.move.bean.FindXhBean;
 import com.secretk.move.bean.HotProjectAndHotUserBean;
 import com.secretk.move.bean.InfoBean;
 import com.secretk.move.ui.activity.FindRankingListActivity;
@@ -25,6 +27,7 @@ import com.secretk.move.ui.activity.FindWkActivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.activity.RewardSquareActivity;
 import com.secretk.move.ui.adapter.FindFragmentAdapter;
+import com.secretk.move.ui.adapter.FindFragmentXhAdapter;
 import com.secretk.move.ui.adapter.FindNewAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
@@ -57,6 +60,8 @@ import butterknife.OnClick;
 public class FindFragment extends LazyFragment {
     @BindView(R.id.recycler)
     RecyclerView recycler;
+    @BindView(R.id.recycler_jdwk)
+    RecyclerView recyclerJdwk;
     @BindView(R.id.iv_status)
     ImageView ivStatus;
     @BindView(R.id.iv_head_img)
@@ -80,11 +85,17 @@ public class FindFragment extends LazyFragment {
     RecyclerView rvNewPro;
     @BindView(R.id.rv_new_user)
     RecyclerView rvNewUser;
-    private FindFragmentAdapter adapter;
+    @BindView(R.id.tv_dpwk)
+    TextView tvDpwk;
+    @BindView(R.id.tv_jdwk)
+    TextView tvJdwk;
     int pageIndex = 1;
+    int pageIndexXh = 1;
     private List<InfoBean.DataBeanX.DataBean.RowsBean> rows;
     private FindNewAdapter adapterP;
     private FindNewAdapter adapterU;
+    private FindFragmentAdapter adapter;
+    private FindFragmentXhAdapter adapterXh;
 
     @Override
     public int setFragmentView() {
@@ -97,6 +108,7 @@ public class FindFragment extends LazyFragment {
     public void initViews() {
         initRefresh();
         setVerticalManager(recycler);
+        setVerticalManager(recyclerJdwk);
         setHorizontalManager(rvNewUser);
         setHorizontalManager(rvNewPro);
         adapterP = new FindNewAdapter(getActivity(),1);
@@ -105,6 +117,8 @@ public class FindFragment extends LazyFragment {
         rvNewUser.setAdapter(adapterU);
         adapter = new FindFragmentAdapter(getActivity());
         recycler.setAdapter(adapter);
+        adapterXh = new FindFragmentXhAdapter(getActivity());
+        recyclerJdwk.setAdapter(adapterXh);
         loadingDialog = new LoadingDialog(getActivity());
         viewpager.setZx();
     }
@@ -175,7 +189,11 @@ public class FindFragment extends LazyFragment {
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
-                getMiningActivityPageList();
+                if(recycler.getVisibility()==View.VISIBLE){
+                    getMiningActivityPageList();
+                }else{
+                    getMiningActivityXhPageList();
+                }
             }
         });
     }
@@ -188,12 +206,19 @@ public class FindFragment extends LazyFragment {
             return;
         }
         pageIndex=1;
+        pageIndexXh=1;
         //轮播图
         getNewsFlashImgList();
         //发现页面取热门项目，活跃用户
         getHotProjectAndHotUser();
         //挖矿列表页
         adapter.clearData();
+        adapterXh.clearData();
+
+        tvDpwk.setTextColor(getResources().getColor(R.color.app_background));
+        tvJdwk.setTextColor(getResources().getColor(R.color.title_gray));
+        recycler.setVisibility(View.VISIBLE);
+        recyclerJdwk.setVisibility(View.GONE);
         getMiningActivityPageList();
     }
 
@@ -236,7 +261,7 @@ public class FindFragment extends LazyFragment {
             }
         });
     }
-
+    boolean isNotDataDpwk = true;
     private void getMiningActivityPageList() {
         JSONObject node = new JSONObject();
         try {
@@ -257,10 +282,12 @@ public class FindFragment extends LazyFragment {
             public void onCompleted(FindKwBean str) {
                 FindKwBean.DataBeanX.DataBean data = str.getData().getData();
                 if (data == null) {
+                    isNotDataDpwk = false;
                     refreshLayout.finishLoadMoreWithNoMoreData();
                     return;
                 }
                 if (data.getCurPageNum() == data.getPageSize()) {
+                    isNotDataDpwk = false;
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
                 List<FindKwBean.DataBeanX.DataBean.RowsBean> rowsBeans = data.getRows();
@@ -290,8 +317,64 @@ public class FindFragment extends LazyFragment {
             }
         });
     }
+    boolean isNotDataJdwk = true;
+    private void getMiningActivityXhPageList() {
+        JSONObject node = new JSONObject();
+        try {
+            //0-进行中，1-已结束
+            node.put("pageIndex", pageIndexXh++);
+            node.put("pageSize", Constants.PAGE_SIZE);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.GET_REWARD_ACTIVITY_LIST)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, FindXhBean.class, new HttpCallBackImpl<FindXhBean>() {
+            @Override
+            public void onCompleted(FindXhBean str) {
+                FindXhBean.DataBean data = str.getData();
+                if (data == null) {
+                    isNotDataJdwk = false;
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                    return;
+                }
+                if (data.getCurPageNum() == data.getPageSize()) {
+                    isNotDataJdwk = false;
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                }
+                List<FindXhBean.DataBean.RowsBean> rowsBeans = data.getRows();
+                if (rowsBeans != null && rowsBeans.size() > 0) {
+                    if (pageIndexXh > 2) {
+                        adapterXh.addData(rowsBeans);
+                    } else {
+                        adapterXh.setData(rowsBeans);
+                    }
+                }
+            }
 
-    @OnClick({R.id.home_find_1, R.id.home_find_2, R.id.home_find_3,R.id.home_find_4})
+            @Override
+            public void onFinish() {
+                if (refreshLayout.isEnableRefresh()) {
+                    refreshLayout.finishRefresh();
+                }
+                if (refreshLayout.isEnableLoadMore()) {
+                    refreshLayout.finishLoadMore();
+                }
+                loadingDialog.dismiss();
+            }
+
+            @Override
+            public void onError(String message) {
+                loadingDialog.dismiss();
+            }
+        });
+    }
+
+    @OnClick({R.id.home_find_1, R.id.home_find_2, R.id.home_find_3,R.id.home_find_4
+    ,R.id.ll_dpwk,R.id.ll_jdwk})
     public void onViewClicked(View view) {
         if(!SharedUtils.getLoginZt() || StringUtil.isBlank(SharedUtils.getToken())){
             IntentUtil.startActivity(LoginHomeActivity.class);
@@ -309,6 +392,36 @@ public class FindFragment extends LazyFragment {
                 break;
             case R.id.home_find_4:
                 IntentUtil.startActivity(RewardSquareActivity.class);
+                break;
+            case R.id.ll_dpwk:
+                if(!isNotDataDpwk){
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                }else{
+                    refreshLayout.setNoMoreData(false);
+                }
+                tvDpwk.setTextColor(getResources().getColor(R.color.app_background));
+                tvJdwk.setTextColor(getResources().getColor(R.color.title_gray));
+                recycler.setVisibility(View.VISIBLE);
+                recyclerJdwk.setVisibility(View.GONE);
+                if(adapter.getItemCount()==0){
+                    pageIndex=1;
+                    getMiningActivityPageList();
+                }
+                break;
+            case R.id.ll_jdwk:
+                if(!isNotDataJdwk){
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                }else{
+                    refreshLayout.setNoMoreData(false);
+                }
+                tvDpwk.setTextColor(getResources().getColor(R.color.title_gray));
+                tvJdwk.setTextColor(getResources().getColor(R.color.app_background));
+                recycler.setVisibility(View.GONE);
+                recyclerJdwk.setVisibility(View.VISIBLE);
+                if(adapterXh.getItemCount()==0){
+                    pageIndexXh=1;
+                    getMiningActivityXhPageList();
+                }
                 break;
         }
     }

@@ -325,23 +325,7 @@
                             android:background="@color/background_gray" />
                     </LinearLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/rl_not_content"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_margin="@dimen/dp_35"
-                            android:src="@drawable/ic_not_contant" />
-                    </RelativeLayout>
-
-
                     <LinearLayout
-                        android:id="@+id/ll_zx"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_10"
@@ -394,6 +378,19 @@
                             android:id="@+id/rv_new_review"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
+                        <RelativeLayout
+                            android:id="@+id/rl_not_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_margin="@dimen/dp_35"
+                                android:src="@drawable/ic_not_contant" />
+                        </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
             </com.secretk.move.view.RecycleScrollView>

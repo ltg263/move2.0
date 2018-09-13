@@ -16,11 +16,12 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.CommonListBase;
+import com.secretk.move.bean.SearchContentBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.UnifyUserListXsAdapter;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
@@ -51,6 +52,8 @@ public class RewardSquareFragment extends LazyFragment implements ItemClickListe
     RelativeLayout rlTopTheme;
     private UnifyUserListXsAdapter adapter;
     int pageIndex = 1;
+    int position;
+    boolean isShouUI = false;
 
     @Override
     public int setFragmentView() {
@@ -98,35 +101,37 @@ public class RewardSquareFragment extends LazyFragment implements ItemClickListe
 
     @Override
     public void onFirstUserVisible() {
-        loadingDialog.show();
+        if(!isShouUI){
+            loadingDialog.show();
+        }
+        isShouUI= true;
         final String token = SharedUtils.singleton().get("token", "");
         JSONObject node = new JSONObject();
         try {
             node.put("token", token);
+            if(position==0){//tab类型：1-最新悬赏，2-高额悬赏，3-精彩回复
+                node.put("typec", 1);
+            }else if(position==1){
+                node.put("typec", 2);
+            }else{
+                node.put("typec", 3);
+            }
             node.put("pageIndex", pageIndex++);
             node.put("pageSize", Constants.PAGE_SIZE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.MAIN_DISCUSS)
+                .url(Constants.REWARD_SQUARE_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
+        RetrofitUtil.request(params, SearchContentBean.class, new HttpCallBackImpl<SearchContentBean>() {
             @Override
-            public void onCompleted(CommonListBase bean) {
-                CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getRecommends();
+            public void onCompleted(SearchContentBean bean) {
+                SearchContentBean.DataBean detailsBean = bean.getData();
                 if (detailsBean.getCurPageNum() == detailsBean.getPageCount()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
-                }
-                if (detailsBean.getRows() == null && pageIndex == 2) {
-                    convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
-                    tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_not_gznr));
-                    tvName.setVisibility(View.INVISIBLE);
-                    tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
-                    refreshLayout.setVisibility(View.GONE);
-                    return;
                 }
                 refreshLayout.setVisibility(View.VISIBLE);
                 convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
@@ -136,7 +141,22 @@ public class RewardSquareFragment extends LazyFragment implements ItemClickListe
                     adapter.setData(detailsBean.getRows());
                 }
             }
-
+            @Override
+            public void onError(String message) {
+                if(message.equals("暂无数据")){
+                    if(pageIndex > 2){
+                        refreshLayout.finishLoadMoreWithNoMoreData();
+                    }else {
+                        convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+                        rlTopTheme.setVisibility(View.VISIBLE);
+                        tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_not_gznr));
+                        tvName.setVisibility(View.INVISIBLE);
+                        tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
+                        refreshLayout.setVisibility(View.GONE);
+                        refreshLayout.setEnableLoadMore(false);
+                    }
+                }
+            }
             @Override
             public void onFinish() {
                 super.onFinish();
@@ -167,4 +187,7 @@ public class RewardSquareFragment extends LazyFragment implements ItemClickListe
 
     }
 
+    public void setPosition(int position) {
+        this.position = position;
+    }
 }

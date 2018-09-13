@@ -40,6 +40,7 @@ public class RewardShareDialog extends AlertDialog {
     String endSm;
     String endTime;
     boolean isShowZz;
+    int postId;
     private TextView tvFind;
     private TextView tvStatus;
     private TextView tvEndSm;
@@ -81,13 +82,14 @@ public class RewardShareDialog extends AlertDialog {
         });
         shareDownloadImg(imgPath);
     }
-    public void setData(String findNum, String status, String imgPath,String url,String endSm,String endTime,boolean isShowZz){
+    public void setData(String findNum, String status, String imgPath,String url,String endSm,String endTime,int postId,boolean isShowZz){
         this.findNum = findNum;
         this.status = status;
         this.imgPath = imgPath;
         this.url = url;
         this.endSm = endSm;
         this.endTime = endTime;
+        this.postId = postId;
         this.isShowZz = isShowZz;
     }
 
@@ -115,10 +117,11 @@ public class RewardShareDialog extends AlertDialog {
     }
     public void shareUi(){
         SharePopupWindow popupWindow = new SharePopupWindow(context);
-        popupWindow.setShareImg(url);
+        popupWindow.setShareImg(strPath);
         if(isShowZz){
             popupWindow.showZzhd();
         }
+        popupWindow.setPostId(postId);
         popupWindow.showAtLocation(ivImg, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 }

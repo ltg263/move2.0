@@ -21,6 +21,7 @@ public class RewardSquareVpAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         RewardSquareFragment fragment = new RewardSquareFragment();
+        fragment.setPosition(position);
         return fragment;
     }
 

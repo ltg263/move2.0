@@ -54,9 +54,9 @@ public class RewardSquareActivity extends BaseActivity {
         adapter = new RewardSquareVpAdapter(getSupportFragmentManager());
         vpMainChildren.setAdapter(adapter);
         List<String> list = new ArrayList<>();
-        list.add("精彩回答");
-        list.add("最热悬赏");
         list.add("最新悬赏");
+        list.add("高额悬赏");
+        list.add("精彩回复");
         vpMainChildren.setOffscreenPageLimit(list.size());
         MagicIndicatorUtils.initMagicIndicatorTitle(this,list,vpMainChildren,magicIndicatorTitle);
         adapter.setData(list);

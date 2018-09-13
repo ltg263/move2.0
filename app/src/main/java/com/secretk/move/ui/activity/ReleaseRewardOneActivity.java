@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
 import com.secretk.move.bean.MenuInfo;
@@ -65,6 +66,7 @@ public class ReleaseRewardOneActivity extends BaseActivity {
     protected void initUI(Bundle savedInstanceState) {
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.app_background), 0);
+        MoveApplication.getContext().addActivity(this);
         tvDay.setText(Html.fromHtml(getResources().getString(R.string.sy_day)));
         StringUtil.etSearchChangedListener(etDay, null, new StringUtil.EtChange() {
             @Override

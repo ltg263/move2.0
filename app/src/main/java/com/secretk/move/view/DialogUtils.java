@@ -528,7 +528,7 @@ public class DialogUtils {
     /**
      * @param context
      * @param type:1 点赞  2 收藏 3复制 4举报
-     *            5 分享 6评论 7看涨
+     *            5 分享 6评论 7看涨 8悬赏终止
      * 点赞框
      */
     public static void showDialogPraise(Context context,int type,boolean isCollect,double find) {
@@ -545,6 +545,7 @@ public class DialogUtils {
         TextView tv_info_z = view.findViewById(R.id.tv_info_z);
         TextView tv_comment = view.findViewById(R.id.tv_comment);
         TextView tv_comment_find = view.findViewById(R.id.tv_comment_find);
+        TextView tv_reward_zz = view.findViewById(R.id.tv_reward_zz);
         if (type==1){
             tv_praise.setVisibility(View.VISIBLE);
             if(find!=0){
@@ -593,6 +594,13 @@ public class DialogUtils {
                 tv_info_z.setVisibility(View.VISIBLE);
             }else{
                 tv_info_j.setVisibility(View.VISIBLE);
+            }
+        }else if(type==8){
+            tv_reward_zz.setVisibility(View.VISIBLE);
+            if(isCollect){
+                tv_reward_zz.setText("终止成功");
+            }else{
+                tv_reward_zz.setText("终止失败");
             }
         }
         dialog5.setCancelable(false);

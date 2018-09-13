@@ -119,6 +119,17 @@
             android:textColor="@drawable/selector_assist_text"
             android:textSize="@dimen/sp_12"
             android:visibility="gone" />
+        <TextView
+            android:id="@+id/tv_reward_zz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/dp_10"
+            android:drawableTop="@drawable/ic_report_pu"
+            android:padding="@dimen/dp_20"
+            android:text="终止成功"
+            android:textColor="@drawable/selector_assist_text"
+            android:textSize="@dimen/sp_12"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_info_z"

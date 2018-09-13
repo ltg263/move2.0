@@ -21,6 +21,9 @@ import com.secretk.move.apiService.HttpCallBackImpl;
 import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
+import com.secretk.move.ui.activity.DetailsDiscussActivity;
+import com.secretk.move.ui.activity.LoginHomeActivity;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
@@ -28,6 +31,7 @@ import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.utils.UiUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -99,6 +103,7 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
         tvShareQq.setOnClickListener(tvOnClickListener);
         tvShareLink.setOnClickListener(tvOnClickListener);
         tvShareReport.setOnClickListener(tvOnClickListener);
+        tvShareZzhd.setOnClickListener(tvOnClickListener);
         //		tv_photo_count.setText("亲，你还可以上传"+(5-mDataList.size())+"张图片。");
         //设置SelectPicPopupWindow的View
         this.setContentView(mMenuView);
@@ -142,6 +147,10 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
         this.imgUrl = imgUrl;
         this.activityId = activityId;
         this.isImg = false;
+        this.postId = postId;
+    }
+
+    public void setPostId(int postId) {
         this.postId = postId;
     }
 
@@ -211,6 +220,14 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
                     break;
                 case R.id.tv_share_report:
                     shareReport();
+                    break;
+                case R.id.tv_share_zzhd:
+                    DialogUtils.showDialogHint(mContext, "您确定要终止活动吗？",false, new DialogUtils.ErrorDialogInterface() {
+                        @Override
+                        public void btnConfirm() {
+                            shareXsEnd();
+                        }
+                    });
                     break;
                 case R.id.tv_cancel:
                     break;
@@ -369,6 +386,39 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
                 e.printStackTrace();
             }
         }
+    }
+    private void shareXsEnd() {
+        JSONObject node = new JSONObject();
+        try {
+            node.put("token", SharedUtils.getToken());
+            node.put("postId", postId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxHttpParams params = new RxHttpParams.Build()
+                .url(Constants.REWARD_LIST_AZ)
+                .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
+                .addQuery("sign", MD5.Md5(node.toString()))
+                .build();
+        RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
+            @Override
+            public void onCompleted(String str) {
+
+                DialogUtils.showDialogPraise(mContext, 8, true, 0);
+//                try {
+//                    JSONObject obj = new JSONObject(str);
+//                    if(obj.getJSONObject("data")!=null){
+//                    }else{
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+            }
+            @Override
+            public void onError(String message) {
+                DialogUtils.showDialogPraise(mContext, 8, false, 0);
+            }
+        });
     }
 
     @Override
