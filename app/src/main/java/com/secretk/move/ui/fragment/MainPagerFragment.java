@@ -22,6 +22,8 @@ import android.widget.RelativeLayout;
 
 import com.secretk.move.R;
 import com.secretk.move.base.LazyFragment;
+import com.secretk.move.ui.activity.ReleaseArticleActivity;
+import com.secretk.move.ui.activity.ReleaseDiscussActivity;
 import com.secretk.move.ui.activity.ReleaseRewardOneActivity;
 import com.secretk.move.ui.activity.SearchActivity;
 import com.secretk.move.ui.activity.SearchAllActivity;
@@ -157,8 +159,14 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         view.findViewById(R.id.ll_article).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent = new Intent(getContext(), SelectProjectActivity.class);
-                intent.putExtra("publication_type",2);
+//                intent = new Intent(getContext(), SelectProjectActivity.class);
+//                intent.putExtra("publication_type",2);
+//                dialog.dismiss();
+//                startActivity(intent);
+
+                intent = new Intent(getContext(), ReleaseArticleActivity.class);
+                intent.putExtra("projectId", 0);
+                intent.putExtra("projectPay", "");
                 dialog.dismiss();
                 startActivity(intent);
             }
@@ -166,8 +174,14 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         view.findViewById(R.id.ll_discuss).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent = new Intent(getContext(), SelectProjectActivity.class);
-                intent.putExtra("publication_type",3);
+//                intent = new Intent(getContext(), SelectProjectActivity.class);
+//                intent.putExtra("publication_type",3);
+//                dialog.dismiss();
+//                startActivity(intent);
+
+                intent = new Intent(getContext(), ReleaseDiscussActivity.class);
+                intent.putExtra("projectId", 0);
+                intent.putExtra("projectPay", "");
                 dialog.dismiss();
                 startActivity(intent);
             }

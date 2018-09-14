@@ -40,10 +40,6 @@ public class TopicArticleFragment extends LazyFragment {
     RecyclerView rvReview;
     @BindView(R.id.iv_not_content)
     ImageView ivNotContent;
-    @BindView(R.id.view)
-    View view;
-    @BindView(R.id.ll)
-    LinearLayout ll;
     @BindView(R.id.tv_jx)
     TextView tvJx;
     @BindView(R.id.tv_zx)
@@ -62,8 +58,6 @@ public class TopicArticleFragment extends LazyFragment {
 
     @Override
     public void initViews() {
-        ll.setVisibility(View.VISIBLE);
-        view.setVisibility(View.VISIBLE);
         setVerticalManager(rvReview);
         adapter = new MainRfFragmentRecyclerAdapter(getActivity());
         rvReview.setAdapter(adapter);

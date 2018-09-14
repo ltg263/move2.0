@@ -14,6 +14,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.ProjectTabBean;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.activity.SearchActivity;
+import com.secretk.move.ui.activity.SearchAllActivity;
 import com.secretk.move.ui.activity.SubmitProjectActivity;
 import com.secretk.move.ui.adapter.MainProjectFragmentPagerAdapter;
 import com.secretk.move.utils.IntentUtil;
@@ -66,7 +67,7 @@ public class ProjectFragment extends LazyFragment {
         tool_bar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SearchActivity.class);
+                Intent intent = new Intent(getContext(), SearchAllActivity.class);
                 startActivity(intent);
             }
         });

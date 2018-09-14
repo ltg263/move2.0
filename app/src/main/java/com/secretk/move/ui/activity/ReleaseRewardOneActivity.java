@@ -12,7 +12,9 @@ import android.widget.TextView;
 import com.secretk.move.MoveApplication;
 import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
@@ -64,6 +66,9 @@ public class ReleaseRewardOneActivity extends BaseActivity {
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
+        tvRewardFind.setFocusable(true);
+        tvRewardFind.setFocusableInTouchMode(true);
+        tvRewardFind.requestFocus();
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.app_background), 0);
         MoveApplication.getContext().addActivity(this);
@@ -76,7 +81,7 @@ public class ReleaseRewardOneActivity extends BaseActivity {
                 if (Integer.valueOf(currentHH) < 12) {
                     data = StringUtil.plusDay2(Integer.valueOf(etDay.getText().toString())) + " 12:00";
                 } else {
-                    data = StringUtil.plusDay2(Integer.valueOf(etDay.getText().toString())) + " 24:00";
+                    data = StringUtil.plusDay2(Integer.valueOf(etDay.getText().toString())) + " 00:00";
                 }
                 tvTime.setText("截止于 " + data);
             }
@@ -120,7 +125,7 @@ public class ReleaseRewardOneActivity extends BaseActivity {
         tvRewardState.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.getInstance().show("悬赏规则");
+                IntentUtil.startWebViewActivity(Constants.REGULATION,"悬赏规则");
             }
         });
     }

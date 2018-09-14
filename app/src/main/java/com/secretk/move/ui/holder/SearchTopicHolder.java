@@ -38,7 +38,7 @@ public class SearchTopicHolder extends RecyclerViewBaseHolder {
     }
     public void refresh(final SearchTopicBean.DataBean.RowsBean rowsBean, Context context) {
         GlideUtils.loadSideMinImage_76(context,img,Constants.BASE_IMG_URL+StringUtil.getBeanString(rowsBean.getImgPath()));
-        tvName.setText(StringUtil.getBeanString(rowsBean.getTagName()));
+        tvName.setText("#"+StringUtil.getBeanString(rowsBean.getTagName())+"#");
         tvLastContent.setText(StringUtil.getBeanString(rowsBean.getMemo()));
         llTopic.setOnClickListener(new View.OnClickListener() {
             @Override

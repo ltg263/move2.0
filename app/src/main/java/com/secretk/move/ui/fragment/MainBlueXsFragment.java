@@ -160,8 +160,12 @@ public class MainBlueXsFragment extends LazyFragment implements ItemClickListene
                     if(pageIndex > 2){
                         refreshLayout.finishLoadMoreWithNoMoreData();
                     }else {
-//                        rvNewReview.setVisibility(View.GONE);
-//                        rlNotContent.setVisibility(View.VISIBLE);
+                        convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
+                        tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_not_gznr));
+                        tvName.setVisibility(View.INVISIBLE);
+                        rlTopTheme.setVisibility(View.VISIBLE);
+                        tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
+                        refreshLayout.setVisibility(View.GONE);
                         refreshLayout.setEnableLoadMore(false);
                     }
                 }

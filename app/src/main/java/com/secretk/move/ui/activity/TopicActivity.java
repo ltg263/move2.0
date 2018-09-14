@@ -116,7 +116,7 @@ public class TopicActivity extends BaseActivity {
         if (StringUtil.isNotBlank(currentType)) {
             viewPager.setCurrentItem(Integer.valueOf(currentType));
         } else {
-            viewPager.setCurrentItem(0);
+            viewPager.setCurrentItem(1);
         }
         initListener();
     }

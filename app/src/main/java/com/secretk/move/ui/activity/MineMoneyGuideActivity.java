@@ -136,7 +136,7 @@ public class MineMoneyGuideActivity extends BaseActivity {
         tvJrzbNum.setText(resultBean.getTodayAward()+"");
         tvZbQfs.setText("区分指数"+resultBean.getStatusHierarchyType());
         tvDlFind.setText(resultBean.getLoginAward()+"FIND");
-        tvTopFind.setText("今日+"+resultBean.getTodayAward());
+        tvTopFind.setText("今日+"+resultBean.getInvaAward());
         tvFind.setText("每邀请一个好友赚"+resultBean.getInvaEachAward()+"FIND");
 
         tvPlIncome.setText(""+resultBean.getCommentAwardSum());
@@ -168,7 +168,7 @@ public class MineMoneyGuideActivity extends BaseActivity {
         tvFxIncome.setText(resultBean.getSharePostAwardSum()+"");
         tvFxTwo.setText(resultBean.getSharePostAward()+"FIND／次");
         pbFxJd.setMax(resultBean.getSharePostSumDegr());
-        pbFxJd.setProgress(resultBean.getPraiseDegr());
+        pbFxJd.setProgress(resultBean.getSharePostDegr());
         tvFxNum.setText(resultBean.getSharePostDegr()+"/"+resultBean.getSharePostSumDegr());
         if(resultBean.getSharePostReceStatus()==1){
             tvFxGo.setText("已领取");
@@ -178,7 +178,7 @@ public class MineMoneyGuideActivity extends BaseActivity {
             tvFxGo.setSelected(false);
         }
 
-        tvPcIncome.setText(resultBean.getEvaAwardSumDegr()+"");
+        tvPcIncome.setText(resultBean.getEvaAwardSum()+"");
         tvPcTwo.setText("专业评测"+resultBean.getEvaAward()+"FIND／篇");
         pbPcJd.setMax(resultBean.getEvaAwardSumDegr());
         pbPcJd.setProgress(resultBean.getEvaDegr());
@@ -192,7 +192,7 @@ public class MineMoneyGuideActivity extends BaseActivity {
         }
 
         tvYdIncome.setText(resultBean.getReadingAwardSum()+"");
-        tvYdTwo.setText("阅读"+resultBean.getReadingAwardSum()+"篇评测(已完成"+resultBean.getReadingDegr()+"次)");
+        tvYdTwo.setText("阅读"+resultBean.getReadingSumDegr()+"篇评测(已完成"+resultBean.getReadingDegr()+"次)");
         if(resultBean.getReadingReceStatus()==1){
             tvYdGo.setText("已领取");
             tvYdGo.setSelected(true);

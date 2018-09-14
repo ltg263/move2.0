@@ -162,7 +162,7 @@ public class PopupWindowUtilsReward extends PopupWindow {
                             return;
                         }
                         if(Integer.valueOf(season)<1000){
-                            ToastUtils.getInstance().show("悬赏金额不能低于10000");
+                            ToastUtils.getInstance().show("悬赏金额不能低于1000");
                             return;
                         }
                         dialogInterface.btnConfirm(season);

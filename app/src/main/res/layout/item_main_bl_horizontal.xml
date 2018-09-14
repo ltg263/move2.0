@@ -18,14 +18,14 @@
 
         <ImageView
             android:id="@+id/iv"
-            android:layout_width="@dimen/dp_80"
-            android:layout_height="@dimen/dp_80"
+            android:layout_width="@dimen/dp_65"
+            android:layout_height="@dimen/dp_65"
             android:scaleType="fitXY"
             android:src="@drawable/ic_aaa" />
 
         <TextView
             android:id="@+id/tv_topic_name"
-            android:layout_width="@dimen/dp_80"
+            android:layout_width="@dimen/dp_65"
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_12"
             android:padding="@dimen/dp_5"

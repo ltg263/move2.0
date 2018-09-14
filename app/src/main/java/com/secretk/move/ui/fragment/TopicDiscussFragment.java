@@ -38,12 +38,8 @@ public class TopicDiscussFragment extends LazyFragment{
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
 
-    @BindView(R.id.view)
-    View view;
     @BindView(R.id.iv_not_content)
     ImageView ivNotContent;
-    @BindView(R.id.ll)
-    LinearLayout ll;
     @BindView(R.id.tv_jx)
     TextView tvJx;
     @BindView(R.id.tv_zx)
@@ -62,14 +58,14 @@ public class TopicDiscussFragment extends LazyFragment{
 
     @Override
     public void initViews() {
-        ll.setVisibility(View.VISIBLE);
-        view.setVisibility(View.VISIBLE);
         setVerticalManager(rvReview);
         adapter = new MainBlFragmentRecyclerAdapter(getActivity());
         rvReview.setAdapter(adapter);
         if(loadingDialog==null){
             loadingDialog=new LoadingDialog(getActivity());
         }
+        tvJx.setTextColor(getResources().getColor(R.color.theme_title));
+        tvZx.setTextColor(getResources().getColor(R.color.app_background));
     }
 
     @Override
@@ -169,7 +165,7 @@ public class TopicDiscussFragment extends LazyFragment{
         tvZx.setTextColor(getResources().getColor(R.color.theme_title));
         getLoadData();
     }
-    boolean isSelectJx = true;
+    boolean isSelectJx = false;
     @OnClick({R.id.ll_jx, R.id.ll_zx})
     public void onViewClicked(View view) {
         switch (view.getId()) {

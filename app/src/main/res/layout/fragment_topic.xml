@@ -11,20 +11,19 @@
         android:fillViewport="true"
         android:scrollbars="none">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dp_10"
             android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
                 android:background="@color/white"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/ll_jx"
@@ -88,22 +87,27 @@
                 android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_line"
-                android:background="@color/cut_off_rule"
-                android:visibility="gone" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_review"
+                android:layout_below="@id/ll"
+                android:background="@color/cut_off_rule"/>
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                android:visibility="gone" />
+                android:layout_below="@id/view"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/iv_not_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_130"
-                android:src="@drawable/ic_not_content" />
-        </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:visibility="gone" />
+                <ImageView
+                    android:id="@+id/iv_not_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_130"
+                    android:src="@drawable/ic_not_content" />
+            </RelativeLayout>
+        </RelativeLayout>
     </com.secretk.move.view.RecycleNestedScrollView>
 </RelativeLayout>

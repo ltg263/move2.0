@@ -129,6 +129,10 @@ public interface Constants {
      */
     String MODEL = BASE_IMG_HTML5+"user/model";
     /**
+     * 悬赏规则
+     */
+    String REGULATION = BASE_IMG_HTML5+"mine/regulation";
+    /**
      * 评测分享
       */
     String EVALUATION_SHARE= BASE_IMG_HTML5+"project/articleInfo?id=";

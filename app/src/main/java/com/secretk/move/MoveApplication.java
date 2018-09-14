@@ -113,13 +113,12 @@ public class MoveApplication extends Application {
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-//                layout.setEnableAutoLoadMore(false);//使上拉加载具有弹性效果
                 layout.setEnableOverScrollDrag(false);//禁止越界拖动（1.0.4以上版本）
                 layout.setEnableOverScrollBounce(false);//关闭越界回弹功能
                 layout.setEnableLoadMoreWhenContentNotFull(false);
-                layout.setEnableAutoLoadMore(true);
+                layout.setEnableAutoLoadMore(true);//设置是否监听列表在滚动到底部时触发加载事件
                 layout.setPrimaryColorsId(R.color.background_gray, R.color.title_gray_66);//全局设置主题颜色
-                return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.FixedBehind);//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
+                return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Scale);//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
             }
         });
         //设置全局的Footer构建器
@@ -127,11 +126,11 @@ public class MoveApplication extends Application {
             @Override
             public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
                 //指定为经典Footer，默认是 BallPulseFooter
-                layout.setEnableFooterFollowWhenLoadFinished(true);
+                layout.setEnableFooterFollowWhenLoadFinished(true);//设置是否在全部加载结束之后Footer跟随内容
 //                layout.setEnableLoadMoreWhenContentNotFull(true);
                 ClassicsFooter footer = new ClassicsFooter(context);
                 footer.REFRESH_FOOTER_NOTHING = "我也是有底线的！";
-                footer.setSpinnerStyle(SpinnerStyle.FixedBehind);
+                footer.setSpinnerStyle(SpinnerStyle.Scale);
                 return footer;
 //                return new ClassicsFooter(context).setDrawableSize(20);
             }
