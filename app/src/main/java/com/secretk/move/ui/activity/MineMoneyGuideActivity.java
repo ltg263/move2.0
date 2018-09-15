@@ -13,10 +13,13 @@ import com.secretk.move.base.BaseActivity;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.bean.MoneyGuide;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.ToastUtils;
 import com.secretk.move.view.AppBarHeadView;
+import com.secretk.move.view.ShareView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -227,10 +230,11 @@ public class MineMoneyGuideActivity extends BaseActivity {
 //                ToastUtils.getInstance().show("邀请好友问号");
                 break;
             case R.id.tv_ljyq:
+                ShareView.showShare(this, mHeadView, "", Constants.INVITE_FRIENDS + SharedUtils.singleton().get("invaUIH",""),
+                        "免费领取价值500RMB的数字货币", "点击领取红包","https://pic.qufen.top/hongbao.png", 0);
                 ToastUtils.getInstance().show("立即邀请");
                 break;
             case R.id.tv_pl_go:
-
                 finish();
 //                ToastUtils.getInstance().show("评论");
                 break;

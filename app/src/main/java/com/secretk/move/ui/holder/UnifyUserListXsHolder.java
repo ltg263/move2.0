@@ -229,7 +229,7 @@ public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
             tvTitle.setVisibility(View.VISIBLE);
             tvTitle.setText(StringUtil.getBeanString(bean.getPostTitle()));
         }
-        String b = "【奖励"+bean.getRewardMoney()+"FIND】";
+        String b = "悬赏"+bean.getRewardMoney()+"FIND";
         tvDesc.setText(StringUtil.getBeanString(bean.getPostShortDesc()));
         tvFindNum.setText(b);
         //截止时间08.08 12:00，已有12人回答

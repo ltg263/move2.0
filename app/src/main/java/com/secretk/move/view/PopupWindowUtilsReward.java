@@ -15,6 +15,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.utils.LogUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 
@@ -163,6 +165,11 @@ public class PopupWindowUtilsReward extends PopupWindow {
                         }
                         if(Integer.valueOf(season)<1000){
                             ToastUtils.getInstance().show("悬赏金额不能低于1000");
+                            return;
+                        }
+                        LogUtil.w("SharedUtils.getKffCoinNum():"+SharedUtils.getKffCoinNum());
+                        if(Double.valueOf(season)> Double.valueOf(SharedUtils.getKffCoinNum())){
+                            ToastUtils.getInstance().show("你的余额不足");
                             return;
                         }
                         dialogInterface.btnConfirm(season);

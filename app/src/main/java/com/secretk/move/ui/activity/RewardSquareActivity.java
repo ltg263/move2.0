@@ -5,8 +5,10 @@ import android.view.View;
 
 import com.secretk.move.R;
 import com.secretk.move.base.BaseActivity;
+import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.MenuInfo;
 import com.secretk.move.ui.adapter.RewardSquareVpAdapter;
+import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.MagicIndicatorUtils;
 import com.secretk.move.view.ViewPagerFixed;
@@ -42,6 +44,11 @@ public class RewardSquareActivity extends BaseActivity {
         mHeadView.getImageView().setVisibility(View.VISIBLE);
         mMenuInfos.add(0, new MenuInfo(R.string.rule, getResources().getString(R.string.rule), R.drawable.ic_share));
         return mHeadView;
+    }
+
+    @Override
+    protected void OnToolbarRightListener() {
+        IntentUtil.startWebViewActivity(Constants.REGULATION,"悬赏规则");
     }
 
     @Override

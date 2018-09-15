@@ -93,6 +93,17 @@ public class GlideUtils {
         Glide.with(MoveApplication.getContext()).applyDefaultRequestOptions(new RequestOptions().transform(new GlideRoundTransform()).placeholder(R.drawable.ic_silent_plate_mix).error(R.drawable.ic_silent_plate_mix)).
                 load(url).into(img);
     }
+    /**
+     *  方 ImageView
+     *  加载矩形  小的默认
+     */
+    public static void loadSideMinImage_JYS_76(Context context,ImageView img, String url) {
+        if(url.contains("https:") || url.contains("http:") ){
+            url=url+ImgUrlMix_76;
+        }
+        Glide.with(MoveApplication.getContext()).applyDefaultRequestOptions(new RequestOptions().transform(new GlideRoundTransform()).placeholder(R.drawable.ic_silent_jys_mix).error(R.drawable.ic_silent_jys_mix)).
+                load(url).into(img);
+    }
 
     /**
      *  方 ImageView

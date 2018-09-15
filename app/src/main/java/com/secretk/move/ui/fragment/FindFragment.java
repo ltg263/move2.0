@@ -73,6 +73,8 @@ public class FindFragment extends LazyFragment {
 
     @BindView(R.id.viewpager)
     CustomViewPager viewpager;
+    @BindView(R.id.ll_top)
+    LinearLayout llTop;
     @BindView(R.id.home_find_1)
     LinearLayout homeFind1;
     @BindView(R.id.home_find_2)

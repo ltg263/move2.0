@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="10dp"
-                android:drawableTop="@drawable/ic_share_sina_weibo"
+                android:drawableTop="@drawable/ic_share_zz"
                 android:gravity="center_horizontal"
                 android:text="终止活动"
                 android:textColor="@color/title_gray"

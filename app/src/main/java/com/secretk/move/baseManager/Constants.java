@@ -42,6 +42,10 @@ public interface Constants {
      */
     String USER_ID = "userId";
     /**
+     * 登录的用户FIND数量
+     */
+    String KFF_COIN_NUM = "kffCoinNum";
+    /**
      * 登录的用户手机号
      */
     String MOBILE = "mobile";
@@ -152,6 +156,10 @@ public interface Constants {
      * 新闻
       */
     String CURRENCY= BASE_IMG_HTML5+"project/currency?id=";
+    /**
+     * 赚币中心 邀请好友
+      */
+    String INVITE_FRIENDS = BASE_IMG_HTML5+"redenvelopes/envelopes?invaUIH=";
     /**
      * 币智慧
      */

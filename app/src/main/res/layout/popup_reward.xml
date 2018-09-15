@@ -154,6 +154,7 @@
                 android:background="@drawable/selected_give_no"
                 android:hint="最低1000"
                 android:padding="10dp"
+                android:maxLength="7"
                 android:textColor="@color/title_gray"
                 android:textColorHint="@color/title_gray_aa"
                 android:textCursorDrawable="@drawable/shape_edit_cursor"

@@ -325,7 +325,7 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     ArrayList<PostDataInfo> imageLists;
     public void showPostDesc(RowsBean bean) {
         tvTitle.setVisibility(View.GONE);
-        if(StringUtil.isNotBlank(bean.getPostTitle())){
+        if(StringUtil.isNotBlank(bean.getPostTitle()) && bean.getPostType()!=4){
             tvTitle.setVisibility(View.VISIBLE);
             tvTitle.setText(StringUtil.getBeanString(bean.getPostTitle()));
         }
@@ -335,7 +335,7 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         ll_xs.setVisibility(View.GONE);
         if(bean.getPostType()==4){
             ll_xs.setVisibility(View.VISIBLE);
-            tvXs1.setText(Html.fromHtml( "<font color=\"#ff2851\">【￥"+bean.getRewardMoney()+"FIND】</font>"
+            tvXs1.setText(Html.fromHtml( "<font color=\"#ff2851\">【悬赏 ￥"+bean.getRewardMoney()+"FIND】</font>"
                     +StringUtil.getBeanString(bean.getPostTitle())));
             if(bean.getRewardMoneyToOne()>0){
                 tvDesc.setText(Html.fromHtml("<font color=\"#ff2851\">【奖励"+bean.getRewardMoneyToOne()+"FIND】</font>"+postShortDesc));

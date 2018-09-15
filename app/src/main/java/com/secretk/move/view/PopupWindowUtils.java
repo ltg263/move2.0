@@ -18,7 +18,9 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.secretk.move.R;
+import com.secretk.move.utils.KeybordS;
 import com.secretk.move.utils.PopupWindowShowUtil;
+import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
 
@@ -31,6 +33,8 @@ import com.secretk.move.utils.ToastUtils;
 public class PopupWindowUtils extends PopupWindow {
 
     Context mcontext;
+    private EditText etLogContent;
+
     public PopupWindowUtils(ImageView ivPupo, final Context context, final ErrorDialogInterface dialogInterface) {
         super(context);
         mcontext = context;
@@ -132,6 +136,7 @@ public class PopupWindowUtils extends PopupWindow {
                 int y = (int) event.getY();
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (y < height) {
+                        KeybordS.closeKeybord(etLogContent,mcontext);
                         dismiss();
                     }
                 }
@@ -147,7 +152,7 @@ public class PopupWindowUtils extends PopupWindow {
         final TextView tvGive4 = view.findViewById(R.id.tv_give_4);
         final TextView tvGive5 = view.findViewById(R.id.tv_give_5);
         final TextView tvGive6 = view.findViewById(R.id.tv_give_6);
-        final EditText etLogContent = view.findViewById(R.id.et_log_content);
+        etLogContent = view.findViewById(R.id.et_log_content);
         TextView tvLogPrompt = view.findViewById(R.id.tv_log_prompt);
         TextView tvLogConfirm = view.findViewById(R.id.tv_log_confirm);
         ImageView ivLogCancel = view.findViewById(R.id.iv_log_cancel);
@@ -223,10 +228,15 @@ public class PopupWindowUtils extends PopupWindow {
                             ToastUtils.getInstance().show("请输入10-2000整数");
                             return;
                         }
+                        if(Double.valueOf(season)>Double.valueOf(SharedUtils.getKffCoinNum())){
+                            ToastUtils.getInstance().show("你的余额不足");
+                            return;
+                        }
                         dialogInterface.btnConfirm(season);
                         dismiss();
                         break;
                     case R.id.iv_log_cancel:
+                        KeybordS.closeKeybord(etLogContent,mcontext);
                         dismiss();
                         break;
                 }

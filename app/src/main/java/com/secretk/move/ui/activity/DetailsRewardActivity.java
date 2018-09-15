@@ -143,7 +143,7 @@ public class DetailsRewardActivity extends BaseActivity {
         mHeadView = findViewById(R.id.head_app_server);
         mHeadView.setHeadBackShow(true);
         mHeadView.setTitleColor(R.color.title_gray);
-        mHeadView.setTitle("悬赏尽调");
+        mHeadView.getImageView().setVisibility(View.VISIBLE);
         mMenuInfos.add(0, new MenuInfo(R.string.share, getResources().getString(R.string.share), R.drawable.ic_share));
         return mHeadView;
     }
@@ -185,7 +185,8 @@ public class DetailsRewardActivity extends BaseActivity {
 
 
     @OnClick({R.id.tv_follow_status, R.id.iv_post_small_images,R.id.rl_ge_ren,
-            R.id.tv_sort_new, R.id.tv_sort_time,R.id.tv_go_hd_b,R.id.tv_go_hd})
+            R.id.tv_sort_new, R.id.tv_sort_time,R.id.tv_go_hd_b,R.id.tv_go_hd
+            ,R.id.rl_xs_xsgc})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_follow_status:
@@ -235,6 +236,9 @@ public class DetailsRewardActivity extends BaseActivity {
                 break;
             case R.id.tv_go_hd:
                 sendDiscuuss();
+                break;
+            case R.id.rl_xs_xsgc:
+                IntentUtil.startActivity(RewardSquareActivity.class);
                 break;
         }
     }
@@ -321,6 +325,11 @@ public class DetailsRewardActivity extends BaseActivity {
                 createUserId = discussDetail.getCreateUserId();
                 postShortDesc = discussDetail.getPostShortDesc();
                 projectId = discussDetail.getProjectId();
+
+                mHeadView.setTitle(discussDetail.getProjectCode());
+                mHeadView.setTitleVice("/" + discussDetail.getProjectChineseName());
+                mHeadView.setToolbarListener(projectId);
+                GlideUtils.loadCircleProjectUrl(DetailsRewardActivity.this, mHeadView.getImageView(), Constants.BASE_IMG_URL + discussDetail.getProjectIcon());
                 if (StringUtil.isNotBlank(discussDetail.getProjectCode())) {
                     tvProjectCode.setVisibility(View.VISIBLE);
                     tvProjectCode.setText(discussDetail.getProjectCode());
@@ -353,7 +362,7 @@ public class DetailsRewardActivity extends BaseActivity {
                 String a = StringUtil.getBeanString(discussDetail.getPostShortDesc());
                 String b = "【奖励"+discussDetail.getRewardMoney()+"FIND】";
                 String c = "<font color=\"#ff2851\">" + b + "</font>" + a;
-                tvPostShortDesc.setText(Html.fromHtml(c));
+                tvPostShortDesc.setText(Html.fromHtml(a));
                 tvXsFind.setText(" 悬赏"+discussDetail.getRewardMoney()+"FIND 】");
                 String endTime = "截止时间"+StringUtil.getTimeMDHM(discussDetail.getEndTime())+"，已有"+discussDetail.getAnswerCount()+"人回答";
                 tvXs2.setText(endTime);
@@ -465,8 +474,8 @@ public class DetailsRewardActivity extends BaseActivity {
                     refreshLayout.finishLoadMore(true);
                 }
                 if (isFinish && loadingDialog.isShowing()) {
-                    rvNewReview.setVisibility(View.VISIBLE);
-                    rlNotContent.setVisibility(View.GONE);
+                    haveData.setVisibility(View.VISIBLE);
+                    findViewById(R.id.no_data).setVisibility(View.GONE);
                     loadingDialog.dismiss();
                 }
                 isFinish = true;

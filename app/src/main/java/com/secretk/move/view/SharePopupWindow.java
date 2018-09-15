@@ -454,6 +454,10 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
     }
 
     private void addPostShare(String activityId, int postId){
+        if(postId == 0){
+            DialogUtils.showDialogPraise(mContext,5,true,0);
+            return;
+        }
         JSONObject node = new JSONObject();
         try {
             node.put("token", SharedUtils.getToken());

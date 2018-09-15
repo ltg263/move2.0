@@ -15,6 +15,7 @@ import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.bean.DiscussLabelListbean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.SelectProjectActivity;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.StringUtil;
 
 import butterknife.BindView;
@@ -48,14 +49,14 @@ public class ReleaseArticleLabelAdapter extends RecyclerView.Adapter<ReleaseArti
         if(position==0){
             holder.tvCode.setVisibility(View.VISIBLE);
             holder.tvDown.setVisibility(View.GONE);
+            holder.tvCode.setText(bean.getTagName());
+            if(StringUtil.isBlank(bean.getTagName())){
+                holder.tvCode.setText("选择项目");
+            }
         }else{
             holder.tvCode.setVisibility(View.GONE);
             holder.tvDown.setVisibility(View.VISIBLE);
-        }
-        if(StringUtil.isBlank(bean.getTagName())){
-            holder.tvCode.setText("选择项目");
-        }else{
-            holder.tvCode.setText(bean.getTagName());
+            holder.tvDown.setText(bean.getTagName());
         }
     }
 

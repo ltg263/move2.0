@@ -69,6 +69,8 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
     TextView tv1;
     @BindView(R.id.tv_2)
     TextView tv2;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     ReleaseArticleLabelAdapter releaseArticleLabelAdapter;
     LinearLayoutManager layoutManager;
 
@@ -80,6 +82,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
     int postId;
     String token = SharedUtils.singleton().get("token", "");
     private JSONArray sonArray;
+    private String projectPay;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,7 +96,9 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         MoveApplication.getContext().addActivity(this);
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.main_background), 0);
-
+        if(postId!=0){
+            tvTitle.setText("悬赏回答");
+        }
         StringUtil.etSearchChangedListener(ed_content, null, new StringUtil.EtChange() {
             @Override
             public void etYes() {
@@ -131,11 +136,12 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         ed_title.setHint(Html.fromHtml("请输入标题 <small>(6-60字之间)</small>"));
         loadingDialog = new LoadingDialog(this);
         projectId = getIntent().getIntExtra("projectId", 0);
+        projectPay = getIntent().getStringExtra("projectPay");
         postId = getIntent().getIntExtra("postId", 0);
 
         beans = new DiscussLabelListbean.TagList();
         beans.setTagId(String.valueOf(projectId));
-        beans.setTagName(getIntent().getStringExtra("projectPay"));
+        beans.setTagName(projectPay);
         arrayTags.put(-1,beans);
     }
 
@@ -272,7 +278,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
             }
             beans = new DiscussLabelListbean.TagList();
             beans.setTagId(String.valueOf(projectId));
-            beans.setTagName(getIntent().getStringExtra("projectPay"));
+            beans.setTagName(projectPay);
             arrayTags.put(-1,beans);
             for (int i = 0; i < AddLabelActivity.array.size(); i++) {
                 DiscussLabelListbean.TagList bean = AddLabelActivity.array.get(AddLabelActivity.array.keyAt(i));
@@ -289,7 +295,8 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
 
         if(SelectProjectActivity.staticProjectId!=0){
             projectId = SelectProjectActivity.staticProjectId;
-            releaseArticleLabelAdapter.amendCode(projectId,SelectProjectActivity.staticProjectCode);
+            projectPay = SelectProjectActivity.staticProjectCode;
+            releaseArticleLabelAdapter.amendCode(projectId,projectPay);
             SelectProjectActivity.staticProjectId=0;
         }
     }

@@ -103,7 +103,7 @@ public class ProjectMarketHolder extends RecyclerViewBaseHolder {
             ivMarketChange.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_price_rise));
         }
         tvMarketCurrent.setText(StringUtil.getYxNum(usersBean.getLast())+"  "+usersBean.getCoinpair());
-        GlideUtils.loadSideMinImage_76(context,img,StringUtil.getBeanString(usersBean.getExchangeLogo()));
+        GlideUtils.loadSideMinImage_JYS_76(context,img,StringUtil.getBeanString(usersBean.getExchangeLogo()));
         tvFollowNum.setText(styJyl);
         tvMarketNew.setText(styZxjg);
     }

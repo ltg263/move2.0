@@ -253,21 +253,7 @@ public class DetailsArticleActivity extends BaseActivity {
                 //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
                 //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
                 LogUtil.w("11:" + url);
-//                https://m.qufen.top/project/article?id=7358
-                //article   discuss   articleInfo  evaluationLitt
-
-//                1.主页  推荐：https://www.qufen.top/discovery
-//                关注：https://www.qufen.top/attention
-//                项目：https://www.qufen.top/project
-//                2.个人中心：https://www.qufen.top/summary/evaluatingcenter?id=32
-
-//                3.内容详情  文章：https://www.qufen.top/project/article
-//                评测：https://www.qufen.top/project/articleInfo?id=1752
-//                爆料：https://www.qufen.top/project/discuss?id=1952
-//                4.项目主页：https://www.qufen.top/summary/evaluatingdetail?id=21
-//                5.用户主页：https://www.qufen.top/summary/evaluatingcenter?id=114
-
-                if(url.contains(Constants.BASE_IMG_HTML5)){
+                if(url.contains("qufen.top")){
                     int type = -1;
                     if (url.contains("evaluationLitt") || url.contains("articleInfo")) {
                         type = 1;
@@ -275,24 +261,28 @@ public class DetailsArticleActivity extends BaseActivity {
                         type = 2;
                     } else if (url.contains("article")) {
                         type = 3;
-                    } else if(url.contains("evaluatingcenter____")){
+                    } else if(url.contains("个人中心")){
                         type = 4;
-                        ToastUtils.getInstance().show("个人中心");
+//                        ToastUtils.getInstance().show("个人中心");
                     }else if(url.contains("discovery")){
                         type = 5;
-                        ToastUtils.getInstance().show("推荐");
+//                        ToastUtils.getInstance().show("推荐");
                     }else if(url.contains("attention")){
                         type = 6;
-                        ToastUtils.getInstance().show("关注");
+//                        ToastUtils.getInstance().show("关注");
                     }else if(url.contains("project")){
                         type = 7;
-                        ToastUtils.getInstance().show("项目");
+//                        ToastUtils.getInstance().show("项目");
                     }else if(url.contains("evaluatingdetail")){
                         type = 8;
-                        ToastUtils.getInstance().show("项目主页");
+//                        ToastUtils.getInstance().show("项目主页");
                     }else if(url.contains("evaluatingcenter")){
                         type = 9;
-                        ToastUtils.getInstance().show("用户主页");
+//                        ToastUtils.getInstance().show("用户主页");
+                    }
+                    if(type==-1){
+                        IntentUtil.startWebViewActivity(url.toString(), getString(R.string.app_name));
+                        return true;
                     }
                     Uri uri = Uri.parse(url);
                     String id = uri.getQueryParameter("id");

@@ -35,7 +35,7 @@
         android:layout_height="match_parent"
         android:layout_above="@id/tv_go_hd_b"
         android:layout_below="@id/view"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/refreshLayout"
@@ -377,12 +377,12 @@
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/rv_new_review"
                             android:layout_width="match_parent"
+                            android:visibility="gone"
                             android:layout_height="wrap_content" />
                         <RelativeLayout
                             android:id="@+id/rl_not_content"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone">
+                            android:layout_height="wrap_content">
 
                             <ImageView
                                 android:layout_width="wrap_content"

@@ -42,6 +42,7 @@ import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.GridSpacingItemDecoration;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.KeybordS;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.NetUtil;
 import com.secretk.move.utils.PolicyUtil;
@@ -266,31 +267,51 @@ public class DetailsReviewAllActivity extends BaseActivity {
         wvPostShortDesc.setWebViewClient(new WebViewClient() {
             @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    //该方法在Build.VERSION_CODES.LOLLIPOP以前有效，从Build.VERSION_CODES.LOLLIPOP起，建议使用shouldOverrideUrlLoading(WebView, WebResourceRequest)} instead
-                    //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
-                    //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
-
-                    if(url.contains(Constants.BASE_IMG_HTML5)){
-                        int type = -1;
-                        if (url.contains("evaluationLitt") || url.contains("articleInfo")) {
-                            type = 1;
-                        } else if (url.contains("discuss")) {
-                            type = 2;
-                        } else if (url.contains("article")) {
-                            type = 3;
-                        } else {
-                            ToastUtils.getInstance().show("类型出错");
-                        }
-                        Uri uri = Uri.parse(url);
-                        String id = uri.getQueryParameter("id");
-                        IntentUtil.go2DetailsByType(type, String.valueOf(id));
-                        return true;
+                //该方法在Build.VERSION_CODES.LOLLIPOP以前有效，从Build.VERSION_CODES.LOLLIPOP起，建议使用shouldOverrideUrlLoading(WebView, WebResourceRequest)} instead
+                //返回false，意味着请求过程里，不管有多少次的跳转请求（即新的请求地址），均交给webView自己处理，这也是此方法的默认处理
+                //返回true，说明你自己想根据url，做新的跳转，比如在判断url符合条件的情况下，我想让webView加载http://ask.csdn.net/questions/178242
+                LogUtil.w("11:" + url);
+                if(url.contains("qufen.top")){
+                    int type = -1;
+                    if (url.contains("evaluationLitt") || url.contains("articleInfo")) {
+                        type = 1;
+                    } else if (url.contains("discuss")) {
+                        type = 2;
+                    } else if (url.contains("article")) {
+                        type = 3;
+                    } else if(url.contains("个人中心")){
+                        type = 4;
+//                        ToastUtils.getInstance().show("个人中心");
+                    }else if(url.contains("discovery")){
+                        type = 5;
+//                        ToastUtils.getInstance().show("推荐");
+                    }else if(url.contains("attention")){
+                        type = 6;
+//                        ToastUtils.getInstance().show("关注");
+                    }else if(url.contains("project")){
+                        type = 7;
+//                        ToastUtils.getInstance().show("项目");
+                    }else if(url.contains("evaluatingdetail")){
+                        type = 8;
+//                        ToastUtils.getInstance().show("项目主页");
+                    }else if(url.contains("evaluatingcenter")){
+                        type = 9;
+//                        ToastUtils.getInstance().show("用户主页");
                     }
-                    if (StringUtil.isNotBlank(url)) {
+                    if(type==-1){
                         IntentUtil.startWebViewActivity(url.toString(), getString(R.string.app_name));
                         return true;
                     }
-                    return false;
+                    Uri uri = Uri.parse(url);
+                    String id = uri.getQueryParameter("id");
+                    IntentUtil.go2DetailsByType(type, String.valueOf(id));
+                    return true;
+                }
+                if (StringUtil.isNotBlank(url)) {
+                    IntentUtil.startWebViewActivity(url.toString(), getString(R.string.app_name));
+                    return true;
+                }
+                return false;
             }
         });
     }

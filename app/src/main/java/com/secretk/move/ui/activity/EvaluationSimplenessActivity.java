@@ -80,6 +80,7 @@ public class EvaluationSimplenessActivity extends BaseActivity{
     RelativeLayout addlabel;
     @BindView(R.id.tv_release)
     TextView tvRelease;
+    String projectPay;
 
     @Override
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
@@ -97,9 +98,9 @@ public class EvaluationSimplenessActivity extends BaseActivity{
 
     @Override
     protected void initUI(Bundle savedInstanceState) {
-
-        tvProjectCode.setText(getIntent().getStringExtra("projectPay"));
         projectId = getIntent().getStringExtra("projectId");
+        projectPay = getIntent().getStringExtra("projectPay");
+        tvProjectCode.setText(projectPay);
         StringUtil.etSearchChangedListener(etEvaluationContent, null, new StringUtil.EtChange() {
             @Override
             public void etYes() {
@@ -129,7 +130,7 @@ public class EvaluationSimplenessActivity extends BaseActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EvaluationSimplenessActivity.this, SelectProjectActivity.class);
-                intent.putExtra("publication_type",4);
+                intent.putExtra("publication_type",-1);
                 startActivity(intent);
             }
         });
@@ -165,7 +166,7 @@ public class EvaluationSimplenessActivity extends BaseActivity{
         });
         releasePicAdapter.addData("move");
 
-        mHeadView.setTitle(getIntent().getStringExtra("projectPay") + "-" + getString(R.string.evaluation_simpleness));
+        mHeadView.setTitle(projectPay + "-" + getString(R.string.evaluation_simpleness));
         esViewa.setScore(Constants.DEFAULT_SCORE);
         esViewa.setEsvBackground(R.color.app_background);
         tvEvaluationState.setText(StringUtil.getStateValueStr(Constants.DEFAULT_SCORE));
@@ -191,7 +192,7 @@ public class EvaluationSimplenessActivity extends BaseActivity{
 //        startActivity(intent);
 
         IntentUtil.startProjectCompileDxZjyActivity(String.valueOf(Constants.ModelType.MODEL_TYPE_ALL_NEW),
-                String.valueOf(projectId), getIntent().getStringExtra("projectPay"),
+                String.valueOf(projectId), projectPay,
                 "", String.valueOf(Constants.DEFAULT_SCORE), getString(R.string.comprehensive_evaluation));
     }
 
@@ -206,7 +207,9 @@ public class EvaluationSimplenessActivity extends BaseActivity{
         }
         if(SelectProjectActivity.staticProjectId!=0){
             projectId = String.valueOf(SelectProjectActivity.staticProjectId);
-            tvProjectCode.setText(SelectProjectActivity.staticProjectCode);
+            projectPay = SelectProjectActivity.staticProjectCode;
+            mHeadView.setTitle(projectPay + "-" + getString(R.string.evaluation_simpleness));
+            tvProjectCode.setText(projectPay);
             SelectProjectActivity.staticProjectCode="";
             SelectProjectActivity.staticProjectId=0;
         }

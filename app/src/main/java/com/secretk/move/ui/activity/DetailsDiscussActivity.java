@@ -274,7 +274,7 @@ public class DetailsDiscussActivity extends BaseActivity {
 
     @OnClick({R.id.tv_follow_status, R.id.iv_post_small_images, R.id.tv_send, R.id.rl_ge_ren,
             R.id.tv_commendation_Num, R.id.rl_sc, R.id.rl_dz, R.id.rl_pl, R.id.tv_content,
-            R.id.tv_sort_new, R.id.tv_sort_time,R.id.tv_xs_3})
+            R.id.tv_sort_new, R.id.tv_sort_time,R.id.tv_xs_3,R.id.rl_xs_xsgc})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_follow_status:
@@ -412,6 +412,9 @@ public class DetailsDiscussActivity extends BaseActivity {
                     } else {
                         IntentUtil.startActivity(LoginHomeActivity.class);
                     }
+                break;
+            case R.id.rl_xs_xsgc:
+                IntentUtil.startActivity(RewardSquareActivity.class);
                 break;
         }
     }
@@ -562,7 +565,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                     tvProjectCode.setText(discussDetail.getProjectCode());
                 }
                 GlideUtils.loadCircleProjectUrl(DetailsDiscussActivity.this, mHeadView.getImageView(), Constants.BASE_IMG_URL + discussDetail.getProjectIcon());
-                if (StringUtil.isNotBlank(discussDetail.getPostTitle())) {
+                if (StringUtil.isNotBlank(discussDetail.getPostTitle()) && discussDetail.getPostType()!=4) {
                     tvPostTitle.setVisibility(View.VISIBLE);
                     tvPostTitle.setText(discussDetail.getPostTitle());
                 }
@@ -619,7 +622,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                 tvPostShortDesc.setText(Html.fromHtml(StringUtil.getBeanString(discussDetail.getDisscussContents())));
                 if(discussDetail.getPostType()==4){
                     llBlXs.setVisibility(View.VISIBLE);
-                    tvXsFind.setText(discussDetail.getRewardMoney()+"FIND】");
+                    tvXsFind.setText(" 悬赏"+discussDetail.getRewardMoney()+"FIND】");
                     tvXs1.setVisibility(View.GONE);
                     if(StringUtil.isNotBlank(discussDetail.getPostTitle())){
                         tvXs1.setVisibility(View.VISIBLE);

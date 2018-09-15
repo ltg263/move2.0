@@ -71,6 +71,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
 
     LoadingDialog loadingDialog;
     int projectId;
+    String projectPay;
     private JSONArray sonArray;
     String token = SharedUtils.singleton().get("token", "");
 
@@ -110,10 +111,11 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         });
         loadingDialog = new LoadingDialog(this);
         projectId = getIntent().getIntExtra("projectId", 0);
+        projectPay = getIntent().getStringExtra("projectPay");
 
         beans = new DiscussLabelListbean.TagList();
         beans.setTagId(String.valueOf(projectId));
-        beans.setTagName(getIntent().getStringExtra("projectPay"));
+        beans.setTagName(projectPay);
         arrayTags.put(-1,beans);
     }
     public void setTextViewNum(){
@@ -399,7 +401,7 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
             }
             beans = new DiscussLabelListbean.TagList();
             beans.setTagId(String.valueOf(projectId));
-            beans.setTagName(getIntent().getStringExtra("projectPay"));
+            beans.setTagName(projectPay);
             arrayTags.put(-1,beans);
             for (int i = 0; i < AddLabelActivity.array.size(); i++) {
                 DiscussLabelListbean.TagList bean = AddLabelActivity.array.get(AddLabelActivity.array.keyAt(i));
@@ -418,7 +420,8 @@ public class ReleaseArticleActivity extends AppCompatActivity implements ItemCli
         }
         if(SelectProjectActivity.staticProjectId!=0){
             projectId = SelectProjectActivity.staticProjectId;
-            releaseArticleLabelAdapter.amendCode(projectId,SelectProjectActivity.staticProjectCode);
+            projectPay = SelectProjectActivity.staticProjectCode;
+            releaseArticleLabelAdapter.amendCode(projectId,projectPay);
             SelectProjectActivity.staticProjectId=0;
         }
     }

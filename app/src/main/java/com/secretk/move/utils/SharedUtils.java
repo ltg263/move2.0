@@ -101,4 +101,8 @@ public class SharedUtils {
 	public static String getToken(){
 		return singleton().get(Constants.TOKEN_KEY,"");
 	}
+
+	public static String getKffCoinNum(){
+		return singleton().get(Constants.KFF_COIN_NUM,"");
+	}
 }

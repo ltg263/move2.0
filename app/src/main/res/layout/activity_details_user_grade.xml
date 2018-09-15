@@ -369,7 +369,7 @@
         android:background="@drawable/btn_max_selected_top_radius"
         android:gravity="center"
         android:padding="@dimen/dp_10"
-        android:text="写评论"
+        android:text="写短评"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_16" />
 </RelativeLayout>

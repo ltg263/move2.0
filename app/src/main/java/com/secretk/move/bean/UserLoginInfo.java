@@ -36,6 +36,7 @@ public class UserLoginInfo extends BaseRes{
          */
 
         private String token;
+        private String invaUIH;
         private UserBean user;
 
         private int userCardStatus;// 1  待审核  2   审核通过  3   未通过审核  4   未提交   身份验证  和账号验证的审核状态
@@ -55,6 +56,14 @@ public class UserLoginInfo extends BaseRes{
             this.messageSum = messageSum;
         }
 
+        public String getInvaUIH() {
+            return invaUIH;
+        }
+
+
+        public void setInvaUIH(String invaUIH) {
+            this.invaUIH = invaUIH;
+        }
 
         public int getAwardToken() {
             return awardToken;

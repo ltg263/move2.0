@@ -192,7 +192,7 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
 
         beans = new DiscussLabelListbean.TagList();
         beans.setTagId(String.valueOf(projectId));
-        beans.setTagName(getIntent().getStringExtra("projectPay"));
+        beans.setTagName(projectPay);
         arrayTags.put(-1, beans);
     }
 
@@ -304,7 +304,7 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
             }
             beans = new DiscussLabelListbean.TagList();
             beans.setTagId(String.valueOf(projectId));
-            beans.setTagName(getIntent().getStringExtra("projectPay"));
+            beans.setTagName(projectPay);
             arrayTags.put(-1,beans);
             for (int i = 0; i < AddLabelActivity.array.size(); i++) {
                 DiscussLabelListbean.TagList bean = AddLabelActivity.array.get(AddLabelActivity.array.keyAt(i));
@@ -323,7 +323,9 @@ public class EvaluationWriteNewSimpActivity extends BaseActivity implements Item
         }
         if(SelectProjectActivity.staticProjectId!=0){
             projectId = SelectProjectActivity.staticProjectId;
-            releaseArticleLabelAdapter.amendCode(projectId,SelectProjectActivity.staticProjectCode);
+            projectPay = SelectProjectActivity.staticProjectCode;
+            mHeadView.setTitle(projectPay+" - 精评");
+            releaseArticleLabelAdapter.amendCode(projectId,projectPay);
             SelectProjectActivity.staticProjectId=0;
         }
     }

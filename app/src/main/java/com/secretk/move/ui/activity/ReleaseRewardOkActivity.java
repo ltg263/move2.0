@@ -166,18 +166,18 @@ public class ReleaseRewardOkActivity extends AppCompatActivity implements ItemCl
     List<String> adapterImgList;
     @OnClick(R.id.tv_release)
     public void tv_release() {
-//        if (TextUtils.isEmpty(getEdTitle())) {
-//            ToastUtils.getInstance().show("请输入标题");
-//            return;
-//        }
+        if (TextUtils.isEmpty(getEdTitle())) {
+            ToastUtils.getInstance().show("请输入标题");
+            return;
+        }
         if (TextUtils.isEmpty(getEdContent())) {
             ToastUtils.getInstance().show("请输入内容");
             return;
         }
-//        if (getEdTitle().length() < 6) {
-//            ToastUtils.getInstance().show("标题不能少于6个汉字");
-//            return;
-//        }
+        if (getEdTitle().length() < 6) {
+            ToastUtils.getInstance().show("标题不能少于6个汉字");
+            return;
+        }
         // tagId,tagName
         sonArray = new JSONArray();
         if(arrayTags!=null){

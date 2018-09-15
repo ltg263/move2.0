@@ -23,6 +23,7 @@
                 android:background="@drawable/toobar_back_blue" />
 
             <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
