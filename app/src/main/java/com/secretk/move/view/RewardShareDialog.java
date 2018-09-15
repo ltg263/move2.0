@@ -118,9 +118,7 @@ public class RewardShareDialog extends AlertDialog {
     public void shareUi(){
         SharePopupWindow popupWindow = new SharePopupWindow(context);
         popupWindow.setShareImg(strPath);
-        if(isShowZz){
-            popupWindow.showZzhd();
-        }
+        popupWindow.showBctp(isShowZz);
         popupWindow.setPostId(postId);
         popupWindow.showAtLocation(ivImg, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }

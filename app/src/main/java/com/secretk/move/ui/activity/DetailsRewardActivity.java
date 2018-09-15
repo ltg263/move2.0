@@ -248,6 +248,7 @@ public class DetailsRewardActivity extends BaseActivity {
         intent.putExtra("projectId", discussDetail.getProjectId());
         intent.putExtra("projectPay", discussDetail.getProjectCode());
         intent.putExtra("postId", discussDetail.getPostId());
+        intent.putExtra("tagInfos", discussDetail.getTagInfos());
         startActivity(intent);
     }
 

@@ -54,6 +54,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.secretk.move.utils.IntentUtil.startTopicActivity;
+
 /*发表讨论*/
 public class ReleaseDiscussActivity extends AppCompatActivity implements ItemClickListener {
     InputMethodManager imm;
@@ -83,6 +85,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
     String token = SharedUtils.singleton().get("token", "");
     private JSONArray sonArray;
     private String projectPay;
+    private String tagInfos;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -137,12 +140,29 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         loadingDialog = new LoadingDialog(this);
         projectId = getIntent().getIntExtra("projectId", 0);
         projectPay = getIntent().getStringExtra("projectPay");
+        tagInfos = getIntent().getStringExtra("tagInfos");
         postId = getIntent().getIntExtra("postId", 0);
-
         beans = new DiscussLabelListbean.TagList();
         beans.setTagId(String.valueOf(projectId));
         beans.setTagName(projectPay);
         arrayTags.put(-1,beans);
+        if(StringUtil.isNotBlank(tagInfos)){
+            try {
+                JSONArray tagInfosArray = new JSONArray(tagInfos);
+                for (int i = 0; i < tagInfosArray.length(); i++) {
+                    final JSONObject object = tagInfosArray.getJSONObject(i);
+                    if (StringUtil.isNotBlank(object.getString("tagName"))
+                            && object.getInt("tagId")!=0) {
+                        beans = new DiscussLabelListbean.TagList();
+                        beans.setTagId(String.valueOf(object.getInt("tagId")));
+                        beans.setTagName(object.getString("tagName"));
+                        arrayTags.put(object.getInt("tagId"),beans);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @OnClick(R.id.img_return)

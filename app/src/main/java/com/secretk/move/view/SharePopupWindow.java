@@ -4,7 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Environment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,7 +25,10 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.ui.activity.DetailsDiscussActivity;
+import com.secretk.move.ui.activity.InvitePosterActivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
+import com.secretk.move.utils.BitmapUtil;
+import com.secretk.move.utils.ImageUtils;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
@@ -37,6 +43,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -72,6 +79,10 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
     TextView tvShareReport;
     @BindView(R.id.tv_share_zzhd)
     TextView tvShareZzhd;
+    @BindView(R.id.tv_share_bctp)
+    TextView tvShareBctp;
+    @BindView(R.id.tv_share_kw)
+    TextView tvShareKw;
     @BindView(R.id.tv_cancel)
     TextView tvCancel;
     @BindView(R.id.ll_below)
@@ -104,6 +115,7 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
         tvShareLink.setOnClickListener(tvOnClickListener);
         tvShareReport.setOnClickListener(tvOnClickListener);
         tvShareZzhd.setOnClickListener(tvOnClickListener);
+        tvShareBctp.setOnClickListener(tvOnClickListener);
         //		tv_photo_count.setText("亲，你还可以上传"+(5-mDataList.size())+"张图片。");
         //设置SelectPicPopupWindow的View
         this.setContentView(mMenuView);
@@ -228,6 +240,21 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
                             shareXsEnd();
                         }
                     });
+                    break;
+                case R.id.tv_share_bctp:
+                    LogUtil.w("imgPath:"+imgPath);
+                    Bitmap bmp = BitmapUtil.getDiskBitmap(imgPath);
+                    if(bmp != null) {
+                        String pathDj = Environment.getExternalStorageDirectory()+ File.separator +"区分";
+                        if (!new File(pathDj).exists()) {
+                            new File(pathDj).mkdirs();
+                        }
+                        String path = BitmapUtil.saveImgToDisk(pathDj,"find_" + System.currentTimeMillis()+".png",bmp);
+                       if(StringUtil.isNotBlank(path)){
+                           ImageUtils.galleryAddPic(mContext,path);
+                           ToastUtils.getInstance().show("保存成功");
+                       }
+                    }
                     break;
                 case R.id.tv_cancel:
                     break;
@@ -442,6 +469,21 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
      */
     public void showZzhd() {
         tvShareZzhd.setVisibility(View.VISIBLE);
+    }
+    /**
+     * 显示保存图片
+     * true 显示终止活动
+     * false 不显示终止活动
+     */
+    public void showBctp(boolean isZzhd) {
+        tvShareBctp.setVisibility(View.VISIBLE);
+        if(isZzhd){
+            tvShareZzhd.setVisibility(View.VISIBLE);
+            tvShareKw.setVisibility(View.GONE);
+        }else{
+            tvShareZzhd.setVisibility(View.GONE);
+            tvShareKw.setVisibility(View.INVISIBLE);
+        }
     }
 
 

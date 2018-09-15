@@ -374,7 +374,9 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                         tvActivity.setText(mesSum);
                     }
                 }
-                sharedUtils.put("invaUIH", userInfo.getData().getInvaUIH());
+                if(StringUtil.isNotBlank(userInfo.getData().getInvaUIH())){
+                    sharedUtils.put("invaUIH", userInfo.getData().getInvaUIH());
+                }
                 sharedUtils.put("awardToken", userInfo.getData().getAwardToken());
                 sharedUtils.put("userCardStatus", userInfo.getData().getUserCardStatus());
                 sharedUtils.put("statusHierarchyType", userInfo.getData().getStatusHierarchyType());

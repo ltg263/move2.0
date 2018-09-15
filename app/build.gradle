@@ -75,7 +75,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 21
         versionCode 25
-        versionName "1.5.2"
+        versionName "1.5.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         /* 个推 */
         manifestPlaceholders = [
