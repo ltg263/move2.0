@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.bean.RowsBean;
+import com.secretk.move.ui.activity.DetailsRewardActivity;
 import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.activity.ImageViewVpAcivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
@@ -93,6 +96,12 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     TextView tvShare;
     @BindView(R.id.tv_stick)
     TextView tvStick;
+    @BindView(R.id.ll_xs)
+    LinearLayout llXs;
+    @BindView(R.id.tv_xs_1)
+    TextView tvXs1;
+    @BindView(R.id.tv_xs_2)
+    TextView tvXs2;
     private ImagesAdapter imagesadapter;
     Context mContext;
     List<Integer> tagIdLists = new ArrayList<>();
@@ -140,7 +149,18 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         if(StringUtil.isBlank(bean.getPostTitle())){
             tvTitle.setVisibility(View.GONE);
         }
-        tvDesc.setText(bean.getPostShortDesc());
+        String postShortDesc = StringUtil.getBeanString(bean.getPostShortDesc());
+        tvDesc.setText(postShortDesc);
+        llXs.setVisibility(View.GONE);
+        if(bean.getPostType()==4){
+            llXs.setVisibility(View.VISIBLE);
+            tvTitle.setVisibility(View.GONE);
+            tvXs1.setText(Html.fromHtml( "<font color=\"#ff2851\">【悬赏 ￥"+bean.getRewardMoney()+"FIND】</font>"
+                    +StringUtil.getBeanString(bean.getPostTitle())));
+            if(bean.getRewardMoneyToOne()>0){
+                tvDesc.setText(Html.fromHtml("<font color=\"#ff2851\">【奖励"+bean.getRewardMoneyToOne()+"FIND】</font>"+postShortDesc));
+            }
+        }
         showRecommend(bean);
         if(StringUtil.isNotBlank(bean.getProjectCode())){
             tvProjectCode.setVisibility(View.VISIBLE);
@@ -377,7 +397,7 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         });
     }
 
-    public void showRecommend(RowsBean bean){
+    public void showRecommend(final RowsBean bean){
         switch (bean.getPostType()){
             case 1:
                 tvSore.setVisibility(View.VISIBLE);
@@ -396,6 +416,18 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 tvSore.setVisibility(View.GONE);
                 break;
         }
+
+        llXs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (SharedUtils.getLoginZt()) {
+                    int postId = bean.getPostIdToReward();
+                    IntentUtil.go2DetailsByType(10, String.valueOf(postId));
+                } else {
+                    IntentUtil.startActivity(LoginHomeActivity.class);
+                }
+            }
+        });
     }
     private void setPraise(boolean isPraise, final RowsBean bead) {
         NetUtil.setAnimation(tvPraise);

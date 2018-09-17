@@ -1,6 +1,7 @@
 package com.secretk.move.view;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -301,7 +302,9 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
 
 
     private void shareToWechat(final int i) {
-        imgUrl = "http://download.sdk.mob.com/web/images/2018/05/25/10/1527215980143/108_108_7.07.png";
+        if(!imgUrl.equals(Constants.SHARE_MR_IOCN)){
+            imgUrl = Constants.SHARE_MR_IOCN;
+        }
         Platform.ShareParams paramsToShare = new Platform.ShareParams();
         Platform platform;
         if (i == 1) {
@@ -321,7 +324,7 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
     }
 
     private void shareToQQ(int index) {
-        String headUrl = "http://download.sdk.mob.com/web/images/2018/05/25/10/1527215980143/108_108_7.07.png";
+        String headUrl = Constants.SHARE_MR_IOCN;
         String imgWechat = "";
         if (StringUtil.isNotBlank(imgUrl) && imgUrl.contains("http")) {
             imgWechat = imgUrl + "?imageView2/1/w/108";
@@ -424,7 +427,6 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
         RetrofitUtil.request(params, String.class, new HttpCallBackImpl<String>() {
             @Override
             public void onCompleted(String str) {
-
                 DialogUtils.showDialogPraise(mContext, 8, true, 0);
 //                try {
 //                    JSONObject obj = new JSONObject(str);

@@ -168,6 +168,14 @@ public interface Constants {
      * 币智慧
      */
     String BI_ZHI_HUI= "http://bizhihui.baiduux.com/h5/bizhihui.html";
+    /**
+     * 分享默认图标
+     */
+    String SHARE_MR_IOCN= "https://app.qufen.top/upload/file/logo.png";
+    /**
+     * 分享默认红包图标
+     */
+    String SHARE_HONGBAO_IOCN= "https://app.qufen.top/upload/file/hongbao.png";
 
     //发送验证码通用接口
 //    String DYNAMIC_VALIDATE_CODE_SEND = BASE_URL + "kff/dynamicValidateCode/send";

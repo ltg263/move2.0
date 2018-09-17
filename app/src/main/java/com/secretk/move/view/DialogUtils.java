@@ -1,5 +1,6 @@
 package com.secretk.move.view;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.secretk.move.R;
 import com.secretk.move.bean.ProjectTypeListBean;
 import com.secretk.move.listener.ItemClickListener;
+import com.secretk.move.ui.activity.DetailsRewardActivity;
 import com.secretk.move.ui.activity.MainActivity;
 import com.secretk.move.ui.adapter.DiaLogListAdapter;
 import com.secretk.move.utils.LogUtil;
@@ -531,7 +533,7 @@ public class DialogUtils {
      *            5 分享 6评论 7看涨 8悬赏终止
      * 点赞框
      */
-    public static void showDialogPraise(Context context,int type,boolean isCollect,double find) {
+    public static void showDialogPraise(final Context context, int type, boolean isCollect, double find) {
         final Dialog dialog5 = new Dialog(context, R.style.selectorDialog_bj);
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_praise_find, null);
         TextView tv_praise = view.findViewById(R.id.tv_praise);
@@ -612,6 +614,9 @@ public class DialogUtils {
                 try {
                     Thread.sleep(1000);
                     dialog5.dismiss();
+                    if(context instanceof DetailsRewardActivity){
+                        ((DetailsRewardActivity)context).finish();
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

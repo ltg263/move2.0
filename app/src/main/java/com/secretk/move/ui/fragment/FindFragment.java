@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.secretk.move.R;
@@ -177,6 +178,8 @@ public class FindFragment extends LazyFragment {
     private void initRefresh() {
 //        refreshLayout.setEnableRefresh(false);
 //        refreshLayout.setEnableLoadMore(false);
+
+        refreshLayout.setEnableFooterFollowWhenLoadFinished(false);//设置是否在全部加载结束之后Footer跟随内容
         /**
          * 下拉刷新
          */

@@ -231,8 +231,7 @@ public class MineMoneyGuideActivity extends BaseActivity {
                 break;
             case R.id.tv_ljyq:
                 ShareView.showShare(this, mHeadView, "", Constants.INVITE_FRIENDS + SharedUtils.singleton().get("invaUIH",""),
-                        "免费领取价值500RMB的数字货币", "点击领取红包","https://pic.qufen.top/hongbao.png", 0);
-                ToastUtils.getInstance().show("立即邀请");
+                        "免费领取价值500RMB的数字货币", "点击领取红包",Constants.SHARE_HONGBAO_IOCN, 0);
                 break;
             case R.id.tv_pl_go:
                 finish();

@@ -223,7 +223,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     @OnClick({R.id.iv_my_set, R.id.ll_my_approve, R.id.tv_go_login, R.id.tv_go_register, R.id.rl_user_info,
             R.id.rl_appraisal, R.id.rl_discuss, R.id.rl_essay, R.id.ll_check_details, R.id.ll_my_attention,
             R.id.ll_my_collect, R.id.ll_my_message, R.id.ll_my_recommend, R.id.ll_my_about, R.id.ll_my_feedback,
-            R.id.btn,R.id.iv_zb})
+            R.id.btn,R.id.iv_zb,R.id.tv_balance})
     public void onViewClicked(View view) {
         if (!isLoginZt) {
             IntentUtil.startActivity(LoginHomeActivity.class);
@@ -266,6 +266,9 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 IntentUtil.startActivity(MineApproveSubmitiCertificateActivity.class);
                 break;
             case R.id.ll_check_details://资产明细
+                IntentUtil.startActivity(MineCheckDetailsActivity.class);
+                break;
+            case R.id.tv_balance://资产明细
                 IntentUtil.startActivity(MineCheckDetailsActivity.class);
                 break;
             case R.id.ll_my_attention://我的关注

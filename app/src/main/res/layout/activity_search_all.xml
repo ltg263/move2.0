@@ -31,7 +31,7 @@
                     android:background="@drawable/shape_fragment_topic_search"
                     android:drawableLeft="@drawable/main_search_gray"
                     android:gravity="center_vertical"
-                    android:hint="  搜索相关币种"
+                    android:hint="  搜索项目.用户.内容.话题"
                     android:imeOptions="actionSearch"
                     android:inputType="text"
                     android:maxLines="1"
