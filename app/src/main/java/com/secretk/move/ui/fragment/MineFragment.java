@@ -60,6 +60,8 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     MineFragmentPresenter presenter;
     @BindView(R.id.iv_my_set)
     ImageView ivMySet;
+    @BindView(R.id.iv_zb)
+    ImageView ivZb;
     @BindView(R.id.iv_head_notLogin)
     ImageView ivHeadNotLogin;
     @BindView(R.id.tv_go_login)
@@ -142,6 +144,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     @Override
     public void initViews() {
         LogUtil.w("rlActivity:"+rlActivity);
+        GlideUtils.loadUrlDd(getActivity(),ivZb,R.drawable.ic_mine_zb);
         sv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -220,7 +223,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
     @OnClick({R.id.iv_my_set, R.id.ll_my_approve, R.id.tv_go_login, R.id.tv_go_register, R.id.rl_user_info,
             R.id.rl_appraisal, R.id.rl_discuss, R.id.rl_essay, R.id.ll_check_details, R.id.ll_my_attention,
             R.id.ll_my_collect, R.id.ll_my_message, R.id.ll_my_recommend, R.id.ll_my_about, R.id.ll_my_feedback,
-            R.id.btn,R.id.tv_zb})
+            R.id.btn,R.id.iv_zb})
     public void onViewClicked(View view) {
         if (!isLoginZt) {
             IntentUtil.startActivity(LoginHomeActivity.class);
@@ -284,7 +287,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 IntentUtil.startActivity(MineOpinionBackActivity.class);
 //                IntentUtil.startActivity(ImagesSelectorActivity.class);
                 break;
-            case R.id.tv_zb://赚币指南
+            case R.id.iv_zb://赚币指南
                 IntentUtil.startActivity(MineMoneyGuideActivity.class);
 //                IntentUtil.startActivity(ImagesSelectorActivity.class);
                 break;

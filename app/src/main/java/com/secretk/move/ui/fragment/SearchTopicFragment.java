@@ -100,6 +100,7 @@ public class SearchTopicFragment extends LazyFragment implements ItemClickListen
     private void getLoadData() {
         JSONObject node = new JSONObject();
         try {
+            node.put("token", token);
             node.put("type", 4);
             node.put("title", searchTxt);
             node.put("pageIndex", pageIndex++);

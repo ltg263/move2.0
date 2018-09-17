@@ -99,7 +99,7 @@ public class TopicActivity extends BaseActivity {
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.app_background), 0);
         tagId = getIntent().getIntExtra("tagId",0);
         currentType = getIntent().getStringExtra("currentType");
-        refreshLayout.setEnableRefresh(false);//禁止下拉刷新
+//        refreshLayout.setEnableRefresh(false);//禁止下拉刷新
         reviewFragment = new TopicReviewFragment();
         discussFragment = new TopicDiscussFragment();
         articleFragment = new TopicArticleFragment();

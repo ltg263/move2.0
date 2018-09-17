@@ -61,7 +61,7 @@ public class SearchProjectHolder extends RecyclerViewBaseHolder {
         }
         tvFollws.setText(currenBean.getFollowerNum() + "关注");
         //0 显示 关注按钮； 1--显示取消关注 按钮 ；2 不显示按钮
-        if(currenBean.getState() == 1){
+        if(currenBean.getFollowStatus() == 1){
             tvIsFollw.setSelected(true);
             tvIsFollw.setText(context.getResources().getString(R.string.follow_status_1));
         }else{

@@ -153,6 +153,10 @@ public interface Constants {
       */
     String DISCUSS_SHARE= BASE_IMG_HTML5+"project/discuss?id=";
     /**
+     * 悬赏分享
+      */
+    String REWARD = BASE_IMG_HTML5+"reward/?id=";
+    /**
      * 新闻
       */
     String CURRENCY= BASE_IMG_HTML5+"project/currency?id=";

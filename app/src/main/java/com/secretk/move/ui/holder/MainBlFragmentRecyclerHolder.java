@@ -18,6 +18,7 @@ import com.secretk.move.base.RecyclerViewBaseHolder;
 import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.PostDataInfo;
 import com.secretk.move.bean.RowsBean;
+import com.secretk.move.ui.activity.DetailsRewardActivity;
 import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.activity.ImageViewVpAcivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
@@ -294,14 +295,7 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 });
             }
         });
-        tvXs2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ToastUtils.getInstance().show(tvXs2.getText().toString());
-
-            }
-        });
-        tvXs2.setOnClickListener(new View.OnClickListener() {
+        ll_xs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (SharedUtils.getLoginZt()) {
@@ -334,9 +328,11 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvDesc.setText(postShortDesc);
         ll_xs.setVisibility(View.GONE);
         if(bean.getPostType()==4){
-            ll_xs.setVisibility(View.VISIBLE);
-            tvXs1.setText(Html.fromHtml( "<font color=\"#ff2851\">【悬赏 ￥"+bean.getRewardMoney()+"FIND】</font>"
-                    +StringUtil.getBeanString(bean.getPostTitle())));
+            if(!(mContext instanceof DetailsRewardActivity)){
+                ll_xs.setVisibility(View.VISIBLE);
+                tvXs1.setText(Html.fromHtml( "<font color=\"#ff2851\">【悬赏 ￥"+bean.getRewardMoney()+"FIND】</font>"
+                        +StringUtil.getBeanString(bean.getPostTitle())));
+            }
             if(bean.getRewardMoneyToOne()>0){
                 tvDesc.setText(Html.fromHtml("<font color=\"#ff2851\">【奖励"+bean.getRewardMoneyToOne()+"FIND】</font>"+postShortDesc));
             }

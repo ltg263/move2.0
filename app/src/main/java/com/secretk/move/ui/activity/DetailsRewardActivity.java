@@ -152,7 +152,7 @@ public class DetailsRewardActivity extends BaseActivity {
     protected void OnToolbarRightListener() {
         final RewardShareDialog dialog = new RewardShareDialog(this,R.style.selectorDialog);
         dialog.setData(discussDetail.getRewardMoney()+"FIND", discussDetail.getPostTitle(),
-                "share_reward_"+System.currentTimeMillis(),"https://blog.csdn.net/pxcz110112/article/details/80234997",
+                "share_reward_"+System.currentTimeMillis(),Constants.REWARD+postId,
                 "扫码参与活动，领取巨额奖励","活动截止时间"+StringUtil.getTimeMDHM(discussDetail.getEndTime()),
                 postId,baseUserId==discussDetail.getCreateUserId());
         dialog.show();

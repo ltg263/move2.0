@@ -163,8 +163,6 @@ public class DetailsDiscussActivity extends BaseActivity {
     TextView tvXs2;
     @BindView(R.id.tv_xs_3)
     TextView tvXs3;
-    @BindView(R.id.ll_xs)
-    LinearLayout llXs;
     @BindView(R.id.iv)
     ImageView iv;
     @BindView(R.id.tv_xs_title)
@@ -274,7 +272,7 @@ public class DetailsDiscussActivity extends BaseActivity {
 
     @OnClick({R.id.tv_follow_status, R.id.iv_post_small_images, R.id.tv_send, R.id.rl_ge_ren,
             R.id.tv_commendation_Num, R.id.rl_sc, R.id.rl_dz, R.id.rl_pl, R.id.tv_content,
-            R.id.tv_sort_new, R.id.tv_sort_time,R.id.tv_xs_3,R.id.rl_xs_xsgc})
+            R.id.tv_sort_new, R.id.tv_sort_time,R.id.ll_xs,R.id.rl_xs_xsgc})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_follow_status:
@@ -406,7 +404,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                     initNewsDataList();
                 }
                 break;
-            case R.id.tv_xs_3:
+            case R.id.ll_xs:
                     if (SharedUtils.getLoginZt()) {
                         IntentUtil.go2DetailsByType(10, String.valueOf(postIdToReward));
                     } else {

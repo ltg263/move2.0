@@ -90,7 +90,7 @@
             android:layout_alignParentRight="true"
             android:drawableRight="@drawable/ic_share"
             android:drawablePadding="@dimen/dp_5"
-            android:text="规则"
+            android:text="@string/rule"
             android:textColor="@color/title_gray"
             android:layout_centerVertical="true"
             android:paddingHorizontal="@dimen/dp_15"

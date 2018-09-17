@@ -198,6 +198,7 @@ public class SearchProjectBean extends BaseRes{
             private float totalScore;
             private int raterNum;
             private int followerNum;
+            private int followStatus;
             private int commentsNum;
             private int collectNum;
             private int totalRaterNum;
@@ -207,6 +208,14 @@ public class SearchProjectBean extends BaseRes{
             private int projectUserId;
             private String projectMobile;
             private int projectUserType;
+
+            public int getFollowStatus() {
+                return followStatus;
+            }
+
+            public void setFollowStatus(int followStatus) {
+                this.followStatus = followStatus;
+            }
 
             public int getProjectId() {
                 return projectId;

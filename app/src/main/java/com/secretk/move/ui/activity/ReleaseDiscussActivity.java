@@ -99,6 +99,10 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
         MoveApplication.getContext().addActivity(this);
         StatusBarUtil.setLightMode(this);
         StatusBarUtil.setColor(this, UiUtils.getColor(R.color.main_background), 0);
+        projectId = getIntent().getIntExtra("projectId", 0);
+        projectPay = getIntent().getStringExtra("projectPay");
+        tagInfos = getIntent().getStringExtra("tagInfos");
+        postId = getIntent().getIntExtra("postId", 0);
         if(postId!=0){
             tvTitle.setText("悬赏回答");
         }
@@ -138,10 +142,6 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
 
         ed_title.setHint(Html.fromHtml("请输入标题 <small>(6-60字之间)</small>"));
         loadingDialog = new LoadingDialog(this);
-        projectId = getIntent().getIntExtra("projectId", 0);
-        projectPay = getIntent().getStringExtra("projectPay");
-        tagInfos = getIntent().getStringExtra("tagInfos");
-        postId = getIntent().getIntExtra("postId", 0);
         beans = new DiscussLabelListbean.TagList();
         beans.setTagId(String.valueOf(projectId));
         beans.setTagName(projectPay);
@@ -352,9 +352,14 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
             public void onCompleted(String str) {
                 try {
                     JSONObject object = new JSONObject(str);
-                    int postId = object.getJSONObject("data").getInt("postId");
-                    IntentUtil.startPublishSucceedActivity(String.valueOf(postId),
-                            "发表爆料", getResources().getString(R.string.discuss_succeed),getResources().getString(R.string.not_go_look), Constants.PublishSucceed.DISCUSS);
+                    int post = object.getJSONObject("data").getInt("postId");
+                    if(postId!=0){
+                        IntentUtil.startPublishSucceedActivity(String.valueOf(post),
+                                "悬赏回答", getResources().getString(R.string.discuss_reward_hd),getResources().getString(R.string.not_go_look), Constants.PublishSucceed.DISCUSS);
+                    }else{
+                        IntentUtil.startPublishSucceedActivity(String.valueOf(post),
+                                "发表爆料", getResources().getString(R.string.discuss_succeed),getResources().getString(R.string.not_go_look), Constants.PublishSucceed.DISCUSS);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

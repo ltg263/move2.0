@@ -19,6 +19,7 @@ import com.secretk.move.baseManager.Constants;
 import com.secretk.move.bean.SearchContentBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.LoginHomeActivity;
+import com.secretk.move.ui.adapter.MainBlFragmentRecyclerAdapter;
 import com.secretk.move.ui.adapter.UnifyUserListXsAdapter;
 import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.LogUtil;
@@ -51,6 +52,7 @@ public class RewardSquareFragment extends LazyFragment implements ItemClickListe
     @BindView(R.id.rl_top_theme)
     RelativeLayout rlTopTheme;
     private UnifyUserListXsAdapter adapter;
+    private MainBlFragmentRecyclerAdapter adapterHd;
     int pageIndex = 1;
     int position;
     boolean isShouUI = false;
@@ -64,9 +66,15 @@ public class RewardSquareFragment extends LazyFragment implements ItemClickListe
     public void initViews() {
         setVerticalManager(recycler);
         initRefresh();
-        adapter = new UnifyUserListXsAdapter(getActivity());
-        recycler.setAdapter(adapter);
-        adapter.setItemListener(this);
+        if(position == 0 || position == 1){
+            adapter = new UnifyUserListXsAdapter(getActivity());
+            recycler.setAdapter(adapter);
+            adapter.setItemListener(this);
+        }else{
+            adapterHd = new MainBlFragmentRecyclerAdapter(getActivity());
+            recycler.setAdapter(adapterHd);
+            adapterHd.setItemListener(this);
+        }
     }
 
     private void initRefresh() {
@@ -135,10 +143,19 @@ public class RewardSquareFragment extends LazyFragment implements ItemClickListe
                 }
                 refreshLayout.setVisibility(View.VISIBLE);
                 convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
-                if (pageIndex > 2) {
-                    adapter.setAddData(detailsBean.getRows());
-                } else {
-                    adapter.setData(detailsBean.getRows());
+
+                if(position == 0 || position == 1){
+                    if (pageIndex > 2) {
+                        adapter.setAddData(detailsBean.getRows());
+                    } else {
+                        adapter.setData(detailsBean.getRows());
+                    }
+                }else{
+                    if (pageIndex > 2) {
+                        adapterHd.setAddData(detailsBean.getRows());
+                    } else {
+                        adapterHd.setData(detailsBean.getRows());
+                    }
                 }
             }
             @Override

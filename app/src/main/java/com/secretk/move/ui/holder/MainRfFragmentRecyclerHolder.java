@@ -137,6 +137,9 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             tvUserFolly.setVisibility(View.GONE);
         }
         tvTitle.setText(bean.getPostTitle());
+        if(StringUtil.isBlank(bean.getPostTitle())){
+            tvTitle.setVisibility(View.GONE);
+        }
         tvDesc.setText(bean.getPostShortDesc());
         showRecommend(bean);
         if(StringUtil.isNotBlank(bean.getProjectCode())){
@@ -258,6 +261,9 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 if (SharedUtils.getLoginZt()) {
                     int postId = bean.getPostId();
                     int postType = bean.getPostType();
+                    if(postType==4){
+                        postType=2;
+                    }
                     IntentUtil.go2DetailsByType(postType, String.valueOf(postId));
                 } else {
                     IntentUtil.startActivity(LoginHomeActivity.class);
@@ -357,6 +363,9 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                     case 3:
                         uslStr=Constants.ARTICLE_SHARE+bean.getPostId();
                         break;
+                    case 4:
+                        uslStr=Constants.DISCUSS_SHARE+bean.getPostId();
+                        break;
                 }
                 String imgUrl ="";
                 if(imageLists!=null && imageLists.size()>0){
@@ -381,6 +390,9 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 tvSore.setVisibility(View.GONE);
                 break;
             case 3:
+                tvSore.setVisibility(View.GONE);
+                break;
+            case 4:
                 tvSore.setVisibility(View.GONE);
                 break;
         }
@@ -411,7 +423,8 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
 
     private void setCrackTag(RowsBean discussDetail, int type){
         String tagVal = discussDetail.getTagInfos();
-        if(type==1){
+//        if(type==1){
+        if(StringUtil.isBlank(tagVal)){
             tagVal=discussDetail.getEvaluationTags();
         }
         tvCrackDown.setVisibility(View.GONE);

@@ -143,12 +143,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="10dp"
-                android:drawableTop="@drawable/ic_share_qzone"
+                android:drawableTop="@drawable/ic_share_bstp"
                 android:gravity="center_horizontal"
                 android:text="保存图片"
                 android:textColor="@color/title_gray"
                 android:textSize="@dimen/sp_12"
-                android:visibility="visible" />
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tv_share_kw"
