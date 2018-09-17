@@ -83,6 +83,8 @@ public class FindFragment extends LazyFragment {
     LinearLayout homeFind3;
     @BindView(R.id.home_find_4)
     LinearLayout homeFind4;
+    @BindView(R.id.ll_jdwk)
+    LinearLayout ll_jdwk;
     @BindView(R.id.rv_new_pro)
     RecyclerView rvNewPro;
     @BindView(R.id.rv_new_user)
@@ -409,6 +411,7 @@ public class FindFragment extends LazyFragment {
                     pageIndex=1;
                     getMiningActivityPageList();
                 }
+                rcv.scrollTo(0, llTop.getTop());
                 break;
             case R.id.ll_jdwk:
                 if(!isNotDataJdwk){
@@ -424,6 +427,7 @@ public class FindFragment extends LazyFragment {
                     pageIndexXh=1;
                     getMiningActivityXhPageList();
                 }
+                rcv.scrollTo(0, llTop.getTop());
                 break;
         }
     }

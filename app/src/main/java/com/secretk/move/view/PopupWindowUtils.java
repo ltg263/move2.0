@@ -233,6 +233,7 @@ public class PopupWindowUtils extends PopupWindow {
                             return;
                         }
                         dialogInterface.btnConfirm(season);
+                        KeybordS.closeKeybord(etLogContent,mcontext);
                         dismiss();
                         break;
                     case R.id.iv_log_cancel:
