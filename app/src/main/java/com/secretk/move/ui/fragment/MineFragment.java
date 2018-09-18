@@ -358,7 +358,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 sharedUtils.put(Constants.USER_TYPE, userInfo.getData().getUser().getUserType());
                 sharedUtils.put(Constants.MOBILE, userInfo.getData().getUser().getMobile());
                 sharedUtils.put(Constants.USER_ID, userInfo.getData().getUser().getUserId());
-                sharedUtils.put(Constants.KFF_COIN_NUM, String.valueOf(userInfo.getData().getUser().getKffCoinNum()));
+                sharedUtils.put(Constants.KFF_COIN_NUM, String.valueOf(userInfo.getData().getUser().getCoinLock()));
                 String mesSum = "";
                 int messageSum = userInfo.getData().getMessageSum();
                 rlMesNum.setVisibility(View.GONE);

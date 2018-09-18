@@ -210,6 +210,8 @@ public interface Constants {
     String MAIN_RECOMMEND = BASE_URL + "kff/home/recommendList";
     //首页关注
     String MAIN_FOLLOW = BASE_URL + "kff/home/followList";
+    //首页最新
+    String NEWEST_LIST = BASE_URL + "kff/home/newestList";
     //首页打假
     String MAIN_DISCUSS = BASE_URL + "kff/home/getBurstList";
     //青天榜

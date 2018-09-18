@@ -96,6 +96,7 @@ public class MineMoneyGuideActivity extends BaseActivity {
     ProgressBar pbYdJd;
     @BindView(R.id.tv_yd_num)
     TextView tvYdNum;
+    private int hierarchyType;
 
     @Override
     protected int setOnCreate() {
@@ -136,6 +137,7 @@ public class MineMoneyGuideActivity extends BaseActivity {
 
     //(所有领取状态1 表示已领取 0 表示去完成)
     private void initUiData(MoneyGuide.DataBean.ResultBean resultBean) {
+        hierarchyType = resultBean.getStatusHierarchyType();
         tvJrzbNum.setText(resultBean.getTodayAward()+"");
         tvZbQfs.setText("区分指数"+resultBean.getStatusHierarchyType());
         tvDlFind.setText(resultBean.getLoginAward()+"FIND");
@@ -224,33 +226,38 @@ public class MineMoneyGuideActivity extends BaseActivity {
 //                ToastUtils.getInstance().show("问号");
                 break;
             case R.id.tv_dl_find:
+                IntentUtil.startActivity(MineAssetDistributedActivity.class);
 //                ToastUtils.getInstance().show("登录奖励");
                 break;
             case R.id.tv_yqhy_wh:
 //                ToastUtils.getInstance().show("邀请好友问号");
                 break;
             case R.id.tv_ljyq:
+                if(hierarchyType==0){
+                    IntentUtil.startActivity(MineApproveSubmitiCertificateActivity.class);
+                    return;
+                }
                 ShareView.showShare(this, mHeadView, "", Constants.INVITE_FRIENDS + SharedUtils.singleton().get("invaUIH",""),
                         "免费领取价值500RMB的数字货币", "点击领取红包",Constants.SHARE_HONGBAO_IOCN, 0);
                 break;
             case R.id.tv_pl_go:
-                finish();
+                IntentUtil.go2DetailsByType(5,"");
 //                ToastUtils.getInstance().show("评论");
                 break;
             case R.id.tv_dz_go:
-                finish();
+                IntentUtil.go2DetailsByType(5,"");
 //                ToastUtils.getInstance().show("点赞");
                 break;
             case R.id.tv_fx_go:
-                finish();
+                IntentUtil.go2DetailsByType(5,"");
 //                ToastUtils.getInstance().show("分享");
                 break;
             case R.id.tv_pc_go:
-                finish();
+                IntentUtil.go2DetailsByType(5,"");
 //                ToastUtils.getInstance().show("评测");
                 break;
             case R.id.tv_yd_go:
-                finish();
+                IntentUtil.go2DetailsByType(5,"");
 //                ToastUtils.getInstance().show("阅读");
                 break;
         }

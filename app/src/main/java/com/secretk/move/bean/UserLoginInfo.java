@@ -200,6 +200,7 @@ public class UserLoginInfo extends BaseRes{
             private int discussNum;
             private int articleNum;
             private double kffCoinNum;
+            private double coinLock;
             private String  areaName;
             private long createTime;
             private String createTimeStr;
@@ -212,6 +213,14 @@ public class UserLoginInfo extends BaseRes{
             private String areaCode;
             private String referUserId;
             private int referLevel;
+
+            public double getCoinLock() {
+                return coinLock;
+            }
+
+            public void setCoinLock(double coinLock) {
+                this.coinLock = coinLock;
+            }
 
             public int getFollowStatus() {
                 return followStatus;

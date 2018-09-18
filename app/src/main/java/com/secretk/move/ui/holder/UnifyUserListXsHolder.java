@@ -234,7 +234,15 @@ public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
         tvDesc.setText(StringUtil.getBeanString(bean.getPostShortDesc()));
         tvFindNum.setText(b);
         //截止时间08.08 12:00，已有12人回答
-        String endTime = "截止时间"+StringUtil.getTimeMDHM(bean.getEndTime())+"，已有"+bean.getAnswerCount()+"人回答";
+        //// status:/悬赏的状态：0-进行中，1-已结束，2-已撤销
+        String endTime="";
+        if(bean.getState() == 0){
+            endTime = "截止时间"+StringUtil.getTimeMDHM(bean.getEndTime())+"，已有"+bean.getAnswerCount()+"人回答";
+        }else if(bean.getState() == 1){
+            endTime = "已结束，已有"+bean.getAnswerCount()+"人回答";
+        }else if(bean.getState() == 2){
+            endTime = "已撤销，已有"+bean.getAnswerCount()+"人回答";
+        }
         tvEndTime.setText(endTime);
         imagesadapter = new ImagesAdapter(mContext);
         rvImg.setAdapter(imagesadapter);

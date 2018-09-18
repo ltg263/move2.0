@@ -116,6 +116,7 @@ public class DetailsRewardBase extends BaseRes{
         private long updateTime;
         private String updateTimeStr;
         private int status;
+        private int state;
         private Object discussId;
         private Object disscussContents;
         private String tagInfos;
@@ -125,7 +126,7 @@ public class DetailsRewardBase extends BaseRes{
         private Object evaluationTags;
         private Object praiseIncome;
         private int donateIncome;
-        private int postTotalIncome;
+        private double postTotalIncome;
         private Object postUuid;
         private int isNiceChoice;
         private long niceChoiceAt;
@@ -136,6 +137,14 @@ public class DetailsRewardBase extends BaseRes{
         private int answerCount;
         private long endTime;
         private String rewardContents;
+
+        public int getState() {
+            return state;
+        }
+
+        public void setState(int state) {
+            this.state = state;
+        }
 
         public int getFollowStatus() {
             return followStatus;
@@ -465,11 +474,11 @@ public class DetailsRewardBase extends BaseRes{
             this.donateIncome = donateIncome;
         }
 
-        public int getPostTotalIncome() {
+        public double getPostTotalIncome() {
             return postTotalIncome;
         }
 
-        public void setPostTotalIncome(int postTotalIncome) {
+        public void setPostTotalIncome(double postTotalIncome) {
             this.postTotalIncome = postTotalIncome;
         }
 

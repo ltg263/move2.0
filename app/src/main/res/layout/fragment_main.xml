@@ -7,70 +7,59 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:visibility="gone">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/tool_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/main_background"
-            android:fitsSystemWindows="true">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tab_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:background="@color/main_background"
-                    android:fillViewport="false"
-                    app:tabIndicatorColor="@color/app_background"
-                    app:tabMode="scrollable"
-                    app:tabSelectedTextColor="@color/app_background"
-                    app:tabTextAppearance="@style/TabLayoutTextStyle"
-                    app:tabTextColor="#aeaeae" />
-            </RelativeLayout>
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:paddingHorizontal="@dimen/dp_15"
+        android:paddingVertical="@dimen/dp_10"
+        android:orientation="horizontal">
 
-        <net.lucode.hackware.magicindicator.MagicIndicator
-            android:id="@+id/magic_indicator_title"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_gravity="bottom"
-            android:layout_toLeftOf="@id/iv_search"
-            android:background="@color/white"
-            app:layout_collapseMode="pin" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/iv_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/iv_edit"
-            android:padding="@dimen/dp_10"
-            android:src="@drawable/main_search" />
+            <TextView
+                android:id="@+id/tv_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_weight="1"
+                android:background="@drawable/shape_fragment_topic_search"
+                android:drawableLeft="@drawable/main_search_gray"
+                android:gravity="center_vertical"
+                android:hint="  搜索项目.用户.内容.话题"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/dp_5"
+                android:paddingLeft="@dimen/dp_25"
+                android:paddingTop="@dimen/dp_5"
+                android:textColor="@color/black"
+                android:textColorHint="@color/title_gray_aa"
+                android:textSize="@dimen/sp_12" />
 
-        <ImageView
-            android:id="@+id/iv_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:padding="@dimen/dp_10"
-            android:src="@drawable/main_menu_publish" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/main_menu_publish"
+                android:drawablePadding="@dimen/dp_5"
+                android:gravity="center_vertical"
+                android:onClick="search"
+                android:text="发表"
+                android:textColor="@color/colorPrimary" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:id="@+id/magic_indicator_title"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        app:layout_collapseMode="pin" />
 
     <com.secretk.move.view.ViewPagerFixed
         android:id="@+id/vp_main_children"

@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.secretk.move.R;
 import com.secretk.move.base.LazyFragment;
@@ -28,6 +29,7 @@ import com.secretk.move.ui.activity.ReleaseRewardOneActivity;
 import com.secretk.move.ui.activity.SearchActivity;
 import com.secretk.move.ui.activity.SearchAllActivity;
 import com.secretk.move.ui.activity.SelectProjectActivity;
+import com.secretk.move.ui.adapter.HomePageAdapter;
 import com.secretk.move.ui.adapter.MainFragmentPagerAdapter;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.UiUtils;
@@ -54,20 +56,13 @@ import butterknife.BindView;
 public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuItemClickListener {
     @BindView(R.id.vp_main_children)
     ViewPagerFixed vp_main_children;
-    @BindView(R.id.tool_bar)
-    Toolbar tool_bar;
-    @BindView(R.id.tab_layout)
-    TabLayout tab_layout;
-    MainFragmentPagerAdapter adapter;
-    @BindView(R.id.iv_search)
-    ImageView ivSearch;
-    @BindView(R.id.iv_edit)
-    ImageView ivEdit;
-    public String[] head_list;
+    HomePageAdapter adapter;
+    @BindView(R.id.tv_search)
+    TextView tvSearch;
+    @BindView(R.id.tv_edit)
+    TextView tvEdit;
     Dialog dialog;
     Intent intent;
-//    @BindView(R.id.main_content)
-//    CoordinatorLayout main_content;
     @BindView(R.id.magic_indicator_title)
     MagicIndicator magicIndicatorTitle;
 
@@ -78,42 +73,36 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
 
     @Override
     public void initViews() {
-        tool_bar.inflateMenu(R.menu.activity_main_menu);
-        tool_bar.setNavigationIcon(R.drawable.main_search);
-        adapter = new MainFragmentPagerAdapter(getChildFragmentManager());
-        vp_main_children.setAdapter(adapter);
-        vp_main_children.setOffscreenPageLimit(3);
-        tab_layout.setupWithViewPager(vp_main_children);
-        tab_layout.setTabMode(TabLayout.MODE_FIXED);
-        tool_bar.setOnMenuItemClickListener(this);
+        adapter = new HomePageAdapter(getChildFragmentManager());
 
-        tool_bar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SearchActivity.class);
-                startActivity(intent);
-            }
-        });
-        ivSearch.setOnClickListener(new View.OnClickListener() {
+        MainBlueGzFragment gzFragment = new MainBlueGzFragment();
+        MainBlueFxFragment fxFragment = new MainBlueFxFragment();
+        MainBluePcFragment pcFragment = new MainBluePcFragment();
+        MainBlueZxFragment zxFragment = new MainBlueZxFragment();
+//        MainBlueBlFragment blFragment = new MainBlueBlFragment();
+        MainBlueXsFragment xsFragment = new MainBlueXsFragment();
+        adapter.addFragment(gzFragment, "关注");
+        adapter.addFragment(fxFragment, "推荐");
+        adapter.addFragment(pcFragment, "评测");
+        adapter.addFragment(zxFragment, "最新");
+//        adapter.addFragment(blFragment, "爆料");
+        adapter.addFragment(xsFragment, "悬赏");
+        vp_main_children.setOffscreenPageLimit(5);
+        vp_main_children.setAdapter(adapter);
+        MagicIndicatorUtils.initMagicIndicator(getActivity(),adapter.getmFragmentTitles(),vp_main_children,magicIndicatorTitle);
+        tvSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), SearchAllActivity.class);
                 startActivity(intent);
             }
         });
-        ivEdit.setOnClickListener(new View.OnClickListener() {
+        tvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 initDailog();
             }
         });
-        TabLayoutLenth();
-        List<String> list = new ArrayList<>();
-        list.add("推荐");
-        list.add("关注");
-        list.add("爆料");
-        list.add("悬赏");
-        MagicIndicatorUtils.initMagicIndicator(getActivity(),list,vp_main_children,magicIndicatorTitle);
     }
 
     public ViewPagerFixed getViewPagerFixed() {
@@ -122,21 +111,15 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
 
     @Override
     public void onFirstUserVisible() {
-        head_list = UiUtils.getStringArray(R.array.fragment_main_titles);
-        for (String name : head_list) {
-            tab_layout.addTab(tab_layout.newTab().setText(name));
-        }
-        vp_main_children.setOffscreenPageLimit(head_list.length);
-        adapter.setData(head_list);
     }
 
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-
         initDailog();
         return false;
     }
+
 
     private void initDailog() {
         dialog = new Dialog(getContext(), R.style.Dialog_Fullscreen);
@@ -144,9 +127,7 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         View view = inflater.inflate(R.layout.dialog_release, null);
         RelativeLayout rl_parent = view.findViewById(R.id.rl_parent);
         Bitmap bitmap=screenShotWithoutStatusBar(getActivity());
-       rl_parent.setBackground(new BitmapDrawable(getResources(),blurBitmap(bitmap,25)));
-
-
+        rl_parent.setBackground(new BitmapDrawable(getResources(),blurBitmap(bitmap,25)));
         view.findViewById(R.id.ll_evaluation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -219,16 +200,6 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
                     ((MainBlueSkyFragment)fragment).onUserVisible();
             }
         }
-    }
-
-    public void TabLayoutLenth() {
-        tab_layout.post(new Runnable() {
-            @Override
-            public void run() {
-                StatusBarUtil.setIndicator(tab_layout, 10, 10);
-            }
-        });
-
     }
 
 

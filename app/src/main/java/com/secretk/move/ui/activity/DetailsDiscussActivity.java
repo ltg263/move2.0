@@ -545,7 +545,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                 postIdToReward = discussDetail.getPostId();
                 createUserId = discussDetail.getCreateUserId();
                 mHeadView.setTitle(discussDetail.getProjectCode());
-                postShortDesc = discussDetail.getPostShortDesc();
+                postShortDesc = discussDetail.getDisscussContents();
                 mHeadView.setTitleVice("/" + discussDetail.getProjectChineseName());
                 if (discussDetail.getCommentsNum() != 0) {
                     tvPlNum.setVisibility(View.VISIBLE);
@@ -629,7 +629,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                     tvXs2.setText(discussDetail.getPostShortDesc());
                     tvXs3.setVisibility(View.VISIBLE);
                     if(discussDetail.getRewardMoneyToOne()>0){
-                        tvPostShortDesc.setText(Html.fromHtml("<font color=\"#ff2851\">【奖励"+discussDetail.getRewardMoneyToOne()+"FIND】</font>"+postShortDesc));
+                        tvPostShortDesc.setText(Html.fromHtml("<font color=\"#ff2851\">【奖励"+discussDetail.getRewardMoneyToOne()+"FIND】</font>"+discussDetail.getDisscussContents()));
                     }
                 }
 

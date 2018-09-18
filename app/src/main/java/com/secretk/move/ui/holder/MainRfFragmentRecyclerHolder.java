@@ -2,6 +2,7 @@ package com.secretk.move.ui.holder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -155,8 +156,20 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         if(bean.getPostType()==4){
             llXs.setVisibility(View.VISIBLE);
             tvTitle.setVisibility(View.GONE);
-            tvXs1.setText(Html.fromHtml( "<font color=\"#ff2851\">【悬赏 ￥"+bean.getRewardMoney()+"FIND】</font>"
-                    +StringUtil.getBeanString(bean.getPostTitle())));
+//            tvXs1.setText(Html.fromHtml( "<font color=\"#ff2851\">【悬赏 ￥"+bean.getRewardMoney()+"FIND】</font>"
+//                    +StringUtil.getBeanString(bean.getPostTitle())));
+            String htmlFor02 ="<font color=\"#ff2851\">【 <img src='" + R.drawable.ic_jrzb_fing + "'> 悬赏 ￥" + bean.getRewardMoney() + "FIND】</font>"
+                    + StringUtil.getBeanString(bean.getPostTitle());
+            tvXs1.setText(Html.fromHtml(htmlFor02, new Html.ImageGetter() {
+                @Override
+                public Drawable getDrawable(String source) {
+                    int id = Integer.parseInt(source);
+                    Drawable drawable = mContext.getResources().getDrawable(id);
+                    drawable.setBounds(-7, -10, drawable.getIntrinsicWidth() ,
+                            drawable.getIntrinsicHeight());
+                    return drawable;
+                }
+            }, null));
             if(bean.getRewardMoneyToOne()>0){
                 tvDesc.setText(Html.fromHtml("<font color=\"#ff2851\">【奖励"+bean.getRewardMoneyToOne()+"FIND】</font>"+postShortDesc));
             }

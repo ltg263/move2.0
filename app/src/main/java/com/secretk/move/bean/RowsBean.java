@@ -54,6 +54,7 @@ public class RowsBean extends CommonListBase {
     private double evaTotalScore;
     private String postTitle;
     private int postType;
+    private int state;
     private int modelType;
     private String postShortDesc;
     private int commentsNum;
@@ -80,6 +81,14 @@ public class RowsBean extends CommonListBase {
     private List<PostSmallImagesListBean> postSmallImagesList;
     private String postSmallImages;
     private String professionalEvaDetail;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
 
     public int getDisStickTop() {
         return disStickTop;

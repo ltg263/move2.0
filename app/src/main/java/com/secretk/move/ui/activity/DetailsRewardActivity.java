@@ -365,7 +365,16 @@ public class DetailsRewardActivity extends BaseActivity {
                 String c = "<font color=\"#ff2851\">" + b + "</font>" + a;
                 tvPostShortDesc.setText(Html.fromHtml(a));
                 tvXsFind.setText(" 悬赏"+discussDetail.getRewardMoney()+"FIND 】");
-                String endTime = "截止时间"+StringUtil.getTimeMDHM(discussDetail.getEndTime())+"，已有"+discussDetail.getAnswerCount()+"人回答";
+
+                //// status:/悬赏的状态：0-进行中，1-已结束，2-已撤销
+                String endTime="";
+                if(discussDetail.getState() == 0){
+                    endTime =  "截止时间"+StringUtil.getTimeMDHM(discussDetail.getEndTime())+"，已有"+discussDetail.getAnswerCount()+"人回答";
+                }else if(discussDetail.getState() == 1){
+                    endTime = "已结束，已有"+discussDetail.getAnswerCount()+"人回答";
+                }else if(discussDetail.getState() == 2){
+                    endTime = "已撤销，已有"+discussDetail.getAnswerCount()+"人回答";
+                }
                 tvXs2.setText(endTime);
 //                tvPostShortDesc.setText(discussDetail.getDisscussContents());
                 tvCreateTime.setText(StringUtil.getTimeToM(discussDetail.getCreateTime()));

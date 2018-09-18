@@ -533,7 +533,7 @@ public class DialogUtils {
      *            5 分享 6评论 7看涨 8悬赏终止
      * 点赞框
      */
-    public static void showDialogPraise(final Context context, int type, boolean isCollect, double find) {
+    public static void showDialogPraise(final Context context, final int type, final boolean isCollect, double find) {
         final Dialog dialog5 = new Dialog(context, R.style.selectorDialog_bj);
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_praise_find, null);
         TextView tv_praise = view.findViewById(R.id.tv_praise);
@@ -614,7 +614,8 @@ public class DialogUtils {
                 try {
                     Thread.sleep(1000);
                     dialog5.dismiss();
-                    if(context instanceof DetailsRewardActivity){
+                    if(context instanceof DetailsRewardActivity
+                            && type == 8 && isCollect){
                         ((DetailsRewardActivity)context).finish();
                     }
                 } catch (InterruptedException e) {

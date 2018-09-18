@@ -202,12 +202,12 @@ public class MainActivity extends MvpBaseActivity<MainPresenterImpl> implements 
                 case 5://推荐
                     rbMain.setChecked(true);
                     MainPagerFragment f = (MainPagerFragment) adapter.getItem(0);
-                    f.getViewPagerFixed().setCurrentItem(0);
+                    f.getViewPagerFixed().setCurrentItem(1);
                     break;
                 case 6://关注
                     rbMain.setChecked(true);
                     MainPagerFragment f1 = (MainPagerFragment) adapter.getItem(0);
-                    f1.getViewPagerFixed().setCurrentItem(1);
+                    f1.getViewPagerFixed().setCurrentItem(0);
                     break;
                 case 7://项目
                     rbProject.setChecked(true);

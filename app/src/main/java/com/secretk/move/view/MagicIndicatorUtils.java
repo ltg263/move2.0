@@ -90,6 +90,7 @@ public class MagicIndicatorUtils {
                                                 final ViewPagerFixed vp_main_children,MagicIndicator magicIndicator) {
         CommonNavigator commonNavigator = new CommonNavigator(mContext);
         commonNavigator.setSkimOver(true);
+        commonNavigator.setAdjustMode(true);//ture 即标题平分屏幕宽度的模式
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
