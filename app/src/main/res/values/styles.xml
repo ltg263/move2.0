@@ -164,4 +164,23 @@
         <item name="android:textSize">@dimen/sp_12</item>
         <item name="android:visibility">gone</item>
     </style>
+    <!--搜索框-->
+    <style name="TvOReT_View_Style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">@dimen/dp_10</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/shape_fragment_topic_search</item>
+        <item name="android:drawableLeft">@drawable/main_search_gray</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:hint">搜索项目.用户.内容.话题</item>
+        <item name="android:imeOptions">actionSearch</item>
+        <item name="android:inputType">text</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:padding">@dimen/dp_10</item>
+        <item name="android:textColor">@color/title_gray</item>
+        <item name="android:textColorHint">@color/title_gray_aa</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:drawablePadding">@dimen/dp_10</item>
+    </style>
 </resources>

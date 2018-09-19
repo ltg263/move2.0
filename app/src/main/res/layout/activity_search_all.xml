@@ -24,23 +24,7 @@
 
                 <EditText
                     android:id="@+id/ed_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:background="@drawable/shape_fragment_topic_search"
-                    android:drawableLeft="@drawable/main_search_gray"
-                    android:gravity="center_vertical"
-                    android:hint="  搜索项目.用户.内容.话题"
-                    android:imeOptions="actionSearch"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:paddingBottom="@dimen/dp_5"
-                    android:paddingLeft="@dimen/dp_25"
-                    android:paddingTop="@dimen/dp_5"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/title_gray_aa"
-                    android:textSize="@dimen/sp_12" />
+                    style="@style/TvOReT_View_Style" />
 
                 <TextView
                     android:layout_width="match_parent"

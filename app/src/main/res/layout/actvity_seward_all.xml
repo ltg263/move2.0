@@ -26,48 +26,9 @@
                 android:padding="@dimen/dp_10"
                 android:src="@drawable/toobar_back_blue" />
 
-            <EditText
-                android:id="@+id/ed_search"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/shape_fragment_topic_search"
-                android:drawableLeft="@drawable/main_search_gray"
-                android:drawablePadding="@dimen/dp_10"
-                android:gravity="center_vertical"
-                android:hint="搜索相关币种"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:maxLines="1"
-                android:paddingBottom="@dimen/dp_5"
-                android:paddingLeft="@dimen/dp_20"
-                android:paddingTop="@dimen/dp_5"
-                android:textColor="@color/black"
-                android:textColorHint="@color/title_gray_aa"
-                android:textCursorDrawable="@drawable/shape_edit_cursor"
-                android:textSize="@dimen/sp_12"
-                android:visibility="gone" />
-
             <TextView
                 android:id="@+id/tv_search_1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/shape_fragment_topic_search"
-                android:drawableLeft="@drawable/main_search_gray"
-                android:drawablePadding="@dimen/dp_10"
-                android:gravity="center_vertical"
-                android:hint="搜索相关币种"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:maxLines="1"
-                android:paddingBottom="@dimen/dp_5"
-                android:paddingLeft="@dimen/dp_20"
-                android:paddingTop="@dimen/dp_5"
-                android:textColor="@color/black"
-                android:textColorHint="@color/title_gray_aa"
-                android:textCursorDrawable="@drawable/shape_edit_cursor"
-                android:textSize="@dimen/sp_12" />
+                style="@style/TvOReT_View_Style"/>
 
             <TextView
                 android:id="@+id/tv_search"
