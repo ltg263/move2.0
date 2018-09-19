@@ -302,7 +302,10 @@ public class SharePopupWindow extends PopupWindow implements PlatformActionListe
 
 
     private void shareToWechat(final int i) {
-        if(!imgUrl.equals(Constants.SHARE_MR_IOCN)){
+        if(StringUtil.isBlank(imgUrl)){
+            imgUrl = Constants.SHARE_MR_IOCN;
+        }
+        if(!imgUrl.equals(Constants.SHARE_HONGBAO_IOCN)){
             imgUrl = Constants.SHARE_MR_IOCN;
         }
         Platform.ShareParams paramsToShare = new Platform.ShareParams();
