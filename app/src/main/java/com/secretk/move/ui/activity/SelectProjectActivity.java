@@ -28,6 +28,7 @@ import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.adapter.SelectProjectAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StatusBarUtil;
@@ -111,7 +112,7 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
         setTopData();
         initRefresh();
         publicationType = getIntent().getIntExtra("publication_type", 0);
-        if(publicationType == 4){
+        if(publicationType == 4 || publicationType==-1){
             reward = getIntent().getBundleExtra("reward");
         }
         projectId = getIntent().getIntExtra("projectId", -1);
@@ -297,13 +298,22 @@ public class SelectProjectActivity extends BaseActivity implements ItemClickList
                 break;
             case R.id.tv_search_1:
                 intent = new Intent(this, SearchActivity.class);
+                if(reward!=null){
+                    publicationType=4;
+                    intent.putExtra("reward", reward);
+                }
                 intent.putExtra("publication_type",publicationType);
                 intent.putExtra("search_type",-1);
                 startActivity(intent);
                 break;
             case R.id.tv_search:
-//                searchProject();
                 intent = new Intent(this, SearchActivity.class);
+                if(reward!=null){
+                    publicationType=4;
+                    intent.putExtra("reward", reward);
+                }
+                intent.putExtra("publication_type",publicationType);
+                intent.putExtra("search_type",-1);
                 startActivity(intent);
                 break;
         }

@@ -95,8 +95,8 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     TextView tvTotalIncome;
     @BindView(R.id.tvShare)
     TextView tvShare;
-    @BindView(R.id.tv_stick)
-    TextView tvStick;
+    @BindView(R.id.iv_stick)
+    ImageView ivStick;
     @BindView(R.id.ll_xs)
     LinearLayout llXs;
     @BindView(R.id.tv_xs_1)
@@ -105,7 +105,6 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     TextView tvXs2;
     private ImagesAdapter imagesadapter;
     Context mContext;
-    List<Integer> tagIdLists = new ArrayList<>();
     public MainRfFragmentRecyclerHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -123,15 +122,15 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
         tvUserName.setText(StringUtil.getBeanString(bean.getCreateUserName()));
         tvTime.setText(time);
         tvUserFolly.setVisibility(View.VISIBLE);
-        tvStick.setVisibility(View.GONE);
+        ivStick.setVisibility(View.GONE);
         if(bean.getDisStickTop() ==1){
-            tvStick.setVisibility(View.VISIBLE);
+            ivStick.setVisibility(View.VISIBLE);
         }
         if(mContext instanceof HomeActivity){
-            tvStick.setVisibility(View.GONE);
+            ivStick.setVisibility(View.GONE);
         }
         if(mContext instanceof ProjectActivity){
-            tvStick.setVisibility(View.GONE);
+            ivStick.setVisibility(View.GONE);
         }
         if(bean.getFollowStatus() == 1){
             tvUserFolly.setSelected(true);
@@ -397,7 +396,7 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                         uslStr=Constants.ARTICLE_SHARE+bean.getPostId();
                         break;
                     case 4:
-                        uslStr=Constants.DISCUSS_SHARE+bean.getPostId();
+                        uslStr=Constants.ANSWER+bean.getPostId();
                         break;
                 }
                 String imgUrl ="";
@@ -486,20 +485,17 @@ public class MainRfFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                     if(i==0){
                         tvCrackDown.setVisibility(View.VISIBLE);
                         tvCrackDown.setText(strObj.getString("tagName"));
-                        tagIdLists.add(strObj.getInt("tagId"));
-                        IntentUtil.startCrackDown(tvCrackDown,tagIdLists.get(0));
+                        IntentUtil.startCrackDown(tvCrackDown,strObj.getInt("tagId"));
                     }
                     if(i==1){
                         tvCrackDown1.setVisibility(View.VISIBLE);
                         tvCrackDown1.setText(strObj.getString("tagName"));
-                        tagIdLists.add(strObj.getInt("tagId"));
-                        IntentUtil.startCrackDown(tvCrackDown1,tagIdLists.get(1));
+                        IntentUtil.startCrackDown(tvCrackDown1,strObj.getInt("tagId"));
                     }
                     if(i==2){
                         tvCrackDown2.setVisibility(View.VISIBLE);
                         tvCrackDown2.setText(strObj.getString("tagName"));
-                        tagIdLists.add(strObj.getInt("tagId"));
-                        IntentUtil.startCrackDown(tvCrackDown2,tagIdLists.get(2));
+                        IntentUtil.startCrackDown(tvCrackDown2,strObj.getInt("tagId"));
                     }
 //                    tagOnly[i] = "#" + strObj.getString("tagName") + "#";
 //                    tagAll += "#" + strObj.getString("tagName") + "#   ";

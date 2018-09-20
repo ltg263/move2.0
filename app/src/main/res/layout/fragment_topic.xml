@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_gray"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <com.secretk.move.view.RecycleNestedScrollView
@@ -88,11 +89,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_line"
                 android:layout_below="@id/ll"
-                android:background="@color/cut_off_rule"/>
+                android:background="@color/cut_off_rule" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_below="@id/view"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_review"
@@ -100,6 +102,7 @@
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
                     android:visibility="gone" />
+
                 <ImageView
                     android:id="@+id/iv_not_content"
                     android:layout_width="wrap_content"

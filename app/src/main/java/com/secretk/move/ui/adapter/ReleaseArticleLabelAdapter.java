@@ -3,6 +3,7 @@ package com.secretk.move.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -79,6 +80,10 @@ public class ReleaseArticleLabelAdapter extends RecyclerView.Adapter<ReleaseArti
         list.put(-1,beans);
         notifyDataSetChanged();
     }
+    Bundle bundle ;
+    public void setBundle(Bundle bundle) {
+        this.bundle = bundle;
+    }
 
 
     public class ViewHolder extends RecyclerViewBaseHolder {
@@ -95,6 +100,9 @@ public class ReleaseArticleLabelAdapter extends RecyclerView.Adapter<ReleaseArti
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, SelectProjectActivity.class);
                     intent.putExtra("publication_type",-1);
+                    if(bundle!=null){
+                        intent.putExtra("reward", bundle);
+                    }
                     mContext.startActivity(intent);
                 }
             });

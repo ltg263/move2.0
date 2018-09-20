@@ -160,9 +160,9 @@ public class TopicDiscussFragment extends LazyFragment{
         isHaveData = true;
         refreshLayouF.setNoMoreData(false);
         pageIndex=1;
-        isSelectJx=true;
-        tvJx.setTextColor(getResources().getColor(R.color.app_background));
-        tvZx.setTextColor(getResources().getColor(R.color.theme_title));
+        isSelectJx=false;
+        tvJx.setTextColor(getResources().getColor(R.color.theme_title));
+        tvZx.setTextColor(getResources().getColor(R.color.app_background));
         getLoadData();
     }
     boolean isSelectJx = false;

@@ -1,114 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_gray"
     android:orientation="vertical">
 
-    <com.secretk.move.view.AppBarHeadView
-        android:id="@+id/head_app_server"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/app_background" />
-
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refreshLayout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnablePreviewInEditMode="false">
+        android:orientation="vertical">
 
-        <com.scwang.smartrefresh.header.MaterialHeader
+        <com.secretk.move.view.AppBarHeadView
+            android:id="@+id/head_app_server"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@color/app_background" />
 
-        <android.support.design.widget.CoordinatorLayout
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:srlEnablePreviewInEditMode="false">
 
-            <android.support.design.widget.AppBarLayout
-                android:id="@+id/appbar"
+            <com.scwang.smartrefresh.header.MaterialHeader
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:elevation="0dp"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+                android:layout_height="wrap_content" />
 
-                <android.support.design.widget.CollapsingToolbarLayout
-                    android:id="@+id/collapsing_toolbar"
+            <android.support.design.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.design.widget.AppBarLayout
+                    android:id="@+id/appbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/transparent"
+                    android:background="@color/white"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:elevation="0dp"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-                    <RelativeLayout
+                    <android.support.design.widget.CollapsingToolbarLayout
+                        android:id="@+id/collapsing_toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal">
+                        android:background="@color/transparent"
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-
-                        <ImageView
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:background="@drawable/ic_topic_bj" />
-
-                        <ImageView
-                            android:id="@+id/iv_topic_icon"
-                            android:layout_width="73dp"
-                            android:layout_height="73dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="@dimen/dp_35" />
-
-                        <TextView
-                            android:id="@+id/tv_topic_name"
-                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/iv_topic_icon"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="@dimen/dp_15"
-                            android:text="行情分析"
-                            android:textColor="@color/title_gray"
-                            android:textSize="@dimen/sp_18"
-                            android:textStyle="bold" />
+                            android:gravity="center_horizontal">
 
-                        <TextView
-                            android:id="@+id/tv_topic_sin"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_topic_name"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="@dimen/dp_35"
-                            android:layout_marginTop="@dimen/dp_10"
-                            android:text="行情分析"
-                            android:textColor="@color/title_gray_aa"
-                            android:textSize="@dimen/sp_14"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
-                </android.support.design.widget.CollapsingToolbarLayout>
-            </android.support.design.widget.AppBarLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:background="@drawable/ic_topic_bj" />
 
-                <net.lucode.hackware.magicindicator.MagicIndicator
-                    android:id="@+id/magic_indicator_title"
+                            <ImageView
+                                android:id="@+id/iv_topic_icon"
+                                android:layout_width="73dp"
+                                android:layout_height="73dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_35" />
+
+                            <TextView
+                                android:id="@+id/tv_topic_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/iv_topic_icon"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/dp_15"
+                                android:textColor="@color/title_gray"
+                                android:textSize="@dimen/sp_18"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_topic_sin"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tv_topic_name"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="@dimen/dp_35"
+                                android:layout_marginTop="@dimen/dp_10"
+                                android:textColor="@color/title_gray_aa"
+                                android:textSize="@dimen/sp_14"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
+                    </android.support.design.widget.CollapsingToolbarLayout>
+                </android.support.design.widget.AppBarLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:background="@color/white"
-                    app:layout_collapseMode="pin" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <com.secretk.move.view.ViewPagerFixed
-                    android:id="@+id/view_pager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
+                    <net.lucode.hackware.magicindicator.MagicIndicator
+                        android:id="@+id/magic_indicator_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:background="@color/white"
+                        app:layout_collapseMode="pin" />
 
-        </android.support.design.widget.CoordinatorLayout>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+                    <com.secretk.move.view.ViewPagerFixed
+                        android:id="@+id/view_pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
 
-</LinearLayout>
+            </android.support.design.widget.CoordinatorLayout>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        android:src="@drawable/main_menu_publish"
+        app:backgroundTint="@color/white"
+        app:borderWidth="0.0dip"
+        app:elevation="5.0dip"
+        app:fabSize="normal"
+        app:pressedTranslationZ="10.0dip"
+        app:rippleColor="#a6a6a6" />
+</FrameLayout>

@@ -318,6 +318,9 @@ public class MineProjectListHolder extends RecyclerViewBaseHolder {
                     case 3:
                         uslStr=Constants.ARTICLE_SHARE+bean.getPostId();
                         break;
+                    case 4:
+                        uslStr=Constants.ANSWER+bean.getPostId();
+                        break;
                 }
                 String imgUrl ="";
                 if(imageLists!=null && imageLists.size()>0){

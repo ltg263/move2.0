@@ -30,7 +30,7 @@
     <string name="main_tab_mine">我的</string>
     <string name="main_fragment_recommend">推荐</string>
     <string name="main_fragment_follow">关注</string>
-    <string name="main_fragment_discuss">爆料</string>
+    <string name="main_fragment_discuss">讨论</string>
     <string name="main_fragment_bluesky">悬赏</string>
     <string name="main_publish">发表</string>
     <!-- 注册界面-->
@@ -48,7 +48,7 @@
     <!--用户 @ 项目 界面-->
     <string name="intro">简介</string>
     <string name="review">评测</string>
-    <string name="discuss">爆料</string>
+    <string name="discuss">讨论</string>
     <string name="article">文章</string>
     <string name="market">行情</string>
     <string name="news">新闻</string>
@@ -87,7 +87,7 @@
     <string name="speculative_risk">投资风险</string>
     <string name="assessment">精选评测</string>
     <string name="assessment_new">最新评测</string>
-    <string name="crack_down">爆料</string>
+    <string name="crack_down">讨论</string>
     <string name="project_was_assessed">评测了项目</string>
     <string name="name_authentication">实名认证后获取更多权益\n注册奖励领取、内容奖励、评分加权</string>
 
@@ -277,7 +277,7 @@
     <string name="not_go_look">去看看</string>
     <string name="evaluation_succeed">评测发布成功！</string>
     <string name="article_succeed">文章发布成功！</string>
-    <string name="discuss_succeed">爆料发布成功！</string>
+    <string name="discuss_succeed">讨论发布成功！</string>
     <string name="discuss_reward_hd">回答发布成功！</string>
     <string name="discuss_reward">悬赏发布成功！</string>
 

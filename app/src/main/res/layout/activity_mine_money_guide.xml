@@ -114,7 +114,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/dp_10"
-                android:drawableRight="@drawable/ic_jrzb_wh"
                 android:paddingHorizontal="@dimen/dp_12"
                 android:paddingVertical="@dimen/dp_10"
                 android:text="邀請好友"
@@ -135,8 +134,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/dp_20"
-                    android:text="今日+3000"
                     android:textColor="@color/white"
+                    android:visibility="invisible"
                     android:textSize="@dimen/sp_14"
                     android:textStyle="bold" />
 
@@ -172,7 +171,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/dp_10"
-                android:drawableRight="@drawable/ic_jrzb_wh"
                 android:paddingHorizontal="@dimen/dp_12"
                 android:paddingVertical="@dimen/dp_10"
                 android:text="每日成就"

@@ -180,10 +180,10 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
             ToastUtils.getInstance().show("请输入内容");
             return;
         }
-//        if (getEdTitle().length() < 6) {
-//            ToastUtils.getInstance().show("标题不能少于6个汉字");
-//            return;
-//        }
+        if (getEdContent().length() < 10) {
+            ToastUtils.getInstance().show("内容不能少于10个汉字");
+            return;
+        }
         // tagId,tagName
         sonArray = new JSONArray();
         if(arrayTags!=null){
@@ -358,7 +358,7 @@ public class ReleaseDiscussActivity extends AppCompatActivity implements ItemCli
                                 "悬赏回答", getResources().getString(R.string.discuss_reward_hd),getResources().getString(R.string.not_go_look), Constants.PublishSucceed.DISCUSS);
                     }else{
                         IntentUtil.startPublishSucceedActivity(String.valueOf(post),
-                                "发表爆料", getResources().getString(R.string.discuss_succeed),getResources().getString(R.string.not_go_look), Constants.PublishSucceed.DISCUSS);
+                                "发表讨论", getResources().getString(R.string.discuss_succeed),getResources().getString(R.string.not_go_look), Constants.PublishSucceed.DISCUSS);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -149,9 +149,13 @@ public interface Constants {
       */
     String ARTICLE_SHARE = BASE_IMG_HTML5+"project/article?id=";
     /**
-     * 打假分享
+     * 讨论分享
       */
     String DISCUSS_SHARE= BASE_IMG_HTML5+"project/discuss?id=";
+    /**
+     * 懸賞讨论分享
+      */
+    String ANSWER= BASE_IMG_HTML5+"reward/answer?id=1";
     /**
      * 悬赏分享
       */
@@ -207,9 +211,13 @@ public interface Constants {
     String MY_PINLESS_WALLET = BASE_URL + "kff/user/myPinlessWallet";
 
     //首页推荐
-    String MAIN_RECOMMEND = BASE_URL + "kff/home/recommendList";
+    String MAIN_RECOMMEND = BASE_URL + "kff/home/newRecommendList";
     //首页关注
     String MAIN_FOLLOW = BASE_URL + "kff/home/followList";
+    //首页评测
+    String RECOMMEND_LIST = BASE_URL + "kff/home/recommendList";
+    //悬赏主页列表
+    String REWARD_LIST = BASE_URL+"kff/rewardActivity/rewardList";
     //首页最新
     String NEWEST_LIST = BASE_URL + "kff/home/newestList";
     //首页打假
@@ -392,14 +400,12 @@ public interface Constants {
     String INDEX_SEARCH = BASE_URL+"kff/search/indexSearch";
     //话题 详情
     String GET_DTAG_DETAIL = BASE_URL+"kff/tags/getDTagDetail";
-    //获取话题下的评测，文章，爆料
-    //type	int	帖子类型：1-评测；2-爆料；3-文章
+    //获取话题下的评测，文章，讨论
+    //type	int	帖子类型：1-评测；2-讨论；3-文章
     String GET_POST_INFO_WITH_TAGS = BASE_URL+"kff/post/getPostInfoWithTags";
-    //爆料页面获取话题接口
+    //讨论页面获取话题接口
     String GET_DTAGS_INFO = BASE_URL+"kff/tags/getDTagsInfo";
 
-    //悬赏主页列表
-    String REWARD_LIST = BASE_URL+"kff/rewardActivity/rewardList";
     //悬赏详情
     String REWARD_DETAIL = BASE_URL+"kff/rewardActivity/rewardDetail";
 
@@ -470,8 +476,6 @@ public interface Constants {
         //发布项目
         String PUBLISH_PROJECT = "publish_project";
     }
-
-
     int TOPIC_SORT_BY_NUM = 1;
     int TOPIC_SORT_BY_NAME = 2;
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,6 +40,8 @@ import com.secretk.move.view.AppBarHeadView;
 import com.secretk.move.view.FixGridLayout;
 import com.secretk.move.view.RecycleScrollView;
 import com.secretk.move.view.RewardShareDialog;
+import com.secretk.move.view.ShareInfoImgPopupWindow;
+import com.secretk.move.view.ShareXsImgPopupWindow;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -150,13 +153,21 @@ public class DetailsRewardActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        final RewardShareDialog dialog = new RewardShareDialog(this,R.style.selectorDialog);
-        dialog.setData(discussDetail.getRewardMoney()+"FIND", discussDetail.getPostTitle(),
-                "share_reward_"+System.currentTimeMillis(),Constants.REWARD+postId,
+//        final RewardShareDialog dialog = new RewardShareDialog(this,R.style.selectorDialog);
+//        dialog.setData(discussDetail.getRewardMoney()+"FIND", discussDetail.getPostTitle(),
+//                "share_reward_"+System.currentTimeMillis(),Constants.REWARD+postId,
+//                "扫码参与活动，领取巨额奖励","活动截止时间"+StringUtil.getTimeMDHM(discussDetail.getEndTime()),
+//                postId,baseUserId==discussDetail.getCreateUserId());
+//        dialog.show();
+//        dialog.shareUi();
+
+        ShareXsImgPopupWindow popupWindow = new ShareXsImgPopupWindow(this);
+        popupWindow.setData(discussDetail.getRewardMoney()+"FIND", discussDetail.getPostTitle(),
+                "share_reward_"+postId,Constants.REWARD+postId,
                 "扫码参与活动，领取巨额奖励","活动截止时间"+StringUtil.getTimeMDHM(discussDetail.getEndTime()),
                 postId,baseUserId==discussDetail.getCreateUserId());
-        dialog.show();
-        dialog.shareUi();
+        popupWindow.showAtLocation(tvCreateTime, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        popupWindow.showShareView();
     }
 
     @Override

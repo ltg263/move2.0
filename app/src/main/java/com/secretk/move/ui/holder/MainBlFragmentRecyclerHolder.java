@@ -28,6 +28,7 @@ import com.secretk.move.ui.activity.HomeActivity;
 import com.secretk.move.ui.activity.ImageViewVpAcivity;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.activity.ProjectActivity;
+import com.secretk.move.ui.activity.TopicActivity;
 import com.secretk.move.ui.adapter.ImagesAdapter;
 import com.secretk.move.utils.GlideUtils;
 import com.secretk.move.utils.GridSpacingItemDecoration;
@@ -100,15 +101,15 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
     TextView tvPraise;
     @BindView(R.id.tvComments)
     TextView tvComments;
-    @BindView(R.id.tv_stick)
-    TextView tvStick;
+    @BindView(R.id.iv_stick)
+    ImageView ivStick;
     @BindView(R.id.ll_xs)
     LinearLayout ll_xs;
     @BindView(R.id.tv_xs_1)
     TextView tvXs1;
     @BindView(R.id.tv_xs_2)
     TextView tvXs2;
-    List<Integer> tagIdLists = new ArrayList<>();
+//    List<Integer> tagIdLists = new ArrayList<>();
     private ImagesAdapter imagesadapter;
     private Context mContext;
     public MainBlFragmentRecyclerHolder(View itemView,Context context) {
@@ -130,15 +131,18 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
             tvProjectCode.setVisibility(View.VISIBLE);
             tvProjectCode.setText(bean.getProjectCode());
         }
-        tvStick.setVisibility(View.GONE);
+        ivStick.setVisibility(View.GONE);
         if(bean.getDisStickTop()==1){
-            tvStick.setVisibility(View.VISIBLE);
+            ivStick.setVisibility(View.VISIBLE);
         }
         if(mContext instanceof HomeActivity){
-            tvStick.setVisibility(View.GONE);
+            ivStick.setVisibility(View.GONE);
         }
         if(mContext instanceof ProjectActivity){
-            tvStick.setVisibility(View.GONE);
+            ivStick.setVisibility(View.GONE);
+        }
+        if(mContext instanceof TopicActivity){
+            ivStick.setVisibility(View.GONE);
         }
         StringUtil.getUserType(bean.getUserType(),ivModelType);
         showPostDesc(bean);
@@ -406,20 +410,17 @@ public class MainBlFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                     if(i==0){
                         tvCrackDown.setVisibility(View.VISIBLE);
                         tvCrackDown.setText(strObj.getString("tagName"));
-                        tagIdLists.add(strObj.getInt("tagId"));
-                        IntentUtil.startCrackDown(tvCrackDown,tagIdLists.get(0));
+                        IntentUtil.startCrackDown(tvCrackDown,strObj.getInt("tagId"));
                     }
                     if(i==1){
                         tvCrackDown1.setVisibility(View.VISIBLE);
                         tvCrackDown1.setText(strObj.getString("tagName"));
-                        tagIdLists.add(strObj.getInt("tagId"));
-                        IntentUtil.startCrackDown(tvCrackDown1,tagIdLists.get(1));
+                        IntentUtil.startCrackDown(tvCrackDown1,strObj.getInt("tagId"));
                     }
                     if(i==2){
                         tvCrackDown2.setVisibility(View.VISIBLE);
                         tvCrackDown2.setText(strObj.getString("tagName"));
-                        tagIdLists.add(strObj.getInt("tagId"));
-                        IntentUtil.startCrackDown(tvCrackDown2,tagIdLists.get(2));
+                        IntentUtil.startCrackDown(tvCrackDown2,strObj.getInt("tagId"));
                     }
 
 //                    tagOnly[i] = "#" + strObj.getString("tagName") + "#";

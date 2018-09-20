@@ -1,7 +1,10 @@
 package com.secretk.move.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -68,6 +71,8 @@ public class TopicActivity extends BaseActivity {
     MagicIndicator magicIndicatorTitle;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
     public static final int HOME_REVIEW_FRAGMENT = 0;
     public static final int HOME_DISCUSS_FRAGMENT = 1;
     public static final int HOME_ARTICLE_FRAGMENT = 2;
@@ -83,9 +88,9 @@ public class TopicActivity extends BaseActivity {
     protected AppBarHeadView initHeadView(List<MenuInfo> mMenus) {
         mHeadView = findViewById(R.id.head_app_server);
         mHeadView.setHeadBackShow(true);
-        isLoginUi=true;
         mHeadView.setTitleColor(R.color.white);
         mHeadView.setTitle("话题");
+        isLoginUi=true;
         return mHeadView;
     }
 
@@ -118,6 +123,18 @@ public class TopicActivity extends BaseActivity {
         } else {
             viewPager.setCurrentItem(1);
         }
+        //"tagInfos":"[{\"tagId\":\"33\",\"tagName\":\"防伪溯源\"},{\"tagId\":\"34\",\"tagName\":\"社交通讯\"}]
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String tagInfos = "[{\"tagId\":\""+tagId+"\",\"tagName\":\""+tvTopicName.getText().toString().trim()+"\"}]";
+                Intent intent = new Intent(TopicActivity.this, ReleaseDiscussActivity.class);
+                intent.putExtra("projectId", 0);
+                intent.putExtra("projectPay", "");
+                intent.putExtra("tagInfos", tagInfos);
+                startActivity(intent);
+            }
+        });
         initListener();
     }
 
@@ -232,6 +249,7 @@ public class TopicActivity extends BaseActivity {
             public void getVpPageSelected(int position) {
                 switch (position) {
                     case HOME_REVIEW_FRAGMENT:
+                        fab.setVisibility(View.GONE);
                         if (reviewFragment.isHaveData) {
                             refreshLayout.setNoMoreData(false);
                         } else {
@@ -239,6 +257,7 @@ public class TopicActivity extends BaseActivity {
                         }
                         break;
                     case HOME_DISCUSS_FRAGMENT:
+                        fab.setVisibility(View.VISIBLE);
                         if (discussFragment.isHaveData) {
                             refreshLayout.setNoMoreData(false);
                         } else {
@@ -246,6 +265,7 @@ public class TopicActivity extends BaseActivity {
                         }
                         break;
                     case HOME_ARTICLE_FRAGMENT:
+                        fab.setVisibility(View.GONE);
                         if (articleFragment.isHaveData) {
                             refreshLayout.setNoMoreData(false);
                         } else {

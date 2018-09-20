@@ -140,8 +140,14 @@ public class MineMoneyGuideActivity extends BaseActivity {
         hierarchyType = resultBean.getStatusHierarchyType();
         tvJrzbNum.setText(resultBean.getTodayAward()+"");
         tvZbQfs.setText("区分指数"+resultBean.getStatusHierarchyType());
+        if(hierarchyType==0){
+            tvZbQfs.setText("请先实名认证 >");
+        }
         tvDlFind.setText(resultBean.getLoginAward()+"FIND");
-        tvTopFind.setText("今日+"+resultBean.getInvaAward());
+        if(resultBean.getInvaEachAward()>0){
+            tvTopFind.setVisibility(View.VISIBLE);
+            tvTopFind.setText("今日+"+resultBean.getInvaAward());
+        }
         tvFind.setText("每邀请一个好友赚"+resultBean.getInvaEachAward()+"FIND");
 
         tvPlIncome.setText(""+resultBean.getCommentAwardSum());
@@ -219,11 +225,18 @@ public class MineMoneyGuideActivity extends BaseActivity {
         return mHeadView;
     }
 
-    @OnClick({R.id.iv_wh, R.id.tv_dl_find, R.id.tv_yqhy_wh, R.id.tv_ljyq, R.id.tv_pl_go, R.id.tv_dz_go, R.id.tv_fx_go, R.id.tv_pc_go, R.id.tv_yd_go})
+    @OnClick({R.id.iv_wh,R.id.tv_zb_qfs, R.id.tv_dl_find, R.id.tv_yqhy_wh, R.id.tv_ljyq, R.id.tv_pl_go, R.id.tv_dz_go, R.id.tv_fx_go, R.id.tv_pc_go, R.id.tv_yd_go})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_wh:
+                IntentUtil.startWebViewActivity(Constants.HELP, "帮助中心");
 //                ToastUtils.getInstance().show("问号");
+                break;
+            case R.id.tv_zb_qfs:
+//                ToastUtils.getInstance().show("问号");
+                if(hierarchyType==0){
+                    IntentUtil.startActivity(MineApproveSubmitiCertificateActivity.class);
+                }
                 break;
             case R.id.tv_dl_find:
                 IntentUtil.startActivity(MineAssetDistributedActivity.class);
@@ -233,10 +246,6 @@ public class MineMoneyGuideActivity extends BaseActivity {
 //                ToastUtils.getInstance().show("邀请好友问号");
                 break;
             case R.id.tv_ljyq:
-                if(hierarchyType==0){
-                    IntentUtil.startActivity(MineApproveSubmitiCertificateActivity.class);
-                    return;
-                }
                 ShareView.showShare(this, mHeadView, "", Constants.INVITE_FRIENDS + SharedUtils.singleton().get("invaUIH",""),
                         "免费领取价值500RMB的数字货币", "点击领取红包",Constants.SHARE_HONGBAO_IOCN, 0);
                 break;

@@ -24,6 +24,7 @@ import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.utils.StringUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -156,7 +157,7 @@ public class MainBlueXsFragment extends LazyFragment implements ItemClickListene
 
             @Override
             public void onError(String message) {
-                if(message.equals("暂无数据")){
+                if(StringUtil.isNotBlank(message) && message.equals("暂无数据")){
                     if(pageIndex > 2){
                         refreshLayout.finishLoadMoreWithNoMoreData();
                     }else {

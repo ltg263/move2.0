@@ -3,9 +3,9 @@ package com.secretk.move.ui.fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.ScrollView;
 
+import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -16,7 +16,8 @@ import com.secretk.move.apiService.RetrofitUtil;
 import com.secretk.move.apiService.RxHttpParams;
 import com.secretk.move.base.LazyFragment;
 import com.secretk.move.baseManager.Constants;
-import com.secretk.move.bean.SearchContentBean;
+import com.secretk.move.bean.CommonListBase;
+import com.secretk.move.bean.InfoBean;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.ui.activity.LoginHomeActivity;
 import com.secretk.move.ui.adapter.MainRfFragmentRecyclerAdapter;
@@ -24,9 +25,16 @@ import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.SharedUtils;
+import com.secretk.move.utils.StringUtil;
+import com.secretk.move.utils.ToastUtils;
+import com.secretk.move.view.CustomViewPager;
+import com.secretk.move.view.RecycleScrollView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -41,18 +49,10 @@ public class MainBluePcFragment extends LazyFragment implements ItemClickListene
     RecyclerView recycler;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-    @BindView(R.id.tv_icon)
-    ImageView tvIcon;
-    @BindView(R.id.tv_name)
-    TextView tvName;
-    @BindView(R.id.tv_submit)
-    TextView tvSubmit;
-    @BindView(R.id.rl_top_theme)
-    RelativeLayout rlTopTheme;
     private MainRfFragmentRecyclerAdapter adapter;
     int pageIndex = 1;
-    boolean showFragment = false;
     String tokenLs = "";
+    boolean showFragment = false;//需要弹框
 
     @Override
     public int setFragmentView() {
@@ -81,37 +81,16 @@ public class MainBluePcFragment extends LazyFragment implements ItemClickListene
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
+            public void onLoadMore(RefreshLayout refreshLayout) {
                 onFirstUserVisible();
-            }
-        });
-        tvSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(isLoginZt){
-                    pageIndex=1;
-                    onFirstUserVisible();
-                }else {
-                    IntentUtil.startActivity(LoginHomeActivity.class);
-                }
             }
         });
     }
 
     @Override
     public void onFirstUserVisible() {
-        isLoginZt=true;
+
         tokenLs = token;
-        if (!isLoginZt) {
-            showFragment = true;
-            refreshLayout.setVisibility(View.GONE);
-            convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
-            tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_go_login));
-            tvSubmit.setText(getActivity().getResources().getString(R.string.go_login));
-            tvName.setVisibility(View.VISIBLE);
-            tvName.setText("您尚未登陆,无法预览已关注内容");
-            return;
-        }
         if (!showFragment) {
             loadingDialog.show();
         }
@@ -126,24 +105,16 @@ public class MainBluePcFragment extends LazyFragment implements ItemClickListene
             e.printStackTrace();
         }
         RxHttpParams params = new RxHttpParams.Build()
-                .url(Constants.REWARD_LIST)
+                .url(Constants.RECOMMEND_LIST)
                 .addQuery("policy", PolicyUtil.encryptPolicy(node.toString()))
                 .addQuery("sign", MD5.Md5(node.toString()))
                 .build();
-        RetrofitUtil.request(params, SearchContentBean.class, new HttpCallBackImpl<SearchContentBean>() {
+        RetrofitUtil.request(params, CommonListBase.class, new HttpCallBackImpl<CommonListBase>() {
             @Override
-            public void onCompleted(SearchContentBean bean) {
-                SearchContentBean.DataBean detailsBean = bean.getData();
-                if (detailsBean.getCurPageNum() >= detailsBean.getPageCount()) {
+            public void onCompleted(CommonListBase bean) {
+                CommonListBase.DataBean.DetailsBean detailsBean = bean.getData().getRecommends();
+                if (detailsBean.getCurPageNum() == detailsBean.getPageCount()) {
                     refreshLayout.finishLoadMoreWithNoMoreData();
-                }
-                if (detailsBean.getRows() == null && pageIndex == 2) {
-                    convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
-                    tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_not_gznr));
-                    tvName.setVisibility(View.INVISIBLE);
-                    tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
-                    refreshLayout.setVisibility(View.GONE);
-                    return;
                 }
                 refreshLayout.setVisibility(View.VISIBLE);
                 convertView.findViewById(R.id.no_data).setVisibility(View.GONE);
@@ -155,29 +126,11 @@ public class MainBluePcFragment extends LazyFragment implements ItemClickListene
             }
 
             @Override
-            public void onError(String message) {
-                if(message.equals("暂无数据")){
-                    if(pageIndex > 2){
-                        refreshLayout.finishLoadMoreWithNoMoreData();
-                    }else {
-                        convertView.findViewById(R.id.no_data).setVisibility(View.VISIBLE);
-                        tvIcon.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_not_gznr));
-                        tvName.setVisibility(View.INVISIBLE);
-                        rlTopTheme.setVisibility(View.VISIBLE);
-                        tvSubmit.setText(getActivity().getResources().getString(R.string.not_refresh));
-                        refreshLayout.setVisibility(View.GONE);
-                        refreshLayout.setEnableLoadMore(false);
-                    }
-                }
-            }
-            @Override
             public void onFinish() {
                 super.onFinish();
-//                if (refreshLayout.isRefreshing()) {
                 if (refreshLayout.isEnableRefresh()) {
                     refreshLayout.finishRefresh();
                 }
-//                if (refreshLayout.isLoading()) {
                 if (refreshLayout.isEnableLoadMore()) {
                     refreshLayout.finishLoadMore();
                 }
@@ -197,18 +150,17 @@ public class MainBluePcFragment extends LazyFragment implements ItemClickListene
 
     @Override
     public void onItemClick(View view, int postion) {
-//        if (isLoginZt) {
-//            int postId = adapter.getDataIndex(postion).getPostId();
-//            int postType = adapter.getDataIndex(postion).getPostType();
-//            IntentUtil.go2DetailsByType(postType, String.valueOf(postId));
-//        } else {
-//            IntentUtil.startActivity(LoginHomeActivity.class);
-//        }
+        if (isLoginZt) {
+            int postId = adapter.getDataIndex(postion).getPostId();
+            int postType = adapter.getDataIndex(postion).getPostType();
+            IntentUtil.go2DetailsByType(postType, String.valueOf(postId));
+        } else {
+            IntentUtil.startActivity(LoginHomeActivity.class);
+        }
     }
 
     @Override
     public void onItemLongClick(View view, int postion) {
 
     }
-
 }

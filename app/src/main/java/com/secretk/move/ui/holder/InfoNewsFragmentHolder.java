@@ -1,6 +1,7 @@
 package com.secretk.move.ui.holder;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,8 +19,8 @@ import com.secretk.move.utils.IntentUtil;
 import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
-import com.secretk.move.view.CustomDialog;
 import com.secretk.move.view.DialogUtils;
+import com.secretk.move.view.ShareInfoImgPopupWindow;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -99,12 +100,15 @@ public class InfoNewsFragmentHolder extends RecyclerViewBaseHolder {
         tvInfoShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                ScrollView scrollView = DialogUtils.showDialogImage(mContext, rowsBean.getCreatedAt(), rowsBean.getTitle(), rowsBean.getAbstractc());
-//                ShareView.showShareImg(ll,scrollView,"share_info_news_"+rowsBean.getId());
-                CustomDialog dialog = new CustomDialog(mContext,R.style.selectorDialog);
-                dialog.setData(rowsBean.getCreatedAt(), rowsBean.getTitle(), rowsBean.getAbstractc(),"share_info_news_"+rowsBean.getId());
-                dialog.show();
-                dialog.shareUi();
+//                CustomDialog dialog = new CustomDialog(mContext,R.style.selectorDialog);
+//                dialog.setData(rowsBean.getCreatedAt(), rowsBean.getTitle(), rowsBean.getAbstractc(),"share_info_news_"+rowsBean.getId());
+//                dialog.show();
+//                dialog.shareUi();
+
+                ShareInfoImgPopupWindow popupWindow = new ShareInfoImgPopupWindow(mContext);
+                popupWindow.setData(rowsBean.getCreatedAt(), rowsBean.getTitle(), rowsBean.getAbstractc(),"share_info_news_"+rowsBean.getId());
+                popupWindow.showAtLocation(tvTime, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                popupWindow.showShareView();
             }
         });
         llHtml.setOnClickListener(new View.OnClickListener() {

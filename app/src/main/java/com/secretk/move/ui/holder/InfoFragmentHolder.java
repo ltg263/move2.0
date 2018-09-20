@@ -1,6 +1,7 @@
 package com.secretk.move.ui.holder;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,8 +20,8 @@ import com.secretk.move.utils.MD5;
 import com.secretk.move.utils.PolicyUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
-import com.secretk.move.view.CustomDialog;
 import com.secretk.move.view.DialogUtils;
+import com.secretk.move.view.ShareInfoImgPopupWindow;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -115,10 +116,14 @@ public class InfoFragmentHolder extends RecyclerViewBaseHolder {
         tvInfoShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomDialog dialog = new CustomDialog(mContext,R.style.selectorDialog);
-                dialog.setData(rowsBean.getUpdatedAt(), rowsBean.getTitle(), rowsBean.getContent(),"share_info_"+rowsBean.getId());
-                dialog.show();
-                dialog.shareUi();
+//                CustomDialog dialog = new CustomDialog(mContext,R.style.selectorDialog);
+//                dialog.setData(rowsBean.getUpdatedAt(), rowsBean.getTitle(), rowsBean.getContent(),"share_info_"+rowsBean.getId());
+//                dialog.show();
+//                dialog.shareUi();
+                ShareInfoImgPopupWindow popupWindow = new ShareInfoImgPopupWindow(mContext);
+                popupWindow.setData(rowsBean.getUpdatedAt(), rowsBean.getTitle(), rowsBean.getContent(),"share_info_"+rowsBean.getId());
+                popupWindow.showAtLocation(tvTime, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                popupWindow.showShareView();
             }
         });
         tvDetailDesc.setOnClickListener(new View.OnClickListener() {

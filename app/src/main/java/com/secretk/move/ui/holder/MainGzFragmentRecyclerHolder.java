@@ -227,7 +227,7 @@ public class MainGzFragmentRecyclerHolder extends RecyclerViewBaseHolder {
                 break;
             case 2:
                 tvSore.setVisibility(View.INVISIBLE);
-                tvUserDynamic.setText("发表了爆料");
+                tvUserDynamic.setText("发表了讨论");
                 setCrackTag(bean,2);
                 break;
             case 3:

@@ -358,7 +358,6 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 sharedUtils.put(Constants.USER_TYPE, userInfo.getData().getUser().getUserType());
                 sharedUtils.put(Constants.MOBILE, userInfo.getData().getUser().getMobile());
                 sharedUtils.put(Constants.USER_ID, userInfo.getData().getUser().getUserId());
-                sharedUtils.put(Constants.KFF_COIN_NUM, String.valueOf(userInfo.getData().getUser().getCoinLock()));
                 String mesSum = "";
                 int messageSum = userInfo.getData().getMessageSum();
                 rlMesNum.setVisibility(View.GONE);
@@ -383,6 +382,7 @@ public class MineFragment extends LazyFragment implements FragmentMineView {
                 if(StringUtil.isNotBlank(userInfo.getData().getInvaUIH())){
                     sharedUtils.put("invaUIH", userInfo.getData().getInvaUIH());
                 }
+                sharedUtils.put(Constants.KFF_COIN_NUM, String.valueOf(userInfo.getData().getCoinLock()));
                 sharedUtils.put("awardToken", userInfo.getData().getAwardToken());
                 sharedUtils.put("userCardStatus", userInfo.getData().getUserCardStatus());
                 sharedUtils.put("statusHierarchyType", userInfo.getData().getStatusHierarchyType());

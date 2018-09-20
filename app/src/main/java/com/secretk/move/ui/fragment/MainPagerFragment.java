@@ -84,12 +84,13 @@ public class MainPagerFragment extends LazyFragment implements Toolbar.OnMenuIte
         adapter.addFragment(gzFragment, "关注");
         adapter.addFragment(fxFragment, "推荐");
         adapter.addFragment(pcFragment, "评测");
-        adapter.addFragment(zxFragment, "最新");
-//        adapter.addFragment(blFragment, "爆料");
+        adapter.addFragment(zxFragment, "币友圈");
+//        adapter.addFragment(blFragment, "讨论");
         adapter.addFragment(xsFragment, "悬赏");
         vp_main_children.setOffscreenPageLimit(5);
         vp_main_children.setAdapter(adapter);
         MagicIndicatorUtils.initMagicIndicator(getActivity(),adapter.getmFragmentTitles(),vp_main_children,magicIndicatorTitle);
+        vp_main_children.setCurrentItem(1);
         tvSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -187,6 +187,7 @@ public class DetailsDiscussActivity extends BaseActivity {
     private int projectId;
     String postShortDesc;
     private String activityId;
+    private int postType=2;
 
     @Override
     protected int setOnCreate() {
@@ -205,8 +206,12 @@ public class DetailsDiscussActivity extends BaseActivity {
 
     @Override
     protected void OnToolbarRightListener() {
-        ShareView.showShare(this, mHeadView, activityId, Constants.DISCUSS_SHARE + Integer.valueOf(postId),
-                tvPostTitle.getText().toString(), postShortDesc, imgUrl, Integer.valueOf(postId));
+        String url = Constants.DISCUSS_SHARE;
+        if(postType==4){
+            url=Constants.ANSWER;
+        }
+        ShareView.showShare(this, mHeadView, activityId, url + Integer.valueOf(postId),
+                postShortDesc, postShortDesc, imgUrl, Integer.valueOf(postId));
     }
 
     @Override
@@ -563,6 +568,7 @@ public class DetailsDiscussActivity extends BaseActivity {
                     tvProjectCode.setText(discussDetail.getProjectCode());
                 }
                 GlideUtils.loadCircleProjectUrl(DetailsDiscussActivity.this, mHeadView.getImageView(), Constants.BASE_IMG_URL + discussDetail.getProjectIcon());
+                postType =discussDetail.getPostType();
                 if (StringUtil.isNotBlank(discussDetail.getPostTitle()) && discussDetail.getPostType()!=4) {
                     tvPostTitle.setVisibility(View.VISIBLE);
                     tvPostTitle.setText(discussDetail.getPostTitle());

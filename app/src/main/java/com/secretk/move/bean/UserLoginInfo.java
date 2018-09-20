@@ -42,8 +42,18 @@ public class UserLoginInfo extends BaseRes{
         private int userCardStatus;// 1  待审核  2   审核通过  3   未通过审核  4   未提交   身份验证  和账号验证的审核状态
         private int awardToken;
         private int messageSum;
+        private double coinLock;
         private int statusHierarchyType;
         private String statusHierarchyDesc;
+
+        public double getCoinLock() {
+            return coinLock;
+        }
+
+        public void setCoinLock(double coinLock) {
+            this.coinLock = coinLock;
+        }
+
         public int getUserCardStatus() {
             return userCardStatus;
         }
@@ -200,7 +210,6 @@ public class UserLoginInfo extends BaseRes{
             private int discussNum;
             private int articleNum;
             private double kffCoinNum;
-            private double coinLock;
             private String  areaName;
             private long createTime;
             private String createTimeStr;
@@ -213,14 +222,6 @@ public class UserLoginInfo extends BaseRes{
             private String areaCode;
             private String referUserId;
             private int referLevel;
-
-            public double getCoinLock() {
-                return coinLock;
-            }
-
-            public void setCoinLock(double coinLock) {
-                this.coinLock = coinLock;
-            }
 
             public int getFollowStatus() {
                 return followStatus;

@@ -61,6 +61,8 @@ public class TopicReviewFragment extends LazyFragment{
         setVerticalManager(rvReview);
         adapter = new MainRfFragmentRecyclerAdapter(getActivity());
         rvReview.setAdapter(adapter);
+        tvJx.setTextColor(getResources().getColor(R.color.theme_title));
+        tvZx.setTextColor(getResources().getColor(R.color.app_background));
     }
     @Override
     public void onAttach(Context context) {
@@ -152,13 +154,13 @@ public class TopicReviewFragment extends LazyFragment{
         isHaveData = true;
         refreshLayouF.setNoMoreData(false);
         pageIndex=1;
-        isSelectJx=true;
+        isSelectJx=false;
         tvJx.setTextColor(getResources().getColor(R.color.app_background));
         tvZx.setTextColor(getResources().getColor(R.color.theme_title));
         getLoadData();
     }
 
-    boolean isSelectJx = true;
+    boolean isSelectJx = false;
     @OnClick({R.id.ll_jx, R.id.ll_zx})
     public void onViewClicked(View view) {
         switch (view.getId()) {

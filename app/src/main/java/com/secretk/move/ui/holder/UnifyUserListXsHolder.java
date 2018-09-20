@@ -53,8 +53,8 @@ public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
     RelativeLayout rlHead;
     @BindView(R.id.tv_name)
     TextView tvName;
-    @BindView(R.id.tv_stick)
-    TextView tvStick;
+    @BindView(R.id.iv_stick)
+    ImageView ivStick;
     @BindView(R.id.tv_time)
     TextView tvTime;
     @BindView(R.id.tv_find_num)
@@ -91,7 +91,6 @@ public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
     RelativeLayout rl;
     private ImagesAdapter imagesadapter;
     private Context mContext;
-    List<Integer> tagIdLists = new ArrayList<>();
     public UnifyUserListXsHolder(View itemView, Context context) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -119,9 +118,9 @@ public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
             tvProjectCode.setVisibility(View.VISIBLE);
             tvProjectCode.setText(bean.getProjectCode());
         }
-        tvStick.setVisibility(View.GONE);
+        ivStick.setVisibility(View.GONE);
         if(bean.getDisStickTop()==1){
-            tvStick.setVisibility(View.VISIBLE);
+            ivStick.setVisibility(View.VISIBLE);
         }
         StringUtil.getUserType(bean.getUserType(),ivModelType);
         showPostDesc(bean);
@@ -290,20 +289,17 @@ public class UnifyUserListXsHolder extends RecyclerViewBaseHolder {
                     if(i==0){
                         tvCrackDown.setVisibility(View.VISIBLE);
                         tvCrackDown.setText(strObj.getString("tagName"));
-                        tagIdLists.add(strObj.getInt("tagId"));
-                        IntentUtil.startCrackDown(tvCrackDown,tagIdLists.get(0));
+                        IntentUtil.startCrackDown(tvCrackDown,strObj.getInt("tagId"));
                     }
                     if(i==1){
                         tvCrackDown1.setVisibility(View.VISIBLE);
                         tvCrackDown1.setText(strObj.getString("tagName"));
-                        tagIdLists.add(strObj.getInt("tagId"));
-                        IntentUtil.startCrackDown(tvCrackDown1,tagIdLists.get(1));
+                        IntentUtil.startCrackDown(tvCrackDown1,strObj.getInt("tagId"));
                     }
                     if(i==2){
                         tvCrackDown2.setVisibility(View.VISIBLE);
                         tvCrackDown2.setText(strObj.getString("tagName"));
-                        tagIdLists.add(strObj.getInt("tagId"));
-                        IntentUtil.startCrackDown(tvCrackDown2,tagIdLists.get(2));
+                        IntentUtil.startCrackDown(tvCrackDown2,strObj.getInt("tagId"));
                     }
                 }
             } catch (JSONException e) {

@@ -1,6 +1,7 @@
 package com.secretk.move.ui.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.secretk.move.presenter.ActivitySearchPresenterImpl;
 import com.secretk.move.ui.adapter.FindFragmentRecyclerAdapter;
 import com.secretk.move.ui.adapter.SearchHistoryAdapter;
 import com.secretk.move.utils.IntentUtil;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.SharedUtils;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
@@ -48,6 +50,7 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
     private SearchHistoryAdapter historyAdapter;
     private FindFragmentRecyclerAdapter adapter;
     private int publicationType;
+    private Bundle reward;
 
     @Override
     protected int setLayout() {
@@ -70,6 +73,9 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
         final int searchType = getIntent().getIntExtra("search_type", 0);
         if(searchType==-1){
             publicationType = getIntent().getIntExtra("publication_type", 0);
+            if(publicationType == 4){
+                reward = getIntent().getBundleExtra("reward");
+            }
 
         }
         adapter.setItemListener(new ItemClickListener() {
@@ -84,6 +90,12 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
                         Intent intent = new Intent(SearchActivity.this, ReleaseArticleActivity.class);
                         intent.putExtra("projectId", bean.getProjectId());
                         intent.putExtra("projectPay", bean.getProjectCode());
+                        startActivity(intent);
+                    }else if(publicationType == 4){
+                        Intent intent = new Intent(SearchActivity.this, ReleaseRewardOkActivity.class);
+                        intent.putExtra("projectId", bean.getProjectId());
+                        intent.putExtra("projectPay", bean.getProjectCode());
+                        intent.putExtra("reward", reward);
                         startActivity(intent);
                     } else {
                         Intent intent = new Intent(SearchActivity.this, ReleaseDiscussActivity.class);

@@ -315,9 +315,9 @@
                         android:id="@+id/ll_bl_xs"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         android:background="@color/white"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <LinearLayout
                             android:id="@+id/ll_xs"
@@ -360,6 +360,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_10"
+                                android:ellipsize="end"
+                                android:maxLines="2"
                                 android:text="ALL- 团队测评!!!"
                                 android:textColor="@color/title_gray"
                                 android:textSize="@dimen/sp_16"
@@ -370,6 +372,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/dp_10"
+                                android:ellipsize="end"
+                                android:maxLines="2"
                                 android:text="今年以来，加密货币跌势难止。数据显示，在截至6月25日的一周内，它是未来......"
                                 android:textColor="@color/title_gray_66"
                                 android:textSize="@dimen/sp_14" />

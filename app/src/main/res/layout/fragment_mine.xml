@@ -285,7 +285,7 @@
                             android:layout_below="@id/tv_discuss_mun"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/dp_5"
-                            android:text="爆料"
+                            android:text="讨论"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_14" />
                     </RelativeLayout>
@@ -627,7 +627,7 @@
                 android:text="測試接口"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_14"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </LinearLayout>
     </com.secretk.move.view.RecycleNestedScrollView>
 

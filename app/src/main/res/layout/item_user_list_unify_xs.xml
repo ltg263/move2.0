@@ -51,22 +51,18 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="aasdff"
                 android:textColor="@color/title_gray"
                 android:textSize="@dimen/sp_14"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_stick"
+            <ImageView
+                android:id="@+id/iv_stick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_toRightOf="@id/tv_name"
-                android:background="@drawable/garden_crack"
-                android:paddingHorizontal="@dimen/dp_10"
-                android:paddingVertical="@dimen/dp_1"
-                android:text="置顶"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_12"
+                android:src="@drawable/ic_stick_zd"
                 android:visibility="gone" />
 
             <TextView
@@ -235,10 +231,10 @@
         android:background="@color/white"
         android:gravity="center"
         android:padding="@dimen/dp_10"
-        android:visibility="gone"
         android:text="去悬赏广场看看>>"
         android:textColor="@color/app_background"
-        android:textSize="@dimen/sp_16" />
+        android:textSize="@dimen/sp_16"
+        android:visibility="gone" />
 
     <View
         android:layout_width="match_parent"

@@ -116,7 +116,7 @@ public class MineCollectHolder extends RecyclerViewBaseHolder {
                 break;
             case 2:
                 tvSore.setVisibility(View.GONE);
-                postType = "发表了爆料";
+                postType = "发表了讨论";
                 setCrackTag(rowsBean,2);
                 break;
             case 3:

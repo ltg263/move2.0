@@ -63,7 +63,7 @@ public class RewardSquareActivity extends BaseActivity {
         List<String> list = new ArrayList<>();
         list.add("最新悬赏");
         list.add("高额悬赏");
-        list.add("精彩回复");
+        list.add("精彩回答");
         vpMainChildren.setOffscreenPageLimit(list.size());
         MagicIndicatorUtils.initMagicIndicatorTitle(this,list,vpMainChildren,magicIndicatorTitle);
         adapter.setData(list);

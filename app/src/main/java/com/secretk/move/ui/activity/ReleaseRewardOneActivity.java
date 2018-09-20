@@ -55,7 +55,7 @@ public class ReleaseRewardOneActivity extends BaseActivity {
         mHeadView.setTitleColor(R.color.white);
         isLoginUi = true;
         mHeadView.setHeadBackShow(true);
-        mHeadView.setTitle("发布尽调");
+        mHeadView.setTitle("发布悬赏");
         return mHeadView;
     }
 
