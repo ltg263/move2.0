@@ -3,6 +3,7 @@ package com.secretk.move.ui.activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 
@@ -15,6 +16,7 @@ import com.secretk.move.contract.ActivitySearchContract;
 import com.secretk.move.listener.ItemClickListener;
 import com.secretk.move.presenter.ActivitySearchPresenterImpl;
 import com.secretk.move.ui.adapter.SearchHistoryAdapter;
+import com.secretk.move.utils.LogUtil;
 import com.secretk.move.utils.StatusBarUtil;
 import com.secretk.move.utils.StringUtil;
 import com.secretk.move.utils.ToastUtils;
@@ -65,6 +67,33 @@ public class SearchAllActivity extends MvpBaseActivity<ActivitySearchPresenterIm
     private void initRefresh() {
         refreshLayout.setEnableLoadMore(false);
         refreshLayout.setEnableRefresh(false);
+        ed_search.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(keyEvent.getKeyCode() == 66 && keyEvent.getAction()==KeyEvent.ACTION_UP){
+                    if(StringUtil.isBlank(ed_search.getText().toString().trim())){
+                        ToastUtils.getInstance().show("搜索内容不能为空");
+                        return true;
+                    }
+                    presenter.searchSuccess(null,ed_search.getText().toString().trim(),1);
+                    if(searchType==-1){
+                        searchTxt=ed_search.getText().toString().trim();
+                        finish();
+                        return true;
+                    }
+                    Intent intent = new Intent(SearchAllActivity.this,SearchAllContentActivity.class);
+                    intent.putExtra("searchTxt",ed_search.getText().toString().trim());
+                    startActivity(intent);
+                }
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override

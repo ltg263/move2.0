@@ -102,6 +102,7 @@ public class MagicIndicatorUtils {
                 SimplePagerTitleView simplePagerTitleView = new ScaleTransitionPagerTitleView(context);
                 simplePagerTitleView.setText(mDataList.get(index));
                 simplePagerTitleView.setTextSize(18);
+                simplePagerTitleView.setPadding(0,0,0,0);
                 simplePagerTitleView.setNormalColor(ContextCompat.getColor(mContext, R.color.title_gray));
                 simplePagerTitleView.setSelectedColor(ContextCompat.getColor(mContext, R.color.app_background));
 

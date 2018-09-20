@@ -144,7 +144,7 @@ public class MineMoneyGuideActivity extends BaseActivity {
             tvZbQfs.setText("请先实名认证 >");
         }
         tvDlFind.setText(resultBean.getLoginAward()+"FIND");
-        if(resultBean.getInvaEachAward()>0){
+        if(resultBean.getInvaAward()>0){
             tvTopFind.setVisibility(View.VISIBLE);
             tvTopFind.setText("今日+"+resultBean.getInvaAward());
         }

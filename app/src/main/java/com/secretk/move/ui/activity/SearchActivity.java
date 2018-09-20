@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 
@@ -124,6 +125,19 @@ public class SearchActivity extends MvpBaseActivity<ActivitySearchPresenterImpl>
             @Override
             public void onItemLongClick(View view, int postion) {
 
+            }
+        });
+        ed_search.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(keyEvent.getKeyCode() == 66 && keyEvent.getAction()==KeyEvent.ACTION_UP){
+                    if(StringUtil.isBlank(ed_search.getText().toString().trim())){
+                        ToastUtils.getInstance().show("搜索内容不能为空");
+                        return true;
+                    }
+                    presenter.search();
+                }
+                return false;
             }
         });
 
