@@ -282,6 +282,9 @@ public class DetailsArticleActivity extends BaseActivity {
                     }else if(url.contains("reward")){
                         type = 10;
 //                        ToastUtils.getInstance().show("悬赏详情");
+                    }else if(url.contains("evaluating")){
+                        type = 11;
+//                        ToastUtils.getInstance().show("话题");
                     }
                     if(type==-1){
                         IntentUtil.startWebViewActivity(url.toString(), getString(R.string.app_name));

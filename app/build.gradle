@@ -74,8 +74,8 @@ android {
         applicationId "com.secretk.move"
         minSdkVersion 19
         targetSdkVersion 21
-        versionCode 35
-        versionName "1.6.3"
+        versionCode 38
+        versionName "2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         /* 个推 */
         manifestPlaceholders = [

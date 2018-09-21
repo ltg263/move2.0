@@ -271,6 +271,9 @@ public class IntentUtil {
                 intent.putExtra("postId",Integer.valueOf(postId));
                 startActivity(intent);
                 break;
+            case 11:
+                startTopicActivity(Integer.valueOf(postId));
+                break;
         }
     }
     public static void startCrackDown(View view, final int tagId){
